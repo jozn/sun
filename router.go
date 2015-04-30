@@ -15,10 +15,12 @@ func registerRoutes() {
 	http.Handle("/play4", actioner(play4))
 	http.Handle("/play5", actioner(play5))
 
+	http.Handle("/fact/user1", actioner(factUser1))
+
 	http.Handle("/fact/p1", actioner(factPlay1))
 	http.Handle("/fact/p2", actioner(factPlay2))
 	http.Handle("/fact/p3", actioner(factPlay3))
 	http.Handle("/fact/p4", actioner(factPlay4))
 
-	http.HandleFunc("/", Home)
+	//http.HandleFunc("/", Home)
 }
