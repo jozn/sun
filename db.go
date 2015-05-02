@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"reflect"
 	"strings"
 )
@@ -58,8 +59,20 @@ func dbInsertUpdateStruct(structRow interface{}, table string, isInsert bool) (s
 		query = "UPDATE " + table + " SET " + setstr + " WHERE Id = ?"
 		vals = append(vals, id)
 	}
-	fmt.Println(query)
-	return DB.Exec(query, vals...)
+
+	if __DEV__ {
+		fmt.Println(query)
+	}
+
+	r, err := DB.Exec(query, vals...)
+
+	if __DEV__ {
+		if err != nil {
+			log.Fatal("database err for table: ", table, " error: ", err)
+		}
+	}
+	// noErr(err)
+	return r, err
 
 	// fmt.Println(cols, vals)
 	// fmt.Println(cols, vals)

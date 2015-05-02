@@ -26,4 +26,6 @@ play/img/*
 play/*.jpg
 play/*.jpeg
 play/*.png
+public/
+/public/
 

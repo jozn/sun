@@ -63,7 +63,7 @@ type Media struct {
 type Post struct {
 	Id               int
 	UserId           int
-	TypeID           int
+	TypeId           int
 	Text             string
 	FormatedText     string
 	SharedTo         int
@@ -114,6 +114,43 @@ type UserPassword struct {
 	Password         int
 	CreatedTimestamp int
 }
+
+///////views for json///////
+
+type ImageResHolder struct {
+	LowRes      *ImageResRow //320
+	StandardRes *ImageResRow //640
+	High        *ImageResRow //? 960 ?
+	ThumbRes    *ImageResRow //150
+	Tiny150Res  *ImageResRow
+	Tiny100Res  *ImageResRow
+	Tiny50Res   *ImageResRow
+}
+
+type ImageResRow struct {
+	Width  int
+	Height int
+	Url    string
+}
+
+type PostAndDetailes struct {
+	*Post
+	Comments []Comment
+	Likes    []Like
+	Images   ImageResHolder
+	AmIlike  bool
+	Sender
+}
+
+//for comments and mini-likes
+type UserTinyInfoView struct {
+	UserId   int
+	UserName string
+	FullName string
+	// Avatars Avatars
+}
+
+////play//////////
 
 type ViewUser struct {
 	*User

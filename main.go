@@ -5,16 +5,23 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	cacheDrive "github.com/pmylund/go-cache"
 	"log"
 	"math/rand"
 	"net/http"
 	"runtime"
+	"time"
 )
+
+var cashe *cacheDrive.Cache
+
+var __DEV__ bool
 
 var DB *sqlx.DB
 var users []User
 
 func main() {
+	__DEV__ = true
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	fmt.Println("main start")
 	var err error
@@ -22,6 +29,10 @@ func main() {
 	noErr(err)
 	DB.MapperFunc(func(s string) string { return s })
 	registerRoutes()
+
+	// _casheCom = make(map[int][]Comment, 100)
+	// _casheLike = make(map[int][]Like, 100)
+	cashe = cacheDrive.New(5*time.Minute, 30*time.Second)
 
 	// http.Handle("/2", actioner(h2))
 	// http.Handle("/hello", actioner(helo))
