@@ -28,4 +28,7 @@ play/*.jpeg
 play/*.png
 public/
 /public/
-
+/upload
+*.exe
+/.idea
+*.sublime-*

@@ -1,0 +1,1 @@
+-in every goroutine that you start alwyas recover(); if a groutine not recover itgoes directly to main go routine and howle program crashes.

@@ -1,0 +1,77 @@
+//for JS
+conn = new WebSocket("ws://localhost:5000/ws");
+conn.onclose = function(evt) {
+	console.log('close')
+}
+conn.onmessage = function(evt) {
+	console.log('message:',evt)
+
+}
+var p = {
+	Command: 'hello'
+}
+var p2 = {
+	Command: 'panic'
+}
+var p3 = {
+	Command: 'nothing'
+}
+//var ps = JSON.stringify(p)
+//conn.send(JSON.stringify(p))
+
+
+////////////////////////panic
+
+conn = new WebSocket("ws://localhost:5000/ws");
+conn.onclose = function(evt) {
+	console.log('close')
+}
+conn.onmessage = function(evt) {
+	console.log('message:',evt)
+
+}
+var p = {
+	Command: 'panic'
+}
+p.Command = 'panic'
+var ps = JSON.stringify(p)
+//conn.send(ps)
+
+
+////////////////////////////// echo loop
+var i = 0
+conn = new WebSocket("ws://localhost:5000/ws");
+conn.onclose = function(evt) {
+	console.log('close')
+}
+conn.onmessage = function(evt) {
+	console.log('message:',evt)
+	i++
+	if(i%1000 ===0){
+	    console.log(i++)
+	}
+
+    conn.send(JSON.stringify(p))
+}
+var p = {
+	Command: 'hello',
+	RequestId: i
+}
+var p2 = {
+	Command: 'panic'
+}
+var p3 = {
+	Command: 'nothing'
+}
+//var ps = JSON.stringify(p)
+//conn.send(JSON.stringify(p))
+setTimeout(function(){conn.send(JSON.stringify(p))},1000)
+setInterval(function(){conn.send(JSON.stringify(p))},1000)
+
+setTimeout(function(){conn.send(conn.close())},5000)
+
+
+///////////////////////////nenchmarks
+
+thor --amount 5000 ws://localhost:5000/ws
+websocket-bench -a 2500 -c 200 ws://localhost:5000/ws
