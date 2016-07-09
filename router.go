@@ -106,6 +106,8 @@ func registerRoutes() {
 	http.Handle("/i/msg2", actionToFunc(SendSampleMesgTable2))
 	http.Handle("/i/redis", actionToFunc(RedisSavePlay))
 	http.Handle("/i/play", actionToFunc(PlaySomething))
+	http.Handle("/i/store1", actionToFunc(MemoryStore1))
+	http.Handle("/i/db", actionToFunc(DBStruct))
 
 	//messages
 	http.HandleFunc("/MsgUpload", MsgUpload)

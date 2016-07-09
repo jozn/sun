@@ -26,6 +26,7 @@ play/img/*
 play/*.jpg
 play/*.jpeg
 play/*.png
+play/*.zip
 public/
 /public/
 /upload

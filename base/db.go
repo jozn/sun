@@ -8,6 +8,7 @@ import (
 	"reflect"
 	"strings"
 	//"bytes"
+	"ms/sun/helper"
 )
 
 //structRow: must be poniter
@@ -176,6 +177,41 @@ func DbStructToTable(structRow interface{}, table string) string {
 	sql1 := fmt.Sprintf(strings.Join(cols, ",\n"))
 
 	sql2 := fmt.Sprintf("CREATE TABLE IF NOT EXISTS `%v` (\n%v \n) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;\n", table, sql1)
+	fmt.Println(sql2)
+	return sql2
+}
+
+func DbStructToTable2New(structRow interface{}, table string) string {
+	arr_str, arr_vals := helper.StructToFiledsRejects(structRow,"nothing")
+	var cols []string
+	_ = cols
+	//stut := s.Type()
+	//	fmt.Printf("struc %T %v ", stut, stut)
+	//	fmt.Println("struc  ", stut)
+	for i := 0; i < len(arr_str); i++ {
+		col:=arr_str[i]
+		val := arr_vals[i]
+		//f := s.Field(i)
+		//f := col
+		//filedName := stut.Field(i).Name
+		filedName := col
+		//		fmt.Printf("f: %v - %T\n",f,f)
+		//		fmt.Printf("filed: %v --- %T \n", filedName, filedName)
+		sqlCol := ""
+		//		f.t
+		switch val.(type) {
+		case int:
+			sqlCol = fmt.Sprintf("  `%v` int(10) DEFAULT '0' ", filedName)
+		case string:
+			sqlCol = fmt.Sprintf("  `%v` varchar(250) DEFAULT ''", filedName)
+		}
+		cols = append(cols, sqlCol)
+
+	}
+	//	fmt.Println(cols)
+	sql1 := fmt.Sprintf(strings.Join(cols, ",\n"))
+
+	sql2 := fmt.Sprintf("CREATE TABLE IF NOT EXISTS `%v` (\n%v \n) ENGINE=Aria DEFAULT CHARSET=utf8mb4;\n", table, sql1)
 	fmt.Println(sql2)
 	return sql2
 }
