@@ -58,7 +58,7 @@ func FollowUser(uid int, followedId int) {
 	flm.UserId = uid
 	flm.FollowType = 1
 	flm.ListId = u.PrimaryFollowingList
-	flm.UpdatedTimestampMs = helper.TimeNowMs()
+	flm.UpdatedTimeMs = helper.TimeNowMs()
 
 	//todo check for duplicate
 	changeListCountBy(u.PrimaryFollowingList, 1)
@@ -79,7 +79,7 @@ func UnfollowUser(uid int, followedId int) {
 	flm.UserId = uid
 	flm.FollowType = 0 //update
 	flm.ListId = u.PrimaryFollowingList
-	flm.UpdatedTimestampMs = helper.TimeNowMs()
+	flm.UpdatedTimeMs = helper.TimeNowMs()
 	//todo check for duplicate
 	changeListCountBy(u.PrimaryFollowingList, 1)
 	keys,values :=helper.StructToFiledsRejectsEscape(&flm,"Id")

@@ -100,7 +100,7 @@ func registerRoutes() {
 	//phone dbs
 	http.Handle("/mf/contacts", actioner(fact.FactPhoneContacts))
 
-	http.Handle("/ping", actioner(ctrl.PingAction))
+	http.Handle("/ping", actionToFunc(ctrl.PingAction))
 
 	http.Handle("/i/msg", actionToFunc(SendSampleMesgTable))
 	http.Handle("/i/msg2", actionToFunc(SendSampleMesgTable2))
@@ -132,9 +132,6 @@ func registerRoutes() {
 
 	mux.Get("/comments/add", actionToFunc(ctrl.PostAddCommentAction))
 	mux.Get("/comments/list", actionToFunc(ctrl.GetCommentsAction))
-
-
-
 
 
 

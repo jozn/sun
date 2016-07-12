@@ -29,7 +29,7 @@ func TestJson1(c *Action) AppErr {
 	u := User{}
 	u22 := &User{}
 	print(sint)
-	u.CreatedTimestamp =int(sint)
+	u.CreatedTime =int(sint)
 	u.Id =int(sint)
 	u.FullName = c.Req.Host
 	u.FirstName = c.Req.Method

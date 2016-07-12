@@ -17,7 +17,7 @@ func FactPost1(c *Action) {
 	u := Post{}
 	u.UserId = rand.Intn(50)
 	u.Text = factRnddStr(300)
-	u.CreatedTimestamp = int(time.Now().Unix()) - rand.Intn(50000)
+	u.CreatedTime = int(time.Now().Unix()) - rand.Intn(50000)
 	u.TypeId = 10 //text see: gloab_types
 	// ui := UserInfo{}
 
@@ -37,7 +37,7 @@ func FactPost2(c *Action) {
 	uid := rand.Intn(50)
 	u.UserId = uid
 	u.Text = factRnddStr(300)
-	u.CreatedTimestamp = int(time.Now().Unix()) - rand.Intn(50000)
+	u.CreatedTime = int(time.Now().Unix()) - rand.Intn(50000)
 	u.TypeId = 10 //text see: gloab_types
 	// ui := UserInfo{}
 	if rand.Intn(2) == 1 {
@@ -72,14 +72,14 @@ func FactLike1(c *Action) {
 	u.UserId = rand.Intn(_factLastUserId()) + 1
 	u.PostId = rand.Intn(_factLastPostId()) + 1
 	u.Text = factRnddStr(15)
-	u.CreatedTimestamp = int(time.Now().Unix()) - rand.Intn(50000)
+	u.CreatedTime = int(time.Now().Unix()) - rand.Intn(50000)
 	DbInsertStruct(&u, "comments")
 
 	l := Like{}
 	l.UserId = rand.Intn(_factLastUserId()) + 1
 	l.PostId = rand.Intn(_factLastPostId()) + 1
 	// l.Text = factRnddStr(15)
-	l.CreatedTimestamp = int(time.Now().Unix()) - rand.Intn(50000)
+	l.CreatedTime = int(time.Now().Unix()) - rand.Intn(50000)
 	DbInsertStruct(&l, "likes")
 
 }
@@ -92,7 +92,7 @@ func FactComment1(c *Action) {
 	u.UserId = rand.Intn(_factLastUserId()) + 1
 	u.PostId = rand.Intn(_factLastPostId()) + 1
 	u.Text = factRnddStr(15)
-	u.CreatedTimestamp = int(time.Now().Unix()) - rand.Intn(50000)
+	u.CreatedTime = int(time.Now().Unix()) - rand.Intn(50000)
 	DbInsertStruct(&u, "comments")
 
 }
@@ -103,7 +103,7 @@ func FactLike2(c *Action) {
 	l := Like{}
 	l.PostId = rand.Intn(100) + 1
 	l.UserId = rand.Intn(50) + 1
-	l.CreatedTimestamp = now()
+	l.CreatedTime = now()
 	DbInsertStruct(&l, "likes")
 }
 

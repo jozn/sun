@@ -145,7 +145,7 @@ func AddTagsInPost(post Post) {
 		if len(dbTags) == 0 { //not exist ,insert it
 			dbTag = Tag{}
 			dbTag.Name = tag
-			dbTag.CreatedTimestamp = now()
+			dbTag.CreatedTime = now()
 			res, _ := DbInsertStruct(&dbTag, "tags")
 			tid, _ := res.LastInsertId()
 			dbTag.Id = int(tid)
@@ -157,7 +157,7 @@ func AddTagsInPost(post Post) {
 		tagPost.TagId = dbTag.Id
 		tagPost.PostId = post.Id
 		tagPost.TypeId = post.TypeId
-		tagPost.CreatedTimestamp = now()
+		tagPost.CreatedTime = now()
 
 		DbInsertStruct(&tagPost, "tags_posts")
 		//TODO increment dbTags.Count

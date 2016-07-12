@@ -4,7 +4,6 @@ import (
     "ms/sun/base"
     "fmt"
     "encoding/json"
-    "ms/sun/docs/del/chat"
     "math/rand"
     "ms/sun/helper"
 //"time"
@@ -18,11 +17,11 @@ func AddNewMsg(c *base.CmdAction){
     json.Unmarshal([]byte(c.Cmd.Data),&m)
 
     uid := helper.StrToInt(m.RoomKey[1:],rand.Intn(80))
-    msg := chat.MessagesTable{}
+    msg := models.MessagesTable{}
     msg.RoomKey ="u"+ helper.IntToStr(uid)
     msg.UserId = uid
     msg.MessageKey = helper.RandString(10)
-    msg.CreatedMs = helper.TimeNowMs()+100000
+    msg.CreatedTimestampMs = helper.TimeNowMs()+100000
     msg.MessageTypeId = 10
     msg.Text = helper.FactRandStr(15)+ " ========== "+ m.RoomKey + " =========\n "+ m.Text
 

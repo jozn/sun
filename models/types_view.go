@@ -1,6 +1,6 @@
 package models
 
-///////views for json///////
+///////views for json////////
 
 type ImageResHolder struct {
 	LowRes      *ImageResRow //320

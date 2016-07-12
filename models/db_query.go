@@ -13,7 +13,7 @@ func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int )  {
     flm.UserId = UserId
     flm.FollowType = FollowType //0: not following any more ; 1 following : 2 requested(for private profiles)
     flm.ListId = UserId
-    flm.UpdatedTimestampMs = helper.TimeNowMs()
+    flm.UpdatedTimeMs = helper.TimeNowMs()
     keys,values :=helper.StructToFiledsRejectsEscape(&flm,"Id")
     q := "replace into following_list_member ("+strings.Join(keys,",") +") values (" +strings.Join(values,",") +")"
 
@@ -28,7 +28,7 @@ func QueryAddPostLike(UserId, PostId int )  {
     l := Like{}
     l.UserId = UserId
     l.PostId = PostId
-    l.CreatedTimestamp = helper.TimeNow()
+    l.CreatedTime = helper.TimeNow()
 
     keys,values :=helper.StructToFiledsRejectsEscape(&l,"Id")
     q := "replace into likes ("+strings.Join(keys,",") +") values (" +strings.Join(values,",") +")"

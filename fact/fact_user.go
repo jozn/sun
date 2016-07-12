@@ -26,7 +26,7 @@ func FactUser1(c *Action) {
 	//u.FullName = u.FirstName + " " + u.LastName
 	u.Email = _randomEmail()
 	u.AvatarSrc = "public/avatars/" + intToStr(rand.Intn(15)+1) + ".jpg"
-	u.CreatedTimestamp = int(time.Now().Unix())
+	u.CreatedTime = int(time.Now().Unix())
 
 	ui := UserInfo{}
 
@@ -167,7 +167,7 @@ func FactRealUser(c *Action) {
 	//},
 	}
 	for _, user := range us {
-		user.CreatedTimestamp = int(time.Now().Unix())
+		user.CreatedTime = int(time.Now().Unix())
 		DbInsertStruct(&user, "user")
 
 	}

@@ -55,7 +55,7 @@ func PostAddCommentAction(c *base.Action) base.AppErr {
 	cmt.UserId = c.UserId()
 
 	cmt.PostId = pid
-	cmt.CreatedTimestamp = helper.TimeNow()
+	cmt.CreatedTime = helper.TimeNow()
 	//todo format text for security and size ,parsing ,tages,...
 	cmt.Text = texts
 

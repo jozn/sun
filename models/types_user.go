@@ -1,14 +1,14 @@
 package models
 
 type UserBasic struct {
-	Id        int
-	UserName  string
-	FirstName string
-	LastName  string
-	FullName  string //deprecated
-	AvatarSrc string //dep
-	AvatarUrl string
-	IsProfilePrivate     int
+	Id               int
+	UserName         string
+	FirstName        string
+	LastName         string
+	FullName         string //deprecated
+	AvatarSrc        string //dep
+	AvatarUrl        string
+	IsProfilePrivate int
 }
 
 type UserPhone struct {
@@ -26,19 +26,20 @@ type UserCounts struct {
 	FollowingCount int
 	PostsCount     int
 	MediaCount     int
-	LikesCount     int//unrelable
+	LikesCount     int //unrelable
 	ResharedCount  int
-	CommentsCount  int//unrelable
+	CommentsCount  int //unrelable
 }
 
 type UserExtra struct {
-	Email                string `json:"-"`
-	PrimaryFollowingList int
-	CreatedTimestamp     int `json:"-"`
-	UpdatedTimestamp     int //`json:"-"`
-	LastLoginTimestamp   int
-	AppVersion          int
-
+    Email                string `json:"-"`
+    PrimaryFollowingList int
+    CreatedTime          int `json:"-"`
+    UpdatedTime          int //`json:"-"`
+    LastLoginTime        int
+    AppVersion           int
+    LastPostTime         int
+    LastActivityTime     int
 }
 
 // +gen slice:"Where,GroupBy[string],DistinctBy,SortBy,Select[string]"
@@ -53,14 +54,14 @@ type UserTable struct {
 	UserExtra
 }
 
-/////////// for Responses ///////////////////////////////////////
+/////////// for Responses //////////////////////////////////////
 
 type UserBasicAndMe struct { //legacy switch to UserTable
-	UserBasic
-	UserId int
-	UpdatedTimestamp     int
-	AmIFollowing int//dep
-	FollowingType  int /// 0: not_following  1: following  2: follow_requested
+    UserBasic
+    UserId        int
+    UpdatedTime   int
+    AmIFollowing  int //dep
+    FollowingType int /// 0: not_following  1: following  2: follow_requested
 	//FollowingLists int
 }
 
@@ -74,18 +75,18 @@ type UserBasicPhoneAndMe struct {
 //	PhoneContact
 //}
 
-func (t *UserBasicAndMe) FromUser(u UserTable,list FollowChecker )  {
+func (t *UserBasicAndMe) FromUser(u UserTable, list FollowChecker) {
 	t.UserBasic = u.UserBasic
 	t.UserId = u.Id
-	t.UpdatedTimestamp = u.UpdatedTimestamp
+	t.UpdatedTime = u.UpdatedTime
 	t.FollowingType = list.FollowingType(u.Id)
 }
 
-func (t *UserBasicAndMe) FormUserAndMe(u UserTable, meId int )  {
+func (t *UserBasicAndMe) FormUserAndMe(u UserTable, meId int) {
 	t.UserBasic = u.UserBasic
 	t.UserId = u.Id
-	t.UpdatedTimestamp = u.UpdatedTimestamp
-	t.FollowingType = GetFollowingType(meId,u.Id)
+	t.UpdatedTime = u.UpdatedTime
+	t.FollowingType = GetFollowingType(meId, u.Id)
 }
 
 /////////// Deprecated //////////////////////////////
@@ -102,9 +103,9 @@ type UserInfo struct { //deprecated
 }
 
 type UserPassword struct {
-	UserId           int
-	Password         int
-	CreatedTimestamp int
+    UserId      int
+    Password    int
+    CreatedTime int
 }
 
 /////////////////////////////////////////////////////////

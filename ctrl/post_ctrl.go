@@ -18,7 +18,7 @@ func AddPostAction(c *base.Action) base.AppErr {
     post.Text = txt
     post.UserId = c.UserId()
     post.TypeId = models.POST_TYPE_TEXT
-    post.CreatedTimestamp = helper.TimeNow()
+    post.CreatedTime = helper.TimeNow()
     post.CommentsCount = 0
     post.LikesCount = 0
 

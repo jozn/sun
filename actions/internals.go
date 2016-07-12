@@ -2,7 +2,6 @@ package actions
 
 import (
     "ms/sun/base"
-    "ms/sun/docs/del/chat"
     "ms/sun/helper"
     "time"
     "math/rand"
@@ -233,11 +232,11 @@ func SendSampleMesgTable2(a *base.Action) base.AppErr {
     go func() {
         for  {
             uid := 6//rand.Intn(80)+1
-            msg := chat.MessagesTable{}
+            msg := models.MessagesTable{}
             msg.RoomKey ="u"+ helper.IntToStr(uid)
             msg.UserId = uid
             msg.MessageKey = helper.RandString(10)
-            msg.CreatedMs = helper.TimeNowMs()
+            msg.CreatedTimestampMs = helper.TimeNowMs()
             msg.MessageTypeId = 10
             msg.Text = helper.FactRandStr(15)
 
