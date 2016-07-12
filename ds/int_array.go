@@ -58,8 +58,19 @@ func (list *IntList) AddAndSort(values ...int) {
 }
 
 func (list *IntList) RemoveAndSort(value int) {
-    list.Remove(value)
-    list.SortDesc()
+    list.RemoveIndex(value)
+	for {
+		n:= sort.Search(list.size ,func(i int) bool { return list.Elements[i] <= value })
+		if n >= list.size || n < 0{
+			break
+		}
+		v := list.Elements[n]
+		if v == value{
+			list.RemoveIndex(n)
+		}else {
+			break
+		}
+	}
 }
 
 // Get returns the element at index.
@@ -75,7 +86,7 @@ func (list *IntList) Get(index int) (int, bool) {
 
 // Remove removes one or more elements from the list with the supplied indices.
 //ME: no need resort
-func (list *IntList) Remove(index int) {
+func (list *IntList) RemoveIndex(index int) {
 
 	if !list.withinRange(index) {
 		return
@@ -112,11 +123,20 @@ func (list *IntList) Contains(values ...int) bool {
 //must be sorted asc
 func (list *IntList) BinaryContains(value int) bool {
    //n:= sort.SearchInts(list.Aelements, value)
+	//list.SortAsc()
+	//n:=sort.SearchInts(list.Elements, value)
    n:= sort.Search(list.size ,func(i int) bool { return list.Elements[i] <= value })
-    if n >= list.size || n <= list.size {
+	//print("Search : ",n," ", value ," ", list.size, " ", list.Elements , " ", len(list.Elements), "\n")
+	//fmt.Println(list.Elements)
+	//list.SortDesc()
+    if n >= list.size || n <0 {
         return false
     }
-    return true
+	if list.Elements[n] == value {
+		return true
+	}
+	//copy()
+    return false
 }
 
 // Values returns all elements in the list.

@@ -9,17 +9,18 @@ import (
 	//"github.com/drone/routes"
 	"ms/sun/routes"
 "ms/sun/sync"
+	"ms/sun/ctrl"
 )
 
 func registerRoutes() {
 	mux := routes.NewPrefix("/v1")
 
-	http.Handle("/posts", actioner(GetPostsAction))
-	http.Handle("/add-post", actioner(AddPostAction))
-	http.Handle("/likes", actioner(GetLikesAction))
-	http.Handle("/comments", actioner(GetCommentsAction))
-	http.Handle("/add-post-like", actioner(PostAddLikeAction))
-	http.Handle("/add-comment", actioner(PostAddCommentAction))
+	//http.Handle("/posts", actioner(GetPostsAction))
+	//http.Handle("/add-post", actioner(AddPostAction))
+	//http.Handle("/likes", actioner(GetLikesAction))
+	//http.Handle("/comments", actioner(GetCommentsAction))
+	//http.Handle("/add-post-like", actioner(PostAddLikeAction))
+	//http.Handle("/add-comment", actioner(PostAddCommentAction))
 
 	http.Handle("/upload-avatar", actioner(UploadAvatarAction))
 	http.Handle("/remove-avatar", actioner(RemoveAvatarAction))
@@ -29,10 +30,10 @@ func registerRoutes() {
 	http.Handle("/search", actioner(SearchAllAction))
 	http.Handle("/tag", actioner(SearchTagsAction))
 
-	http.Handle("/follow", actioner(FollowAction))
-	http.Handle("/unfollow", actioner(UnfollowAction))
-	http.Handle("/followers", actioner(GetFollowersAction))
-	http.Handle("/followings", actioner(GetFollowingsAction))
+	//http.Handle("/follow", actioner(FollowAction))
+	//http.Handle("/unfollow", actioner(UnfollowAction))
+	//http.Handle("/followers", actioner(GetFollowersAction))
+	//http.Handle("/followings", actioner(GetFollowingsAction))
 
 	//http.Handle("/sync-all-contacts", actioner(SyncAllContactsAction))
 	mux.Post("/sync-all-contacts", actionToFunc(SyncAllContactsAction))
@@ -111,6 +112,31 @@ func registerRoutes() {
 
 	//messages
 	http.HandleFunc("/MsgUpload", MsgUpload)
+
+	//New V1 apis
+	mux.Post("/post/add", actionToFunc(ctrl.AddPostAction))
+	mux.Get("/post/add", actionToFunc(ctrl.AddPostAction))
+	mux.Get("/post/get", actionToFunc(ctrl.GetSinglePostAction))
+	mux.Get("/post/stream", actionToFunc(ctrl.GetPostsStraemAction))
+	mux.Get("/post/delete", actionToFunc(ctrl.PostDeleteAction))
+	mux.Get("/post/update", actionToFunc(ctrl.PostUpdateAction))
+
+	mux.Get("/follow", actionToFunc(ctrl.FollowAction))
+	mux.Get("/unfollow", actionToFunc(ctrl.UnfollowAction))
+	mux.Get("/followers", actionToFunc(ctrl.GetFollowersListAction))
+	mux.Get("/following", actionToFunc(ctrl.GetFollowingsListAction))
+
+	//mux.Get("/likes", actionToFunc(ctrl.GetFollowingsListAction))
+	mux.Get("/like", actionToFunc(ctrl.PostAddLikeAction))
+	mux.Get("/unlike", actionToFunc(ctrl.PostRemoveLikeAction))
+	mux.Get("/likes", actionToFunc(ctrl.GetLikesAction))
+
+	mux.Get("/comments/add", actionToFunc(ctrl.PostAddCommentAction))
+	mux.Get("/comments/list", actionToFunc(ctrl.GetCommentsAction))
+
+
+
+
 
 
 	http.Handle("/", mux)

@@ -109,6 +109,7 @@ func main() {
 	go func() {
 		log.Println(http.ListenAndServe("localhost:6060", nil))
 	}()
+	UserMemoryStore.ReloadAll()
 	http.ListenAndServe(":5000", nil)
 	//runtime.MemProfileRecord{}.
 }

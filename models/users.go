@@ -2,6 +2,7 @@ package models
 
 import (
 	. "ms/sun/base"
+	"errors"
 )
 
 //dep use GetUserById2
@@ -40,6 +41,21 @@ func GetUserByUsername(username string) User {
 	return u[0]
 }
 
+func GetUserByUsername2(username string) (User ,error)  {
+	key := "user_" + username
+	if v, ok := cashe.Get(key); ok {
+		return v.(User) ,nil
+	}
+	var u []User
+	debug(u)
+	err := DB.Select(&u, "select * from user where UserName =? limit 1", username)
+	if err != nil || len(u)==0{
+		return User{},errors.New("error babe")
+	}
+	cashe.Set(key, u[0], 0)
+	return u[0],nil
+}
+
 func GetUserInfo(id int) UserInfo {
 	// key := "user_" + username
 	// if v, ok := cashe.Get(key); ok {
@@ -54,8 +70,9 @@ func GetUserInfo(id int) UserInfo {
 }
 
 func GetUserView(uid int) UserInlineView {
-	debug("GetUserView: ", uid)
-	u := GetUserById(uid)
+	//debug("GetUserView: ", uid)
+	//u := GetUserById(uid)
+	u := UserMemoryStore.Map[uid]
 	v := UserInlineView{}
 	v.FullName = u.FirstName + " " + u.LastName
 	v.UserId = u.Id

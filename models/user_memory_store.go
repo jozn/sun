@@ -2,7 +2,6 @@ package models
 
 import (
     . "ms/sun/base"
-    "sort"
     "sync"
     "ms/sun/ds"
 )
@@ -19,20 +18,18 @@ var UserMemoryStore memoryStoreImpl
 func init() {
     UserMemoryStore = memoryStoreImpl{}
     UserMemoryStore.Map = make(map[int]*userMemRow)
+    //UserMemoryStore.ReloadAll()
 }
 
 //+gen slice:"Where,Count,GroupBy[string]"
 type userMemRow struct {
     UserTable
-    SS                  string
     SessionId           [20]rune
-    //Followings []int
-    //Followings2 _followingTypeSorter //[]FollowingType
-    //Followings3 TwoArr //[]FollowingType
     Followings          *ds.IntList
     FollowingsRequested *ds.IntList
 
-    LikedPost           []int
+    LikedPost          *ds.IntList
+    //LikedPost2          []int
     RecentPosts         []int
     RecentActivities    []int
 }
@@ -43,10 +40,7 @@ func (db *memoryStoreImpl) ReloadAll(){
     db.Map = make(map[int]*userMemRow)
     db.ReloadAllUser()//must called first
     //go
-    //db.ReloadAllFollowings()
-    //db.ReloadAllFollowings2()
-    //db.ReloadAllFollowings3()
-    db.ReloadAllFollowings5()
+    db.ReloadAllFollowings()
     db.ReloadAllLikes()
 
 }
@@ -64,12 +58,11 @@ func (db *memoryStoreImpl) ReloadAllUser(){
         db.RWMutex.Lock()
         db.Map[u.Id] = &row
         db.RWMutex.Unlock()
-        //print(row.SS)
     }
 }
 
 
-func (db *memoryStoreImpl) ReloadAllFollowings5(){
+func (db *memoryStoreImpl) ReloadAllFollowings(){
     for _ ,r := range db.Map {
         r.Followings = ds.New()
         r.FollowingsRequested = ds.New()
@@ -102,7 +95,7 @@ func (db *memoryStoreImpl) ReloadAllFollowings5(){
 
 func (db *memoryStoreImpl) ReloadAllLikes(){
     for _ ,r := range db.Map {
-        r.LikedPost = make([]int,0)
+        r.LikedPost = ds.New()
     }
 
     var ls []Like
@@ -111,18 +104,28 @@ func (db *memoryStoreImpl) ReloadAllLikes(){
     for _ , l := range ls {
         _,ok :=db.Map[l.UserId]
         if ok {
-            db.Map[l.UserId].LikedPost = append(db.Map[l.UserId].LikedPost, l.PostId)
+            db.Map[l.UserId].LikedPost.Add(l.PostId)// = append(db.Map[l.UserId].LikedPost2, l.PostId)
         }
     }
 
     for _ ,r := range db.Map {
         if r.LikedPost != nil{
-            sort.Ints(r.LikedPost)
+            r.LikedPost.SortDesc()
         }
     }
 }
 
 ////////////////////////////// ////////////////////////////////////////
+func (db *memoryStoreImpl) GetForUser(UserId int) *userMemRow {
+    db.RLock()
+    u , ok :=  db.Map[UserId]
+    db.RUnlock()
+    if ok {
+        return  u
+    }
+    return nil
+}
+
 func (db *memoryStoreImpl) GetAllAsArray() []*userMemRow {
     rows:= make([]*userMemRow,0)
 
@@ -131,13 +134,53 @@ func (db *memoryStoreImpl) GetAllAsArray() []*userMemRow {
     }
     return rows
 }
+func (db *memoryStoreImpl) ReloadUser(UserId int) {
+    //_ , ok :=  db.Map[UserId]
+    u :=  db.GetForUser(UserId)
+    if u != nil {
+        var u2 UserTable
+        err := DB.Get(&u2, "select * from user where Id = ? ",UserId)
+        if err != nil{
+            //db.Lock()
+            //db.Map[UserId].UserTable = u
+             u.UserTable = u2
+            //db.Unlock()
+        }
+    }
+}
+
+
+
+//////////////////////// Likes - Post /////////////////////////////////
+
+func (db *memoryStoreImpl) AddPostLike(UserId, PostId int) {
+    s , ok :=  db.Map[UserId]
+    if ok {
+        if !s.LikedPost.BinaryContains(PostId){//don't duplicate
+            s.LikedPost.AddAndSort(PostId)
+        }
+        QueryReomePostLike(UserId,PostId)
+        QueryAddPostLike(UserId,PostId)
+    }
+}
+
+func (db *memoryStoreImpl) RemovePostLike(UserId, PostId int) {
+    s , ok :=  db.Map[UserId]
+    if ok {
+        s.LikedPost.RemoveAndSort(PostId)
+        QueryReomePostLike(UserId,PostId)
+    }
+}
+
 
 //////////////////////// Followings ///////////////////////////////////
 func (db *memoryStoreImpl) GetFollowingTypeForUsers(UserId, ReqFollowedUserId int) int {
     s , ok :=  db.Map[UserId]
     ftype:= 0
     if ok {
+        //debug("xx: ",s.Followings)
         if s.Followings.BinaryContains(ReqFollowedUserId){
+        //if s.Followings.Contains(ReqFollowedUserId){
             ftype = 1
         }else if s.FollowingsRequested.BinaryContains(ReqFollowedUserId) {
             ftype = 2
@@ -162,20 +205,57 @@ func (db *memoryStoreImpl) RemoveFollow(UserId, FollowedUserId int) {
     }
 }
 
-////////////////// Posts Functionalities /////////////////////
-func (db *memoryStoreImpl) AddPostLike(UserId, PostId int) {
-    s , ok :=  db.Map[UserId]
-    if ok {
-        _ =s
+
+//////////////// User Actions Counts ////////////////
+func (db *memoryStoreImpl) UpdateUserFollowingCounts(UserId int, cnt int  ) {
+    user  :=  db.GetForUser(UserId)
+    if user != nil {
+        user.UserCounts.FollowingCount += 1
+        QueryUpdateUserActionCounts(UserId,cnt,"FollowingCount")
     }
 }
 
-func (db *memoryStoreImpl) RemovePostLike(UserId, PostId int) {
-    s , ok :=  db.Map[UserId]
-    if ok {
-        _ =s
+func (db *memoryStoreImpl) UpdateUserFollowersCounts(UserId int, cnt int  ) {
+    user  :=  db.GetForUser(UserId)
+    if user != nil {
+        user.UserCounts.FollowingCount += 1
+        QueryUpdateUserActionCounts(UserId,cnt,"FollowersCount")
     }
 }
+
+func (db *memoryStoreImpl) UpdateUserPostsCounts(UserId int, cnt int  ) {
+    user  :=  db.GetForUser(UserId)
+    if user != nil {
+        user.UserCounts.FollowingCount += 1
+        QueryUpdateUserActionCounts(UserId,cnt,"PostsCount")
+    }
+}
+
+func (db *memoryStoreImpl) UpdateUserMediasCounts(UserId int, cnt int  ) {
+    user  :=  db.GetForUser(UserId)
+    if user != nil {
+        user.UserCounts.FollowingCount += 1
+        QueryUpdateUserActionCounts(UserId,cnt,"MediaCount")
+    }
+}
+
+func (db *memoryStoreImpl) UpdateUserLikesCounts(UserId int, cnt int  ) {
+    user  :=  db.GetForUser(UserId)
+    if user != nil {
+        user.UserCounts.FollowingCount += 1
+        QueryUpdateUserActionCounts(UserId,cnt,"LikesCount")
+    }
+}
+
+/*
+func (db *memoryStoreImpl) UpdateUserCommentsCounts(UserId int, cnt int  ) {
+    user  :=  db.GetForUser(UserId)
+    if user != nil {
+        user.UserCounts.FollowingCount += 1
+        QueryUpdateUserActionCounts(UserId,cnt,"LikesCount")
+    }
+}
+*/
 
 
 

@@ -26,8 +26,9 @@ type UserCounts struct {
 	FollowingCount int
 	PostsCount     int
 	MediaCount     int
-	LikesCount     int
+	LikesCount     int//unrelable
 	ResharedCount  int
+	CommentsCount  int//unrelable
 }
 
 type UserExtra struct {
@@ -36,6 +37,8 @@ type UserExtra struct {
 	CreatedTimestamp     int `json:"-"`
 	UpdatedTimestamp     int //`json:"-"`
 	LastLoginTimestamp   int
+	AppVersion          int
+
 }
 
 // +gen slice:"Where,GroupBy[string],DistinctBy,SortBy,Select[string]"

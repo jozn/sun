@@ -6,7 +6,8 @@ import (
 "ms/sun/base"
 )
 
-func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int, )  {
+///////////////////// Followings /////////////////////////////
+func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int )  {
     flm := FollowingListMember{}
     flm.FollowedUserId = FollowedUserId
     flm.UserId = UserId
@@ -17,6 +18,40 @@ func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int, )  {
     q := "replace into following_list_member ("+strings.Join(keys,",") +") values (" +strings.Join(values,",") +")"
 
     _,err:=base.DB.Exec(q)
+    if err !=nil {
+        devPrintn(err)
+    }
+}
+
+/////////////////////// Likes ////////////////////////
+func QueryAddPostLike(UserId, PostId int )  {
+    l := Like{}
+    l.UserId = UserId
+    l.PostId = PostId
+    l.CreatedTimestamp = helper.TimeNow()
+
+    keys,values :=helper.StructToFiledsRejectsEscape(&l,"Id")
+    q := "replace into likes ("+strings.Join(keys,",") +") values (" +strings.Join(values,",") +")"
+
+    _,err:=base.DB.Exec(q)
+    if err !=nil {
+        devPrintn(err)
+    }
+}
+
+func QueryReomePostLike(UserId, PostId int )  {
+    q := "DELETE FROM likes WHERE UserId = ? AND PostId = ?"
+    _,err:=base.DB.Exec(q, UserId ,PostId)
+    if err !=nil {
+        devPrintn(err)
+    }
+}
+
+///////////////////// User ///////////////////////////
+func QueryUpdateUserActionCounts(UserId,  CountDiff int, column string )  {
+    cnt := helper.IntToStr(CountDiff)
+    q := "UPDATE user SET "+ column + " = " + column + " + " + cnt  + " WHERE Id = ?"
+    _,err:=base.DB.Exec(q, UserId )
     if err !=nil {
         devPrintn(err)
     }

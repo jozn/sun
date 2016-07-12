@@ -2,15 +2,18 @@ package base
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
 	"time"
+	"ms/sun/helper"
+	"compress/gzip"
+	"fmt"
 )
 
 //parent action of all actions
 type Action struct {
+	Protocol BNCP
 	f         http.Handler //dep?
 	c         int
 	_bodyText string //dep? do we need bodRes?
@@ -33,7 +36,9 @@ type Action struct {
 //    @response['server_time'] = Time.now.to_i
 type BNCP struct {
 	Status     string
+	Error      string
 	Payload    *interface{}
+	Meta       string
 	ServerTime int
 	Version    int
 	ResTime    int64
@@ -45,6 +50,12 @@ type BNCP struct {
 func (c Action) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer recover()
 	t1 := time.Now()
+
+	//prot := BNCP{}
+	c.Protocol.Status = "ok"
+	c.Protocol.ServerTime = int(time.Now().Unix())
+	c.Protocol.Version = 1
+	//c.Protocol = prot
 
 	c.c = c.c + 1
 	c.Req = r
@@ -70,22 +81,26 @@ func (c Action) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// fmt.Fprintln(w, r.UserAgent(), c.c)
 		// panic("asd")
 	}
-	prot := BNCP{}
-	prot.Status = "ok"
-	prot.ServerTime = int(time.Now().Unix())
-	prot.Version = 1
-	prot.Payload = &c._payload
-	prot.ResTime = time.Now().Sub(t1).Nanoseconds() / 1e6 //ms
+	c.Protocol.Payload = &c._payload
+	c.Protocol.ResTime = time.Now().Sub(t1).Nanoseconds() / 1e6 //ms
 
 	// fmt.Fprintln(w, r.UserAgent(), c.c, i)
 	// fmt.Fprintln(*c.Res, c._bodyText) //[]byte(s))
 
 	//TODO :mereg with SendJson
-	b, err := json.Marshal(prot)
+	b, err := json.Marshal(c.Protocol)
 	if __DEV__ && err != nil {
 		log.Fatal("json Marshaling error in send json response: ", err)
 	}
-	fmt.Fprintln(*c.Res, string(b))
+	if len(b) > 1300 {//860: Akami cdn defualts
+		w.Header().Set("Content-Type","text/html")
+		w.Header().Set("Content-Encoding","gzip")
+		bgzip,_ := gzip.NewWriterLevel(*c.Res, gzip.BestSpeed)
+		bgzip.Write(b)
+		bgzip.Close()
+	}else {
+		fmt.Fprintln(*c.Res, string(b))
+	}
 }
 
 func (c *Action) IsUser() bool {
@@ -117,6 +132,17 @@ func (c *Action) SendText(s string) {
 	// fmt.Fprintln(*c.Res, s) //[]byte(s))
 	c._payload = s
 }
+
+func (c *Action) GetPage() int {
+	pageStr := c.Req.Form.Get("page")
+	return helper.StrToInt(pageStr,0)
+}
+
+func (c *Action) GetParamInt(param string, defulat int) int {
+	val := c.Req.Form.Get(param)
+	return helper.StrToInt(val,0)
+}
+
 
 func (c *Action) SendPalinText() {}
 func (c *Action) TurnOffGzip()   {}

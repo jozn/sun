@@ -6,6 +6,10 @@ import (
 	. "ms/sun/base"
 )
 
+var POST_TYPE_TEXT = 1
+var POST_TYPE_PHOTO = 2
+var POST_TYPE_VIDEO = 3
+
 func GetPostAndDetailes(posts []Post) []PostAndDetailes {
 	var viw []PostAndDetailes
 	// UserSlice
@@ -129,3 +133,63 @@ func GetMedias() {
 }
 
 /////////////
+
+//////////////////  New Apis   ///////////////////////////
+func AddTagsInPost(post Post) {
+	parser := TextParser{}
+	parser.Parse(post.Text)
+	for _, tag := range parser.Tags {
+		var dbTags []Tag
+		var dbTag Tag
+		DB.Select(&dbTags, "select * from tags where Name = ? ", tag)
+		if len(dbTags) == 0 { //not exist ,insert it
+			dbTag = Tag{}
+			dbTag.Name = tag
+			dbTag.CreatedTimestamp = now()
+			res, _ := DbInsertStruct(&dbTag, "tags")
+			tid, _ := res.LastInsertId()
+			dbTag.Id = int(tid)
+		} else {
+			dbTag = dbTags[0]
+		}
+
+		tagPost := TagPost{}
+		tagPost.TagId = dbTag.Id
+		tagPost.PostId = post.Id
+		tagPost.TypeId = post.TypeId
+		tagPost.CreatedTimestamp = now()
+
+		DbInsertStruct(&tagPost, "tags_posts")
+		//TODO increment dbTags.Count
+	}
+}
+
+func AddUserMentionedInPost(post Post) {
+
+}
+
+func PostToPostAndDetailes(post *Post) *PostAndDetailes {
+	//todo extract this to it's func
+	//debug(p.UserId)
+	v := PostAndDetailes{}
+	v.Post = *post
+	v.TypeName = TypeIdToName(post.TypeId)
+	v.Sender = GetUserView(post.UserId)
+	v.Comments = GetPostLastComments(post.Id)
+	v.Likes = GetPostLastLikes(post.Id)
+	SetPostImages(&v)
+	v.AmIlike = false
+
+	return &v
+}
+
+func PostsToPostsAndDetailes(posts []Post) []*PostAndDetailes {
+	var viw []*PostAndDetailes
+	// UserSlice
+	for _, p := range posts {
+		viw = append(viw, PostToPostAndDetailes(&p))
+	}
+	return viw
+}
+
+

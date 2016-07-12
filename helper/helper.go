@@ -23,6 +23,12 @@ func DebugPrintln(msgs ...interface{}) {
 	}
 }
 
+func DebugErr(err error) {
+	if true && err != nil {
+		fmt.Println(err)
+	}
+}
+
 func ToJson(structoo interface{}) string {
 	r, _ := json.Marshal(structoo)
 	return string(r)
