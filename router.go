@@ -3,7 +3,6 @@ package main
 import (
 	//		"ms/sun/fact"
 	. "ms/sun/actions"
-	"ms/sun/actions"
 	"ms/sun/fact"
 	"net/http"
 	//"github.com/drone/routes"
@@ -37,8 +36,8 @@ func registerRoutes() {
 
 	//http.Handle("/sync-all-contacts", actioner(SyncAllContactsAction))
 	mux.Post("/sync-all-contacts", actionToFunc(SyncAllContactsAction))
-	mux.Post("/sync-followings", actionToFunc(actions.SyncFollowingsAction))
-	mux.Get("/sync-followings", actionToFunc(actions.SyncFollowingsAction))
+	mux.Post("/sync-followings", actionToFunc(ctrl.SyncFollowingsAction))
+	mux.Get("/sync-followings", actionToFunc(ctrl.SyncFollowingsAction))
 
 	// http.Handle("/2", actioner(h2))
 	//	http.Handle("/hello", actioner(helo))
@@ -101,7 +100,7 @@ func registerRoutes() {
 	//phone dbs
 	http.Handle("/mf/contacts", actioner(fact.FactPhoneContacts))
 
-	http.Handle("/ping", actioner(PingAction))
+	http.Handle("/ping", actioner(ctrl.PingAction))
 
 	http.Handle("/i/msg", actionToFunc(SendSampleMesgTable))
 	http.Handle("/i/msg2", actionToFunc(SendSampleMesgTable2))
