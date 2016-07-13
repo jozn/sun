@@ -52,17 +52,6 @@ type Like struct {
     CreatedTime int
 }
 
-//Deprecated
-type Media struct {
-    Id          int
-    UserId      int
-    PostId      int
-    AlbumId     int
-    TypeId      int
-    CreatedTime int
-    Src         string
-}
-
 type Post struct {
 	Id            int
 	UserId        int
@@ -105,4 +94,15 @@ type TagPost struct {
     PostId      int
     TypeId      int // text? photo? video?
     CreatedTime int
+}
+
+//Deprecated
+type Media struct {
+    Id          int
+    UserId      int
+    PostId      int
+    AlbumId     int
+    TypeId      int
+    CreatedTime int
+    Src         string
 }

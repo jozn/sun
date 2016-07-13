@@ -3,6 +3,9 @@ package actions
 import (
     "ms/sun/base"
     "ms/sun/models"
+    "ms/sun/helper"
+    "net/http"
+    "fmt"
 )
 
 
@@ -26,3 +29,19 @@ func DBStruct(a *base.Action) base.AppErr   {
     a.SendJson(s)
     return nil
 }
+
+func DBStructsTojava(a *base.Action) base.AppErr   {
+    s := helper.DbStructToJava(models.UserInlineView{})
+    a.SendJson(s)
+    return nil
+}
+
+func DBStructsTojava2(w http.ResponseWriter, r *http.Request)  {
+    str:=""
+    str += helper.DbStructToJava(models.UserInlineView{})
+    //str += helper.DbStructToJava(models.CommentInlineInfo{})
+    //str += helper.DbStructToJava(models.PostAndDetailes{})
+
+    fmt.Fprint(w,str)
+}
+

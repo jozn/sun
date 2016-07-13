@@ -108,6 +108,8 @@ func registerRoutes() {
 	http.Handle("/i/play", actionToFunc(PlaySomething))
 	http.Handle("/i/store1", actionToFunc(MemoryStore1))
 	http.Handle("/i/db", actionToFunc(DBStruct))
+	http.Handle("/i/java2", actionToFunc(DBStructsTojava))
+	http.HandleFunc("/i/java", DBStructsTojava2)
 
 	//messages
 	http.HandleFunc("/MsgUpload", MsgUpload)

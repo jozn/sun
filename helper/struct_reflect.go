@@ -115,3 +115,33 @@ func StructValuesToMysqlEscape(values ...interface{} ) ([]string) {
 	}
 	return valuesEscaped
 }
+
+
+///////////////////////////////////////////////////
+
+func DbStructToJava(structRow interface{}) string{
+    _ , fileds := DeepFields(structRow)
+    refVal :=  reflect.ValueOf(structRow)
+    javaFilsdStr := ""
+    for _,field := range fileds {
+        f := refVal.FieldByName(field)
+        javaType := ""
+        switch f.Type().Kind() {
+        case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64,
+            reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+            javaType = "int"
+        case reflect.Float32, reflect.Float64 :
+            javaType = "float"
+        case reflect.Bool:
+            javaType = "boolean"
+        case reflect.String:
+            javaType = "String"
+        }
+        javaFilsdStr += " public " + javaType + " " +field + ";\n"
+    }
+
+    res := "public class V {\n"+javaFilsdStr+"\n}"
+    return res
+}
+
+
