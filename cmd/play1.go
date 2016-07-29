@@ -45,7 +45,7 @@ func HelloCmd(c *base.CmdAction) {
     //bu.UserId = 150
     //bu.IFollowType = int(time.Now().Unix())
     //bu.UserName = "ssssssssssss7777sssssss7"
-    //bu.AvatarSrc = "avatarataratar"
+    //bu.AvatarUrl = "avatarataratar"
     //s, _ := json.Marshal(bu)
     //com := base.Command{Name: "time", Data: string(s)}
     //res.Commands = append(res.Commands, com)

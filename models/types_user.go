@@ -36,21 +36,33 @@ type UserExtra struct {
     PrimaryFollowingList int
     CreatedTime          int `json:"-"`
     UpdatedTime          int //`json:"-"`
-    LastLoginTime        int
-    AppVersion           int
+
     LastPostTime         int
-    LastActivityTime     int
+    LastActionTime     int //post ,comment, like ,... === for activity in memmoery
+}
+
+type UserSession struct {
+    SessionUuid        string
+    DeviceUuid         string
+    AppVersion         int
+    LastLoginTime        int
+    LastActivityTime   int
+    LastIpAddress      string
+    LastWifiMacAddress string
+    LastNetworkType    string
 }
 
 // +gen slice:"Where,GroupBy[string],DistinctBy,SortBy,Select[string]"
 type User struct { //legacy switch to UserTable
 	UserTable
 }
+
 type UserTable struct {
 	UserBasic
 	UserPhone
 	UserSecurity
 	UserCounts
+    UserSession
 	UserExtra
 }
 
@@ -123,7 +135,7 @@ type UserPassword struct {
 //	PasswordHash         string `json:"-"`
 //	PasswordSalt         string `json:"-"`
 //	IsProfilePrivate     int
-//	AvatarSrc            string
+//	AvatarUrl            string
 //	CreatedTimestamp     int `json:"-"`
 //	UpdatedTimestamp     int //`json:"-"`
 //	FollowersCount     int

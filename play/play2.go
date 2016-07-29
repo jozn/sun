@@ -55,7 +55,7 @@ import (
 // 	}
 
 // 	user := GetUserById(c.UserId())
-// 	user.AvatarSrc = avatrBuilderPath(userIdS, ext, "%s")
+// 	user.AvatarUrl = avatrBuilderPath(userIdS, ext, "%s")
 // 	dbUpdateStruct(&user, "user")
 
 // 	c.SendJson(user)

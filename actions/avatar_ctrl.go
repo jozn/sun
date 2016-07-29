@@ -63,7 +63,7 @@ func UploadAvatarAction(c *Action) {
 	}
 
 	user := GetUserById(c.UserId())
-	user.AvatarSrc = avatrBuilderPath(userIdS, ext, "%s")
+	user.AvatarUrl = avatrBuilderPath(userIdS, ext, "%s")
 	DbUpdateStruct(&user, "user")
 
 	c.SendJson(user)
@@ -72,7 +72,7 @@ func UploadAvatarAction(c *Action) {
 
 func RemoveAvatarAction(c *Action) {
 	user := GetUserById(c.UserId())
-	user.AvatarSrc = ""
+	user.AvatarUrl = ""
 	DbUpdateStruct(&user, "user")
 
 	c.SendJson(user)

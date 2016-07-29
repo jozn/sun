@@ -3,12 +3,12 @@ package base
 import (
 	"encoding/json"
 	"log"
-	"math/rand"
 	"net/http"
 	"time"
 	"ms/sun/helper"
 	"compress/gzip"
 	"fmt"
+    "ms/sun/constants"
 )
 
 //parent action of all actions
@@ -24,16 +24,10 @@ type Action struct {
 	Req       *http.Request
 	Res       *http.ResponseWriter
 	Ver         int
+    _userId int
 	// UserId    int
 }
 
-//from old EM implmn
-//    @response['version'] = '0.1'
-//    @response['status'] ||= RESPONSE_STATUS[:ok]
-//    @response['payload'] = text
-//    @response['connection_id'] = @client[:ws].__id__
-//    @response['request_id'] = @request['request_id']
-//    @response['server_time'] = Time.now.to_i
 type BNCP struct {
 	Status     string
 	Error      string
@@ -48,7 +42,19 @@ type BNCP struct {
 //send a copy(not pointer*) of Actions
 //c standfor controller
 func (c Action) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	defer recover()
+	//defer recover()
+    defer func() {
+        e := recover()
+        if e != nil {
+            if e == constants.HttpIsNotUser {
+                c.Protocol.Error = "باید وارد شوید."
+                c.Protocol.Status = "Error"
+                c.SendJson(nil)
+                setResponseBody(&c,w,time.Now())
+            }
+        }
+
+    }()
 	t1 := time.Now()
 
 	//prot := BNCP{}
@@ -71,36 +77,44 @@ func (c Action) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			c.Fn(&c)
 		}
 	} else { //browser CROS check
-//		devPrintn("callsed OPTIONS http request")
 		c._payload = "OPTIONS"
 	}
 
-	// i := 5
-	// w.Write([]byte(c.c))
-	if rand.Intn(2) == 1 || true {
-		// fmt.Fprintln(w, r.UserAgent(), c.c)
+	if  false {
+		 fmt.Println(r.RemoteAddr)
+		 fmt.Println(r.RequestURI)
+		 fmt.Println(r.Referer())
+		 fmt.Println(r.Host)
+		 fmt.Println(r.Header)
+		 fmt.Println(r.Method)
+		 fmt.Println(r.UserAgent())
 		// panic("asd")
 	}
-	c.Protocol.Payload = &c._payload
-	c.Protocol.ResTime = time.Now().Sub(t1).Nanoseconds() / 1e6 //ms
+    setResponseBody(&c,w,t1)
+}
 
-	// fmt.Fprintln(w, r.UserAgent(), c.c, i)
-	// fmt.Fprintln(*c.Res, c._bodyText) //[]byte(s))
+func setResponseBody(c *Action ,w http.ResponseWriter , t1 time.Time) {
+    c.Protocol.Payload = &c._payload
+    c.Protocol.ResTime = time.Now().Sub(t1).Nanoseconds() / 1e6 //ms
 
-	//TODO :mereg with SendJson
-	b, err := json.Marshal(c.Protocol)
-	if __DEV__ && err != nil {
-		log.Fatal("json Marshaling error in send json response: ", err)
-	}
-	if len(b) > 1300 {//860: Akami cdn defualts
-		w.Header().Set("Content-Type","text/html")
-		w.Header().Set("Content-Encoding","gzip")
-		bgzip,_ := gzip.NewWriterLevel(*c.Res, gzip.BestSpeed)
-		bgzip.Write(b)
-		bgzip.Close()
-	}else {
-		fmt.Fprintln(*c.Res, string(b))
-	}
+    // fmt.Fprintln(w, r.UserAgent(), c.c, i)
+    // fmt.Fprintln(*c.Res, c._bodyText) //[]byte(s))
+
+    //TODO :mereg with SendJson
+    b, err := json.Marshal(c.Protocol)
+    if __DEV__ && err != nil {
+        log.Fatal("json Marshaling error in send json response: ", err)
+    }
+    if len(b) > 1300 {//860: Akami cdn defualts
+        w.Header().Set("Content-Type","text/html")
+        w.Header().Set("Content-Encoding","gzip")
+        bgzip,_ := gzip.NewWriterLevel(*c.Res, gzip.BestSpeed)
+        bgzip.Write(b)
+        bgzip.Close()
+    }else {
+        fmt.Fprintln(*c.Res, string(b))
+    }
+
 }
 
 func (c *Action) IsUser() bool {
@@ -108,11 +122,16 @@ func (c *Action) IsUser() bool {
 }
 
 func (c *Action) UserId() int {
-	return 6
+	return c._userId
+}
+
+func (c *Action) SetUserId(UserId int)  {
+    c._userId = UserId
 }
 
 func (c *Action) MustUser() {
 	//if not user panic
+
 }
 
 func (c *Action) MustPost() {
@@ -120,12 +139,6 @@ func (c *Action) MustPost() {
 }
 func (c *Action) SendJson(res interface{}) {
 	c._payload = res
-	// b, err := json.Marshal(stuc)
-	// if __DEV__ && err != nil {
-	// 	log.Fatal("json Marshaling error in send json response: ", err)
-	// }
-	// c._bodyText = string(b)
-	// c.SendText(string(b))
 }
 
 func (c *Action) SendText(s string) {

@@ -24,7 +24,7 @@ func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int )  {
 }
 
 /////////////////////// Likes ////////////////////////
-func QueryAddPostLike(UserId, PostId int )  {
+func QueryAddPostLike(UserId, PostId int ) error {
     l := Like{}
     l.UserId = UserId
     l.PostId = PostId
@@ -37,15 +37,56 @@ func QueryAddPostLike(UserId, PostId int )  {
     if err !=nil {
         devPrintn(err)
     }
+    return err
 }
 
-func QueryReomePostLike(UserId, PostId int )  {
+func QueryReomePostLike(UserId, PostId int ) error {
     q := "DELETE FROM likes WHERE UserId = ? AND PostId = ?"
     _,err:=base.DB.Exec(q, UserId ,PostId)
     if err !=nil {
         devPrintn(err)
     }
+    return err
 }
+
+func QueryIncerPostLikesCount(PostId,  CountDiff int )  {
+    cnt := helper.IntToStr(CountDiff)
+    q := "UPDATE post SET LikesCount = LikesCount + " + cnt  + " WHERE Id = ?"
+    _,err:=base.DB.Exec(q, PostId )
+    if err !=nil {
+        devPrintn(err)
+    }
+}
+
+func QueryDecerPostLikesCount(PostId,  CountDiff int )  {
+    cnt := helper.IntToStr(CountDiff)
+    q := "UPDATE post SET LikesCount = LikesCount - " + cnt  + " WHERE Id = ?"
+    _,err:=base.DB.Exec(q, PostId )
+    if err !=nil {
+        devPrintn(err)
+    }
+}
+
+//////////////////// Comments ///////////////////////
+
+func QueryIncerPostCommentsCount(PostId,  CountDiff int )  {
+    cnt := helper.IntToStr(CountDiff)
+    q := "UPDATE post SET CommentsCount = CommentsCount + " + cnt  + " WHERE Id = ?"
+    _,err:=base.DB.Exec(q, PostId )
+    if err !=nil {
+        devPrintn(err)
+    }
+}
+
+func QueryDecerPostCommentsCount(PostId,  CountDiff int )  {
+    cnt := helper.IntToStr(CountDiff)
+    q := "UPDATE post SET CommentsCount = CommentsCount - " + cnt  + " WHERE Id = ?"
+    _,err:=base.DB.Exec(q, PostId )
+    if err !=nil {
+        devPrintn(err)
+    }
+}
+
 
 ///////////////////// User ///////////////////////////
 func QueryUpdateUserActionCounts(UserId,  CountDiff int, column string )  {
@@ -55,6 +96,19 @@ func QueryUpdateUserActionCounts(UserId,  CountDiff int, column string )  {
     if err !=nil {
         devPrintn(err)
     }
+}
+
+func QueryUpdateSessionLastActivitiesOfUsers(UserIds []int) {
+    if len(UserIds) == 0{
+        return
+    }
+
+    q := "UPDATE user SET LastActivityTime = "+ helper.IntToStr(helper.TimeNow()) + " WHERE Id in (" + helper.IntsToSqlIn(UserIds) + ")  "
+    _,err:=base.DB.Exec(q)
+    if err !=nil {
+        devPrintn(err)
+    }
+    helper.DebugPrintln(q)
 }
 
 

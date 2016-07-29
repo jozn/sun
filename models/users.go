@@ -77,6 +77,6 @@ func GetUserView(uid int) UserInlineView {
 	v.FullName = u.FirstName + " " + u.LastName
 	v.UserId = u.Id
 	v.UserName = u.UserName
-	v.AvatarSrc = u.AvatarSrc
+	v.AvatarUrl = u.AvatarUrl
 	return v
 }

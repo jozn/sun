@@ -53,7 +53,7 @@ type UserInlineView struct {
 	UserId    int
 	UserName  string
 	FullName  string
-	AvatarSrc string
+	AvatarUrl string
 }
 
 type UserInlineFollowView struct {

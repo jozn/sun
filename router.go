@@ -59,11 +59,13 @@ func registerRoutes() {
 	//	http.Handle("/fact/post1", actioner(factPost1))
 	//	http.Handle("/fact/post2", actioner(factPost2))
 	//	http.Handle("/fact/like1", actioner(factLike1))
-	//	http.Handle("/fact/like2", actioner(factLike2))
+		http.Handle("/fact/like2", actioner(fact.FactLike2))
+		http.Handle("/fact/like3", actioner(fact.FactLike3))
 	//	http.Handle("/fact/comment1", actioner(factComment1))
 	http.Handle("/fact/follow1", actioner(fact.FactFollow1))
 	http.Handle("/fact/follow2", actioner(fact.FactFollow2))
 	// http.Handle("/fact/comment1", actioner(factC))
+	 http.Handle("/fact/comment2", actioner(fact.FactComment2))
 
 	//	http.Handle("/fact/p1", actioner(factPlay1))
 	//	http.Handle("/fact/p2", actioner(factPlay2))
@@ -133,6 +135,7 @@ func registerRoutes() {
 	mux.Get("/likes", actionToFunc(ctrl.GetLikesAction))
 
 	mux.Get("/comments/add", actionToFunc(ctrl.PostAddCommentAction))
+	mux.Post("/comments/add", actionToFunc(ctrl.PostAddCommentAction))
 	mux.Get("/comments/list", actionToFunc(ctrl.GetCommentsAction))
 
 

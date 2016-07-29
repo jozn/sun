@@ -4,6 +4,7 @@ import (
     . "ms/sun/base"
     "sync"
     "ms/sun/ds"
+    "ms/sun/helper"
 )
 
 type memoryStoreImpl struct {
@@ -51,6 +52,9 @@ func (db *memoryStoreImpl) ReloadAllUser(){
     err := DB.Select(&us, "select * from user")
     //fmt.Println(us)
     //cashe.Set(key, u[0], 0)
+    if err != nil {
+        helper.DebugErr(err)
+    }
     _ = err
     for _ ,u := range us {
         row := userMemRow{}
@@ -159,8 +163,11 @@ func (db *memoryStoreImpl) AddPostLike(UserId, PostId int) {
         if !s.LikedPost.BinaryContains(PostId){//don't duplicate
             s.LikedPost.AddAndSort(PostId)
         }
-        QueryReomePostLike(UserId,PostId)
-        QueryAddPostLike(UserId,PostId)
+        //QueryReomePostLike(UserId,PostId)
+        err:=QueryAddPostLike(UserId,PostId)
+        if err == nil{
+            QueryIncerPostLikesCount(PostId,1)
+        }
     }
 }
 
@@ -168,7 +175,10 @@ func (db *memoryStoreImpl) RemovePostLike(UserId, PostId int) {
     s , ok :=  db.Map[UserId]
     if ok {
         s.LikedPost.RemoveAndSort(PostId)
-        QueryReomePostLike(UserId,PostId)
+        err:=QueryReomePostLike(UserId,PostId)
+        if err == nil{
+            QueryDecerPostLikesCount(PostId,1)
+        }
     }
 }
 
@@ -245,6 +255,36 @@ func (db *memoryStoreImpl) UpdateUserLikesCounts(UserId int, cnt int  ) {
         user.UserCounts.FollowingCount += 1
         QueryUpdateUserActionCounts(UserId,cnt,"LikesCount")
     }
+}
+
+
+//////////////////////// Session ///////////////////////////////
+func (db *memoryStoreImpl) TryLogin(PhoneEmail, PassWord string) {
+
+}
+
+func (db *memoryStoreImpl) IsUserSession(UserId int, SessionUuid string) bool{
+    if UserId < 1 || SessionUuid == "" {
+        return false
+    }
+
+    user  :=  db.GetForUser(UserId)
+    if user != nil {
+        if user.SessionUuid == SessionUuid {
+            return true
+        }
+    }
+    return false
+}
+
+func (db *memoryStoreImpl) IsUserSessionAndUpdateActivity(UserId int, SessionUuid string) bool{
+    user  :=  db.GetForUser(UserId)
+    is := db.IsUserSession(UserId , SessionUuid)
+    if is {
+        user.LastActivityTime = helper.TimeNow()
+        PeriodaclyUpdateLastActivityOfUser(UserId)
+    }
+    return is
 }
 
 /*

@@ -67,19 +67,6 @@ type Post struct {
 	CreatedTime   int
 }
 
-type Session struct {
-    Id                 int
-    UserId             int
-    SessionUuid        string
-    ClientUuid         string
-    DeviceUuid         string
-    LastActivityTime   int
-    LastIpAddress      string
-    LastWifiMacAddress string
-    LastNetworkType    string
-    CreatedTime        int
-}
-
 type Tag struct {
     Id          int
     Name        string
@@ -95,6 +82,22 @@ type TagPost struct {
     TypeId      int // text? photo? video?
     CreatedTime int
 }
+
+
+//not used in this version but maybe for futuer versions
+type Session struct {
+    Id                 int
+    UserId             int
+    SessionUuid        string
+    ClientUuid         string
+    DeviceUuid         string
+    LastActivityTime   int
+    LastIpAddress      string
+    LastWifiMacAddress string
+    LastNetworkType    string
+    CreatedTime        int
+}
+
 
 //Deprecated
 type Media struct {
