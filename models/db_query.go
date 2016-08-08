@@ -91,7 +91,12 @@ func QueryDecerPostCommentsCount(PostId,  CountDiff int )  {
 ///////////////////// User ///////////////////////////
 func QueryUpdateUserActionCounts(UserId,  CountDiff int, column string )  {
     cnt := helper.IntToStr(CountDiff)
-    q := "UPDATE user SET "+ column + " = " + column + " + " + cnt  + " WHERE Id = ?"
+    q:=""
+    if CountDiff >=0  {
+        q = "UPDATE user SET "+ column + " = " + column + " + " + cnt  + " WHERE Id = ?"
+    }else {
+        q = "UPDATE user SET "+ column + " = " + column + " - " + cnt  + " WHERE Id = ?"
+    }
     _,err:=base.DB.Exec(q, UserId )
     if err !=nil {
         devPrintn(err)

@@ -122,5 +122,61 @@ func GetPostsStraemAction(c *base.Action) base.AppErr {
     return nil
 }
 
+func GetPostsLatestAction(c *base.Action) base.AppErr {
+    laststr := c.Req.Form.Get("last")//last that have
+    pagestr := c.Req.Form.Get("page")
+    last:= helper.StrToInt(laststr,0)
+    page:= helper.StrToInt(pagestr,0)
+    _ = last; _ = page
+
+    // dbIns(len(fids))e
+    sql := "select * from post  order by Id Desc limit 100 "
+
+
+    var rs []models.Post
+    base.DB.Select(&rs, sql)
+
+    view:= models.PostsToPostsAndDetailes(rs)
+    c.SendJson(view)
+    return nil
+}
+
+//////////////// For Profile ///////////////////////
+type ProfileRespnse struct  {
+    User models.UserTable
+    Posts []*models.PostAndDetailes
+
+}
+
+func GetPostsForProfileAction(c *base.Action) base.AppErr {
+    laststr := c.Req.Form.Get("last")//last that have
+    pagestr := c.Req.Form.Get("page")
+    last:= helper.StrToInt(laststr,0)
+    page:= helper.StrToInt(pagestr,0)
+    _ = last; _ = page
+
+    profileId := c.GetParamInt("profile_id",0)
+    mem:=models.UserMemoryStore.GetForUser(profileId)
+
+    if mem == nil {
+        c.Protocol.Error = "NOT FOUND"
+        c.Protocol.Status = "ERROR"
+        return nil
+    }
+    u := mem.UserTable
+
+    sql := "select * from post where UserId =" + helper.IntToStr(profileId) + " order by Id Desc limit 100 "
+
+    var rs []models.Post
+    base.DB.Select(&rs, sql)
+
+    view:= models.PostsToPostsAndDetailes(rs)
+    res:= ProfileRespnse{}
+    res.Posts = view
+    res.User = u
+    c.SendJson(res)
+    return nil
+}
+
 
 

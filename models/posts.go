@@ -4,6 +4,8 @@ import (
 	// "encoding/json"
 	// "fmt"
 	. "ms/sun/base"
+    "ms/sun/helper"
+    "ms/sun/base"
 )
 
 var POST_TYPE_TEXT = 1
@@ -190,6 +192,21 @@ func PostsToPostsAndDetailes(posts []Post) []*PostAndDetailes {
 		viw = append(viw, PostToPostAndDetailes(&p))
 	}
 	return viw
+}
+
+/////////// From version 0.4 /////////////
+
+func AddNewPostToDbAndItsMeta(post Post) {
+    post.CreatedTime = helper.TimeNow()
+    base.DbInsertStruct(&post,"post")
+    UserMemoryStore.UpdateUserPostsCounts(post.UserId,1)
+}
+
+func DeletePostToDbAndItsMeta(post Post) {
+
+
+    UserMemoryStore.UpdateUserFollowingCounts(post.UserId,-1)
+
 }
 
 

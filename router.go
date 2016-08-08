@@ -97,6 +97,8 @@ func registerRoutes() {
 	http.Handle("/f/msg", actioner(fact.ChatMsgFact1))
 	http.Handle("/f/gm", actioner(fact.GroupMemFact1))
 	http.Handle("/f/ginfo", actioner(fact.GroupInfoFact1))
+	http.Handle("/f/1", actioner(fact.Run1))
+	http.Handle("/f/2", actioner(fact.Run2))
 	//	http.Handle("/f/all_chat", actioner(fact.ChatFact))
 
 	//phone dbs
@@ -121,6 +123,7 @@ func registerRoutes() {
 	mux.Get("/post/add", actionToFunc(ctrl.AddPostAction))
 	mux.Get("/post/get", actionToFunc(ctrl.GetSinglePostAction))
 	mux.Get("/post/stream", actionToFunc(ctrl.GetPostsStraemAction))
+	mux.Get("/post/latest", actionToFunc(ctrl.GetPostsLatestAction))
 	mux.Get("/post/delete", actionToFunc(ctrl.PostDeleteAction))
 	mux.Get("/post/update", actionToFunc(ctrl.PostUpdateAction))
 
@@ -142,6 +145,7 @@ func registerRoutes() {
 	mux.Post("/session/info", actionToFunc(ctrl.SessionGetUserInfo))
 	mux.Get("/session/info", actionToFunc(ctrl.SessionGetUserInfo))
 
+    mux.Get("/profile/all", actionToFunc(ctrl.GetPostsForProfileAction))
 
 
 	http.Handle("/", mux)

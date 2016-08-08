@@ -57,8 +57,11 @@ type Post struct {
 	UserId        int
 	TypeId        int
 	Text          string
+
 	MediaUrl      string
 	MediaServerId int `json:"-"`
+    Width int
+    Height int
 	FormatedText  string
 	SharedTo      int
 	HasTag        bool

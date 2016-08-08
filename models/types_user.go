@@ -9,6 +9,8 @@ type UserBasic struct {
 	AvatarSrc        string //dep
 	AvatarUrl        string
 	IsProfilePrivate int
+    About        string
+
 }
 
 type UserPhone struct {
