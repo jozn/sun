@@ -8,6 +8,10 @@ import (
     "math/rand"
     "log"
     "ms/sun/helper"
+    "ms/sun/base"
+    "time"
+    "fmt"
+    "ms/sun/shared"
 )
 
 func FactPosts() {
@@ -67,4 +71,19 @@ func randImage() (string, int,int) {
 
     return fn[2:], b.X , b.Y
 
+}
+
+func FactUserAvatars(c *base.Action) {
+    dir :="./upload/_avatars"
+    imageFiles, err := ioutil.ReadDir(dir)
+    if err != nil {
+        log.Fatal(err)
+    }
+    fn := "./upload/_avatars" + "/" + imageFiles[rand.Intn(len(imageFiles))].Name()
+
+    userAvatr := shared.NewAvatarFileName(rand.Intn(80)+1)
+    t1:=time.Now().UnixNano()
+    helper.ImageCropSquerThumb(fn,userAvatr.Path,userAvatr.FileName, []int{50,100,200,400})
+    t := (time.Now().UnixNano() - t1)/ 1e6
+    fmt.Println("time for avatar gen:",t)
 }

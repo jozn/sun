@@ -97,8 +97,10 @@ func registerRoutes() {
 	http.Handle("/f/msg", actioner(fact.ChatMsgFact1))
 	http.Handle("/f/gm", actioner(fact.GroupMemFact1))
 	http.Handle("/f/ginfo", actioner(fact.GroupInfoFact1))
+
 	http.Handle("/f/1", actioner(fact.Run1))
 	http.Handle("/f/2", actioner(fact.Run2))
+	http.Handle("/fact/avatar", actioner(fact.FactUserAvatars))
 	//	http.Handle("/f/all_chat", actioner(fact.ChatFact))
 
 	//phone dbs

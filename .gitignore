@@ -23,10 +23,12 @@ upload/
 *.exe
 *.exe;
 play/img/*
-play/*.jpg
-play/*.jpeg
-play/*.png
-play/*.zip
+play/**/*.jpg
+play/**/*.jpeg
+play/**/*.png
+play/**/*.zip
+play/**/*.exe
+play/**/*.svg
 public/
 /public/
 /upload
