@@ -10,7 +10,6 @@ import (
 	. "ms/sun/models"
 	"strconv"
 	"time"
-    "ms/sun/helper"
 )
 
 func FactPost1(c *Action) {
@@ -95,49 +94,5 @@ func FactComment1(c *Action) {
 	u.Text = factRnddStr(15)
 	u.CreatedTime = int(time.Now().Unix()) - rand.Intn(50000)
 	DbInsertStruct(&u, "comments")
-
-}
-
-func FactComment2(c *Action) {
-    print("factoring like+comment\n")
-    // u.UserId = rand.Intn(50) + 1
-    // u.PostId = rand.Intn(450) + 1
-    UserId := rand.Intn(_factLastUserId()) + 1
-    PostId := rand.Intn(_factLastPostId()) + 1
-    Text := helper.FactRandStrEmoji(20,true)
-    co :=AddNewComment(UserId,PostId,Text)
-    c.SendJson(co)
-
-}
-
-func FactLike2(c *Action) {
-	print("factoring likes post\n")
-	//COUNT = 50
-	l := Like{}
-	l.PostId = rand.Intn(500) + 1
-	l.UserId = rand.Intn(80) + 1
-	l.CreatedTime = now()
-	DbInsertStruct(&l, "likes")
-}
-
-func FactLike3(c *Action) {
-    UserMemoryStore.AddPostLike(rand.Intn(80)+1, rand.Intn(500)+1)
-}
-
-func _factLastPostId() int {
-	var ps []Post
-	DB.Select(&ps, "select * from post order by Id DESC limit 2 ")
-	p := ps[0]
-
-	return p.Id
-
-}
-
-func _factLastUserId() int {
-	var ps []User
-	DB.Select(&ps, "select * from user order by Id DESC limit 2 ")
-	p := ps[0]
-
-	return p.Id
 
 }

@@ -16,6 +16,9 @@ import (
 
 const NUM_OF_USERS  = 80
 
+func FactPost(c *base.Action) {
+    FactPosts()
+}
 func FactPosts() {
     p := models.Post{}
     p.TypeId = 1
@@ -110,3 +113,49 @@ func FactUnFollow(c *base.Action) {
 }
 
 
+func FactComment(c *base.Action) {
+    print("factoring like+comment\n")
+    // u.UserId = rand.Intn(50) + 1
+    // u.PostId = rand.Intn(450) + 1
+    UserId := rand.Intn(_factLastUserId()) + 1
+    PostId := rand.Intn(_factLastPostId()) + 1
+    n:=rand.Intn(50)+1
+    Text := helper.FactRandStrEmoji(n,true)
+    co :=models.AddNewComment(UserId,PostId,Text)
+    c.SendJson(co)
+
+}
+
+
+
+func FactLike(c *base.Action) {
+    models.UserMemoryStore.AddPostLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
+}
+
+func _factLastPostId() int {
+    var ps []models.Post
+    base.DB.Select(&ps, "select * from post order by Id DESC limit 2 ")
+    p := ps[0]
+
+    return p.Id
+
+}
+
+func _factLastUserId() int {
+    var ps []models.User
+    base.DB.Select(&ps, "select * from user order by Id DESC limit 2 ")
+    p := ps[0]
+
+    return p.Id
+
+}
+
+func FactLike2(c *base.Action) {
+    print("factoring likes post\n")
+    //COUNT = 50
+    l := models.Like{}
+    l.PostId = rand.Intn(500) + 1
+    l.UserId = rand.Intn(80) + 1
+    l.CreatedTime = now()
+    base.DbInsertStruct(&l, "likes")
+}

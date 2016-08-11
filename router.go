@@ -60,12 +60,10 @@ func registerRoutes() {
 	//	http.Handle("/fact/post2", actioner(factPost2))
 	//	http.Handle("/fact/like1", actioner(factLike1))
 		http.Handle("/fact/like2", actioner(fact.FactLike2))
-		http.Handle("/fact/like3", actioner(fact.FactLike3))
 	//	http.Handle("/fact/comment1", actioner(factComment1))
 	http.Handle("/fact/follow1", actioner(fact.FactFollow1))
 	http.Handle("/fact/follow2", actioner(fact.FactFollow2))
 	// http.Handle("/fact/comment1", actioner(factC))
-	 http.Handle("/fact/comment2", actioner(fact.FactComment2))
 
 	//	http.Handle("/fact/p1", actioner(factPlay1))
 	//	http.Handle("/fact/p2", actioner(factPlay2))
@@ -115,10 +113,15 @@ func registerRoutes() {
 	http.Handle("/i/java2", actionToFunc(DBStructsTojava))
 	http.HandleFunc("/i/java", DBStructsTojava2)
 
-    ////////////// New Facts /////////////////
+    ////////////// New Facts from v0.4 /////////////////
     http.Handle("/fact/follow", actioner(fact.FactFollow))
     http.Handle("/fact/unfollow", actioner(fact.FactUnFollow))
     http.Handle("/fact/avatar", actioner(fact.FactUserAvatars))
+    http.Handle("/fact/like", actioner(fact.FactLike))
+    http.Handle("/fact/comment", actioner(fact.FactComment))
+    http.Handle("/fact/post", actioner(fact.FactPost))
+
+
 
 
     //messages
