@@ -25,7 +25,7 @@ func AddNewComment(UserId, PostId int, Text string) Comment  {
 
 func RemoveComment(UserId, PostId, CommentId int) bool {
     q := "DELETE FROM comments WHERE UserId = ? AND PostId = ? AND Id = ?"
-    res,err:= base.DB.DB.Exec(q, UserId, PostId, CommentId)
+    res,err:= base.DbExecute(q, UserId, PostId, CommentId)
 
     removed:=false
     if err == nil {

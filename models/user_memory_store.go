@@ -179,6 +179,16 @@ func (db *memoryStoreImpl) AddPostLike(UserId, PostId int) {
     }
 }
 
+func (db *memoryStoreImpl) AmILikePost(UserId, PostId int) bool {
+    s  :=  db.GetForUser(UserId)
+    if s != nil {
+        if s.LikedPost.BinaryContains(PostId){
+            return true
+        }
+    }
+    return false
+}
+
 func (db *memoryStoreImpl) RemovePostLike(UserId, PostId int) {
     s , ok :=  db.Map[UserId]
     if ok {

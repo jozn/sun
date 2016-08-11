@@ -38,15 +38,19 @@ type LikelineInfo struct {
 	UserInlineInfo
 }
 
+/*
 type UserMajorInfoMe struct {
 	User
 	WithMe
 }
+*/
 
+/*
 type WithMe struct {
 	User
 	AmIFollowing bool
 }
+*/
 
 type UserInlineView struct {
 	// User
@@ -69,10 +73,10 @@ type UserInlineFollowView struct {
 //for comments and mini-likes
 //dep :use UserView
 //dep
-type Avatar struct {
+/*type Avatar struct {
 	Size int
 	Src  string
-}
+}*/
 
 type UserInlineInfo struct {
 	UserId   int
@@ -80,6 +84,7 @@ type UserInlineInfo struct {
 	FullName string
 	// Avatars Avatars
 }
+/*
 
 type ViewUser struct {
 	*User
@@ -93,6 +98,7 @@ type Play1 struct {
 	Session
 	SEEEE *Session
 }
+*/
 
 type ProfileView struct {
 	User         User

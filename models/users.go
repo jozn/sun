@@ -80,3 +80,12 @@ func GetUserView(uid int) UserInlineView {
 	v.AvatarUrl = u.AvatarUrl
 	return v
 }
+
+func GetUserViewV2(uid int) (*UserInlineView,error) {
+    u := UserMemoryStore.GetUserTableForUser(uid)
+    if u != nil {
+        return u.ToUserInlineView() , nil
+    }
+    return &UserInlineView{}, errors.New("User NOT Fund")
+}
+

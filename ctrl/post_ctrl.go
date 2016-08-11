@@ -9,8 +9,8 @@ import (
 //psost types: 1:text 2: media/photo
 
 func AddPostAction(c *base.Action) base.AppErr {
-    c.MustUser()
-    //c.MustPost()
+    MustBeUserAndUpdate(c)
+
     txt := c.Req.Form.Get("text")
 
     post := models.Post{}
@@ -50,32 +50,21 @@ func GetSinglePostAction(c *base.Action) base.AppErr {
 }
 
 func PostDeleteAction(c *base.Action) base.AppErr {
+    MustBeUserAndUpdate(c)
+
     idstr := c.Req.Form.Get("post_id")
     id:= helper.StrToInt(idstr,0)
     if id < 1{
         return nil
     }
 
-    var post models.Post
-    err:= base.DB.Get(&post, "select * from post where Id = ? ", id)
-    if err != nil{
-        return nil
-    }
-
-
-    if post.UserId != c.UserId() {
-        return  nil
-    } else {
-        base.DB.Exec("delete from post where Id = ? limit 1 ", post.Id)
-        base.DB.Exec("delete from likes where PostId = ? And UserId = ? ", post.Id , post.UserId)
-        base.DB.Exec("delete from comments where PostId = ? And UserId = ? ", post.Id , post.UserId)
-        //todo delete from more
-    }
+    models.DeletePost(c.UserId(),id)
 
     return nil
 }
 
 func PostUpdateAction(c *base.Action) base.AppErr {
+    MustBeUserAndUpdate(c)
     idstr := c.Req.Form.Get("post_id")
     text := c.Req.Form.Get("text")
     id:= helper.StrToInt(idstr,0)
@@ -119,17 +108,21 @@ func GetPostsStraemAction(c *base.Action) base.AppErr {
     var rs []models.Post
     base.DB.Select(&rs, sql)
 
-    view:= models.PostsToPostsAndDetailes(rs)
+    view:= models.PostsToPostsAndDetailesV1(rs,uid)
     c.SendJson(view)
     return nil
 }
 
 func GetPostsLatestAction(c *base.Action) base.AppErr {
+    UpdateSessionActivityIfUser(c)
+
     laststr := c.Req.Form.Get("last")//last that have
     pagestr := c.Req.Form.Get("page")
     last:= helper.StrToInt(laststr,0)
     page:= helper.StrToInt(pagestr,0)
     _ = last; _ = page
+
+    uid := c.UserId()
 
     // dbIns(len(fids))e
     sql := "select * from post  order by Id Desc limit 100 "
@@ -138,7 +131,7 @@ func GetPostsLatestAction(c *base.Action) base.AppErr {
     var rs []models.Post
     base.DB.Select(&rs, sql)
 
-    view:= models.PostsToPostsAndDetailes(rs)
+    view:= models.PostsToPostsAndDetailesV1(rs,uid)
     c.SendJson(view)
     return nil
 }
@@ -151,12 +144,14 @@ type ProfileRespnse struct  {
 }
 
 func GetPostsForProfileAction(c *base.Action) base.AppErr {
+    UpdateSessionActivityIfUser(c)
     laststr := c.Req.Form.Get("last")//last that have
     pagestr := c.Req.Form.Get("page")
     last:= helper.StrToInt(laststr,0)
     page:= helper.StrToInt(pagestr,0)
     _ = last; _ = page
 
+    uid := c.UserId()
     profileId := c.GetParamInt("profile_id",0)
     mem:=models.UserMemoryStore.GetForUser(profileId)
 
@@ -172,7 +167,7 @@ func GetPostsForProfileAction(c *base.Action) base.AppErr {
     var rs []models.Post
     base.DB.Select(&rs, sql)
 
-    view:= models.PostsToPostsAndDetailes(rs)
+    view:= models.PostsToPostsAndDetailesV1(rs,uid)
     res:= ProfileRespnse{}
     res.Posts = view
     res.User = u

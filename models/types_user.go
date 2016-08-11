@@ -97,6 +97,15 @@ func (ub *UserBasic) GetFullName() string  {
     return ub.FirstName + " " + ub.LastName
 }
 
+func (ub *UserBasic) ToUserInlineView() *UserInlineView  {
+    v := UserInlineView{}
+    v.FullName = ub.GetFullName()
+    v.UserId = ub.Id
+    v.UserName = ub.UserName
+    v.AvatarUrl = ub.AvatarUrl
+    return &v
+}
+
 
 /////////////////////////////////////////////////////////////
 

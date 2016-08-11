@@ -18,7 +18,7 @@ func registerRoutes() {
 	http.Handle("/upload-avatar", actioner(UploadAvatarAction))
 	http.Handle("/remove-avatar", actioner(RemoveAvatarAction))
 
-	http.Handle("/profile", actioner(GetProfileAction))
+	//http.Handle("/profile", actioner(GetProfileAction))
 
 	http.Handle("/search", actioner(SearchAllAction))
 	http.Handle("/tag", actioner(SearchTagsAction))
