@@ -101,6 +101,7 @@ func PostUpdateAction(c *base.Action) base.AppErr {
 }
 
 func GetPostsStraemAction(c *base.Action) base.AppErr {
+    MustBeUserAndUpdate(c)
     laststr := c.Req.Form.Get("last")//last that have
     pagestr := c.Req.Form.Get("page")
     last:= helper.StrToInt(laststr,0)
@@ -109,7 +110,8 @@ func GetPostsStraemAction(c *base.Action) base.AppErr {
 
     uid := c.UserId()
     print(uid)
-    fids := models.GetAllPrimiryFollowingIds(uid)
+    //fids := models.GetAllPrimiryFollowingIds(uid)
+    fids := models.UserMemoryStore.GetAllFollowingsListOfUser(uid).Elements
     // dbIns(len(fids))e
     sql := "select * from post where UserId in(" + helper.IntsToSqlIn(fids) + ") order by Id Desc limit 100 "
 

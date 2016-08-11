@@ -24,25 +24,6 @@ type Comment struct {
     CreatedTime int
 }
 
-type FollowingList struct {
-    Id          int
-    UserId      int
-    ListType    int
-    Name        string
-    Count       int
-    IsAuto      int
-    IsPimiry    int
-    CreatedTime int
-}
-
-type FollowingListMember struct {
-    Id             int
-    ListId         int
-    UserId         int
-    FollowedUserId int
-    FollowType     int
-    UpdatedTimeMs  int
-}
 
 type Like struct {
     Id          int

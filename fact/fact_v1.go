@@ -14,6 +14,8 @@ import (
     "ms/sun/shared"
 )
 
+const NUM_OF_USERS  = 80
+
 func FactPosts() {
     p := models.Post{}
     p.TypeId = 1
@@ -79,11 +81,32 @@ func FactUserAvatars(c *base.Action) {
     if err != nil {
         log.Fatal(err)
     }
-    fn := "./upload/_avatars" + "/" + imageFiles[rand.Intn(len(imageFiles))].Name()
 
-    userAvatr := shared.NewAvatarFileName(rand.Intn(80)+1)
-    t1:=time.Now().UnixNano()
-    helper.ImageCropSquerThumb(fn,userAvatr.Path,userAvatr.FileName, []int{50,100,200,400})
-    t := (time.Now().UnixNano() - t1)/ 1e6
-    fmt.Println("time for avatar gen:",t)
+    for uid :=0 ; uid < 100 ; uid++ {
+        u := models.UserMemoryStore.GetForUser(uid)
+        if u != nil{
+            fn := dir + "/" + imageFiles[rand.Intn(len(imageFiles))].Name()
+
+            userAvatr := shared.NewAvatarFileName(uid)
+            t1:=time.Now().UnixNano()
+            helper.ImageCropSquerThumb(fn,userAvatr.Path,userAvatr.FileName, []int{50,100,200,400})
+            t := (time.Now().UnixNano() - t1)/ 1e6
+            u := models.UserMemoryStore.GetForUser(uid)
+            u.AvatarUrl = userAvatr.FullUrl
+            u.UserBasic.UpdateToTable()
+            fmt.Println("time for avatar gen:",t)
+
+        }
+    }
+
 }
+
+func FactFollow(c *base.Action) {
+    models.Follow(rand.Intn(NUM_OF_USERS),rand.Intn(NUM_OF_USERS))
+}
+
+func FactUnFollow(c *base.Action) {
+    models.UnFollow(rand.Intn(NUM_OF_USERS),rand.Intn(NUM_OF_USERS))
+}
+
+

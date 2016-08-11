@@ -7,10 +7,10 @@ import (
 
 func NewAvatarFileName(UserId int) *AvatarFileName{
     a := AvatarFileName{}
-    a.Path = "./upload/avatar/"
+    a.Path = "./upload/avatar/" + helper.IntToStr(UserId%config.NUMBER_OF_USER_AVATAR_DIRS) +"/"
     a.FileName = helper.IntToStr(UserId) + "_" +helper.RandString(4) + "_"
     a.ServerId = 1
-    a.FullUrl = config.CDN_IMAGE_SERVER_FULL_URL + a.Path + a.FileName + "%s.jpg"
+    a.FullUrl = config.CDN_IMAGE_SERVER_FULL_URL + a.Path[2:] + a.FileName + "%s.jpg"
 
     return &a
 }

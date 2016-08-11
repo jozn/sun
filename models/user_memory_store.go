@@ -130,6 +130,14 @@ func (db *memoryStoreImpl) GetForUser(UserId int) *userMemRow {
     return nil
 }
 
+func (db *memoryStoreImpl) GetUserTableForUser(UserId int) *UserTable {
+    row:=db.GetForUser(UserId)
+    if row != nil{
+        return &row.UserTable
+    }
+    return nil
+}
+
 func (db *memoryStoreImpl) GetAllAsArray() []*userMemRow {
     rows:= make([]*userMemRow,0)
 
@@ -203,7 +211,7 @@ func (db *memoryStoreImpl) AddFollow(UserId, FollowedUserId int) {
     s , ok :=  db.Map[UserId]
     if ok {
         s.Followings.AddAndSort(FollowedUserId)
-        QueryInsertNewFollowing(UserId,FollowedUserId,1)
+        //QueryInsertNewFollowing(UserId,FollowedUserId,1)
     }
 }
 
@@ -211,16 +219,22 @@ func (db *memoryStoreImpl) RemoveFollow(UserId, FollowedUserId int) {
     s , ok :=  db.Map[UserId]
     if ok {
         s.Followings.RemoveAndSort(FollowedUserId)
-        QueryInsertNewFollowing(UserId,FollowedUserId,0)
+        //QueryInsertNewFollowing(UserId,FollowedUserId,0)
     }
 }
 
-
+func (db *memoryStoreImpl) GetAllFollowingsListOfUser(UserId int) *ds.IntList {
+    s , ok :=  db.Map[UserId]
+    if ok {
+        return s.Followings
+    }
+    return ds.New()
+}
 //////////////// User Actions Counts ////////////////
 func (db *memoryStoreImpl) UpdateUserFollowingCounts(UserId int, cnt int  ) {
     user  :=  db.GetForUser(UserId)
     if user != nil {
-        user.UserCounts.FollowingCount += 1
+        user.UserCounts.FollowingCount += cnt
         QueryUpdateUserActionCounts(UserId,cnt,"FollowingCount")
     }
 }
@@ -228,7 +242,7 @@ func (db *memoryStoreImpl) UpdateUserFollowingCounts(UserId int, cnt int  ) {
 func (db *memoryStoreImpl) UpdateUserFollowersCounts(UserId int, cnt int  ) {
     user  :=  db.GetForUser(UserId)
     if user != nil {
-        user.UserCounts.FollowersCount += 1
+        user.UserCounts.FollowersCount += cnt
         QueryUpdateUserActionCounts(UserId,cnt,"FollowersCount")
     }
 }
@@ -236,7 +250,7 @@ func (db *memoryStoreImpl) UpdateUserFollowersCounts(UserId int, cnt int  ) {
 func (db *memoryStoreImpl) UpdateUserPostsCounts(UserId int, cnt int  ) {
     user  :=  db.GetForUser(UserId)
     if user != nil {
-        user.UserCounts.PostsCount += 1
+        user.UserCounts.PostsCount += cnt
         QueryUpdateUserActionCounts(UserId,cnt,"PostsCount")
     }
 }
@@ -244,7 +258,7 @@ func (db *memoryStoreImpl) UpdateUserPostsCounts(UserId int, cnt int  ) {
 func (db *memoryStoreImpl) UpdateUserMediasCounts(UserId int, cnt int  ) {
     user  :=  db.GetForUser(UserId)
     if user != nil {
-        user.UserCounts.FollowingCount += 1
+        user.UserCounts.FollowingCount += cnt
         QueryUpdateUserActionCounts(UserId,cnt,"MediaCount")
     }
 }
@@ -252,7 +266,7 @@ func (db *memoryStoreImpl) UpdateUserMediasCounts(UserId int, cnt int  ) {
 func (db *memoryStoreImpl) UpdateUserLikesCounts(UserId int, cnt int  ) {
     user  :=  db.GetForUser(UserId)
     if user != nil {
-        user.UserCounts.FollowingCount += 1
+        user.UserCounts.FollowingCount += cnt
         QueryUpdateUserActionCounts(UserId,cnt,"LikesCount")
     }
 }

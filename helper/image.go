@@ -9,7 +9,7 @@ import (
 "image/draw"
     "image"
 )
-func ImageCropSquer(imageFilePath , outDirectory ,fileNamePrefix string, sizes []int ) bool {
+func ImageResize(imageFilePath , outDirectory ,fileNamePrefix string, sizes []int ) bool {
     return imageCropThumb(imageFilePath , outDirectory ,fileNamePrefix , sizes ,false)
 }
 
@@ -50,7 +50,7 @@ func imageCropThumb(imageFilePath , outDirectory ,fileNamePrefix string, sizes [
             sizeY = sizeX
         }
         m := resize.Thumbnail(uint(sizeX), uint(sizeY), img, resize.Lanczos3)
-        out, err := os.Create(outDirectory + fileNamePrefix + "_" + IntToStr(sizeX) + ".jpg")
+        out, err := os.Create(outDirectory + fileNamePrefix + "" + IntToStr(sizeX) + ".jpg")
         if err != nil {
             log.Println(err)
             continue

@@ -98,10 +98,8 @@ func registerRoutes() {
 	http.Handle("/f/gm", actioner(fact.GroupMemFact1))
 	http.Handle("/f/ginfo", actioner(fact.GroupInfoFact1))
 
-	http.Handle("/f/1", actioner(fact.Run1))
-	http.Handle("/f/2", actioner(fact.Run2))
-	http.Handle("/fact/avatar", actioner(fact.FactUserAvatars))
-	//	http.Handle("/f/all_chat", actioner(fact.ChatFact))
+
+    //	http.Handle("/f/all_chat", actioner(fact.ChatFact))
 
 	//phone dbs
 	http.Handle("/mf/contacts", actioner(fact.FactPhoneContacts))
@@ -117,7 +115,13 @@ func registerRoutes() {
 	http.Handle("/i/java2", actionToFunc(DBStructsTojava))
 	http.HandleFunc("/i/java", DBStructsTojava2)
 
-	//messages
+    ////////////// New Facts /////////////////
+    http.Handle("/fact/follow", actioner(fact.FactFollow))
+    http.Handle("/fact/unfollow", actioner(fact.FactUnFollow))
+    http.Handle("/fact/avatar", actioner(fact.FactUserAvatars))
+
+
+    //messages
 	http.HandleFunc("/MsgUpload", MsgUpload)
 
 	//New V1 apis

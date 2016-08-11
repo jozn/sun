@@ -1,5 +1,7 @@
 package models
 
+import "ms/sun/base"
+
 type UserBasic struct {
 	Id               int
 	UserName         string
@@ -8,7 +10,7 @@ type UserBasic struct {
 	FullName         string //deprecated
 	AvatarSrc        string //dep
 	AvatarUrl        string
-	IsProfilePrivate int
+    PrivacyProfile int
     About        string
 
 }
@@ -89,6 +91,17 @@ type UserBasicPhoneAndMe struct {
 //	PhoneContact
 //}
 
+/////////////////////////////////////////////
+/// User functions
+func (ub *UserBasic) GetFullName() string  {
+    return ub.FirstName + " " + ub.LastName
+}
+
+
+/////////////////////////////////////////////////////////////
+
+// ALL are DEPRECATD they was for when we didint store all user data in memory
+
 func (t *UserBasicAndMe) FromUser(u UserTable, list FollowChecker) {
 	t.UserBasic = u.UserBasic
 	t.UserId = u.Id
@@ -102,6 +115,12 @@ func (t *UserBasicAndMe) FormUserAndMe(u UserTable, meId int) {
 	t.UpdatedTime = u.UpdatedTime
 	t.FollowingType = GetFollowingType(meId, u.Id)
 }
+
+func (ub *UserBasic) UpdateToTable() {
+    //UserMemoryStore.GetForUser(ub)
+    base.DbUpdateStruct(ub,"user")
+}
+///////////////////////////////////////////////////////////////////
 
 /////////// Deprecated //////////////////////////////
 
@@ -122,39 +141,3 @@ type UserPassword struct {
     CreatedTime int
 }
 
-/////////////////////////////////////////////////////////
-
-//type User struct {
-//	Id int
-//				    // UserId int
-//	UserName             string
-//	FirstName            string
-//	LastName             string
-//	FullName             string //deprecated
-//	Email                string `json:"-"`
-//	Phone                string //`json:"-"`
-//	PrimaryFollowingList int
-//	PasswordHash         string `json:"-"`
-//	PasswordSalt         string `json:"-"`
-//	IsProfilePrivate     int
-//	AvatarUrl            string
-//	CreatedTimestamp     int `json:"-"`
-//	UpdatedTimestamp     int //`json:"-"`
-//	FollowersCount     int
-//	FollowingCount     int
-//	PostsCount         int
-//	MediaCount         int
-//	LikesCount         int
-//	ResharedCount      int
-//	LastLoginTimestamp int
-//	IsDeleted int
-//}
-
-//type User struct {
-//	Email                string `json:"-"`
-//	PrimaryFollowingList int
-//	IsProfilePrivate     int
-//	CreatedTimestamp     int `json:"-"`
-//	UpdatedTimestamp     int //`json:"-"`
-//	LastLoginTimestamp int
-//}

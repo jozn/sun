@@ -14,6 +14,7 @@ func MustBeUserAndUpdate(c *base.Action) {
 
     isLoged := models.UserMemoryStore.IsUserSessionAndUpdateActivity(uid,session)
     if isLoged == false {
+        print("NOT LOGED")
         panic(constants.HttpIsNotUser)
     }
     c.SetUserId(uid)

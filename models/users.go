@@ -41,16 +41,16 @@ func GetUserByUsername(username string) User {
 	return u[0]
 }
 
-func GetUserByUsername2(username string) (User ,error)  {
+func GetUserByUsername2(username string) (UserTable ,error)  {
 	key := "user_" + username
 	if v, ok := cashe.Get(key); ok {
-		return v.(User) ,nil
+		return v.(UserTable) ,nil
 	}
-	var u []User
+	var u []UserTable
 	debug(u)
 	err := DB.Select(&u, "select * from user where UserName =? limit 1", username)
 	if err != nil || len(u)==0{
-		return User{},errors.New("error babe")
+		return UserTable{},errors.New("error babe")
 	}
 	cashe.Set(key, u[0], 0)
 	return u[0],nil

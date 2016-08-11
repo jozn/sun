@@ -56,7 +56,7 @@ func FollowUser(uid int, followedId int) {
 	flm := FollowingListMember{}
 	flm.FollowedUserId = followedId
 	flm.UserId = uid
-	flm.FollowType = 1
+	//flm.FollowType = 1
 	flm.ListId = u.PrimaryFollowingList
 	flm.UpdatedTimeMs = helper.TimeNowMs()
 
@@ -77,7 +77,7 @@ func UnfollowUser(uid int, followedId int) {
 	flm := FollowingListMember{}
 	flm.FollowedUserId = followedId
 	flm.UserId = uid
-	flm.FollowType = 0 //update
+	//flm.FollowType = 0 //update
 	flm.ListId = u.PrimaryFollowingList
 	flm.UpdatedTimeMs = helper.TimeNowMs()
 	//todo check for duplicate
@@ -132,6 +132,7 @@ func IsUserFollowing(userId, followedUserId int) bool {
 	return false
 }
 
+//deprecated
 func GetFollowingType(iUserId, peerUserId int) int {
 	var typ int
 	q:= "select FollowType from following_list_member where UserId = ? and FollowedUserId = ? "
@@ -153,7 +154,7 @@ func PreloadFollowingsListTypesForUser(userId int) (list userfollowingsList) {
 	//var userIds []int
 	//userIds := make([]int,0)
 	userIds := []int{}
-	q:= "select FollowedUserId from following_list_member where UserId = ? and FollowType = 1 "
+	q:= "select FollowedUserId from following_list_member where UserId = ? " //and FollowType = 1 "
 	//println(userIds)
 	base.DB.Select(&userIds,q,userId)
 
@@ -202,4 +203,19 @@ func UsersToInlineFollowView(userIds []int, cuid int) []UserInlineFollowView {
 		userListView = append(userListView, userView)
 	}
 	return userListView
+}
+
+func UsersListForFollowView(userIds []int, cuid int) []UserInlineFollowView {
+    var userListView []UserInlineFollowView
+    for _, uid := range userIds {
+        userView := UserInlineFollowView{}
+        userView.UserInlineView = GetUserView(uid)
+        if cuid > 0 {
+            //userView.AmIFollowing = IsUserFollowing(cuid, userView.UserId)
+            userView.IFollowType = UserMemoryStore.GetFollowingTypeForUsers(cuid, uid)
+            //debug("GetFollowingTypeForUsers: ", UserMemoryStore.GetFollowingTypeForUsers(cuid, uid))
+        }
+        userListView = append(userListView, userView)
+    }
+    return userListView
 }

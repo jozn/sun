@@ -4,10 +4,11 @@ import (
 "ms/sun/helper"
 "strings"
 "ms/sun/base"
+    "math"
 )
 
 ///////////////////// Followings /////////////////////////////
-func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int )  {
+func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int ) (*FollowingListMember, error) {
     flm := FollowingListMember{}
     flm.FollowedUserId = FollowedUserId
     flm.UserId = UserId
@@ -15,12 +16,13 @@ func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int )  {
     flm.ListId = UserId
     flm.UpdatedTimeMs = helper.TimeNowMs()
     keys,values :=helper.StructToFiledsRejectsEscape(&flm,"Id")
-    q := "replace into following_list_member ("+strings.Join(keys,",") +") values (" +strings.Join(values,",") +")"
+    q := "Insert into following_list_member ("+strings.Join(keys,",") +") values (" +strings.Join(values,",") +")"
 
     _,err:=base.DB.Exec(q)
     if err !=nil {
-        devPrintn(err)
+        helper.DebugPrintln(err)
     }
+    return &flm,err
 }
 
 /////////////////////// Likes ////////////////////////
@@ -90,14 +92,14 @@ func QueryDecerPostCommentsCount(PostId,  CountDiff int )  {
 
 ///////////////////// User ///////////////////////////
 func QueryUpdateUserActionCounts(UserId,  CountDiff int, column string )  {
-    cnt := helper.IntToStr(CountDiff)
+    cnt := helper.IntToStr(int(math.Abs(float64(CountDiff))))
     q:=""
     if CountDiff >=0  {
         q = "UPDATE user SET "+ column + " = " + column + " + " + cnt  + " WHERE Id = ?"
     }else {
         q = "UPDATE user SET "+ column + " = " + column + " - " + cnt  + " WHERE Id = ?"
     }
-    _,err:=base.DB.Exec(q, UserId )
+    _,err:=base.DbExecute(q, UserId )
     if err !=nil {
         devPrintn(err)
     }

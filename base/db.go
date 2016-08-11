@@ -9,19 +9,92 @@ import (
 	"strings"
 	//"bytes"
 	"ms/sun/helper"
+    "ms/sun/config"
 )
 
 //structRow: must be poniter
 func DbInsertStruct(structRow interface{}, table string) (sql.Result, error) {
-	return DbInsertUpdateStruct(structRow, table, true)
+	//return DbInsertUpdateStruct(structRow, table, true)
+    keys,values :=helper.StructToFiledsRejectsEscape(structRow,"Id")
+
+    ks := make([]string,len(keys))
+    for i,s := range keys {
+        ks[i] = "`"+s+"`"
+    }
+
+
+    //q := "Insert into " + table + " ("+strings.Join(ks,",") +") values (" +strings.Join(values,",") +")"
+    q := "Insert " + table + " ("+strings.Join(ks,",") +") values (" +DbQuestionForIn(len(values)) +")"
+
+    vals := make([]interface{},len(values))
+    for i,s := range values {
+        //vals[i] = "`"+s+"`"
+        vals[i] = s
+    }
+
+    r, err := DB.Exec(q, vals...)
+    //r, err := DB.Exec(q)
+
+    if config.DEBUG_LOG_SQL {
+        helper.DebugPrintln(q, vals)
+        if err != nil {
+            fmt.Println("DATABASE ERROR: for table: ", table, " error: ", err , " query ",q , " PARAMS: ", vals)
+        }
+    }
+    return r, err
 }
 
 //ignors Id in all structs to set by db- or not at all
 func DbUpdateStruct(structRow interface{}, table string) (sql.Result, error) {
-	return DbInsertUpdateStruct(structRow, table, false)
+	//return DbInsertUpdateStruct(structRow, table, false)
+    keys,values :=helper.StructToFiledsRejectsEscape(structRow,"Id")
+    _,idavls :=helper.StructToFiledsCollect(structRow,"Id")
+
+    ks := make([]string,len(keys))
+    for i,s := range keys {
+        ks[i] = "`"+s+"`"
+    }
+    idval :=""
+    if len(idavls) == 1 {
+        idval = fmt.Sprint(idavls[0])
+    }else {
+        log.Panic("In Update statemant Id of struct is not exist - struct: ",structRow)
+    }
+
+
+    q := "Update " + table + " ("+strings.Join(ks,",") +") values (" +DbQuestionForIn(len(values)) +") WHERE Id = "+idval
+
+    vals := make([]interface{},len(values))
+    for i,s := range values {
+        //vals[i] = "`"+s+"`"
+        vals[i] = s
+    }
+
+    r, err := DB.Exec(q, vals...)
+
+    if config.DEBUG_LOG_SQL {
+        helper.DebugPrintln(q, vals)
+        if err != nil {
+            fmt.Println("DATABASE ERROR: for table: ", table, " error: ", err , " query ",q , " PARAMS: ", vals)
+        }
+    }
+    return r, err
+}
+
+func DbExecute(query string, params ...interface{} ) (sql.Result, error) {
+    r, err := DB.Exec(query, params...)
+
+    if config.DEBUG_LOG_SQL {
+        helper.DebugPrintln(query, params)
+        if err != nil {
+            fmt.Println("DATABASE ERROR: error: ", err , " query ",query , " PARAMS: ", params)
+        }
+    }
+    return r, err
 }
 
 //update a struct will by defult update dy Id
+// deprecated
 func DbInsertUpdateStruct(structRow interface{}, table string, isInsert bool) (sql.Result, error) {
 	s := reflect.ValueOf(structRow).Elem()
 	var cols []string
@@ -64,7 +137,7 @@ func DbInsertUpdateStruct(structRow interface{}, table string, isInsert bool) (s
 	}
 
 	if __DEV__ {
-		// fmt.Println("-db query: ", query)
+		 fmt.Println("-db query: ", query ,vals)
 	}
 
 	r, err := DB.Exec(query, vals...)
