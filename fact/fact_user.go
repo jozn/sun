@@ -41,43 +41,13 @@ func FactUser1(c *Action) {
 	fl.UserId = int(id)
 	fl.Name = "دنبال میکنم"
 	// fl.IsPimiry = true
-	debug(fl)
+	//debug(fl)
 	r, err := DbInsertStruct(&fl, "following_list")
 	// noErr(err)
-	debug(err)
+	//debug(err)
 	pid, _ := r.LastInsertId()
 	DB.MustExec("update user set PrimaryFollowingList = ? where Id =?", pid, id)
 	e(u)
-
-}
-
-func FactFollow1(c *Action) {
-	print("factoring following members\n")
-	//COUNT = 50
-	for i := 0; i < 100; i++ {
-		uid := rand.Intn(80) + 1
-		fid := rand.Intn(80) + 1
-		if uid != fid {
-			FollowUser(uid, fid)
-		}
-		// fm := FollowingListMember{}
-		// fm.FollowedUserId =
-	}
-
-}
-
-func FactFollow2(c *Action) {
-	print("factoring following members\n")
-	//COUNT = 50
-	for i := 0; i < 100; i++ {
-		uid := rand.Intn(80) + 1
-		fid := rand.Intn(80) + 1
-		if uid != fid {
-			UnfollowUser(uid, fid)
-		}
-		// fm := FollowingListMember{}
-		// fm.FollowedUserId =
-	}
 
 }
 

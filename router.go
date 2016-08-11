@@ -14,12 +14,6 @@ import (
 func registerRoutes() {
 	mux := routes.NewPrefix("/v1")
 
-	//http.Handle("/posts", actioner(GetPostsAction))
-	//http.Handle("/add-post", actioner(AddPostAction))
-	//http.Handle("/likes", actioner(GetLikesAction))
-	//http.Handle("/comments", actioner(GetCommentsAction))
-	//http.Handle("/add-post-like", actioner(PostAddLikeAction))
-	//http.Handle("/add-comment", actioner(PostAddCommentAction))
 
 	http.Handle("/upload-avatar", actioner(UploadAvatarAction))
 	http.Handle("/remove-avatar", actioner(RemoveAvatarAction))
@@ -28,60 +22,14 @@ func registerRoutes() {
 
 	http.Handle("/search", actioner(SearchAllAction))
 	http.Handle("/tag", actioner(SearchTagsAction))
-
-	//http.Handle("/follow", actioner(FollowAction))
-	//http.Handle("/unfollow", actioner(UnfollowAction))
-	//http.Handle("/followers", actioner(GetFollowersAction))
-	//http.Handle("/followings", actioner(GetFollowingsAction))
-
-	//http.Handle("/sync-all-contacts", actioner(SyncAllContactsAction))
 	mux.Post("/sync-all-contacts", actionToFunc(SyncAllContactsAction))
 	mux.Post("/sync-followings", actionToFunc(ctrl.SyncFollowingsAction))
 	mux.Get("/sync-followings", actionToFunc(ctrl.SyncFollowingsAction))
 
-	// http.Handle("/2", actioner(h2))
-	//	http.Handle("/hello", actioner(helo))
-	//	http.Handle("/x", actioner(helo))
-	//	http.Handle("/json1", actioner(playJsonAction))
-	//	http.Handle("/test2", actioner(playTagsAction))
-	//
-	//	http.Handle("/play1", actioner(play1))
-	//	http.Handle("/play2", actioner(play2))
-	//	http.Handle("/play3", actioner(play3))
-	//	http.Handle("/play4", actioner(play4))
-	//	http.Handle("/play5", actioner(play5))
-	//	http.Handle("/play6", actioner(play6))
-	//	http.Handle("/redis1", actioner(redisAction1))
-	//	http.Handle("/redis2", actioner(redisAction2))
-	//	http.Handle("/panic", actioner(panicAction))
-	//
 	http.Handle("/fact/user1", actioner(fact.FactUser1))
-	//	http.Handle("/fact/post1", actioner(factPost1))
-	//	http.Handle("/fact/post2", actioner(factPost2))
-	//	http.Handle("/fact/like1", actioner(factLike1))
-		http.Handle("/fact/like2", actioner(fact.FactLike2))
-	//	http.Handle("/fact/comment1", actioner(factComment1))
-	http.Handle("/fact/follow1", actioner(fact.FactFollow1))
-	http.Handle("/fact/follow2", actioner(fact.FactFollow2))
-	// http.Handle("/fact/comment1", actioner(factC))
-
-	//	http.Handle("/fact/p1", actioner(factPlay1))
-	//	http.Handle("/fact/p2", actioner(factPlay2))
-	//	http.Handle("/fact/p3", actioner(factPlay3))
-	//	http.Handle("/fact/p4", actioner(factPlay4))
 
 	http.Handle("/fact/user_real", actioner(fact.FactRealUser))
 
-	// http.HandleFunc("/ws", serveWs)
-	// http.HandleFunc("/ws2", serveWs2)
-	// http.HandleFunc("/ws3", serveWs3)
-	//	http.HandleFunc("/ws", serveWs2)
-
-	//http.HandleFunc("/", Home)
-
-	//http.Handle("/json1", actioner(TestJson1))
-	//http.Handle("/json1", actioner(TestJson1))
-	//mux.GET()
 	mux.Get("/json2/:UserId",actionToFunc(TestJson1))
 	mux.Del("/json2/:UserId",actionToFunc(TestJson1))
 
@@ -95,9 +43,6 @@ func registerRoutes() {
 	http.Handle("/f/msg", actioner(fact.ChatMsgFact1))
 	http.Handle("/f/gm", actioner(fact.GroupMemFact1))
 	http.Handle("/f/ginfo", actioner(fact.GroupInfoFact1))
-
-
-    //	http.Handle("/f/all_chat", actioner(fact.ChatFact))
 
 	//phone dbs
 	http.Handle("/mf/contacts", actioner(fact.FactPhoneContacts))
@@ -120,9 +65,6 @@ func registerRoutes() {
     http.Handle("/fact/like", actioner(fact.FactLike))
     http.Handle("/fact/comment", actioner(fact.FactComment))
     http.Handle("/fact/post", actioner(fact.FactPost))
-
-
-
 
     //messages
 	http.HandleFunc("/MsgUpload", MsgUpload)

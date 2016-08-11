@@ -13,7 +13,7 @@ func Run2(c *base.Action) {
 }
 
 func updateUsersAbout()  {
-    for i:=0;i<100;i++ {
+    for i:=0;i<_factLastUserId();i++ {
         s:= helper.FactRandStrEmoji(120,true)
         if len(s)> 150{
             s = s[0:150]
