@@ -13,3 +13,9 @@ func IntsToSqlIn(ins []int) string {
     }
     return strings.Join(sins, ",")
 }
+
+func DbQuestionForSqlIn(size int) string {
+    s := strings.Repeat("?,", size)
+    s = s[0 : len(s)-1] //remove last ','
+    return s
+}

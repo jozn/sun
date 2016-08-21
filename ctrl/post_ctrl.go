@@ -22,12 +22,13 @@ func AddPostAction(c *base.Action) base.AppErr {
     post.CommentsCount = 0
     post.LikesCount = 0
 
-    res, _ := base.DbInsertStruct(&post, "post")
-    pid, _ := res.LastInsertId()
-    post.Id = int(pid)
-    models.AddTagsInPost(post)
-    models.AddUserMentionedInPost(post)
+    //res, _ := base.DbInsertStruct(&post, "post")
+    //pid, _ := res.LastInsertId()
+    //post.Id = int(pid)
 
+    //models.AddTagsInPost(post)
+    //models.AddUserMentionedInPost(post)
+    models.AddNewPostToDbAndItsMeta(&post)
      c.SendJson(post)
     return nil
 }

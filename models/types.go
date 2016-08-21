@@ -51,22 +51,6 @@ type Post struct {
 	CreatedTime   int
 }
 
-type Tag struct {
-    Id          int
-    Name        string
-    Count       int
-    IsBlocked   bool
-    CreatedTime int
-}
-
-type TagPost struct {
-    Id          int
-    TagId       int
-    PostId      int
-    TypeId      int // text? photo? video?
-    CreatedTime int
-}
-
 
 //not used in this version but maybe for futuer versions
 type Session struct {

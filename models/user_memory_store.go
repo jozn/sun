@@ -44,6 +44,7 @@ func (db *memoryStoreImpl) ReloadAll(){
     db.ReloadAllFollowings()
     db.ReloadAllLikes()
 
+
 }
 
 func (db *memoryStoreImpl) ReloadAllUser(){
@@ -295,6 +296,9 @@ func (db *memoryStoreImpl) IsUserSession(UserId int, SessionUuid string) bool{
     user  :=  db.GetForUser(UserId)
     if user != nil {
         if user.SessionUuid == SessionUuid {
+            ///Temp
+            GenrateRecommends(UserId)
+            ////
             return true
         }
     }

@@ -23,7 +23,7 @@ func FactPosts() {
     p := models.Post{}
     p.TypeId = 1
     p.UserId = rand.Intn(80)+1
-    p.Text = helper.FactRandStrEmoji(150,true)
+    p.Text = helper.FactRandStrEmoji(200,true)
 
     if rand.Intn(3) == 1{
         img , W ,H := randImage()
@@ -34,7 +34,7 @@ func FactPosts() {
         p.TypeId = 2
     }
 
-    models.AddNewPostToDbAndItsMeta(p)
+    models.AddNewPostToDbAndItsMeta(&p)
     //base.DbInsertStruct(&p,"post")
 
 }

@@ -205,6 +205,7 @@ func UsersToInlineFollowView(userIds []int, cuid int) []UserInlineFollowView {
 	return userListView
 }
 
+/*
 func UsersListForFollowView(userIds []int, cuid int) []UserInlineFollowView {
     var userListView []UserInlineFollowView
     for _, uid := range userIds {
@@ -218,4 +219,4 @@ func UsersListForFollowView(userIds []int, cuid int) []UserInlineFollowView {
         userListView = append(userListView, userView)
     }
     return userListView
-}
+}*/

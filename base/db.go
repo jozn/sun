@@ -93,6 +93,65 @@ func DbExecute(query string, params ...interface{} ) (sql.Result, error) {
     return r, err
 }
 
+//structRows must be an [] of POINTERS
+func DbMassReplacetStructPoninters(table string, structRows ...interface{}) (sql.Result, error) {
+    //fmt.Println("Inside DbMassReplacetStruct")
+    if len(structRows) == 0 {
+        w:= errors.New("length of structRows must be grater than zero")
+        helper.DebugPrintln(w)
+        return nil, w
+    }
+    structRow := structRows[0]
+
+    keys,values :=helper.StructToFiledsRejectsEscape(structRow,"Id")
+
+    ks := make([]string,len(keys))
+    for i,s := range keys {
+        ks[i] = "`"+s+"`"
+    }
+
+    // build "? ,? ,? ,? " for use of Mysql escape
+    var insAll []string //[ "(?,?,?)" , "?,?,?" , ... ]
+    var qus, colsSql, query string
+
+    //TODO:optimize and simpilify beacus it is just "(?,?,?), ..." we can build one and repeat it
+    for i := 0; i < len(structRows); i++ {
+        var insRow []string
+        for j := 0; j < len(values); j++ {
+            insRow = append(insRow, "?")
+        }
+        insAll = append(insAll, "("+strings.Join(insRow, ",")+")") // building: "(?,?,?)"
+    }
+
+    qus = strings.Join(insAll, ", ")         // "(?,?,?) , (?,?,?) ..."
+    colsSql = strings.Join(ks, ",") //columsn " Id ,Nmae, UserName"
+    query = "REPLACE INTO " + table + " (" + colsSql + ") VALUES " + qus + " "
+
+    //fmt.Println(query)
+    //	var valRaw []interface{}
+    var valHolders []interface{}
+    for n := 0; n < len(structRows); n++ {
+        _,values2 :=helper.StructToFiledsRejectsEscape(structRows[n],"Id")
+
+        for j := 0; j < len(values2); j++ {
+            valHolders = append(valHolders, values2[j])
+        }
+    }
+
+    r, err := DB.Exec(query, valHolders...)
+
+    if config.DEBUG_LOG_SQL {
+        helper.DebugPrintln(query, valHolders)
+        if err != nil {
+            fmt.Println("DATABASE ERROR: error: ", err , " query ",query , " PARAMS: ", valHolders)
+        }
+    }
+
+    return r, err
+
+}
+
+
 //update a struct will by defult update dy Id
 // deprecated
 func DbInsertUpdateStruct(structRow interface{}, table string, isInsert bool) (sql.Result, error) {
@@ -155,6 +214,7 @@ func DbInsertUpdateStruct(structRow interface{}, table string, isInsert bool) (s
 	// fmt.Println(cols, vals)
 }
 
+//deprecated use DbMassReplacetStruct
 //update a struct will by defult update dy Id
 func DbMassInsertStruct(table string, structRows ...interface{}) (sql.Result, error) {
 	if len(structRows) == 0 {

@@ -4,7 +4,6 @@ import (
 	// "encoding/json"
 	// "fmt"
 	. "ms/sun/base"
-    "ms/sun/helper"
     "ms/sun/base"
 )
 
@@ -136,40 +135,6 @@ func GetMedias() {
 
 /////////////
 
-//////////////////  New Apis   ///////////////////////////
-func AddTagsInPost(post Post) {
-	parser := TextParser{}
-	parser.Parse(post.Text)
-	for _, tag := range parser.Tags {
-		var dbTags []Tag
-		var dbTag Tag
-		DB.Select(&dbTags, "select * from tags where Name = ? ", tag)
-		if len(dbTags) == 0 { //not exist ,insert it
-			dbTag = Tag{}
-			dbTag.Name = tag
-			dbTag.CreatedTime = now()
-			res, _ := DbInsertStruct(&dbTag, "tags")
-			tid, _ := res.LastInsertId()
-			dbTag.Id = int(tid)
-		} else {
-			dbTag = dbTags[0]
-		}
-
-		tagPost := TagPost{}
-		tagPost.TagId = dbTag.Id
-		tagPost.PostId = post.Id
-		tagPost.TypeId = post.TypeId
-		tagPost.CreatedTime = now()
-
-		DbInsertStruct(&tagPost, "tags_posts")
-		//TODO increment dbTags.Count
-	}
-}
-
-func AddUserMentionedInPost(post Post) {
-
-}
-
 //deprecated: use GetPostToPostAndDetailes
 func PostToPostAndDetailes(post *Post) *PostAndDetailes {
 	//todo extract this to it's func
@@ -198,11 +163,7 @@ func PostsToPostsAndDetailes(posts []Post) []*PostAndDetailes {
 
 /////////// From version 0.4 /////////////
 
-func AddNewPostToDbAndItsMeta(post Post) {
-    post.CreatedTime = helper.TimeNow()
-    base.DbInsertStruct(&post,"post")
-    UserMemoryStore.UpdateUserPostsCounts(post.UserId,1)
-}
+
 
 func DeletePost(UserId,PostId int) bool {
     var post Post
