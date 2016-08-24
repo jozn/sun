@@ -98,10 +98,13 @@ func registerRoutes() {
 
     mux.Get("/profile/all", actionToFunc(ctrl.GetPostsForProfileAction))
 
-    mux.Get("/recommend/posts", actionToFunc(ctrl.RecommendPostsCtrl))
+    mux.Get("/recommend/top_posts", actionToFunc(ctrl.RecommendPostsCtrl))
     mux.Get("/recommend/users", actionToFunc(ctrl.RecommendUsersCtrl))
-    mux.Get("/recommend/tags", actionToFunc(ctrl.RecommendTagsCtrl))
+    mux.Get("/recommend/top_tags", actionToFunc(ctrl.RecommendTagsCtrl))
+    mux.Get("/recommend/top_tags_discover", actionToFunc(ctrl.RecommendTagsWithPostsCtrl))
 
+    mux.Get("/tags/list", actionToFunc(ctrl.TagsPostsListCtrl))
+    mux.Get("/search", actionToFunc(ctrl.SearchCtrl))
 
 
     http.Handle("/", mux)

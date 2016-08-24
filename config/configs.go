@@ -10,6 +10,6 @@ const NUMBER_OF_USER_AVATAR_DIRS = 5
 
 
 const IS_DEBUG = true
-const DEBUG_LOG_SQL = false
+const DEBUG_LOG_SQL = IS_DEBUG
 const IS_PRODUCTION = false
 

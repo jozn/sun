@@ -72,7 +72,7 @@ func GetUserInfo(id int) UserInfo {
 func GetUserView(uid int) UserInlineView {
 	//debug("GetUserView: ", uid)
 	//u := GetUserById(uid)
-	u := UserMemoryStore.Map[uid]
+	u := UserMemoryStore.GetUserTableForUser(uid)
 	v := UserInlineView{}
 	v.FullName = u.FirstName + " " + u.LastName
 	v.UserId = u.Id

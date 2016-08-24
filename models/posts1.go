@@ -24,3 +24,17 @@ func AddNewPostToDbAndItsMeta(post *Post) {
     AddTagsInPost(post)
     AddUserMentionedInPost(post)
 }
+
+func GetPosts(PostIds []int) *[]Post {
+    sql := "select * from post where Id in(" + helper.IntsToSqlIn(PostIds) + ") order by Id Desc"
+    var rs []Post
+    base.DB.Select(&rs, sql)
+
+    return &rs
+}
+
+func GetPostsAndItsDetails(PostIds []int, UserId int) []*PostAndDetailes {
+    rs:= GetPosts(PostIds)
+    view:= PostsToPostsAndDetailesV1(*rs,UserId)
+    return view
+}

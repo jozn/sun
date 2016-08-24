@@ -29,6 +29,16 @@ type tagsMap struct {
     _map map[string]*Tag
 }
 
+func (mp *tagsMap)GetTag (Name string) (*Tag,bool) {
+    mp.m.RLock()
+    t := mp._map[Name]
+
+    if t == nil {
+        return nil, false
+    }
+    return t, true
+}
+
 func newTagsMap() *tagsMap {
     tm := tagsMap{}
     tm._map = make(map[string]*Tag)
@@ -37,6 +47,7 @@ func newTagsMap() *tagsMap {
 
 var TagsMap = newTagsMap() //new(tagsMap)
 var TopTags = make([]Tag,0,50)
+var TopTagsWithPostsResult = make([]TopTagsWithPosts,0,50)
 
 //called on inits
 func ReloadAllTags()  {
@@ -57,6 +68,32 @@ func ReloadTopTags()  {
 
     TopTags = tags
 }
+
+func ReloadTopPostsForTopTags() {
+
+    tags := TopTags
+    tagsId := []int{}
+
+    var newTopTagsWithPosts = make([]TopTagsWithPosts,0,50)
+
+    for _ , t := range tags {
+        tagsId = append(tagsId,t.Id) //useless
+        var PostsIds []int
+
+        base.DB.Select(&PostsIds ,"SELECT PostId FROM tags_posts where TagId = ? AND TypeId = 2 ORDER BY Id DESC LIMIT 4 ", t.Id)
+
+        post := GetPosts(PostsIds)
+
+        v :=TopTagsWithPosts{}
+        v.Tag = t
+        v.Posts = *post
+        newTopTagsWithPosts = append(newTopTagsWithPosts , v)
+    }
+
+    TopTagsWithPostsResult = newTopTagsWithPosts
+}
+
+
 
 
 //////////////////  New Apis   ///////////////////////////

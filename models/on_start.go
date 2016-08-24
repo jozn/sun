@@ -9,4 +9,8 @@ func OnAppStart_Models() {
     ReloadAllTags()
     ReloadTopTags()
 
+    go PeriodicReloadTopPostsForTopTags()
+
 }
+
+

@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+    "time"
+    "ms/sun/helper"
+)
 
 var _bufferOfSessionLastActivity = make([]int,0, 10000)
 func PeriodaclyUpdateLastActivityOfUser(UserId int) {
@@ -18,5 +21,14 @@ func impleOfPeriodaclyUpdateLastActivityOfUser() {
         arr := _bufferOfSessionLastActivity
         _bufferOfSessionLastActivity = make([]int,0, 10000)
         QueryUpdateSessionLastActivitiesOfUsers(arr)
+    }
+}
+
+func PeriodicReloadTopPostsForTopTags() {
+    defer helper.JustRecover()
+
+    for {
+        ReloadTopPostsForTopTags()
+        time.Sleep(time.Second * 60)
     }
 }
