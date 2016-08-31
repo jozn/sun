@@ -2,10 +2,10 @@ package models
 
 import (
 	// "sort"
-	 "ms/sun/base"
+	"fmt"
+	"ms/sun/base"
 	"ms/sun/helper"
 	"strings"
-	"fmt"
 )
 
 func GetAllPrimiryFollowingIds(uid int) (ids []int) {
@@ -20,31 +20,31 @@ func GetAllPrimiryFollowingIds(uid int) (ids []int) {
 	return
 }
 
-func GetAllFollowingsUserIds(userId int ,lastTimestamp int) (ids []int) {
+func GetAllFollowingsUserIds(userId int, lastTimestamp int) (ids []int) {
 	userIds := []int{}
-	q:= "select FollowedUserId from following_list_member where UserId = ? and FollowType = 1 "
-	if lastTimestamp > 0{
-		q =q +" And UpdatedTimestampMs >= "+ helper.IntToStr(lastTimestamp)
+	q := "select FollowedUserId from following_list_member where UserId = ? and FollowType = 1 "
+	if lastTimestamp > 0 {
+		q = q + " And UpdatedTimestampMs >= " + helper.IntToStr(lastTimestamp)
 	}
-	base.DB.Select(&userIds,q,userId)
+	base.DB.Select(&userIds, q, userId)
 	return userIds
 }
 
 func GetAllFollowingsUser(userId int, lastTimestamp int) []UserTable {
-	userIds := GetAllFollowingsUserIds(userId,lastTimestamp)
+	userIds := GetAllFollowingsUserIds(userId, lastTimestamp)
 	users := []UserTable{}
-	q:= "select * from user where Id in(" + helper.IntsToSqlIn(userIds) + ")"
-	base.DB.Select(&users,q)
+	q := "select * from user where Id in(" + helper.IntsToSqlIn(userIds) + ")"
+	base.DB.Select(&users, q)
 	return users
 }
 
 func GetAllUnFollowedUserIds(userId int, lastTimestamp int) []int {
 	userIds := []int{}
-	q:= "select FollowedUserId from following_list_member where UserId = ? and FollowType = 0 "
+	q := "select FollowedUserId from following_list_member where UserId = ? and FollowType = 0 "
 	if lastTimestamp > 0 {
-		q = q +" And UpdatedTimestampMs >= "+helper.IntToStr(lastTimestamp)
+		q = q + " And UpdatedTimestampMs >= " + helper.IntToStr(lastTimestamp)
 	}
-	base.DB.Select(&userIds,q,userId)
+	base.DB.Select(&userIds, q, userId)
 	return userIds
 }
 
@@ -63,10 +63,10 @@ func FollowUser(uid int, followedId int) {
 	//todo check for duplicate
 	changeListCountBy(u.PrimaryFollowingList, 1)
 	//base.DbInsertStruct(&flm, "following_list_member")
-	keys,values :=helper.StructToFiledsRejectsEscape(&flm,"Id")
-	q := "replace into following_list_member ("+strings.Join(keys,",") +") values (" +strings.Join(values,",") +")"
+	keys, values := helper.StructToFiledsRejectsEscape(&flm, "Id")
+	q := "replace into following_list_member (" + strings.Join(keys, ",") + ") values (" + strings.Join(values, ",") + ")"
 	fmt.Println(q)
-	_,err:=base.DB.Exec(q)
+	_, err := base.DB.Exec(q)
 	fmt.Println(err)
 	// cls, vals := structSqlNamesValues(flm)
 	// DB.MustExec("insert ignore into following_list_member ("+cls+") "+ () + structSqlNamesValues(flm))
@@ -82,8 +82,8 @@ func UnfollowUser(uid int, followedId int) {
 	flm.UpdatedTimeMs = helper.TimeNowMs()
 	//todo check for duplicate
 	changeListCountBy(u.PrimaryFollowingList, 1)
-	keys,values :=helper.StructToFiledsRejectsEscape(&flm,"Id")
-	q := "replace into following_list_member ("+strings.Join(keys,",") +") values (" +strings.Join(values,",") +")"
+	keys, values := helper.StructToFiledsRejectsEscape(&flm, "Id")
+	q := "replace into following_list_member (" + strings.Join(keys, ",") + ") values (" + strings.Join(values, ",") + ")"
 	//println(q)
 	base.DB.Exec(q)
 }
@@ -135,12 +135,10 @@ func IsUserFollowing(userId, followedUserId int) bool {
 //deprecated
 func GetFollowingType(iUserId, peerUserId int) int {
 	var typ int
-	q:= "select FollowType from following_list_member where UserId = ? and FollowedUserId = ? "
-	base.DB.Get(&typ,q,iUserId,peerUserId)
+	q := "select FollowType from following_list_member where UserId = ? and FollowedUserId = ? "
+	base.DB.Get(&typ, q, iUserId, peerUserId)
 	return typ
 }
-
-
 
 func AddFollowingsToUserList(user []User, iUserId int) {
 
@@ -154,11 +152,11 @@ func PreloadFollowingsListTypesForUser(userId int) (list userfollowingsList) {
 	//var userIds []int
 	//userIds := make([]int,0)
 	userIds := []int{}
-	q:= "select FollowedUserId from following_list_member where UserId = ? " //and FollowType = 1 "
+	q := "select FollowedUserId from following_list_member where UserId = ? " //and FollowType = 1 "
 	//println(userIds)
-	base.DB.Select(&userIds,q,userId)
+	base.DB.Select(&userIds, q, userId)
 
-	for _,uid := range userIds {
+	for _, uid := range userIds {
 		list[uid] = 1
 		//list = append(list,uid)
 	}
@@ -166,8 +164,8 @@ func PreloadFollowingsListTypesForUser(userId int) (list userfollowingsList) {
 }
 
 func (list userfollowingsList) IsFollowing(peerUserId int) bool {
-	u:= list[peerUserId]
-	if  u == 1 {
+	u := list[peerUserId]
+	if u == 1 {
 		return true
 	}
 	return false
@@ -176,14 +174,14 @@ func (list userfollowingsList) IsFollowing(peerUserId int) bool {
 //TODO: implement 2:follow_requested
 /// 0: not_following  1: following  2: follow_requested
 func (list userfollowingsList) FollowingType(peerUserId int) int {
-	u:= list[peerUserId]
-	if  u == 1 {
+	u := list[peerUserId]
+	if u == 1 {
 		return 1 //
 	}
 	return 0
 }
 
-type FollowChecker interface{
+type FollowChecker interface {
 	FollowingType(int) int
 	IsFollowing(int) bool
 }

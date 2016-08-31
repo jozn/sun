@@ -121,7 +121,7 @@ func FactComment(c *base.Action) {
     PostId := rand.Intn(_factLastPostId()) + 1
     n:=rand.Intn(50)+1
     Text := helper.FactRandStrEmoji(n,true)
-    co :=models.AddNewComment(UserId,PostId,Text)
+    co :=models.CreateNewComment(UserId,PostId,Text)
     c.SendJson(co)
 
 }

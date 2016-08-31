@@ -1,8 +1,8 @@
 package models
 
 import (
-	. "ms/sun/base"
 	"errors"
+	. "ms/sun/base"
 )
 
 //dep use GetUserById2
@@ -41,19 +41,19 @@ func GetUserByUsername(username string) User {
 	return u[0]
 }
 
-func GetUserByUsername2(username string) (UserTable ,error)  {
+func GetUserByUsername2(username string) (UserTable, error) {
 	key := "user_" + username
 	if v, ok := cashe.Get(key); ok {
-		return v.(UserTable) ,nil
+		return v.(UserTable), nil
 	}
 	var u []UserTable
 	debug(u)
 	err := DB.Select(&u, "select * from user where UserName =? limit 1", username)
-	if err != nil || len(u)==0{
-		return UserTable{},errors.New("error babe")
+	if err != nil || len(u) == 0 {
+		return UserTable{}, errors.New("error babe")
 	}
 	cashe.Set(key, u[0], 0)
-	return u[0],nil
+	return u[0], nil
 }
 
 func GetUserInfo(id int) UserInfo {
@@ -81,11 +81,10 @@ func GetUserView(uid int) UserInlineView {
 	return v
 }
 
-func GetUserViewV2(uid int) (*UserInlineView,error) {
-    u := UserMemoryStore.GetUserTableForUser(uid)
-    if u != nil {
-        return u.ToUserInlineView() , nil
-    }
-    return &UserInlineView{}, errors.New("User NOT Fund")
+func GetUserViewV2(uid int) (*UserInlineView, error) {
+	u := UserMemoryStore.GetUserTableForUser(uid)
+	if u != nil {
+		return u.ToUserInlineView(), nil
+	}
+	return &UserInlineView{}, errors.New("User NOT Fund")
 }
-

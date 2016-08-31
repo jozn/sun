@@ -32,3 +32,38 @@ func SearchCtrl(c *base.Action) base.AppErr  {
     c.SendJson(res)
     return nil
 }
+
+func SearchTagsCtrl(c *base.Action) base.AppErr  {
+    UpdateSessionActivityIfUser(c)
+
+    q := c.Req.FormValue("q")
+
+    q = "%"+ q + "%"
+
+    var tags []models.Tag
+
+    if strings.TrimSpace(q) != "" {
+        base.DB.Select(&tags, "select * from tags where `Name` like ? limit 20 ", q)
+    }
+
+    c.SendJson(tags)
+    return nil
+}
+
+func SearchUsersCtrl(c *base.Action) base.AppErr  {
+    UpdateSessionActivityIfUser(c)
+
+    q := c.Req.FormValue("q")
+
+    q = "%"+ q + "%"
+
+    var UsersIds []int
+
+    if strings.TrimSpace(q) != "" {
+        base.DB.Select(&UsersIds, "SELECT Id FROM USER WHERE UserName OR FirstName OR LastName LIKE ? LIMIT 20  ", q)
+    }
+
+    usersFollow := models.UsersToInlineFollowView(UsersIds, c.UserId())
+    c.SendJson(usersFollow)
+    return nil
+}

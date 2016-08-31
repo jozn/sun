@@ -45,3 +45,18 @@ func DBStructsTojava2(w http.ResponseWriter, r *http.Request)  {
     fmt.Fprint(w,str)
 }
 
+func DBStructsToTable(a *base.Action) base.AppErr  {
+    str:=""
+    str += base.DbStructToTable(&models.Notification{},"notification")
+
+    a.SendJson(str)
+    return nil
+}
+
+
+func ShowCached(a *base.Action) base.AppErr  {
+
+    a.SendJson(models.Cache.Items())
+    return nil
+}
+

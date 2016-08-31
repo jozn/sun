@@ -3,16 +3,15 @@ package models
 import "ms/sun/base"
 
 type UserBasic struct {
-	Id               int
-	UserName         string
-	FirstName        string
-	LastName         string
-	FullName         string //deprecated
-	AvatarSrc        string //dep
-	AvatarUrl        string
-    PrivacyProfile int
-    About        string
-
+	Id             int
+	UserName       string
+	FirstName      string
+	LastName       string
+	FullName       string //deprecated
+	AvatarSrc      string //dep
+	AvatarUrl      string
+	PrivacyProfile int
+	About          string
 }
 
 type UserPhone struct {
@@ -36,24 +35,24 @@ type UserCounts struct {
 }
 
 type UserExtra struct {
-    Email                string `json:"-"`
-    PrimaryFollowingList int
-    CreatedTime          int `json:"-"`
-    UpdatedTime          int //`json:"-"`
+	Email                string `json:"-"`
+	PrimaryFollowingList int
+	CreatedTime          int `json:"-"`
+	UpdatedTime          int //`json:"-"`
 
-    LastPostTime         int
-    LastActionTime     int //post ,comment, like ,... === for activity in memmoery
+	LastPostTime   int
+	LastActionTime int //post ,comment, like ,... === for activity in memmoery
 }
 
 type UserSession struct {
-    SessionUuid        string
-    DeviceUuid         string
-    AppVersion         int
-    LastLoginTime        int
-    LastActivityTime   int
-    LastIpAddress      string
-    LastWifiMacAddress string
-    LastNetworkType    string
+	SessionUuid        string
+	DeviceUuid         string
+	AppVersion         int
+	LastLoginTime      int
+	LastActivityTime   int
+	LastIpAddress      string
+	LastWifiMacAddress string
+	LastNetworkType    string
 }
 
 // +gen slice:"Where,GroupBy[string],DistinctBy,SortBy,Select[string]"
@@ -66,18 +65,18 @@ type UserTable struct {
 	UserPhone
 	UserSecurity
 	UserCounts
-    UserSession
+	UserSession
 	UserExtra
 }
 
 /////////// for Responses //////////////////////////////////////
 
 type UserBasicAndMe struct { //legacy switch to UserTable
-    UserBasic
-    UserId        int
-    UpdatedTime   int
-    AmIFollowing  int //dep
-    FollowingType int /// 0: not_following  1: following  2: follow_requested
+	UserBasic
+	UserId        int
+	UpdatedTime   int
+	AmIFollowing  int //dep
+	FollowingType int /// 0: not_following  1: following  2: follow_requested
 	//FollowingLists int
 }
 
@@ -93,19 +92,18 @@ type UserBasicPhoneAndMe struct {
 
 /////////////////////////////////////////////
 /// User functions
-func (ub *UserBasic) GetFullName() string  {
-    return ub.FirstName + " " + ub.LastName
+func (ub *UserBasic) GetFullName() string {
+	return ub.FirstName + " " + ub.LastName
 }
 
-func (ub *UserBasic) ToUserInlineView() *UserInlineView  {
-    v := UserInlineView{}
-    v.FullName = ub.GetFullName()
-    v.UserId = ub.Id
-    v.UserName = ub.UserName
-    v.AvatarUrl = ub.AvatarUrl
-    return &v
+func (ub *UserBasic) ToUserInlineView() *UserInlineView {
+	v := UserInlineView{}
+	v.FullName = ub.GetFullName()
+	v.UserId = ub.Id
+	v.UserName = ub.UserName
+	v.AvatarUrl = ub.AvatarUrl
+	return &v
 }
-
 
 /////////////////////////////////////////////////////////////
 
@@ -126,9 +124,10 @@ func (t *UserBasicAndMe) FormUserAndMe(u UserTable, meId int) {
 }
 
 func (ub *UserBasic) UpdateToTable() {
-    //UserMemoryStore.GetForUser(ub)
-    base.DbUpdateStruct(ub,"user")
+	//UserMemoryStore.GetForUser(ub)
+	base.DbUpdateStruct(ub, "user")
 }
+
 ///////////////////////////////////////////////////////////////////
 
 /////////// Deprecated //////////////////////////////
@@ -145,8 +144,7 @@ type UserInfo struct { //deprecated
 }
 
 type UserPassword struct {
-    UserId      int
-    Password    int
-    CreatedTime int
+	UserId      int
+	Password    int
+	CreatedTime int
 }
-

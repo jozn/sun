@@ -2,11 +2,9 @@ package models
 
 func init() {
 
-    go impleOfPeriodaclyUpdateLastActivityOfUser()
+	go impleOfPeriodaclyUpdateLastActivityOfUser()
 
-    //load all tags
-    //ReloadAllTags()
-
-
+	//load all tags
+	//ReloadAllTags()
 
 }

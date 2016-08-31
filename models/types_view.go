@@ -84,6 +84,7 @@ type UserInlineInfo struct {
 	FullName string
 	// Avatars Avatars
 }
+
 /*
 
 type ViewUser struct {

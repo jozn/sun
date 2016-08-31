@@ -3,6 +3,7 @@ package ctrl
 import (
     "ms/sun/base"
     "ms/sun/models"
+    "strings"
 )
 
 func TagsPostsListCtrl(c *base.Action) base.AppErr  {
@@ -10,6 +11,7 @@ func TagsPostsListCtrl(c *base.Action) base.AppErr  {
     UpdateSessionActivityIfUser(c)
 
     tagName:= c.Req.FormValue("tag")
+    tagName = strings.Replace(tagName,"#","",-1)
 
     tag,ok :=models.TagsMap.GetTag(tagName)
 

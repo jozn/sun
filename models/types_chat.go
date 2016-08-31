@@ -119,8 +119,8 @@ type MessagesTableSpec struct {
 	ClientReceivedTimestamp int
 	ServerDeletedTimestamp  int
 
-	MediaName       string
-	MediaExtension       string
+	MediaName      string
+	MediaExtension string
 }
 
 type MessagesTable struct {
@@ -135,51 +135,49 @@ type MessagesTable struct {
 }
 
 type MessagesTableFromClient struct {
-	MessageKey         string
-	RoomKey            string
-	UserId             int
-	RoomTypeId             int
-	MessageTypeId      int
-	Text               string
-	ExtraJson          string
-	CreatedMs          int
+	MessageKey    string
+	RoomKey       string
+	UserId        int
+	RoomTypeId    int
+	MessageTypeId int
+	Text          string
+	ExtraJson     string
+	CreatedMs     int
 
 	//media
-	MediaThumb64       string
-	MediaName       string
-	MediaLocalSrc       string
-	MediaServerSrc       string
-	MediaSize int
-	MediaDuration int
-	MediaHeight int
-	MediaWidth int
+	MediaThumb64   string
+	MediaName      string
+	MediaLocalSrc  string
+	MediaServerSrc string
+	MediaSize      int
+	MediaDuration  int
+	MediaHeight    int
+	MediaWidth     int
 	MediaExtension string
-
 }
 
 /////// Communication ///////
 type MessageSyncRow struct {
-	MessageKey         string
-	RoomKey            string
-	UserId             int
-	MessageTypeId      int
-	Text               string
-	ExtraJson          string
-	CreatedTimeMs       int
+	MessageKey    string
+	RoomKey       string
+	UserId        int
+	MessageTypeId int
+	Text          string
+	ExtraJson     string
+	CreatedTimeMs int
 	//
-	MediaSize int
+	MediaSize     int
 	MediaDuration int
-	MediaThumb64 string
-	MediaName string
+	MediaThumb64  string
+	MediaName     string
 }
 
-type MessageSyncMeta struct  {
-	MessageKey         string
-	RoomKey            string
-	ByUserId     int
-	AtTimeMs int// this is client time
-	ExtraData interface{}
-
+type MessageSyncMeta struct {
+	MessageKey string
+	RoomKey    string
+	ByUserId   int
+	AtTimeMs   int // this is client time
+	ExtraData  interface{}
 }
 
 /////////////////////////
@@ -194,7 +192,7 @@ type PhoneContact struct {
 
 type PhoneContactTable struct {
 	//	PhoneContact
-	Id int
+	Id                    int
 	PhoneDisplayName      string
 	PhoneFamilyName       string
 	PhoneNumber           string
@@ -206,8 +204,6 @@ type PhoneContactTable struct {
 	UpdatedTimeStamp      int
 }
 
-
-
 //deprectaed
 type ContactPhone struct {
 	PhoneContactRowId        int
@@ -218,6 +214,7 @@ type ContactPhone struct {
 	PhoneDisplayName         string
 	PhoneFamilyName          string
 }
+
 //dep
 /////////////////from Android client
 type ClientPhoneContact struct {
@@ -227,7 +224,3 @@ type ClientPhoneContact struct {
 	PhoneNormalizedNumber string
 	PhoneContactRowId     int
 }
-
-
-
-

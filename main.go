@@ -20,11 +20,11 @@ import (
 	. "ms/sun/base"
 	. "ms/sun/models"
 	"net"
+	_ "net/http/pprof"
 	"os"
 	"strconv"
 	"strings"
 	"time"
-	_ "net/http/pprof"
 	//"github.com/pkg/profile"
 	//"runtime"
 	//"github.com/garyburd/redigo/redis"
@@ -85,10 +85,8 @@ func main() {
 	//registerWSRoutes()
 	//init_dbs()
 
-
 	//// Inits ///////////////
 	registerCmdRouters()
-
 
 	// _casheCom = make(map[int][]Comment, 100)
 	// _casheLike = make(map[int][]Like, 100)
@@ -110,17 +108,16 @@ func main() {
 		log.Println(http.ListenAndServe("localhost:6060", nil))
 	}()
 
-
-    //in models
-    OnAppStart_Models()
+	//in models
+	OnAppStart_Models()
 
 	http.ListenAndServe(":5000", nil)
 	//runtime.MemProfileRecord{}.
 }
 
-func redisInit()  {
-	var err  error
-	redisPool , err = pool.New("tcp", "localhost:6379", 10)
+func redisInit() {
+	var err error
+	redisPool, err = pool.New("tcp", "localhost:6379", 10)
 	if err != nil {
 		fmt.Println("redis failed")
 		return
@@ -172,7 +169,7 @@ func actioner2(action func(*Action)) http.HandlerFunc {
 
 //for Version 2 of Action -- that returns ActionErr
 func actionToFunc(action func(*Action) AppErr) http.HandlerFunc {
-	return (&Action{Fn2: action,Ver:2}).ServeHTTP
+	return (&Action{Fn2: action, Ver: 2}).ServeHTTP
 }
 
 //func dummy() {

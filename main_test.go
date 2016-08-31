@@ -5,9 +5,9 @@ import (
 	// "fmt"
 	"encoding/json"
 	"ms/sun/models"
+	"sync"
 	"testing"
 	"unicode"
-	"sync"
 	//"time"
 )
 
@@ -28,13 +28,14 @@ func BenchmarkDebug(b *testing.B) {
 		debug("...")
 	}
 }
+
 ////////////converting  /////////////////
 func Benchmark_ConvertStrToBytes(b *testing.B) {
-    s:= "abcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh"
-    //f := func() {}
-    for i := 0; i < b.N; i++ {
-        _ = []byte(s)
-    }
+	s := "abcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh"
+	//f := func() {}
+	for i := 0; i < b.N; i++ {
+		_ = []byte(s)
+	}
 }
 
 ///////////////////////Functions
@@ -46,43 +47,41 @@ func Benchmark_EmptyFunc(b *testing.B) {
 }
 
 func Benchmark_CreatingEmptyFunc(b *testing.B) {
-    for i := 0; i < b.N; i++ {
-        _ = func(i int) {}
-    }
+	for i := 0; i < b.N; i++ {
+		_ = func(i int) {}
+	}
 }
 
 func Benchmark_CreatingFunc(b *testing.B) {
-    f2 := func (j int) int { return  j}
-    for i := 0; i < b.N; i++ {
-        _ = func(i int) {f2(i)}
-    }
+	f2 := func(j int) int { return j }
+	for i := 0; i < b.N; i++ {
+		_ = func(i int) { f2(i) }
+	}
 }
 
 //////////////////////  Chaneels       //////////  ////////////////////////
 func Benchmark_CreatingChanels(b *testing.B) {
-    for i := 0; i < b.N; i++ {
-      _ =  make(chan int,1)
-    }
+	for i := 0; i < b.N; i++ {
+		_ = make(chan int, 1)
+	}
 }
 
-
-
 func Benchmark_SendingToChanels(b *testing.B) {
-    ch := make(chan int,1000)
+	ch := make(chan int, 1000)
 
-    go func() {
-        for _ =range ch {
-        }
-    }()
-    for i := 0; i < b.N; i++ {
-        ch <- i
-    }
-    close(ch)
+	go func() {
+		for _ = range ch {
+		}
+	}()
+	for i := 0; i < b.N; i++ {
+		ch <- i
+	}
+	close(ch)
 }
 
 func _Benchmark_GoRotnis(b *testing.B) {
-	ch := make(chan int,1000)
-	f := func(j int ) {
+	ch := make(chan int, 1000)
+	f := func(j int) {
 		ch <- j
 	}
 	go func() {
@@ -99,10 +98,10 @@ func Benchmark_Channels(b *testing.B) {
 
 	var done sync.WaitGroup
 	done.Add(1)
-	N:= 100000
+	N := 100000
 	for i := 0; i < N; i++ {
 		go func(j int) {
-			if j == 1{
+			if j == 1 {
 				for _ = range ch {
 				}
 			}
@@ -118,13 +117,13 @@ func Benchmark_Channels(b *testing.B) {
 		done.Done()
 	}()
 
-
 	for i := 0; i < b.N; i++ {
 		ch <- true
 	}
 	close(ch)
 	done.Wait()
 }
+
 // func BenchmarkLoopii(b *testing.B) {
 // 	for i := 0; i < b.N; i++ {
 // 		loopii()
@@ -138,10 +137,10 @@ func BenchmarkReturnii(b *testing.B) {
 }
 
 func Benchmark_ReturnInt(b *testing.B) {
-    f := func (j int) int { return  j}
-    for i := 0; i < b.N; i++ {
-        f(i)
-    }
+	f := func(j int) int { return j }
+	for i := 0; i < b.N; i++ {
+		f(i)
+	}
 }
 
 func BenchmarkStr(b *testing.B) {
@@ -207,7 +206,7 @@ func loopStr(text string) {
 		unicode.IsSpace(b)
 	}
 	// }
-    _ = b
+	_ = b
 	//e(b)
 }
 

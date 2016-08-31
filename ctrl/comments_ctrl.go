@@ -65,7 +65,7 @@ func PostAddCommentAction(c *base.Action) base.AppErr {
 	base.DbInsertStruct(&cmt, "comments")
     models.QueryIncerPostCommentsCount(pid,1)*/
 	// c.SendText("ok")
-    cmt := models.AddNewComment(c.UserId(),pid,texts)
+    cmt := models.CreateNewComment(c.UserId(),pid,texts)
 	c.SendJson(cmt)
 	return nil
 }
