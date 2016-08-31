@@ -169,11 +169,12 @@ func (db *memoryStoreImpl) AddPostLike(UserId, PostId int) {
 		if !s.LikedPost.BinaryContains(PostId) { //don't duplicate
 			s.LikedPost.AddAndSort(PostId)
 		}
+        QueryIncerPostLikesCount(PostId, 1)
 		//QueryReomePostLike(UserId,PostId)
-		err := QueryAddPostLike(UserId, PostId)
+		/*err := QueryAddPostLike(UserId, PostId)
 		if err == nil {
 			QueryIncerPostLikesCount(PostId, 1)
-		}
+		}*/
 	}
 }
 
@@ -191,10 +192,11 @@ func (db *memoryStoreImpl) RemovePostLike(UserId, PostId int) {
 	s, ok := db.Map[UserId]
 	if ok {
 		s.LikedPost.RemoveAndSort(PostId)
-		err := QueryReomePostLike(UserId, PostId)
+        QueryDecerPostLikesCount(PostId, 1)
+		/*err := QueryReomePostLike(UserId, PostId)
 		if err == nil {
 			QueryDecerPostLikesCount(PostId, 1)
-		}
+		}*/
 	}
 }
 

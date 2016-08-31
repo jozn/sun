@@ -29,7 +29,8 @@ func SearchCtrl(c *base.Action) base.AppErr  {
 
     usersFollow := models.UsersToInlineFollowView(UsersIds, c.UserId())
     res := SearchResultView{Tags: tags, Users: usersFollow}
-    c.SendJson(res)
+    _ = res
+    c.SendJson("as")
     return nil
 }
 
@@ -65,5 +66,14 @@ func SearchUsersCtrl(c *base.Action) base.AppErr  {
 
     usersFollow := models.UsersToInlineFollowView(UsersIds, c.UserId())
     c.SendJson(usersFollow)
+    return nil
+}
+
+
+func NoftificationsCtrl2(c *base.Action) base.AppErr  {
+    //MustBeUserAndUpdate(c)
+
+    _ =(models.Notification_GetLastsViews(c.UserId()))
+    c.SendJson("asdsa")
     return nil
 }

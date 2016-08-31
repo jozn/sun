@@ -98,6 +98,42 @@ func Notification_OnFollowing_Imple(UserId, FollowedPeerUserId int , added bool)
     }
 }
 
+///////// Likes /////////////
+func Notification_OnPostLiked(lk *Like) {
+    Notification_OnPostLikeing_Imple(lk,true)
+}
+
+func Notification_OnPostUnLiked(lk *Like) {
+    Notification_OnPostLikeing_Imple(lk,false)
+}
+
+func Notification_OnPostLikeing_Imple(lk *Like , added bool) {
+    post,err := CacheModels.GetPostById(lk.PostId)
+    if err != nil {
+        return
+    }
+
+    nf := Notification{
+        Id:0,
+        ForUserId: post.UserId,
+        ActorUserId: lk.UserId,
+        ActionTypeId: ACTION_TYPE_POST_LIKED,
+        ObjectTypeId: OBJECT_LIKE,
+        TargetId: post.Id,
+        ObjectId: 0,
+        SeenStatus: 0,
+        CreatedTime: helper.TimeNow(),
+    }
+
+    if added {
+        nf.InsertToDb()
+    }else{
+        nf.ActionTypeId = - nf.ActionTypeId
+        nf.InsertToDb()
+        Notification_Delete(nf)
+    }
+}
+
 //////////////////////////////////
 func Notification_Delete(nf Notification) {
     q:="delete from notification where ForUserId = ? and ActorUserId = ? and ActionTypeId = ? and TargetId = ?"
@@ -112,3 +148,37 @@ type NotificationView struct {
 	PayLoad interface{}
 	Actor   UserBasicAndMe
 }
+
+func Notification_GetLastsViews(UserId int) ([]NotificationView) {
+    q:= "select * from notification where ForUserId = ? order by Id desc limit 200 "
+
+    var nots []Notification
+    base.DB.Select(&nots, q, UserId)
+
+    res := make([]NotificationView,0, len(nots))
+
+    for _, nf := range nots {
+        nv :=NotificationView{}
+        nv.Notification = nf
+
+        if (nf.ActionTypeId > 0 ){
+            nv.Actor = *GetUserBasicAndMe(nf.ActorUserId ,UserId)
+
+            switch nf.ActionTypeId {
+            case ACTION_TYPE_FOLLOWED_YOU:
+                nv.PayLoad = nv.Actor
+            case ACTION_TYPE_POST_LIKED:
+                post,_ := CacheModels.GetPostById(nf.TargetId)
+                nv.PayLoad = *post
+            case ACTION_TYPE_POST_COMMENTED:
+                com,_ := CacheModels.GetCommentById(nf.TargetId)
+                nv.PayLoad = *com
+            }
+        }
+
+    }
+
+    return res
+
+}
+

@@ -26,6 +26,7 @@ func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int) (*Following
 }
 
 /////////////////////// Likes ////////////////////////
+//dep
 func QueryAddPostLike(UserId, PostId int) error {
 	l := Like{}
 	l.UserId = UserId
@@ -42,6 +43,7 @@ func QueryAddPostLike(UserId, PostId int) error {
 	return err
 }
 
+//dep
 func QueryReomePostLike(UserId, PostId int) error {
 	q := "DELETE FROM likes WHERE UserId = ? AND PostId = ?"
 	_, err := base.DB.Exec(q, UserId, PostId)

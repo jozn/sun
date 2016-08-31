@@ -99,7 +99,10 @@ func registerRoutes() {
 
 	mux.Get("/profile/all", actionToFunc(ctrl.GetPostsForProfileAction))
 
-	mux.Get("/recommend/top_posts", actionToFunc(ctrl.RecommendPostsCtrl))
+    mux.Get("/notifications", actionToFunc(ctrl.NoftificationsCtrl))
+    //mux.Get("notifications", actionToFunc(ctrl.NoftificationsCtrl))
+
+    mux.Get("/recommend/top_posts", actionToFunc(ctrl.RecommendPostsCtrl))
 	mux.Get("/recommend/users", actionToFunc(ctrl.RecommendUsersCtrl))
 	mux.Get("/recommend/top_tags", actionToFunc(ctrl.RecommendTagsCtrl))
 	mux.Get("/recommend/top_tags_discover", actionToFunc(ctrl.RecommendTagsWithPostsCtrl))
@@ -107,8 +110,12 @@ func registerRoutes() {
 	mux.Get("/tags/list", actionToFunc(ctrl.TagsPostsListCtrl))
 	mux.Get("/search", actionToFunc(ctrl.SearchCtrl))
 	mux.Get("/search/tags", actionToFunc(ctrl.SearchTagsCtrl))
-	mux.Get("/search/users", actionToFunc(ctrl.SearchTagsCtrl))
+	mux.Get("/search/users", actionToFunc(ctrl.SearchUsersCtrl))
 
-	http.Handle("/", mux)
+	mux.Get("/noti", actionToFunc(ctrl.NoftificationsCtrl2))
+
+    mux.Get("/not", actionToFunc(ctrl.NoftificationsCtrl))
+
+    http.Handle("/", mux)
 
 }
