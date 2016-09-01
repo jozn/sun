@@ -13,7 +13,7 @@ type Notification struct {
 	ActionTypeId int //added_post ,added_comment == NotifyTypeId
 	ObjectTypeId int //post , comment
 	TargetId     int // PostId, CommentId
-	ObjectId     int // == TargetId * 1000 + ObjectTypeId  ---- eg: 1256*1000 + 3 = 1256003
+	ObjectId     int //dep == TargetId * 1000 + ObjectTypeId  ---- eg: 1256*1000 + 3 = 1256003
 	SeenStatus   int
 	CreatedTime  int
 }
@@ -49,7 +49,7 @@ func Notification_OnPostCommented(comment *Comment, post *Post, toAdd bool) {
         ActorUserId: comment.UserId,
         ActionTypeId: ACTION_TYPE_POST_COMMENTED,
         ObjectTypeId: OBJECT_COMMENT,
-        TargetId: post.Id,
+        TargetId: comment.Id,
         ObjectId: objId,
         SeenStatus: 0,
         CreatedTime: helper.TimeNow(),
@@ -144,17 +144,78 @@ func Notification_Delete(nf Notification) {
 
 //////////////////////////////////////////////////
 type NotificationView struct {
-	Notification
-	PayLoad interface{}
-	Actor   UserBasicAndMe
+    Notification
+    Load interface{}
+	//Actor   UserBasicAndMe
+}
+
+type NotifPayload struct  {
+    Actor   *UserBasicAndMe
+    Post *Post
+    Comment *Comment
 }
 
 func Notification_GetLastsViews(UserId int) ([]NotificationView) {
     q:= "select * from notification where ForUserId = ? order by Id desc limit 200 "
 
     var nots []Notification
-    base.DB.Select(&nots, q, UserId)
+    err := base.DB.Select(&nots, q, UserId)
+    if err != nil {
+        helper.DebugPrintln(err)
+    }
+    res := make([]NotificationView,0, len(nots))
 
+    for _, nf := range nots {
+        nv :=NotificationView{}
+        nv.Notification = nf
+
+        load := NotifPayload{}
+        nv.Load = &load
+
+        if (nf.ActionTypeId > 0 ){
+            load.Actor = GetUserBasicAndMe(nf.ActorUserId ,UserId)
+
+            switch nf.ActionTypeId {
+            case ACTION_TYPE_FOLLOWED_YOU:
+
+            case ACTION_TYPE_POST_LIKED:
+                post,err := CacheModels.GetPostById(nf.TargetId)
+                if err == nil {
+                    load.Post = post
+                }else {
+                    helper.DebugPrintln(err)
+                }
+
+            case ACTION_TYPE_POST_COMMENTED:
+                com,err := CacheModels.GetCommentById(nf.TargetId)
+                if err == nil {
+                    load.Comment = com
+                    post,_ := CacheModels.GetPostById(com.PostId)
+                    load.Post = post
+                }else {
+                    helper.DebugPrintln(err)
+                }
+            }
+
+        }
+        res = append(res,nv)
+
+    }
+
+    return res
+
+}
+
+/*
+
+func Notification_GetLastsViews_BK(UserId int) ([]NotificationView) {
+    q:= "select * from notification where ForUserId = ? order by Id desc limit 200 "
+
+    var nots []Notification
+    err := base.DB.Select(&nots, q, UserId)
+    if err != nil {
+        helper.DebugPrintln(err)
+    }
     res := make([]NotificationView,0, len(nots))
 
     for _, nf := range nots {
@@ -168,17 +229,29 @@ func Notification_GetLastsViews(UserId int) ([]NotificationView) {
             case ACTION_TYPE_FOLLOWED_YOU:
                 nv.PayLoad = nv.Actor
             case ACTION_TYPE_POST_LIKED:
-                post,_ := CacheModels.GetPostById(nf.TargetId)
-                nv.PayLoad = *post
+                post,err := CacheModels.GetPostById(nf.TargetId)
+                helper.DebugPrintln(err)
+                if err == nil {
+                    nv.PayLoad = *post
+                }else {
+                    helper.DebugPrintln(err)
+                }
+
             case ACTION_TYPE_POST_COMMENTED:
-                com,_ := CacheModels.GetCommentById(nf.TargetId)
-                nv.PayLoad = *com
+                com,err := CacheModels.GetCommentById(nf.TargetId)
+                if err == nil {
+                    nv.PayLoad = *com
+                }else {
+                    helper.DebugPrintln(err)
+                }
             }
+
         }
+        res = append(res,nv)
 
     }
 
     return res
 
 }
-
+*/

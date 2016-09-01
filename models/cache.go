@@ -72,7 +72,7 @@ func (cm *_cacheModels) GetCommentById(Id int) (*Comment, error) {
 	}
 
     com:= new(Comment)
-    err := base.DB.Select(com, " select * from comment where Id = ? ", Id)
+    err := base.DB.Get(com, " select * from comments where Id = ? ", Id)
 	if err != nil {
 		return nil, errors.New("comment not found")
 	}
