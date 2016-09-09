@@ -88,16 +88,6 @@ type ContactsTableSpec struct {
 	UnseenMessageCount    int
 }
 
-type ContactUserInfo struct {
-	PhoneNormalizedNumberInt int //TODO:add to user table
-	IsFollowing              int
-	UserId                   int
-	AvatarUrl                string
-	StatusText               string
-	StatusId                 string
-	UpdateTimestamp          string
-	//	UnseenMessageCount    int
-}
 
 type MessagesTableSpec struct {
 	MessageKey              string
@@ -157,20 +147,6 @@ type MessagesTableFromClient struct {
 }
 
 /////// Communication ///////
-type MessageSyncRow struct {
-	MessageKey    string
-	RoomKey       string
-	UserId        int
-	MessageTypeId int
-	Text          string
-	ExtraJson     string
-	CreatedTimeMs int
-	//
-	MediaSize     int
-	MediaDuration int
-	MediaThumb64  string
-	MediaName     string
-}
 
 type MessageSyncMeta struct {
 	MessageKey string
@@ -204,6 +180,7 @@ type PhoneContactTable struct {
 	UpdatedTimeStamp      int
 }
 
+/*
 //deprectaed
 type ContactPhone struct {
 	PhoneContactRowId        int
@@ -224,3 +201,30 @@ type ClientPhoneContact struct {
 	PhoneNormalizedNumber string
 	PhoneContactRowId     int
 }
+type MessageSyncRow struct {
+    MessageKey    string
+    RoomKey       string
+    UserId        int
+    MessageTypeId int
+    Text          string
+    ExtraJson     string
+    CreatedTimeMs int
+    //
+    MediaSize     int
+    MediaDuration int
+    MediaThumb64  string
+    MediaName     string
+}
+
+type ContactUserInfo struct {
+    PhoneNormalizedNumberInt int //TODO:add to user table
+    IsFollowing              int
+    UserId                   int
+    AvatarUrl                string
+    StatusText               string
+    StatusId                 string
+    UpdateTimestamp          string
+                                 //	UnseenMessageCount    int
+}
+*/
+
