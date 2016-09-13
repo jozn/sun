@@ -24,6 +24,7 @@ func (pipe *UserDevicePipe) ServeIncomingReqs() {
 		defer func() {
 			if r := recover(); r != nil {
 				helper.Debug("Recovered in ws messaging clinet request", r)
+                pipe.ShutDownCompletely()
 			}
 		}()
 
@@ -31,19 +32,18 @@ func (pipe *UserDevicePipe) ServeIncomingReqs() {
 		if e != nil {
 			panic(e)
 		}
-		//FIXME:this is sequence message proccessing do we need multi process
-		for {
 
+		for {
 			var req base.WSReq
 			messageType, bytes, err := pipe.Ws.ReadMessage() //blocking
-			//cnt++
+
 			helper.Debug("messageType: ", " ::", messageType, string(bytes))
 			if messageType == websocket.CloseMessage || err != nil {
 				pipe.ShutDownCompletely()
-				helper.Debug("closeding ", messageType, " error: ", err)
+				helper.Debugf("closeing pip for userId: %v , messageType:%v , err: %v",pipe.UserId ,messageType, err)
 				return
 			}
-			//TODO: another go fn here for many command proccessing
+
 			if messageType == websocket.TextMessage {
 				err = json.Unmarshal(bytes, &req)
 				if err == nil {
@@ -68,16 +68,17 @@ func (pipe *UserDevicePipe) ServeIncomingReqs() {
 
 func (pipe *UserDevicePipe) ServeSendToUserDevice() {
 	go func() {
-		//if we panic somehow? in writing json to writer, just close ws
+		//if we panic somehow? in writing json shutdown
 		defer func() {
 			if r := recover(); r != nil {
-				pipe.Ws.Close()
+				pipe.ShutDownCompletely()
 			}
 		}()
 		for r := range pipe.ToDeviceChan {
 			pipe.Ws.WriteJSON(r)
 		}
 		//after closing chanel
+        //fixme :not neccossroy waht about .ShutDownCompletely()?
 		err := pipe.Ws.Close()
 		pipe.IsOpen = false
 		helper.Debug("closed: ", err)
@@ -99,7 +100,7 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 	AllPipesMap.ShutDownUser(pipe.UserId)
 }
 
-/////////////////////////////////
+/////////////// Commands handler //////////////////
 
 func serverWSReqCommands(req base.WSReq, pipe *UserDevicePipe) {
 	arr := make([]int64, 0, len(req.Commands))

@@ -23,6 +23,6 @@ func CommandsReceived(c *base.CmdAction) {
 				max = n
 			}
 		}
-		RemoveCmdsFromRedis(c.UserId, min, max)
+		RemoveCommandsFromRedis(c.UserId, min, max)
 	}
 }

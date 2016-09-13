@@ -50,7 +50,7 @@ func (m pipesMap) SendCmdToUser(UserId int, cmd *base.Command) {
 
 func (m pipesMap) SendAndStoreCmdToUser(UserId int, cmd *base.Command) {
 	//store
-	SaveCmdToRedis(UserId, cmd)
+	StoreCommandsToRedis(UserId, cmd)
 
 	//send
 	res := base.WSRes{Status: "OK", ReqKey: ""}
@@ -69,7 +69,7 @@ func (m pipesMap) ShutDownUser(UserId int) {
 }
 
 //adds a new pip
-func (m pipesMap) ServeUserWs(UserId int, ws *websocket.Conn) {
+func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 	pipe := UserDevicePipe{
 		UserId:       UserId,
 		ToDeviceChan: make(chan *base.WSRes, 10),
@@ -81,6 +81,8 @@ func (m pipesMap) ServeUserWs(UserId int, ws *websocket.Conn) {
 
 	pipe.ServeIncomingReqs()
 	pipe.ServeSendToUserDevice()
+
+    OnNewUserWsConnected(UserId)//do and send Stored Cmds in here
 
 	m.AddUserPipe(UserId, &pipe)
 }

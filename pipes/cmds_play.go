@@ -58,6 +58,7 @@ func HelloCmd(c *base.CmdAction) {
 func EchoRes(c *base.CmdAction) {
 	cmd := base.NewResponseCommand(c.Cmd.ResId)
 
+
 	cmd.SetData(models.UserBasic{FirstName: helper.RandString(20)})
 	AllPipesMap.SendCmdToUser(6, cmd)
 }

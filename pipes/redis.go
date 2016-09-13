@@ -9,16 +9,16 @@ import (
 	"encoding/json"
 )
 
-func SaveCmdToRedis(UserId int, cmd *base.Command) {
+func StoreCommandsToRedis(UserId int, cmd *base.Command) {
 	p := store.GetRedisPool()
 	gen := keygen.NewForUser(UserId)
 	key := gen.RedisMsgsAllKey() // "user_msgs:156"
 	//con,_ := p.Get()
 	r := p.Cmd(store.REDIS_SORTED_LIST_ADD, key, cmd.CmdId, helper.ToJson(cmd))
-	helper.Debug("SaveCmdToRedis()  ", r.Err)
+	helper.Debug("SaveCmdToRedis()  Err: ", r.Err)
 }
 
-func RemoveCmdsFromRedis(UserId int, minNano, maxNano int64) {
+func RemoveCommandsFromRedis(UserId int, minNano, maxNano int64) {
 	p := store.GetRedisPool()
 	gen := keygen.NewForUser(UserId)
 	key := gen.RedisMsgsAllKey() // "user_msgs:156"
@@ -28,7 +28,7 @@ func RemoveCmdsFromRedis(UserId int, minNano, maxNano int64) {
 		key,
 		minNano-100,
 		maxNano+100)
-	helper.Debug("RemoveCmdsFromRedis()  ", r.Err, key, minNano, maxNano)
+	helper.Debug("RemoveCmdsFromRedis() Err: ", r.Err, key, minNano, maxNano)
 }
 
 func GetEarlistCmdsFromRedis(UserId int) (cmds []*base.Command) {
