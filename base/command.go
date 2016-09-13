@@ -8,21 +8,23 @@ import (
 
 //todo: maybe merge WSReq and WSRes to one
 type WSReq struct {
-	SessionUid string //???
-	Command    string //dep
+	//SessionUid string //???
+	//Command    string //dep
 	Commands   []Command
+    NanoId uint64
 	//RequestId  string //dep
-	ReqKey string //dep
+	//ReqKey string //dep
 	//Params     map[string]interface{}//dep
 }
 
 type WSRes struct {
 	// BNCP
-	Status string //dep
+    Status       string //dep
 	//ResTime   int64//dep eventing
-	Commands []*Command
+    Commands     []*Command
+    SyncedNanoId uint64
 	//RequestId string //dep
-	ReqKey string //dep
+    ReqKey       string //dep
 	//TODO remove?
 	//Payload interface{} //dep no need, its eventing
 }

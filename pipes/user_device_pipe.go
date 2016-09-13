@@ -75,6 +75,7 @@ func (pipe *UserDevicePipe) ServeSendToUserDevice() {
 			}
 		}()
 		for r := range pipe.ToDeviceChan {
+            helper.Debug("sending to user fom ToDeviceChan Command size ", len(r.Commands))
 			pipe.Ws.WriteJSON(r)
 		}
 		//after closing chanel

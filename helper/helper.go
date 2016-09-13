@@ -13,6 +13,9 @@ func TimeNow() int {
 	return int(time.Now().Unix())
 }
 
+func TimeNowNano() int {
+    return int(time.Now().UnixNano())
+}
 func TimeNowMs() int {
 	return int(time.Now().UnixNano() / 1000000)
 }

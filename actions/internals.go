@@ -8,6 +8,7 @@ import (
 "ms/sun/sync"
     "ms/sun/constants"
     "ms/sun/models"
+    "ms/sun/pipes"
 )
 
 func SendSampleMesgTable(a *base.Action) base.AppErr {
@@ -21,7 +22,7 @@ func SendSampleMesgTable(a *base.Action) base.AppErr {
 
     dInt := helper.StrToInt(ds,2000)
     user := helper.StrToInt(us,6)
-    limit := helper.StrToInt(l,100)
+    limit := helper.StrToInt(l,10)
 
     emoji := true
     if(e!=""){
@@ -218,7 +219,7 @@ M0UV+Tn2PD20fSH/AKVUP//Z`
             //}
             //res.Commands = []*base.Command{&cmd}
             //sync.AllPipesMap.SendToUser(6,res)
-            sync.AllPipesMap.SendCmdToUser(user,&cmd)
+            pipes.AllPipesMap.SendAndStoreCmdToUser(user,&cmd)
             time.Sleep(time.Millisecond * time.Duration(dInt))
         }
         //return

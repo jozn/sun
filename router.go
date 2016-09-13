@@ -37,8 +37,8 @@ func registerRoutes() {
 	http.Handle("/upload3", actioner(PlayUpload3))
 	http.HandleFunc("/upload2", PlayUpload2)
 
-	http.HandleFunc("/ws", sync.ServeUserWs)//Deprectaed
-	http.HandleFunc("/ws1", pipes.ServeHttpWs)
+	http.HandleFunc("/ws1", sync.ServeUserWs)//Deprectaed
+	http.HandleFunc("/ws", pipes.ServeHttpWs)
 
 	http.Handle("/mysql1", actioner(fact.IsamPlay))
 	http.Handle("/f/msg", actioner(fact.ChatMsgFact1))
