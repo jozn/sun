@@ -1,7 +1,6 @@
 package pipes
 
 import (
-	"fmt"
 	"github.com/gorilla/websocket"
 	"sync"
 	//"time"
@@ -17,14 +16,14 @@ type UserDevicePipe struct {
 	Ws             *websocket.Conn
 	ToDeviceChan   chan *base.WSRes
 	FromDeviceChan chan *base.WSRes // NOT NEEDED?
-	m          sync.RWMutex
+	m              sync.RWMutex
 }
 
 func (pipe *UserDevicePipe) ServeIncomingReqs() {
 	go func() {
 		defer func() {
 			if r := recover(); r != nil {
-				fmt.Println("Recovered in ws messaging clinet request", r)
+				helper.Debug("Recovered in ws messaging clinet request", r)
 			}
 		}()
 
@@ -38,32 +37,30 @@ func (pipe *UserDevicePipe) ServeIncomingReqs() {
 			var req base.WSReq
 			messageType, bytes, err := pipe.Ws.ReadMessage() //blocking
 			//cnt++
-			fmt.Println("messageType: ", " ::", messageType, string(bytes))
+			helper.Debug("messageType: ", " ::", messageType, string(bytes))
 			if messageType == websocket.CloseMessage || err != nil {
-				pipe.IsOpen = false
-				close(pipe.ToDeviceChan)
-				fmt.Println("closeding ", messageType, " error: ", err)
+				pipe.ShutDownCompletely()
+				helper.Debug("closeding ", messageType, " error: ", err)
 				return
 			}
 			//TODO: another go fn here for many command proccessing
 			if messageType == websocket.TextMessage {
-				//t1 := time.Now().UnixNano()
-				json.Unmarshal(bytes, &req)
-				//res := handleWSCommand(req,resChan)
-				serverWSReqCmds(req, pipe)
+				err = json.Unmarshal(bytes, &req)
+				if err == nil {
+					serverWSReqCommands(req, pipe)
+				}
 				fLog.WriteString(string(bytes) + "\n")
 				fLog.Sync()
-				//					devPrintn("WS: Command: ", req.Command, " Res: ", res)
-				//res.ResTime = (time.Now().UnixNano() - t1) / 1e6 //to miliscond
-				//resChan <- res
 			}
 
 			if messageType == websocket.BinaryMessage {
-				f, _ := os.Create("./upload/ws_" + helper.RandString(8))
+				pipe.ShutDownCompletely()
+				return
+				/*f, _ := os.Create("./upload/ws_" + helper.RandString(8))
 				wd, _ := os.Getwd()
 				fmt.Println("ws: "+" wd:"+wd+"binary:  ", bytes)
 				f.Write(bytes)
-				f.Close()
+				f.Close()*/
 			}
 		}
 	}()
@@ -83,7 +80,7 @@ func (pipe *UserDevicePipe) ServeSendToUserDevice() {
 		//after closing chanel
 		err := pipe.Ws.Close()
 		pipe.IsOpen = false
-		fmt.Println("closed: ", err)
+		helper.Debug("closed: ", err)
 	}()
 }
 
@@ -94,13 +91,17 @@ func (pipe *UserDevicePipe) SendToUser(res base.WSRes) {
 }
 
 func (pipe *UserDevicePipe) ShutDown() {
-    pipe.Ws.Close()
-    close(pipe.ToDeviceChan)
+	pipe.Ws.Close()
+	close(pipe.ToDeviceChan)
+}
+
+func (pipe *UserDevicePipe) ShutDownCompletely() {
+	AllPipesMap.ShutDownUser(pipe.UserId)
 }
 
 /////////////////////////////////
 
-func serverWSReqCmds(req base.WSReq, pipe *UserDevicePipe) {
+func serverWSReqCommands(req base.WSReq, pipe *UserDevicePipe) {
 	arr := make([]int64, 0, len(req.Commands))
 	serveCmdsRec := true
 	for _, cmd := range req.Commands {
@@ -119,7 +120,7 @@ func serverWSReqCmds(req base.WSReq, pipe *UserDevicePipe) {
 
 	for _, cmd := range req.Commands {
 		fncmd := base.CmdMapRouter[cmd.Name]
-		fmt.Println("serving Cmd: ", cmd.Name, " Userid: ", pipe.UserId)
+		helper.Debug("serving Cmd: ", cmd.Name, " Userid: ", pipe.UserId)
 		action := base.CmdAction{Req: &req, UserId: pipe.UserId, Cmd: &cmd}
 		if fncmd != nil {
 			fncmd(&action)

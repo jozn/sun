@@ -1,17 +1,18 @@
 package pipes
 
 import (
-	"fmt"
 	"github.com/gorilla/websocket"
 	"ms/sun/base"
-    "sync"
+	"ms/sun/helper"
+	"sync"
 )
 
 //todo change UserDevicePipe => *UserDevicePipe
 type pipesMap struct {
-    mp map[int]*UserDevicePipe
-    m sync.RWMutex
+	mp map[int]*UserDevicePipe
+	m  sync.RWMutex
 }
+
 //type pipesMap map[int]*UserDevicePipe
 
 //var AllPipesMap = make(pipesMap) // make(map[int]UserDevicePipe)
@@ -20,13 +21,13 @@ var AllPipesMap = new(pipesMap) // make(map[int]UserDevicePipe)
 
 func (m pipesMap) SendToUser(UserId int, res base.WSRes) {
 	pipe, ok := m.GetUserPipe(UserId)
-	fmt.Printf("sending to user:%d %v %v ", UserId, ok, res.Commands)
+	helper.Debugf("sending to user:%d %v %v ", UserId, ok, res.Commands)
 	if ok && pipe.IsOpen {
 		defer func() {
 			if r := recover(); r != nil {
 				//pipe.IsOpen = false
-                pipe.ShutDown()
-				fmt.Println("Recovered in SendToUser: ", r)
+				pipe.ShutDown()
+				helper.Debug("Recovered in SendToUser: ", r)
 			}
 		}()
 		pipe.SendToUser(res)
@@ -36,15 +37,15 @@ func (m pipesMap) SendToUser(UserId int, res base.WSRes) {
 
 func (m pipesMap) GetUserPipe(UserId int) (*UserDevicePipe, bool) {
 	m.m.RLock()
-    pipe,ok := m.mp[UserId]
-    m.m.RUnlock()
-    return pipe,ok
+	pipe, ok := m.mp[UserId]
+	m.m.RUnlock()
+	return pipe, ok
 }
 
 func (m pipesMap) SendCmdToUser(UserId int, cmd *base.Command) {
-    res := base.WSRes{Status: "OK", ReqKey: ""}
-    res.Commands = []*base.Command{cmd}
-    m.SendToUser(UserId, res)
+	res := base.WSRes{Status: "OK", ReqKey: ""}
+	res.Commands = []*base.Command{cmd}
+	m.SendToUser(UserId, res)
 }
 
 func (m pipesMap) SendAndStoreCmdToUser(UserId int, cmd *base.Command) {
@@ -58,13 +59,13 @@ func (m pipesMap) SendAndStoreCmdToUser(UserId int, cmd *base.Command) {
 }
 
 func (m pipesMap) ShutDownUser(UserId int) {
-    pipe,ok := m.GetUserPipe(UserId)
-    if ok {
-        pipe.ShutDown()
-        m.m.RLock()
-        delete(m.mp,UserId)
-        m.m.RUnlock()
-    }
+	pipe, ok := m.GetUserPipe(UserId)
+	if ok {
+		pipe.ShutDown()
+		m.m.RLock()
+		delete(m.mp, UserId)
+		m.m.RUnlock()
+	}
 }
 
 //adds a new pip
@@ -76,12 +77,22 @@ func (m pipesMap) ServeUserWs(UserId int, ws *websocket.Conn) {
 		Ws:           ws,
 	}
 
-	fmt.Println("serving user ws for user:", UserId)
+	helper.Debug("serving user ws for user: ", UserId)
 
 	pipe.ServeIncomingReqs()
 	pipe.ServeSendToUserDevice()
 
-    m.m.RLock()
-	m.mp[UserId]= &pipe
-    m.m.RUnlock()
+	m.AddUserPipe(UserId, &pipe)
+}
+
+func (m pipesMap) AddUserPipe(UserId int, pipe *UserDevicePipe) {
+	m.m.RLock()
+	m.mp[UserId] = pipe
+	m.m.RUnlock()
+}
+
+func (m pipesMap) DeleteUserPipe(UserId int) {
+	m.m.RLock()
+	delete(m.mp, UserId)
+	m.m.RUnlock()
 }

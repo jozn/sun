@@ -1,7 +1,6 @@
 package pipes
 
 import (
-	"fmt"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/keygen"
@@ -16,7 +15,7 @@ func SaveCmdToRedis(UserId int, cmd *base.Command) {
 	key := gen.RedisMsgsAllKey() // "user_msgs:156"
 	//con,_ := p.Get()
 	r := p.Cmd(store.REDIS_SORTED_LIST_ADD, key, cmd.CmdId, helper.ToJson(cmd))
-	fmt.Println("SaveCmdToRedis()  ", r.Err)
+	helper.Debug("SaveCmdToRedis()  ", r.Err)
 }
 
 func RemoveCmdsFromRedis(UserId int, minNano, maxNano int64) {
@@ -29,7 +28,7 @@ func RemoveCmdsFromRedis(UserId int, minNano, maxNano int64) {
 		key,
 		minNano-100,
 		maxNano+100)
-	fmt.Println("RemoveCmdsFromRedis()  ", r.Err, key, minNano, maxNano)
+	helper.Debug("RemoveCmdsFromRedis()  ", r.Err, key, minNano, maxNano)
 }
 
 func GetEarlistCmdsFromRedis(UserId int) (cmds []*base.Command) {
