@@ -129,7 +129,3 @@ func serverWSReqCommands(req base.WSReq, pipe *UserDevicePipe) {
 		}
 	}
 }
-
-func nn() {
-
-}
