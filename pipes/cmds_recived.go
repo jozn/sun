@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"ms/sun/base"
-	"ms/sun/sync"
 )
 
 func CommandsReceived(c *base.CmdAction) {
@@ -24,6 +23,6 @@ func CommandsReceived(c *base.CmdAction) {
 				max = n
 			}
 		}
-		sync.RemoveCmdsFromRedis(c.UserId, min, max)
+		RemoveCmdsFromRedis(c.UserId, min, max)
 	}
 }

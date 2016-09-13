@@ -10,7 +10,6 @@ import (
 	//"ms/sun/docs/del/chat"
 	"ms/sun/commands"
 	"ms/sun/constants"
-	"ms/sun/sync"
 )
 
 func MsgAddNew(c *base.CmdAction) {
@@ -30,11 +29,11 @@ func MsgAddNew(c *base.CmdAction) {
 
 	recivedCmd := commands.NewMsgsReceivedToServer(meta)
 
-	sync.AllPipesMap.SendAndStoreCmdToUser(c.UserId, recivedCmd)
+	AllPipesMap.SendAndStoreCmdToUser(c.UserId, recivedCmd)
 
 	//send msg to peer
 	cmd := commands.NewMsgsAddNew(msg)
-	sync.AllPipesMap.SendAndStoreCmdToUser(toUid, cmd)
+	AllPipesMap.SendAndStoreCmdToUser(toUid, cmd)
 }
 
 func MsgReceivedToPeer(c *base.CmdAction) {
@@ -59,14 +58,14 @@ func MsgReceivedToPeer(c *base.CmdAction) {
 		recivedCmd.AddSliceData(metRes)
 		recivedCmd.MakeDataReady()
 
-		sync.AllPipesMap.SendAndStoreCmdToUser(toUid, recivedCmd)
+		AllPipesMap.SendAndStoreCmdToUser(toUid, recivedCmd)
 
 		//send MsgDeletedFromServer to that user
 		delCmd := base.NewCommand(constants.MsgsDeletedFromServer)
 		delCmd.AddSliceData(metRes)
 		delCmd.MakeDataReady()
 
-		sync.AllPipesMap.SendAndStoreCmdToUser(toUid, delCmd)
+		AllPipesMap.SendAndStoreCmdToUser(toUid, delCmd)
 	}
 
 }
@@ -94,7 +93,7 @@ func MsgSeenByPeer(c *base.CmdAction) {
 		recivedCmd.AddSliceData(metRes)
 		recivedCmd.MakeDataReady()
 
-		sync.AllPipesMap.SendAndStoreCmdToUser(toUid, recivedCmd)
+		AllPipesMap.SendAndStoreCmdToUser(toUid, recivedCmd)
 	}
 
 }

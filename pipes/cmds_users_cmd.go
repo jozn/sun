@@ -4,7 +4,6 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
-	"ms/sun/sync"
 )
 
 func GetUserForTable(c *base.CmdAction) {
@@ -22,5 +21,5 @@ func GetUserForTable(c *base.CmdAction) {
 		Data: helper.ToJson(res),
 	}
 
-	sync.AllPipesMap.SendCmdToUser(c.UserId, &cmd)
+	AllPipesMap.SendCmdToUser(c.UserId, &cmd)
 }

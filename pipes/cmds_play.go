@@ -8,7 +8,6 @@ import (
 	"ms/sun/helper"
 	//"time"
 	"ms/sun/models"
-	"ms/sun/sync"
 )
 
 func AddNewMsg(c *base.CmdAction) {
@@ -31,7 +30,7 @@ func AddNewMsg(c *base.CmdAction) {
 	//res :=base.WSRes{
 	//}
 	//res.Commands = []*base.Command{&cmd}
-	sync.AllPipesMap.SendAndStoreCmdToUser(6, cmd)
+	AllPipesMap.SendAndStoreCmdToUser(6, cmd)
 	//sync.AllPipesMap.SendToUser(6,res)
 	//time.Sleep(time.Millisecond * time.Duration(dInt))
 
@@ -60,12 +59,12 @@ func EchoRes(c *base.CmdAction) {
 	cmd := base.NewResponseCommand(c.Cmd.ResId)
 
 	cmd.SetData(models.UserBasic{FirstName: helper.RandString(20)})
-	sync.AllPipesMap.SendCmdToUser(6, cmd)
+	AllPipesMap.SendCmdToUser(6, cmd)
 }
 
 func EchoCmd(c *base.CmdAction) {
 	b, _ := json.Marshal(c.Cmd)
 	r := base.WSRes{Status: "BB", ReqKey: string(b)}
 
-	sync.AllPipesMap.SendToUser(c.UserId, r)
+	AllPipesMap.SendToUser(c.UserId, r)
 }
