@@ -27,6 +27,11 @@ func(pipe *UserDevicePipe) ServeIncomingReqs() {
                 fmt.Println("Recovered in ws messaging clinet request", r)
             }
         }()
+
+        fLog,e :=os.OpenFile("./ws_Log_"+ helper.IntToStr(helper.TimeNow()), os.O_CREATE|os.O_WRONLY |os.O_APPEND , 0666)
+        if e!= nil{
+            panic(e)
+        }
         //FIXME:this is sequence message proccessing do we need multi process
         for {
 
@@ -46,6 +51,8 @@ func(pipe *UserDevicePipe) ServeIncomingReqs() {
                 json.Unmarshal(bytes, &req)
                 //res := handleWSCommand(req,resChan)
                 serverWSReqCmds(req,pipe)
+                fLog.WriteString(string(bytes)+"\n")
+                fLog.Sync()
                 //					devPrintn("WS: Command: ", req.Command, " Res: ", res)
                 //res.ResTime = (time.Now().UnixNano() - t1) / 1e6 //to miliscond
                 //resChan <- res
@@ -88,6 +95,22 @@ func(pipe *UserDevicePipe) SendToUser(res base.WSRes) {
 
 
 func serverWSReqCmds(req base.WSReq, pipe *UserDevicePipe) {
+    arr:= make([]int64,0,len(req.Commands))
+    serveCmdsRec := true
+    for _, cmd := range req.Commands {
+        arr = append(arr,cmd.CmdId)
+        if cmd.CmdId < 0 {
+            serveCmdsRec = false
+        }
+    }
+
+    if serveCmdsRec{
+        cmdsRecived := base.NewCommand("CommandsReceivedToServer")
+        cmdsRecived.CmdId = -1
+        cmdsRecived.SetData(arr)
+        AllPipesMap.SendCmdToUser(pipe.UserId,cmdsRecived)
+    }
+
     for _, cmd := range req.Commands {
         fncmd := base.CmdMapRouter[cmd.Name]
         fmt.Println("serving Cmd: ",cmd.Name, " Userid: ", pipe.UserId)
@@ -100,3 +123,6 @@ func serverWSReqCmds(req base.WSReq, pipe *UserDevicePipe) {
     }
 }
 
+func nn()  {
+
+}

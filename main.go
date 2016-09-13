@@ -103,10 +103,10 @@ func main() {
 	http.HandleFunc("/upload/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, r.URL.Path[1:])
 	})
-	go serverEcho()
-	go func() {
-		log.Println(http.ListenAndServe("localhost:6060", nil))
-	}()
+	//go serverEcho()
+	//go func() {
+	//	log.Println(http.ListenAndServe("localhost:6060", nil))
+	//}()
 
 	//in models
 	OnAppStart_Models()

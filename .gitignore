@@ -18,6 +18,7 @@ src/tmp/
 
 upload/
 
+ws_*
 
 *.map
 *.exe

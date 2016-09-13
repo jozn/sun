@@ -9,6 +9,7 @@ import (
 	"ms/sun/ctrl"
 	"ms/sun/routes"
 	"ms/sun/sync"
+    "ms/sun/pipes"
 )
 
 func registerRoutes() {
@@ -36,7 +37,8 @@ func registerRoutes() {
 	http.Handle("/upload3", actioner(PlayUpload3))
 	http.HandleFunc("/upload2", PlayUpload2)
 
-	http.HandleFunc("/ws", sync.ServeUserWs)
+	http.HandleFunc("/ws", sync.ServeUserWs)//Deprectaed
+	http.HandleFunc("/ws1", pipes.ServeUserWs)
 
 	http.Handle("/mysql1", actioner(fact.IsamPlay))
 	http.Handle("/f/msg", actioner(fact.ChatMsgFact1))

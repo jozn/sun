@@ -35,4 +35,7 @@ func ServeUserWs(w http.ResponseWriter, r *http.Request) {
 
     //TODO get userId
     AllPipesMap.ServeUserWs(uid,ws)
+
+
 }
+
