@@ -210,16 +210,14 @@ M0UV+Tn2PD20fSH/AKVUP//Z`
 
             }
 
-            cmd:=base.Command{
-                Name: constants.MsgsAddNew,//"addMsg",
-            }
+            cmd:=base.NewCommand(constants.MsgsAddNew)
             cmd.AddSliceData(msg)
             cmd.MakeDataReady()
             //res :=base.WSRes{
             //}
             //res.Commands = []*base.Command{&cmd}
             //sync.AllPipesMap.SendToUser(6,res)
-            pipes.AllPipesMap.SendAndStoreCmdToUser(user,&cmd)
+            pipes.AllPipesMap.SendAndStoreCmdToUser(user,cmd)
             time.Sleep(time.Millisecond * time.Duration(dInt))
         }
         //return

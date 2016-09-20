@@ -14,7 +14,12 @@ func StoreCommandsToRedis(UserId int, cmd *base.Command) {
 	gen := keygen.NewForUser(UserId)
 	key := gen.RedisMsgsAllKey() // "user_msgs:156"
 	//con,_ := p.Get()
-	r := p.Cmd(store.REDIS_SORTED_LIST_ADD, key, helper.TimeNowNano(), helper.ToJson(cmd))
+    score := helper.TimeNowNano()
+    if cmd.ServerNanoId < 1 {
+        cmd.ServerNanoId = score
+    }
+    score = cmd.ServerNanoId
+	r := p.Cmd(store.REDIS_SORTED_LIST_ADD, key, score, helper.ToJson(cmd))
 	helper.Debug("SaveCmdToRedis() Err: ", r.Err)
 }
 
@@ -26,8 +31,8 @@ func RemoveCommandsFromRedis(UserId int, minNano, maxNano int64) {
 	r := p.Cmd(
 		store.REDIS_SORTED_LIST_REMOVE_RANGE_SCORE,
 		key,
-		minNano-100,
-		maxNano+100)
+		minNano-10,
+		maxNano+10)
 	helper.Debug("RemoveCmdsFromRedis() Err: ", r.Err, key, minNano, maxNano)
 }
 

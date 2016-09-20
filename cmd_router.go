@@ -10,7 +10,8 @@ func registerCmdRouters() {
 	mp := base.CmdMapRouter
 
 	//commands reciced to client
-	mp["CommandsReceived"] = pipes.CommandsReceived
+	mp["CommandsReceived"] = pipes.CommandsReceived_Dep
+	mp["CommandsReceivedToClient"] = pipes.CommandsReceived
 
 	//Messages flow
 	mp["MsgsAddNew"] = pipes.MsgAddNew

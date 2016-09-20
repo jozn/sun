@@ -15,7 +15,7 @@ func SaveCmdToRedis(UserId int,cmd *base.Command) {
     gen := keygen.NewForUser(UserId)
     key := gen.RedisMsgsAllKey() // "user_msgs:156"
     //con,_ := p.Get()
-    r := p.Cmd(store.REDIS_SORTED_LIST_ADD,key , cmd.CmdId ,helper.ToJson(cmd))
+    r := p.Cmd(store.REDIS_SORTED_LIST_ADD,key , cmd.ClientNanoId,helper.ToJson(cmd))
     fmt.Println("SaveCmdToRedis()  ",r.Err)
 }
 

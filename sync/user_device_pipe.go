@@ -98,15 +98,15 @@ func serverWSReqCmds(req base.WSReq, pipe *UserDevicePipe) {
     arr:= make([]int64,0,len(req.Commands))
     serveCmdsRec := true
     for _, cmd := range req.Commands {
-        arr = append(arr,cmd.CmdId)
-        if cmd.CmdId < 0 {
+        arr = append(arr,cmd.ClientNanoId)
+        if cmd.ClientNanoId < 0 {
             serveCmdsRec = false
         }
     }
 
     if serveCmdsRec{
         cmdsRecived := base.NewCommand("CommandsReceivedToServer")
-        cmdsRecived.CmdId = -1
+        cmdsRecived.ClientNanoId = -1
         cmdsRecived.SetData(arr)
         AllPipesMap.SendCmdToUser(pipe.UserId,cmdsRecived)
     }

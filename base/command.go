@@ -22,7 +22,7 @@ type WSRes struct {
     Status       string //dep
 	//ResTime   int64//dep eventing
     Commands     []*Command
-    SyncedNanoId uint64
+    SyncedNanoId int64
 	//RequestId string //dep
     ReqKey       string //dep
 	//TODO remove?
@@ -31,11 +31,12 @@ type WSRes struct {
 
 type Command struct {
 	//Command string
-	Name            string
-	ResId           int64
-	CmdId           int64
-	Data            string        //marshilized json - don't set dirctly set via toJsonData
-	toJsonSliceData []interface{} //`json:"-"`
+    Name            string
+    ResId           int64
+    ClientNanoId    int64
+    ServerNanoId    int64
+    Data            string        //marshilized json - don't set dirctly set via toJsonData
+    toJsonSliceData []interface{} //`json:"-"`
 	//Params  map[string]interface{}//dep
 }
 
@@ -43,11 +44,11 @@ func NewResponseCommand(ResId int64) *Command {
 	return &Command{
 		Name:  "ResCmd",
 		ResId: ResId,
-		CmdId: time.Now().UnixNano()}
+		ServerNanoId: time.Now().UnixNano()}
 }
 
 func NewCommand(Name string) *Command {
-	return &Command{Name: Name, CmdId: time.Now().UnixNano()}
+	return &Command{Name: Name, ServerNanoId: time.Now().UnixNano()}
 }
 
 func (self *Command) SetData(data interface{}) {
