@@ -9,6 +9,7 @@ import (
     "ms/sun/constants"
     "ms/sun/models"
     "ms/sun/pipes"
+    "fmt"
 )
 
 func SendSampleMesgTable(a *base.Action) base.AppErr {
@@ -34,9 +35,10 @@ func SendSampleMesgTable(a *base.Action) base.AppErr {
         is_image = true
     }
 
+
     go func() {
         for i:=0 ; i< limit ; i++ {
-            txt:=helper.FactRandStr(15)
+            txt:=  helper.FactRandStr(15)
             rnd:=rand.Intn(10)
             if  rnd== 5 {//big text 10%
                 txt = helper.FactRandStrEmoji(150,emoji)
@@ -48,6 +50,8 @@ func SendSampleMesgTable(a *base.Action) base.AppErr {
             if text != "" {
                 txt = text
             }
+
+            txt = fmt.Sprintf("id: %d ",i) + txt
 
             uid := helper.StrToInt(tus,rand.Intn(80)+1)
             //msg := chat.MessagesTable{}

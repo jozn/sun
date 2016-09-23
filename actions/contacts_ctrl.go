@@ -23,7 +23,7 @@ func SyncAllContactsAction(a *base.Action) base.AppErr {
 	var _cs []interface{} //just for inserting in mass
 	for _, c := range conts {
 		c.UserId = a.UserId()
-		c.CreatedTimeStamp = helper.TimeNow()
+		c.CreatedTime = helper.TimeNow()
 		_cs = append(_cs, c)
 	}
 

@@ -71,8 +71,8 @@ func TestUpload1(c *Action) {
 		//		row :=PhoneContactTable{}
 		//		row.PhoneContact = d
 		row.UserId = c.UserId()
-		row.CreatedTimeStamp = now()
-		row.UpdatedTimeStamp = now()
+		row.CreatedTime = now()
+		row.UpdatedTime = now()
 		interfaceSlice[i] = row //DbMassInsertStruct only accets real []interface{}
 		fmt.Println(i)
 		for i := 0; i < 1000; i++ {

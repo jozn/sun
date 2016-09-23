@@ -112,6 +112,7 @@ type SyncFollowings struct {
 }
 
 func SyncFollowingsAction(a *base.Action) base.AppErr  {
+    MustBeUserAndUpdate(a)
 	last_str := a.Req.Form.Get("last")//last TimeStamp
 	last := helper.StrToInt(last_str,0)
 

@@ -119,6 +119,8 @@ func registerRoutes() {
     mux.Get("/not", actionToFunc(ctrl.VNoftificationsCtrl))
     http.Handle("/not2", actioner(ctrl.VNoftificationsCtrl2))
 
+    mux.Get("/sync_users", actionToFunc(ctrl.SyncUsersCtrl))
+
     http.Handle("/", mux)
 
 }

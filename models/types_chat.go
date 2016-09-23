@@ -168,16 +168,16 @@ type PhoneContact struct {
 
 type PhoneContactTable struct {
 	//	PhoneContact
-	Id                    int
-	PhoneDisplayName      string
-	PhoneFamilyName       string
-	PhoneNumber           string
-	PhoneNormalizedNumber string
-	PhoneContactRowId     int
-	UserId                int
-	DeviceUuidId          int
-	CreatedTimeStamp      int
-	UpdatedTimeStamp      int
+    Id                    int
+    PhoneDisplayName      string
+    PhoneFamilyName       string
+    PhoneNumber           string
+    PhoneNormalizedNumber string
+    PhoneContactRowId     int
+    UserId                int
+    DeviceUuidId          int
+    CreatedTime           int
+    UpdatedTime           int
 }
 
 /*
