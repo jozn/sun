@@ -198,6 +198,7 @@ func (u *_User2Deleter)Delete (db sql.DB) (int,error) {
 
 }
 
+/*
 func whereClusesToSql(wheres []whereClause, whereSep string ) (string, []interface{}) {
     var wheresArr []string
     for _,w := range wheres{
@@ -211,4 +212,5 @@ func whereClusesToSql(wheres []whereClause, whereSep string ) (string, []interfa
     }
     return wheresStr , args
 }
+*/
 
