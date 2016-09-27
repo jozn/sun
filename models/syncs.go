@@ -34,4 +34,5 @@ func SyncGetAllChangedUser(UserId , LastTime int ) []User {
 
 func UserTableToUserViewCompation(users []User) []User {
 
+    return nil
 }
