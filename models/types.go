@@ -7,6 +7,8 @@ type Activity struct {
 	TargetActionId int
 	Privacy        int
 	CreatedTime    int
+    // xo fields
+    _exists, _deleted bool
 }
 
 type Blocked struct {
@@ -14,6 +16,8 @@ type Blocked struct {
 	UserId        int
 	BlockedUserID int
 	CreatedTime   int
+    // xo fields
+    _exists, _deleted bool
 }
 
 type Comment struct {
@@ -22,6 +26,8 @@ type Comment struct {
 	PostId      int
 	Text        string
 	CreatedTime int
+    // xo fields
+    _exists, _deleted bool
 }
 
 type Like struct {
@@ -30,6 +36,8 @@ type Like struct {
 	UserId      int
 	TypeId      int
 	CreatedTime int
+    // xo fields
+    _exists, _deleted bool
 }
 
 type Post struct {
@@ -48,6 +56,8 @@ type Post struct {
 	LikesCount    int
 	CommentsCount int
 	CreatedTime   int
+    // xo fields
+    _exists, _deleted bool
 }
 
 //not used in this version but maybe for futuer versions
@@ -62,6 +72,8 @@ type Session struct {
 	LastWifiMacAddress string
 	LastNetworkType    string
 	CreatedTime        int
+    // xo fields
+    _exists, _deleted bool
 }
 
 //Deprecated
@@ -73,4 +85,7 @@ type Media struct {
 	TypeId      int
 	CreatedTime int
 	Src         string
+    // xo fields
+    _exists, _deleted bool
 }
+

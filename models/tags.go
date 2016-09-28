@@ -7,20 +7,25 @@ import (
 )
 
 ///////////////// Structs Database /////////////////////////////
+// Go-Orma
 type Tag struct {
 	Id          int
 	Name        string
 	Count       int
 	IsBlocked   int
 	CreatedTime int
+    // xo fields
+    _exists, _deleted bool
 }
 
-type TagPost struct {
+type TagsPost struct {
 	Id          int
 	TagId       int
 	PostId      int
 	TypeId      int // text? photo? video?
 	CreatedTime int
+                    // xo fields
+    _exists, _deleted bool
 }
 
 /////////////////////////////////////////////
@@ -123,7 +128,7 @@ func AddTagsInPost(post *Post) {
 	for _, tagName := range parser.Tags {
 		tg, ok := TagsMap._map[tagName]
 		if ok {
-			tagPost := TagPost{}
+			tagPost := TagsPost{}
 			tagPost.TagId = tg.Id
 			tagPost.PostId = post.Id
 			tagPost.TypeId = post.TypeId
@@ -166,7 +171,7 @@ func AddTagsInPost_OLD_DEP(post Post) {
 			dbTag = dbTags[0]
 		}
 
-		tagPost := TagPost{}
+		tagPost := TagsPost{}
 		tagPost.TagId = dbTag.Id
 		tagPost.PostId = post.Id
 		tagPost.TypeId = post.TypeId

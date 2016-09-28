@@ -51,7 +51,7 @@ func SearchTagsAction(c *Action) {
 	tag := tags[0]
 	// devPrintn(tag)
 
-	var tagsPost []TagPost
+	var tagsPost []TagsPost
 	err = DB.Select(&tagsPost, "select * from tags_posts where TagId = ? limit 50", tag.Id)
 	// err = DB.Select(&tagsPost, "select * from tags_posts") // where TagId = ? limit 50", 1)
 	devPrintn(tagsPost)

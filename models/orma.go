@@ -1,12 +1,13 @@
 package models
 
 import (
-    "database/sql"
+    /*"database/sql"
     "ms/sun/helper"
     "strings"
     "strconv"
-    "github.com/jmoiron/sqlx"
+    "github.com/jmoiron/sqlx"*/
 )
+/*
 
 type deleter struct  {
     where []whereClause
@@ -197,6 +198,7 @@ func (u *_User2Deleter)Delete (db sql.DB) (int,error) {
     return int(num),nil
 
 }
+*/
 
 /*
 func whereClusesToSql(wheres []whereClause, whereSep string ) (string, []interface{}) {

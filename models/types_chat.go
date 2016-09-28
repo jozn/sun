@@ -157,14 +157,29 @@ type MessageSyncMeta struct {
 }
 
 /////////////////////////
-
+// Orma
 type PhoneContact struct {
-	PhoneDisplayName      string
-	PhoneFamilyName       string
-	PhoneNumber           string
-	PhoneNormalizedNumber string
-	PhoneContactRowId     int
+    Id int `json:"Id"` // Id -
+    PhoneDisplayName string `json:"PhoneDisplayName"` // PhoneDisplayName -
+    PhoneFamilyName string `json:"PhoneFamilyName"` // PhoneFamilyName -
+    PhoneNumber string `json:"PhoneNumber"` // PhoneNumber -
+    PhoneNormalizedNumber string `json:"PhoneNormalizedNumber"` // PhoneNormalizedNumber -
+    PhoneContactRowId int `json:"PhoneContactRowId"` // PhoneContactRowId -
+    UserId int `json:"UserId"` // UserId -
+    DeviceUuidId int `json:"DeviceUuidId"` // DeviceUuidId -
+    CreatedTime int `json:"CreatedTime"` // CreatedTime -
+    UpdatedTime int `json:"UpdatedTime"` // UpdatedTime -
+
+    // xo fields
+    _exists, _deleted bool
 }
+/*PhoneDisplayName      string
+PhoneFamilyName       string
+PhoneNumber           string
+PhoneNormalizedNumber string
+PhoneContactRowId     int
+// xo fields
+_exists, _deleted bool*/
 
 type PhoneContactTable struct {
 	//	PhoneContact

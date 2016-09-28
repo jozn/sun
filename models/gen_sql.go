@@ -9,6 +9,7 @@ import (
 	"encoding/csv"
 	"errors"
 	"fmt"
+	"ms/sun/config"
 	"ms/sun/helper"
 	"regexp"
 	"strconv"
@@ -19,10 +20,11 @@ import (
 
 // Comment represents a row from 'ms.comments'.
 
-type Comment struct {
-	Id          int64  `json:"Id"`          // Id -
+// Manualy copy this to project
+type __Comment struct {
+	Id          int    `json:"Id"`          // Id -
 	UserId      int    `json:"UserId"`      // UserId -
-	PostId      int64  `json:"PostId"`      // PostId -
+	PostId      int    `json:"PostId"`      // PostId -
 	Text        string `json:"Text"`        // Text -
 	CreatedTime int    `json:"CreatedTime"` // CreatedTime -
 
@@ -70,7 +72,7 @@ func (c *Comment) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	c.Id = int64(id)
+	c.Id = int(id)
 	c._exists = true
 
 	return nil
@@ -101,7 +103,7 @@ func (c *Comment) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	c.Id = int64(id)
+	c.Id = int(id)
 	c._exists = true
 
 	return nil
@@ -1840,14 +1842,15 @@ func (d *__Comment_Deleter) Delete(db XODB) (int, error) {
 
 // FollowingList represents a row from 'ms.following_list'.
 
-type FollowingList struct {
+// Manualy copy this to project
+type __FollowingList struct {
 	Id          int    `json:"Id"`          // Id -
 	UserId      int    `json:"UserId"`      // UserId -
 	ListType    int    `json:"ListType"`    // ListType -
 	Name        string `json:"Name"`        // Name -
 	Count       int    `json:"Count"`       // Count -
-	IsAuto      int16  `json:"IsAuto"`      // IsAuto -
-	IsPimiry    int16  `json:"IsPimiry"`    // IsPimiry -
+	IsAuto      int    `json:"IsAuto"`      // IsAuto -
+	IsPimiry    int    `json:"IsPimiry"`    // IsPimiry -
 	CreatedTime int    `json:"CreatedTime"` // CreatedTime -
 
 	// xo fields
@@ -2414,6 +2417,190 @@ func (d *__FollowingList_Deleter) Count_GE(val int) *__FollowingList_Deleter {
 	return d
 }
 
+func (u *__FollowingList_Deleter) IsAuto_In(ins []int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsAuto IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Deleter) IsAuto_NotIn(ins []int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsAuto NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingList_Deleter) IsAuto_EQ(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) IsAuto_NotEQ(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) IsAuto_LT(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) IsAuto_LE(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) IsAuto_GT(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) IsAuto_GE(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__FollowingList_Deleter) IsPimiry_In(ins []int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsPimiry IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Deleter) IsPimiry_NotIn(ins []int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsPimiry NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingList_Deleter) IsPimiry_EQ(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) IsPimiry_NotEQ(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) IsPimiry_LT(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) IsPimiry_LE(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) IsPimiry_GT(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) IsPimiry_GE(val int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__FollowingList_Deleter) CreatedTime_In(ins []int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2875,6 +3062,190 @@ func (d *__FollowingList_Updater) Count_GE(val int) *__FollowingList_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Count >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__FollowingList_Updater) IsAuto_In(ins []int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsAuto IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Updater) IsAuto_NotIn(ins []int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsAuto NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingList_Updater) IsAuto_EQ(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) IsAuto_NotEQ(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) IsAuto_LT(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) IsAuto_LE(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) IsAuto_GT(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) IsAuto_GE(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__FollowingList_Updater) IsPimiry_In(ins []int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsPimiry IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Updater) IsPimiry_NotIn(ins []int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsPimiry NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingList_Updater) IsPimiry_EQ(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) IsPimiry_NotEQ(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) IsPimiry_LT(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) IsPimiry_LE(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) IsPimiry_GT(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) IsPimiry_GE(val int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3346,6 +3717,190 @@ func (d *__FollowingList_Selector) Count_GE(val int) *__FollowingList_Selector {
 	return d
 }
 
+func (u *__FollowingList_Selector) IsAuto_In(ins []int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsAuto IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Selector) IsAuto_NotIn(ins []int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsAuto NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingList_Selector) IsAuto_EQ(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) IsAuto_NotEQ(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) IsAuto_LT(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) IsAuto_LE(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) IsAuto_GT(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) IsAuto_GE(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsAuto >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__FollowingList_Selector) IsPimiry_In(ins []int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsPimiry IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Selector) IsPimiry_NotIn(ins []int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsPimiry NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingList_Selector) IsPimiry_EQ(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) IsPimiry_NotEQ(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) IsPimiry_LT(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) IsPimiry_LE(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) IsPimiry_GT(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) IsPimiry_GE(val int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsPimiry >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__FollowingList_Selector) CreatedTime_In(ins []int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3643,9 +4198,19 @@ func (u *__FollowingList_Updater) Count(newVal int) *__FollowingList_Updater {
 
 //ints
 
+func (u *__FollowingList_Updater) IsAuto(newVal int) *__FollowingList_Updater {
+	u.updates[" IsAuto = ? "] = newVal
+	return u
+}
+
 //string
 
 //ints
+
+func (u *__FollowingList_Updater) IsPimiry(newVal int) *__FollowingList_Updater {
+	u.updates[" IsPimiry = ? "] = newVal
+	return u
+}
 
 //string
 
@@ -4008,13 +4573,14 @@ func (d *__FollowingList_Deleter) Delete(db XODB) (int, error) {
 
 // FollowingListMember represents a row from 'ms.following_list_member'.
 
-type FollowingListMember struct {
-	Id             int64 `json:"Id"`             // Id -
-	ListId         int   `json:"ListId"`         // ListId -
-	UserId         int   `json:"UserId"`         // UserId -
-	FollowedUserId int   `json:"FollowedUserId"` // FollowedUserId -
-	FollowType     int16 `json:"FollowType"`     // FollowType -
-	UpdatedTimeMs  int64 `json:"UpdatedTimeMs"`  // UpdatedTimeMs -
+// Manualy copy this to project
+type __FollowingListMember struct {
+	Id             int `json:"Id"`             // Id -
+	ListId         int `json:"ListId"`         // ListId -
+	UserId         int `json:"UserId"`         // UserId -
+	FollowedUserId int `json:"FollowedUserId"` // FollowedUserId -
+	FollowType     int `json:"FollowType"`     // FollowType -
+	UpdatedTimeMs  int `json:"UpdatedTimeMs"`  // UpdatedTimeMs -
 
 	// xo fields
 	_exists, _deleted bool
@@ -4060,7 +4626,7 @@ func (flm *FollowingListMember) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	flm.Id = int64(id)
+	flm.Id = int(id)
 	flm._exists = true
 
 	return nil
@@ -4091,7 +4657,7 @@ func (flm *FollowingListMember) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	flm.Id = int64(id)
+	flm.Id = int(id)
 	flm._exists = true
 
 	return nil
@@ -4580,6 +5146,98 @@ func (d *__FollowingListMember_Deleter) FollowedUserId_GE(val int) *__FollowingL
 	return d
 }
 
+func (u *__FollowingListMember_Deleter) FollowType_In(ins []int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Deleter) FollowType_NotIn(ins []int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingListMember_Deleter) FollowType_EQ(val int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Deleter) FollowType_NotEQ(val int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Deleter) FollowType_LT(val int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Deleter) FollowType_LE(val int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Deleter) FollowType_GT(val int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Deleter) FollowType_GE(val int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__FollowingListMember_Deleter) UpdatedTimeMs_In(ins []int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -5041,6 +5699,98 @@ func (d *__FollowingListMember_Updater) FollowedUserId_GE(val int) *__FollowingL
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FollowedUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__FollowingListMember_Updater) FollowType_In(ins []int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Updater) FollowType_NotIn(ins []int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingListMember_Updater) FollowType_EQ(val int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Updater) FollowType_NotEQ(val int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Updater) FollowType_LT(val int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Updater) FollowType_LE(val int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Updater) FollowType_GT(val int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Updater) FollowType_GE(val int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5512,6 +6262,98 @@ func (d *__FollowingListMember_Selector) FollowedUserId_GE(val int) *__Following
 	return d
 }
 
+func (u *__FollowingListMember_Selector) FollowType_In(ins []int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Selector) FollowType_NotIn(ins []int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingListMember_Selector) FollowType_EQ(val int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Selector) FollowType_NotEQ(val int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Selector) FollowType_LT(val int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Selector) FollowType_LE(val int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Selector) FollowType_GT(val int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMember_Selector) FollowType_GE(val int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__FollowingListMember_Selector) UpdatedTimeMs_In(ins []int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -5653,6 +6495,11 @@ func (u *__FollowingListMember_Updater) FollowedUserId(newVal int) *__FollowingL
 //string
 
 //ints
+
+func (u *__FollowingListMember_Updater) FollowType(newVal int) *__FollowingListMember_Updater {
+	u.updates[" FollowType = ? "] = newVal
+	return u
+}
 
 //string
 
@@ -5981,14 +6828,15 @@ func (d *__FollowingListMember_Deleter) Delete(db XODB) (int, error) {
 
 // FollowingListMemberHistory represents a row from 'ms.following_list_member_history'.
 
-type FollowingListMemberHistory struct {
-	Id             int64 `json:"Id"`             // Id -
-	ListId         int   `json:"ListId"`         // ListId -
-	UserId         int   `json:"UserId"`         // UserId -
-	FollowedUserId int   `json:"FollowedUserId"` // FollowedUserId -
-	FollowType     int16 `json:"FollowType"`     // FollowType -
-	UpdatedTimeMs  int64 `json:"UpdatedTimeMs"`  // UpdatedTimeMs -
-	FollowId       int   `json:"FollowId"`       // FollowId -
+// Manualy copy this to project
+type __FollowingListMemberHistory struct {
+	Id             int `json:"Id"`             // Id -
+	ListId         int `json:"ListId"`         // ListId -
+	UserId         int `json:"UserId"`         // UserId -
+	FollowedUserId int `json:"FollowedUserId"` // FollowedUserId -
+	FollowType     int `json:"FollowType"`     // FollowType -
+	UpdatedTimeMs  int `json:"UpdatedTimeMs"`  // UpdatedTimeMs -
+	FollowId       int `json:"FollowId"`       // FollowId -
 
 	// xo fields
 	_exists, _deleted bool
@@ -6034,7 +6882,7 @@ func (flmh *FollowingListMemberHistory) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	flmh.Id = int64(id)
+	flmh.Id = int(id)
 	flmh._exists = true
 
 	return nil
@@ -6065,7 +6913,7 @@ func (flmh *FollowingListMemberHistory) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	flmh.Id = int64(id)
+	flmh.Id = int(id)
 	flmh._exists = true
 
 	return nil
@@ -6549,6 +7397,98 @@ func (d *__FollowingListMemberHistory_Deleter) FollowedUserId_GE(val int) *__Fol
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FollowedUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__FollowingListMemberHistory_Deleter) FollowType_In(ins []int) *__FollowingListMemberHistory_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMemberHistory_Deleter) FollowType_NotIn(ins []int) *__FollowingListMemberHistory_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingListMemberHistory_Deleter) FollowType_EQ(val int) *__FollowingListMemberHistory_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Deleter) FollowType_NotEQ(val int) *__FollowingListMemberHistory_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Deleter) FollowType_LT(val int) *__FollowingListMemberHistory_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Deleter) FollowType_LE(val int) *__FollowingListMemberHistory_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Deleter) FollowType_GT(val int) *__FollowingListMemberHistory_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Deleter) FollowType_GE(val int) *__FollowingListMemberHistory_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7112,6 +8052,98 @@ func (d *__FollowingListMemberHistory_Updater) FollowedUserId_GE(val int) *__Fol
 	return d
 }
 
+func (u *__FollowingListMemberHistory_Updater) FollowType_In(ins []int) *__FollowingListMemberHistory_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMemberHistory_Updater) FollowType_NotIn(ins []int) *__FollowingListMemberHistory_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingListMemberHistory_Updater) FollowType_EQ(val int) *__FollowingListMemberHistory_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Updater) FollowType_NotEQ(val int) *__FollowingListMemberHistory_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Updater) FollowType_LT(val int) *__FollowingListMemberHistory_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Updater) FollowType_LE(val int) *__FollowingListMemberHistory_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Updater) FollowType_GT(val int) *__FollowingListMemberHistory_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Updater) FollowType_GE(val int) *__FollowingListMemberHistory_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__FollowingListMemberHistory_Updater) UpdatedTimeMs_In(ins []int) *__FollowingListMemberHistory_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -7670,6 +8702,98 @@ func (d *__FollowingListMemberHistory_Selector) FollowedUserId_GE(val int) *__Fo
 	return d
 }
 
+func (u *__FollowingListMemberHistory_Selector) FollowType_In(ins []int) *__FollowingListMemberHistory_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMemberHistory_Selector) FollowType_NotIn(ins []int) *__FollowingListMemberHistory_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__FollowingListMemberHistory_Selector) FollowType_EQ(val int) *__FollowingListMemberHistory_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Selector) FollowType_NotEQ(val int) *__FollowingListMemberHistory_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Selector) FollowType_LT(val int) *__FollowingListMemberHistory_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Selector) FollowType_LE(val int) *__FollowingListMemberHistory_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Selector) FollowType_GT(val int) *__FollowingListMemberHistory_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingListMemberHistory_Selector) FollowType_GE(val int) *__FollowingListMemberHistory_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FollowType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__FollowingListMemberHistory_Selector) UpdatedTimeMs_In(ins []int) *__FollowingListMemberHistory_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -7903,6 +9027,11 @@ func (u *__FollowingListMemberHistory_Updater) FollowedUserId(newVal int) *__Fol
 //string
 
 //ints
+
+func (u *__FollowingListMemberHistory_Updater) FollowType(newVal int) *__FollowingListMemberHistory_Updater {
+	u.updates[" FollowType = ? "] = newVal
+	return u
+}
 
 //string
 
@@ -8257,12 +9386,13 @@ func (d *__FollowingListMemberHistory_Deleter) Delete(db XODB) (int, error) {
 
 // Like represents a row from 'ms.likes'.
 
-type Like struct {
-	Id          int   `json:"Id"`          // Id -
-	PostId      int64 `json:"PostId"`      // PostId -
-	UserId      int   `json:"UserId"`      // UserId -
-	TypeId      int16 `json:"TypeId"`      // TypeId -
-	CreatedTime int   `json:"CreatedTime"` // CreatedTime -
+// Manualy copy this to project
+type __Like struct {
+	Id          int `json:"Id"`          // Id -
+	PostId      int `json:"PostId"`      // PostId -
+	UserId      int `json:"UserId"`      // UserId -
+	TypeId      int `json:"TypeId"`      // TypeId -
+	CreatedTime int `json:"CreatedTime"` // CreatedTime -
 
 	// xo fields
 	_exists, _deleted bool
@@ -8736,6 +9866,98 @@ func (d *__Like_Deleter) UserId_GE(val int) *__Like_Deleter {
 	return d
 }
 
+func (u *__Like_Deleter) TypeId_In(ins []int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Deleter) TypeId_NotIn(ins []int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Like_Deleter) TypeId_EQ(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Deleter) TypeId_NotEQ(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Deleter) TypeId_LT(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Deleter) TypeId_LE(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Deleter) TypeId_GT(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Deleter) TypeId_GE(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Like_Deleter) CreatedTime_In(ins []int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -9105,6 +10327,98 @@ func (d *__Like_Updater) UserId_GE(val int) *__Like_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " UserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Like_Updater) TypeId_In(ins []int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Updater) TypeId_NotIn(ins []int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Like_Updater) TypeId_EQ(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Updater) TypeId_NotEQ(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Updater) TypeId_LT(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Updater) TypeId_LE(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Updater) TypeId_GT(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Updater) TypeId_GE(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -9484,6 +10798,98 @@ func (d *__Like_Selector) UserId_GE(val int) *__Like_Selector {
 	return d
 }
 
+func (u *__Like_Selector) TypeId_In(ins []int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Selector) TypeId_NotIn(ins []int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Like_Selector) TypeId_EQ(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Selector) TypeId_NotEQ(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Selector) TypeId_LT(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Selector) TypeId_LE(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Selector) TypeId_GT(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Selector) TypeId_GE(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Like_Selector) CreatedTime_In(ins []int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -9616,6 +11022,11 @@ func (u *__Like_Updater) UserId(newVal int) *__Like_Updater {
 //string
 
 //ints
+
+func (u *__Like_Updater) TypeId(newVal int) *__Like_Updater {
+	u.updates[" TypeId = ? "] = newVal
+	return u
+}
 
 //string
 
@@ -9927,12 +11338,13 @@ func (d *__Like_Deleter) Delete(db XODB) (int, error) {
 
 // Media represents a row from 'ms.media'.
 
-type Media struct {
-	Id          int64  `json:"Id"`          // Id -
+// Manualy copy this to project
+type __Media struct {
+	Id          int    `json:"Id"`          // Id -
 	UserId      int    `json:"UserId"`      // UserId -
 	PostId      int    `json:"PostId"`      // PostId -
 	AlbumId     int    `json:"AlbumId"`     // AlbumId -
-	TypeId      int16  `json:"TypeId"`      // TypeId -
+	TypeId      int    `json:"TypeId"`      // TypeId -
 	CreatedTime int    `json:"CreatedTime"` // CreatedTime -
 	Src         string `json:"Src"`         // Src -
 
@@ -9980,7 +11392,7 @@ func (m *Media) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	m.Id = int64(id)
+	m.Id = int(id)
 	m._exists = true
 
 	return nil
@@ -10011,7 +11423,7 @@ func (m *Media) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	m.Id = int64(id)
+	m.Id = int(id)
 	m._exists = true
 
 	return nil
@@ -10500,6 +11912,98 @@ func (d *__Media_Deleter) AlbumId_GE(val int) *__Media_Deleter {
 	return d
 }
 
+func (u *__Media_Deleter) TypeId_In(ins []int) *__Media_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Media_Deleter) TypeId_NotIn(ins []int) *__Media_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Media_Deleter) TypeId_EQ(val int) *__Media_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Deleter) TypeId_NotEQ(val int) *__Media_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Deleter) TypeId_LT(val int) *__Media_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Deleter) TypeId_LE(val int) *__Media_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Deleter) TypeId_GT(val int) *__Media_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Deleter) TypeId_GE(val int) *__Media_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Media_Deleter) CreatedTime_In(ins []int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -10961,6 +12465,98 @@ func (d *__Media_Updater) AlbumId_GE(val int) *__Media_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " AlbumId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Media_Updater) TypeId_In(ins []int) *__Media_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Media_Updater) TypeId_NotIn(ins []int) *__Media_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Media_Updater) TypeId_EQ(val int) *__Media_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Updater) TypeId_NotEQ(val int) *__Media_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Updater) TypeId_LT(val int) *__Media_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Updater) TypeId_LE(val int) *__Media_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Updater) TypeId_GT(val int) *__Media_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Updater) TypeId_GE(val int) *__Media_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -11432,6 +13028,98 @@ func (d *__Media_Selector) AlbumId_GE(val int) *__Media_Selector {
 	return d
 }
 
+func (u *__Media_Selector) TypeId_In(ins []int) *__Media_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Media_Selector) TypeId_NotIn(ins []int) *__Media_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Media_Selector) TypeId_EQ(val int) *__Media_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Selector) TypeId_NotEQ(val int) *__Media_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Selector) TypeId_LT(val int) *__Media_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Selector) TypeId_LE(val int) *__Media_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Selector) TypeId_GT(val int) *__Media_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Selector) TypeId_GE(val int) *__Media_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Media_Selector) CreatedTime_In(ins []int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -11720,6 +13408,11 @@ func (u *__Media_Updater) AlbumId(newVal int) *__Media_Updater {
 //string
 
 //ints
+
+func (u *__Media_Updater) TypeId(newVal int) *__Media_Updater {
+	u.updates[" TypeId = ? "] = newVal
+	return u
+}
 
 //string
 
@@ -12073,7 +13766,8 @@ func (d *__Media_Deleter) Delete(db XODB) (int, error) {
 
 // Notification represents a row from 'ms.notification'.
 
-type Notification struct {
+// Manualy copy this to project
+type __Notification struct {
 	Id           int `json:"Id"`           // Id -
 	ForUserId    int `json:"ForUserId"`    // ForUserId -
 	ActorUserId  int `json:"ActorUserId"`  // ActorUserId -
@@ -15236,7 +16930,8 @@ func (d *__Notification_Deleter) Delete(db XODB) (int, error) {
 
 // PhoneContact represents a row from 'ms.phone_contacts'.
 
-type PhoneContact struct {
+// Manualy copy this to project
+type __PhoneContact struct {
 	Id                    int    `json:"Id"`                    // Id -
 	PhoneDisplayName      string `json:"PhoneDisplayName"`      // PhoneDisplayName -
 	PhoneFamilyName       string `json:"PhoneFamilyName"`       // PhoneFamilyName -
@@ -18182,10 +19877,11 @@ func (d *__PhoneContact_Deleter) Delete(db XODB) (int, error) {
 
 // Post represents a row from 'ms.post'.
 
-type Post struct {
-	Id            uint64 `json:"Id"`            // Id -
+// Manualy copy this to project
+type __Post struct {
+	Id            int    `json:"Id"`            // Id -
 	UserId        int    `json:"UserId"`        // UserId -
-	TypeId        int16  `json:"TypeId"`        // TypeId -
+	TypeId        int    `json:"TypeId"`        // TypeId -
 	Text          string `json:"Text"`          // Text -
 	FormatedText  string `json:"FormatedText"`  // FormatedText -
 	MediaUrl      string `json:"MediaUrl"`      // MediaUrl -
@@ -18193,7 +19889,7 @@ type Post struct {
 	Width         int    `json:"Width"`         // Width -
 	Height        int    `json:"Height"`        // Height -
 	SharedTo      int    `json:"SharedTo"`      // SharedTo -
-	HasTag        []byte `json:"HasTag"`        // HasTag -
+	HasTag        int    `json:"HasTag"`        // HasTag -
 	LikesCount    int    `json:"LikesCount"`    // LikesCount -
 	CommentsCount int    `json:"CommentsCount"` // CommentsCount -
 	CreatedTime   int    `json:"CreatedTime"`   // CreatedTime -
@@ -18242,7 +19938,7 @@ func (p *Post) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	p.Id = uint64(id)
+	p.Id = int(id)
 	p._exists = true
 
 	return nil
@@ -18273,7 +19969,7 @@ func (p *Post) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	p.Id = uint64(id)
+	p.Id = int(id)
 	p._exists = true
 
 	return nil
@@ -18394,6 +20090,98 @@ func (u *__Post_Deleter) Or(ins []int) *__Post_Deleter {
 	return u
 }
 
+func (u *__Post_Deleter) Id_In(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Deleter) Id_NotIn(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Post_Deleter) Id_EQ(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) Id_NotEQ(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) Id_LT(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) Id_LE(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) Id_GT(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) Id_GE(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Post_Deleter) UserId_In(ins []int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -18481,6 +20269,98 @@ func (d *__Post_Deleter) UserId_GE(val int) *__Post_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " UserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Post_Deleter) TypeId_In(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Deleter) TypeId_NotIn(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Post_Deleter) TypeId_EQ(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) TypeId_NotEQ(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) TypeId_LT(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) TypeId_LE(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) TypeId_GT(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) TypeId_GE(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -18854,6 +20734,98 @@ func (d *__Post_Deleter) SharedTo_GE(val int) *__Post_Deleter {
 	return d
 }
 
+func (u *__Post_Deleter) HasTag_In(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HasTag IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Deleter) HasTag_NotIn(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HasTag NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Post_Deleter) HasTag_EQ(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) HasTag_NotEQ(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) HasTag_LT(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) HasTag_LE(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) HasTag_GT(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) HasTag_GE(val int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Post_Deleter) LikesCount_In(ins []int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -19136,6 +21108,98 @@ func (u *__Post_Updater) Or(ins []int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) Id_In(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Updater) Id_NotIn(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Post_Updater) Id_EQ(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) Id_NotEQ(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) Id_LT(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) Id_LE(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) Id_GT(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) Id_GE(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Post_Updater) UserId_In(ins []int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -19223,6 +21287,98 @@ func (d *__Post_Updater) UserId_GE(val int) *__Post_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " UserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Post_Updater) TypeId_In(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Updater) TypeId_NotIn(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Post_Updater) TypeId_EQ(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) TypeId_NotEQ(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) TypeId_LT(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) TypeId_LE(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) TypeId_GT(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) TypeId_GE(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -19596,6 +21752,98 @@ func (d *__Post_Updater) SharedTo_GE(val int) *__Post_Updater {
 	return d
 }
 
+func (u *__Post_Updater) HasTag_In(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HasTag IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Updater) HasTag_NotIn(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HasTag NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Post_Updater) HasTag_EQ(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) HasTag_NotEQ(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) HasTag_LT(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) HasTag_LE(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) HasTag_GT(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) HasTag_GE(val int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Post_Updater) LikesCount_In(ins []int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -19878,6 +22126,98 @@ func (u *__Post_Selector) Or(ins []int) *__Post_Selector {
 	return u
 }
 
+func (u *__Post_Selector) Id_In(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Selector) Id_NotIn(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Post_Selector) Id_EQ(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) Id_NotEQ(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) Id_LT(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) Id_LE(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) Id_GT(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) Id_GE(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Post_Selector) UserId_In(ins []int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -19965,6 +22305,98 @@ func (d *__Post_Selector) UserId_GE(val int) *__Post_Selector {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " UserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Post_Selector) TypeId_In(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Selector) TypeId_NotIn(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Post_Selector) TypeId_EQ(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) TypeId_NotEQ(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) TypeId_LT(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) TypeId_LE(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) TypeId_GT(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) TypeId_GE(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -20333,6 +22765,98 @@ func (d *__Post_Selector) SharedTo_GE(val int) *__Post_Selector {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " SharedTo >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Post_Selector) HasTag_In(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HasTag IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Selector) HasTag_NotIn(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HasTag NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Post_Selector) HasTag_EQ(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) HasTag_NotEQ(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) HasTag_LT(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) HasTag_LE(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) HasTag_GT(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) HasTag_GE(val int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HasTag >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -21069,6 +23593,11 @@ func (d *__Post_Selector) MediaUrl_EQ(val string) *__Post_Selector {
 
 //ints
 
+func (u *__Post_Updater) Id(newVal int) *__Post_Updater {
+	u.updates[" Id = ? "] = newVal
+	return u
+}
+
 //string
 
 //ints
@@ -21081,6 +23610,11 @@ func (u *__Post_Updater) UserId(newVal int) *__Post_Updater {
 //string
 
 //ints
+
+func (u *__Post_Updater) TypeId(newVal int) *__Post_Updater {
+	u.updates[" TypeId = ? "] = newVal
+	return u
+}
 
 //string
 
@@ -21145,6 +23679,11 @@ func (u *__Post_Updater) SharedTo(newVal int) *__Post_Updater {
 //string
 
 //ints
+
+func (u *__Post_Updater) HasTag(newVal int) *__Post_Updater {
+	u.updates[" HasTag = ? "] = newVal
+	return u
+}
 
 //string
 
@@ -21627,7 +24166,8 @@ func (d *__Post_Deleter) Delete(db XODB) (int, error) {
 
 // RecommendUser represents a row from 'ms.recommend_user'.
 
-type RecommendUser struct {
+// Manualy copy this to project
+type __RecommendUser struct {
 	Id          int     `json:"Id"`          // Id -
 	UserId      int     `json:"UserId"`      // UserId -
 	TargetId    int     `json:"TargetId"`    // TargetId -
@@ -23297,7 +25837,8 @@ func (d *__RecommendUser_Deleter) Delete(db XODB) (int, error) {
 
 // Session represents a row from 'ms.session'.
 
-type Session struct {
+// Manualy copy this to project
+type __Session struct {
 	Id                 int    `json:"Id"`                 // Id -
 	UserId             int    `json:"UserId"`             // UserId -
 	SessionUuid        string `json:"SessionUuid"`        // SessionUuid -
@@ -25983,11 +28524,12 @@ func (d *__Session_Deleter) Delete(db XODB) (int, error) {
 
 // Tag represents a row from 'ms.tags'.
 
-type Tag struct {
-	Id          uint   `json:"Id"`          // Id -
+// Manualy copy this to project
+type __Tag struct {
+	Id          int    `json:"Id"`          // Id -
 	Name        string `json:"Name"`        // Name -
 	Count       int    `json:"Count"`       // Count -
-	IsBlocked   int16  `json:"IsBlocked"`   // IsBlocked -
+	IsBlocked   int    `json:"IsBlocked"`   // IsBlocked -
 	CreatedTime int    `json:"CreatedTime"` // CreatedTime -
 
 	// xo fields
@@ -26034,7 +28576,7 @@ func (t *Tag) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	t.Id = uint(id)
+	t.Id = int(id)
 	t._exists = true
 
 	return nil
@@ -26065,7 +28607,7 @@ func (t *Tag) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	t.Id = uint(id)
+	t.Id = int(id)
 	t._exists = true
 
 	return nil
@@ -26186,6 +28728,98 @@ func (u *__Tag_Deleter) Or(ins []int) *__Tag_Deleter {
 	return u
 }
 
+func (u *__Tag_Deleter) Id_In(ins []int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Deleter) Id_NotIn(ins []int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Tag_Deleter) Id_EQ(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) Id_NotEQ(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) Id_LT(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) Id_LE(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) Id_GT(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) Id_GE(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Tag_Deleter) Count_In(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -26273,6 +28907,98 @@ func (d *__Tag_Deleter) Count_GE(val int) *__Tag_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Count >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Tag_Deleter) IsBlocked_In(ins []int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Deleter) IsBlocked_NotIn(ins []int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsBlocked NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Tag_Deleter) IsBlocked_EQ(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) IsBlocked_NotEQ(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) IsBlocked_LT(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) IsBlocked_LE(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) IsBlocked_GT(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) IsBlocked_GE(val int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -26376,6 +29102,98 @@ func (u *__Tag_Updater) Or(ins []int) *__Tag_Updater {
 	return u
 }
 
+func (u *__Tag_Updater) Id_In(ins []int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Updater) Id_NotIn(ins []int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Tag_Updater) Id_EQ(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) Id_NotEQ(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) Id_LT(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) Id_LE(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) Id_GT(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) Id_GE(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Tag_Updater) Count_In(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -26463,6 +29281,98 @@ func (d *__Tag_Updater) Count_GE(val int) *__Tag_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Count >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Tag_Updater) IsBlocked_In(ins []int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Updater) IsBlocked_NotIn(ins []int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsBlocked NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Tag_Updater) IsBlocked_EQ(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) IsBlocked_NotEQ(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) IsBlocked_LT(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) IsBlocked_LE(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) IsBlocked_GT(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) IsBlocked_GE(val int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -26566,6 +29476,98 @@ func (u *__Tag_Selector) Or(ins []int) *__Tag_Selector {
 	return u
 }
 
+func (u *__Tag_Selector) Id_In(ins []int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Selector) Id_NotIn(ins []int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Tag_Selector) Id_EQ(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) Id_NotEQ(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) Id_LT(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) Id_LE(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) Id_GT(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) Id_GE(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Tag_Selector) Count_In(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -26653,6 +29655,98 @@ func (d *__Tag_Selector) Count_GE(val int) *__Tag_Selector {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Count >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Tag_Selector) IsBlocked_In(ins []int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Selector) IsBlocked_NotIn(ins []int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsBlocked NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Tag_Selector) IsBlocked_EQ(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) IsBlocked_NotEQ(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) IsBlocked_LT(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) IsBlocked_LE(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) IsBlocked_GT(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) IsBlocked_GE(val int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsBlocked >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -26911,6 +30005,11 @@ func (d *__Tag_Selector) Name_EQ(val string) *__Tag_Selector {
 
 //ints
 
+func (u *__Tag_Updater) Id(newVal int) *__Tag_Updater {
+	u.updates[" Id = ? "] = newVal
+	return u
+}
+
 //string
 
 //ints
@@ -26931,6 +30030,11 @@ func (u *__Tag_Updater) Count(newVal int) *__Tag_Updater {
 //string
 
 //ints
+
+func (u *__Tag_Updater) IsBlocked(newVal int) *__Tag_Updater {
+	u.updates[" IsBlocked = ? "] = newVal
+	return u
+}
 
 //string
 
@@ -27242,7 +30346,8 @@ func (d *__Tag_Deleter) Delete(db XODB) (int, error) {
 
 // TagsPost represents a row from 'ms.tags_posts'.
 
-type TagsPost struct {
+// Manualy copy this to project
+type __TagsPost struct {
 	Id          int `json:"Id"`          // Id -
 	TagId       int `json:"TagId"`       // TagId -
 	PostId      int `json:"PostId"`      // PostId -
@@ -29193,7 +32298,8 @@ func (d *__TagsPost_Deleter) Delete(db XODB) (int, error) {
 
 // User represents a row from 'ms.user'.
 
-type User struct {
+// Manualy copy this to project
+type __User struct {
 	Id                   int    `json:"Id"`                   // Id -
 	UserName             string `json:"UserName"`             // UserName -
 	FirstName            string `json:"FirstName"`            // FirstName -
@@ -29202,7 +32308,7 @@ type User struct {
 	FullName             string `json:"FullName"`             // FullName -
 	AvatarSrc            string `json:"AvatarSrc"`            // AvatarSrc -
 	AvatarUrl            string `json:"AvatarUrl"`            // AvatarUrl -
-	PrivacyProfile       int16  `json:"PrivacyProfile"`       // PrivacyProfile -
+	PrivacyProfile       int    `json:"PrivacyProfile"`       // PrivacyProfile -
 	Phone                string `json:"Phone"`                // Phone -
 	Email                string `json:"Email"`                // Email -
 	IsDeleted            int    `json:"IsDeleted"`            // IsDeleted -
@@ -29511,6 +32617,98 @@ func (d *__User_Deleter) Id_GE(val int) *__User_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__User_Deleter) PrivacyProfile_In(ins []int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrivacyProfile IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Deleter) PrivacyProfile_NotIn(ins []int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrivacyProfile NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__User_Deleter) PrivacyProfile_EQ(val int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) PrivacyProfile_NotEQ(val int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) PrivacyProfile_LT(val int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) PrivacyProfile_LE(val int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) PrivacyProfile_GT(val int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) PrivacyProfile_GE(val int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -30994,6 +34192,98 @@ func (d *__User_Updater) Id_GE(val int) *__User_Updater {
 	return d
 }
 
+func (u *__User_Updater) PrivacyProfile_In(ins []int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrivacyProfile IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Updater) PrivacyProfile_NotIn(ins []int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrivacyProfile NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__User_Updater) PrivacyProfile_EQ(val int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) PrivacyProfile_NotEQ(val int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) PrivacyProfile_LT(val int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) PrivacyProfile_LE(val int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) PrivacyProfile_GT(val int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) PrivacyProfile_GE(val int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__User_Updater) IsDeleted_In(ins []int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -32467,6 +35757,98 @@ func (d *__User_Selector) Id_GE(val int) *__User_Selector {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__User_Selector) PrivacyProfile_In(ins []int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrivacyProfile IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Selector) PrivacyProfile_NotIn(ins []int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrivacyProfile NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__User_Selector) PrivacyProfile_EQ(val int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) PrivacyProfile_NotEQ(val int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) PrivacyProfile_LT(val int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) PrivacyProfile_LE(val int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) PrivacyProfile_GT(val int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) PrivacyProfile_GE(val int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PrivacyProfile >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -36283,6 +39665,11 @@ func (u *__User_Updater) AvatarUrl(newVal string) *__User_Updater {
 
 //ints
 
+func (u *__User_Updater) PrivacyProfile(newVal int) *__User_Updater {
+	u.updates[" PrivacyProfile = ? "] = newVal
+	return u
+}
+
 //string
 
 //ints
@@ -37265,9 +40652,10 @@ func (d *__User_Deleter) Delete(db XODB) (int, error) {
 
 //
 
-// UserPasswod represents a row from 'ms.user_passwod'.
+// UserPassword represents a row from 'ms.user_password'.
 
-type UserPasswod struct {
+// Manualy copy this to project
+type __UserPassword struct {
 	UserId      int    `json:"UserId"`      // UserId -
 	Password    string `json:"Password"`    // Password -
 	CreatedTime int    `json:"CreatedTime"` // CreatedTime -
@@ -37276,18 +40664,18 @@ type UserPasswod struct {
 	_exists, _deleted bool
 }
 
-// Exists determines if the UserPasswod exists in the database.
-func (up *UserPasswod) Exists() bool {
+// Exists determines if the UserPassword exists in the database.
+func (up *UserPassword) Exists() bool {
 	return up._exists
 }
 
-// Deleted provides information if the UserPasswod has been deleted from the database.
-func (up *UserPasswod) Deleted() bool {
+// Deleted provides information if the UserPassword has been deleted from the database.
+func (up *UserPassword) Deleted() bool {
 	return up._deleted
 }
 
-// Insert inserts the UserPasswod to the database.
-func (up *UserPasswod) Insert(db XODB) error {
+// Insert inserts the UserPassword to the database.
+func (up *UserPassword) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
@@ -37296,7 +40684,7 @@ func (up *UserPasswod) Insert(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `INSERT INTO ms.user_passwod (` +
+	const sqlstr = `INSERT INTO ms.user_password (` +
 		`Password, CreatedTime` +
 		`) VALUES (` +
 		`?, ?` +
@@ -37322,12 +40710,12 @@ func (up *UserPasswod) Insert(db XODB) error {
 	return nil
 }
 
-// Insert inserts the UserPasswod to the database.
-func (up *UserPasswod) Replace(db XODB) error {
+// Insert inserts the UserPassword to the database.
+func (up *UserPassword) Replace(db XODB) error {
 	var err error
 
 	// sql query
-	const sqlstr = `REPLACE INTO ms.user_passwod (` +
+	const sqlstr = `REPLACE INTO ms.user_password (` +
 		`Password, CreatedTime` +
 		`) VALUES (` +
 		`?, ?` +
@@ -37353,8 +40741,8 @@ func (up *UserPasswod) Replace(db XODB) error {
 	return nil
 }
 
-// Update updates the UserPasswod in the database.
-func (up *UserPasswod) Update(db XODB) error {
+// Update updates the UserPassword in the database.
+func (up *UserPassword) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
@@ -37368,7 +40756,7 @@ func (up *UserPasswod) Update(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `UPDATE ms.user_passwod SET ` +
+	const sqlstr = `UPDATE ms.user_password SET ` +
 		`Password = ?, CreatedTime = ?` +
 		` WHERE UserId = ?`
 
@@ -37378,8 +40766,8 @@ func (up *UserPasswod) Update(db XODB) error {
 	return err
 }
 
-// Save saves the UserPasswod to the database.
-func (up *UserPasswod) Save(db XODB) error {
+// Save saves the UserPassword to the database.
+func (up *UserPassword) Save(db XODB) error {
 	if up.Exists() {
 		return up.Update(db)
 	}
@@ -37387,8 +40775,8 @@ func (up *UserPasswod) Save(db XODB) error {
 	return up.Replace(db)
 }
 
-// Delete deletes the UserPasswod from the database.
-func (up *UserPasswod) Delete(db XODB) error {
+// Delete deletes the UserPassword from the database.
+func (up *UserPassword) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
@@ -37402,7 +40790,7 @@ func (up *UserPasswod) Delete(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.user_passwod WHERE UserId = ?`
+	const sqlstr = `DELETE FROM ms.user_password WHERE UserId = ?`
 
 	// run query
 	XOLog(sqlstr, up.UserId)
@@ -37423,18 +40811,18 @@ func (up *UserPasswod) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __UserPasswod_Deleter struct {
+type __UserPassword_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __UserPasswod_Updater struct {
+type __UserPassword_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __UserPasswod_Selector struct {
+type __UserPassword_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -37443,19 +40831,19 @@ type __UserPasswod_Selector struct {
 	offset    int
 }
 
-func NewUserPasswod_Deleter() *__UserPasswod_Deleter {
-	d := __UserPasswod_Deleter{whereSep: " AND "}
+func NewUserPassword_Deleter() *__UserPassword_Deleter {
+	d := __UserPassword_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewUserPasswod_Updater() *__UserPasswod_Updater {
-	u := __UserPasswod_Updater{whereSep: " AND "}
+func NewUserPassword_Updater() *__UserPassword_Updater {
+	u := __UserPassword_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewUserPasswod_Selector() *__UserPasswod_Selector {
-	u := __UserPasswod_Selector{whereSep: " AND ", selectCol: "*"}
+func NewUserPassword_Selector() *__UserPassword_Selector {
+	u := __UserPassword_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -37463,12 +40851,12 @@ func NewUserPasswod_Selector() *__UserPasswod_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__UserPasswod_Deleter) Or(ins []int) *__UserPasswod_Deleter {
+func (u *__UserPassword_Deleter) Or(ins []int) *__UserPassword_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__UserPasswod_Deleter) UserId_In(ins []int) *__UserPasswod_Deleter {
+func (u *__UserPassword_Deleter) UserId_In(ins []int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37481,7 +40869,7 @@ func (u *__UserPasswod_Deleter) UserId_In(ins []int) *__UserPasswod_Deleter {
 	return u
 }
 
-func (u *__UserPasswod_Deleter) UserId_NotIn(ins []int) *__UserPasswod_Deleter {
+func (u *__UserPassword_Deleter) UserId_NotIn(ins []int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37494,7 +40882,7 @@ func (u *__UserPasswod_Deleter) UserId_NotIn(ins []int) *__UserPasswod_Deleter {
 	return u
 }
 
-func (d *__UserPasswod_Deleter) UserId_EQ(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) UserId_EQ(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37505,7 +40893,7 @@ func (d *__UserPasswod_Deleter) UserId_EQ(val int) *__UserPasswod_Deleter {
 	return d
 }
 
-func (d *__UserPasswod_Deleter) UserId_NotEQ(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) UserId_NotEQ(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37516,7 +40904,7 @@ func (d *__UserPasswod_Deleter) UserId_NotEQ(val int) *__UserPasswod_Deleter {
 	return d
 }
 
-func (d *__UserPasswod_Deleter) UserId_LT(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) UserId_LT(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37527,7 +40915,7 @@ func (d *__UserPasswod_Deleter) UserId_LT(val int) *__UserPasswod_Deleter {
 	return d
 }
 
-func (d *__UserPasswod_Deleter) UserId_LE(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) UserId_LE(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37538,7 +40926,7 @@ func (d *__UserPasswod_Deleter) UserId_LE(val int) *__UserPasswod_Deleter {
 	return d
 }
 
-func (d *__UserPasswod_Deleter) UserId_GT(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) UserId_GT(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37549,7 +40937,7 @@ func (d *__UserPasswod_Deleter) UserId_GT(val int) *__UserPasswod_Deleter {
 	return d
 }
 
-func (d *__UserPasswod_Deleter) UserId_GE(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) UserId_GE(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37560,7 +40948,7 @@ func (d *__UserPasswod_Deleter) UserId_GE(val int) *__UserPasswod_Deleter {
 	return d
 }
 
-func (u *__UserPasswod_Deleter) CreatedTime_In(ins []int) *__UserPasswod_Deleter {
+func (u *__UserPassword_Deleter) CreatedTime_In(ins []int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37573,7 +40961,7 @@ func (u *__UserPasswod_Deleter) CreatedTime_In(ins []int) *__UserPasswod_Deleter
 	return u
 }
 
-func (u *__UserPasswod_Deleter) CreatedTime_NotIn(ins []int) *__UserPasswod_Deleter {
+func (u *__UserPassword_Deleter) CreatedTime_NotIn(ins []int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37586,7 +40974,7 @@ func (u *__UserPasswod_Deleter) CreatedTime_NotIn(ins []int) *__UserPasswod_Dele
 	return u
 }
 
-func (d *__UserPasswod_Deleter) CreatedTime_EQ(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) CreatedTime_EQ(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37597,7 +40985,7 @@ func (d *__UserPasswod_Deleter) CreatedTime_EQ(val int) *__UserPasswod_Deleter {
 	return d
 }
 
-func (d *__UserPasswod_Deleter) CreatedTime_NotEQ(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) CreatedTime_NotEQ(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37608,7 +40996,7 @@ func (d *__UserPasswod_Deleter) CreatedTime_NotEQ(val int) *__UserPasswod_Delete
 	return d
 }
 
-func (d *__UserPasswod_Deleter) CreatedTime_LT(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) CreatedTime_LT(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37619,7 +41007,7 @@ func (d *__UserPasswod_Deleter) CreatedTime_LT(val int) *__UserPasswod_Deleter {
 	return d
 }
 
-func (d *__UserPasswod_Deleter) CreatedTime_LE(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) CreatedTime_LE(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37630,7 +41018,7 @@ func (d *__UserPasswod_Deleter) CreatedTime_LE(val int) *__UserPasswod_Deleter {
 	return d
 }
 
-func (d *__UserPasswod_Deleter) CreatedTime_GT(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) CreatedTime_GT(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37641,7 +41029,7 @@ func (d *__UserPasswod_Deleter) CreatedTime_GT(val int) *__UserPasswod_Deleter {
 	return d
 }
 
-func (d *__UserPasswod_Deleter) CreatedTime_GE(val int) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) CreatedTime_GE(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37653,12 +41041,12 @@ func (d *__UserPasswod_Deleter) CreatedTime_GE(val int) *__UserPasswod_Deleter {
 }
 
 ////////ints
-func (u *__UserPasswod_Updater) Or(ins []int) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) Or(ins []int) *__UserPassword_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__UserPasswod_Updater) UserId_In(ins []int) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) UserId_In(ins []int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37671,7 +41059,7 @@ func (u *__UserPasswod_Updater) UserId_In(ins []int) *__UserPasswod_Updater {
 	return u
 }
 
-func (u *__UserPasswod_Updater) UserId_NotIn(ins []int) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) UserId_NotIn(ins []int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37684,7 +41072,7 @@ func (u *__UserPasswod_Updater) UserId_NotIn(ins []int) *__UserPasswod_Updater {
 	return u
 }
 
-func (d *__UserPasswod_Updater) UserId_EQ(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) UserId_EQ(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37695,7 +41083,7 @@ func (d *__UserPasswod_Updater) UserId_EQ(val int) *__UserPasswod_Updater {
 	return d
 }
 
-func (d *__UserPasswod_Updater) UserId_NotEQ(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) UserId_NotEQ(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37706,7 +41094,7 @@ func (d *__UserPasswod_Updater) UserId_NotEQ(val int) *__UserPasswod_Updater {
 	return d
 }
 
-func (d *__UserPasswod_Updater) UserId_LT(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) UserId_LT(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37717,7 +41105,7 @@ func (d *__UserPasswod_Updater) UserId_LT(val int) *__UserPasswod_Updater {
 	return d
 }
 
-func (d *__UserPasswod_Updater) UserId_LE(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) UserId_LE(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37728,7 +41116,7 @@ func (d *__UserPasswod_Updater) UserId_LE(val int) *__UserPasswod_Updater {
 	return d
 }
 
-func (d *__UserPasswod_Updater) UserId_GT(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) UserId_GT(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37739,7 +41127,7 @@ func (d *__UserPasswod_Updater) UserId_GT(val int) *__UserPasswod_Updater {
 	return d
 }
 
-func (d *__UserPasswod_Updater) UserId_GE(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) UserId_GE(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37750,7 +41138,7 @@ func (d *__UserPasswod_Updater) UserId_GE(val int) *__UserPasswod_Updater {
 	return d
 }
 
-func (u *__UserPasswod_Updater) CreatedTime_In(ins []int) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) CreatedTime_In(ins []int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37763,7 +41151,7 @@ func (u *__UserPasswod_Updater) CreatedTime_In(ins []int) *__UserPasswod_Updater
 	return u
 }
 
-func (u *__UserPasswod_Updater) CreatedTime_NotIn(ins []int) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) CreatedTime_NotIn(ins []int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37776,7 +41164,7 @@ func (u *__UserPasswod_Updater) CreatedTime_NotIn(ins []int) *__UserPasswod_Upda
 	return u
 }
 
-func (d *__UserPasswod_Updater) CreatedTime_EQ(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) CreatedTime_EQ(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37787,7 +41175,7 @@ func (d *__UserPasswod_Updater) CreatedTime_EQ(val int) *__UserPasswod_Updater {
 	return d
 }
 
-func (d *__UserPasswod_Updater) CreatedTime_NotEQ(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) CreatedTime_NotEQ(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37798,7 +41186,7 @@ func (d *__UserPasswod_Updater) CreatedTime_NotEQ(val int) *__UserPasswod_Update
 	return d
 }
 
-func (d *__UserPasswod_Updater) CreatedTime_LT(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) CreatedTime_LT(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37809,7 +41197,7 @@ func (d *__UserPasswod_Updater) CreatedTime_LT(val int) *__UserPasswod_Updater {
 	return d
 }
 
-func (d *__UserPasswod_Updater) CreatedTime_LE(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) CreatedTime_LE(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37820,7 +41208,7 @@ func (d *__UserPasswod_Updater) CreatedTime_LE(val int) *__UserPasswod_Updater {
 	return d
 }
 
-func (d *__UserPasswod_Updater) CreatedTime_GT(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) CreatedTime_GT(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37831,7 +41219,7 @@ func (d *__UserPasswod_Updater) CreatedTime_GT(val int) *__UserPasswod_Updater {
 	return d
 }
 
-func (d *__UserPasswod_Updater) CreatedTime_GE(val int) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) CreatedTime_GE(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37843,12 +41231,12 @@ func (d *__UserPasswod_Updater) CreatedTime_GE(val int) *__UserPasswod_Updater {
 }
 
 ////////ints
-func (u *__UserPasswod_Selector) Or(ins []int) *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) Or(ins []int) *__UserPassword_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__UserPasswod_Selector) UserId_In(ins []int) *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) UserId_In(ins []int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37861,7 +41249,7 @@ func (u *__UserPasswod_Selector) UserId_In(ins []int) *__UserPasswod_Selector {
 	return u
 }
 
-func (u *__UserPasswod_Selector) UserId_NotIn(ins []int) *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) UserId_NotIn(ins []int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37874,7 +41262,7 @@ func (u *__UserPasswod_Selector) UserId_NotIn(ins []int) *__UserPasswod_Selector
 	return u
 }
 
-func (d *__UserPasswod_Selector) UserId_EQ(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) UserId_EQ(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37885,7 +41273,7 @@ func (d *__UserPasswod_Selector) UserId_EQ(val int) *__UserPasswod_Selector {
 	return d
 }
 
-func (d *__UserPasswod_Selector) UserId_NotEQ(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) UserId_NotEQ(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37896,7 +41284,7 @@ func (d *__UserPasswod_Selector) UserId_NotEQ(val int) *__UserPasswod_Selector {
 	return d
 }
 
-func (d *__UserPasswod_Selector) UserId_LT(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) UserId_LT(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37907,7 +41295,7 @@ func (d *__UserPasswod_Selector) UserId_LT(val int) *__UserPasswod_Selector {
 	return d
 }
 
-func (d *__UserPasswod_Selector) UserId_LE(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) UserId_LE(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37918,7 +41306,7 @@ func (d *__UserPasswod_Selector) UserId_LE(val int) *__UserPasswod_Selector {
 	return d
 }
 
-func (d *__UserPasswod_Selector) UserId_GT(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) UserId_GT(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37929,7 +41317,7 @@ func (d *__UserPasswod_Selector) UserId_GT(val int) *__UserPasswod_Selector {
 	return d
 }
 
-func (d *__UserPasswod_Selector) UserId_GE(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) UserId_GE(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37940,7 +41328,7 @@ func (d *__UserPasswod_Selector) UserId_GE(val int) *__UserPasswod_Selector {
 	return d
 }
 
-func (u *__UserPasswod_Selector) CreatedTime_In(ins []int) *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) CreatedTime_In(ins []int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37953,7 +41341,7 @@ func (u *__UserPasswod_Selector) CreatedTime_In(ins []int) *__UserPasswod_Select
 	return u
 }
 
-func (u *__UserPasswod_Selector) CreatedTime_NotIn(ins []int) *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) CreatedTime_NotIn(ins []int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -37966,7 +41354,7 @@ func (u *__UserPasswod_Selector) CreatedTime_NotIn(ins []int) *__UserPasswod_Sel
 	return u
 }
 
-func (d *__UserPasswod_Selector) CreatedTime_EQ(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) CreatedTime_EQ(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37977,7 +41365,7 @@ func (d *__UserPasswod_Selector) CreatedTime_EQ(val int) *__UserPasswod_Selector
 	return d
 }
 
-func (d *__UserPasswod_Selector) CreatedTime_NotEQ(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) CreatedTime_NotEQ(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37988,7 +41376,7 @@ func (d *__UserPasswod_Selector) CreatedTime_NotEQ(val int) *__UserPasswod_Selec
 	return d
 }
 
-func (d *__UserPasswod_Selector) CreatedTime_LT(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) CreatedTime_LT(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -37999,7 +41387,7 @@ func (d *__UserPasswod_Selector) CreatedTime_LT(val int) *__UserPasswod_Selector
 	return d
 }
 
-func (d *__UserPasswod_Selector) CreatedTime_LE(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) CreatedTime_LE(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -38010,7 +41398,7 @@ func (d *__UserPasswod_Selector) CreatedTime_LE(val int) *__UserPasswod_Selector
 	return d
 }
 
-func (d *__UserPasswod_Selector) CreatedTime_GT(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) CreatedTime_GT(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -38021,7 +41409,7 @@ func (d *__UserPasswod_Selector) CreatedTime_GT(val int) *__UserPasswod_Selector
 	return d
 }
 
-func (d *__UserPasswod_Selector) CreatedTime_GE(val int) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) CreatedTime_GE(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -38036,7 +41424,7 @@ func (d *__UserPasswod_Selector) CreatedTime_GE(val int) *__UserPasswod_Selector
 
 ////////ints
 
-func (u *__UserPasswod_Deleter) Password_In(ins []string) *__UserPasswod_Deleter {
+func (u *__UserPassword_Deleter) Password_In(ins []string) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -38049,7 +41437,7 @@ func (u *__UserPasswod_Deleter) Password_In(ins []string) *__UserPasswod_Deleter
 	return u
 }
 
-func (u *__UserPasswod_Deleter) Password_NotIn(ins []string) *__UserPasswod_Deleter {
+func (u *__UserPassword_Deleter) Password_NotIn(ins []string) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -38063,7 +41451,7 @@ func (u *__UserPasswod_Deleter) Password_NotIn(ins []string) *__UserPasswod_Dele
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__UserPasswod_Deleter) Password_Like(val string) *__UserPasswod_Deleter {
+func (u *__UserPassword_Deleter) Password_Like(val string) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -38074,7 +41462,7 @@ func (u *__UserPasswod_Deleter) Password_Like(val string) *__UserPasswod_Deleter
 	return u
 }
 
-func (d *__UserPasswod_Deleter) Password_EQ(val string) *__UserPasswod_Deleter {
+func (d *__UserPassword_Deleter) Password_EQ(val string) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -38087,7 +41475,7 @@ func (d *__UserPasswod_Deleter) Password_EQ(val string) *__UserPasswod_Deleter {
 
 ////////ints
 
-func (u *__UserPasswod_Updater) Password_In(ins []string) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) Password_In(ins []string) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -38100,7 +41488,7 @@ func (u *__UserPasswod_Updater) Password_In(ins []string) *__UserPasswod_Updater
 	return u
 }
 
-func (u *__UserPasswod_Updater) Password_NotIn(ins []string) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) Password_NotIn(ins []string) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -38114,7 +41502,7 @@ func (u *__UserPasswod_Updater) Password_NotIn(ins []string) *__UserPasswod_Upda
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__UserPasswod_Updater) Password_Like(val string) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) Password_Like(val string) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -38125,7 +41513,7 @@ func (u *__UserPasswod_Updater) Password_Like(val string) *__UserPasswod_Updater
 	return u
 }
 
-func (d *__UserPasswod_Updater) Password_EQ(val string) *__UserPasswod_Updater {
+func (d *__UserPassword_Updater) Password_EQ(val string) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -38138,7 +41526,7 @@ func (d *__UserPasswod_Updater) Password_EQ(val string) *__UserPasswod_Updater {
 
 ////////ints
 
-func (u *__UserPasswod_Selector) Password_In(ins []string) *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) Password_In(ins []string) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -38151,7 +41539,7 @@ func (u *__UserPasswod_Selector) Password_In(ins []string) *__UserPasswod_Select
 	return u
 }
 
-func (u *__UserPasswod_Selector) Password_NotIn(ins []string) *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) Password_NotIn(ins []string) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -38165,7 +41553,7 @@ func (u *__UserPasswod_Selector) Password_NotIn(ins []string) *__UserPasswod_Sel
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__UserPasswod_Selector) Password_Like(val string) *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) Password_Like(val string) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -38176,7 +41564,7 @@ func (u *__UserPasswod_Selector) Password_Like(val string) *__UserPasswod_Select
 	return u
 }
 
-func (d *__UserPasswod_Selector) Password_EQ(val string) *__UserPasswod_Selector {
+func (d *__UserPassword_Selector) Password_EQ(val string) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -38193,7 +41581,7 @@ func (d *__UserPasswod_Selector) Password_EQ(val string) *__UserPasswod_Selector
 
 //ints
 
-func (u *__UserPasswod_Updater) UserId(newVal int) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) UserId(newVal int) *__UserPassword_Updater {
 	u.updates[" UserId = ? "] = newVal
 	return u
 }
@@ -38203,14 +41591,14 @@ func (u *__UserPasswod_Updater) UserId(newVal int) *__UserPasswod_Updater {
 //ints
 
 //string
-func (u *__UserPasswod_Updater) Password(newVal string) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) Password(newVal string) *__UserPassword_Updater {
 	u.updates[" Password = ? "] = newVal
 	return u
 }
 
 //ints
 
-func (u *__UserPasswod_Updater) CreatedTime(newVal int) *__UserPasswod_Updater {
+func (u *__UserPassword_Updater) CreatedTime(newVal int) *__UserPassword_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
 	return u
 }
@@ -38222,66 +41610,66 @@ func (u *__UserPasswod_Updater) CreatedTime(newVal int) *__UserPasswod_Updater {
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__UserPasswod_Selector) OrderBy_UserId_Desc() *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) OrderBy_UserId_Desc() *__UserPassword_Selector {
 	u.orderBy = " ORDER BY UserId DESC "
 	return u
 }
 
-func (u *__UserPasswod_Selector) OrderBy_UserId_Asc() *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) OrderBy_UserId_Asc() *__UserPassword_Selector {
 	u.orderBy = " ORDER BY UserId ASC "
 	return u
 }
 
-func (u *__UserPasswod_Selector) Select_UserId() *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) Select_UserId() *__UserPassword_Selector {
 	u.selectCol = "UserId"
 	return u
 }
 
-func (u *__UserPasswod_Selector) OrderBy_Password_Desc() *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) OrderBy_Password_Desc() *__UserPassword_Selector {
 	u.orderBy = " ORDER BY Password DESC "
 	return u
 }
 
-func (u *__UserPasswod_Selector) OrderBy_Password_Asc() *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) OrderBy_Password_Asc() *__UserPassword_Selector {
 	u.orderBy = " ORDER BY Password ASC "
 	return u
 }
 
-func (u *__UserPasswod_Selector) Select_Password() *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) Select_Password() *__UserPassword_Selector {
 	u.selectCol = "Password"
 	return u
 }
 
-func (u *__UserPasswod_Selector) OrderBy_CreatedTime_Desc() *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) OrderBy_CreatedTime_Desc() *__UserPassword_Selector {
 	u.orderBy = " ORDER BY CreatedTime DESC "
 	return u
 }
 
-func (u *__UserPasswod_Selector) OrderBy_CreatedTime_Asc() *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) OrderBy_CreatedTime_Asc() *__UserPassword_Selector {
 	u.orderBy = " ORDER BY CreatedTime ASC "
 	return u
 }
 
-func (u *__UserPasswod_Selector) Select_CreatedTime() *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) Select_CreatedTime() *__UserPassword_Selector {
 	u.selectCol = "CreatedTime"
 	return u
 }
 
-func (u *__UserPasswod_Selector) Limit(num int) *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) Limit(num int) *__UserPassword_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__UserPasswod_Selector) Offset(num int) *__UserPasswod_Selector {
+func (u *__UserPassword_Selector) Offset(num int) *__UserPassword_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__UserPasswod_Selector) _stoSql() (string, []interface{}) {
+func (u *__UserPassword_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
-	sqlstr := "SELECT " + u.selectCol + " FROM ms.user_passwod"
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.user_password"
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -38301,14 +41689,14 @@ func (u *__UserPasswod_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__UserPasswod_Selector) GetRow(db *sqlx.DB) (*UserPasswod, error) {
+func (u *__UserPassword_Selector) GetRow(db *sqlx.DB) (*UserPassword, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &UserPasswod{}
+	row := &UserPassword{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -38318,14 +41706,14 @@ func (u *__UserPasswod_Selector) GetRow(db *sqlx.DB) (*UserPasswod, error) {
 	return row, nil
 }
 
-func (u *__UserPasswod_Selector) GetRows(db *sqlx.DB) ([]UserPasswod, error) {
+func (u *__UserPassword_Selector) GetRows(db *sqlx.DB) ([]UserPassword, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []UserPasswod
+	var rows []UserPassword
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -38335,7 +41723,7 @@ func (u *__UserPasswod_Selector) GetRows(db *sqlx.DB) ([]UserPasswod, error) {
 	return rows, nil
 }
 
-func (u *__UserPasswod_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__UserPassword_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -38352,7 +41740,7 @@ func (u *__UserPasswod_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__UserPasswod_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__UserPassword_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -38369,7 +41757,7 @@ func (u *__UserPasswod_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	return rows, nil
 }
 
-func (u *__UserPasswod_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__UserPassword_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -38386,7 +41774,7 @@ func (u *__UserPasswod_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__UserPasswod_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__UserPassword_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -38404,7 +41792,7 @@ func (u *__UserPasswod_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__UserPasswod_Updater) Update(db XODB) (int, error) {
+func (u *__UserPassword_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -38421,7 +41809,7 @@ func (u *__UserPasswod_Updater) Update(db XODB) (int, error) {
 	allArgs = append(allArgs, updateArgs...)
 	allArgs = append(allArgs, whereArgs...)
 
-	sqlstr := `UPDATE ms.user_passwod SET ` + sqlUpdate
+	sqlstr := `UPDATE ms.user_password SET ` + sqlUpdate
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -38441,7 +41829,7 @@ func (u *__UserPasswod_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__UserPasswod_Deleter) Delete(db XODB) (int, error) {
+func (d *__UserPassword_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -38454,7 +41842,7 @@ func (d *__UserPasswod_Deleter) Delete(db XODB) (int, error) {
 		args = append(args, w.args...)
 	}
 
-	sqlstr := "DELETE FROM ms.user_passwod WHERE " + wheresStr
+	sqlstr := "DELETE FROM ms.user_password WHERE " + wheresStr
 
 	// run query
 	XOLog(sqlstr, args)
@@ -38480,10 +41868,49 @@ func (d *__UserPasswod_Deleter) Delete(db XODB) (int, error) {
 
 //
 
+// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
+//
+// Generated from index 'PostId'.
+func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, PostId, Text, CreatedTime ` +
+		`FROM ms.comments ` +
+		`WHERE PostId = ?`
+
+	// run query
+	XOLog(sqlstr, postId)
+	q, err := db.Query(sqlstr, postId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Comment{}
+	for q.Next() {
+		c := Comment{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &c)
+	}
+
+	return res, nil
+}
+
 // CommentById retrieves a row from 'ms.comments' as a Comment.
 //
 // Generated from index 'comments_Id_pkey'.
-func CommentById(db XODB, id int64) (*Comment, error) {
+func CommentById(db XODB, id int) (*Comment, error) {
 	var err error
 
 	// sql query
@@ -38574,7 +42001,7 @@ func FollowingListMembersByFollowedUserIdUserId(db XODB, followedUserId int, use
 // FollowingListMemberById retrieves a row from 'ms.following_list_member' as a FollowingListMember.
 //
 // Generated from index 'following_list_member_Id_pkey'.
-func FollowingListMemberById(db XODB, id int64) (*FollowingListMember, error) {
+func FollowingListMemberById(db XODB, id int) (*FollowingListMember, error) {
 	var err error
 
 	// sql query
@@ -38600,7 +42027,7 @@ func FollowingListMemberById(db XODB, id int64) (*FollowingListMember, error) {
 // FollowingListMemberHistoriesByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
 //
 // Generated from index 'UserId'.
-func FollowingListMemberHistoriesByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeMs int64) ([]*FollowingListMemberHistory, error) {
+func FollowingListMemberHistoriesByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeMs int) ([]*FollowingListMemberHistory, error) {
 	var err error
 
 	// sql query
@@ -38639,7 +42066,7 @@ func FollowingListMemberHistoriesByUserIdUpdatedTimeMs(db XODB, userId int, upda
 // FollowingListMemberHistoryById retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
 //
 // Generated from index 'following_list_member_history_Id_pkey'.
-func FollowingListMemberHistoryById(db XODB, id int64) (*FollowingListMemberHistory, error) {
+func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistory, error) {
 	var err error
 
 	// sql query
@@ -38662,36 +42089,10 @@ func FollowingListMemberHistoryById(db XODB, id int64) (*FollowingListMemberHist
 	return &flmh, nil
 }
 
-// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'PostId'.
-func LikeByPostIdUserId(db XODB, postId int64, userId int) (*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE PostId = ? AND UserId = ?`
-
-	// run query
-	XOLog(sqlstr, postId, userId)
-	l := Like{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
-	if err != nil {
-		return nil, err
-	}
-
-	return &l, nil
-}
-
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId_2'.
-func LikesByPostId(db XODB, postId int64) ([]*Like, error) {
+func LikesByPostId(db XODB, postId int) ([]*Like, error) {
 	var err error
 
 	// sql query
@@ -38755,47 +42156,8 @@ func LikeByUserId(db XODB, userId int) (*Like, error) {
 
 // MediaById retrieves a row from 'ms.media' as a Media.
 //
-// Generated from index 'Id'.
-func MediaById(db XODB, id int64) ([]*Media, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, PostId, AlbumId, TypeId, CreatedTime, Src ` +
-		`FROM ms.media ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Media{}
-	for q.Next() {
-		m := Media{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&m.Id, &m.UserId, &m.PostId, &m.AlbumId, &m.TypeId, &m.CreatedTime, &m.Src)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &m)
-	}
-
-	return res, nil
-}
-
-// MediaById retrieves a row from 'ms.media' as a Media.
-//
 // Generated from index 'media_Id_pkey'.
-func MediaById(db XODB, id int64) (*Media, error) {
+func MediaById(db XODB, id int) (*Media, error) {
 	var err error
 
 	// sql query
@@ -39094,7 +42456,7 @@ func PhoneContactById(db XODB, id int) (*PhoneContact, error) {
 // PostById retrieves a row from 'ms.post' as a Post.
 //
 // Generated from index 'post_Id_pkey'.
-func PostById(db XODB, id uint64) (*Post, error) {
+func PostById(db XODB, id int) (*Post, error) {
 	var err error
 
 	// sql query
@@ -39141,6 +42503,45 @@ func RecommendUserById(db XODB, id int) (*RecommendUser, error) {
 	}
 
 	return &ru, nil
+}
+
+// SessionsById retrieves a row from 'ms.session' as a Session.
+//
+// Generated from index 'Id'.
+func SessionsById(db XODB, id int) ([]*Session, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
+		`FROM ms.session ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Session{}
+	for q.Next() {
+		s := Session{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &s)
+	}
+
+	return res, nil
 }
 
 // SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
@@ -39198,7 +42599,7 @@ func TagByName(db XODB, name string) (*Tag, error) {
 // TagById retrieves a row from 'ms.tags' as a Tag.
 //
 // Generated from index 'tags_Id_pkey'.
-func TagById(db XODB, id uint) (*Tag, error) {
+func TagById(db XODB, id int) (*Tag, error) {
 	var err error
 
 	// sql query
@@ -39429,21 +42830,21 @@ func UserById(db XODB, id int) (*User, error) {
 	return &u, nil
 }
 
-// UserPasswodByUserId retrieves a row from 'ms.user_passwod' as a UserPasswod.
+// UserPasswordByUserId retrieves a row from 'ms.user_password' as a UserPassword.
 //
-// Generated from index 'user_passwod_UserId_pkey'.
-func UserPasswodByUserId(db XODB, userId int) (*UserPasswod, error) {
+// Generated from index 'user_password_UserId_pkey'.
+func UserPasswordByUserId(db XODB, userId int) (*UserPassword, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
 		`UserId, Password, CreatedTime ` +
-		`FROM ms.user_passwod ` +
+		`FROM ms.user_password ` +
 		`WHERE UserId = ?`
 
 	// run query
 	XOLog(sqlstr, userId)
-	up := UserPasswod{
+	up := UserPassword{
 		_exists: true,
 	}
 
@@ -39467,7 +42868,7 @@ type XODB interface {
 
 // XOLog provides the log func used by generated queries.
 var XOLog = func(strings ...interface{}) {
-	if DEBUG {
+	if config.IS_DEBUG {
 		fmt.Println(strings...)
 	}
 }

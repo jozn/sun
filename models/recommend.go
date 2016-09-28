@@ -15,15 +15,18 @@ func ReloadTopUserIds() {
 
 /////////////////////////////////////////////////////////////
 
-type RecommendTable struct {
+type RecommendUser struct {
 	Id          int
 	UserId      int
 	TargetId    int
 	CreatedTime int
 	Weight      float64
+    // xo fields
+    _exists, _deleted bool
 }
 
 func GenrateRecommends(ForUserId int) {
+    //NewRecommendUser_Deleter()
 	go func() {
 		defer helper.JustRecover()
 
@@ -45,12 +48,12 @@ func GenrateRecommendUser(ForUserId int) {
 	base.DB.Select(&UserContactsIds, q)
 
 	/////////////////////////////////////
-	var RecomUsers []RecommendTable
+	var RecomUsers []RecommendUser
 
 	//1:: contacts
 	for _, uid := range UserContactsIds {
 		if UserMemoryStore.GetFollowingTypeForUsers(ForUserId, uid) == 0 {
-			r := RecommendTable{}
+			r := RecommendUser{}
 			r.UserId = ForUserId
 			r.TargetId = uid
 			r.Weight = 1
@@ -74,7 +77,7 @@ func GenrateRecommendUser(ForUserId int) {
 		if len(TopUserIds) > i {
 			uid := TopUserIds[i]
 			if UserMemoryStore.GetFollowingTypeForUsers(ForUserId, uid) == 0 {
-				r := RecommendTable{}
+				r := RecommendUser{}
 				r.UserId = ForUserId
 				r.TargetId = uid
 				r.Weight = 1

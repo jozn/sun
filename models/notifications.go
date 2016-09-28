@@ -5,7 +5,7 @@ import (
     "ms/sun/helper"
     "math"
 )
-
+// In Orma-gen
 type Notification struct {
 	Id           int
 	ForUserId    int
@@ -16,6 +16,8 @@ type Notification struct {
 	ObjectId     int //dep == TargetId * 1000 + ObjectTypeId  ---- eg: 1256*1000 + 3 = 1256003
 	SeenStatus   int
 	CreatedTime  int
+                     // xo fields
+    _exists, _deleted bool
 }
 
 func (n *Notification) InsertToDb() {
@@ -25,8 +27,10 @@ func (n *Notification) InsertToDb() {
     }
 }
 
+/*
 func (n *Notification) Delete() {
 }
+*/
 
 
 func LoadLastNotificationsForUser(UserId, FromTime int) []Notification {

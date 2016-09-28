@@ -5,6 +5,7 @@ import (
 	"ms/sun/helper"
 )
 
+// In Orma-gen
 type FollowingList struct {
 	Id          int
 	UserId      int
@@ -14,6 +15,8 @@ type FollowingList struct {
 	IsAuto      int
 	IsPimiry    int
 	CreatedTime int
+    // xo fields
+    _exists, _deleted bool
 }
 
 //following_list_member
@@ -24,13 +27,18 @@ type FollowingListMember struct {
 	FollowedUserId int
 	FollowType     int
 	UpdatedTimeMs  int
+    // xo fields
+    _exists, _deleted bool
 }
 
 //table: following_list_member_history
 type FollowingListMemberHistory struct {
 	FollowingListMember
 	FollowId int
+    // xo fields
+    _exists, _deleted bool
 }
+
 
 func Follow(UserId, FollowedPeerUserId int) {
 	if UserId == FollowedPeerUserId || UserId < 1 || FollowedPeerUserId < 1 {
@@ -44,7 +52,8 @@ func Follow(UserId, FollowedPeerUserId int) {
 		UserMemoryStore.UpdateUserFollowersCounts(FollowedPeerUserId, 1)
 
 		fh := FollowingListMemberHistory{}
-		fh.FollowingListMember = *follow
+		//fh.FollowedUserId = FollowedPeerUserId// *follow
+		fh.FollowedUserId = follow.Id
 		fh.FollowType = 1
 		fh.FollowId = 0
 		fh.InsertToDb()
