@@ -1,4 +1,5 @@
 package routes
+
 /// IMPORTANT BY ME:
 // this is a package from copyied github.com/drone/routes
 //only on changelog to this file:
@@ -152,13 +153,15 @@ func (m *RouteMux) Filter(filter http.HandlerFunc) {
 
 // FilterParam adds the middleware filter iff the REST URL parameter exists.
 func (m *RouteMux) FilterParam(param string, filter http.HandlerFunc) {
-	if !strings.HasPrefix(param,":") {
-		param = ":"+param
+	if !strings.HasPrefix(param, ":") {
+		param = ":" + param
 	}
 
 	m.Filter(func(w http.ResponseWriter, r *http.Request) {
 		p := r.URL.Query().Get(param)
-		if len(p) > 0 { filter(w, r) }
+		if len(p) > 0 {
+			filter(w, r)
+		}
 	})
 }
 

@@ -14,11 +14,11 @@ func StoreCommandsToRedis(UserId int, cmd *base.Command) {
 	gen := keygen.NewForUser(UserId)
 	key := gen.RedisMsgsAllKey() // "user_msgs:156"
 	//con,_ := p.Get()
-    score := helper.TimeNowNano()
-    if cmd.ServerNanoId < 1 {
-        cmd.ServerNanoId = score
-    }
-    score = cmd.ServerNanoId
+	score := helper.TimeNowNano()
+	if cmd.ServerNanoId < 1 {
+		cmd.ServerNanoId = score
+	}
+	score = cmd.ServerNanoId
 	r := p.Cmd(store.REDIS_SORTED_LIST_ADD, key, score, helper.ToJson(cmd))
 	helper.Debug("SaveCmdToRedis() Err: ", r.Err)
 }
@@ -49,13 +49,13 @@ func GetEarlistCmdsFromRedis(UserId int) (cmds []*base.Command) {
 	//helper.Debugf("ZRANGE()  ",r.Err, key)
 	if r.Err == nil {
 		res, err := r.List()
-        //helper.Debugf("ZRANGE()  ",len(res), err, key)
-        if err == nil {
+		//helper.Debugf("ZRANGE()  ",len(res), err, key)
+		if err == nil {
 			for _, c := range res {
 				cmd := base.Command{}
-                //helper.Debugf("ZRANGE()  ",len(res), err, key)
+				//helper.Debugf("ZRANGE()  ",len(res), err, key)
 				err = json.Unmarshal([]byte(c), &cmd)
-                //helper.Debugf("ZRANGE() Unamrshal err  ", err)
+				//helper.Debugf("ZRANGE() Unamrshal err  ", err)
 				cmds = append(cmds, &cmd)
 			}
 		}

@@ -1,16 +1,16 @@
 package ctrl
 
 import (
-    "ms/sun/models"
-    "ms/sun/base"
+	"ms/sun/base"
+	"ms/sun/models"
 )
 
-func SyncUsersCtrl(c *base.Action) base.AppErr  {
-    MustBeUserAndUpdate(c)
+func SyncUsersCtrl(c *base.Action) base.AppErr {
+	MustBeUserAndUpdate(c)
 
-    lastTime := c.GetParamInt("last",-1);
+	lastTime := c.GetParamInt("last", -1)
 
-    c.SendJson(models.SyncGetAllChangedUser(c.UserId(),lastTime))
+	c.SendJson(models.SyncGetAllChangedUser(c.UserId(), lastTime))
 
-    return nil
+	return nil
 }

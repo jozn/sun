@@ -58,8 +58,8 @@ type UserSession struct {
 // +gen slice:"Where,GroupBy[string],DistinctBy,SortBy,Select[string]"
 type User struct { //legacy switch to UserTable
 	UserTable
-                   // xo fields
-    _exists, _deleted bool
+	// xo fields
+	_exists, _deleted bool
 }
 
 type UserTable struct {
@@ -69,7 +69,6 @@ type UserTable struct {
 	UserCounts
 	UserSession
 	UserExtra
-
 }
 
 /////////// for Responses //////////////////////////////////////
@@ -150,6 +149,6 @@ type UserPassword struct {
 	UserId      int
 	Password    int
 	CreatedTime int
-    // xo fields
-    _exists, _deleted bool
+	// xo fields
+	_exists, _deleted bool
 }

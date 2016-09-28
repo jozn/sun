@@ -7,9 +7,9 @@ import (
 	"net/http"
 	//"github.com/drone/routes"
 	"ms/sun/ctrl"
+	"ms/sun/pipes"
 	"ms/sun/routes"
 	"ms/sun/sync"
-    "ms/sun/pipes"
 )
 
 func registerRoutes() {
@@ -37,7 +37,7 @@ func registerRoutes() {
 	http.Handle("/upload3", actioner(PlayUpload3))
 	http.HandleFunc("/upload2", PlayUpload2)
 
-	http.HandleFunc("/ws1", sync.ServeUserWs)//Deprectaed
+	http.HandleFunc("/ws1", sync.ServeUserWs) //Deprectaed
 	http.HandleFunc("/ws", pipes.ServeHttpWs)
 
 	http.Handle("/mysql1", actioner(fact.IsamPlay))
@@ -101,10 +101,10 @@ func registerRoutes() {
 
 	mux.Get("/profile/all", actionToFunc(ctrl.GetPostsForProfileAction))
 
-    mux.Get("/notifications", actionToFunc(ctrl.VNoftificationsCtrl))
-    //mux.Get("notifications", actionToFunc(ctrl.NoftificationsCtrl))
+	mux.Get("/notifications", actionToFunc(ctrl.VNoftificationsCtrl))
+	//mux.Get("notifications", actionToFunc(ctrl.NoftificationsCtrl))
 
-    mux.Get("/recommend/top_posts", actionToFunc(ctrl.RecommendPostsCtrl))
+	mux.Get("/recommend/top_posts", actionToFunc(ctrl.RecommendPostsCtrl))
 	mux.Get("/recommend/users", actionToFunc(ctrl.RecommendUsersCtrl))
 	mux.Get("/recommend/top_tags", actionToFunc(ctrl.RecommendTagsCtrl))
 	mux.Get("/recommend/top_tags_discover", actionToFunc(ctrl.RecommendTagsWithPostsCtrl))
@@ -116,11 +116,12 @@ func registerRoutes() {
 
 	mux.Get("/noti", actionToFunc(ctrl.NoftificationsCtrl2))
 
-    mux.Get("/not", actionToFunc(ctrl.VNoftificationsCtrl))
-    http.Handle("/not2", actioner(ctrl.VNoftificationsCtrl2))
+	mux.Get("/not", actionToFunc(ctrl.VNoftificationsCtrl))
+	http.Handle("/not2", actioner(ctrl.VNoftificationsCtrl2))
 
-    mux.Get("/sync_users", actionToFunc(ctrl.SyncUsersCtrl))
+	mux.Get("/sync_users", actionToFunc(ctrl.SyncUsersCtrl))
+	mux.Get("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
 
-    http.Handle("/", mux)
+	http.Handle("/", mux)
 
 }

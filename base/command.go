@@ -10,8 +10,8 @@ import (
 type WSReq struct {
 	//SessionUid string //???
 	//Command    string //dep
-	Commands   []Command
-    NanoId uint64
+	Commands []Command
+	NanoId   uint64
 	//RequestId  string //dep
 	//ReqKey string //dep
 	//Params     map[string]interface{}//dep
@@ -19,31 +19,31 @@ type WSReq struct {
 
 type WSRes struct {
 	// BNCP
-    Status       string //dep
+	Status string //dep
 	//ResTime   int64//dep eventing
-    Commands     []*Command
-    SyncedNanoId int64
+	Commands     []*Command
+	SyncedNanoId int64
 	//RequestId string //dep
-    ReqKey       string //dep
+	ReqKey string //dep
 	//TODO remove?
 	//Payload interface{} //dep no need, its eventing
 }
 
 type Command struct {
 	//Command string
-    Name            string
-    ResId           int64
-    ClientNanoId    int64
-    ServerNanoId    int64
-    Data            string        //marshilized json - don't set dirctly set via toJsonData
-    toJsonSliceData []interface{} //`json:"-"`
+	Name            string
+	ResId           int64
+	ClientNanoId    int64
+	ServerNanoId    int64
+	Data            string        //marshilized json - don't set dirctly set via toJsonData
+	toJsonSliceData []interface{} //`json:"-"`
 	//Params  map[string]interface{}//dep
 }
 
 func NewResponseCommand(ResId int64) *Command {
 	return &Command{
-		Name:  "ResCmd",
-		ResId: ResId,
+		Name:         "ResCmd",
+		ResId:        ResId,
 		ServerNanoId: time.Now().UnixNano()}
 }
 

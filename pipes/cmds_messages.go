@@ -106,4 +106,3 @@ func MsgDeletedFromServer(c *base.CmdAction) {
 func MsgReceivedToServer(c *base.CmdAction) {
 
 }
-

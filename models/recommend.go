@@ -21,12 +21,12 @@ type RecommendUser struct {
 	TargetId    int
 	CreatedTime int
 	Weight      float64
-    // xo fields
-    _exists, _deleted bool
+	// xo fields
+	_exists, _deleted bool
 }
 
 func GenrateRecommends(ForUserId int) {
-    //NewRecommendUser_Deleter()
+	//NewRecommendUser_Deleter()
 	go func() {
 		defer helper.JustRecover()
 

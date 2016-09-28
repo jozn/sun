@@ -1,9 +1,10 @@
 package helper
 
 import (
-	"io"
 	"bytes"
+	"io"
 )
+
 //THIS files funtions has been borrowed from
 func escapeString(txt string) string {
 	var (

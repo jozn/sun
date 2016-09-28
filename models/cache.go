@@ -1,8 +1,8 @@
 package models
 
 import (
-	c "github.com/patrickmn/go-cache"
 	"errors"
+	c "github.com/patrickmn/go-cache"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"time"
@@ -43,10 +43,10 @@ func (cm *_cacheModels) GetPostById(Id int) (*Post, error) {
 		}
 	}
 
-    p := new(Post)
-    err := base.DB.Get(p, " select * from post where Id = ? ", Id)
+	p := new(Post)
+	err := base.DB.Get(p, " select * from post where Id = ? ", Id)
 	if err != nil {
-        helper.DebugPrintln("XXX: "+err.Error())
+		helper.DebugPrintln("XXX: " + err.Error())
 		return nil, errors.New("post not found")
 	}
 
@@ -71,8 +71,8 @@ func (cm *_cacheModels) GetCommentById(Id int) (*Comment, error) {
 		}
 	}
 
-    com:= new(Comment)
-    err := base.DB.Get(com, " select * from comments where Id = ? ", Id)
+	com := new(Comment)
+	err := base.DB.Get(com, " select * from comments where Id = ? ", Id)
 	if err != nil {
 		return nil, errors.New("comment not found")
 	}

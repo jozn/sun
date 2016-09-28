@@ -1,20 +1,17 @@
-package actions
+package ctrl
 
 import (
 	"encoding/json"
 	"ms/sun/base"
-	"ms/sun/models"
-	//"fmt"
-	// "../util"
 	"ms/sun/helper"
-	//"strings"
-	"fmt"
+	"ms/sun/models"
 )
 
-func SyncAllContactsAction(a *base.Action) base.AppErr {
-	//c.MustPost()
+func GrabAllUserContactsCtrl(a *base.Action) base.AppErr {
+	MustBeUserAndUpdate(a)
 	contactsForm := a.Req.Form.Get("contacts")
-	var conts []models.PhoneContactTable
+	//DeviceUuidId := a.Req.Form.Get("uuid")
+	var conts []models.PhoneContact
 	err := json.Unmarshal([]byte(contactsForm), &conts)
 	if err != nil {
 		return nil
@@ -22,8 +19,10 @@ func SyncAllContactsAction(a *base.Action) base.AppErr {
 	//fmt.Println(conts)
 	var _cs []interface{} //just for inserting in mass
 	for _, c := range conts {
+		c.Id = 0 //security
 		c.UserId = a.UserId()
 		c.CreatedTime = helper.TimeNow()
+		c.DeviceUuidId = 0 ///DeviceUuidId
 		_cs = append(_cs, c)
 	}
 
@@ -45,19 +44,5 @@ func SyncAllContactsAction(a *base.Action) base.AppErr {
 	helper.DebugPrintln(q)
 	_ = base.DB.Select(&users, q)
 
-	users_res := make([]models.UserBasicPhoneAndMe, 0, len(users))
-
-	list := models.PreloadFollowingsListTypesForUser(a.UserId())
-	for _, u := range users {
-		cu := models.UserBasicPhoneAndMe{}
-		cu.FromUser(u, list)
-		//cu.UserBasic = u.UserBasic
-		cu.Phone = u.Phone
-		//cu.UpdatedTimestamp = u.UpdatedTimestamp
-		//cu.FollowingType = list.FollowingType(u.Id)
-		users_res = append(users_res, cu)
-	}
-	fmt.Println(len(users), len(users_res))
-	a.SendJson(users_res)
 	return nil
 }

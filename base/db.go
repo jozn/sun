@@ -8,149 +8,146 @@ import (
 	"reflect"
 	"strings"
 	//"bytes"
+	"ms/sun/config"
 	"ms/sun/helper"
-    "ms/sun/config"
 )
 
 //structRow: must be poniter
 func DbInsertStruct(structRow interface{}, table string) (sql.Result, error) {
 	//return DbInsertUpdateStruct(structRow, table, true)
-    keys,values :=helper.StructToFiledsRejectsEscape(structRow,"Id")
+	keys, values := helper.StructToFiledsRejectsEscape(structRow, "Id")
 
-    ks := make([]string,len(keys))
-    for i,s := range keys {
-        ks[i] = "`"+s+"`"
-    }
+	ks := make([]string, len(keys))
+	for i, s := range keys {
+		ks[i] = "`" + s + "`"
+	}
 
+	//q := "Insert into " + table + " ("+strings.Join(ks,",") +") values (" +strings.Join(values,",") +")"
+	q := "Insert " + table + " (" + strings.Join(ks, ",") + ") values (" + DbQuestionForIn(len(values)) + ")"
 
-    //q := "Insert into " + table + " ("+strings.Join(ks,",") +") values (" +strings.Join(values,",") +")"
-    q := "Insert " + table + " ("+strings.Join(ks,",") +") values (" +DbQuestionForIn(len(values)) +")"
+	vals := make([]interface{}, len(values))
+	for i, s := range values {
+		//vals[i] = "`"+s+"`"
+		vals[i] = s
+	}
 
-    vals := make([]interface{},len(values))
-    for i,s := range values {
-        //vals[i] = "`"+s+"`"
-        vals[i] = s
-    }
+	r, err := DB.Exec(q, vals...)
+	//r, err := DB.Exec(q)
 
-    r, err := DB.Exec(q, vals...)
-    //r, err := DB.Exec(q)
-
-    if config.DEBUG_LOG_SQL {
-        helper.DebugPrintln(q, vals)
-        if err != nil {
-            fmt.Println("DATABASE ERROR: for table: ", table, " error: ", err , " query ",q , " PARAMS: ", vals)
-        }
-    }
-    return r, err
+	if config.DEBUG_LOG_SQL {
+		helper.DebugPrintln(q, vals)
+		if err != nil {
+			fmt.Println("DATABASE ERROR: for table: ", table, " error: ", err, " query ", q, " PARAMS: ", vals)
+		}
+	}
+	return r, err
 }
 
 //ignors Id in all structs to set by db- or not at all
 func DbUpdateStruct(structRow interface{}, table string) (sql.Result, error) {
 	//return DbInsertUpdateStruct(structRow, table, false)
-    keys,values :=helper.StructToFiledsRejectsEscape(structRow,"Id")
-    _,idavls :=helper.StructToFiledsCollect(structRow,"Id")
+	keys, values := helper.StructToFiledsRejectsEscape(structRow, "Id")
+	_, idavls := helper.StructToFiledsCollect(structRow, "Id")
 
-    ks := make([]string,len(keys))
-    for i,s := range keys {
-        ks[i] = "`"+s+"`"
-    }
-    idval :=""
-    if len(idavls) == 1 {
-        idval = fmt.Sprint(idavls[0])
-    }else {
-        log.Panic("In Update statemant Id of struct is not exist - struct: ",structRow)
-    }
+	ks := make([]string, len(keys))
+	for i, s := range keys {
+		ks[i] = "`" + s + "`"
+	}
+	idval := ""
+	if len(idavls) == 1 {
+		idval = fmt.Sprint(idavls[0])
+	} else {
+		log.Panic("In Update statemant Id of struct is not exist - struct: ", structRow)
+	}
 
+	q := "Update " + table + " (" + strings.Join(ks, ",") + ") values (" + DbQuestionForIn(len(values)) + ") WHERE Id = " + idval
 
-    q := "Update " + table + " ("+strings.Join(ks,",") +") values (" +DbQuestionForIn(len(values)) +") WHERE Id = "+idval
+	vals := make([]interface{}, len(values))
+	for i, s := range values {
+		//vals[i] = "`"+s+"`"
+		vals[i] = s
+	}
 
-    vals := make([]interface{},len(values))
-    for i,s := range values {
-        //vals[i] = "`"+s+"`"
-        vals[i] = s
-    }
+	r, err := DB.Exec(q, vals...)
 
-    r, err := DB.Exec(q, vals...)
-
-    if config.DEBUG_LOG_SQL {
-        helper.DebugPrintln(q, vals)
-        if err != nil {
-            fmt.Println("DATABASE ERROR: for table: ", table, " error: ", err , " query ",q , " PARAMS: ", vals)
-        }
-    }
-    return r, err
+	if config.DEBUG_LOG_SQL {
+		helper.DebugPrintln(q, vals)
+		if err != nil {
+			fmt.Println("DATABASE ERROR: for table: ", table, " error: ", err, " query ", q, " PARAMS: ", vals)
+		}
+	}
+	return r, err
 }
 
-func DbExecute(query string, params ...interface{} ) (sql.Result, error) {
-    r, err := DB.Exec(query, params...)
+func DbExecute(query string, params ...interface{}) (sql.Result, error) {
+	r, err := DB.Exec(query, params...)
 
-    if config.DEBUG_LOG_SQL {
-        helper.DebugPrintln(query, params)
-        if err != nil {
-            fmt.Println("DATABASE ERROR: error: ", err , " query ",query , " PARAMS: ", params)
-        }
-    }
-    return r, err
+	if config.DEBUG_LOG_SQL {
+		helper.DebugPrintln(query, params)
+		if err != nil {
+			fmt.Println("DATABASE ERROR: error: ", err, " query ", query, " PARAMS: ", params)
+		}
+	}
+	return r, err
 }
 
 //structRows must be an [] of POINTERS
 func DbMassReplacetStructPoninters(table string, structRows ...interface{}) (sql.Result, error) {
-    //fmt.Println("Inside DbMassReplacetStruct")
-    if len(structRows) == 0 {
-        w:= errors.New("length of structRows must be grater than zero")
-        helper.DebugPrintln(w)
-        return nil, w
-    }
-    structRow := structRows[0]
+	//fmt.Println("Inside DbMassReplacetStruct")
+	if len(structRows) == 0 {
+		w := errors.New("length of structRows must be grater than zero")
+		helper.DebugPrintln(w)
+		return nil, w
+	}
+	structRow := structRows[0]
 
-    keys,values :=helper.StructToFiledsRejectsEscape(structRow,"Id")
+	keys, values := helper.StructToFiledsRejectsEscape(structRow, "Id")
 
-    ks := make([]string,len(keys))
-    for i,s := range keys {
-        ks[i] = "`"+s+"`"
-    }
+	ks := make([]string, len(keys))
+	for i, s := range keys {
+		ks[i] = "`" + s + "`"
+	}
 
-    // build "? ,? ,? ,? " for use of Mysql escape
-    var insAll []string //[ "(?,?,?)" , "?,?,?" , ... ]
-    var qus, colsSql, query string
+	// build "? ,? ,? ,? " for use of Mysql escape
+	var insAll []string //[ "(?,?,?)" , "?,?,?" , ... ]
+	var qus, colsSql, query string
 
-    //TODO:optimize and simpilify beacus it is just "(?,?,?), ..." we can build one and repeat it
-    for i := 0; i < len(structRows); i++ {
-        var insRow []string
-        for j := 0; j < len(values); j++ {
-            insRow = append(insRow, "?")
-        }
-        insAll = append(insAll, "("+strings.Join(insRow, ",")+")") // building: "(?,?,?)"
-    }
+	//TODO:optimize and simpilify beacus it is just "(?,?,?), ..." we can build one and repeat it
+	for i := 0; i < len(structRows); i++ {
+		var insRow []string
+		for j := 0; j < len(values); j++ {
+			insRow = append(insRow, "?")
+		}
+		insAll = append(insAll, "("+strings.Join(insRow, ",")+")") // building: "(?,?,?)"
+	}
 
-    qus = strings.Join(insAll, ", ")         // "(?,?,?) , (?,?,?) ..."
-    colsSql = strings.Join(ks, ",") //columsn " Id ,Nmae, UserName"
-    query = "REPLACE INTO " + table + " (" + colsSql + ") VALUES " + qus + " "
+	qus = strings.Join(insAll, ", ") // "(?,?,?) , (?,?,?) ..."
+	colsSql = strings.Join(ks, ",")  //columsn " Id ,Nmae, UserName"
+	query = "REPLACE INTO " + table + " (" + colsSql + ") VALUES " + qus + " "
 
-    //fmt.Println(query)
-    //	var valRaw []interface{}
-    var valHolders []interface{}
-    for n := 0; n < len(structRows); n++ {
-        _,values2 :=helper.StructToFiledsRejectsEscape(structRows[n],"Id")
+	//fmt.Println(query)
+	//	var valRaw []interface{}
+	var valHolders []interface{}
+	for n := 0; n < len(structRows); n++ {
+		_, values2 := helper.StructToFiledsRejectsEscape(structRows[n], "Id")
 
-        for j := 0; j < len(values2); j++ {
-            valHolders = append(valHolders, values2[j])
-        }
-    }
+		for j := 0; j < len(values2); j++ {
+			valHolders = append(valHolders, values2[j])
+		}
+	}
 
-    r, err := DB.Exec(query, valHolders...)
+	r, err := DB.Exec(query, valHolders...)
 
-    if config.DEBUG_LOG_SQL {
-        helper.DebugPrintln(query, valHolders)
-        if err != nil {
-            fmt.Println("DATABASE ERROR: error: ", err , " query ",query , " PARAMS: ", valHolders)
-        }
-    }
+	if config.DEBUG_LOG_SQL {
+		helper.DebugPrintln(query, valHolders)
+		if err != nil {
+			fmt.Println("DATABASE ERROR: error: ", err, " query ", query, " PARAMS: ", valHolders)
+		}
+	}
 
-    return r, err
+	return r, err
 
 }
-
 
 //update a struct will by defult update dy Id
 // deprecated
@@ -196,7 +193,7 @@ func DbInsertUpdateStruct(structRow interface{}, table string, isInsert bool) (s
 	}
 
 	if __DEV__ {
-		 fmt.Println("-db query: ", query ,vals)
+		fmt.Println("-db query: ", query, vals)
 	}
 
 	r, err := DB.Exec(query, vals...)
@@ -315,14 +312,14 @@ func DbStructToTable(structRow interface{}, table string) string {
 }
 
 func DbStructToTable2New(structRow interface{}, table string) string {
-	arr_str, arr_vals := helper.StructToFiledsRejects(structRow,"nothing")
+	arr_str, arr_vals := helper.StructToFiledsRejects(structRow, "nothing")
 	var cols []string
 	_ = cols
 	//stut := s.Type()
 	//	fmt.Printf("struc %T %v ", stut, stut)
 	//	fmt.Println("struc  ", stut)
 	for i := 0; i < len(arr_str); i++ {
-		col:=arr_str[i]
+		col := arr_str[i]
 		val := arr_vals[i]
 		//f := s.Field(i)
 		//f := col
@@ -359,12 +356,9 @@ func DbQuestionForIn(size int) string {
 func DbSliceStringToSafeIns(str []string) string {
 	//var buf bytes.Buffer
 	var buf []string
-	for _,s := range str{
+	for _, s := range str {
 		//buf.WriteString(s)
-		buf = append(buf, "'"+MySqlEscape(s)+"'" )
+		buf = append(buf, "'"+MySqlEscape(s)+"'")
 	}
-	return strings.Join(buf,",")
+	return strings.Join(buf, ",")
 }
-
-
-

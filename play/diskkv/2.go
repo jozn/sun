@@ -15,7 +15,7 @@ func main() {
 	})
 
 	key := "alpha"
-	t2:= time.Now().UnixNano()
+	t2 := time.Now().UnixNano()
 
 	for i := 0; i < 5000; i++ {
 
@@ -24,8 +24,7 @@ func main() {
 		}
 	}
 
-	fmt.Println("time: " ,(time.Now().UnixNano() - t2)/1e6 )
-
+	fmt.Println("time: ", (time.Now().UnixNano()-t2)/1e6)
 
 	value, err := d.Read(key)
 	if err != nil {

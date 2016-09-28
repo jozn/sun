@@ -4,18 +4,17 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"log"
-
 )
+
 var DB *sqlx.DB
 var __DEV__ bool
 
-
-func init()  {
+func init() {
 	__DEV__ = true
-//	DB, err := sqlx.Connect("mysql", "root:123456@/ms3?charset=utf8mb4")
-//	// DB, err = sqlx.Connect("mysql", "root:123456@/ms3?charset=ascii")
-//	noErr(err)
-//	DB.MapperFunc(func(s string) string { return s })
+	//	DB, err := sqlx.Connect("mysql", "root:123456@/ms3?charset=utf8mb4")
+	//	// DB, err = sqlx.Connect("mysql", "root:123456@/ms3?charset=ascii")
+	//	noErr(err)
+	//	DB.MapperFunc(func(s string) string { return s })
 	_ = DB
 }
 
@@ -37,4 +36,3 @@ func noDevErr(err error) {
 func e(...interface{}) {
 
 }
-

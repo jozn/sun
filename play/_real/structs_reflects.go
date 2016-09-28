@@ -2,46 +2,43 @@ package main
 
 import (
 	"fmt"
+	"ms/sun/helper"
 	"reflect"
 	"unicode"
-	"ms/sun/helper"
 )
 
 type U struct {
-	In2 int
-	Id2 int64
+	In2   int
+	Id2   int64
 	Name2 string
-	Ok bool
-	fi2 int
-
+	Ok    bool
+	fi2   int
 }
 type User struct {
 	U
-	In int
-	Id int64
+	In   int
+	Id   int64
 	Name string
-	Ok bool
-	fi int
-
+	Ok   bool
+	fi   int
 }
 
-
 // isCollect: true => just collect fileds , false:  rejects fileds
-func structToFiledsGeneral(structPointer interface{}, isCollect bool , filedsFilter ...string )(fileds []string, values []interface{} ) {
+func structToFiledsGeneral(structPointer interface{}, isCollect bool, filedsFilter ...string) (fileds []string, values []interface{}) {
 	//func structToFiledsGeneral(structPointer interface{}, isCollect bool , filedsFilter ...string )([]string, []interface{} ) {
-	s := reflect.ValueOf(structPointer).Elem().Interface()//for pointer
+	s := reflect.ValueOf(structPointer).Elem().Interface() //for pointer
 	rjs := make(map[string]bool)
 	//var fileds []string
 	//var values []interface{}
 
-	for _ , r := range filedsFilter {
+	for _, r := range filedsFilter {
 		rjs[r] = true
 	}
 	//fmt.Println(rjs)
 
 	//should run @A if bloc
 	shouldRunBlock := func(existis bool) bool {
-		switch  {
+		switch {
 		case isCollect && existis:
 			return true
 		case isCollect && !existis:
@@ -59,10 +56,10 @@ func structToFiledsGeneral(structPointer interface{}, isCollect bool , filedsFil
 	//_ = shouldRunBlock
 	//_ =s
 
-	vls, fls := DeepFields(s)//len(fls) == len(valeus)
+	vls, fls := DeepFields(s) //len(fls) == len(valeus)
 	//fmt.Println("Depps: ",vls,fls)
-	for i,filed := range fls {
-		if  inMap := rjs[filed]; shouldRunBlock(inMap) {
+	for i, filed := range fls {
+		if inMap := rjs[filed]; shouldRunBlock(inMap) {
 			fileds = append(fileds, fls[i])
 			values = append(values, vls[i])
 		}
@@ -73,7 +70,7 @@ func structToFiledsGeneral(structPointer interface{}, isCollect bool , filedsFil
 	//allFileds := make([]string,10)//for embeded
 
 	//stut := s.Type()
-/*	for i := 0; i < s.NumField(); i++ {
+	/*	for i := 0; i < s.NumField(); i++ {
 		f := s.Field(i)
 		filed := stut.Field(i).Name
 		if unicode.IsLower(rune(filed[0])) {//will painc for un-exported filds
@@ -86,7 +83,7 @@ func structToFiledsGeneral(structPointer interface{}, isCollect bool , filedsFil
 			fields = append(fields, v)
 		}
 		allFileds = append(fileds, filed)*/
-		/*
+	/*
 		value := f.Interface()
 		if reflect
 		//if filed != "Id" {
@@ -104,7 +101,7 @@ func structToFiledsGeneral(structPointer interface{}, isCollect bool , filedsFil
 	return //fileds, values
 }
 
-func DeepFields(iface interface{}) (valeus []interface{} , fields []string) {
+func DeepFields(iface interface{}) (valeus []interface{}, fields []string) {
 	//reflect.ValueOf(iface)
 	//fields := make([]reflect.Value, 0)
 	//fields := make([]interface{}, 0)
@@ -117,12 +114,12 @@ func DeepFields(iface interface{}) (valeus []interface{} , fields []string) {
 	for i := 0; i < ift.NumField(); i++ {
 		v := ifv.Field(i)
 		n := ift.Field(i).Name
-		if unicode.IsLower(rune(n[0])) {//will painc for un-exported filds
+		if unicode.IsLower(rune(n[0])) { //will painc for un-exported filds
 			continue
 		}
 		switch v.Kind() {
 		case reflect.Struct:
-			vls ,cls := DeepFields(v.Interface())
+			vls, cls := DeepFields(v.Interface())
 			valeus = append(valeus, vls...)
 			fields = append(fields, cls...)
 		default:
@@ -136,6 +133,7 @@ func DeepFields(iface interface{}) (valeus []interface{} , fields []string) {
 	//fmt.Println(ss)
 	return valeus, fields
 }
+
 /*
 example
 u := User{}
@@ -149,8 +147,8 @@ StructToFiledsCollect(&u,"name","Name","In")
 [Id Ok]
 */
 
-func StructToFiledsCollect(structPointer interface{} ,collectFileds ...string) (fileds []string, values []interface{} )  {
-	return structToFiledsGeneral(structPointer, true , collectFileds...)
+func StructToFiledsCollect(structPointer interface{}, collectFileds ...string) (fileds []string, values []interface{}) {
+	return structToFiledsGeneral(structPointer, true, collectFileds...)
 }
 
 /*
@@ -165,31 +163,30 @@ StructToFiledsRejects(&u,"name","Name","In")
 [Id Ok]
 [0 false]
 */
-func StructToFiledsRejects(structPointer interface{} ,rejecttFileds ...string) (fileds []string, values []interface{} )  {
-	return structToFiledsGeneral(structPointer, false , rejecttFileds...)
+func StructToFiledsRejects(structPointer interface{}, rejecttFileds ...string) (fileds []string, values []interface{}) {
+	return structToFiledsGeneral(structPointer, false, rejecttFileds...)
 }
 
-func StructValuesToMysqlEscape(values ...interface{} ) ([]string) {
+func StructValuesToMysqlEscape(values ...interface{}) []string {
 	//if len(fileds)
-	valuesEscaped := make([]string,len(values))
-	for _,val := range values{
-		valuesEscaped = append(valuesEscaped, helper.MySqlEscape(fmt.Sprintf("%v",val)))
+	valuesEscaped := make([]string, len(values))
+	for _, val := range values {
+		valuesEscaped = append(valuesEscaped, helper.MySqlEscape(fmt.Sprintf("%v", val)))
 	}
 	return valuesEscaped
 }
-
 
 func main() {
 	u := User{}
 	u.In = 5888
 	u.Name = "asdasl'd\"asd`asd`سسس"
-	u.fi =444
+	u.fi = 444
 	//fmt.Println(DeepFields(u))
 	//DeepFields(u)
 	//StructToFiledsCollect(u,"name","Name","In")
 	//StructToFiledsCollect(&u,"name","Name","In")
 
-	fmt.Println(StructToFiledsCollect(&u,"Name","Id"))
+	fmt.Println(StructToFiledsCollect(&u, "Name", "Id"))
 	//structToFiledsGeneral(&u, false,  "Id")
 	//structToFiledsGeneral(&u, true,  "Id")
 	////structToFiledsGeneral(u, true,  "Id")

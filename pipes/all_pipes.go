@@ -14,14 +14,16 @@ type pipesMap struct {
 }
 
 func init() {
-    AllPipesMap = new(pipesMap)
-    AllPipesMap.mp = make(map[int]*UserDevicePipe, 100)
+	AllPipesMap = new(pipesMap)
+	AllPipesMap.mp = make(map[int]*UserDevicePipe, 100)
 
 }
+
 //type pipesMap map[int]*UserDevicePipe
 
 //var AllPipesMap = make(pipesMap) // make(map[int]UserDevicePipe)
 var AllPipesMap *pipesMap
+
 //var AllUserDevicesPipesMap2 = make(pipesMap)// make(map[int]UserDevicePipe)
 
 func (m pipesMap) SendToUser(UserId int, res base.WSRes) {
@@ -53,10 +55,10 @@ func (m pipesMap) SendCmdToUser(UserId int, cmd *base.Command) {
 	m.SendToUser(UserId, res)
 }
 
-func (m pipesMap) SendCmdsToUser(UserId int,cmds []*base.Command) {
-    res := base.WSRes{Status: "OK", ReqKey: "", SyncedNanoId: helper.TimeNowNano()}
-    res.Commands = cmds
-    m.SendToUser(UserId, res)
+func (m pipesMap) SendCmdsToUser(UserId int, cmds []*base.Command) {
+	res := base.WSRes{Status: "OK", ReqKey: "", SyncedNanoId: helper.TimeNowNano()}
+	res.Commands = cmds
+	m.SendToUser(UserId, res)
 }
 
 func (m pipesMap) SendAndStoreCmdToUser(UserId int, cmd *base.Command) {
@@ -95,7 +97,7 @@ func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 
 	m.AddUserPipe(UserId, &pipe)
 
-    OnNewUserWsConnected(UserId)//do and send Stored Cmds in here
+	OnNewUserWsConnected(UserId) //do and send Stored Cmds in here
 
 }
 

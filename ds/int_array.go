@@ -15,8 +15,8 @@ import (
 	"fmt"
 	//"github.com/emirpasic/gods/lists"
 	//"github.com/emirpasic/gods/utils"
+	"sort"
 	"strings"
-    "sort"
 )
 
 //func assertListImplementation() {
@@ -26,8 +26,8 @@ import (
 // IntList holds the elements in a slice
 type IntList struct {
 	//elements []interface{}
-    Elements []int
-    size     int
+	Elements []int
+	size     int
 }
 
 const (
@@ -39,6 +39,7 @@ const (
 func New() *IntList {
 	return &IntList{}
 }
+
 //func New() IntList {
 //    return IntList{}
 //}
@@ -53,21 +54,21 @@ func (list *IntList) Add(values ...int) {
 }
 
 func (list *IntList) AddAndSort(values ...int) {
-    list.Add(values...)
-    list.SortDesc()
+	list.Add(values...)
+	list.SortDesc()
 }
 
 func (list *IntList) RemoveAndSort(value int) {
-    list.RemoveIndex(value)
+	list.RemoveIndex(value)
 	for {
-		n:= sort.Search(list.size ,func(i int) bool { return list.Elements[i] <= value })
-		if n >= list.size || n < 0{
+		n := sort.Search(list.size, func(i int) bool { return list.Elements[i] <= value })
+		if n >= list.size || n < 0 {
 			break
 		}
 		v := list.Elements[n]
-		if v == value{
+		if v == value {
 			list.RemoveIndex(n)
-		}else {
+		} else {
 			break
 		}
 	}
@@ -92,7 +93,7 @@ func (list *IntList) RemoveIndex(index int) {
 		return
 	}
 
-	list.Elements[index] = 0                                    // cleanup reference
+	list.Elements[index] = 0                                      // cleanup reference
 	copy(list.Elements[index:], list.Elements[index+1:list.size]) // shift to the left by one (slow operation, need ways to optimize this)
 	list.size--
 
@@ -122,21 +123,21 @@ func (list *IntList) Contains(values ...int) bool {
 
 //must be sorted asc
 func (list *IntList) BinaryContains(value int) bool {
-   //n:= sort.SearchInts(list.Aelements, value)
+	//n:= sort.SearchInts(list.Aelements, value)
 	//list.SortAsc()
 	//n:=sort.SearchInts(list.Elements, value)
-   n:= sort.Search(list.size ,func(i int) bool { return list.Elements[i] <= value })
+	n := sort.Search(list.size, func(i int) bool { return list.Elements[i] <= value })
 	//print("Search : ",n," ", value ," ", list.size, " ", list.Elements , " ", len(list.Elements), "\n")
 	//fmt.Println(list.Elements)
 	//list.SortDesc()
-    if n >= list.size || n <0 {
-        return false
-    }
+	if n >= list.size || n < 0 {
+		return false
+	}
 	if list.Elements[n] == value {
 		return true
 	}
 	//copy()
-    return false
+	return false
 }
 
 // Values returns all elements in the list.
@@ -252,10 +253,10 @@ func (list *IntList) shrink() {
 }
 
 //By me For sorting
-func (p *IntList) SortAsc() { sort.Sort(p) }
+func (p *IntList) SortAsc()  { sort.Sort(p) }
 func (p *IntList) SortDesc() { sort.Sort(sort.Reverse(p)) }
-
 
 func (p *IntList) Len() int           { return p.size /*len(p.elements)*/ }
 func (p *IntList) Less(i, j int) bool { return p.Elements[i] < p.Elements[j] }
+
 //func (p *IntList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }

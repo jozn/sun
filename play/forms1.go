@@ -1,18 +1,18 @@
 package main
 
 import (
+	"crypto/md5"
 	"fmt"
+	"github.com/astaxie/beedb"
+	orm "gopkg.in/gorp.v1"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
-	"strings"
-	"io"
-	"strconv"
-	"crypto/md5"
-	"time"
 	"os"
-	orm "gopkg.in/gorp.v1"
-	"github.com/astaxie/beedb"
+	"strconv"
+	"strings"
+	"time"
 )
 
 func sayhelloName(w http.ResponseWriter, r *http.Request) {
@@ -28,7 +28,7 @@ func sayhelloName(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Form["url_long"])
 	for k, v := range r.Form {
 		fmt.Println("key:", k)
-		var s  string = r.Form.Get("hjhj")
+		var s string = r.Form.Get("hjhj")
 		_ = s
 		fmt.Println("val:", strings.Join(v, " + "))
 	}
@@ -38,7 +38,7 @@ func sayhelloName(w http.ResponseWriter, r *http.Request) {
 
 func login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("===========================") //get request method
-	fmt.Println("method:", r.Method) //get request method
+	fmt.Println("method:", r.Method)           //get request method
 	if r.Method == "GET" {
 		t, _ := template.ParseFiles("t1.gtpl")
 		t.Execute(w, nil)
@@ -47,7 +47,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		// logic part of log in
 		fmt.Println("username:", r.Form["username"])
 		fmt.Println("password:", r.Form["password"])
-		w.Write([]byte("<html>"+template.HTMLEscapeString(r.Form.Get("username"))+"</html>"))
+		w.Write([]byte("<html>" + template.HTMLEscapeString(r.Form.Get("username")) + "</html>"))
 	}
 }
 
@@ -88,9 +88,8 @@ func main() {
 
 	c := orm.DbMap{}
 	//c.
-	z :=beedb.New()
-	z.TableName ="asd"
-
+	z := beedb.New()
+	z.TableName = "asd"
 
 	err := http.ListenAndServe(":9090", nil) // setting listening port
 	if err != nil {

@@ -1,19 +1,18 @@
 package helper
 
 import (
-    "ms/sun/config"
-    "fmt"
+	"fmt"
+	"ms/sun/config"
 )
 
-func Debug(vals ...interface{})  {
-    if config.IS_DEBUG {
-        fmt.Println(vals...)
-    }
+func Debug(vals ...interface{}) {
+	if config.IS_DEBUG {
+		fmt.Println(vals...)
+	}
 }
 
 func Debugf(str string, vals ...interface{}) {
-    if config.IS_DEBUG {
-        fmt.Printf(str ,vals...)
-    }
+	if config.IS_DEBUG {
+		fmt.Printf(str, vals...)
+	}
 }
-

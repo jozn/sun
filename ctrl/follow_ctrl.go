@@ -1,7 +1,7 @@
 package ctrl
 
 import (
-	 "ms/sun/base"
+	"ms/sun/base"
 	"ms/sun/models"
 
 	"ms/sun/helper"
@@ -17,13 +17,13 @@ func PingAction(c *base.Action) base.AppErr {
 	return nil
 }
 
-func FollowAction(c *base.Action)  base.AppErr{
-    MustBeUserAndUpdate(c)
+func FollowAction(c *base.Action) base.AppErr {
+	MustBeUserAndUpdate(c)
 	cuid := c.UserId()
 
 	//fid := c.Req.Form.Get("followed_user_id")
 	fid := c.Req.Form.Get("followed_user_id")
-	fUserId := helper.StrToInt(fid,-1)
+	fUserId := helper.StrToInt(fid, -1)
 	if fUserId < 1 {
 		return nil
 	}
@@ -31,98 +31,98 @@ func FollowAction(c *base.Action)  base.AppErr{
 	return nil
 }
 
-
 func UnfollowAction(c *base.Action) base.AppErr {
-    MustBeUserAndUpdate(c)
+	MustBeUserAndUpdate(c)
 	cuid := c.UserId()
 
 	fid := c.Req.Form.Get("followed_user_id")
-	fUserId := helper.StrToInt(fid,-1)
+	fUserId := helper.StrToInt(fid, -1)
 	if fUserId < 1 {
 		return nil
 	}
-    models.UnFollow(cuid,fUserId)
+	models.UnFollow(cuid, fUserId)
 	c.SendText("ok")
 	return nil
 }
 
 const FOLLOW_LIST_SHOW_LIMIT = 50
+
 //followers of a user
-func GetFollowersListAction(c *base.Action) base.AppErr{
-    return genaeralListForFollowingsListActioner(c,LIST_TYPE_FOLLOWERS)
+func GetFollowersListAction(c *base.Action) base.AppErr {
+	return genaeralListForFollowingsListActioner(c, LIST_TYPE_FOLLOWERS)
 }
 
-func GetFollowingsListAction(c *base.Action) base.AppErr{
-    return genaeralListForFollowingsListActioner(c,LIST_TYPE_FOLLOWINGS)
+func GetFollowingsListAction(c *base.Action) base.AppErr {
+	return genaeralListForFollowingsListActioner(c, LIST_TYPE_FOLLOWINGS)
 }
 
-func genaeralListForFollowingsListActioner(c *base.Action, listType int) base.AppErr{
-    UpdateSessionActivityIfUser(c)
-    cuid := c.UserId()
+func genaeralListForFollowingsListActioner(c *base.Action, listType int) base.AppErr {
+	UpdateSessionActivityIfUser(c)
+	cuid := c.UserId()
 
-    username := c.Req.Form.Get("username")
-    pageStr := c.Req.Form.Get("page")
-    page := helper.StrToInt(pageStr,0)
-    offset := FOLLOW_LIST_SHOW_LIMIT * page
-    last := c.GetParamInt("last",1000000000)
-    peer_id := c.GetParamInt("peer_id",0)
+	username := c.Req.Form.Get("username")
+	pageStr := c.Req.Form.Get("page")
+	page := helper.StrToInt(pageStr, 0)
+	offset := FOLLOW_LIST_SHOW_LIMIT * page
+	last := c.GetParamInt("last", 1000000000)
+	peer_id := c.GetParamInt("peer_id", 0)
 
-    var user models.UserTable
-    var err error
-    if peer_id < 1{
-        user,err = models.GetUserByUsername2(username)
-    }else {
-        user = models.UserMemoryStore.GetForUser(peer_id).UserTable
-    }
+	var user models.UserTable
+	var err error
+	if peer_id < 1 {
+		user, err = models.GetUserByUsername2(username)
+	} else {
+		user = models.UserMemoryStore.GetForUser(peer_id).UserTable
+	}
 
-    if err != nil {//|| user == nil{
-        c.Protocol.Status = "ERR"
-        c.Protocol.Error = " کاربر پیدا نشد "
-        return nil
-    }
+	if err != nil { //|| user == nil{
+		c.Protocol.Status = "ERR"
+		c.Protocol.Error = " کاربر پیدا نشد "
+		return nil
+	}
 
-    var userIds []int
-    switch listType {
-    case LIST_TYPE_FOLLOWERS:
-        q:="select UserId from following_list_member where FollowedUserId = ?" //"select UserId from following_list_member where FollowedUserId = ? AND Id < ? order by Id DESC limit ? offset ? "
-        if last >0 {
-            q += " AND Id < " + helper.IntToStr(last)
-        }
-        q +=  " order by Id DESC limit ? offset ? "
-        base.DB.Select(&userIds, q , user.Id , FOLLOW_LIST_SHOW_LIMIT, offset)
-    case LIST_TYPE_FOLLOWINGS:
-        base.DB.Select(&userIds, "select FollowedUserId from following_list_member where UserId = ? order by Id DESC limit ? offset ? ", user.Id, FOLLOW_LIST_SHOW_LIMIT, offset)
-    case LIST_TYPE_LIKES:
+	var userIds []int
+	switch listType {
+	case LIST_TYPE_FOLLOWERS:
+		q := "select UserId from following_list_member where FollowedUserId = ?" //"select UserId from following_list_member where FollowedUserId = ? AND Id < ? order by Id DESC limit ? offset ? "
+		if last > 0 {
+			q += " AND Id < " + helper.IntToStr(last)
+		}
+		q += " order by Id DESC limit ? offset ? "
+		base.DB.Select(&userIds, q, user.Id, FOLLOW_LIST_SHOW_LIMIT, offset)
+	case LIST_TYPE_FOLLOWINGS:
+		base.DB.Select(&userIds, "select FollowedUserId from following_list_member where UserId = ? order by Id DESC limit ? offset ? ", user.Id, FOLLOW_LIST_SHOW_LIMIT, offset)
+	case LIST_TYPE_LIKES:
 
-    }
+	}
 
-    if err != nil {
-        helper.DebugErr(err)
-        return nil
-    }
-    usersFollow := models.GetListOfUserForFollowType(userIds, cuid)
+	if err != nil {
+		helper.DebugErr(err)
+		return nil
+	}
+	usersFollow := models.GetListOfUserForFollowType(userIds, cuid)
 
-    c.SendJson(usersFollow)
-    return nil
+	c.SendJson(usersFollow)
+	return nil
 }
 
 type SyncFollowings struct {
-	Add []models.UserBasicAndMe
+	Add    []models.UserBasicAndMe
 	Remove []int
 }
 
-func SyncFollowingsAction(a *base.Action) base.AppErr  {
-    MustBeUserAndUpdate(a)
-	last_str := a.Req.Form.Get("last")//last TimeStamp
-	last := helper.StrToInt(last_str,0)
+func SyncFollowingsAction(a *base.Action) base.AppErr {
+	MustBeUserAndUpdate(a)
+	last_str := a.Req.Form.Get("last") //last TimeStamp
+	last := helper.StrToInt(last_str, 0)
 
-	users:=models.GetAllFollowingsUser(a.UserId(),last)
+	users := models.GetAllFollowingsUser(a.UserId(), last)
 
 	list := models.PreloadFollowingsListTypesForUser(a.UserId())
 	followings_res := []models.UserBasicAndMe{}
-	for _,u := range users {
+	for _, u := range users {
 		cu := models.UserBasicAndMe{}
-		cu.FromUser(u,list)
+		cu.FromUser(u, list)
 		//cu.UserBasic = u.UserBasic
 		//cu.UpdatedTimestamp = u.UpdatedTimestamp
 		//cu.FollowingType = list.FollowingType(u.Id)
@@ -130,8 +130,8 @@ func SyncFollowingsAction(a *base.Action) base.AppErr  {
 	}
 
 	sync_res := SyncFollowings{
-		Add: followings_res,
-		Remove: models.GetAllUnFollowedUserIds(a.UserId(),last),
+		Add:    followings_res,
+		Remove: models.GetAllUnFollowedUserIds(a.UserId(), last),
 	}
 	a.SendJson(sync_res)
 	return nil
@@ -285,4 +285,3 @@ func GetFollowersListAction(c *base.Action) base.AppErr{
     c.SendJson(usersFollow)
     return nil
 }*/
-

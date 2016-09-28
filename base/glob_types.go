@@ -5,7 +5,6 @@ import (
 	"strconv"
 )
 
-
 var GlobTypes map[string]string
 
 // GlobTypes := make(map[string]string) - basicaly it's an enum

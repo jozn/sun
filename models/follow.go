@@ -15,8 +15,8 @@ type FollowingList struct {
 	IsAuto      int
 	IsPimiry    int
 	CreatedTime int
-    // xo fields
-    _exists, _deleted bool
+	// xo fields
+	_exists, _deleted bool
 }
 
 //following_list_member
@@ -27,18 +27,17 @@ type FollowingListMember struct {
 	FollowedUserId int
 	FollowType     int
 	UpdatedTimeMs  int
-    // xo fields
-    _exists, _deleted bool
+	// xo fields
+	_exists, _deleted bool
 }
 
 //table: following_list_member_history
 type FollowingListMemberHistory struct {
 	FollowingListMember
 	FollowId int
-    // xo fields
-    _exists, _deleted bool
+	// xo fields
+	_exists, _deleted bool
 }
-
 
 func Follow(UserId, FollowedPeerUserId int) {
 	if UserId == FollowedPeerUserId || UserId < 1 || FollowedPeerUserId < 1 {
@@ -58,7 +57,7 @@ func Follow(UserId, FollowedPeerUserId int) {
 		fh.FollowId = 0
 		fh.InsertToDb()
 
-        OnFollowed(UserId, FollowedPeerUserId)
+		OnFollowed(UserId, FollowedPeerUserId)
 	}
 }
 
@@ -81,8 +80,8 @@ func UnFollow(UserId, FollowedPeerUserId int) {
 			fh.FollowType = 2
 			fh.InsertToDb()
 
-            OnUnFollowed(UserId, FollowedPeerUserId)
-        }
+			OnUnFollowed(UserId, FollowedPeerUserId)
+		}
 	}
 }
 

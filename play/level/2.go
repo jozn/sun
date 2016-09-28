@@ -6,9 +6,9 @@ import (
 
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/opt"
+	"math/rand"
 	"strconv"
 	"time"
-	"math/rand"
 )
 
 func printMemStats() {
@@ -42,10 +42,10 @@ func main() {
 	// Add records to batch.
 	fmt.Println("Creating batch...")
 	batch := new(leveldb.Batch)
-//	batch.Load(make([]byte, 12, 12+numRecords*recSize+numRecords*11))
+	//	batch.Load(make([]byte, 12, 12+numRecords*recSize+numRecords*11))
 	t1 := time.Now().UnixNano()
 	for i := 0; i < numRecords; i++ {
-//		batch.Put(records[i], nil)
+		//		batch.Put(records[i], nil)
 		batch.Put([]byte("bar-"+strconv.Itoa(rand.Int())), []byte("another%%%%%%%^%&^%&^%&%$^$%^*^&((((((((((( MEEEEEEEEEEEEEE dasda value"))
 	}
 
@@ -61,8 +61,8 @@ func main() {
 	}
 	fmt.Println("Batch written")
 
-	t2:= time.Now().UnixNano()
-	fmt.Println("TIME", (t2-t1)/1e6 )
+	t2 := time.Now().UnixNano()
+	fmt.Println("TIME", (t2-t1)/1e6)
 
 	// Print mem stats: ~1.8GB!
 	printMemStats()

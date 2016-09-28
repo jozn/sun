@@ -21,20 +21,19 @@ func CreateNewComment(UserId, PostId int, Text string) Comment {
 		QueryIncerPostCommentsCount(PostId, 1)
 	}
 
-    //Eventing
-    //todo clean this up: post alwayse load
-    post,_:= CacheModels.GetPostById(PostId)
-    OnPostCommented(&cmt,post)
+	//Eventing
+	//todo clean this up: post alwayse load
+	post, _ := CacheModels.GetPostById(PostId)
+	OnPostCommented(&cmt, post)
 
 	return cmt
 }
 
 func RemoveComment(UserId, PostId, CommentId int) bool {
-    //Eventing
-    //todo clean this up: post alwayse load
-    post,_:= CacheModels.GetPostById(PostId)
-    com,_:= CacheModels.GetCommentById(CommentId)
-
+	//Eventing
+	//todo clean this up: post alwayse load
+	post, _ := CacheModels.GetPostById(PostId)
+	com, _ := CacheModels.GetCommentById(CommentId)
 
 	q := "DELETE FROM comments WHERE UserId = ? AND PostId = ? AND Id = ?"
 	res, err := base.DbExecute(q, UserId, PostId, CommentId)
@@ -48,8 +47,8 @@ func RemoveComment(UserId, PostId, CommentId int) bool {
 		}
 		helper.DebugPrintln(err)
 
-        OnPostCommentedDelted(com,post)
-    }
+		OnPostCommentedDelted(com, post)
+	}
 	helper.DebugPrintln(err)
 	return removed
 }

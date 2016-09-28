@@ -24,7 +24,7 @@ func (pipe *UserDevicePipe) ServeIncomingReqs() {
 		defer func() {
 			if r := recover(); r != nil {
 				helper.Debug("Recovered in ws messaging clinet request", r)
-                pipe.ShutDownCompletely()
+				pipe.ShutDownCompletely()
 			}
 		}()
 
@@ -40,7 +40,7 @@ func (pipe *UserDevicePipe) ServeIncomingReqs() {
 			helper.Debug("messageType: ", " ::", messageType, string(bytes))
 			if messageType == websocket.CloseMessage || err != nil {
 				pipe.ShutDownCompletely()
-				helper.Debugf("closeing pip for userId: %v , messageType:%v , err: %v",pipe.UserId ,messageType, err)
+				helper.Debugf("closeing pip for userId: %v , messageType:%v , err: %v", pipe.UserId, messageType, err)
 				return
 			}
 
@@ -75,11 +75,11 @@ func (pipe *UserDevicePipe) ServeSendToUserDevice() {
 			}
 		}()
 		for r := range pipe.ToDeviceChan {
-            helper.Debug("sending to user fom ToDeviceChan Command size ", len(r.Commands))
+			helper.Debug("sending to user fom ToDeviceChan Command size ", len(r.Commands))
 			pipe.Ws.WriteJSON(r)
 		}
 		//after closing chanel
-        //fixme :not neccossroy waht about .ShutDownCompletely()?
+		//fixme :not neccossroy waht about .ShutDownCompletely()?
 		err := pipe.Ws.Close()
 		pipe.IsOpen = false
 		helper.Debug("closed: ", err)

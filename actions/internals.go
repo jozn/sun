@@ -1,77 +1,76 @@
 package actions
 
 import (
-    "ms/sun/base"
-    "ms/sun/helper"
-    "time"
-    "math/rand"
-"ms/sun/sync"
-    "ms/sun/constants"
-    "ms/sun/models"
-    "ms/sun/pipes"
-    "fmt"
+	"fmt"
+	"math/rand"
+	"ms/sun/base"
+	"ms/sun/constants"
+	"ms/sun/helper"
+	"ms/sun/models"
+	"ms/sun/pipes"
+	"ms/sun/sync"
+	"time"
 )
 
 func SendSampleMesgTable(a *base.Action) base.AppErr {
-    ds:=a.Req.Form.Get("delay")
-    us :=a.Req.Form.Get("user")
-    tus :=a.Req.Form.Get("from")
-    l :=a.Req.Form.Get("limit")
-    text :=a.Req.Form.Get("text")
-    img :=a.Req.Form.Get("img")
-    e :=a.Req.Form.Get("emoji")
+	ds := a.Req.Form.Get("delay")
+	us := a.Req.Form.Get("user")
+	tus := a.Req.Form.Get("from")
+	l := a.Req.Form.Get("limit")
+	text := a.Req.Form.Get("text")
+	img := a.Req.Form.Get("img")
+	e := a.Req.Form.Get("emoji")
 
-    dInt := helper.StrToInt(ds,2000)
-    user := helper.StrToInt(us,6)
-    limit := helper.StrToInt(l,10)
+	dInt := helper.StrToInt(ds, 2000)
+	user := helper.StrToInt(us, 6)
+	limit := helper.StrToInt(l, 10)
 
-    emoji := true
-    if(e!=""){
-        emoji = false
-    }
+	emoji := true
+	if e != "" {
+		emoji = false
+	}
 
-    is_image := false
-    if len(img)>0{
-        is_image = true
-    }
+	is_image := false
+	if len(img) > 0 {
+		is_image = true
+	}
 
+	go func() {
+		for i := 0; i < limit; i++ {
+			txt := helper.FactRandStr(15)
+			rnd := rand.Intn(10)
+			if rnd == 5 { //big text 10%
+				txt = helper.FactRandStrEmoji(150, emoji)
+			} else if rnd == 6 {
+				txt = helper.FactRandStrEmoji(500, emoji)
+			} else if rnd == 7 {
+				txt = helper.FactRandStrEmoji(2500, emoji)
+			}
+			if text != "" {
+				txt = text
+			}
 
-    go func() {
-        for i:=0 ; i< limit ; i++ {
-            txt:=  helper.FactRandStr(15)
-            rnd:=rand.Intn(10)
-            if  rnd== 5 {//big text 10%
-                txt = helper.FactRandStrEmoji(150,emoji)
-            }else if rnd== 6 {
-                txt = helper.FactRandStrEmoji(500,emoji)
-            }else if rnd== 7 {
-                txt = helper.FactRandStrEmoji(2500,emoji)
-            }
-            if text != "" {
-                txt = text
-            }
+			txt = fmt.Sprintf("id: %d ", i) + txt
 
-            txt = fmt.Sprintf("id: %d ",i) + txt
+			uid := helper.StrToInt(tus, rand.Intn(80)+1)
+			//msg := chat.MessagesTable{}
+			msg := models.MessagesTableFromClient{}
+			msg.RoomKey = "u" + helper.IntToStr(uid)
+			msg.UserId = uid
+			msg.MessageKey = helper.RandString(10)
+			msg.CreatedMs = helper.TimeNowMs()
+			msg.MessageTypeId = 10
+			msg.Text = txt
 
-            uid := helper.StrToInt(tus,rand.Intn(80)+1)
-            //msg := chat.MessagesTable{}
-            msg := models.MessagesTableFromClient{}
-            msg.RoomKey ="u"+ helper.IntToStr(uid)
-            msg.UserId = uid
-            msg.MessageKey = helper.RandString(10)
-            msg.CreatedMs = helper.TimeNowMs()
-            msg.MessageTypeId = 10
-            msg.Text = txt
-
-            if is_image {
-                msg.MessageTypeId = 40
-                msg.MediaName = helper.RandString(10)+".jpg"
-                msg.MediaServerSrc = "http://localhost:5000/public/photo/"+ helper.IntToStr(rand.Intn(21)+1) + "_960.jpg"
-                msg.MediaExtension =".jpg"
-                msg.MediaSize = 200000
-                msg.MediaHeight = 600
-                msg.MediaWidth = 960
-                msg.MediaThumb64 = `/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+			if is_image {
+				msg.MessageTypeId = 40
+				msg.MediaName = helper.RandString(10) + ".jpg"
+				msg.MediaServerSrc = "http://localhost:5000/public/photo/" + helper.IntToStr(rand.Intn(21)+1) + "_960.jpg"
+				msg.MediaExtension = ".jpg"
+				msg.MediaSize = 200000
+				msg.MediaHeight = 600
+				msg.MediaWidth = 960
+				msg.MediaThumb64 = `/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCADVAKADASIA
 AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA
@@ -212,51 +211,50 @@ KDzzb03qfqP/AEKSu80y9k5GB2GQcd3Hp7ZPrxzkZJRX0B8ud9pl5JzwDnGOenpjj/PrXqPhm8k5
 4HQDr/1056dfT6j0OSig+oPq/wADeLNV2yHeP4O59XP4dMH1GOeOfpPSb2QqeBx78H5mHp/sD/6+
 M0UV+Tn2PD20fSH/AKVUP//Z`
 
-            }
+			}
 
-            cmd:=base.NewCommand(constants.MsgsAddNew)
-            cmd.AddSliceData(msg)
-            cmd.MakeDataReady()
-            //res :=base.WSRes{
-            //}
-            //res.Commands = []*base.Command{&cmd}
-            //sync.AllPipesMap.SendToUser(6,res)
-            pipes.AllPipesMap.SendAndStoreCmdToUser(user,cmd)
-            time.Sleep(time.Millisecond * time.Duration(dInt))
-        }
-        //return
-    }()
-    return nil
+			cmd := base.NewCommand(constants.MsgsAddNew)
+			cmd.AddSliceData(msg)
+			cmd.MakeDataReady()
+			//res :=base.WSRes{
+			//}
+			//res.Commands = []*base.Command{&cmd}
+			//sync.AllPipesMap.SendToUser(6,res)
+			pipes.AllPipesMap.SendAndStoreCmdToUser(user, cmd)
+			time.Sleep(time.Millisecond * time.Duration(dInt))
+		}
+		//return
+	}()
+	return nil
 }
 
 func SendSampleMesgTable2(a *base.Action) base.AppErr {
-    ds:=a.Req.Form.Get("delay")
-    dInt := helper.StrToInt(ds,2000)
-    go func() {
-        for  {
-            uid := 6//rand.Intn(80)+1
-            msg := models.MessagesTable{}
-            msg.RoomKey ="u"+ helper.IntToStr(uid)
-            msg.UserId = uid
-            msg.MessageKey = helper.RandString(10)
-            msg.CreatedTimestampMs = helper.TimeNowMs()
-            msg.MessageTypeId = 10
-            msg.Text = helper.FactRandStr(15)
+	ds := a.Req.Form.Get("delay")
+	dInt := helper.StrToInt(ds, 2000)
+	go func() {
+		for {
+			uid := 6 //rand.Intn(80)+1
+			msg := models.MessagesTable{}
+			msg.RoomKey = "u" + helper.IntToStr(uid)
+			msg.UserId = uid
+			msg.MessageKey = helper.RandString(10)
+			msg.CreatedTimestampMs = helper.TimeNowMs()
+			msg.MessageTypeId = 10
+			msg.Text = helper.FactRandStr(15)
 
-            cmd:=base.Command{
-                Name: constants.MsgsAddNew,//"addMsg",
-            }
-            cmd.AddSliceData(msg)
-            cmd.MakeDataReady()
-            //res :=base.WSRes{
-            //}
-            //res.Commands = []*base.Command{&cmd}
-            //sync.AllPipesMap.SendToUser(6,res)
-            sync.AllPipesMap.SendCmdToUser(2,&cmd)
-            time.Sleep(time.Millisecond * time.Duration(dInt))
-        }
-        //return
-    }()
-    return nil
+			cmd := base.Command{
+				Name: constants.MsgsAddNew, //"addMsg",
+			}
+			cmd.AddSliceData(msg)
+			cmd.MakeDataReady()
+			//res :=base.WSRes{
+			//}
+			//res.Commands = []*base.Command{&cmd}
+			//sync.AllPipesMap.SendToUser(6,res)
+			sync.AllPipesMap.SendCmdToUser(2, &cmd)
+			time.Sleep(time.Millisecond * time.Duration(dInt))
+		}
+		//return
+	}()
+	return nil
 }
-

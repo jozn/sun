@@ -30,7 +30,7 @@ func main() {
 	u := url.URL{Scheme: "ws", Host: *addr, Path: "/ws"}
 	log.Printf("connecting to %s", u.String())
 
-	for i:=0;i<1000;i++ {
+	for i := 0; i < 1000; i++ {
 		c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 		if err != nil {
 			log.Fatal("dial:", err)
@@ -40,8 +40,8 @@ func main() {
 		done := make(chan struct{})
 
 		go func() {
-			for  {
-				c.WriteJSON(base.WSReq{Command:"hello"})
+			for {
+				c.WriteJSON(base.WSReq{Command: "hello"})
 			}
 		}()
 		go func() {
@@ -72,17 +72,17 @@ func main() {
 					}
 				case <-interrupt:
 					log.Println("interrupt")
-				// To cleanly close a connection, a client should send a close
-				// frame and wait for the server to close the connection.
+					// To cleanly close a connection, a client should send a close
+					// frame and wait for the server to close the connection.
 					err := c.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
 					if err != nil {
 						log.Println("write close:", err)
 						return
 					}
-						select {
-						case <-done:
-						case <-time.After(time.Second):
-						}
+					select {
+					case <-done:
+					case <-time.After(time.Second):
+					}
 					c.Close()
 					return
 				}

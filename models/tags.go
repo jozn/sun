@@ -14,8 +14,8 @@ type Tag struct {
 	Count       int
 	IsBlocked   int
 	CreatedTime int
-    // xo fields
-    _exists, _deleted bool
+	// xo fields
+	_exists, _deleted bool
 }
 
 type TagsPost struct {
@@ -24,8 +24,8 @@ type TagsPost struct {
 	PostId      int
 	TypeId      int // text? photo? video?
 	CreatedTime int
-                    // xo fields
-    _exists, _deleted bool
+	// xo fields
+	_exists, _deleted bool
 }
 
 /////////////////////////////////////////////

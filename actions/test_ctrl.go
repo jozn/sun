@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	. "ms/sun/base"
-	. "ms/sun/models"
 	"ms/sun/helper"
+	. "ms/sun/models"
 	"os"
 	//	"time"
 	"io"
@@ -20,28 +20,28 @@ import (
 )
 
 func TestJson1(c *Action) AppErr {
-	s :=c.Req.Form.Get(":UserId")
+	s := c.Req.Form.Get(":UserId")
 	fmt.Println("Params: ", c.Req.Form)
-	fmt.Println("Params: ", strings.Join(c.Req.Form["me"],"|") )
-	sint,_ := strconv.ParseInt(s,10,0)
+	fmt.Println("Params: ", strings.Join(c.Req.Form["me"], "|"))
+	sint, _ := strconv.ParseInt(s, 10, 0)
 	print(s)
 	print(c.Req.URL.RawQuery)
 	u := User{}
 	u22 := &User{}
 	print(sint)
-	u.CreatedTime =int(sint)
-	u.Id =int(sint)
+	u.CreatedTime = int(sint)
+	u.Id = int(sint)
 	u.FullName = c.Req.Host
 	u.FirstName = c.Req.Method
 	//var us []User
 	var us []interface{}
 	helper.StructToFiledsRejects(u22)
-	n,m:= helper.StructToFiledsRejects(&u)
+	n, m := helper.StructToFiledsRejects(&u)
 	for i := 0; i < 1; i++ {
 		us = append(us, u)
 	}
 
-	us = append(us, n ,m)
+	us = append(us, n, m)
 
 	c.SendJson(us)
 	//return ActionErr{}

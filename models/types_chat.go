@@ -88,7 +88,6 @@ type ContactsTableSpec struct {
 	UnseenMessageCount    int
 }
 
-
 type MessagesTableSpec struct {
 	MessageKey              string
 	RoomKey                 string
@@ -159,20 +158,21 @@ type MessageSyncMeta struct {
 /////////////////////////
 // Orma
 type PhoneContact struct {
-    Id int `json:"Id"` // Id -
-    PhoneDisplayName string `json:"PhoneDisplayName"` // PhoneDisplayName -
-    PhoneFamilyName string `json:"PhoneFamilyName"` // PhoneFamilyName -
-    PhoneNumber string `json:"PhoneNumber"` // PhoneNumber -
-    PhoneNormalizedNumber string `json:"PhoneNormalizedNumber"` // PhoneNormalizedNumber -
-    PhoneContactRowId int `json:"PhoneContactRowId"` // PhoneContactRowId -
-    UserId int `json:"UserId"` // UserId -
-    DeviceUuidId int `json:"DeviceUuidId"` // DeviceUuidId -
-    CreatedTime int `json:"CreatedTime"` // CreatedTime -
-    UpdatedTime int `json:"UpdatedTime"` // UpdatedTime -
+	Id                    int    `json:"Id"`                    // Id -
+	PhoneDisplayName      string `json:"PhoneDisplayName"`      // PhoneDisplayName -
+	PhoneFamilyName       string `json:"PhoneFamilyName"`       // PhoneFamilyName -
+	PhoneNumber           string `json:"PhoneNumber"`           // PhoneNumber -
+	PhoneNormalizedNumber string `json:"PhoneNormalizedNumber"` // PhoneNormalizedNumber -
+	PhoneContactRowId     int    `json:"PhoneContactRowId"`     // PhoneContactRowId -
+	UserId                int    `json:"UserId"`                // UserId -
+	DeviceUuidId          int    `json:"DeviceUuidId"`          // DeviceUuidId -
+	CreatedTime           int    `json:"CreatedTime"`           // CreatedTime -
+	UpdatedTime           int    `json:"UpdatedTime"`           // UpdatedTime -
 
-    // xo fields
-    _exists, _deleted bool
+	// xo fields
+	_exists, _deleted bool
 }
+
 /*PhoneDisplayName      string
 PhoneFamilyName       string
 PhoneNumber           string
@@ -183,16 +183,16 @@ _exists, _deleted bool*/
 
 type PhoneContactTable struct {
 	//	PhoneContact
-    Id                    int
-    PhoneDisplayName      string
-    PhoneFamilyName       string
-    PhoneNumber           string
-    PhoneNormalizedNumber string
-    PhoneContactRowId     int
-    UserId                int
-    DeviceUuidId          int
-    CreatedTime           int
-    UpdatedTime           int
+	Id                    int
+	PhoneDisplayName      string
+	PhoneFamilyName       string
+	PhoneNumber           string
+	PhoneNormalizedNumber string
+	PhoneContactRowId     int
+	UserId                int
+	DeviceUuidId          int
+	CreatedTime           int
+	UpdatedTime           int
 }
 
 /*
@@ -242,4 +242,3 @@ type ContactUserInfo struct {
                                  //	UnseenMessageCount    int
 }
 */
-

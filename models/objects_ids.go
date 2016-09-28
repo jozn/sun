@@ -14,7 +14,6 @@ const OBJECT_POST_IMAGE = 21
 const OBJECT_POST_VIDEO = 22
 const OBJECT_POST_URL = 23
 
-
 ////////////////////////////////////////////////////////////////
 /// Action_Types For Notifications
 // ALL Notifications ACTIONS 2XX GLOBAL OBJECTS TYPES

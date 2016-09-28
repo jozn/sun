@@ -8,7 +8,7 @@ type Company struct {
 	City    string
 }
 
-func asd()  {
-	cs :=CompanySlice{Company{}}
-	cs.Where(func(c Company) bool{ return c.Country ==""})
+func asd() {
+	cs := CompanySlice{Company{}}
+	cs.Where(func(c Company) bool { return c.Country == "" })
 }
