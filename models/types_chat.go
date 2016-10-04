@@ -181,6 +181,8 @@ PhoneContactRowId     int
 // xo fields
 _exists, _deleted bool*/
 
+//dep
+//todo delete
 type PhoneContactTable struct {
 	//	PhoneContact
 	Id                    int

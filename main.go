@@ -46,7 +46,7 @@ var ws websocket.Conn
 func main() {
 	__DEV__ = true
 	var err error
-	DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms5?charset=utf8mb4")
+	DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms?charset=utf8mb4")
 	// DB, err = sqlx.Connect("mysql", "root:123456@/ms3?charset=ascii")
 	noErr(err)
 	//xxx := DB.MapperFunc

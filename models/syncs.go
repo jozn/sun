@@ -6,28 +6,34 @@ import (
 )
 
 //TODO: must add update users as well
-func SyncGetAllChangedUser(UserId, LastTime int) []User {
+func SyncGetAllChangedUser(CurrentUserId, LastTime int) []UserViewSync {
 
 	//contacts
-	var users1 []User
-	q := "SELECT u.* FROM `user` AS u JOIN phone_contacts AS pc WHERE pc.UserId=? AND pc.CreatedTime >= ? AND u.Phone = pc.PhoneNormalizedNumber"
-	err1 := base.DB.Select(&users1, q, UserId, LastTime)
+	var usersContacts []User
+	q := "SELECT u.* FROM `user` AS u JOIN phone_contacts AS pc WHERE pc.UserId=? AND pc.CreatedTime >= ? AND u.Phone = pc.PhoneNormalizedNumber AND u.Phone != '' "
+	err1 := base.DB.Select(&usersContacts, q, CurrentUserId, LastTime)
 
-	var users2 []User
+	var usersFollowd []User
 	q2 := "SELECT u.* FROM `user` AS u JOIN following_list_member AS fm ON u.Id = fm.FollowedUserId WHERE fm.UserId=? AND fm.UpdatedTimeMs >= ?"
-	err2 := base.DB.Select(&users2, q2, UserId, LastTime*1000)
+	err2 := base.DB.Select(&usersFollowd, q2, CurrentUserId, LastTime*1000)
 
-	usersRes := make([]User, 0, len(users1)+len(users2))
+	usersRes := make([]UserViewSync, 0, len(usersContacts)+len(usersFollowd))
 
-	for _, u := range users1 {
-		usersRes = append(usersRes, u)
+    //first do for followings - Phone filed maybe overide if a user existi in both
+
+	for _, u := range usersFollowd {
+        v := UserViewSync{}
+        v.FromUser(CurrentUserId, u, false)
+		usersRes = append(usersRes, v)
 	}
 
-	for _, u := range users2 {
-		usersRes = append(usersRes, u)
-	}
+    for _, u := range usersContacts {
+        v := UserViewSync{}
+        v.FromUser(CurrentUserId, u, true)
+        usersRes = append(usersRes, v)
+    }
 
-	helper.Debug("SyncGetAllChangedUser()", len(users1), err1, err2)
+	helper.Debug("SyncGetAllChangedUser()", len(usersContacts), err1, err2)
 
 	return usersRes
 }

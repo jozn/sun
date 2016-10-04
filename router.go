@@ -72,7 +72,11 @@ func registerRoutes() {
 	//messages
 	http.HandleFunc("/MsgUpload", MsgUpload)
 
-	//New V1 apis
+	//////////////////// New V1 apis //////////////////////////
+    //mux.Post("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
+    //mux.Get("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
+    http.Handle("/v1/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
+
 	mux.Post("/post/add", actionToFunc(ctrl.AddPostAction))
 	mux.Get("/post/add", actionToFunc(ctrl.AddPostAction))
 	mux.Get("/post/get", actionToFunc(ctrl.GetSinglePostAction))
@@ -120,7 +124,6 @@ func registerRoutes() {
 	http.Handle("/not2", actioner(ctrl.VNoftificationsCtrl2))
 
 	mux.Get("/sync_users", actionToFunc(ctrl.SyncUsersCtrl))
-	mux.Get("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
 
 	http.Handle("/", mux)
 
