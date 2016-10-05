@@ -7,6 +7,7 @@ import (
 
 type Call struct {
 	Name            string
+    UserId          int
 	ClientNanoId    int64
 	ServerNanoId    int64
 	Data            string        //marshilized json - don't set dirctly set via toJsonData
@@ -28,7 +29,7 @@ func (self *Call) MakeDataReady() {
 	//self.Data = helper.ToJson(data)
 }
 
-var CallMapRouter = make(map[string]func(*CmdAction))
+var CallMapRouter = make(map[string]func(Call))
 
 /*
 func (self *Call) AddSliceData(data interface{}) {
