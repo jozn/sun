@@ -101,7 +101,7 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 	AllPipesMap.ShutDownUser(pipe.UserId)
 }
 
-/////////////// Commands handler //////////////////
+/////////////// Commands handler /////////////////
 
 func serverWSReqCalls(reqCall base.Call, pipe *UserDevicePipe) {
 
