@@ -30,7 +30,7 @@ func AddNewMsg(c *base.CmdAction) {
 	//res :=base.WSRes{
 	//}
 	//res.Commands = []*base.Command{&cmd}
-	AllPipesMap.SendAndStoreCmdToUser(6, cmd)
+	//AllPipesMap.SendAndStoreCmdToUser(6, cmd)
 	//sync.AllPipesMap.SendToUser(6,res)
 	//time.Sleep(time.Millisecond * time.Duration(dInt))
 
@@ -59,12 +59,13 @@ func EchoRes(c *base.CmdAction) {
 	cmd := base.NewResponseCommand(c.Cmd.ResId)
 
 	cmd.SetData(models.UserBasic{FirstName: helper.RandString(20)})
-	AllPipesMap.SendCmdToUser(6, cmd)
+	//AllPipesMap.SendCmdToUser(6, cmd)
 }
 
-func EchoCmd(c *base.CmdAction) {
-	b, _ := json.Marshal(c.Cmd)
-	r := base.WSRes{Status: "BB", ReqKey: string(b)}
-
-	AllPipesMap.SendToUser_DEP(c.UserId, r)
+func EchoCmd(c base.Call) {
+	//b, _ := json.Marshal(c)
+	//r := base.WSRes{Status: "BB", ReqKey: string(b)}
+	call := base.NewCallWithData("echo", "sad")
+	AllPipesMap.SendToUser(c.UserId, call)
+	//AllPipesMap.SendToUser_DEP(c.UserId, r)
 }

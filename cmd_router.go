@@ -2,6 +2,7 @@ package main
 
 import (
 	"ms/sun/base"
+	"ms/sun/pipes"
 	"ms/sun/pipesold"
 )
 
@@ -29,6 +30,10 @@ func registerCmdRouters() {
 	mp["AddNewMsg"] = pipesold.AddNewMsg
 
 	mp["EchoRes"] = pipesold.EchoRes
+
+	mp2 := base.CallMapRouter
+	mp2["echo"] = pipes.EchoCmd
+	mp2["Echo"] = pipes.EchoCmd
 
 }
 

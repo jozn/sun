@@ -50,9 +50,9 @@ func (m pipesMap) SendToUserWithCallBack(UserId int, call base.Call, callback fu
 		}()
 
 		pipe.SendToUser(call)
-		resCallback := &callRespondCallback{
+		resCallback := callRespondCallback{
 			serverCallId: call.ServerCallId,
-			succ:         callback(),
+			succ:         callback,
 		}
 
 		callRespndMap.Register(resCallback)

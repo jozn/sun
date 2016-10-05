@@ -26,7 +26,7 @@ type _registerMap struct {
 	mp map[int64]callRespondCallback
 }
 
-func (m _registerMap) Register(callback *callRespondCallback) {
+func (m _registerMap) Register(callback callRespondCallback) {
 	if callback.serverCallId == 0 {
 		callback.serverCallId = getNextCallId()
 	}
@@ -36,16 +36,16 @@ func (m _registerMap) Register(callback *callRespondCallback) {
 	m.Unlock()
 }
 
-func (m _registerMap) Get(serverCallId int64) (callRespondCallback, error) {
+func (m _registerMap) Get(serverCallId int64) (*callRespondCallback, error) {
 	if serverCallId == 0 {
 		return nil, errors.New(" serverCallId could not be 0")
 	}
 	m.RLock()
-	callback, err := m.mp[serverCallId]
-	if err != nil {
-		return nil, err
+	callback, ok := m.mp[serverCallId]
+	if ok {
+		return nil, errors.New(" serverCallId not found in  map")
 	}
-	return callback, nil
+	return &callback, nil
 }
 
 //utils

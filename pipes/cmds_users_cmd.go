@@ -16,10 +16,10 @@ func GetUserForTable(c *base.CmdAction) {
 	u := models.GetUserById2(uid)
 	res := models.UserBasicAndMe{}
 	res.FormUserAndMe(u, c.UserId)
-	cmd := base.Command{
+	_ = base.Command{
 		Name: "SetUserForTable",
 		Data: helper.ToJson(res),
 	}
 
-	AllPipesMap.SendCmdToUser(c.UserId, &cmd)
+	//AllPipesMap.SendCmdToUser(c.UserId, &cmd)
 }

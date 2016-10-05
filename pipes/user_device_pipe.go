@@ -119,7 +119,7 @@ func serverWSReqCalls(reqCall base.Call, pipe *UserDevicePipe) {
 	fnCall := base.CallMapRouter[reqCall.Name]
 	helper.Debug("serving Cmd: ", reqCall.Name, " Userid: ", pipe.UserId)
 	if fnCall != nil {
-		fnCall(pipe)
+		fnCall(reqCall)
 	} else { //send call func not found -- in debug
 
 	}

@@ -15,11 +15,11 @@ type Call struct {
 	Meta            string        //marshilized json - don't set dirctly set via toJsonData
 }
 
-func NewCall(Name string) *Call {
-	return &Call{Name: Name, ServerCallId: time.Now().UnixNano()}
+func NewCall(Name string) Call {
+	return Call{Name: Name, ServerCallId: time.Now().UnixNano()}
 }
 
-func NewCallWithData(Name string, Data interface{}) *Call {
+func NewCallWithData(Name string, Data interface{}) Call {
 	c := NewCall(Name)
 	c.SetData(Data)
 	return c

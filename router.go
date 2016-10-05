@@ -7,10 +7,9 @@ import (
 	"net/http"
 	//"github.com/drone/routes"
 	"ms/sun/ctrl"
-	"ms/sun/pipesold"
+	"ms/sun/pipes"
 	"ms/sun/routes"
 	"ms/sun/sync"
-    "ms/sun/pipes"
 )
 
 func registerRoutes() {

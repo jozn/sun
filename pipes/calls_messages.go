@@ -10,7 +10,7 @@ import (
 )
 
 func MsgAddOne(c base.Call) {
-	fmt.Println("called MsgAddNew :", *c)
+	fmt.Println("called MsgAddNew :", c)
 
 	myMsg := models.MessagesTableFromClient{}
 	json.Unmarshal([]byte(c.Data), &myMsg)
