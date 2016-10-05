@@ -12,7 +12,7 @@ type Call struct {
 	ServerCallId    int64
 	Data            string        //marshilized json - don't set dirctly set via toJsonData
 	toJsonSliceData []interface{} //`json:"-"`
-    Meta            string        //marshilized json - don't set dirctly set via toJsonData
+	Meta            string        //marshilized json - don't set dirctly set via toJsonData
 }
 
 func NewCall(Name string) *Call {
@@ -20,9 +20,9 @@ func NewCall(Name string) *Call {
 }
 
 func NewCallWithData(Name string, Data interface{}) *Call {
-    c := NewCall(Name)
-    c.SetData(Data)
-    return c
+	c := NewCall(Name)
+	c.SetData(Data)
+	return c
 }
 
 func (self *Call) SetData(data interface{}) {
@@ -30,7 +30,7 @@ func (self *Call) SetData(data interface{}) {
 }
 
 func (self *Call) SetMeta(meta interface{}) {
-    self.Meta = helper.ToJson(meta)
+	self.Meta = helper.ToJson(meta)
 }
 
 func (self *Call) MakeDataReady() {

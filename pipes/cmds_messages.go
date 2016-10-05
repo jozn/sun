@@ -99,10 +99,10 @@ func MsgSeenByPeer__dep(c *base.CmdAction) {
 }
 
 ///NOT NEEDED IN SERVER
-func MsgDeletedFromServer(c *base.CmdAction) {
+func MsgDeletedFromServer__dep(c *base.CmdAction) {
 
 }
 
-func MsgReceivedToServer(c *base.CmdAction) {
+func MsgReceivedToServer__dep(c *base.CmdAction) {
 
 }
