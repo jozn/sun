@@ -1,4 +1,4 @@
-package pipesold
+package pipes
 
 import (
 	"github.com/gorilla/websocket"

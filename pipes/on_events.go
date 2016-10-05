@@ -1,4 +1,4 @@
-package pipesold
+package pipes
 
 //todo upadte
 func OnNewUserWsConnected(UserId int) {
