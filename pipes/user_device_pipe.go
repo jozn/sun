@@ -105,6 +105,10 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 
 func serverWSReqCalls(reqCall base.Call, pipe *UserDevicePipe) {
 
+    if reqCall.Name == "CallReceivedToServer" {
+
+    }
+
 	if reqCall.ClientCallId != 0 {
 		callRecived := base.Call{
 			Name:         "CallReceivedToServer",
