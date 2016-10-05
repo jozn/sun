@@ -66,5 +66,5 @@ func EchoCmd(c *base.CmdAction) {
 	b, _ := json.Marshal(c.Cmd)
 	r := base.WSRes{Status: "BB", ReqKey: string(b)}
 
-	AllPipesMap.SendToUser(c.UserId, r)
+	AllPipesMap.SendToUser_DEP(c.UserId, r)
 }

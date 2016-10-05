@@ -6,7 +6,6 @@ import (
 	//"time"
 	"encoding/json"
 	"ms/sun/base"
-	"ms/sun/cmd"
 	"ms/sun/helper"
 	"os"
 )
@@ -105,19 +104,16 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 /////////////// Commands handler //////////////////
 
 func serverWSReqCommands(reqCall base.Call, pipe *UserDevicePipe) {
-	//TODO UPGRADE THIS TO NEW Call
-	/*arr := make([]int64, 0, len(req.Commands))
-	for _, cmd := range req.Commands {
-		arr = append(arr, cmd.ClientNanoId)
-	}
 
-	if len(arr) > 0 {
-		cmdsRecived := base.NewCommand("CommandsReceivedToServer")
-		cmdsRecived.ClientNanoId = -1
-		cmdsRecived.ServerNanoId = -1
-		cmdsRecived.SetData(arr)
-		AllPipesMap.SendCmdToUser(pipe.UserId, cmdsRecived)
-	}*/
+	if reqCall.ClientCallId != 0 {
+		callRecived := base.Call{
+			Name:         "CallReceivedToServer",
+			ClientCallId: reqCall.ClientCallId,
+			ServerCallId: 0,
+		}
+
+		AllPipesMap.SendToUser(pipe.UserId, callRecived)
+	}
 
 	reqCall.UserId = pipe.UserId
 	fnCall := base.CallMapRouter[reqCall.Name]
@@ -128,15 +124,4 @@ func serverWSReqCommands(reqCall base.Call, pipe *UserDevicePipe) {
 
 	}
 
-	//del
-	/*for _, cmd := range req.Commands {
-		fnCall := base.CallMapRouter[cmd.Name]
-		helper.Debug("serving Cmd: ", cmd.Name, " Userid: ", pipe.UserId)
-		action := base.CmdAction{Req: &req, UserId: pipe.UserId, Cmd: &cmd}
-		if fnCall != nil {
-			fnCall(action)
-		} else { //send cmd not found -- in debug
-			//wsErrorCommand(&action)
-		}
-	}*/
 }

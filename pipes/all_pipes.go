@@ -37,35 +37,33 @@ func (m pipesMap) SendToUser(UserId int, call base.Call) {
 	}
 }
 
+func (m pipesMap) SendToUserWithCallBack(UserId int, call base.Call, callback func()) {
+	pipe, ok := m.GetUserPipe(UserId)
+	helper.Debugf("sending to user:%d %v %v ", UserId, ok)
+	if ok && pipe.IsOpen {
+		defer func() {
+			if r := recover(); r != nil {
+				//pipe.IsOpen = false
+				pipe.ShutDown()
+				helper.Debug("Recovered in SendToUser: ", r)
+			}
+		}()
+
+		pipe.SendToUser(call)
+		resCallback := &callRespondCallback{
+			serverCallId: call.ServerCallId,
+			succ:         callback(),
+		}
+
+		callRespndMap.Register(resCallback)
+	}
+}
+
 func (m pipesMap) GetUserPipe(UserId int) (*UserDevicePipe, bool) {
 	m.m.RLock()
 	pipe, ok := m.mp[UserId]
 	m.m.RUnlock()
 	return pipe, ok
-}
-
-func (m pipesMap) SendCmdToUser(UserId int, cmd base.Call) {
-	res := base.WSRes{Status: "OK", ReqKey: "", SyncedNanoId: helper.TimeNowNano()}
-	res.Commands = []*base.Command{cmd}
-	m.SendToUser(UserId, res)
-}
-
-//deperecated //call one by one
-func (m pipesMap) SendCmdsToUser(UserId int, cmds []*base.Command) {
-	res := base.WSRes{Status: "OK", ReqKey: "", SyncedNanoId: helper.TimeNowNano()}
-	res.Commands = cmds
-	m.SendToUser(UserId, res)
-}
-
-//deprectaed: use response
-func (m pipesMap) SendAndStoreCmdToUser(UserId int, cmd *base.Command) {
-	//store
-	StoreCommandsToRedis(UserId, cmd)
-
-	//send
-	res := base.WSRes{Status: "OK", ReqKey: "", SyncedNanoId: helper.TimeNowNano()}
-	res.Commands = []*base.Command{cmd}
-	m.SendToUser(UserId, res)
 }
 
 func (m pipesMap) ShutDownUser(UserId int) {
@@ -109,3 +107,48 @@ func (m pipesMap) DeleteUserPipe(UserId int) {
 	delete(m.mp, UserId)
 	m.m.RUnlock()
 }
+
+// Deps
+
+/*
+func (m pipesMap) SendToUser_DEP(UserId int, call base.Call) {
+    pipe, ok := m.GetUserPipe(UserId)
+    helper.Debugf("sending to user:%d %v %v ", UserId, ok)
+    if ok && pipe.IsOpen {
+        defer func() {
+            if r := recover(); r != nil {
+                //pipe.IsOpen = false
+                pipe.ShutDown()
+                helper.Debug("Recovered in SendToUser: ", r)
+            }
+        }()
+        pipe.SendToUser(call)
+        //pipe.ToDeviceChan <- res
+    }
+}
+
+func (m pipesMap) SendCmdToUser(UserId int, cmd base.Call) {
+    res := base.WSRes{Status: "OK", ReqKey: "", SyncedNanoId: helper.TimeNowNano()}
+    res.Commands = []*base.Command{cmd}
+    m.SendToUser_DEP(UserId, res)
+}
+
+//deperecated //call one by one
+func (m pipesMap) SendCmdsToUser(UserId int, cmds []*base.Command) {
+    res := base.WSRes{Status: "OK", ReqKey: "", SyncedNanoId: helper.TimeNowNano()}
+    res.Commands = cmds
+    m.SendToUser_DEP(UserId, res)
+}
+
+//deprectaed: use response
+func (m pipesMap) SendAndStoreCmdToUser(UserId int, cmd *base.Command) {
+    //store
+    StoreCommandsToRedis(UserId, cmd)
+
+    //send
+    res := base.WSRes{Status: "OK", ReqKey: "", SyncedNanoId: helper.TimeNowNano()}
+    res.Commands = []*base.Command{cmd}
+    m.SendToUser_DEP(UserId, res)
+}
+
+*/

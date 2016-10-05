@@ -8,14 +8,20 @@ import (
 type Call struct {
 	Name            string
 	UserId          int
-	ClientNanoId    int64
-	ServerNanoId    int64
+	ClientCallId    int64
+	ServerCallId    int64
 	Data            string        //marshilized json - don't set dirctly set via toJsonData
 	toJsonSliceData []interface{} //`json:"-"`
 }
 
 func NewCall(Name string) *Call {
-	return &Call{Name: Name, ServerNanoId: time.Now().UnixNano()}
+	return &Call{Name: Name, ServerCallId: time.Now().UnixNano()}
+}
+
+func NewCallWithData(Name string, Data interface{}) *Call {
+    c := NewCall(Name)
+    c.SetData(Data)
+    return c
 }
 
 func (self *Call) SetData(data interface{}) {
