@@ -2,7 +2,7 @@ package main
 
 import (
 	"ms/sun/base"
-	"ms/sun/pipes"
+    "ms/sun/pipesold"
 )
 
 //command events that clinet invokes
@@ -10,25 +10,25 @@ func registerCmdRouters() {
 	mp := base.CmdMapRouter
 
 	//commands reciced to client
-	mp["CommandsReceived"] = pipes.CommandsReceived_Dep
-	mp["CommandsReceivedToClient"] = pipes.CommandsReceived
+	mp["CommandsReceived"] = pipesold.CommandsReceived_Dep
+	mp["CommandsReceivedToClient"] = pipesold.CommandsReceived
 
 	//Messages flow
-	mp["MsgsAddNew"] = pipes.MsgAddNew
-	mp["MsgsReceivedToServer"] = pipes.MsgReceivedToServer
-	mp["MsgsReceivedToPeer"] = pipes.MsgReceivedToPeer
-	mp["MsgsSeenByPeer"] = pipes.MsgSeenByPeer
-	mp["MsgsDeletedFromServer"] = pipes.MsgDeletedFromServer
+	mp["MsgsAddNew"] = pipesold.MsgAddNew
+	mp["MsgsReceivedToServer"] = pipesold.MsgReceivedToServer
+	mp["MsgsReceivedToPeer"] = pipesold.MsgReceivedToPeer
+	mp["MsgsSeenByPeer"] = pipesold.MsgSeenByPeer
+	mp["MsgsDeletedFromServer"] = pipesold.MsgDeletedFromServer
 
-	mp["GetUserForTable"] = pipes.GetUserForTable
+	mp["GetUserForTable"] = pipesold.GetUserForTable
 
 	//play
-	mp["hello"] = pipes.HelloCmd
-	mp["echo"] = pipes.EchoCmd
+	mp["hello"] = pipesold.HelloCmd
+	mp["echo"] = pipesold.EchoCmd
 
-	mp["AddNewMsg"] = pipes.AddNewMsg
+	mp["AddNewMsg"] = pipesold.AddNewMsg
 
-	mp["EchoRes"] = pipes.EchoRes
+	mp["EchoRes"] = pipesold.EchoRes
 
 }
 

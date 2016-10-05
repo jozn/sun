@@ -7,7 +7,7 @@ import (
 	"net/http"
 	//"github.com/drone/routes"
 	"ms/sun/ctrl"
-	"ms/sun/pipes"
+    "ms/sun/pipesold"
 	"ms/sun/routes"
 	"ms/sun/sync"
 )
@@ -38,7 +38,7 @@ func registerRoutes() {
 	http.HandleFunc("/upload2", PlayUpload2)
 
 	http.HandleFunc("/ws1", sync.ServeUserWs) //Deprectaed
-	http.HandleFunc("/ws", pipes.ServeHttpWs)
+	http.HandleFunc("/ws", pipesold.ServeHttpWs)
 
 	http.Handle("/mysql1", actioner(fact.IsamPlay))
 	http.Handle("/f/msg", actioner(fact.ChatMsgFact1))
