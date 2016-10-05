@@ -13764,6 +13764,7164 @@ func (d *__Media_Deleter) Delete(db XODB) (int, error) {
 
 //
 
+// Message represents a row from 'ms.message'.
+
+// Manualy copy this to project
+type __Message struct {
+	Id         int    `json:"Id"`         // Id -
+	MessageKey string `json:"MessageKey"` // MessageKey -
+	ToUserId   int    `json:"ToUserId"`   // ToUserId -
+	FromUserID int    `json:"FromUserID"` // FromUserID -
+	Text       string `json:"Text"`       // Text -
+	TimeMs     int    `json:"TimeMs"`     // TimeMs -
+
+	// xo fields
+	_exists, _deleted bool
+}
+
+// Exists determines if the Message exists in the database.
+func (m *Message) Exists() bool {
+	return m._exists
+}
+
+// Deleted provides information if the Message has been deleted from the database.
+func (m *Message) Deleted() bool {
+	return m._deleted
+}
+
+// Insert inserts the Message to the database.
+func (m *Message) Insert(db XODB) error {
+	var err error
+
+	// if already exist, bail
+	if m._exists {
+		return errors.New("insert failed: already exists")
+	}
+
+	// sql query
+	const sqlstr = `INSERT INTO ms.message (` +
+		`MessageKey, ToUserId, FromUserID, Text, TimeMs` +
+		`) VALUES (` +
+		`?, ?, ?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Text, m.TimeMs)
+	res, err := db.Exec(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Text, m.TimeMs)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	m.Id = int(id)
+	m._exists = true
+
+	return nil
+}
+
+// Insert inserts the Message to the database.
+func (m *Message) Replace(db XODB) error {
+	var err error
+
+	// sql query
+	const sqlstr = `REPLACE INTO ms.message (` +
+		`MessageKey, ToUserId, FromUserID, Text, TimeMs` +
+		`) VALUES (` +
+		`?, ?, ?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Text, m.TimeMs)
+	res, err := db.Exec(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Text, m.TimeMs)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	m.Id = int(id)
+	m._exists = true
+
+	return nil
+}
+
+// Update updates the Message in the database.
+func (m *Message) Update(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !m._exists {
+		return errors.New("update failed: does not exist")
+	}
+
+	// if deleted, bail
+	if m._deleted {
+		return errors.New("update failed: marked for deletion")
+	}
+
+	// sql query
+	const sqlstr = `UPDATE ms.message SET ` +
+		`MessageKey = ?, ToUserId = ?, FromUserID = ?, Text = ?, TimeMs = ?` +
+		` WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Text, m.TimeMs, m.Id)
+	_, err = db.Exec(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Text, m.TimeMs, m.Id)
+	return err
+}
+
+// Save saves the Message to the database.
+func (m *Message) Save(db XODB) error {
+	if m.Exists() {
+		return m.Update(db)
+	}
+
+	return m.Replace(db)
+}
+
+// Delete deletes the Message from the database.
+func (m *Message) Delete(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !m._exists {
+		return nil
+	}
+
+	// if deleted, bail
+	if m._deleted {
+		return nil
+	}
+
+	// sql query
+	const sqlstr = `DELETE FROM ms.message WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, m.Id)
+	_, err = db.Exec(sqlstr, m.Id)
+	if err != nil {
+		return err
+	}
+
+	// set deleted
+	m._deleted = true
+
+	return nil
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// Querify gen - ME /////////////////////////////////////////
+//.Name = table name
+// _Deleter, _Updater
+
+// orma types
+type __Message_Deleter struct {
+	wheres   []whereClause
+	whereSep string
+}
+
+type __Message_Updater struct {
+	wheres   []whereClause
+	updates  map[string]interface{}
+	whereSep string
+}
+
+type __Message_Selector struct {
+	wheres    []whereClause
+	selectCol string
+	whereSep  string
+	orderBy   string //" order by id desc //for ints
+	limit     int
+	offset    int
+}
+
+func NewMessage_Deleter() *__Message_Deleter {
+	d := __Message_Deleter{whereSep: " AND "}
+	return &d
+}
+
+func NewMessage_Updater() *__Message_Updater {
+	u := __Message_Updater{whereSep: " AND "}
+	u.updates = make(map[string]interface{}, 10)
+	return &u
+}
+
+func NewMessage_Selector() *__Message_Selector {
+	u := __Message_Selector{whereSep: " AND ", selectCol: "*"}
+	return &u
+}
+
+/////////////////////////////// Where for all /////////////////////////////
+//// for ints all selector updater, deleter
+
+////////ints
+func (u *__Message_Deleter) Or(ins []int) *__Message_Deleter {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__Message_Deleter) Id_In(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) Id_NotIn(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) Id_EQ(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Id_NotEQ(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Id_LT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Id_LE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Id_GT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Id_GE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Deleter) ToUserId_In(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) ToUserId_NotIn(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) ToUserId_EQ(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) ToUserId_NotEQ(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) ToUserId_LT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) ToUserId_LE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) ToUserId_GT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) ToUserId_GE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Deleter) FromUserID_In(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) FromUserID_NotIn(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromUserID NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) FromUserID_EQ(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) FromUserID_NotEQ(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) FromUserID_LT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) FromUserID_LE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) FromUserID_GT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) FromUserID_GE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Deleter) TimeMs_In(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) TimeMs_NotIn(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TimeMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) TimeMs_EQ(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) TimeMs_NotEQ(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) TimeMs_LT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) TimeMs_LE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) TimeMs_GT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) TimeMs_GE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__Message_Updater) Or(ins []int) *__Message_Updater {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__Message_Updater) Id_In(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) Id_NotIn(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) Id_EQ(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Id_NotEQ(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Id_LT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Id_LE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Id_GT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Id_GE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Updater) ToUserId_In(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) ToUserId_NotIn(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) ToUserId_EQ(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) ToUserId_NotEQ(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) ToUserId_LT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) ToUserId_LE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) ToUserId_GT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) ToUserId_GE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Updater) FromUserID_In(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) FromUserID_NotIn(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromUserID NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) FromUserID_EQ(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) FromUserID_NotEQ(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) FromUserID_LT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) FromUserID_LE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) FromUserID_GT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) FromUserID_GE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Updater) TimeMs_In(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) TimeMs_NotIn(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TimeMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) TimeMs_EQ(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) TimeMs_NotEQ(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) TimeMs_LT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) TimeMs_LE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) TimeMs_GT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) TimeMs_GE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__Message_Selector) Or(ins []int) *__Message_Selector {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__Message_Selector) Id_In(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) Id_NotIn(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) Id_EQ(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Id_NotEQ(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Id_LT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Id_LE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Id_GT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Id_GE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Selector) ToUserId_In(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) ToUserId_NotIn(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) ToUserId_EQ(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) ToUserId_NotEQ(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) ToUserId_LT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) ToUserId_LE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) ToUserId_GT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) ToUserId_GE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Selector) FromUserID_In(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) FromUserID_NotIn(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromUserID NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) FromUserID_EQ(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) FromUserID_NotEQ(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) FromUserID_LT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) FromUserID_LE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) FromUserID_GT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) FromUserID_GE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromUserID >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Selector) TimeMs_In(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) TimeMs_NotIn(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TimeMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) TimeMs_EQ(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) TimeMs_NotEQ(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) TimeMs_LT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) TimeMs_LE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) TimeMs_GT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) TimeMs_GE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TimeMs >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
+
+////////ints
+
+func (u *__Message_Deleter) MessageKey_In(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) MessageKey_NotIn(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Deleter) MessageKey_Like(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) MessageKey_EQ(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Deleter) Text_In(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Text IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) Text_NotIn(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Text NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Deleter) Text_Like(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) Text_EQ(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__Message_Updater) MessageKey_In(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) MessageKey_NotIn(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Updater) MessageKey_Like(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) MessageKey_EQ(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Updater) Text_In(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Text IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) Text_NotIn(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Text NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Updater) Text_Like(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) Text_EQ(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__Message_Selector) MessageKey_In(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) MessageKey_NotIn(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Selector) MessageKey_Like(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) MessageKey_EQ(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Selector) Text_In(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Text IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) Text_NotIn(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Text NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Selector) Text_Like(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) Text_EQ(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+/// End of wheres for selectors , updators, deletor
+
+/////////////////////////////// Updater /////////////////////////////
+
+//ints
+
+func (u *__Message_Updater) Id(newVal int) *__Message_Updater {
+	u.updates[" Id = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+//string
+func (u *__Message_Updater) MessageKey(newVal string) *__Message_Updater {
+	u.updates[" MessageKey = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__Message_Updater) ToUserId(newVal int) *__Message_Updater {
+	u.updates[" ToUserId = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__Message_Updater) FromUserID(newVal int) *__Message_Updater {
+	u.updates[" FromUserID = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+//string
+func (u *__Message_Updater) Text(newVal string) *__Message_Updater {
+	u.updates[" Text = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__Message_Updater) TimeMs(newVal int) *__Message_Updater {
+	u.updates[" TimeMs = ? "] = newVal
+	return u
+}
+
+//string
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////// Selector ///////////////////////////////////
+
+//Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
+
+func (u *__Message_Selector) OrderBy_Id_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY Id DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_Id_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY Id ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_Id() *__Message_Selector {
+	u.selectCol = "Id"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_MessageKey_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY MessageKey DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_MessageKey_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY MessageKey ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_MessageKey() *__Message_Selector {
+	u.selectCol = "MessageKey"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_ToUserId_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY ToUserId DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_ToUserId_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY ToUserId ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_ToUserId() *__Message_Selector {
+	u.selectCol = "ToUserId"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_FromUserID_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY FromUserID DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_FromUserID_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY FromUserID ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_FromUserID() *__Message_Selector {
+	u.selectCol = "FromUserID"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_Text_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY Text DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_Text_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY Text ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_Text() *__Message_Selector {
+	u.selectCol = "Text"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_TimeMs_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY TimeMs DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_TimeMs_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY TimeMs ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_TimeMs() *__Message_Selector {
+	u.selectCol = "TimeMs"
+	return u
+}
+
+func (u *__Message_Selector) Limit(num int) *__Message_Selector {
+	u.limit = num
+	return u
+}
+
+func (u *__Message_Selector) Offset(num int) *__Message_Selector {
+	u.offset = num
+	return u
+}
+
+/////////////////////////  Queryer Selector  //////////////////////////////////
+func (u *__Message_Selector) _stoSql() (string, []interface{}) {
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.message"
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	if u.orderBy != "" {
+		sqlstr += u.orderBy
+	}
+
+	if u.limit != 0 {
+		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
+	}
+
+	if u.limit != 0 {
+		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
+	}
+	return sqlstr, whereArgs
+}
+
+func (u *__Message_Selector) GetRow(db *sqlx.DB) (*Message, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	row := &Message{}
+	//by Sqlx
+	err = db.Get(row, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return row, nil
+}
+
+func (u *__Message_Selector) GetRows(db *sqlx.DB) ([]Message, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []Message
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__Message_Selector) GetString(db *sqlx.DB) (string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res string
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return "", err
+	}
+
+	return res, nil
+}
+
+func (u *__Message_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []string
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__Message_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []int
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__Message_Selector) GetInt(db *sqlx.DB) (int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res int
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	return res, nil
+}
+
+/////////////////////////  Queryer Update Delete //////////////////////////////////
+func (u *__Message_Updater) Update(db XODB) (int, error) {
+	var err error
+
+	var updateArgs []interface{}
+	var sqlUpdateArr []string
+	for up, newVal := range u.updates {
+		sqlUpdateArr = append(sqlUpdateArr, up)
+		updateArgs = append(updateArgs, newVal)
+	}
+	sqlUpdate := strings.Join(sqlUpdateArr, ",")
+
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	var allArgs []interface{}
+	allArgs = append(allArgs, updateArgs...)
+	allArgs = append(allArgs, whereArgs...)
+
+	sqlstr := `UPDATE ms.message SET ` + sqlUpdate
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	XOLog(sqlstr, allArgs)
+	res, err := db.Exec(sqlstr, allArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+func (d *__Message_Deleter) Delete(db XODB) (int, error) {
+	var err error
+	var wheresArr []string
+	for _, w := range d.wheres {
+		wheresArr = append(wheresArr, w.condition)
+	}
+	wheresStr := strings.Join(wheresArr, d.whereSep)
+
+	var args []interface{}
+	for _, w := range d.wheres {
+		args = append(args, w.args...)
+	}
+
+	sqlstr := "DELETE FROM ms.message WHERE " + wheresStr
+
+	// run query
+	XOLog(sqlstr, args)
+	res, err := db.Exec(sqlstr, args...)
+	if err != nil {
+		return 0, err
+	}
+
+	// retrieve id
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+//////////////////// Play ///////////////////////////////
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+// MsgDeletedFromServer represents a row from 'ms.msg_deleted_from_server'.
+
+// Manualy copy this to project
+type __MsgDeletedFromServer struct {
+	Id         int    `json:"Id"`         // Id -
+	ToUserId   int    `json:"ToUserId"`   // ToUserId -
+	MsgKey     string `json:"MsgKey"`     // MsgKey -
+	PeerUserId int    `json:"PeerUserId"` // PeerUserId -
+	Time       int    `json:"Time"`       // Time -
+
+	// xo fields
+	_exists, _deleted bool
+}
+
+// Exists determines if the MsgDeletedFromServer exists in the database.
+func (mdfs *MsgDeletedFromServer) Exists() bool {
+	return mdfs._exists
+}
+
+// Deleted provides information if the MsgDeletedFromServer has been deleted from the database.
+func (mdfs *MsgDeletedFromServer) Deleted() bool {
+	return mdfs._deleted
+}
+
+// Insert inserts the MsgDeletedFromServer to the database.
+func (mdfs *MsgDeletedFromServer) Insert(db XODB) error {
+	var err error
+
+	// if already exist, bail
+	if mdfs._exists {
+		return errors.New("insert failed: already exists")
+	}
+
+	// sql query
+	const sqlstr = `INSERT INTO ms.msg_deleted_from_server (` +
+		`ToUserId, MsgKey, PeerUserId, Time` +
+		`) VALUES (` +
+		`?, ?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time)
+	res, err := db.Exec(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	mdfs.Id = int(id)
+	mdfs._exists = true
+
+	return nil
+}
+
+// Insert inserts the MsgDeletedFromServer to the database.
+func (mdfs *MsgDeletedFromServer) Replace(db XODB) error {
+	var err error
+
+	// sql query
+	const sqlstr = `REPLACE INTO ms.msg_deleted_from_server (` +
+		`ToUserId, MsgKey, PeerUserId, Time` +
+		`) VALUES (` +
+		`?, ?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time)
+	res, err := db.Exec(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	mdfs.Id = int(id)
+	mdfs._exists = true
+
+	return nil
+}
+
+// Update updates the MsgDeletedFromServer in the database.
+func (mdfs *MsgDeletedFromServer) Update(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !mdfs._exists {
+		return errors.New("update failed: does not exist")
+	}
+
+	// if deleted, bail
+	if mdfs._deleted {
+		return errors.New("update failed: marked for deletion")
+	}
+
+	// sql query
+	const sqlstr = `UPDATE ms.msg_deleted_from_server SET ` +
+		`ToUserId = ?, MsgKey = ?, PeerUserId = ?, Time = ?` +
+		` WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time, mdfs.Id)
+	_, err = db.Exec(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time, mdfs.Id)
+	return err
+}
+
+// Save saves the MsgDeletedFromServer to the database.
+func (mdfs *MsgDeletedFromServer) Save(db XODB) error {
+	if mdfs.Exists() {
+		return mdfs.Update(db)
+	}
+
+	return mdfs.Replace(db)
+}
+
+// Delete deletes the MsgDeletedFromServer from the database.
+func (mdfs *MsgDeletedFromServer) Delete(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !mdfs._exists {
+		return nil
+	}
+
+	// if deleted, bail
+	if mdfs._deleted {
+		return nil
+	}
+
+	// sql query
+	const sqlstr = `DELETE FROM ms.msg_deleted_from_server WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, mdfs.Id)
+	_, err = db.Exec(sqlstr, mdfs.Id)
+	if err != nil {
+		return err
+	}
+
+	// set deleted
+	mdfs._deleted = true
+
+	return nil
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// Querify gen - ME /////////////////////////////////////////
+//.Name = table name
+// _Deleter, _Updater
+
+// orma types
+type __MsgDeletedFromServer_Deleter struct {
+	wheres   []whereClause
+	whereSep string
+}
+
+type __MsgDeletedFromServer_Updater struct {
+	wheres   []whereClause
+	updates  map[string]interface{}
+	whereSep string
+}
+
+type __MsgDeletedFromServer_Selector struct {
+	wheres    []whereClause
+	selectCol string
+	whereSep  string
+	orderBy   string //" order by id desc //for ints
+	limit     int
+	offset    int
+}
+
+func NewMsgDeletedFromServer_Deleter() *__MsgDeletedFromServer_Deleter {
+	d := __MsgDeletedFromServer_Deleter{whereSep: " AND "}
+	return &d
+}
+
+func NewMsgDeletedFromServer_Updater() *__MsgDeletedFromServer_Updater {
+	u := __MsgDeletedFromServer_Updater{whereSep: " AND "}
+	u.updates = make(map[string]interface{}, 10)
+	return &u
+}
+
+func NewMsgDeletedFromServer_Selector() *__MsgDeletedFromServer_Selector {
+	u := __MsgDeletedFromServer_Selector{whereSep: " AND ", selectCol: "*"}
+	return &u
+}
+
+/////////////////////////////// Where for all /////////////////////////////
+//// for ints all selector updater, deleter
+
+////////ints
+func (u *__MsgDeletedFromServer_Deleter) Or(ins []int) *__MsgDeletedFromServer_Deleter {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Deleter) Id_In(ins []int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Deleter) Id_NotIn(ins []int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Id_EQ(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Id_NotEQ(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Id_LT(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Id_LE(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Id_GT(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Id_GE(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgDeletedFromServer_Deleter) ToUserId_In(ins []int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Deleter) ToUserId_NotIn(ins []int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Deleter) ToUserId_EQ(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) ToUserId_NotEQ(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) ToUserId_LT(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) ToUserId_LE(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) ToUserId_GT(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) ToUserId_GE(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgDeletedFromServer_Deleter) PeerUserId_In(ins []int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Deleter) PeerUserId_NotIn(ins []int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Deleter) PeerUserId_EQ(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) PeerUserId_NotEQ(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) PeerUserId_LT(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) PeerUserId_LE(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) PeerUserId_GT(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) PeerUserId_GE(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgDeletedFromServer_Deleter) Time_In(ins []int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Deleter) Time_NotIn(ins []int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Time_EQ(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Time_NotEQ(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Time_LT(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Time_LE(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Time_GT(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Time_GE(val int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__MsgDeletedFromServer_Updater) Or(ins []int) *__MsgDeletedFromServer_Updater {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) Id_In(ins []int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) Id_NotIn(ins []int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Updater) Id_EQ(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) Id_NotEQ(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) Id_LT(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) Id_LE(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) Id_GT(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) Id_GE(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgDeletedFromServer_Updater) ToUserId_In(ins []int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) ToUserId_NotIn(ins []int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Updater) ToUserId_EQ(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) ToUserId_NotEQ(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) ToUserId_LT(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) ToUserId_LE(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) ToUserId_GT(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) ToUserId_GE(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgDeletedFromServer_Updater) PeerUserId_In(ins []int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) PeerUserId_NotIn(ins []int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Updater) PeerUserId_EQ(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) PeerUserId_NotEQ(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) PeerUserId_LT(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) PeerUserId_LE(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) PeerUserId_GT(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) PeerUserId_GE(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgDeletedFromServer_Updater) Time_In(ins []int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) Time_NotIn(ins []int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Updater) Time_EQ(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) Time_NotEQ(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) Time_LT(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) Time_LE(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) Time_GT(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Updater) Time_GE(val int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__MsgDeletedFromServer_Selector) Or(ins []int) *__MsgDeletedFromServer_Selector {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Id_In(ins []int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Id_NotIn(ins []int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Selector) Id_EQ(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) Id_NotEQ(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) Id_LT(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) Id_LE(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) Id_GT(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) Id_GE(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgDeletedFromServer_Selector) ToUserId_In(ins []int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) ToUserId_NotIn(ins []int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Selector) ToUserId_EQ(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) ToUserId_NotEQ(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) ToUserId_LT(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) ToUserId_LE(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) ToUserId_GT(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) ToUserId_GE(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgDeletedFromServer_Selector) PeerUserId_In(ins []int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) PeerUserId_NotIn(ins []int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Selector) PeerUserId_EQ(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) PeerUserId_NotEQ(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) PeerUserId_LT(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) PeerUserId_LE(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) PeerUserId_GT(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) PeerUserId_GE(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgDeletedFromServer_Selector) Time_In(ins []int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Time_NotIn(ins []int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Selector) Time_EQ(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) Time_NotEQ(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) Time_LT(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) Time_LE(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) Time_GT(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgDeletedFromServer_Selector) Time_GE(val int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
+
+////////ints
+
+func (u *__MsgDeletedFromServer_Deleter) MsgKey_In(ins []string) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Deleter) MsgKey_NotIn(ins []string) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgDeletedFromServer_Deleter) MsgKey_Like(val string) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Deleter) MsgKey_EQ(val string) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__MsgDeletedFromServer_Updater) MsgKey_In(ins []string) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) MsgKey_NotIn(ins []string) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgDeletedFromServer_Updater) MsgKey_Like(val string) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Updater) MsgKey_EQ(val string) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__MsgDeletedFromServer_Selector) MsgKey_In(ins []string) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) MsgKey_NotIn(ins []string) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgDeletedFromServer_Selector) MsgKey_Like(val string) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Selector) MsgKey_EQ(val string) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+/// End of wheres for selectors , updators, deletor
+
+/////////////////////////////// Updater /////////////////////////////
+
+//ints
+
+func (u *__MsgDeletedFromServer_Updater) Id(newVal int) *__MsgDeletedFromServer_Updater {
+	u.updates[" Id = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__MsgDeletedFromServer_Updater) ToUserId(newVal int) *__MsgDeletedFromServer_Updater {
+	u.updates[" ToUserId = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+//string
+func (u *__MsgDeletedFromServer_Updater) MsgKey(newVal string) *__MsgDeletedFromServer_Updater {
+	u.updates[" MsgKey = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__MsgDeletedFromServer_Updater) PeerUserId(newVal int) *__MsgDeletedFromServer_Updater {
+	u.updates[" PeerUserId = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__MsgDeletedFromServer_Updater) Time(newVal int) *__MsgDeletedFromServer_Updater {
+	u.updates[" Time = ? "] = newVal
+	return u
+}
+
+//string
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////// Selector ///////////////////////////////////
+
+//Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_Id_Desc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY Id DESC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_Id_Asc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY Id ASC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Select_Id() *__MsgDeletedFromServer_Selector {
+	u.selectCol = "Id"
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_ToUserId_Desc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY ToUserId DESC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_ToUserId_Asc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY ToUserId ASC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Select_ToUserId() *__MsgDeletedFromServer_Selector {
+	u.selectCol = "ToUserId"
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_MsgKey_Desc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY MsgKey DESC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_MsgKey_Asc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY MsgKey ASC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Select_MsgKey() *__MsgDeletedFromServer_Selector {
+	u.selectCol = "MsgKey"
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_PeerUserId_Desc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY PeerUserId DESC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_PeerUserId_Asc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY PeerUserId ASC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Select_PeerUserId() *__MsgDeletedFromServer_Selector {
+	u.selectCol = "PeerUserId"
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_Time_Desc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY Time DESC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_Time_Asc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY Time ASC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Select_Time() *__MsgDeletedFromServer_Selector {
+	u.selectCol = "Time"
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Limit(num int) *__MsgDeletedFromServer_Selector {
+	u.limit = num
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Offset(num int) *__MsgDeletedFromServer_Selector {
+	u.offset = num
+	return u
+}
+
+/////////////////////////  Queryer Selector  //////////////////////////////////
+func (u *__MsgDeletedFromServer_Selector) _stoSql() (string, []interface{}) {
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.msg_deleted_from_server"
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	if u.orderBy != "" {
+		sqlstr += u.orderBy
+	}
+
+	if u.limit != 0 {
+		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
+	}
+
+	if u.limit != 0 {
+		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
+	}
+	return sqlstr, whereArgs
+}
+
+func (u *__MsgDeletedFromServer_Selector) GetRow(db *sqlx.DB) (*MsgDeletedFromServer, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	row := &MsgDeletedFromServer{}
+	//by Sqlx
+	err = db.Get(row, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return row, nil
+}
+
+func (u *__MsgDeletedFromServer_Selector) GetRows(db *sqlx.DB) ([]MsgDeletedFromServer, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []MsgDeletedFromServer
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__MsgDeletedFromServer_Selector) GetString(db *sqlx.DB) (string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res string
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return "", err
+	}
+
+	return res, nil
+}
+
+func (u *__MsgDeletedFromServer_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []string
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__MsgDeletedFromServer_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []int
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__MsgDeletedFromServer_Selector) GetInt(db *sqlx.DB) (int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res int
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	return res, nil
+}
+
+/////////////////////////  Queryer Update Delete //////////////////////////////////
+func (u *__MsgDeletedFromServer_Updater) Update(db XODB) (int, error) {
+	var err error
+
+	var updateArgs []interface{}
+	var sqlUpdateArr []string
+	for up, newVal := range u.updates {
+		sqlUpdateArr = append(sqlUpdateArr, up)
+		updateArgs = append(updateArgs, newVal)
+	}
+	sqlUpdate := strings.Join(sqlUpdateArr, ",")
+
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	var allArgs []interface{}
+	allArgs = append(allArgs, updateArgs...)
+	allArgs = append(allArgs, whereArgs...)
+
+	sqlstr := `UPDATE ms.msg_deleted_from_server SET ` + sqlUpdate
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	XOLog(sqlstr, allArgs)
+	res, err := db.Exec(sqlstr, allArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+func (d *__MsgDeletedFromServer_Deleter) Delete(db XODB) (int, error) {
+	var err error
+	var wheresArr []string
+	for _, w := range d.wheres {
+		wheresArr = append(wheresArr, w.condition)
+	}
+	wheresStr := strings.Join(wheresArr, d.whereSep)
+
+	var args []interface{}
+	for _, w := range d.wheres {
+		args = append(args, w.args...)
+	}
+
+	sqlstr := "DELETE FROM ms.msg_deleted_from_server WHERE " + wheresStr
+
+	// run query
+	XOLog(sqlstr, args)
+	res, err := db.Exec(sqlstr, args...)
+	if err != nil {
+		return 0, err
+	}
+
+	// retrieve id
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+//////////////////// Play ///////////////////////////////
+
+//
+
+//
+
+//
+
+//
+
+//
+
+// MsgReceivedToPeer represents a row from 'ms.msg_received_to_peer'.
+
+// Manualy copy this to project
+type __MsgReceivedToPeer struct {
+	Id       int    `json:"Id"`       // Id -
+	ToUserId int    `json:"ToUserId"` // ToUserId -
+	MsgKey   string `json:"MsgKey"`   // MsgKey -
+	Time     int    `json:"Time"`     // Time -
+
+	// xo fields
+	_exists, _deleted bool
+}
+
+// Exists determines if the MsgReceivedToPeer exists in the database.
+func (mrtp *MsgReceivedToPeer) Exists() bool {
+	return mrtp._exists
+}
+
+// Deleted provides information if the MsgReceivedToPeer has been deleted from the database.
+func (mrtp *MsgReceivedToPeer) Deleted() bool {
+	return mrtp._deleted
+}
+
+// Insert inserts the MsgReceivedToPeer to the database.
+func (mrtp *MsgReceivedToPeer) Insert(db XODB) error {
+	var err error
+
+	// if already exist, bail
+	if mrtp._exists {
+		return errors.New("insert failed: already exists")
+	}
+
+	// sql query
+	const sqlstr = `INSERT INTO ms.msg_received_to_peer (` +
+		`ToUserId, MsgKey, Time` +
+		`) VALUES (` +
+		`?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time)
+	res, err := db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	mrtp.Id = int(id)
+	mrtp._exists = true
+
+	return nil
+}
+
+// Insert inserts the MsgReceivedToPeer to the database.
+func (mrtp *MsgReceivedToPeer) Replace(db XODB) error {
+	var err error
+
+	// sql query
+	const sqlstr = `REPLACE INTO ms.msg_received_to_peer (` +
+		`ToUserId, MsgKey, Time` +
+		`) VALUES (` +
+		`?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time)
+	res, err := db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	mrtp.Id = int(id)
+	mrtp._exists = true
+
+	return nil
+}
+
+// Update updates the MsgReceivedToPeer in the database.
+func (mrtp *MsgReceivedToPeer) Update(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !mrtp._exists {
+		return errors.New("update failed: does not exist")
+	}
+
+	// if deleted, bail
+	if mrtp._deleted {
+		return errors.New("update failed: marked for deletion")
+	}
+
+	// sql query
+	const sqlstr = `UPDATE ms.msg_received_to_peer SET ` +
+		`ToUserId = ?, MsgKey = ?, Time = ?` +
+		` WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time, mrtp.Id)
+	_, err = db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time, mrtp.Id)
+	return err
+}
+
+// Save saves the MsgReceivedToPeer to the database.
+func (mrtp *MsgReceivedToPeer) Save(db XODB) error {
+	if mrtp.Exists() {
+		return mrtp.Update(db)
+	}
+
+	return mrtp.Replace(db)
+}
+
+// Delete deletes the MsgReceivedToPeer from the database.
+func (mrtp *MsgReceivedToPeer) Delete(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !mrtp._exists {
+		return nil
+	}
+
+	// if deleted, bail
+	if mrtp._deleted {
+		return nil
+	}
+
+	// sql query
+	const sqlstr = `DELETE FROM ms.msg_received_to_peer WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, mrtp.Id)
+	_, err = db.Exec(sqlstr, mrtp.Id)
+	if err != nil {
+		return err
+	}
+
+	// set deleted
+	mrtp._deleted = true
+
+	return nil
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// Querify gen - ME /////////////////////////////////////////
+//.Name = table name
+// _Deleter, _Updater
+
+// orma types
+type __MsgReceivedToPeer_Deleter struct {
+	wheres   []whereClause
+	whereSep string
+}
+
+type __MsgReceivedToPeer_Updater struct {
+	wheres   []whereClause
+	updates  map[string]interface{}
+	whereSep string
+}
+
+type __MsgReceivedToPeer_Selector struct {
+	wheres    []whereClause
+	selectCol string
+	whereSep  string
+	orderBy   string //" order by id desc //for ints
+	limit     int
+	offset    int
+}
+
+func NewMsgReceivedToPeer_Deleter() *__MsgReceivedToPeer_Deleter {
+	d := __MsgReceivedToPeer_Deleter{whereSep: " AND "}
+	return &d
+}
+
+func NewMsgReceivedToPeer_Updater() *__MsgReceivedToPeer_Updater {
+	u := __MsgReceivedToPeer_Updater{whereSep: " AND "}
+	u.updates = make(map[string]interface{}, 10)
+	return &u
+}
+
+func NewMsgReceivedToPeer_Selector() *__MsgReceivedToPeer_Selector {
+	u := __MsgReceivedToPeer_Selector{whereSep: " AND ", selectCol: "*"}
+	return &u
+}
+
+/////////////////////////////// Where for all /////////////////////////////
+//// for ints all selector updater, deleter
+
+////////ints
+func (u *__MsgReceivedToPeer_Deleter) Or(ins []int) *__MsgReceivedToPeer_Deleter {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Deleter) Id_In(ins []int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Deleter) Id_NotIn(ins []int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Id_EQ(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Id_NotEQ(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Id_LT(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Id_LE(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Id_GT(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Id_GE(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgReceivedToPeer_Deleter) ToUserId_In(ins []int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Deleter) ToUserId_NotIn(ins []int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Deleter) ToUserId_EQ(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) ToUserId_NotEQ(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) ToUserId_LT(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) ToUserId_LE(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) ToUserId_GT(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) ToUserId_GE(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgReceivedToPeer_Deleter) Time_In(ins []int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Deleter) Time_NotIn(ins []int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Time_EQ(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Time_NotEQ(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Time_LT(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Time_LE(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Time_GT(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Time_GE(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__MsgReceivedToPeer_Updater) Or(ins []int) *__MsgReceivedToPeer_Updater {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Updater) Id_In(ins []int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Updater) Id_NotIn(ins []int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Updater) Id_EQ(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) Id_NotEQ(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) Id_LT(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) Id_LE(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) Id_GT(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) Id_GE(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgReceivedToPeer_Updater) ToUserId_In(ins []int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Updater) ToUserId_NotIn(ins []int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Updater) ToUserId_EQ(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) ToUserId_NotEQ(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) ToUserId_LT(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) ToUserId_LE(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) ToUserId_GT(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) ToUserId_GE(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgReceivedToPeer_Updater) Time_In(ins []int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Updater) Time_NotIn(ins []int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Updater) Time_EQ(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) Time_NotEQ(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) Time_LT(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) Time_LE(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) Time_GT(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) Time_GE(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__MsgReceivedToPeer_Selector) Or(ins []int) *__MsgReceivedToPeer_Selector {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Id_In(ins []int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Id_NotIn(ins []int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Selector) Id_EQ(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) Id_NotEQ(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) Id_LT(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) Id_LE(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) Id_GT(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) Id_GE(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgReceivedToPeer_Selector) ToUserId_In(ins []int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) ToUserId_NotIn(ins []int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Selector) ToUserId_EQ(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) ToUserId_NotEQ(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) ToUserId_LT(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) ToUserId_LE(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) ToUserId_GT(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) ToUserId_GE(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgReceivedToPeer_Selector) Time_In(ins []int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Time_NotIn(ins []int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Selector) Time_EQ(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) Time_NotEQ(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) Time_LT(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) Time_LE(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) Time_GT(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) Time_GE(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
+
+////////ints
+
+func (u *__MsgReceivedToPeer_Deleter) MsgKey_In(ins []string) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Deleter) MsgKey_NotIn(ins []string) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgReceivedToPeer_Deleter) MsgKey_Like(val string) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Deleter) MsgKey_EQ(val string) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__MsgReceivedToPeer_Updater) MsgKey_In(ins []string) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Updater) MsgKey_NotIn(ins []string) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgReceivedToPeer_Updater) MsgKey_Like(val string) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Updater) MsgKey_EQ(val string) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__MsgReceivedToPeer_Selector) MsgKey_In(ins []string) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) MsgKey_NotIn(ins []string) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgReceivedToPeer_Selector) MsgKey_Like(val string) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Selector) MsgKey_EQ(val string) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+/// End of wheres for selectors , updators, deletor
+
+/////////////////////////////// Updater /////////////////////////////
+
+//ints
+
+func (u *__MsgReceivedToPeer_Updater) Id(newVal int) *__MsgReceivedToPeer_Updater {
+	u.updates[" Id = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__MsgReceivedToPeer_Updater) ToUserId(newVal int) *__MsgReceivedToPeer_Updater {
+	u.updates[" ToUserId = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+//string
+func (u *__MsgReceivedToPeer_Updater) MsgKey(newVal string) *__MsgReceivedToPeer_Updater {
+	u.updates[" MsgKey = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__MsgReceivedToPeer_Updater) Time(newVal int) *__MsgReceivedToPeer_Updater {
+	u.updates[" Time = ? "] = newVal
+	return u
+}
+
+//string
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////// Selector ///////////////////////////////////
+
+//Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_Id_Desc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY Id DESC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_Id_Asc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY Id ASC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Select_Id() *__MsgReceivedToPeer_Selector {
+	u.selectCol = "Id"
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_ToUserId_Desc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY ToUserId DESC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_ToUserId_Asc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY ToUserId ASC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Select_ToUserId() *__MsgReceivedToPeer_Selector {
+	u.selectCol = "ToUserId"
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_MsgKey_Desc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY MsgKey DESC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_MsgKey_Asc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY MsgKey ASC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Select_MsgKey() *__MsgReceivedToPeer_Selector {
+	u.selectCol = "MsgKey"
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_Time_Desc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY Time DESC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_Time_Asc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY Time ASC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Select_Time() *__MsgReceivedToPeer_Selector {
+	u.selectCol = "Time"
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Limit(num int) *__MsgReceivedToPeer_Selector {
+	u.limit = num
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Offset(num int) *__MsgReceivedToPeer_Selector {
+	u.offset = num
+	return u
+}
+
+/////////////////////////  Queryer Selector  //////////////////////////////////
+func (u *__MsgReceivedToPeer_Selector) _stoSql() (string, []interface{}) {
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.msg_received_to_peer"
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	if u.orderBy != "" {
+		sqlstr += u.orderBy
+	}
+
+	if u.limit != 0 {
+		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
+	}
+
+	if u.limit != 0 {
+		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
+	}
+	return sqlstr, whereArgs
+}
+
+func (u *__MsgReceivedToPeer_Selector) GetRow(db *sqlx.DB) (*MsgReceivedToPeer, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	row := &MsgReceivedToPeer{}
+	//by Sqlx
+	err = db.Get(row, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return row, nil
+}
+
+func (u *__MsgReceivedToPeer_Selector) GetRows(db *sqlx.DB) ([]MsgReceivedToPeer, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []MsgReceivedToPeer
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__MsgReceivedToPeer_Selector) GetString(db *sqlx.DB) (string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res string
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return "", err
+	}
+
+	return res, nil
+}
+
+func (u *__MsgReceivedToPeer_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []string
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__MsgReceivedToPeer_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []int
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__MsgReceivedToPeer_Selector) GetInt(db *sqlx.DB) (int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res int
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	return res, nil
+}
+
+/////////////////////////  Queryer Update Delete //////////////////////////////////
+func (u *__MsgReceivedToPeer_Updater) Update(db XODB) (int, error) {
+	var err error
+
+	var updateArgs []interface{}
+	var sqlUpdateArr []string
+	for up, newVal := range u.updates {
+		sqlUpdateArr = append(sqlUpdateArr, up)
+		updateArgs = append(updateArgs, newVal)
+	}
+	sqlUpdate := strings.Join(sqlUpdateArr, ",")
+
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	var allArgs []interface{}
+	allArgs = append(allArgs, updateArgs...)
+	allArgs = append(allArgs, whereArgs...)
+
+	sqlstr := `UPDATE ms.msg_received_to_peer SET ` + sqlUpdate
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	XOLog(sqlstr, allArgs)
+	res, err := db.Exec(sqlstr, allArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+func (d *__MsgReceivedToPeer_Deleter) Delete(db XODB) (int, error) {
+	var err error
+	var wheresArr []string
+	for _, w := range d.wheres {
+		wheresArr = append(wheresArr, w.condition)
+	}
+	wheresStr := strings.Join(wheresArr, d.whereSep)
+
+	var args []interface{}
+	for _, w := range d.wheres {
+		args = append(args, w.args...)
+	}
+
+	sqlstr := "DELETE FROM ms.msg_received_to_peer WHERE " + wheresStr
+
+	// run query
+	XOLog(sqlstr, args)
+	res, err := db.Exec(sqlstr, args...)
+	if err != nil {
+		return 0, err
+	}
+
+	// retrieve id
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+//////////////////// Play ///////////////////////////////
+
+//
+
+//
+
+//
+
+//
+
+// MsgSeenByPeer represents a row from 'ms.msg_seen_by_peer'.
+
+// Manualy copy this to project
+type __MsgSeenByPeer struct {
+	Id         int    `json:"Id"`         // Id -
+	ToUserId   int    `json:"ToUserId"`   // ToUserId -
+	MsgKey     string `json:"MsgKey"`     // MsgKey -
+	PeerUserId int    `json:"PeerUserId"` // PeerUserId -
+	Time       int    `json:"Time"`       // Time -
+
+	// xo fields
+	_exists, _deleted bool
+}
+
+// Exists determines if the MsgSeenByPeer exists in the database.
+func (msbp *MsgSeenByPeer) Exists() bool {
+	return msbp._exists
+}
+
+// Deleted provides information if the MsgSeenByPeer has been deleted from the database.
+func (msbp *MsgSeenByPeer) Deleted() bool {
+	return msbp._deleted
+}
+
+// Insert inserts the MsgSeenByPeer to the database.
+func (msbp *MsgSeenByPeer) Insert(db XODB) error {
+	var err error
+
+	// if already exist, bail
+	if msbp._exists {
+		return errors.New("insert failed: already exists")
+	}
+
+	// sql query
+	const sqlstr = `INSERT INTO ms.msg_seen_by_peer (` +
+		`ToUserId, MsgKey, PeerUserId, Time` +
+		`) VALUES (` +
+		`?, ?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time)
+	res, err := db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	msbp.Id = int(id)
+	msbp._exists = true
+
+	return nil
+}
+
+// Insert inserts the MsgSeenByPeer to the database.
+func (msbp *MsgSeenByPeer) Replace(db XODB) error {
+	var err error
+
+	// sql query
+	const sqlstr = `REPLACE INTO ms.msg_seen_by_peer (` +
+		`ToUserId, MsgKey, PeerUserId, Time` +
+		`) VALUES (` +
+		`?, ?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time)
+	res, err := db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	msbp.Id = int(id)
+	msbp._exists = true
+
+	return nil
+}
+
+// Update updates the MsgSeenByPeer in the database.
+func (msbp *MsgSeenByPeer) Update(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !msbp._exists {
+		return errors.New("update failed: does not exist")
+	}
+
+	// if deleted, bail
+	if msbp._deleted {
+		return errors.New("update failed: marked for deletion")
+	}
+
+	// sql query
+	const sqlstr = `UPDATE ms.msg_seen_by_peer SET ` +
+		`ToUserId = ?, MsgKey = ?, PeerUserId = ?, Time = ?` +
+		` WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time, msbp.Id)
+	_, err = db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time, msbp.Id)
+	return err
+}
+
+// Save saves the MsgSeenByPeer to the database.
+func (msbp *MsgSeenByPeer) Save(db XODB) error {
+	if msbp.Exists() {
+		return msbp.Update(db)
+	}
+
+	return msbp.Replace(db)
+}
+
+// Delete deletes the MsgSeenByPeer from the database.
+func (msbp *MsgSeenByPeer) Delete(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !msbp._exists {
+		return nil
+	}
+
+	// if deleted, bail
+	if msbp._deleted {
+		return nil
+	}
+
+	// sql query
+	const sqlstr = `DELETE FROM ms.msg_seen_by_peer WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, msbp.Id)
+	_, err = db.Exec(sqlstr, msbp.Id)
+	if err != nil {
+		return err
+	}
+
+	// set deleted
+	msbp._deleted = true
+
+	return nil
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// Querify gen - ME /////////////////////////////////////////
+//.Name = table name
+// _Deleter, _Updater
+
+// orma types
+type __MsgSeenByPeer_Deleter struct {
+	wheres   []whereClause
+	whereSep string
+}
+
+type __MsgSeenByPeer_Updater struct {
+	wheres   []whereClause
+	updates  map[string]interface{}
+	whereSep string
+}
+
+type __MsgSeenByPeer_Selector struct {
+	wheres    []whereClause
+	selectCol string
+	whereSep  string
+	orderBy   string //" order by id desc //for ints
+	limit     int
+	offset    int
+}
+
+func NewMsgSeenByPeer_Deleter() *__MsgSeenByPeer_Deleter {
+	d := __MsgSeenByPeer_Deleter{whereSep: " AND "}
+	return &d
+}
+
+func NewMsgSeenByPeer_Updater() *__MsgSeenByPeer_Updater {
+	u := __MsgSeenByPeer_Updater{whereSep: " AND "}
+	u.updates = make(map[string]interface{}, 10)
+	return &u
+}
+
+func NewMsgSeenByPeer_Selector() *__MsgSeenByPeer_Selector {
+	u := __MsgSeenByPeer_Selector{whereSep: " AND ", selectCol: "*"}
+	return &u
+}
+
+/////////////////////////////// Where for all /////////////////////////////
+//// for ints all selector updater, deleter
+
+////////ints
+func (u *__MsgSeenByPeer_Deleter) Or(ins []int) *__MsgSeenByPeer_Deleter {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Deleter) Id_In(ins []int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Deleter) Id_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Deleter) Id_EQ(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) Id_NotEQ(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) Id_LT(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) Id_LE(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) Id_GT(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) Id_GE(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgSeenByPeer_Deleter) ToUserId_In(ins []int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Deleter) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Deleter) ToUserId_EQ(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) ToUserId_NotEQ(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) ToUserId_LT(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) ToUserId_LE(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) ToUserId_GT(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) ToUserId_GE(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgSeenByPeer_Deleter) PeerUserId_In(ins []int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Deleter) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Deleter) PeerUserId_EQ(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) PeerUserId_NotEQ(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) PeerUserId_LT(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) PeerUserId_LE(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) PeerUserId_GT(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) PeerUserId_GE(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgSeenByPeer_Deleter) Time_In(ins []int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Deleter) Time_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Deleter) Time_EQ(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) Time_NotEQ(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) Time_LT(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) Time_LE(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) Time_GT(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) Time_GE(val int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__MsgSeenByPeer_Updater) Or(ins []int) *__MsgSeenByPeer_Updater {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) Id_In(ins []int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) Id_NotIn(ins []int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Updater) Id_EQ(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) Id_NotEQ(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) Id_LT(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) Id_LE(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) Id_GT(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) Id_GE(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgSeenByPeer_Updater) ToUserId_In(ins []int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Updater) ToUserId_EQ(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) ToUserId_NotEQ(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) ToUserId_LT(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) ToUserId_LE(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) ToUserId_GT(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) ToUserId_GE(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgSeenByPeer_Updater) PeerUserId_In(ins []int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Updater) PeerUserId_EQ(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) PeerUserId_NotEQ(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) PeerUserId_LT(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) PeerUserId_LE(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) PeerUserId_GT(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) PeerUserId_GE(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgSeenByPeer_Updater) Time_In(ins []int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) Time_NotIn(ins []int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Updater) Time_EQ(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) Time_NotEQ(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) Time_LT(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) Time_LE(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) Time_GT(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) Time_GE(val int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__MsgSeenByPeer_Selector) Or(ins []int) *__MsgSeenByPeer_Selector {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Id_In(ins []int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Id_NotIn(ins []int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Selector) Id_EQ(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) Id_NotEQ(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) Id_LT(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) Id_LE(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) Id_GT(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) Id_GE(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgSeenByPeer_Selector) ToUserId_In(ins []int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Selector) ToUserId_EQ(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) ToUserId_NotEQ(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) ToUserId_LT(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) ToUserId_LE(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) ToUserId_GT(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) ToUserId_GE(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgSeenByPeer_Selector) PeerUserId_In(ins []int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Selector) PeerUserId_EQ(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) PeerUserId_NotEQ(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) PeerUserId_LT(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) PeerUserId_LE(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) PeerUserId_GT(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) PeerUserId_GE(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PeerUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgSeenByPeer_Selector) Time_In(ins []int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Time_NotIn(ins []int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Selector) Time_EQ(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) Time_NotEQ(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) Time_LT(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) Time_LE(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) Time_GT(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) Time_GE(val int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Time >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
+
+////////ints
+
+func (u *__MsgSeenByPeer_Deleter) MsgKey_In(ins []string) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Deleter) MsgKey_NotIn(ins []string) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgSeenByPeer_Deleter) MsgKey_Like(val string) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Deleter) MsgKey_EQ(val string) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__MsgSeenByPeer_Updater) MsgKey_In(ins []string) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) MsgKey_NotIn(ins []string) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgSeenByPeer_Updater) MsgKey_Like(val string) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Updater) MsgKey_EQ(val string) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__MsgSeenByPeer_Selector) MsgKey_In(ins []string) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) MsgKey_NotIn(ins []string) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgSeenByPeer_Selector) MsgKey_Like(val string) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Selector) MsgKey_EQ(val string) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+/// End of wheres for selectors , updators, deletor
+
+/////////////////////////////// Updater /////////////////////////////
+
+//ints
+
+func (u *__MsgSeenByPeer_Updater) Id(newVal int) *__MsgSeenByPeer_Updater {
+	u.updates[" Id = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__MsgSeenByPeer_Updater) ToUserId(newVal int) *__MsgSeenByPeer_Updater {
+	u.updates[" ToUserId = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+//string
+func (u *__MsgSeenByPeer_Updater) MsgKey(newVal string) *__MsgSeenByPeer_Updater {
+	u.updates[" MsgKey = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__MsgSeenByPeer_Updater) PeerUserId(newVal int) *__MsgSeenByPeer_Updater {
+	u.updates[" PeerUserId = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__MsgSeenByPeer_Updater) Time(newVal int) *__MsgSeenByPeer_Updater {
+	u.updates[" Time = ? "] = newVal
+	return u
+}
+
+//string
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////// Selector ///////////////////////////////////
+
+//Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_Id_Desc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY Id DESC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_Id_Asc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY Id ASC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Select_Id() *__MsgSeenByPeer_Selector {
+	u.selectCol = "Id"
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_ToUserId_Desc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY ToUserId DESC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_ToUserId_Asc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY ToUserId ASC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Select_ToUserId() *__MsgSeenByPeer_Selector {
+	u.selectCol = "ToUserId"
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_MsgKey_Desc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY MsgKey DESC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_MsgKey_Asc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY MsgKey ASC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Select_MsgKey() *__MsgSeenByPeer_Selector {
+	u.selectCol = "MsgKey"
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_PeerUserId_Desc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY PeerUserId DESC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_PeerUserId_Asc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY PeerUserId ASC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Select_PeerUserId() *__MsgSeenByPeer_Selector {
+	u.selectCol = "PeerUserId"
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_Time_Desc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY Time DESC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_Time_Asc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY Time ASC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Select_Time() *__MsgSeenByPeer_Selector {
+	u.selectCol = "Time"
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Limit(num int) *__MsgSeenByPeer_Selector {
+	u.limit = num
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Offset(num int) *__MsgSeenByPeer_Selector {
+	u.offset = num
+	return u
+}
+
+/////////////////////////  Queryer Selector  //////////////////////////////////
+func (u *__MsgSeenByPeer_Selector) _stoSql() (string, []interface{}) {
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.msg_seen_by_peer"
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	if u.orderBy != "" {
+		sqlstr += u.orderBy
+	}
+
+	if u.limit != 0 {
+		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
+	}
+
+	if u.limit != 0 {
+		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
+	}
+	return sqlstr, whereArgs
+}
+
+func (u *__MsgSeenByPeer_Selector) GetRow(db *sqlx.DB) (*MsgSeenByPeer, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	row := &MsgSeenByPeer{}
+	//by Sqlx
+	err = db.Get(row, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return row, nil
+}
+
+func (u *__MsgSeenByPeer_Selector) GetRows(db *sqlx.DB) ([]MsgSeenByPeer, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []MsgSeenByPeer
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__MsgSeenByPeer_Selector) GetString(db *sqlx.DB) (string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res string
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return "", err
+	}
+
+	return res, nil
+}
+
+func (u *__MsgSeenByPeer_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []string
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__MsgSeenByPeer_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []int
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__MsgSeenByPeer_Selector) GetInt(db *sqlx.DB) (int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res int
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	return res, nil
+}
+
+/////////////////////////  Queryer Update Delete //////////////////////////////////
+func (u *__MsgSeenByPeer_Updater) Update(db XODB) (int, error) {
+	var err error
+
+	var updateArgs []interface{}
+	var sqlUpdateArr []string
+	for up, newVal := range u.updates {
+		sqlUpdateArr = append(sqlUpdateArr, up)
+		updateArgs = append(updateArgs, newVal)
+	}
+	sqlUpdate := strings.Join(sqlUpdateArr, ",")
+
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	var allArgs []interface{}
+	allArgs = append(allArgs, updateArgs...)
+	allArgs = append(allArgs, whereArgs...)
+
+	sqlstr := `UPDATE ms.msg_seen_by_peer SET ` + sqlUpdate
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	XOLog(sqlstr, allArgs)
+	res, err := db.Exec(sqlstr, allArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+func (d *__MsgSeenByPeer_Deleter) Delete(db XODB) (int, error) {
+	var err error
+	var wheresArr []string
+	for _, w := range d.wheres {
+		wheresArr = append(wheresArr, w.condition)
+	}
+	wheresStr := strings.Join(wheresArr, d.whereSep)
+
+	var args []interface{}
+	for _, w := range d.wheres {
+		args = append(args, w.args...)
+	}
+
+	sqlstr := "DELETE FROM ms.msg_seen_by_peer WHERE " + wheresStr
+
+	// run query
+	XOLog(sqlstr, args)
+	res, err := db.Exec(sqlstr, args...)
+	if err != nil {
+		return 0, err
+	}
+
+	// retrieve id
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+//////////////////// Play ///////////////////////////////
+
+//
+
+//
+
+//
+
+//
+
+//
+
 // Notification represents a row from 'ms.notification'.
 
 // Manualy copy this to project
@@ -41868,45 +49026,6 @@ func (d *__UserPassword_Deleter) Delete(db XODB) (int, error) {
 
 //
 
-// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
-//
-// Generated from index 'PostId'.
-func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, PostId, Text, CreatedTime ` +
-		`FROM ms.comments ` +
-		`WHERE PostId = ?`
-
-	// run query
-	XOLog(sqlstr, postId)
-	q, err := db.Query(sqlstr, postId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Comment{}
-	for q.Next() {
-		c := Comment{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &c)
-	}
-
-	return res, nil
-}
-
 // CommentById retrieves a row from 'ms.comments' as a Comment.
 //
 // Generated from index 'comments_Id_pkey'.
@@ -41998,6 +49117,71 @@ func FollowingListMembersByFollowedUserIdUserId(db XODB, followedUserId int, use
 	return res, nil
 }
 
+// FollowingListMemberByUserIdFollowedUserId retrieves a row from 'ms.following_list_member' as a FollowingListMember.
+//
+// Generated from index 'UserId'.
+func FollowingListMemberByUserIdFollowedUserId(db XODB, userId int, followedUserId int) (*FollowingListMember, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs ` +
+		`FROM ms.following_list_member ` +
+		`WHERE UserId = ? AND FollowedUserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId, followedUserId)
+	flm := FollowingListMember{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, userId, followedUserId).Scan(&flm.Id, &flm.ListId, &flm.UserId, &flm.FollowedUserId, &flm.FollowType, &flm.UpdatedTimeMs)
+	if err != nil {
+		return nil, err
+	}
+
+	return &flm, nil
+}
+
+// FollowingListMembersByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member' as a FollowingListMember.
+//
+// Generated from index 'UserId_2'.
+func FollowingListMembersByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeMs int) ([]*FollowingListMember, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs ` +
+		`FROM ms.following_list_member ` +
+		`WHERE UserId = ? AND UpdatedTimeMs = ?`
+
+	// run query
+	XOLog(sqlstr, userId, updatedTimeMs)
+	q, err := db.Query(sqlstr, userId, updatedTimeMs)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*FollowingListMember{}
+	for q.Next() {
+		flm := FollowingListMember{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&flm.Id, &flm.ListId, &flm.UserId, &flm.FollowedUserId, &flm.FollowType, &flm.UpdatedTimeMs)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &flm)
+	}
+
+	return res, nil
+}
+
 // FollowingListMemberById retrieves a row from 'ms.following_list_member' as a FollowingListMember.
 //
 // Generated from index 'following_list_member_Id_pkey'.
@@ -42024,45 +49208,6 @@ func FollowingListMemberById(db XODB, id int) (*FollowingListMember, error) {
 	return &flm, nil
 }
 
-// FollowingListMemberHistoriesByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
-//
-// Generated from index 'UserId'.
-func FollowingListMemberHistoriesByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeMs int) ([]*FollowingListMemberHistory, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs, FollowId ` +
-		`FROM ms.following_list_member_history ` +
-		`WHERE UserId = ? AND UpdatedTimeMs = ?`
-
-	// run query
-	XOLog(sqlstr, userId, updatedTimeMs)
-	q, err := db.Query(sqlstr, userId, updatedTimeMs)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*FollowingListMemberHistory{}
-	for q.Next() {
-		flmh := FollowingListMemberHistory{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&flmh.Id, &flmh.ListId, &flmh.UserId, &flmh.FollowedUserId, &flmh.FollowType, &flmh.UpdatedTimeMs, &flmh.FollowId)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &flmh)
-	}
-
-	return res, nil
-}
-
 // FollowingListMemberHistoryById retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
 //
 // Generated from index 'following_list_member_history_Id_pkey'.
@@ -42087,6 +49232,71 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	}
 
 	return &flmh, nil
+}
+
+// LikesById retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'Id'.
+func LikesById(db XODB, id int) ([]*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Like{}
+	for q.Next() {
+		l := Like{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &l)
+	}
+
+	return res, nil
+}
+
+// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'PostId'.
+func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE PostId = ? AND UserId = ?`
+
+	// run query
+	XOLog(sqlstr, postId, userId)
+	l := Like{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+	if err != nil {
+		return nil, err
+	}
+
+	return &l, nil
 }
 
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
@@ -42178,6 +49388,149 @@ func MediaById(db XODB, id int) (*Media, error) {
 	}
 
 	return &m, nil
+}
+
+// MessageById retrieves a row from 'ms.message' as a Message.
+//
+// Generated from index 'message_Id_pkey'.
+func MessageById(db XODB, id int) (*Message, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, MessageKey, ToUserId, FromUserID, Text, TimeMs ` +
+		`FROM ms.message ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	m := Message{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.MessageKey, &m.ToUserId, &m.FromUserID, &m.Text, &m.TimeMs)
+	if err != nil {
+		return nil, err
+	}
+
+	return &m, nil
+}
+
+// MsgDeletedFromServersByToUserId retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
+//
+// Generated from index 'ToUserId'.
+func MsgDeletedFromServersByToUserId(db XODB, toUserId int) ([]*MsgDeletedFromServer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, PeerUserId, Time ` +
+		`FROM ms.msg_deleted_from_server ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgDeletedFromServer{}
+	for q.Next() {
+		mdfs := MsgDeletedFromServer{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&mdfs.Id, &mdfs.ToUserId, &mdfs.MsgKey, &mdfs.PeerUserId, &mdfs.Time)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &mdfs)
+	}
+
+	return res, nil
+}
+
+// MsgDeletedFromServerById retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
+//
+// Generated from index 'msg_deleted_from_server_Id_pkey'.
+func MsgDeletedFromServerById(db XODB, id int) (*MsgDeletedFromServer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, PeerUserId, Time ` +
+		`FROM ms.msg_deleted_from_server ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	mdfs := MsgDeletedFromServer{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, id).Scan(&mdfs.Id, &mdfs.ToUserId, &mdfs.MsgKey, &mdfs.PeerUserId, &mdfs.Time)
+	if err != nil {
+		return nil, err
+	}
+
+	return &mdfs, nil
+}
+
+// MsgReceivedToPeerById retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
+//
+// Generated from index 'msg_received_to_peer_Id_pkey'.
+func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, Time ` +
+		`FROM ms.msg_received_to_peer ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	mrtp := MsgReceivedToPeer{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, id).Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.Time)
+	if err != nil {
+		return nil, err
+	}
+
+	return &mrtp, nil
+}
+
+// MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
+//
+// Generated from index 'msg_seen_by_peer_Id_pkey'.
+func MsgSeenByPeerById(db XODB, id int) (*MsgSeenByPeer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, PeerUserId, Time ` +
+		`FROM ms.msg_seen_by_peer ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	msbp := MsgSeenByPeer{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, id).Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.PeerUserId, &msbp.Time)
+	if err != nil {
+		return nil, err
+	}
+
+	return &msbp, nil
 }
 
 // NotificationsByForUserId retrieves a row from 'ms.notification' as a Notification.
@@ -42284,6 +49637,32 @@ func NotificationById(db XODB, id int) (*Notification, error) {
 	return &n, nil
 }
 
+// PhoneContactByPhoneContactRowIdUserId retrieves a row from 'ms.phone_contacts' as a PhoneContact.
+//
+// Generated from index 'PhoneContactRowId'.
+func PhoneContactByPhoneContactRowIdUserId(db XODB, phoneContactRowId int, userId int) (*PhoneContact, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime ` +
+		`FROM ms.phone_contacts ` +
+		`WHERE PhoneContactRowId = ? AND UserId = ?`
+
+	// run query
+	XOLog(sqlstr, phoneContactRowId, userId)
+	pc := PhoneContact{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, phoneContactRowId, userId).Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pc, nil
+}
+
 // PhoneContactsByPhoneNormalizedNumber retrieves a row from 'ms.phone_contacts' as a PhoneContact.
 //
 // Generated from index 'PhoneNormalizedNumber'.
@@ -42360,32 +49739,6 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 	}
 
 	return res, nil
-}
-
-// PhoneContactByUserIdPhoneNormalizedNumber retrieves a row from 'ms.phone_contacts' as a PhoneContact.
-//
-// Generated from index 'UserId_2'.
-func PhoneContactByUserIdPhoneNormalizedNumber(db XODB, userId int, phoneNormalizedNumber string) (*PhoneContact, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime ` +
-		`FROM ms.phone_contacts ` +
-		`WHERE UserId = ? AND PhoneNormalizedNumber = ?`
-
-	// run query
-	XOLog(sqlstr, userId, phoneNormalizedNumber)
-	pc := PhoneContact{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, userId, phoneNormalizedNumber).Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
-	if err != nil {
-		return nil, err
-	}
-
-	return &pc, nil
 }
 
 // PhoneContactsByUserIdCreatedTime retrieves a row from 'ms.phone_contacts' as a PhoneContact.
@@ -42503,45 +49856,6 @@ func RecommendUserById(db XODB, id int) (*RecommendUser, error) {
 	}
 
 	return &ru, nil
-}
-
-// SessionsById retrieves a row from 'ms.session' as a Session.
-//
-// Generated from index 'Id'.
-func SessionsById(db XODB, id int) ([]*Session, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
-		`FROM ms.session ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Session{}
-	for q.Next() {
-		s := Session{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &s)
-	}
-
-	return res, nil
 }
 
 // SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
