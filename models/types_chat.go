@@ -5,7 +5,7 @@ type Message struct {
     MessageKey string `json:"MessageKey"` // MessageKey -
     ToUserId   int    `json:"ToUserId"`   // ToUserId -
     FromUserID int    `json:"FromUserID"` // FromUserID -
-    Text       string `json:"Text"`       // Text -
+    Data       string `json:"Data"`       // Text -
     TimeMs     int    `json:"TimeMs"`     // TimeMs -
 
                                           // xo fields

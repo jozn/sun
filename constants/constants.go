@@ -1,7 +1,8 @@
 package constants
 
 const MsgsAddNew = "MsgsAddNew"
-const MsgsReceivedToServer = "MsgsReceivedToServer"
+const MsgAddOne = "MsgAddOne"
+const MsgsReceivedToServer = "MsgsReceivedToServer"//dep use
 const MsgsReceivedToPeer = "MsgsReceivedToPeer"
 const MsgsSeenByPeer = "MsgsSeenByPeer"
 const MsgsDeletedFromServer = "MsgsDeletedFromServer"

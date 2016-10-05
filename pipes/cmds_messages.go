@@ -12,7 +12,7 @@ import (
 	"ms/sun/constants"
 )
 
-func MsgAddNew(c *base.CmdAction) {
+func MsgAddNew__DEP(c *base.CmdAction) {
 	fmt.Println("called MsgAddNew :", *c)
 
 	myMsg := models.MessagesTableFromClient{}
@@ -36,7 +36,7 @@ func MsgAddNew(c *base.CmdAction) {
 	AllPipesMap.SendAndStoreCmdToUser(toUid, cmd)
 }
 
-func MsgReceivedToPeer(c *base.CmdAction) {
+func MsgReceivedToPeer__dep(c *base.CmdAction) {
 	fmt.Printf("\ncalled MsgReceivedToPeer %v :\n", c)
 
 	metas := []models.MessageSyncMeta{}
@@ -70,7 +70,7 @@ func MsgReceivedToPeer(c *base.CmdAction) {
 
 }
 
-func MsgSeenByPeer(c *base.CmdAction) {
+func MsgSeenByPeer__dep(c *base.CmdAction) {
 	fmt.Println("called MsgSeenByPeer :", *c)
 
 	metas := []models.MessageSyncMeta{}
