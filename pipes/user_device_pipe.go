@@ -47,7 +47,7 @@ func (pipe *UserDevicePipe) ServeIncomingCalls() {
 			if messageType == websocket.TextMessage {
 				err = json.Unmarshal(bytes, &call)
 				if err == nil {
-					serverWSReqCommands(call, pipe)
+					serverWSReqCalls(call, pipe)
 				}
 				fLog.WriteString(string(bytes) + "\n")
 				fLog.Sync()
@@ -103,7 +103,7 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 
 /////////////// Commands handler //////////////////
 
-func serverWSReqCommands(reqCall base.Call, pipe *UserDevicePipe) {
+func serverWSReqCalls(reqCall base.Call, pipe *UserDevicePipe) {
 
 	if reqCall.ClientCallId != 0 {
 		callRecived := base.Call{
