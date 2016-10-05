@@ -7,7 +7,7 @@ import (
 	"net/http"
 	//"github.com/drone/routes"
 	"ms/sun/ctrl"
-    "ms/sun/pipesold"
+	"ms/sun/pipesold"
 	"ms/sun/routes"
 	"ms/sun/sync"
 )
@@ -73,9 +73,9 @@ func registerRoutes() {
 	http.HandleFunc("/MsgUpload", MsgUpload)
 
 	//////////////////// New V1 apis //////////////////////////
-    //mux.Post("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
-    //mux.Get("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
-    http.Handle("/v1/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
+	//mux.Post("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
+	//mux.Get("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
+	http.Handle("/v1/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
 
 	mux.Post("/post/add", actionToFunc(ctrl.AddPostAction))
 	mux.Get("/post/add", actionToFunc(ctrl.AddPostAction))

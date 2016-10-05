@@ -9,7 +9,7 @@ import (
 
 func GrabAllUserContactsCtrl(a *base.Action) base.AppErr {
 	MustBeUserAndUpdate(a)
-    a.Req.ParseForm()
+	a.Req.ParseForm()
 	contactsForm := a.Req.Form.Get("contacts")
 	//DeviceUuidId := a.Req.Form.Get("uuid")
 	var conts []models.PhoneContact
@@ -17,7 +17,7 @@ func GrabAllUserContactsCtrl(a *base.Action) base.AppErr {
 	if err != nil {
 		return nil
 	}
-    helper.Debug("contacts: ",conts)
+	helper.Debug("contacts: ", conts)
 	//fmt.Println(conts)
 	/*var _cs []interface{} //just for inserting in mass
 	for _, c := range conts {
@@ -28,18 +28,18 @@ func GrabAllUserContactsCtrl(a *base.Action) base.AppErr {
 		_cs = append(_cs, c)
 	}*/
 
-    for _, c := range conts {
-        c.Id = 0 //security
-        c.UserId = a.UserId()
-        c.CreatedTime = helper.TimeNow()
-        c.DeviceUuidId = 0 ///DeviceUuidId
-        c.Insert(base.DB)
-    }
+	for _, c := range conts {
+		c.Id = 0 //security
+		c.UserId = a.UserId()
+		c.CreatedTime = helper.TimeNow()
+		c.DeviceUuidId = 0 ///DeviceUuidId
+		c.Insert(base.DB)
+	}
 
 	/*//save to DB
 	base.DB.Exec("delete from phone_contacts where UserId = ?", a.UserId())
 	base.DbMassInsertStruct("phone_contacts", _cs...)
-*/
+	*/
 
 	//get registerd contacts
 	var allNumbers []string
@@ -55,7 +55,7 @@ func GrabAllUserContactsCtrl(a *base.Action) base.AppErr {
 	helper.DebugPrintln(q)
 	_ = base.DB.Select(&users, q)
 
-    a.SendJson(allNumbers)
+	a.SendJson(allNumbers)
 
 	return nil
 }

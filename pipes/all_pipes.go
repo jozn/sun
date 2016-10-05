@@ -15,15 +15,15 @@ type pipesMap struct {
 
 func init() {
 	AllPipesMap = &pipesMap{
-        mp: make(map[int]*UserDevicePipe, 100),
-    }
+		mp: make(map[int]*UserDevicePipe, 100),
+	}
 }
 
 var AllPipesMap *pipesMap
 
 func (m pipesMap) SendToUser(UserId int, call base.Call) {
 	pipe, ok := m.GetUserPipe(UserId)
-	helper.Debugf("sending to user:%d %v %v ", UserId, ok, )
+	helper.Debugf("sending to user:%d %v %v ", UserId, ok)
 	if ok && pipe.IsOpen {
 		defer func() {
 			if r := recover(); r != nil {

@@ -6,9 +6,9 @@ import (
 	//"time"
 	"encoding/json"
 	"ms/sun/base"
+	"ms/sun/cmd"
 	"ms/sun/helper"
 	"os"
-    "ms/sun/cmd"
 )
 
 type UserDevicePipe struct {
@@ -105,7 +105,7 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 /////////////// Commands handler //////////////////
 
 func serverWSReqCommands(reqCall base.Call, pipe *UserDevicePipe) {
-    //TODO UPGRADE THIS TO NEW Call
+	//TODO UPGRADE THIS TO NEW Call
 	/*arr := make([]int64, 0, len(req.Commands))
 	for _, cmd := range req.Commands {
 		arr = append(arr, cmd.ClientNanoId)
@@ -119,16 +119,16 @@ func serverWSReqCommands(reqCall base.Call, pipe *UserDevicePipe) {
 		AllPipesMap.SendCmdToUser(pipe.UserId, cmdsRecived)
 	}*/
 
-    reqCall.UserId = pipe.UserId
-    fnCall := base.CallMapRouter[reqCall.Name]
-    helper.Debug("serving Cmd: ", reqCall.Name, " Userid: ", pipe.UserId)
-    if fnCall != nil {
-        fnCall(pipe)
-    } else { //send call func not found -- in debug
+	reqCall.UserId = pipe.UserId
+	fnCall := base.CallMapRouter[reqCall.Name]
+	helper.Debug("serving Cmd: ", reqCall.Name, " Userid: ", pipe.UserId)
+	if fnCall != nil {
+		fnCall(pipe)
+	} else { //send call func not found -- in debug
 
-    }
+	}
 
-    //del
+	//del
 	/*for _, cmd := range req.Commands {
 		fnCall := base.CallMapRouter[cmd.Name]
 		helper.Debug("serving Cmd: ", cmd.Name, " Userid: ", pipe.UserId)

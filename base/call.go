@@ -7,7 +7,7 @@ import (
 
 type Call struct {
 	Name            string
-    UserId          int
+	UserId          int
 	ClientNanoId    int64
 	ServerNanoId    int64
 	Data            string        //marshilized json - don't set dirctly set via toJsonData
@@ -37,4 +37,3 @@ func (self *Call) AddSliceData(data interface{}) {
 	//self.Data = helper.ToJson(data)
 }
 */
-

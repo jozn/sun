@@ -74,17 +74,17 @@ type UserTable struct {
 /////////// for Responses //////////////////////////////////////
 
 type UserViewSync struct {
-    *UserBasicAndMe
-    AppVersion int
-    Phone string
-    UpdatedTime   int
+	*UserBasicAndMe
+	AppVersion  int
+	Phone       string
+	UpdatedTime int
 }
 
 //todo clean this 2 struct
 type UserBasicAndMe struct { //legacy switch to UserTable
 	UserBasic
 	UserId        int
-	UpdatedTime   int//rm ??
+	UpdatedTime   int //rm ??
 	AmIFollowing  int //dep
 	FollowingType int /// 0: not_following  1: following  2: follow_requested
 	//FollowingLists int
@@ -96,14 +96,15 @@ type UserBasicPhoneAndMe struct {
 	UserPhone
 }
 
-func (v *UserViewSync)FromUser(CurrentUserId int , u User, withPhone bool) {
-    v.UserBasicAndMe = GetUserBasicAndMe(u.Id, CurrentUserId)
-    v.AppVersion = u.AppVersion
-    v.UpdatedTime = u.UpdatedTime
-    if withPhone {
-        v.Phone = u.Phone
-    }
+func (v *UserViewSync) FromUser(CurrentUserId int, u User, withPhone bool) {
+	v.UserBasicAndMe = GetUserBasicAndMe(u.Id, CurrentUserId)
+	v.AppVersion = u.AppVersion
+	v.UpdatedTime = u.UpdatedTime
+	if withPhone {
+		v.Phone = u.Phone
+	}
 }
+
 //type UserBasicContactsAndMe struct {
 //	UserBasicAndMe
 //	PhoneContact

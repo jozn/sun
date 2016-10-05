@@ -19,19 +19,19 @@ func SyncGetAllChangedUser(CurrentUserId, LastTime int) []UserViewSync {
 
 	usersRes := make([]UserViewSync, 0, len(usersContacts)+len(usersFollowd))
 
-    //first do for followings - Phone filed maybe overide if a user existi in both
+	//first do for followings - Phone filed maybe overide if a user existi in both
 
 	for _, u := range usersFollowd {
-        v := UserViewSync{}
-        v.FromUser(CurrentUserId, u, false)
+		v := UserViewSync{}
+		v.FromUser(CurrentUserId, u, false)
 		usersRes = append(usersRes, v)
 	}
 
-    for _, u := range usersContacts {
-        v := UserViewSync{}
-        v.FromUser(CurrentUserId, u, true)
-        usersRes = append(usersRes, v)
-    }
+	for _, u := range usersContacts {
+		v := UserViewSync{}
+		v.FromUser(CurrentUserId, u, true)
+		usersRes = append(usersRes, v)
+	}
 
 	helper.Debug("SyncGetAllChangedUser()", len(usersContacts), err1, err2)
 
