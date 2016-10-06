@@ -9,10 +9,10 @@ import (
 )
 
 type callRespondCallback struct {
-	succ         func()
-	err          func()
-	timeoutAtMs  int   // time second // now + 5 sec
-	serverCallId int64 // time nano
+    success      func()
+    error        func()
+    timeoutAtMs  int   // time second // now + 5 sec
+    serverCallId int64 // time nano
 }
 
 var callRespndMap _registerMap
@@ -64,8 +64,8 @@ func (m _registerMap) runSucceded(serverCallId int64) {
 	if err != nil {
 		return
 	}
-	if callback.err != nil {
-		callback.err()
+	if callback.error != nil {
+		callback.error()
 	}
 }
 
@@ -88,8 +88,8 @@ func (m _registerMap) runErrorOfTimeouts() {
 	m.Unlock()
 
 	for _, v := range arr {
-		if v.err != nil {
-			v.err()
+		if v.error != nil {
+			v.error()
 		}
 	}
 }
