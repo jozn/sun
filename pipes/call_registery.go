@@ -42,22 +42,17 @@ func (m _registerMap) Get(serverCallId int64) (*callRespondCallback, error) {
 	}
 	m.RLock()
 	callback, ok := m.mp[serverCallId]
+    m.RUnlock()
 	if ok {
 		return nil, errors.New(" serverCallId not found in  map")
 	}
 	return &callback, nil
 }
 
-func (m _registerMap) Remove(serverCallId int64) (*callRespondCallback, error) {
-    if serverCallId == 0 {
-        return nil, errors.New(" serverCallId could not be 0")
-    }
-    m.RLock()
-    callback, ok := m.mp[serverCallId]
-    if ok {
-        return nil, errors.New(" serverCallId not found in  map")
-    }
-    return &callback, nil
+func (m _registerMap) Remove(serverCallId int64)  {
+    m.Lock()
+    delete(m.mp, serverCallId)
+    m.Unlock()
 }
 
 //utils
