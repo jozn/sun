@@ -1,6 +1,6 @@
 package pipes
 
-func init{
+func init(){
     intervalRunCallsTimeOutChecker()
 }
 

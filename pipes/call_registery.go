@@ -4,13 +4,14 @@ import (
 	"errors"
 	"sync"
 	"time"
+    "ms/sun/helper"
 )
 
 type callRespondCallback struct {
-	succ         func()
-	err          func()
-	tiomeoutAt   int64 // time second // now + 10 sec
-	serverCallId int64 // time nano
+    succ         func()
+    err          func()
+    timeoutAtMs  int64 // time second // now + 10 sec
+    serverCallId int64 // time nano
 }
 
 var callRespndMap _registerMap
@@ -30,7 +31,7 @@ func (m _registerMap) Register(callback callRespondCallback) {
 	if callback.serverCallId == 0 {
 		callback.serverCallId = getNextCallId()
 	}
-	callback.tiomeoutAt = time.Now().Unix() + 10
+	callback.timeoutAtMs = helper.TimeNowMs() + 5000
 	m.Lock()
 	m.mp[callback.serverCallId] = callback
 	m.Unlock()
@@ -63,6 +64,20 @@ func (m _registerMap) runSucceded(serverCallId int64)  {
     if callback.err != nil{
         callback.err()
     }
+}
+
+func (m _registerMap) runErrorOfTimeouts(serverCallId int64){
+    var arr []callRespondCallback
+
+    m.RLock()
+    for k,v := range m.mp {
+        if v.
+    }
+}
+
+
+func intervalRunCallsTimeOutChecker()  {
+
 }
 
 //utils
