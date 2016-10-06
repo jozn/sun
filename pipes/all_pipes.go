@@ -52,7 +52,7 @@ func (m pipesMap) SendToUserWithCallBack(UserId int, call base.Call, callback fu
 		pipe.SendToUser(call)
 		resCallback := callRespondCallback{
 			serverCallId: call.ServerCallId,
-			success:         callback,
+			success:      callback,
 			timeoutAtMs:  helper.TimeNowMs() + 5000,
 		}
 

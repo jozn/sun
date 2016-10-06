@@ -52,6 +52,7 @@ func registerRoutes() {
 
 	http.Handle("/i/msg", actionToFunc(SendSampleMesgTable))
 	http.Handle("/i/msg2", actionToFunc(SendSampleMesgTable2))
+	http.Handle("/i/msg3", actionToFunc(SendSampleMesgTable3_v04))
 	http.Handle("/i/redis", actionToFunc(RedisSavePlay))
 	http.Handle("/i/play", actionToFunc(PlaySomething))
 	http.Handle("/i/store1", actionToFunc(MemoryStore1))

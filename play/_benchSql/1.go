@@ -7,6 +7,8 @@ import (
 	"math/rand"
 	"strings"
 	"time"
+	//"ms/sun/sync"
+	"sync/atomic"
 )
 
 var DB *sqlx.DB
@@ -25,7 +27,7 @@ func main() {
 	DB, _ = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/tops?charset=utf8mb4")
 
 	go func() {
-		for i := 0; i < 1000; i++ {
+		for i := 0; i < 1; i++ {
 			addMassToTable()
 			if i%1000 == 0 {
 				fmt.Println(" MASS : ", i)
@@ -33,7 +35,31 @@ func main() {
 		}
 	}()
 
-	time.Sleep(time.Second * 1)
+	var i int64 = 0
+
+	for j := 0; j < 4; j++ {
+		n := j
+		go func() {
+			ts := time.Now()
+			lastI := i
+			for i < 10000000 {
+				addToTable()
+				if n == 0 && i%20000 == 0 {
+					sec := time.Now().Sub(ts).Seconds()
+					ts = time.Now()
+					k := i
+					CNT := k - lastI
+					lastI = k
+					qps := float64(CNT) / sec
+					fmt.Printf("addToTable: qps=%d  - %d \n", int(qps), i)
+					//fmt.Println(CNT,sec,i)
+				}
+				atomic.AddInt64(&i, 1)
+			}
+		}()
+	}
+
+	time.Sleep(time.Second * 100000)
 
 	go func() {
 		for i := 0; i < 1000000; i++ {
@@ -46,14 +72,6 @@ func main() {
 
 	//DB.Exec("LOCK TABLES a WRITE;")
 
-	go func() {
-		for i := 0; i < 1000000; i++ {
-			addToTable()
-			if i%1000 == 0 {
-				fmt.Println("addToTable: ", i)
-			}
-		}
-	}()
 	//DB.Exec("UNLOCK TABLES;")
 
 	go func() {
@@ -99,7 +117,7 @@ func main() {
 }
 
 func addToTable() {
-	DB.Exec("insert into bench3 (`Text`,`Time`,`Name`,Indexed) values(?,?,?,?)",
+	DB.Exec("insert into bench4 (`Text`,`Time`,`Name`,Indexed) values(?,?,?,?)",
 		" ahbdas askjn kjdnksd «تسدنتشسی ندنتد jdksdasd asdsajdnas kajdnasd dasdknjasdkad adkdnjadnadad asd diasdasd asda dadadajdbakdjbad m أ یشسینشستی",
 		rand.Intn(50000000),
 		"jasndkjas akj",
@@ -119,36 +137,36 @@ func addMassToTable() {
 		arr = append(arr, rand.Intn(500000000))
 	}
 
-	DB.Exec("replace into bench3 (`Text`,`Time`,`Name`,Indexed) values "+str, arr...)
+	DB.Exec("replace into bench4 (`Text`,`Time`,`Name`,Indexed) values "+str, arr...)
 }
 
 func update(cnt int) {
-	DB.Exec("update bench3 set `Text`= ? where id = ?",
+	DB.Exec("update bench4 set `Text`= ? where id = ?",
 		" UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED ",
 		rand.Intn(cnt))
 }
 
 func selectTable() (error, int) {
 	var res []Bench
-	err := DB.Unsafe().Select(&res, "select * from bench3 ")
+	err := DB.Unsafe().Select(&res, "select * from bench4 ")
 	return err, len(res)
 }
 
 func selectone(cnt int) (error, int) {
 	var res []Bench
-	err := DB.Unsafe().Select(&res, "select * from bench3 where Id = ? ", rand.Intn(cnt))
+	err := DB.Unsafe().Select(&res, "select * from bench4 where Id = ? ", rand.Intn(cnt))
 	return err, len(res)
 }
 
 func selectoneIndexed(cnt int) (error, int) {
 	var res []Bench
-	err := DB.Unsafe().Select(&res, "select * from bench3 where Indexed = ? ", rand.Intn(500000000))
+	err := DB.Unsafe().Select(&res, "select * from bench4 where Indexed = ? ", rand.Intn(500000000))
 	return err, len(res)
 }
 
 func delete() {
-	DB.Exec("delete  from bench3 where Indexed = ? ", rand.Intn(500000000)) // 500 Mil
-	DB.Exec("delete  from bench3 where Id = ? ", rand.Intn(5000000))        // 5 Mil
+	DB.Exec("delete  from bench4 where Indexed = ? ", rand.Intn(500000000)) // 500 Mil
+	DB.Exec("delete  from bench4 where Id = ? ", rand.Intn(5000000))        // 5 Mil
 }
 
 func MIX() {
