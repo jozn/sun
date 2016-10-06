@@ -5,6 +5,7 @@ import (
 	"sync"
 	"time"
     "ms/sun/helper"
+    "ms/sun/config"
 )
 
 type callRespondCallback struct {
@@ -66,7 +67,7 @@ func (m _registerMap) runSucceded(serverCallId int64)  {
     }
 }
 
-func (m _registerMap) runErrorOfTimeouts(serverCallId int64){
+func (m _registerMap) runErrorOfTimeouts(){
     var arr []callRespondCallback
 
     m.RLock()
@@ -92,7 +93,19 @@ func (m _registerMap) runErrorOfTimeouts(serverCallId int64){
 
 
 func intervalRunCallsTimeOutChecker()  {
+    go func() {
+        defer func() {
+            if r := recover(); r != nil {
+                if config.IS_DEBUG {
+                    helper.DebugPrintln("ERROR PANICED RECOVRED -intervalRunCallsTimeOutChecker - ERR:: ", r)
+                }
+            }
+            intervalRunCallsTimeOutChecker()
+        }()
 
+        time.Sleep(time.Second*1)
+        callRespndMap.runErrorOfTimeouts()
+    }()
 }
 
 //utils
