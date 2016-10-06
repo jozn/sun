@@ -48,6 +48,18 @@ func (m _registerMap) Get(serverCallId int64) (*callRespondCallback, error) {
 	return &callback, nil
 }
 
+func (m _registerMap) Remove(serverCallId int64) (*callRespondCallback, error) {
+    if serverCallId == 0 {
+        return nil, errors.New(" serverCallId could not be 0")
+    }
+    m.RLock()
+    callback, ok := m.mp[serverCallId]
+    if ok {
+        return nil, errors.New(" serverCallId not found in  map")
+    }
+    return &callback, nil
+}
+
 //utils
 func getNextCallId() int64 {
 	return time.Now().UnixNano()
