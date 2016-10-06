@@ -70,8 +70,23 @@ func (m _registerMap) runErrorOfTimeouts(serverCallId int64){
     var arr []callRespondCallback
 
     m.RLock()
-    for k,v := range m.mp {
-        if v.
+    for _,v := range m.mp {
+        if v.timeoutAtMs < helper.TimeNowMs(){
+            arr = append(arr,v)
+        }
+    }
+    m.RUnlock()
+
+    m.Lock()
+    for _,v := range arr {
+        delete(m.mp, v.serverCallId)
+    }
+    m.Unlock()
+
+    for _,v := range arr {
+        if v.err != nil{
+            v.err()
+        }
     }
 }
 
