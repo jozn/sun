@@ -37,3 +37,4 @@ public/
 /.idea
 *.sublime-*
 log*
+logs/
