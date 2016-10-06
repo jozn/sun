@@ -55,6 +55,16 @@ func (m _registerMap) Remove(serverCallId int64)  {
     m.Unlock()
 }
 
+func (m _registerMap) runSucceded(serverCallId int64)  {
+    callback,err := m.Get(serverCallId)
+    if err != nil{
+        return
+    }
+    if callback.err != nil{
+        callback.err()
+    }
+}
+
 //utils
 func getNextCallId() int64 {
 	return time.Now().UnixNano()
