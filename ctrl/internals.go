@@ -1,4 +1,4 @@
-package actions
+package ctrl
 
 import (
 	"fmt"
@@ -7,22 +7,20 @@ import (
 	"ms/sun/constants"
 	"ms/sun/helper"
 	"ms/sun/models"
-	"ms/sun/pipesold"
-	"ms/sun/sync"
 	"time"
 )
 
-func SendSampleMesgTable(a *base.Action) base.AppErr {
+func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 	ds := a.Req.Form.Get("delay")
-	us := a.Req.Form.Get("user")
-	tus := a.Req.Form.Get("from")
+	strToUserId := a.Req.Form.Get("user")
+	strFrom := a.Req.Form.Get("from")
 	l := a.Req.Form.Get("limit")
 	text := a.Req.Form.Get("text")
 	img := a.Req.Form.Get("img")
 	e := a.Req.Form.Get("emoji")
 
 	dInt := helper.StrToInt(ds, 2000)
-	user := helper.StrToInt(us, 6)
+	toUserId := helper.StrToInt(strToUserId, 6)
 	limit := helper.StrToInt(l, 10)
 
 	emoji := true
@@ -52,12 +50,12 @@ func SendSampleMesgTable(a *base.Action) base.AppErr {
 
 			txt = fmt.Sprintf("id: %d ", i) + txt
 
-			uid := helper.StrToInt(tus, rand.Intn(80)+1)
+			fromUserId := helper.StrToInt(strFrom, rand.Intn(80)+1)
 			//msg := chat.MessagesTable{}
 			msg := models.MessagesTableFromClient{}
-			msg.RoomKey = "u" + helper.IntToStr(uid)
-			msg.UserId = uid
-			msg.MessageKey = helper.RandString(10)
+			msg.RoomKey = models.UserIdsToRoomKey(toUserId, fromUserId) //"u" + helper.IntToStr(uid)
+			msg.UserId = fromUserId
+			msg.MessageKey = helper.IntToStr(fromUserId) + ":" + helper.RandString(15)
 			msg.CreatedMs = helper.TimeNowMs()
 			msg.MessageTypeId = 10
 			msg.Text = txt
@@ -70,7 +68,26 @@ func SendSampleMesgTable(a *base.Action) base.AppErr {
 				msg.MediaSize = 200000
 				msg.MediaHeight = 600
 				msg.MediaWidth = 960
-				msg.MediaThumb64 = `/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+			}
+
+			cmd := base.NewCommand(constants.MsgsAddNew)
+			cmd.AddSliceData(msg)
+			cmd.MakeDataReady()
+			//res :=base.WSRes{
+			//}
+			//res.Commands = []*base.Command{&cmd}
+			//sync.AllPipesMap.SendToUser(6,res)
+			//pipesold.AllPipesMap.SendAndStoreCmdToUser(userId, cmd)
+			models.MessageModel.SendAndStoreMessage(toUserId, msg)
+			time.Sleep(time.Millisecond * time.Duration(dInt))
+		}
+		//return
+	}()
+	return nil
+}
+
+/*
+`/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCADVAKADASIA
 AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA
@@ -210,127 +227,4 @@ frRRQB8CeNdf1Dn5x29fcevv/P1zXmlFFfcHz50FFFFAGxRRRQB0Fc/RRQBuaZ2/Cu20zo3+f4aK
 KDzzb03qfqP/AEKSu80y9k5GB2GQcd3Hp7ZPrxzkZJRX0B8ud9pl5JzwDnGOenpjj/PrXqPhm8k5
 4HQDr/1056dfT6j0OSig+oPq/wADeLNV2yHeP4O59XP4dMH1GOeOfpPSb2QqeBx78H5mHp/sD/6+
 M0UV+Tn2PD20fSH/AKVUP//Z`
-
-			}
-
-			cmd := base.NewCommand(constants.MsgsAddNew)
-			cmd.AddSliceData(msg)
-			cmd.MakeDataReady()
-			//res :=base.WSRes{
-			//}
-			//res.Commands = []*base.Command{&cmd}
-			//sync.AllPipesMap.SendToUser(6,res)
-			pipesold.AllPipesMap.SendAndStoreCmdToUser(user, cmd)
-			time.Sleep(time.Millisecond * time.Duration(dInt))
-		}
-		//return
-	}()
-	return nil
-}
-
-func SendSampleMesgTable2(a *base.Action) base.AppErr {
-	ds := a.Req.Form.Get("delay")
-	dInt := helper.StrToInt(ds, 2000)
-	go func() {
-		for {
-			uid := 6 //rand.Intn(80)+1
-			msg := models.MessagesTable{}
-			msg.RoomKey = "u" + helper.IntToStr(uid)
-			msg.UserId = uid
-			msg.MessageKey = helper.RandString(10)
-			msg.CreatedTimestampMs = helper.TimeNowMs()
-			msg.MessageTypeId = 10
-			msg.Text = helper.FactRandStr(15)
-
-			cmd := base.Command{
-				Name: constants.MsgsAddNew, //"addMsg",
-			}
-			cmd.AddSliceData(msg)
-			cmd.MakeDataReady()
-			//res :=base.WSRes{
-			//}
-			//res.Commands = []*base.Command{&cmd}
-			//sync.AllPipesMap.SendToUser(6,res)
-			sync.AllPipesMap.SendCmdToUser(2, &cmd)
-			time.Sleep(time.Millisecond * time.Duration(dInt))
-		}
-		//return
-	}()
-	return nil
-}
-
-func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
-	ds := a.Req.Form.Get("delay")
-	strToUserId := a.Req.Form.Get("user")
-	strFrom := a.Req.Form.Get("from")
-	l := a.Req.Form.Get("limit")
-	text := a.Req.Form.Get("text")
-	img := a.Req.Form.Get("img")
-	e := a.Req.Form.Get("emoji")
-
-	dInt := helper.StrToInt(ds, 2000)
-	toUserId := helper.StrToInt(strToUserId, 6)
-	limit := helper.StrToInt(l, 10)
-
-	emoji := true
-	if e != "" {
-		emoji = false
-	}
-
-	is_image := false
-	if len(img) > 0 {
-		is_image = true
-	}
-
-	go func() {
-		for i := 0; i < limit; i++ {
-			txt := helper.FactRandStr(15)
-			rnd := rand.Intn(10)
-			if rnd == 5 { //big text 10%
-				txt = helper.FactRandStrEmoji(150, emoji)
-			} else if rnd == 6 {
-				txt = helper.FactRandStrEmoji(500, emoji)
-			} else if rnd == 7 {
-				txt = helper.FactRandStrEmoji(2500, emoji)
-			}
-			if text != "" {
-				txt = text
-			}
-
-			txt = fmt.Sprintf("id: %d ", i) + txt
-
-			fromUserId := helper.StrToInt(strFrom, rand.Intn(80)+1)
-			//msg := chat.MessagesTable{}
-			msg := models.MessagesTableFromClient{}
-			msg.RoomKey = models.UserIdsToRoomKey(toUserId, fromUserId) //"u" + helper.IntToStr(uid)
-			msg.UserId = fromUserId
-			msg.MessageKey = helper.IntToStr(fromUserId) + ":" + helper.RandString(15)
-			msg.CreatedMs = helper.TimeNowMs()
-			msg.MessageTypeId = 10
-			msg.Text = txt
-
-			if is_image {
-				msg.MessageTypeId = 40
-				msg.MediaName = helper.RandString(10) + ".jpg"
-				msg.MediaServerSrc = "http://localhost:5000/public/photo/" + helper.IntToStr(rand.Intn(21)+1) + "_960.jpg"
-				msg.MediaExtension = ".jpg"
-				msg.MediaSize = 200000
-				msg.MediaHeight = 600
-				msg.MediaWidth = 960
-			}
-
-			cmd := base.NewCommand(constants.MsgsAddNew)
-			cmd.AddSliceData(msg)
-			cmd.MakeDataReady()
-			//res :=base.WSRes{
-			//}
-			//res.Commands = []*base.Command{&cmd}
-			//sync.AllPipesMap.SendToUser(6,res)
-			//pipesold.AllPipesMap.SendAndStoreCmdToUser(userId, cmd)
-			models.MessageModel.SendMessage(toUserId, msg)
-			time.Sleep(time.Millisecond * time.Duration(dInt))
-		}
-		//return
-	}()
-	return nil
-}
+*/

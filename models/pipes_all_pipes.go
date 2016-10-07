@@ -23,7 +23,7 @@ var AllPipesMap *pipesMap
 
 func (m pipesMap) SendToUser(UserId int, call base.Call) {
 	pipe, ok := m.GetUserPipe(UserId)
-	helper.Debugf("sending to user:%d %v %v ", UserId, ok)
+	helper.Debugf("sending to user:%d %v %v ", UserId, ok, call.Name)
 	if ok && pipe.IsOpen {
 		defer func() {
 			if r := recover(); r != nil {

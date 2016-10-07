@@ -7,9 +7,8 @@ import (
 	"net/http"
 	//"github.com/drone/routes"
 	"ms/sun/ctrl"
-	"ms/sun/pipes"
+	"ms/sun/models"
 	"ms/sun/routes"
-	"ms/sun/sync"
 )
 
 func registerRoutes() {
@@ -37,8 +36,9 @@ func registerRoutes() {
 	http.Handle("/upload3", actioner(PlayUpload3))
 	http.HandleFunc("/upload2", PlayUpload2)
 
-	http.HandleFunc("/ws1", sync.ServeUserWs) //Deprectaed
-	http.HandleFunc("/ws_call", pipes.ServeHttpWs)
+	//http.HandleFunc("/ws1", sync.ServeUserWs) //Deprectaed
+	//http.HandleFunc("/ws_call", pipes.ServeHttpWs)
+	http.HandleFunc("/ws_call", models.ServeHttpWs)
 
 	http.Handle("/mysql1", actioner(fact.IsamPlay))
 	http.Handle("/f/msg", actioner(fact.ChatMsgFact1))
@@ -50,9 +50,9 @@ func registerRoutes() {
 
 	http.Handle("/ping", actionToFunc(ctrl.PingAction))
 
-	http.Handle("/i/msg", actionToFunc(SendSampleMesgTable))
-	http.Handle("/i/msg2", actionToFunc(SendSampleMesgTable2))
-	http.Handle("/i/msg3", actionToFunc(SendSampleMesgTable3_v04))
+	//http.Handle("/i/msg", actionToFunc(SendSampleMesgTable))
+	//http.Handle("/i/msg2", actionToFunc(SendSampleMesgTable2))
+	http.Handle("/i/msg", actionToFunc(ctrl.SendSampleMesgTable3_v04))
 	http.Handle("/i/redis", actionToFunc(RedisSavePlay))
 	http.Handle("/i/play", actionToFunc(PlaySomething))
 	http.Handle("/i/store1", actionToFunc(MemoryStore1))

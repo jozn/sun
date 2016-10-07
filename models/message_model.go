@@ -6,11 +6,34 @@ import (
 	"ms/sun/helper"
 )
 
+type messageLoadOne struct {
+	Message Message
+	User    User
+}
 type _messageModelImple int
 
 var MessageModel _messageModelImple
 
-func (e _messageModelImple) SendMessage(ToUserId int, msg MessagesTableFromClient) {
+func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableFromClient) {
+	if msg.CreatedMs == 0 {
+		t := helper.TimeNowMs()
+		msg.CreatedMs = t
+	}
+    data:=struct {
+        Message MessagesTableFromClient
+        User    User
+    }{
+        msg, User{},
+    }
+	call := base.NewCallWithData("MsgAddOne", data)
+	//call.SetData(msg)
+
+	AllPipesMap.SendToUser(ToUserId, call)
+	MessageModel.StoreMessage(ToUserId, msg)
+
+}
+
+func (e _messageModelImple) StoreMessage(ToUserId int, msg MessagesTableFromClient) {
 	if msg.CreatedMs == 0 {
 		t := helper.TimeNowMs()
 		msg.CreatedMs = t

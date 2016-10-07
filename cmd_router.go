@@ -2,38 +2,40 @@ package main
 
 import (
 	"ms/sun/base"
-	"ms/sun/pipes"
-	"ms/sun/pipesold"
+	//"ms/sun/pipes"
+	"ms/sun/models"
 )
 
 //command events that clinet invokes
 func registerCmdRouters() {
-	mp := base.CmdMapRouter
+	/*
+		mp := base.CmdMapRouter
 
-	//commands reciced to client
-	mp["CommandsReceived"] = pipesold.CommandsReceived_Dep
-	mp["CommandsReceivedToClient"] = pipesold.CommandsReceived
+		//commands reciced to client
+		mp["CommandsReceived"] = pipesold.CommandsReceived_Dep
+		mp["CommandsReceivedToClient"] = pipesold.CommandsReceived
 
-	//Messages flow
-	mp["MsgsAddNew"] = pipesold.MsgAddNew
-	mp["MsgsReceivedToServer"] = pipesold.MsgReceivedToServer
-	mp["MsgsReceivedToPeer"] = pipesold.MsgReceivedToPeer
-	mp["MsgsSeenByPeer"] = pipesold.MsgSeenByPeer
-	mp["MsgsDeletedFromServer"] = pipesold.MsgDeletedFromServer
+		//Messages flow
+		mp["MsgsAddNew"] = pipesold.MsgAddNew
+		mp["MsgsReceivedToServer"] = pipesold.MsgReceivedToServer
+		mp["MsgsReceivedToPeer"] = pipesold.MsgReceivedToPeer
+		mp["MsgsSeenByPeer"] = pipesold.MsgSeenByPeer
+		mp["MsgsDeletedFromServer"] = pipesold.MsgDeletedFromServer
 
-	mp["GetUserForTable"] = pipesold.GetUserForTable
+		mp["GetUserForTable"] = pipesold.GetUserForTable
 
-	//play
-	mp["hello"] = pipesold.HelloCmd
-	mp["echo"] = pipesold.EchoCmd
+		//play
+		mp["hello"] = pipesold.HelloCmd
+		mp["echo"] = pipesold.EchoCmd
 
-	mp["AddNewMsg"] = pipesold.AddNewMsg
+		mp["AddNewMsg"] = pipesold.AddNewMsg
 
-	mp["EchoRes"] = pipesold.EchoRes
+		mp["EchoRes"] = pipesold.EchoRes
+	*/
 
 	mp2 := base.CallMapRouter
-	mp2["echo"] = pipes.EchoCmd
-	mp2["Echo"] = pipes.EchoCmd
+	mp2["echo"] = models.EchoCmd
+	mp2["Echo"] = models.EchoCmd
 
 }
 

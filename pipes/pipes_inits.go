@@ -1,4 +1,0 @@
-package pipes
-
-func init() {
-}

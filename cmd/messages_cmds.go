@@ -37,7 +37,7 @@ func MsgAddNew(c *base.CmdAction) {
 	sync.AllPipesMap.SendAndStoreCmdToUser(toUid, cmd)
 }
 
-func MsgReceivedToPeer(c *base.CmdAction) {
+func MsgReceivedToPeer_Call_OLD(c *base.CmdAction) {
 	fmt.Printf("\ncalled MsgReceivedToPeer %v :\n", c)
 
 	metas := []models.MessageSyncMeta{}
@@ -71,7 +71,7 @@ func MsgReceivedToPeer(c *base.CmdAction) {
 
 }
 
-func MsgSeenByPeer(c *base.CmdAction) {
+func MsgSeenByPeer_Call_OLD(c *base.CmdAction) {
 	fmt.Println("called MsgSeenByPeer :", *c)
 
 	metas := []models.MessageSyncMeta{}
@@ -100,11 +100,11 @@ func MsgSeenByPeer(c *base.CmdAction) {
 }
 
 ///NOT NEEDED IN SERVER
-func MsgDeletedFromServer(c *base.CmdAction) {
+func MsgDeletedFromServer_Call_OLD(c *base.CmdAction) {
 
 }
 
-func MsgReceivedToServer(c *base.CmdAction) {
+func MsgReceivedToServer_Call_OLD(c *base.CmdAction) {
 
 }
 
