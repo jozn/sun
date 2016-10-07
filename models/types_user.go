@@ -80,6 +80,15 @@ type UserViewSync struct {
 	UpdatedTime int
 }
 
+type UserViewSyncAndMe struct {
+	UserBasic
+	UserId        int
+	FollowingType int
+	AppVersion    int
+	Phone         string
+	UpdatedTime   int
+}
+
 //todo clean this 2 struct
 type UserBasicAndMe struct { //legacy switch to UserTable
 	UserBasic

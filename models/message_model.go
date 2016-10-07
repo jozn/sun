@@ -19,12 +19,12 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 		t := helper.TimeNowMs()
 		msg.CreatedMs = t
 	}
-    data:=struct {
-        Message MessagesTableFromClient
-        User    User
-    }{
-        msg, User{},
-    }
+	data := struct {
+		Message MessagesTableFromClient
+		User    *UserViewSyncAndMe
+	}{}
+    data.Message = msg
+    data.User = Views.UserViewSync(ToUserId,msg.UserId)
 	call := base.NewCallWithData("MsgAddOne", data)
 	//call.SetData(msg)
 
