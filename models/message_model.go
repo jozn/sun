@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"ms/sun/base"
 	"ms/sun/helper"
+    "encoding/json"
 )
 
 type messageLoadOne struct {
@@ -54,6 +55,55 @@ func (e _messageModelImple) StoreMessage(ToUserId int, msg MessagesTableFromClie
 
 	err := msgT.Insert(base.DB)
 	helper.DebugPrintln(err)
+}
+
+func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
+    helper.DebugPrintln("FlushAllStoredMessagesToUser()")
+
+    msgRows,err := NewMessage_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows(base.DB)// first msgs rows first in slice
+    if err != nil || len(msgRows) ==0 {
+        return
+    }
+
+    mapOfSenders :=make(map[int]bool,len(msgRows))
+    for _, m := range msgRows {
+        mapOfSenders[m.FromUserID] = true
+    }
+
+    //arr := make([]int,0,len(mp))
+    users :=make([]*UserViewSyncAndMe,0,len(mapOfSenders))
+    for id, _ := range mapOfSenders {
+        //arr = append(arr,id)
+        users = append(users,Views.UserViewSync(ToUserId,id))
+    }
+
+    //json unserilaize
+    msgsRes := make([]*MessagesTableFromClient,0,len(mapOfSenders))
+    for _, m := range msgRows {
+        msgView := &MessagesTableFromClient{}
+        json.Unmarshal([]byte(m.Data),msgView)
+        msgsRes = append(msgsRes,msgView)
+    }
+
+    succ := func() {
+        helper.DebugPrintln("SUCESS OF FlushAllStoredMessagesToUser()")
+        arrMsgs := make([]string,0,len(mapOfSenders))
+        for _, m := range msgRows {
+            arrMsgs = append(arrMsgs,m.MessageKey)
+        }
+        NewMessage_Deleter().ToUserId_EQ(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
+    }
+
+    dataSend:= struct {
+        Messages []*MessagesTableFromClient
+        Users []*UserViewSyncAndMe
+    }{
+        msgsRes, users,
+    }
+
+    call := base.NewCallWithData("MsgAddMany", dataSend)
+
+    AllPipesMap.SendToUserWithCallBack(ToUserId,call,succ)
 }
 
 ///////////// Utils //////////////////
