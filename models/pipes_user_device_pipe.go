@@ -19,6 +19,7 @@ type UserDevicePipe struct {
 	ToDeviceChan   chan base.Call
 	FromDeviceChan chan base.Call // NOT NEEDED?
 	m              sync.RWMutex
+	hasShutDown    bool
 }
 
 func (pipe *UserDevicePipe) ServeIncomingCalls() {
@@ -94,11 +95,18 @@ func (pipe *UserDevicePipe) SendToUser(resCall base.Call) {
 }
 
 func (pipe *UserDevicePipe) ShutDown() {
+	if pipe.hasShutDown == true {
+		return
+	}
 	pipe.Ws.Close()
 	close(pipe.ToDeviceChan)
+	pipe.m.Lock()
+	pipe.hasShutDown = true
+	pipe.m.Unlock()
 }
 
 func (pipe *UserDevicePipe) ShutDownCompletely() {
+	defer helper.JustRecover() //maybe double close chanel
 	pipe.ShutDown()
 	AllPipesMap.ShutDownUser(pipe.UserId)
 }

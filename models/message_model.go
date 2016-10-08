@@ -30,7 +30,7 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 
 	succ := func() {
 		helper.DebugPrintln("SUCESS OF SendAndStoreMessage")
-		NewMessage_Deleter().MessageKey_EQ(msg.MessageKey).FromUserID_EQ(ToUserId).Delete(base.DB)
+		NewMessage_Deleter().MessageKey_EQ(msg.MessageKey).ToUserId_EQ(ToUserId).Delete(base.DB)
 	}
 
 	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
