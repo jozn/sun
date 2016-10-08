@@ -15,6 +15,14 @@ func IntsToSqlIn(ins []int) string {
 }
 
 func DbQuestionForSqlIn(size int) string {
+	if size < 1 {
+		return ""
+	}
+
+	if size == 1 {
+		return "?"
+	}
+
 	s := strings.Repeat("?,", size)
 	s = s[0 : len(s)-1] //remove last ','
 	return s
