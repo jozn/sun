@@ -28,7 +28,7 @@ func (m pipesMap) SendToUser(UserId int, call base.Call) {
 		defer func() {
 			if r := recover(); r != nil {
 				//pipe.IsOpen = false
-				pipe.ShutDown()
+				pipe.ShutDownCompletely()
 				helper.Debug("Recovered in SendToUser: ", r)
 			}
 		}()
@@ -44,19 +44,20 @@ func (m pipesMap) SendToUserWithCallBack(UserId int, call base.Call, callback fu
 		defer func() {
 			if r := recover(); r != nil {
 				//pipe.IsOpen = false
-				pipe.ShutDown()
+				pipe.ShutDownCompletely()
 				helper.Debug("Recovered in SendToUser: ", r)
 			}
 		}()
 
-		pipe.SendToUser(call)
 		resCallback := callRespondCallback{
 			serverCallId: call.ServerCallId,
 			success:      callback,
 			timeoutAtMs:  helper.TimeNowMs() + 5000,
 		}
 
-		callRespndMap.Register(resCallback)
+		CallRespndMap.Register(resCallback)
+
+		pipe.SendToUser(call)
 	}
 }
 

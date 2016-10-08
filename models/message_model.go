@@ -23,12 +23,17 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 		Message MessagesTableFromClient
 		User    *UserViewSyncAndMe
 	}{}
-    data.Message = msg
-    data.User = Views.UserViewSync(ToUserId,msg.UserId)
+	data.Message = msg
+	data.User = Views.UserViewSync(ToUserId, msg.UserId)
 	call := base.NewCallWithData("MsgAddOne", data)
 	//call.SetData(msg)
 
-	AllPipesMap.SendToUser(ToUserId, call)
+	succ := func() {
+		helper.DebugPrintln("SUCESS OF SendAndStoreMessage")
+		NewMessage_Deleter().MessageKey_EQ(msg.MessageKey).FromUserID_EQ(ToUserId).Delete(base.DB)
+	}
+
+	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
 	MessageModel.StoreMessage(ToUserId, msg)
 
 }

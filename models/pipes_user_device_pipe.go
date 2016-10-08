@@ -5,7 +5,9 @@ import (
 	"sync"
 	//"time"
 	"encoding/json"
+	"fmt"
 	"ms/sun/base"
+	"ms/sun/config"
 	"ms/sun/helper"
 	"os"
 )
@@ -28,11 +30,6 @@ func (pipe *UserDevicePipe) ServeIncomingCalls() {
 			}
 		}()
 
-		fLog, e := os.OpenFile("./ws_Log_"+helper.IntToStr(helper.TimeNow()), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-		if e != nil {
-			panic(e)
-		}
-
 		for {
 			var call base.Call
 			messageType, bytes, err := pipe.Ws.ReadMessage() //blocking
@@ -49,8 +46,9 @@ func (pipe *UserDevicePipe) ServeIncomingCalls() {
 				if err == nil {
 					serverWSReqCalls(call, pipe)
 				}
-				fLog.WriteString(string(bytes) + "\n")
-				fLog.Sync()
+				if config.IS_DEBUG {
+					wsDebugLog("-> from device: ", string(bytes))
+				}
 			}
 
 			if messageType == websocket.BinaryMessage {
@@ -75,7 +73,10 @@ func (pipe *UserDevicePipe) ServeSendToUserDevice() {
 			}
 		}()
 		for r := range pipe.ToDeviceChan {
-			helper.Debug("sending to user fom ToDeviceChan Command size ", r)
+			//helper.Debug("sending to user fom ToDeviceChan Command size ", r)
+			if config.IS_DEBUG {
+				wsDebugLog("<- to device: ", helper.ToJson(r))
+			}
 			pipe.Ws.WriteJSON(r)
 		}
 		//after closing chanel
@@ -98,6 +99,7 @@ func (pipe *UserDevicePipe) ShutDown() {
 }
 
 func (pipe *UserDevicePipe) ShutDownCompletely() {
+	pipe.ShutDown()
 	AllPipesMap.ShutDownUser(pipe.UserId)
 }
 
@@ -105,18 +107,19 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 
 func serverWSReqCalls(reqCall base.Call, pipe *UserDevicePipe) {
 
-	if reqCall.Name == "CallReceivedToServer" {
-
+	if reqCall.Name == "CallReceivedToClient" {
+		CallRespndMap.runSucceded(reqCall.ServerCallId)
+		return
 	}
 
 	if reqCall.ClientCallId != 0 {
-		callRecived := base.Call{
+		callReceived := base.Call{
 			Name:         "CallReceivedToServer",
 			ClientCallId: reqCall.ClientCallId,
 			ServerCallId: 0,
 		}
 
-		AllPipesMap.SendToUser(pipe.UserId, callRecived)
+		AllPipesMap.SendToUser(pipe.UserId, callReceived)
 	}
 
 	reqCall.UserId = pipe.UserId
@@ -128,4 +131,15 @@ func serverWSReqCalls(reqCall base.Call, pipe *UserDevicePipe) {
 
 	}
 
+}
+
+var _wsLogFile *os.File
+var wsDebugLog = func(strings ...interface{}) {
+	if config.IS_DEBUG {
+		if _wsLogFile == nil {
+			_wsLogFile, _ = os.OpenFile("./logs/ws_"+helper.IntToStr(helper.TimeNow())+".json", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+		}
+		_wsLogFile.WriteString(fmt.Sprintln(strings...))
+		_wsLogFile.Sync()
+	}
 }

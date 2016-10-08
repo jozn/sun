@@ -15,19 +15,19 @@ type callRespondCallback struct {
 	serverCallId int64 // time nano
 }
 
-var callRespndMap _registerMap
+type _registerMap struct {
+	sync.RWMutex
+	mp map[int64]callRespondCallback
+}
+
+var CallRespndMap _registerMap
 
 func init() {
-	callRespndMap = _registerMap{
+	CallRespndMap = _registerMap{
 		mp: make(map[int64]callRespondCallback, 100),
 	}
 	intervalRunCallsTimeOutChecker()
 
-}
-
-type _registerMap struct {
-	sync.RWMutex
-	mp map[int64]callRespondCallback
 }
 
 func (m _registerMap) Register(callback callRespondCallback) {
@@ -47,7 +47,7 @@ func (m _registerMap) Get(serverCallId int64) (*callRespondCallback, error) {
 	m.RLock()
 	callback, ok := m.mp[serverCallId]
 	m.RUnlock()
-	if ok {
+	if !ok {
 		return nil, errors.New(" serverCallId not found in  map")
 	}
 	return &callback, nil
@@ -60,6 +60,18 @@ func (m _registerMap) Remove(serverCallId int64) {
 }
 
 func (m _registerMap) runSucceded(serverCallId int64) {
+	helper.Debugf("runSucceded() %d", serverCallId)
+	callback, err := m.Get(serverCallId)
+	if err != nil {
+		return
+	}
+	if callback.success != nil {
+		callback.success()
+	}
+}
+
+func (m _registerMap) runError(serverCallId int64) {
+	helper.Debugf("runSucceded() %d", serverCallId)
 	callback, err := m.Get(serverCallId)
 	if err != nil {
 		return
@@ -68,7 +80,6 @@ func (m _registerMap) runSucceded(serverCallId int64) {
 		callback.error()
 	}
 }
-
 func (m _registerMap) runErrorOfTimeouts() {
 	//helper.DebugPrintln("runErrorOfTimeouts()")
 	var arr []callRespondCallback
@@ -107,7 +118,7 @@ func intervalRunCallsTimeOutChecker() {
 
 		for {
 			time.Sleep(time.Second * 1)
-			callRespndMap.runErrorOfTimeouts()
+			CallRespndMap.runErrorOfTimeouts()
 		}
 	}()
 }
