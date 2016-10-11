@@ -120,21 +120,37 @@ func (e _messageModelImple) SendAndStoreMsgsReceivedToPeer(msgs []Message) {
 	}
 
 	var metaArr []MsgReceivedToPeer
+    groupMetaUsers := make(map[int][]MsgReceivedToPeer)
 	for toUser, msgs2 := range groupByUsers {
 		for _, m := range msgs2 {
 			met := MsgReceivedToPeer{
 				ToUserId:   toUser,
-				PeerUserId: m.FromUserID,
+				PeerUserId: m.ToUserId,
 				RoomKey:    m.RoomKey,
 				MsgKey:     m.MessageKey,
 				AtTime:     helper.TimeNow(),
 			}
 			metaArr = append(metaArr, met)
+            groupMetaUsers[toUser] = append(groupMetaUsers[toUser], met)
 			//met.Insert(base.DB)
 		}
 	}
 	err := MassInsert_MsgReceivedToPeer(metaArr, base.DB)
 	helper.DebugPrintln(err)
+
+    //// Send to each Message author users : "MsgsRevivedToPeerMany"
+    for toUser, metas := range groupMetaUsers {
+        helper.DebugPrintln(" calling clinet : MsgsRevivedToPeerMany :",toUser)
+        succ:= func() {
+            var msgKeys []string
+            for _, met := range metas {
+                msgKeys = append(msgKeys,met.MsgKey)
+            }
+            NewMsgReceivedToPeer_Deleter().ToUserId_EQ(toUser).MsgKey_In(msgKeys).Delete(base.DB)
+        }
+        cal := base.NewCallWithData("MsgsRevivedToPeerMany",metas)
+        AllPipesMap.SendToUserWithCallBack(toUser,cal,succ)
+    }
 
 }
 
