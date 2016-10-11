@@ -32,6 +32,11 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 	succ := func() {
 		helper.DebugPrintln("SUCESS OF SendAndStoreMessage")
 		NewMessage_Deleter().MessageKey_EQ(msg.MessageKey).ToUserId_EQ(ToUserId).Delete(base.DB)
+        m :=Message{
+            FromUserID: msg.UserId,
+            MessageKey: msg.MessageKey,
+        }
+        MessageModel.SendAndStoreMsgsReceivedToPeer([]Message{m})
 	}
 
 	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
@@ -92,6 +97,7 @@ func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
             arrMsgs = append(arrMsgs,m.MessageKey)
         }
         NewMessage_Deleter().ToUserId_EQ(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
+        MessageModel.SendAndStoreMsgsReceivedToPeer(msgRows)
     }
 
     dataSend:= struct {
@@ -106,6 +112,31 @@ func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
     AllPipesMap.SendToUserWithCallBack(ToUserId,call,succ)
 }
 
+func (e _messageModelImple) SendAndStoreMsgsReceivedToPeer(msgs []Message) {
+    groupByUsers := make(map[int][]Message)
+    for _,msg := range msgs{
+        //FromUserID,ok :=groupByUsers[msg.FromUserID]
+        groupByUsers[msg.FromUserID] = append(groupByUsers[msg.FromUserID],msg)
+    }
+
+    var metaArr []MsgReceivedToPeer
+    for toUser,msgs2 := range groupByUsers{
+        for _,m := range msgs2{
+            met:=MsgReceivedToPeer{
+                ToUserId: toUser,
+                PeerUserId: m.FromUserID,
+                RoomKey: m.RoomKey,
+                MsgKey: m.MessageKey,
+                AtTime: helper.TimeNow(),
+            }
+            metaArr = append(metaArr,met)
+            //met.Insert(base.DB)
+        }
+    }
+    err:=MassInsert_MsgReceivedToPeer(metaArr,base.DB)
+    helper.DebugPrintln(err)
+
+}
 ///////////// Utils //////////////////
 
 //format "p142_1569"

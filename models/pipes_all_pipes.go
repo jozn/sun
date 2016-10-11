@@ -61,6 +61,33 @@ func (m pipesMap) SendToUserWithCallBack(UserId int, call base.Call, callback fu
 	}
 }
 
+func (m pipesMap) SendToUserWithCallBacks(UserId int, call base.Call, callback func(),errback func()) {
+    pipe, ok := m.GetUserPipe(UserId)
+    helper.Debugf("sending to user:%d %v %v ", UserId, ok)
+    if ok && pipe.IsOpen {
+        defer func() {
+            if r := recover(); r != nil {
+                //pipe.IsOpen = false
+                pipe.ShutDownCompletely()
+                helper.Debug("Recovered in SendToUser: ", r)
+            }
+        }()
+
+        resCallback := callRespondCallback{
+            serverCallId: call.ServerCallId,
+            success:      callback,
+            error: errback,
+            timeoutAtMs:  helper.TimeNowMs() + 5000,
+        }
+
+        CallRespndMap.Register(resCallback)
+
+        pipe.SendToUser(call)
+    }else {
+        errback()
+    }
+}
+
 func (m pipesMap) GetUserPipe(UserId int) (*UserDevicePipe, bool) {
 	m.m.RLock()
 	pipe, ok := m.mp[UserId]

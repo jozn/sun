@@ -1829,6 +1829,73 @@ func (d *__Comment_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  Comment ////////////////
+func MassInsert_Comment(rows []Comment, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.comments (" +
+		"UserId, PostId, Text, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.PostId)
+		vals = append(vals, row.Text)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_Comment(rows []Comment, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.comments (" +
+		"UserId, PostId, Text, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.PostId)
+		vals = append(vals, row.Text)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
 
 //
@@ -4554,6 +4621,79 @@ func (d *__FollowingList_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  FollowingList ////////////////
+func MassInsert_FollowingList(rows []FollowingList, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.following_list (" +
+		"Id, ListType, Name, Count, IsAuto, IsPimiry, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
+		vals = append(vals, row.ListType)
+		vals = append(vals, row.Name)
+		vals = append(vals, row.Count)
+		vals = append(vals, row.IsAuto)
+		vals = append(vals, row.IsPimiry)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_FollowingList(rows []FollowingList, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.following_list (" +
+		"Id, ListType, Name, Count, IsAuto, IsPimiry, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
+		vals = append(vals, row.ListType)
+		vals = append(vals, row.Name)
+		vals = append(vals, row.Count)
+		vals = append(vals, row.IsAuto)
+		vals = append(vals, row.IsPimiry)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
 
 //
@@ -6811,6 +6951,75 @@ func (d *__FollowingListMember_Deleter) Delete(db XODB) (int, error) {
 	}
 
 	return int(num), nil
+}
+
+///////////////////////// Mass insert - replace for  FollowingListMember ////////////////
+func MassInsert_FollowingListMember(rows []FollowingListMember, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.following_list_member (" +
+		"ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ListId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.FollowedUserId)
+		vals = append(vals, row.FollowType)
+		vals = append(vals, row.UpdatedTimeMs)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_FollowingListMember(rows []FollowingListMember, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.following_list_member (" +
+		"ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ListId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.FollowedUserId)
+		vals = append(vals, row.FollowType)
+		vals = append(vals, row.UpdatedTimeMs)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 //////////////////// Play ///////////////////////////////
@@ -9369,6 +9578,77 @@ func (d *__FollowingListMemberHistory_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  FollowingListMemberHistory ////////////////
+func MassInsert_FollowingListMemberHistory(rows []FollowingListMemberHistory, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.following_list_member_history (" +
+		"ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs, FollowId" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ListId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.FollowedUserId)
+		vals = append(vals, row.FollowType)
+		vals = append(vals, row.UpdatedTimeMs)
+		vals = append(vals, row.FollowId)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_FollowingListMemberHistory(rows []FollowingListMemberHistory, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.following_list_member_history (" +
+		"ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs, FollowId" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ListId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.FollowedUserId)
+		vals = append(vals, row.FollowType)
+		vals = append(vals, row.UpdatedTimeMs)
+		vals = append(vals, row.FollowId)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
 
 //
@@ -11323,6 +11603,73 @@ func (d *__Like_Deleter) Delete(db XODB) (int, error) {
 	}
 
 	return int(num), nil
+}
+
+///////////////////////// Mass insert - replace for  Like ////////////////
+func MassInsert_Like(rows []Like, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.likes (" +
+		"Id, PostId, TypeId, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
+		vals = append(vals, row.PostId)
+		vals = append(vals, row.TypeId)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_Like(rows []Like, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.likes (" +
+		"Id, PostId, TypeId, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
+		vals = append(vals, row.PostId)
+		vals = append(vals, row.TypeId)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 //////////////////// Play ///////////////////////////////
@@ -13749,6 +14096,77 @@ func (d *__Media_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  Media ////////////////
+func MassInsert_Media(rows []Media, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.media (" +
+		"UserId, PostId, AlbumId, TypeId, CreatedTime, Src" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.PostId)
+		vals = append(vals, row.AlbumId)
+		vals = append(vals, row.TypeId)
+		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.Src)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_Media(rows []Media, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.media (" +
+		"UserId, PostId, AlbumId, TypeId, CreatedTime, Src" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.PostId)
+		vals = append(vals, row.AlbumId)
+		vals = append(vals, row.TypeId)
+		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.Src)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
 
 //
@@ -13770,8 +14188,9 @@ func (d *__Media_Deleter) Delete(db XODB) (int, error) {
 // Manualy copy this to project
 type __Message struct {
 	Id         int    `json:"Id"`         // Id -
-	MessageKey string `json:"MessageKey"` // MessageKey -
 	ToUserId   int    `json:"ToUserId"`   // ToUserId -
+	RoomKey    string `json:"RoomKey"`    // RoomKey -
+	MessageKey string `json:"MessageKey"` // MessageKey -
 	FromUserID int    `json:"FromUserID"` // FromUserID -
 	Data       string `json:"Data"`       // Data -
 	TimeMs     int    `json:"TimeMs"`     // TimeMs -
@@ -13801,14 +14220,14 @@ func (m *Message) Insert(db XODB) error {
 
 	// sql query
 	const sqlstr = `INSERT INTO ms.message (` +
-		`MessageKey, ToUserId, FromUserID, Data, TimeMs` +
+		`ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Data, m.TimeMs)
-	res, err := db.Exec(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Data, m.TimeMs)
+	XOLog(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
+	res, err := db.Exec(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
 	if err != nil {
 		return err
 	}
@@ -13832,14 +14251,14 @@ func (m *Message) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.message (` +
-		`MessageKey, ToUserId, FromUserID, Data, TimeMs` +
+		`ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Data, m.TimeMs)
-	res, err := db.Exec(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Data, m.TimeMs)
+	XOLog(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
+	res, err := db.Exec(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
 	if err != nil {
 		return err
 	}
@@ -13873,12 +14292,12 @@ func (m *Message) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.message SET ` +
-		`MessageKey = ?, ToUserId = ?, FromUserID = ?, Data = ?, TimeMs = ?` +
+		`ToUserId = ?, RoomKey = ?, MessageKey = ?, FromUserID = ?, Data = ?, TimeMs = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Data, m.TimeMs, m.Id)
-	_, err = db.Exec(sqlstr, m.MessageKey, m.ToUserId, m.FromUserID, m.Data, m.TimeMs, m.Id)
+	XOLog(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs, m.Id)
+	_, err = db.Exec(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs, m.Id)
 	return err
 }
 
@@ -15092,6 +15511,55 @@ func (d *__Message_Selector) TimeMs_GE(val int) *__Message_Selector {
 
 ////////ints
 
+func (u *__Message_Deleter) RoomKey_In(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) RoomKey_NotIn(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Deleter) RoomKey_Like(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) RoomKey_EQ(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Message_Deleter) MessageKey_In(ins []string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -15192,6 +15660,55 @@ func (d *__Message_Deleter) Data_EQ(val string) *__Message_Deleter {
 
 ////////ints
 
+func (u *__Message_Updater) RoomKey_In(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) RoomKey_NotIn(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Updater) RoomKey_Like(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) RoomKey_EQ(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Message_Updater) MessageKey_In(ins []string) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -15291,6 +15808,55 @@ func (d *__Message_Updater) Data_EQ(val string) *__Message_Updater {
 }
 
 ////////ints
+
+func (u *__Message_Selector) RoomKey_In(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) RoomKey_NotIn(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Selector) RoomKey_Like(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) RoomKey_EQ(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 func (u *__Message_Selector) MessageKey_In(ins []string) *__Message_Selector {
 	w := whereClause{}
@@ -15405,20 +15971,28 @@ func (u *__Message_Updater) Id(newVal int) *__Message_Updater {
 
 //ints
 
-//string
-func (u *__Message_Updater) MessageKey(newVal string) *__Message_Updater {
-	u.updates[" MessageKey = ? "] = newVal
-	return u
-}
-
-//ints
-
 func (u *__Message_Updater) ToUserId(newVal int) *__Message_Updater {
 	u.updates[" ToUserId = ? "] = newVal
 	return u
 }
 
 //string
+
+//ints
+
+//string
+func (u *__Message_Updater) RoomKey(newVal string) *__Message_Updater {
+	u.updates[" RoomKey = ? "] = newVal
+	return u
+}
+
+//ints
+
+//string
+func (u *__Message_Updater) MessageKey(newVal string) *__Message_Updater {
+	u.updates[" MessageKey = ? "] = newVal
+	return u
+}
 
 //ints
 
@@ -15466,21 +16040,6 @@ func (u *__Message_Selector) Select_Id() *__Message_Selector {
 	return u
 }
 
-func (u *__Message_Selector) OrderBy_MessageKey_Desc() *__Message_Selector {
-	u.orderBy = " ORDER BY MessageKey DESC "
-	return u
-}
-
-func (u *__Message_Selector) OrderBy_MessageKey_Asc() *__Message_Selector {
-	u.orderBy = " ORDER BY MessageKey ASC "
-	return u
-}
-
-func (u *__Message_Selector) Select_MessageKey() *__Message_Selector {
-	u.selectCol = "MessageKey"
-	return u
-}
-
 func (u *__Message_Selector) OrderBy_ToUserId_Desc() *__Message_Selector {
 	u.orderBy = " ORDER BY ToUserId DESC "
 	return u
@@ -15493,6 +16052,36 @@ func (u *__Message_Selector) OrderBy_ToUserId_Asc() *__Message_Selector {
 
 func (u *__Message_Selector) Select_ToUserId() *__Message_Selector {
 	u.selectCol = "ToUserId"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_RoomKey_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY RoomKey DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_RoomKey_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY RoomKey ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_RoomKey() *__Message_Selector {
+	u.selectCol = "RoomKey"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_MessageKey_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY MessageKey DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_MessageKey_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY MessageKey ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_MessageKey() *__Message_Selector {
+	u.selectCol = "MessageKey"
 	return u
 }
 
@@ -15746,7 +16335,80 @@ func (d *__Message_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  Message ////////////////
+func MassInsert_Message(rows []Message, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.message (" +
+		"ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.MessageKey)
+		vals = append(vals, row.FromUserID)
+		vals = append(vals, row.Data)
+		vals = append(vals, row.TimeMs)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_Message(rows []Message, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.message (" +
+		"ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.MessageKey)
+		vals = append(vals, row.FromUserID)
+		vals = append(vals, row.Data)
+		vals = append(vals, row.TimeMs)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
+
+//
 
 //
 
@@ -15768,7 +16430,8 @@ type __MsgDeletedFromServer struct {
 	ToUserId   int    `json:"ToUserId"`   // ToUserId -
 	MsgKey     string `json:"MsgKey"`     // MsgKey -
 	PeerUserId int    `json:"PeerUserId"` // PeerUserId -
-	Time       int    `json:"Time"`       // Time -
+	RoomKey    string `json:"RoomKey"`    // RoomKey -
+	AtTime     int    `json:"AtTime"`     // AtTime -
 
 	// xo fields
 	_exists, _deleted bool
@@ -15795,14 +16458,14 @@ func (mdfs *MsgDeletedFromServer) Insert(db XODB) error {
 
 	// sql query
 	const sqlstr = `INSERT INTO ms.msg_deleted_from_server (` +
-		`ToUserId, MsgKey, PeerUserId, Time` +
+		`ToUserId, MsgKey, PeerUserId, RoomKey, AtTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?` +
+		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time)
-	res, err := db.Exec(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time)
+	XOLog(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.RoomKey, mdfs.AtTime)
+	res, err := db.Exec(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.RoomKey, mdfs.AtTime)
 	if err != nil {
 		return err
 	}
@@ -15826,14 +16489,14 @@ func (mdfs *MsgDeletedFromServer) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.msg_deleted_from_server (` +
-		`ToUserId, MsgKey, PeerUserId, Time` +
+		`ToUserId, MsgKey, PeerUserId, RoomKey, AtTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?` +
+		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time)
-	res, err := db.Exec(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time)
+	XOLog(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.RoomKey, mdfs.AtTime)
+	res, err := db.Exec(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.RoomKey, mdfs.AtTime)
 	if err != nil {
 		return err
 	}
@@ -15867,12 +16530,12 @@ func (mdfs *MsgDeletedFromServer) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.msg_deleted_from_server SET ` +
-		`ToUserId = ?, MsgKey = ?, PeerUserId = ?, Time = ?` +
+		`ToUserId = ?, MsgKey = ?, PeerUserId = ?, RoomKey = ?, AtTime = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time, mdfs.Id)
-	_, err = db.Exec(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.Time, mdfs.Id)
+	XOLog(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.RoomKey, mdfs.AtTime, mdfs.Id)
+	_, err = db.Exec(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.RoomKey, mdfs.AtTime, mdfs.Id)
 	return err
 }
 
@@ -16242,93 +16905,93 @@ func (d *__MsgDeletedFromServer_Deleter) PeerUserId_GE(val int) *__MsgDeletedFro
 	return d
 }
 
-func (u *__MsgDeletedFromServer_Deleter) Time_In(ins []int) *__MsgDeletedFromServer_Deleter {
+func (u *__MsgDeletedFromServer_Deleter) AtTime_In(ins []int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgDeletedFromServer_Deleter) Time_NotIn(ins []int) *__MsgDeletedFromServer_Deleter {
+func (u *__MsgDeletedFromServer_Deleter) AtTime_NotIn(ins []int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgDeletedFromServer_Deleter) Time_EQ(val int) *__MsgDeletedFromServer_Deleter {
+func (d *__MsgDeletedFromServer_Deleter) AtTime_EQ(val int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " AtTime = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Deleter) Time_NotEQ(val int) *__MsgDeletedFromServer_Deleter {
+func (d *__MsgDeletedFromServer_Deleter) AtTime_NotEQ(val int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " AtTime != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Deleter) Time_LT(val int) *__MsgDeletedFromServer_Deleter {
+func (d *__MsgDeletedFromServer_Deleter) AtTime_LT(val int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " AtTime < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Deleter) Time_LE(val int) *__MsgDeletedFromServer_Deleter {
+func (d *__MsgDeletedFromServer_Deleter) AtTime_LE(val int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " AtTime <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Deleter) Time_GT(val int) *__MsgDeletedFromServer_Deleter {
+func (d *__MsgDeletedFromServer_Deleter) AtTime_GT(val int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " AtTime > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Deleter) Time_GE(val int) *__MsgDeletedFromServer_Deleter {
+func (d *__MsgDeletedFromServer_Deleter) AtTime_GE(val int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " AtTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -16616,93 +17279,93 @@ func (d *__MsgDeletedFromServer_Updater) PeerUserId_GE(val int) *__MsgDeletedFro
 	return d
 }
 
-func (u *__MsgDeletedFromServer_Updater) Time_In(ins []int) *__MsgDeletedFromServer_Updater {
+func (u *__MsgDeletedFromServer_Updater) AtTime_In(ins []int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgDeletedFromServer_Updater) Time_NotIn(ins []int) *__MsgDeletedFromServer_Updater {
+func (u *__MsgDeletedFromServer_Updater) AtTime_NotIn(ins []int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgDeletedFromServer_Updater) Time_EQ(val int) *__MsgDeletedFromServer_Updater {
+func (d *__MsgDeletedFromServer_Updater) AtTime_EQ(val int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " AtTime = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Updater) Time_NotEQ(val int) *__MsgDeletedFromServer_Updater {
+func (d *__MsgDeletedFromServer_Updater) AtTime_NotEQ(val int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " AtTime != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Updater) Time_LT(val int) *__MsgDeletedFromServer_Updater {
+func (d *__MsgDeletedFromServer_Updater) AtTime_LT(val int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " AtTime < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Updater) Time_LE(val int) *__MsgDeletedFromServer_Updater {
+func (d *__MsgDeletedFromServer_Updater) AtTime_LE(val int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " AtTime <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Updater) Time_GT(val int) *__MsgDeletedFromServer_Updater {
+func (d *__MsgDeletedFromServer_Updater) AtTime_GT(val int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " AtTime > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Updater) Time_GE(val int) *__MsgDeletedFromServer_Updater {
+func (d *__MsgDeletedFromServer_Updater) AtTime_GE(val int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " AtTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -16990,93 +17653,93 @@ func (d *__MsgDeletedFromServer_Selector) PeerUserId_GE(val int) *__MsgDeletedFr
 	return d
 }
 
-func (u *__MsgDeletedFromServer_Selector) Time_In(ins []int) *__MsgDeletedFromServer_Selector {
+func (u *__MsgDeletedFromServer_Selector) AtTime_In(ins []int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgDeletedFromServer_Selector) Time_NotIn(ins []int) *__MsgDeletedFromServer_Selector {
+func (u *__MsgDeletedFromServer_Selector) AtTime_NotIn(ins []int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgDeletedFromServer_Selector) Time_EQ(val int) *__MsgDeletedFromServer_Selector {
+func (d *__MsgDeletedFromServer_Selector) AtTime_EQ(val int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " AtTime = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Selector) Time_NotEQ(val int) *__MsgDeletedFromServer_Selector {
+func (d *__MsgDeletedFromServer_Selector) AtTime_NotEQ(val int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " AtTime != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Selector) Time_LT(val int) *__MsgDeletedFromServer_Selector {
+func (d *__MsgDeletedFromServer_Selector) AtTime_LT(val int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " AtTime < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Selector) Time_LE(val int) *__MsgDeletedFromServer_Selector {
+func (d *__MsgDeletedFromServer_Selector) AtTime_LE(val int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " AtTime <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Selector) Time_GT(val int) *__MsgDeletedFromServer_Selector {
+func (d *__MsgDeletedFromServer_Selector) AtTime_GT(val int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " AtTime > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgDeletedFromServer_Selector) Time_GE(val int) *__MsgDeletedFromServer_Selector {
+func (d *__MsgDeletedFromServer_Selector) AtTime_GE(val int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " AtTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -17135,6 +17798,55 @@ func (d *__MsgDeletedFromServer_Deleter) MsgKey_EQ(val string) *__MsgDeletedFrom
 	return d
 }
 
+func (u *__MsgDeletedFromServer_Deleter) RoomKey_In(ins []string) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Deleter) RoomKey_NotIn(ins []string) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgDeletedFromServer_Deleter) RoomKey_Like(val string) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Deleter) RoomKey_EQ(val string) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 
 func (u *__MsgDeletedFromServer_Updater) MsgKey_In(ins []string) *__MsgDeletedFromServer_Updater {
@@ -17181,6 +17893,55 @@ func (d *__MsgDeletedFromServer_Updater) MsgKey_EQ(val string) *__MsgDeletedFrom
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgDeletedFromServer_Updater) RoomKey_In(ins []string) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) RoomKey_NotIn(ins []string) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgDeletedFromServer_Updater) RoomKey_Like(val string) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Updater) RoomKey_EQ(val string) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -17237,6 +17998,55 @@ func (d *__MsgDeletedFromServer_Selector) MsgKey_EQ(val string) *__MsgDeletedFro
 	return d
 }
 
+func (u *__MsgDeletedFromServer_Selector) RoomKey_In(ins []string) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) RoomKey_NotIn(ins []string) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgDeletedFromServer_Selector) RoomKey_Like(val string) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgDeletedFromServer_Selector) RoomKey_EQ(val string) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 /// End of wheres for selectors , updators, deletor
 
 /////////////////////////////// Updater /////////////////////////////
@@ -17278,8 +18088,16 @@ func (u *__MsgDeletedFromServer_Updater) PeerUserId(newVal int) *__MsgDeletedFro
 
 //ints
 
-func (u *__MsgDeletedFromServer_Updater) Time(newVal int) *__MsgDeletedFromServer_Updater {
-	u.updates[" Time = ? "] = newVal
+//string
+func (u *__MsgDeletedFromServer_Updater) RoomKey(newVal string) *__MsgDeletedFromServer_Updater {
+	u.updates[" RoomKey = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__MsgDeletedFromServer_Updater) AtTime(newVal int) *__MsgDeletedFromServer_Updater {
+	u.updates[" AtTime = ? "] = newVal
 	return u
 }
 
@@ -17350,18 +18168,33 @@ func (u *__MsgDeletedFromServer_Selector) Select_PeerUserId() *__MsgDeletedFromS
 	return u
 }
 
-func (u *__MsgDeletedFromServer_Selector) OrderBy_Time_Desc() *__MsgDeletedFromServer_Selector {
-	u.orderBy = " ORDER BY Time DESC "
+func (u *__MsgDeletedFromServer_Selector) OrderBy_RoomKey_Desc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY RoomKey DESC "
 	return u
 }
 
-func (u *__MsgDeletedFromServer_Selector) OrderBy_Time_Asc() *__MsgDeletedFromServer_Selector {
-	u.orderBy = " ORDER BY Time ASC "
+func (u *__MsgDeletedFromServer_Selector) OrderBy_RoomKey_Asc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY RoomKey ASC "
 	return u
 }
 
-func (u *__MsgDeletedFromServer_Selector) Select_Time() *__MsgDeletedFromServer_Selector {
-	u.selectCol = "Time"
+func (u *__MsgDeletedFromServer_Selector) Select_RoomKey() *__MsgDeletedFromServer_Selector {
+	u.selectCol = "RoomKey"
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_AtTime_Desc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY AtTime DESC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) OrderBy_AtTime_Asc() *__MsgDeletedFromServer_Selector {
+	u.orderBy = " ORDER BY AtTime ASC "
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) Select_AtTime() *__MsgDeletedFromServer_Selector {
+	u.selectCol = "AtTime"
 	return u
 }
 
@@ -17570,7 +18403,78 @@ func (d *__MsgDeletedFromServer_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  MsgDeletedFromServer ////////////////
+func MassInsert_MsgDeletedFromServer(rows []MsgDeletedFromServer, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.msg_deleted_from_server (" +
+		"ToUserId, MsgKey, PeerUserId, RoomKey, AtTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.MsgKey)
+		vals = append(vals, row.PeerUserId)
+		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.AtTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_MsgDeletedFromServer(rows []MsgDeletedFromServer, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.msg_deleted_from_server (" +
+		"ToUserId, MsgKey, PeerUserId, RoomKey, AtTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.MsgKey)
+		vals = append(vals, row.PeerUserId)
+		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.AtTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
+
+//
 
 //
 
@@ -17586,10 +18490,12 @@ func (d *__MsgDeletedFromServer_Deleter) Delete(db XODB) (int, error) {
 
 // Manualy copy this to project
 type __MsgReceivedToPeer struct {
-	Id       int    `json:"Id"`       // Id -
-	ToUserId int    `json:"ToUserId"` // ToUserId -
-	MsgKey   string `json:"MsgKey"`   // MsgKey -
-	Time     int    `json:"Time"`     // Time -
+	Id         int    `json:"Id"`         // Id -
+	ToUserId   int    `json:"ToUserId"`   // ToUserId -
+	MsgKey     string `json:"MsgKey"`     // MsgKey -
+	RoomKey    string `json:"RoomKey"`    // RoomKey -
+	PeerUserId int    `json:"PeerUserId"` // PeerUserId -
+	AtTime     int    `json:"AtTime"`     // AtTime -
 
 	// xo fields
 	_exists, _deleted bool
@@ -17616,14 +18522,14 @@ func (mrtp *MsgReceivedToPeer) Insert(db XODB) error {
 
 	// sql query
 	const sqlstr = `INSERT INTO ms.msg_received_to_peer (` +
-		`ToUserId, MsgKey, Time` +
+		`ToUserId, MsgKey, RoomKey, PeerUserId, AtTime` +
 		`) VALUES (` +
-		`?, ?, ?` +
+		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time)
-	res, err := db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time)
+	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime)
+	res, err := db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime)
 	if err != nil {
 		return err
 	}
@@ -17647,14 +18553,14 @@ func (mrtp *MsgReceivedToPeer) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.msg_received_to_peer (` +
-		`ToUserId, MsgKey, Time` +
+		`ToUserId, MsgKey, RoomKey, PeerUserId, AtTime` +
 		`) VALUES (` +
-		`?, ?, ?` +
+		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time)
-	res, err := db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time)
+	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime)
+	res, err := db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime)
 	if err != nil {
 		return err
 	}
@@ -17688,12 +18594,12 @@ func (mrtp *MsgReceivedToPeer) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.msg_received_to_peer SET ` +
-		`ToUserId = ?, MsgKey = ?, Time = ?` +
+		`ToUserId = ?, MsgKey = ?, RoomKey = ?, PeerUserId = ?, AtTime = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time, mrtp.Id)
-	_, err = db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.Time, mrtp.Id)
+	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime, mrtp.Id)
+	_, err = db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime, mrtp.Id)
 	return err
 }
 
@@ -17971,93 +18877,185 @@ func (d *__MsgReceivedToPeer_Deleter) ToUserId_GE(val int) *__MsgReceivedToPeer_
 	return d
 }
 
-func (u *__MsgReceivedToPeer_Deleter) Time_In(ins []int) *__MsgReceivedToPeer_Deleter {
+func (u *__MsgReceivedToPeer_Deleter) PeerUserId_In(ins []int) *__MsgReceivedToPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgReceivedToPeer_Deleter) Time_NotIn(ins []int) *__MsgReceivedToPeer_Deleter {
+func (u *__MsgReceivedToPeer_Deleter) PeerUserId_NotIn(ins []int) *__MsgReceivedToPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PeerUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgReceivedToPeer_Deleter) Time_EQ(val int) *__MsgReceivedToPeer_Deleter {
+func (d *__MsgReceivedToPeer_Deleter) PeerUserId_EQ(val int) *__MsgReceivedToPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " PeerUserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Deleter) Time_NotEQ(val int) *__MsgReceivedToPeer_Deleter {
+func (d *__MsgReceivedToPeer_Deleter) PeerUserId_NotEQ(val int) *__MsgReceivedToPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " PeerUserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Deleter) Time_LT(val int) *__MsgReceivedToPeer_Deleter {
+func (d *__MsgReceivedToPeer_Deleter) PeerUserId_LT(val int) *__MsgReceivedToPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " PeerUserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Deleter) Time_LE(val int) *__MsgReceivedToPeer_Deleter {
+func (d *__MsgReceivedToPeer_Deleter) PeerUserId_LE(val int) *__MsgReceivedToPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " PeerUserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Deleter) Time_GT(val int) *__MsgReceivedToPeer_Deleter {
+func (d *__MsgReceivedToPeer_Deleter) PeerUserId_GT(val int) *__MsgReceivedToPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " PeerUserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Deleter) Time_GE(val int) *__MsgReceivedToPeer_Deleter {
+func (d *__MsgReceivedToPeer_Deleter) PeerUserId_GE(val int) *__MsgReceivedToPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " PeerUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgReceivedToPeer_Deleter) AtTime_In(ins []int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Deleter) AtTime_NotIn(ins []int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Deleter) AtTime_EQ(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) AtTime_NotEQ(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) AtTime_LT(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) AtTime_LE(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) AtTime_GT(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Deleter) AtTime_GE(val int) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -18253,93 +19251,185 @@ func (d *__MsgReceivedToPeer_Updater) ToUserId_GE(val int) *__MsgReceivedToPeer_
 	return d
 }
 
-func (u *__MsgReceivedToPeer_Updater) Time_In(ins []int) *__MsgReceivedToPeer_Updater {
+func (u *__MsgReceivedToPeer_Updater) PeerUserId_In(ins []int) *__MsgReceivedToPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgReceivedToPeer_Updater) Time_NotIn(ins []int) *__MsgReceivedToPeer_Updater {
+func (u *__MsgReceivedToPeer_Updater) PeerUserId_NotIn(ins []int) *__MsgReceivedToPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PeerUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgReceivedToPeer_Updater) Time_EQ(val int) *__MsgReceivedToPeer_Updater {
+func (d *__MsgReceivedToPeer_Updater) PeerUserId_EQ(val int) *__MsgReceivedToPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " PeerUserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Updater) Time_NotEQ(val int) *__MsgReceivedToPeer_Updater {
+func (d *__MsgReceivedToPeer_Updater) PeerUserId_NotEQ(val int) *__MsgReceivedToPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " PeerUserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Updater) Time_LT(val int) *__MsgReceivedToPeer_Updater {
+func (d *__MsgReceivedToPeer_Updater) PeerUserId_LT(val int) *__MsgReceivedToPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " PeerUserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Updater) Time_LE(val int) *__MsgReceivedToPeer_Updater {
+func (d *__MsgReceivedToPeer_Updater) PeerUserId_LE(val int) *__MsgReceivedToPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " PeerUserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Updater) Time_GT(val int) *__MsgReceivedToPeer_Updater {
+func (d *__MsgReceivedToPeer_Updater) PeerUserId_GT(val int) *__MsgReceivedToPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " PeerUserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Updater) Time_GE(val int) *__MsgReceivedToPeer_Updater {
+func (d *__MsgReceivedToPeer_Updater) PeerUserId_GE(val int) *__MsgReceivedToPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " PeerUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgReceivedToPeer_Updater) AtTime_In(ins []int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Updater) AtTime_NotIn(ins []int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Updater) AtTime_EQ(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) AtTime_NotEQ(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) AtTime_LT(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) AtTime_LE(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) AtTime_GT(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Updater) AtTime_GE(val int) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -18535,93 +19625,185 @@ func (d *__MsgReceivedToPeer_Selector) ToUserId_GE(val int) *__MsgReceivedToPeer
 	return d
 }
 
-func (u *__MsgReceivedToPeer_Selector) Time_In(ins []int) *__MsgReceivedToPeer_Selector {
+func (u *__MsgReceivedToPeer_Selector) PeerUserId_In(ins []int) *__MsgReceivedToPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgReceivedToPeer_Selector) Time_NotIn(ins []int) *__MsgReceivedToPeer_Selector {
+func (u *__MsgReceivedToPeer_Selector) PeerUserId_NotIn(ins []int) *__MsgReceivedToPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PeerUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgReceivedToPeer_Selector) Time_EQ(val int) *__MsgReceivedToPeer_Selector {
+func (d *__MsgReceivedToPeer_Selector) PeerUserId_EQ(val int) *__MsgReceivedToPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " PeerUserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Selector) Time_NotEQ(val int) *__MsgReceivedToPeer_Selector {
+func (d *__MsgReceivedToPeer_Selector) PeerUserId_NotEQ(val int) *__MsgReceivedToPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " PeerUserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Selector) Time_LT(val int) *__MsgReceivedToPeer_Selector {
+func (d *__MsgReceivedToPeer_Selector) PeerUserId_LT(val int) *__MsgReceivedToPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " PeerUserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Selector) Time_LE(val int) *__MsgReceivedToPeer_Selector {
+func (d *__MsgReceivedToPeer_Selector) PeerUserId_LE(val int) *__MsgReceivedToPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " PeerUserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Selector) Time_GT(val int) *__MsgReceivedToPeer_Selector {
+func (d *__MsgReceivedToPeer_Selector) PeerUserId_GT(val int) *__MsgReceivedToPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " PeerUserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgReceivedToPeer_Selector) Time_GE(val int) *__MsgReceivedToPeer_Selector {
+func (d *__MsgReceivedToPeer_Selector) PeerUserId_GE(val int) *__MsgReceivedToPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " PeerUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgReceivedToPeer_Selector) AtTime_In(ins []int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) AtTime_NotIn(ins []int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Selector) AtTime_EQ(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) AtTime_NotEQ(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) AtTime_LT(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) AtTime_LE(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) AtTime_GT(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgReceivedToPeer_Selector) AtTime_GE(val int) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AtTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -18680,6 +19862,55 @@ func (d *__MsgReceivedToPeer_Deleter) MsgKey_EQ(val string) *__MsgReceivedToPeer
 	return d
 }
 
+func (u *__MsgReceivedToPeer_Deleter) RoomKey_In(ins []string) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Deleter) RoomKey_NotIn(ins []string) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgReceivedToPeer_Deleter) RoomKey_Like(val string) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Deleter) RoomKey_EQ(val string) *__MsgReceivedToPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 
 func (u *__MsgReceivedToPeer_Updater) MsgKey_In(ins []string) *__MsgReceivedToPeer_Updater {
@@ -18726,6 +19957,55 @@ func (d *__MsgReceivedToPeer_Updater) MsgKey_EQ(val string) *__MsgReceivedToPeer
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgReceivedToPeer_Updater) RoomKey_In(ins []string) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Updater) RoomKey_NotIn(ins []string) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgReceivedToPeer_Updater) RoomKey_Like(val string) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Updater) RoomKey_EQ(val string) *__MsgReceivedToPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -18782,6 +20062,55 @@ func (d *__MsgReceivedToPeer_Selector) MsgKey_EQ(val string) *__MsgReceivedToPee
 	return d
 }
 
+func (u *__MsgReceivedToPeer_Selector) RoomKey_In(ins []string) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) RoomKey_NotIn(ins []string) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgReceivedToPeer_Selector) RoomKey_Like(val string) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgReceivedToPeer_Selector) RoomKey_EQ(val string) *__MsgReceivedToPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 /// End of wheres for selectors , updators, deletor
 
 /////////////////////////////// Updater /////////////////////////////
@@ -18814,8 +20143,25 @@ func (u *__MsgReceivedToPeer_Updater) MsgKey(newVal string) *__MsgReceivedToPeer
 
 //ints
 
-func (u *__MsgReceivedToPeer_Updater) Time(newVal int) *__MsgReceivedToPeer_Updater {
-	u.updates[" Time = ? "] = newVal
+//string
+func (u *__MsgReceivedToPeer_Updater) RoomKey(newVal string) *__MsgReceivedToPeer_Updater {
+	u.updates[" RoomKey = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__MsgReceivedToPeer_Updater) PeerUserId(newVal int) *__MsgReceivedToPeer_Updater {
+	u.updates[" PeerUserId = ? "] = newVal
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__MsgReceivedToPeer_Updater) AtTime(newVal int) *__MsgReceivedToPeer_Updater {
+	u.updates[" AtTime = ? "] = newVal
 	return u
 }
 
@@ -18871,18 +20217,48 @@ func (u *__MsgReceivedToPeer_Selector) Select_MsgKey() *__MsgReceivedToPeer_Sele
 	return u
 }
 
-func (u *__MsgReceivedToPeer_Selector) OrderBy_Time_Desc() *__MsgReceivedToPeer_Selector {
-	u.orderBy = " ORDER BY Time DESC "
+func (u *__MsgReceivedToPeer_Selector) OrderBy_RoomKey_Desc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY RoomKey DESC "
 	return u
 }
 
-func (u *__MsgReceivedToPeer_Selector) OrderBy_Time_Asc() *__MsgReceivedToPeer_Selector {
-	u.orderBy = " ORDER BY Time ASC "
+func (u *__MsgReceivedToPeer_Selector) OrderBy_RoomKey_Asc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY RoomKey ASC "
 	return u
 }
 
-func (u *__MsgReceivedToPeer_Selector) Select_Time() *__MsgReceivedToPeer_Selector {
-	u.selectCol = "Time"
+func (u *__MsgReceivedToPeer_Selector) Select_RoomKey() *__MsgReceivedToPeer_Selector {
+	u.selectCol = "RoomKey"
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_PeerUserId_Desc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY PeerUserId DESC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_PeerUserId_Asc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY PeerUserId ASC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Select_PeerUserId() *__MsgReceivedToPeer_Selector {
+	u.selectCol = "PeerUserId"
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_AtTime_Desc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY AtTime DESC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) OrderBy_AtTime_Asc() *__MsgReceivedToPeer_Selector {
+	u.orderBy = " ORDER BY AtTime ASC "
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Selector) Select_AtTime() *__MsgReceivedToPeer_Selector {
+	u.selectCol = "AtTime"
 	return u
 }
 
@@ -19091,7 +20467,80 @@ func (d *__MsgReceivedToPeer_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  MsgReceivedToPeer ////////////////
+func MassInsert_MsgReceivedToPeer(rows []MsgReceivedToPeer, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.msg_received_to_peer (" +
+		"ToUserId, MsgKey, RoomKey, PeerUserId, AtTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.MsgKey)
+		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.PeerUserId)
+		vals = append(vals, row.AtTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_MsgReceivedToPeer(rows []MsgReceivedToPeer, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.msg_received_to_peer (" +
+		"ToUserId, MsgKey, RoomKey, PeerUserId, AtTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.MsgKey)
+		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.PeerUserId)
+		vals = append(vals, row.AtTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
+
+//
+
+//
 
 //
 
@@ -19108,8 +20557,9 @@ type __MsgSeenByPeer struct {
 	Id         int    `json:"Id"`         // Id -
 	ToUserId   int    `json:"ToUserId"`   // ToUserId -
 	MsgKey     string `json:"MsgKey"`     // MsgKey -
+	RoomKey    string `json:"RoomKey"`    // RoomKey -
 	PeerUserId int    `json:"PeerUserId"` // PeerUserId -
-	Time       int    `json:"Time"`       // Time -
+	AtTime     int    `json:"AtTime"`     // AtTime -
 
 	// xo fields
 	_exists, _deleted bool
@@ -19136,14 +20586,14 @@ func (msbp *MsgSeenByPeer) Insert(db XODB) error {
 
 	// sql query
 	const sqlstr = `INSERT INTO ms.msg_seen_by_peer (` +
-		`ToUserId, MsgKey, PeerUserId, Time` +
+		`ToUserId, MsgKey, RoomKey, PeerUserId, AtTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?` +
+		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time)
-	res, err := db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time)
+	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
+	res, err := db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
 	if err != nil {
 		return err
 	}
@@ -19167,14 +20617,14 @@ func (msbp *MsgSeenByPeer) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.msg_seen_by_peer (` +
-		`ToUserId, MsgKey, PeerUserId, Time` +
+		`ToUserId, MsgKey, RoomKey, PeerUserId, AtTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?` +
+		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time)
-	res, err := db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time)
+	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
+	res, err := db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
 	if err != nil {
 		return err
 	}
@@ -19208,12 +20658,12 @@ func (msbp *MsgSeenByPeer) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.msg_seen_by_peer SET ` +
-		`ToUserId = ?, MsgKey = ?, PeerUserId = ?, Time = ?` +
+		`ToUserId = ?, MsgKey = ?, RoomKey = ?, PeerUserId = ?, AtTime = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time, msbp.Id)
-	_, err = db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.PeerUserId, msbp.Time, msbp.Id)
+	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime, msbp.Id)
+	_, err = db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime, msbp.Id)
 	return err
 }
 
@@ -19583,93 +21033,93 @@ func (d *__MsgSeenByPeer_Deleter) PeerUserId_GE(val int) *__MsgSeenByPeer_Delete
 	return d
 }
 
-func (u *__MsgSeenByPeer_Deleter) Time_In(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgSeenByPeer_Deleter) AtTime_In(ins []int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) Time_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgSeenByPeer_Deleter) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) Time_EQ(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) AtTime_EQ(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " AtTime = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Time_NotEQ(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) AtTime_NotEQ(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " AtTime != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Time_LT(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) AtTime_LT(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " AtTime < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Time_LE(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) AtTime_LE(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " AtTime <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Time_GT(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) AtTime_GT(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " AtTime > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Time_GE(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) AtTime_GE(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " AtTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -19957,93 +21407,93 @@ func (d *__MsgSeenByPeer_Updater) PeerUserId_GE(val int) *__MsgSeenByPeer_Update
 	return d
 }
 
-func (u *__MsgSeenByPeer_Updater) Time_In(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgSeenByPeer_Updater) AtTime_In(ins []int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) Time_NotIn(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgSeenByPeer_Updater) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) Time_EQ(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) AtTime_EQ(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " AtTime = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Time_NotEQ(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) AtTime_NotEQ(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " AtTime != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Time_LT(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) AtTime_LT(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " AtTime < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Time_LE(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) AtTime_LE(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " AtTime <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Time_GT(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) AtTime_GT(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " AtTime > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Time_GE(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) AtTime_GE(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " AtTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -20331,93 +21781,93 @@ func (d *__MsgSeenByPeer_Selector) PeerUserId_GE(val int) *__MsgSeenByPeer_Selec
 	return d
 }
 
-func (u *__MsgSeenByPeer_Selector) Time_In(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgSeenByPeer_Selector) AtTime_In(ins []int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Time_NotIn(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgSeenByPeer_Selector) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AtTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) Time_EQ(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) AtTime_EQ(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " AtTime = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Time_NotEQ(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) AtTime_NotEQ(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " AtTime != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Time_LT(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) AtTime_LT(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " AtTime < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Time_LE(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) AtTime_LE(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " AtTime <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Time_GT(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) AtTime_GT(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " AtTime > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Time_GE(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) AtTime_GE(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " AtTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -20476,6 +21926,55 @@ func (d *__MsgSeenByPeer_Deleter) MsgKey_EQ(val string) *__MsgSeenByPeer_Deleter
 	return d
 }
 
+func (u *__MsgSeenByPeer_Deleter) RoomKey_In(ins []string) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Deleter) RoomKey_NotIn(ins []string) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgSeenByPeer_Deleter) RoomKey_Like(val string) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Deleter) RoomKey_EQ(val string) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 
 func (u *__MsgSeenByPeer_Updater) MsgKey_In(ins []string) *__MsgSeenByPeer_Updater {
@@ -20522,6 +22021,55 @@ func (d *__MsgSeenByPeer_Updater) MsgKey_EQ(val string) *__MsgSeenByPeer_Updater
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgSeenByPeer_Updater) RoomKey_In(ins []string) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) RoomKey_NotIn(ins []string) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgSeenByPeer_Updater) RoomKey_Like(val string) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Updater) RoomKey_EQ(val string) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -20578,6 +22126,55 @@ func (d *__MsgSeenByPeer_Selector) MsgKey_EQ(val string) *__MsgSeenByPeer_Select
 	return d
 }
 
+func (u *__MsgSeenByPeer_Selector) RoomKey_In(ins []string) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) RoomKey_NotIn(ins []string) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MsgSeenByPeer_Selector) RoomKey_Like(val string) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgSeenByPeer_Selector) RoomKey_EQ(val string) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 /// End of wheres for selectors , updators, deletor
 
 /////////////////////////////// Updater /////////////////////////////
@@ -20610,6 +22207,14 @@ func (u *__MsgSeenByPeer_Updater) MsgKey(newVal string) *__MsgSeenByPeer_Updater
 
 //ints
 
+//string
+func (u *__MsgSeenByPeer_Updater) RoomKey(newVal string) *__MsgSeenByPeer_Updater {
+	u.updates[" RoomKey = ? "] = newVal
+	return u
+}
+
+//ints
+
 func (u *__MsgSeenByPeer_Updater) PeerUserId(newVal int) *__MsgSeenByPeer_Updater {
 	u.updates[" PeerUserId = ? "] = newVal
 	return u
@@ -20619,8 +22224,8 @@ func (u *__MsgSeenByPeer_Updater) PeerUserId(newVal int) *__MsgSeenByPeer_Update
 
 //ints
 
-func (u *__MsgSeenByPeer_Updater) Time(newVal int) *__MsgSeenByPeer_Updater {
-	u.updates[" Time = ? "] = newVal
+func (u *__MsgSeenByPeer_Updater) AtTime(newVal int) *__MsgSeenByPeer_Updater {
+	u.updates[" AtTime = ? "] = newVal
 	return u
 }
 
@@ -20676,6 +22281,21 @@ func (u *__MsgSeenByPeer_Selector) Select_MsgKey() *__MsgSeenByPeer_Selector {
 	return u
 }
 
+func (u *__MsgSeenByPeer_Selector) OrderBy_RoomKey_Desc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY RoomKey DESC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) OrderBy_RoomKey_Asc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY RoomKey ASC "
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) Select_RoomKey() *__MsgSeenByPeer_Selector {
+	u.selectCol = "RoomKey"
+	return u
+}
+
 func (u *__MsgSeenByPeer_Selector) OrderBy_PeerUserId_Desc() *__MsgSeenByPeer_Selector {
 	u.orderBy = " ORDER BY PeerUserId DESC "
 	return u
@@ -20691,18 +22311,18 @@ func (u *__MsgSeenByPeer_Selector) Select_PeerUserId() *__MsgSeenByPeer_Selector
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_Time_Desc() *__MsgSeenByPeer_Selector {
-	u.orderBy = " ORDER BY Time DESC "
+func (u *__MsgSeenByPeer_Selector) OrderBy_AtTime_Desc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY AtTime DESC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_Time_Asc() *__MsgSeenByPeer_Selector {
-	u.orderBy = " ORDER BY Time ASC "
+func (u *__MsgSeenByPeer_Selector) OrderBy_AtTime_Asc() *__MsgSeenByPeer_Selector {
+	u.orderBy = " ORDER BY AtTime ASC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Select_Time() *__MsgSeenByPeer_Selector {
-	u.selectCol = "Time"
+func (u *__MsgSeenByPeer_Selector) Select_AtTime() *__MsgSeenByPeer_Selector {
+	u.selectCol = "AtTime"
 	return u
 }
 
@@ -20911,7 +22531,78 @@ func (d *__MsgSeenByPeer_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  MsgSeenByPeer ////////////////
+func MassInsert_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.msg_seen_by_peer (" +
+		"ToUserId, MsgKey, RoomKey, PeerUserId, AtTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.MsgKey)
+		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.PeerUserId)
+		vals = append(vals, row.AtTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.msg_seen_by_peer (" +
+		"ToUserId, MsgKey, RoomKey, PeerUserId, AtTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.MsgKey)
+		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.PeerUserId)
+		vals = append(vals, row.AtTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
+
+//
 
 //
 
@@ -24067,6 +25758,81 @@ func (d *__Notification_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  Notification ////////////////
+func MassInsert_Notification(rows []Notification, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.notification (" +
+		"ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, TargetId, ObjectId, SeenStatus, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ForUserId)
+		vals = append(vals, row.ActorUserId)
+		vals = append(vals, row.ActionTypeId)
+		vals = append(vals, row.ObjectTypeId)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.ObjectId)
+		vals = append(vals, row.SeenStatus)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_Notification(rows []Notification, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.notification (" +
+		"ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, TargetId, ObjectId, SeenStatus, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ForUserId)
+		vals = append(vals, row.ActorUserId)
+		vals = append(vals, row.ActionTypeId)
+		vals = append(vals, row.ObjectTypeId)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.ObjectId)
+		vals = append(vals, row.SeenStatus)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
 
 //
@@ -27010,6 +28776,83 @@ func (d *__PhoneContact_Deleter) Delete(db XODB) (int, error) {
 	}
 
 	return int(num), nil
+}
+
+///////////////////////// Mass insert - replace for  PhoneContact ////////////////
+func MassInsert_PhoneContact(rows []PhoneContact, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.phone_contacts (" +
+		"PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.PhoneDisplayName)
+		vals = append(vals, row.PhoneFamilyName)
+		vals = append(vals, row.PhoneNumber)
+		vals = append(vals, row.PhoneNormalizedNumber)
+		vals = append(vals, row.PhoneContactRowId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.DeviceUuidId)
+		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.UpdatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_PhoneContact(rows []PhoneContact, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.phone_contacts (" +
+		"PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.PhoneDisplayName)
+		vals = append(vals, row.PhoneFamilyName)
+		vals = append(vals, row.PhoneNumber)
+		vals = append(vals, row.PhoneNormalizedNumber)
+		vals = append(vals, row.PhoneContactRowId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.DeviceUuidId)
+		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.UpdatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 //////////////////// Play ///////////////////////////////
@@ -31293,6 +33136,91 @@ func (d *__Post_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  Post ////////////////
+func MassInsert_Post(rows []Post, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.post (" +
+		"UserId, TypeId, Text, FormatedText, MediaUrl, MediaServerId, Width, Height, SharedTo, HasTag, LikesCount, CommentsCount, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.TypeId)
+		vals = append(vals, row.Text)
+		vals = append(vals, row.FormatedText)
+		vals = append(vals, row.MediaUrl)
+		vals = append(vals, row.MediaServerId)
+		vals = append(vals, row.Width)
+		vals = append(vals, row.Height)
+		vals = append(vals, row.SharedTo)
+		vals = append(vals, row.HasTag)
+		vals = append(vals, row.LikesCount)
+		vals = append(vals, row.CommentsCount)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_Post(rows []Post, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.post (" +
+		"UserId, TypeId, Text, FormatedText, MediaUrl, MediaServerId, Width, Height, SharedTo, HasTag, LikesCount, CommentsCount, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.TypeId)
+		vals = append(vals, row.Text)
+		vals = append(vals, row.FormatedText)
+		vals = append(vals, row.MediaUrl)
+		vals = append(vals, row.MediaServerId)
+		vals = append(vals, row.Width)
+		vals = append(vals, row.Height)
+		vals = append(vals, row.SharedTo)
+		vals = append(vals, row.HasTag)
+		vals = append(vals, row.LikesCount)
+		vals = append(vals, row.CommentsCount)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
 
 //
@@ -32980,6 +34908,73 @@ func (d *__RecommendUser_Deleter) Delete(db XODB) (int, error) {
 	}
 
 	return int(num), nil
+}
+
+///////////////////////// Mass insert - replace for  RecommendUser ////////////////
+func MassInsert_RecommendUser(rows []RecommendUser, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.recommend_user (" +
+		"UserId, TargetId, Weight, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.Weight)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_RecommendUser(rows []RecommendUser, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.recommend_user (" +
+		"UserId, TargetId, Weight, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.Weight)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 //////////////////// Play ///////////////////////////////
@@ -35659,6 +37654,83 @@ func (d *__Session_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  Session ////////////////
+func MassInsert_Session(rows []Session, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.session (" +
+		"Id, UserId, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.ClientUuid)
+		vals = append(vals, row.DeviceUuid)
+		vals = append(vals, row.LastActivityTime)
+		vals = append(vals, row.LastIpAddress)
+		vals = append(vals, row.LastWifiMacAddress)
+		vals = append(vals, row.LastNetworkType)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_Session(rows []Session, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.session (" +
+		"Id, UserId, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.ClientUuid)
+		vals = append(vals, row.DeviceUuid)
+		vals = append(vals, row.LastActivityTime)
+		vals = append(vals, row.LastIpAddress)
+		vals = append(vals, row.LastWifiMacAddress)
+		vals = append(vals, row.LastNetworkType)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
 
 //
@@ -37489,6 +39561,73 @@ func (d *__Tag_Deleter) Delete(db XODB) (int, error) {
 	}
 
 	return int(num), nil
+}
+
+///////////////////////// Mass insert - replace for  Tag ////////////////
+func MassInsert_Tag(rows []Tag, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.tags (" +
+		"Name, Count, IsBlocked, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Name)
+		vals = append(vals, row.Count)
+		vals = append(vals, row.IsBlocked)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_Tag(rows []Tag, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.tags (" +
+		"Name, Count, IsBlocked, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Name)
+		vals = append(vals, row.Count)
+		vals = append(vals, row.IsBlocked)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 //////////////////// Play ///////////////////////////////
@@ -39441,6 +41580,73 @@ func (d *__TagsPost_Deleter) Delete(db XODB) (int, error) {
 	}
 
 	return int(num), nil
+}
+
+///////////////////////// Mass insert - replace for  TagsPost ////////////////
+func MassInsert_TagsPost(rows []TagsPost, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.tags_posts (" +
+		"TagId, PostId, TypeId, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.TagId)
+		vals = append(vals, row.PostId)
+		vals = append(vals, row.TypeId)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_TagsPost(rows []TagsPost, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.tags_posts (" +
+		"TagId, PostId, TypeId, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.TagId)
+		vals = append(vals, row.PostId)
+		vals = append(vals, row.TypeId)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 //////////////////// Play ///////////////////////////////
@@ -47743,6 +49949,129 @@ func (d *__User_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  User ////////////////
+func MassInsert_User(rows []User, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.user (" +
+		"UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserName)
+		vals = append(vals, row.FirstName)
+		vals = append(vals, row.LastName)
+		vals = append(vals, row.About)
+		vals = append(vals, row.FullName)
+		vals = append(vals, row.AvatarSrc)
+		vals = append(vals, row.AvatarUrl)
+		vals = append(vals, row.PrivacyProfile)
+		vals = append(vals, row.Phone)
+		vals = append(vals, row.Email)
+		vals = append(vals, row.IsDeleted)
+		vals = append(vals, row.PasswordHash)
+		vals = append(vals, row.PasswordSalt)
+		vals = append(vals, row.FollowersCount)
+		vals = append(vals, row.FollowingCount)
+		vals = append(vals, row.PostsCount)
+		vals = append(vals, row.MediaCount)
+		vals = append(vals, row.LikesCount)
+		vals = append(vals, row.ResharedCount)
+		vals = append(vals, row.LastActionTime)
+		vals = append(vals, row.LastPostTime)
+		vals = append(vals, row.PrimaryFollowingList)
+		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.UpdatedTime)
+		vals = append(vals, row.SessionUuid)
+		vals = append(vals, row.DeviceUuid)
+		vals = append(vals, row.LastWifiMacAddress)
+		vals = append(vals, row.LastNetworkType)
+		vals = append(vals, row.AppVersion)
+		vals = append(vals, row.LastActivityTime)
+		vals = append(vals, row.LastLoginTime)
+		vals = append(vals, row.LastIpAddress)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_User(rows []User, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.user (" +
+		"UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserName)
+		vals = append(vals, row.FirstName)
+		vals = append(vals, row.LastName)
+		vals = append(vals, row.About)
+		vals = append(vals, row.FullName)
+		vals = append(vals, row.AvatarSrc)
+		vals = append(vals, row.AvatarUrl)
+		vals = append(vals, row.PrivacyProfile)
+		vals = append(vals, row.Phone)
+		vals = append(vals, row.Email)
+		vals = append(vals, row.IsDeleted)
+		vals = append(vals, row.PasswordHash)
+		vals = append(vals, row.PasswordSalt)
+		vals = append(vals, row.FollowersCount)
+		vals = append(vals, row.FollowingCount)
+		vals = append(vals, row.PostsCount)
+		vals = append(vals, row.MediaCount)
+		vals = append(vals, row.LikesCount)
+		vals = append(vals, row.ResharedCount)
+		vals = append(vals, row.LastActionTime)
+		vals = append(vals, row.LastPostTime)
+		vals = append(vals, row.PrimaryFollowingList)
+		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.UpdatedTime)
+		vals = append(vals, row.SessionUuid)
+		vals = append(vals, row.DeviceUuid)
+		vals = append(vals, row.LastWifiMacAddress)
+		vals = append(vals, row.LastNetworkType)
+		vals = append(vals, row.AppVersion)
+		vals = append(vals, row.LastActivityTime)
+		vals = append(vals, row.LastLoginTime)
+		vals = append(vals, row.LastIpAddress)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
 
 //
@@ -49019,6 +51348,69 @@ func (d *__UserPassword_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
+///////////////////////// Mass insert - replace for  UserPassword ////////////////
+func MassInsert_UserPassword(rows []UserPassword, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.user_password (" +
+		"Password, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Password)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_UserPassword(rows []UserPassword, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.user_password (" +
+		"Password, CreatedTime" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Password)
+		vals = append(vals, row.CreatedTime)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //////////////////// Play ///////////////////////////////
 
 //
@@ -49026,45 +51418,6 @@ func (d *__UserPassword_Deleter) Delete(db XODB) (int, error) {
 //
 
 //
-
-// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
-//
-// Generated from index 'PostId'.
-func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, PostId, Text, CreatedTime ` +
-		`FROM ms.comments ` +
-		`WHERE PostId = ?`
-
-	// run query
-	XOLog(sqlstr, postId)
-	q, err := db.Query(sqlstr, postId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Comment{}
-	for q.Next() {
-		c := Comment{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &c)
-	}
-
-	return res, nil
-}
 
 // CommentById retrieves a row from 'ms.comments' as a Comment.
 //
@@ -49287,6 +51640,32 @@ func LikesById(db XODB, id int) ([]*Like, error) {
 	return res, nil
 }
 
+// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'PostId'.
+func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE PostId = ? AND UserId = ?`
+
+	// run query
+	XOLog(sqlstr, postId, userId)
+	l := Like{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+	if err != nil {
+		return nil, err
+	}
+
+	return &l, nil
+}
+
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId_2'.
@@ -49386,7 +51765,7 @@ func MessagesByToUserIdTimeMs(db XODB, toUserId int, timeMs int) ([]*Message, er
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, MessageKey, ToUserId, FromUserID, Data, TimeMs ` +
+		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
 		`FROM ms.message ` +
 		`WHERE ToUserId = ? AND TimeMs = ?`
 
@@ -49406,7 +51785,7 @@ func MessagesByToUserIdTimeMs(db XODB, toUserId int, timeMs int) ([]*Message, er
 		}
 
 		// scan
-		err = q.Scan(&m.Id, &m.MessageKey, &m.ToUserId, &m.FromUserID, &m.Data, &m.TimeMs)
+		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
 		if err != nil {
 			return nil, err
 		}
@@ -49425,7 +51804,7 @@ func MessageById(db XODB, id int) (*Message, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, MessageKey, ToUserId, FromUserID, Data, TimeMs ` +
+		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
 		`FROM ms.message ` +
 		`WHERE Id = ?`
 
@@ -49435,7 +51814,7 @@ func MessageById(db XODB, id int) (*Message, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.MessageKey, &m.ToUserId, &m.FromUserID, &m.Data, &m.TimeMs)
+	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
 	if err != nil {
 		return nil, err
 	}
@@ -49451,7 +51830,7 @@ func MsgDeletedFromServerById(db XODB, id int) (*MsgDeletedFromServer, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, PeerUserId, Time ` +
+		`Id, ToUserId, MsgKey, PeerUserId, RoomKey, AtTime ` +
 		`FROM ms.msg_deleted_from_server ` +
 		`WHERE Id = ?`
 
@@ -49461,7 +51840,7 @@ func MsgDeletedFromServerById(db XODB, id int) (*MsgDeletedFromServer, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&mdfs.Id, &mdfs.ToUserId, &mdfs.MsgKey, &mdfs.PeerUserId, &mdfs.Time)
+	err = db.QueryRow(sqlstr, id).Scan(&mdfs.Id, &mdfs.ToUserId, &mdfs.MsgKey, &mdfs.PeerUserId, &mdfs.RoomKey, &mdfs.AtTime)
 	if err != nil {
 		return nil, err
 	}
@@ -49477,7 +51856,7 @@ func MsgReceivedToPeersByToUserId(db XODB, toUserId int) ([]*MsgReceivedToPeer, 
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, Time ` +
+		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
 		`FROM ms.msg_received_to_peer ` +
 		`WHERE ToUserId = ?`
 
@@ -49497,7 +51876,7 @@ func MsgReceivedToPeersByToUserId(db XODB, toUserId int) ([]*MsgReceivedToPeer, 
 		}
 
 		// scan
-		err = q.Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.Time)
+		err = q.Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.RoomKey, &mrtp.PeerUserId, &mrtp.AtTime)
 		if err != nil {
 			return nil, err
 		}
@@ -49516,7 +51895,7 @@ func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, Time ` +
+		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
 		`FROM ms.msg_received_to_peer ` +
 		`WHERE Id = ?`
 
@@ -49526,7 +51905,7 @@ func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.Time)
+	err = db.QueryRow(sqlstr, id).Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.RoomKey, &mrtp.PeerUserId, &mrtp.AtTime)
 	if err != nil {
 		return nil, err
 	}
@@ -49542,7 +51921,7 @@ func MsgSeenByPeerById(db XODB, id int) (*MsgSeenByPeer, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, PeerUserId, Time ` +
+		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
 		`FROM ms.msg_seen_by_peer ` +
 		`WHERE Id = ?`
 
@@ -49552,7 +51931,7 @@ func MsgSeenByPeerById(db XODB, id int) (*MsgSeenByPeer, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.PeerUserId, &msbp.Time)
+	err = db.QueryRow(sqlstr, id).Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
 	if err != nil {
 		return nil, err
 	}
