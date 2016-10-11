@@ -9,6 +9,9 @@ import (
 
 const CLIENT_CALL_MsgsReceivedToPeerMany = "MsgsReceivedToPeerMany"
 const CLIENT_CALL_MsgsDeletedFromServerMany = "MsgsDeletedFromServerMany"
+const CLIENT_CALL_MsgsSeenByPeerMany = "MsgsSeenByPeerMany"
+const CLIENT_CALL_MsgAddMany = "MsgAddMany"
+const CLIENT_CALL_MsgAddOne = "MsgAddOne"
 
 type messageLoadOne struct {
 	Message Message
@@ -29,7 +32,7 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 	}{}
 	data.Message = msg
 	data.User = Views.UserViewSync(ToUserId, msg.UserId)
-	call := base.NewCallWithData("MsgAddOne", data)
+	call := base.NewCallWithData(CLIENT_CALL_MsgAddOne, data)
 	//call.SetData(msg)
 
 	succ := func() {
@@ -200,7 +203,7 @@ func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 		msgsRes, users,
 	}
 
-	call := base.NewCallWithData("MsgAddMany", dataSend)
+	call := base.NewCallWithData(CLIENT_CALL_MsgAddMany, dataSend)
 
 	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
 }
@@ -258,7 +261,7 @@ func (e _messageModelImple) FlushAllSeenMsgsByPeerToUser(ToUserId int) {
 		NewMsgSeenByPeer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
 	}
 
-	call := base.NewCallWithData("MsgsSeenByPeerMany", metasRows)
+	call := base.NewCallWithData(CLIENT_CALL_MsgsSeenByPeerMany, metasRows)
 
 	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
 }
