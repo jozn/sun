@@ -61,31 +61,31 @@ func (m pipesMap) SendToUserWithCallBack(UserId int, call base.Call, callback fu
 	}
 }
 
-func (m pipesMap) SendToUserWithCallBacks(UserId int, call base.Call, callback func(),errback func()) {
-    pipe, ok := m.GetUserPipe(UserId)
-    helper.Debugf("sending to user:%d %v %v ", UserId, ok)
-    if ok && pipe.IsOpen {
-        defer func() {
-            if r := recover(); r != nil {
-                //pipe.IsOpen = false
-                pipe.ShutDownCompletely()
-                helper.Debug("Recovered in SendToUser: ", r)
-            }
-        }()
+func (m pipesMap) SendToUserWithCallBacks(UserId int, call base.Call, callback func(), errback func()) {
+	pipe, ok := m.GetUserPipe(UserId)
+	helper.Debugf("sending to user:%d %v %v ", UserId, ok)
+	if ok && pipe.IsOpen {
+		defer func() {
+			if r := recover(); r != nil {
+				//pipe.IsOpen = false
+				pipe.ShutDownCompletely()
+				helper.Debug("Recovered in SendToUser: ", r)
+			}
+		}()
 
-        resCallback := callRespondCallback{
-            serverCallId: call.ServerCallId,
-            success:      callback,
-            error: errback,
-            timeoutAtMs:  helper.TimeNowMs() + 5000,
-        }
+		resCallback := callRespondCallback{
+			serverCallId: call.ServerCallId,
+			success:      callback,
+			error:        errback,
+			timeoutAtMs:  helper.TimeNowMs() + 5000,
+		}
 
-        CallRespndMap.Register(resCallback)
+		CallRespndMap.Register(resCallback)
 
-        pipe.SendToUser(call)
-    }else {
-        errback()
-    }
+		pipe.SendToUser(call)
+	} else {
+		errback()
+	}
 }
 
 func (m pipesMap) GetUserPipe(UserId int) (*UserDevicePipe, bool) {
@@ -122,7 +122,7 @@ func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 	m.AddUserPipe(UserId, pipe)
 
 	OnNewUserWsConnected(UserId) //do and send Stored Cmds in here
-    MessageModel.FlushAllStoredMessagesToUser(UserId)
+	MessageModel.FlushAllStoredMessagesToUser(UserId)
 
 }
 
