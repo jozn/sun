@@ -123,6 +123,9 @@ func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 
 	OnNewUserWsConnected(UserId) //do and send Stored Cmds in here
 	MessageModel.FlushAllStoredMessagesToUser(UserId)
+	MessageModel.FlushAllReceivedMsgsToPeerToUser(UserId)
+	MessageModel.FlushAllDeletedMsgsToUser(UserId)
+	MessageModel.FlushAllSeenMsgsByPeerToUser(UserId)
 
 }
 

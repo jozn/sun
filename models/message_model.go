@@ -7,6 +7,9 @@ import (
 	"ms/sun/helper"
 )
 
+const CLIENT_CALL_MsgsReceivedToPeerMany = "MsgsReceivedToPeerMany"
+const CLIENT_CALL_MsgsDeletedFromServerMany = "MsgsDeletedFromServerMany"
+
 type messageLoadOne struct {
 	Message Message
 	User    User
@@ -37,6 +40,7 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 			MessageKey: msg.MessageKey,
 		}
 		MessageModel.SendAndStoreMsgsReceivedToPeer([]Message{m})
+		MessageModel.SendAndStoreMsgsDeletedFromServer([]Message{m})
 	}
 
 	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
@@ -98,15 +102,58 @@ func (e _messageModelImple) SendAndStoreMsgsReceivedToPeer(msgs []Message) {
 			}
 			NewMsgReceivedToPeer_Deleter().ToUserId_EQ(toUser).MsgKey_In(msgKeys).Delete(base.DB)
 		}
-		cal := base.NewCallWithData("MsgsRevivedToPeerMany", metas)
+		cal := base.NewCallWithData(CLIENT_CALL_MsgsReceivedToPeerMany, metas)
 		AllPipesMap.SendToUserWithCallBack(toUser, cal, succ)
 	}
 
 }
 
-//////////////////////////////////////////////
-///////////// Flushes methods ////////////////
-/////////////////////////////////////////////
+//copy of SendAndStoreMsgsReceivedToPeer with changes
+func (e _messageModelImple) SendAndStoreMsgsDeletedFromServer(msgs []Message) {
+    groupByUsers := make(map[int][]Message)
+    for _, msg := range msgs {
+        //FromUserID,ok :=groupByUsers[msg.FromUserID]
+        groupByUsers[msg.FromUserID] = append(groupByUsers[msg.FromUserID], msg)
+    }
+
+    var metaArr []MsgDeletedFromServer
+    groupMetaUsers := make(map[int][]MsgDeletedFromServer)
+    for toUser, msgs2 := range groupByUsers {
+        for _, m := range msgs2 {
+            met := MsgDeletedFromServer{
+                ToUserId:   toUser,
+                PeerUserId: m.ToUserId,
+                RoomKey:    m.RoomKey,
+                MsgKey:     m.MessageKey,
+                AtTime:     helper.TimeNow(),
+            }
+            metaArr = append(metaArr, met)
+            groupMetaUsers[toUser] = append(groupMetaUsers[toUser], met)
+            //met.Insert(base.DB)
+        }
+    }
+    err := MassInsert_MsgDeletedFromServer(metaArr, base.DB)
+    helper.DebugPrintln(err)
+
+    //// Send to each Message author users : "MsgsRevivedToPeerMany"
+    for toUser, metas := range groupMetaUsers {
+        helper.DebugPrintln(" calling clinet : MsgDeletedFromServer :", toUser)
+        succ := func() {
+            var msgKeys []string
+            for _, met := range metas {
+                msgKeys = append(msgKeys, met.MsgKey)
+            }
+            NewMsgReceivedToPeer_Deleter().ToUserId_EQ(toUser).MsgKey_In(msgKeys).Delete(base.DB)
+        }
+        cal := base.NewCallWithData(CLIENT_CALL_MsgsDeletedFromServerMany, metas)
+        AllPipesMap.SendToUserWithCallBack(toUser, cal, succ)
+    }
+
+}
+
+//////////////////////////////////////////////////////////////////////
+//////////////////////// Flushes methods /////////////////////////////
+//////////////////////////////////////////////////////////////////////
 func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 	helper.DebugPrintln("FlushAllStoredMessagesToUser()")
 
@@ -143,6 +190,7 @@ func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 		}
 		NewMessage_Deleter().ToUserId_EQ(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
 		MessageModel.SendAndStoreMsgsReceivedToPeer(msgRows)
+		MessageModel.SendAndStoreMsgsDeletedFromServer(msgRows)
 	}
 
 	dataSend := struct {
@@ -172,7 +220,7 @@ func (e _messageModelImple) FlushAllReceivedMsgsToPeerToUser(ToUserId int) {
 		NewMsgReceivedToPeer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
 	}
 
-	call := base.NewCallWithData("MsgsRevivedToPeerMany", metasRows)
+	call := base.NewCallWithData(CLIENT_CALL_MsgsReceivedToPeerMany, metasRows)
 
 	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
 }
@@ -191,7 +239,7 @@ func (e _messageModelImple) FlushAllDeletedMsgsToUser(ToUserId int) {
 		NewMsgDeletedFromServer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
 	}
 
-	call := base.NewCallWithData("MsgsDeletedFromServerMany", metasRows)
+	call := base.NewCallWithData(CLIENT_CALL_MsgsDeletedFromServerMany, metasRows)
 
 	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
 }
