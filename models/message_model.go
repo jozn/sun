@@ -62,6 +62,51 @@ func (e _messageModelImple) StoreMessage(ToUserId int, msg MessagesTableFromClie
 	helper.DebugPrintln(err)
 }
 
+func (e _messageModelImple) SendAndStoreMsgsReceivedToPeer(msgs []Message) {
+	groupByUsers := make(map[int][]Message)
+	for _, msg := range msgs {
+		//FromUserID,ok :=groupByUsers[msg.FromUserID]
+		groupByUsers[msg.FromUserID] = append(groupByUsers[msg.FromUserID], msg)
+	}
+
+	var metaArr []MsgReceivedToPeer
+	groupMetaUsers := make(map[int][]MsgReceivedToPeer)
+	for toUser, msgs2 := range groupByUsers {
+		for _, m := range msgs2 {
+			met := MsgReceivedToPeer{
+				ToUserId:   toUser,
+				PeerUserId: m.ToUserId,
+				RoomKey:    m.RoomKey,
+				MsgKey:     m.MessageKey,
+				AtTime:     helper.TimeNow(),
+			}
+			metaArr = append(metaArr, met)
+			groupMetaUsers[toUser] = append(groupMetaUsers[toUser], met)
+			//met.Insert(base.DB)
+		}
+	}
+	err := MassInsert_MsgReceivedToPeer(metaArr, base.DB)
+	helper.DebugPrintln(err)
+
+	//// Send to each Message author users : "MsgsRevivedToPeerMany"
+	for toUser, metas := range groupMetaUsers {
+		helper.DebugPrintln(" calling clinet : MsgsRevivedToPeerMany :", toUser)
+		succ := func() {
+			var msgKeys []string
+			for _, met := range metas {
+				msgKeys = append(msgKeys, met.MsgKey)
+			}
+			NewMsgReceivedToPeer_Deleter().ToUserId_EQ(toUser).MsgKey_In(msgKeys).Delete(base.DB)
+		}
+		cal := base.NewCallWithData("MsgsRevivedToPeerMany", metas)
+		AllPipesMap.SendToUserWithCallBack(toUser, cal, succ)
+	}
+
+}
+
+//////////////////////////////////////////////
+///////////// Flushes methods ////////////////
+/////////////////////////////////////////////
 func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 	helper.DebugPrintln("FlushAllStoredMessagesToUser()")
 
@@ -112,46 +157,62 @@ func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
 }
 
-func (e _messageModelImple) SendAndStoreMsgsReceivedToPeer(msgs []Message) {
-	groupByUsers := make(map[int][]Message)
-	for _, msg := range msgs {
-		//FromUserID,ok :=groupByUsers[msg.FromUserID]
-		groupByUsers[msg.FromUserID] = append(groupByUsers[msg.FromUserID], msg)
+/////////////// Metas flush//////////////
+func (e _messageModelImple) FlushAllReceivedMsgsToPeerToUser(ToUserId int) {
+	helper.DebugPrintln("FlushAllReceivedMsgsToPeerToUser()")
+
+	metasRows, err := NewMsgReceivedToPeer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows(base.DB) // first msgs rows first in slice
+	if err != nil || len(metasRows) == 0 {
+		return
+	}
+	last := metasRows[len(metasRows)-1].Id
+	succ := func() {
+		helper.DebugPrintln("SUCESS OF FlushAllReceivedMsgsToPeerToUser(): ", ToUserId)
+
+		NewMsgReceivedToPeer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
 	}
 
-	var metaArr []MsgReceivedToPeer
-    groupMetaUsers := make(map[int][]MsgReceivedToPeer)
-	for toUser, msgs2 := range groupByUsers {
-		for _, m := range msgs2 {
-			met := MsgReceivedToPeer{
-				ToUserId:   toUser,
-				PeerUserId: m.ToUserId,
-				RoomKey:    m.RoomKey,
-				MsgKey:     m.MessageKey,
-				AtTime:     helper.TimeNow(),
-			}
-			metaArr = append(metaArr, met)
-            groupMetaUsers[toUser] = append(groupMetaUsers[toUser], met)
-			//met.Insert(base.DB)
-		}
+	call := base.NewCallWithData("MsgsRevivedToPeerMany", metasRows)
+
+	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
+}
+
+func (e _messageModelImple) FlushAllDeletedMsgsToUser(ToUserId int) {
+	helper.DebugPrintln("FlushAllDeletedMsgsToUser() ", ToUserId)
+
+	metasRows, err := NewMsgDeletedFromServer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows(base.DB) // first msgs rows first in slice
+	if err != nil || len(metasRows) == 0 {
+		return
 	}
-	err := MassInsert_MsgReceivedToPeer(metaArr, base.DB)
-	helper.DebugPrintln(err)
+	last := metasRows[len(metasRows)-1].Id
+	succ := func() {
+		helper.DebugPrintln("SUCESS OF FlushAllDeletedMsgsToUser(): ", ToUserId)
 
-    //// Send to each Message author users : "MsgsRevivedToPeerMany"
-    for toUser, metas := range groupMetaUsers {
-        helper.DebugPrintln(" calling clinet : MsgsRevivedToPeerMany :",toUser)
-        succ:= func() {
-            var msgKeys []string
-            for _, met := range metas {
-                msgKeys = append(msgKeys,met.MsgKey)
-            }
-            NewMsgReceivedToPeer_Deleter().ToUserId_EQ(toUser).MsgKey_In(msgKeys).Delete(base.DB)
-        }
-        cal := base.NewCallWithData("MsgsRevivedToPeerMany",metas)
-        AllPipesMap.SendToUserWithCallBack(toUser,cal,succ)
-    }
+		NewMsgDeletedFromServer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
+	}
 
+	call := base.NewCallWithData("MsgsDeletedFromServerMany", metasRows)
+
+	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
+}
+
+func (e _messageModelImple) FlushAllSeenMsgsByPeerToUser(ToUserId int) {
+	helper.DebugPrintln("FlushAllSeenMsgsByPeerToUser() ", ToUserId)
+
+	metasRows, err := NewMsgSeenByPeer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows(base.DB) // first msgs rows first in slice
+	if err != nil || len(metasRows) == 0 {
+		return
+	}
+	last := metasRows[len(metasRows)-1].Id
+	succ := func() {
+		helper.DebugPrintln("SUCESS OF FlushAllSeenMsgsByPeerToUser(): ", ToUserId)
+
+		NewMsgSeenByPeer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
+	}
+
+	call := base.NewCallWithData("MsgsSeenByPeerMany", metasRows)
+
+	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
 }
 
 ///////////// Utils //////////////////
