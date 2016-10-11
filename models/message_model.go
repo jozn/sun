@@ -26,6 +26,7 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 		t := helper.TimeNowMs()
 		msg.CreatedMs = t
 	}
+
 	data := struct {
 		Message MessagesTableFromClient
 		User    *UserViewSyncAndMe
@@ -35,38 +36,30 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 	call := base.NewCallWithData(CLIENT_CALL_MsgAddOne, data)
 	//call.SetData(msg)
 
-	succ := func() {
-		helper.DebugPrintln("SUCESS OF SendAndStoreMessage")
-		NewMessage_Deleter().MessageKey_EQ(msg.MessageKey).ToUserId_EQ(ToUserId).Delete(base.DB)
-		m := Message{
-			FromUserID: msg.UserId,
-			MessageKey: msg.MessageKey,
-		}
-		MessageModel.SendAndStoreMsgsReceivedToPeer([]Message{m})
-		MessageModel.SendAndStoreMsgsDeletedFromServer([]Message{m})
-	}
+	////// perpare for Message table and callbacks ///////
 
-	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
-	MessageModel.StoreMessage(ToUserId, msg)
-
-}
-
-func (e _messageModelImple) StoreMessage(ToUserId int, msg MessagesTableFromClient) {
-	if msg.CreatedMs == 0 {
-		t := helper.TimeNowMs()
-		msg.CreatedMs = t
-	}
-
-	msgT := Message{
+	msgRow := Message{
 		FromUserID: msg.UserId,
 		ToUserId:   ToUserId,
 		MessageKey: msg.MessageKey,
+		RoomKey:    msg.RoomKey,
 		Data:       helper.ToJson(msg),
 		TimeMs:     msg.CreatedMs,
 	}
 
-	err := msgT.Insert(base.DB)
-	helper.DebugPrintln(err)
+	succ := func() {
+		helper.DebugPrintln("SUCESS OF SendAndStoreMessage")
+		NewMessage_Deleter().MessageKey_EQ(msg.MessageKey).ToUserId_EQ(ToUserId).Delete(base.DB)
+
+		MessageModel.SendAndStoreMsgsReceivedToPeer([]Message{msgRow})
+		MessageModel.SendAndStoreMsgsDeletedFromServer([]Message{msgRow})
+	}
+
+	errBack := func() {
+		msgRow.Insert(base.DB)
+	}
+
+	AllPipesMap.SendToUserWithCallBacks(ToUserId, call, succ, errBack)
 }
 
 func (e _messageModelImple) SendAndStoreMsgsReceivedToPeer(msgs []Message) {
@@ -113,44 +106,44 @@ func (e _messageModelImple) SendAndStoreMsgsReceivedToPeer(msgs []Message) {
 
 //copy of SendAndStoreMsgsReceivedToPeer with changes
 func (e _messageModelImple) SendAndStoreMsgsDeletedFromServer(msgs []Message) {
-    groupByUsers := make(map[int][]Message)
-    for _, msg := range msgs {
-        //FromUserID,ok :=groupByUsers[msg.FromUserID]
-        groupByUsers[msg.FromUserID] = append(groupByUsers[msg.FromUserID], msg)
-    }
+	groupByUsers := make(map[int][]Message)
+	for _, msg := range msgs {
+		//FromUserID,ok :=groupByUsers[msg.FromUserID]
+		groupByUsers[msg.FromUserID] = append(groupByUsers[msg.FromUserID], msg)
+	}
 
-    var metaArr []MsgDeletedFromServer
-    groupMetaUsers := make(map[int][]MsgDeletedFromServer)
-    for toUser, msgs2 := range groupByUsers {
-        for _, m := range msgs2 {
-            met := MsgDeletedFromServer{
-                ToUserId:   toUser,
-                PeerUserId: m.ToUserId,
-                RoomKey:    m.RoomKey,
-                MsgKey:     m.MessageKey,
-                AtTime:     helper.TimeNow(),
-            }
-            metaArr = append(metaArr, met)
-            groupMetaUsers[toUser] = append(groupMetaUsers[toUser], met)
-            //met.Insert(base.DB)
-        }
-    }
-    err := MassInsert_MsgDeletedFromServer(metaArr, base.DB)
-    helper.DebugPrintln(err)
+	var metaArr []MsgDeletedFromServer
+	groupMetaUsers := make(map[int][]MsgDeletedFromServer)
+	for toUser, msgs2 := range groupByUsers {
+		for _, m := range msgs2 {
+			met := MsgDeletedFromServer{
+				ToUserId:   toUser,
+				PeerUserId: m.ToUserId,
+				RoomKey:    m.RoomKey,
+				MsgKey:     m.MessageKey,
+				AtTime:     helper.TimeNow(),
+			}
+			metaArr = append(metaArr, met)
+			groupMetaUsers[toUser] = append(groupMetaUsers[toUser], met)
+			//met.Insert(base.DB)
+		}
+	}
+	err := MassInsert_MsgDeletedFromServer(metaArr, base.DB)
+	helper.DebugPrintln(err)
 
-    //// Send to each Message author users : "MsgsRevivedToPeerMany"
-    for toUser, metas := range groupMetaUsers {
-        helper.DebugPrintln(" calling clinet : MsgDeletedFromServer :", toUser)
-        succ := func() {
-            var msgKeys []string
-            for _, met := range metas {
-                msgKeys = append(msgKeys, met.MsgKey)
-            }
-            NewMsgReceivedToPeer_Deleter().ToUserId_EQ(toUser).MsgKey_In(msgKeys).Delete(base.DB)
-        }
-        cal := base.NewCallWithData(CLIENT_CALL_MsgsDeletedFromServerMany, metas)
-        AllPipesMap.SendToUserWithCallBack(toUser, cal, succ)
-    }
+	//// Send to each Message author users : "MsgsRevivedToPeerMany"
+	for toUser, metas := range groupMetaUsers {
+		helper.DebugPrintln(" calling clinet : MsgDeletedFromServer :", toUser)
+		succ := func() {
+			var msgKeys []string
+			for _, met := range metas {
+				msgKeys = append(msgKeys, met.MsgKey)
+			}
+			NewMsgDeletedFromServer_Deleter().ToUserId_EQ(toUser).MsgKey_In(msgKeys).Delete(base.DB)
+		}
+		cal := base.NewCallWithData(CLIENT_CALL_MsgsDeletedFromServerMany, metas)
+		AllPipesMap.SendToUserWithCallBack(toUser, cal, succ)
+	}
 
 }
 
@@ -264,6 +257,25 @@ func (e _messageModelImple) FlushAllSeenMsgsByPeerToUser(ToUserId int) {
 	call := base.NewCallWithData(CLIENT_CALL_MsgsSeenByPeerMany, metasRows)
 
 	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
+}
+
+//deprecated
+func (e _messageModelImple) StoreMessage(ToUserId int, msg MessagesTableFromClient) {
+	if msg.CreatedMs == 0 {
+		t := helper.TimeNowMs()
+		msg.CreatedMs = t
+	}
+
+	msgT := Message{
+		FromUserID: msg.UserId,
+		ToUserId:   ToUserId,
+		MessageKey: msg.MessageKey,
+		Data:       helper.ToJson(msg),
+		TimeMs:     msg.CreatedMs,
+	}
+
+	err := msgT.Insert(base.DB)
+	helper.DebugPrintln(err)
 }
 
 ///////////// Utils //////////////////

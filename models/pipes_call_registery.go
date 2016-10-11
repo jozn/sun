@@ -53,6 +53,20 @@ func (m _registerMap) Get(serverCallId int64) (*callRespondCallback, error) {
 	return &callback, nil
 }
 
+func (m _registerMap) GetAndRemove(serverCallId int64) (*callRespondCallback, error) {
+	if serverCallId == 0 {
+		return nil, errors.New(" serverCallId could not be 0")
+	}
+	m.Lock()
+	callback, ok := m.mp[serverCallId]
+	delete(m.mp, serverCallId)
+	m.Unlock()
+	if !ok {
+		return nil, errors.New(" serverCallId not found in  map")
+	}
+	return &callback, nil
+}
+
 func (m _registerMap) Remove(serverCallId int64) {
 	m.Lock()
 	delete(m.mp, serverCallId)
@@ -61,7 +75,7 @@ func (m _registerMap) Remove(serverCallId int64) {
 
 func (m _registerMap) runSucceded(serverCallId int64) {
 	helper.Debugf("runSucceded() %d", serverCallId)
-	callback, err := m.Get(serverCallId)
+	callback, err := m.GetAndRemove(serverCallId)
 	if err != nil {
 		return
 	}
@@ -72,7 +86,7 @@ func (m _registerMap) runSucceded(serverCallId int64) {
 
 func (m _registerMap) runError(serverCallId int64) {
 	helper.Debugf("runSucceded() %d", serverCallId)
-	callback, err := m.Get(serverCallId)
+	callback, err := m.GetAndRemove(serverCallId)
 	if err != nil {
 		return
 	}

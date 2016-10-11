@@ -48,7 +48,7 @@ func (pipe *UserDevicePipe) ServeIncomingCalls() {
 					serverWSReqCalls(call, pipe)
 				}
 				if config.IS_DEBUG {
-					wsDebugLog("-> from device:",pipe.UserId, string(bytes))
+					wsDebugLog("-> from device:", pipe.UserId, string(bytes))
 				}
 			}
 
@@ -76,7 +76,7 @@ func (pipe *UserDevicePipe) ServeSendToUserDevice() {
 		for r := range pipe.ToDeviceChan {
 			//helper.Debug("sending to user fom ToDeviceChan Command size ", r)
 			if config.IS_DEBUG {
-				wsDebugLog("<- to device:",pipe.UserId, helper.ToJson(r))
+				wsDebugLog("<- to device:", pipe.UserId, helper.ToJson(r))
 			}
 			pipe.Ws.WriteJSON(r)
 		}
