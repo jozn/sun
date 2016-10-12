@@ -17,10 +17,12 @@ import (
 	//redis "github.com/mediocregopher/radix.v2"
 	"github.com/gorilla/websocket"
 	"math/rand"
-	. "ms/sun/base"
-	. "ms/sun/models"
+	//. "ms/sun/base"
+	"ms/sun/base"
+	//. "ms/sun/models"
+	"ms/sun/models"
 	"net"
-	_ "net/http/pprof"
+	//_ "net/http/pprof"
 	"os"
 	"strconv"
 	"strings"
@@ -36,7 +38,7 @@ var cashe *cacheDrive.Cache
 var __DEV__ bool
 
 //var DB *sqlx.DB
-var users []User
+var users []models.User
 
 var redisPool *pool.Pool
 var ws websocket.Conn
@@ -46,12 +48,15 @@ var ws websocket.Conn
 func main() {
 	__DEV__ = true
 	var err error
-	DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms?charset=utf8mb4")
-	// DB, err = sqlx.Connect("mysql", "root:123456@/ms3?charset=ascii")
+	//DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3308)/ms?charset=utf8mb4,utf8&collation=utf8mb4_general_ci")
+    base.DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms?charset=utf8mb4")
+    //DB, err = sqlx.Connect("mysql", "root:123456@localhost:3307/ms?charset=utf8mb4")
+    //DB.Exec("SET NAMES 'utf8mb4';")
+    // DB, err = sqlx.Connect("mysql", "root:123456@/ms3?charset=ascii")
 	noErr(err)
 	//xxx := DB.MapperFunc
 	//DB.MapperFunc = xxx
-	DB.MapperFunc(func(s string) string { return s })
+    base.DB.MapperFunc(func(s string) string { return s })
 	redisInit()
 
 	//x := re
@@ -80,7 +85,7 @@ func main() {
 	//	noErr(err)
 	//	DB.MapperFunc(func(s string) string { return s })
 	registerRoutes()
-	RegisterGlobTypes()
+    base.RegisterGlobTypes()
 
 	//registerWSRoutes()
 	//init_dbs()
@@ -109,7 +114,7 @@ func main() {
 	//}()
 
 	//in models
-	OnAppStart_Models()
+    models.OnAppStart_Models()
 
 	http.ListenAndServe(":5000", nil)
 	//runtime.MemProfileRecord{}.
@@ -159,17 +164,17 @@ func noErr(err error) {
 //	}
 //}
 
-func actioner(action func(*Action)) http.Handler {
-	return &Action{Fn: action}
+func actioner(action func(*base.Action)) http.Handler {
+	return &base.Action{Fn: action}
 }
 
-func actioner2(action func(*Action)) http.HandlerFunc {
-	return (&Action{Fn: action}).ServeHTTP
+func actioner2(action func(*base.Action)) http.HandlerFunc {
+	return (&base.Action{Fn: action}).ServeHTTP
 }
 
 //for Version 2 of Action -- that returns ActionErr
-func actionToFunc(action func(*Action) AppErr) http.HandlerFunc {
-	return (&Action{Fn2: action, Ver: 2}).ServeHTTP
+func actionToFunc(action func(*base.Action) base.AppErr) http.HandlerFunc {
+	return (&base.Action{Fn2: action, Ver: 2}).ServeHTTP
 }
 
 //func dummy() {
@@ -181,7 +186,7 @@ func e(...interface{}) {
 
 }
 
-func helo(c *Action) {
+func helo(c *base.Action) {
 	c.SendText("das")
 	e(ws)
 }

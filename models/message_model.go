@@ -22,6 +22,7 @@ type _messageModelImple int
 var MessageModel _messageModelImple
 
 func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableFromClient) {
+    helper.DebugPrintln("SendAndStoreMessage()")
 	if msg.CreatedMs == 0 {
 		t := helper.TimeNowMs()
 		msg.CreatedMs = t

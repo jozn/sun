@@ -52,7 +52,7 @@ func DeepFields(iface interface{}) (valeus []interface{}, fields []string) {
 	for i := 0; i < ift.NumField(); i++ {
 		v := ifv.Field(i)
 		n := ift.Field(i).Name
-		if unicode.IsLower(rune(n[0])) { //will painc for un-exported filds
+		if unicode.IsLower(rune(n[0])) || n[0] == '_' { //will painc for un-exported filds
 			continue
 		}
 		switch v.Kind() {

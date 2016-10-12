@@ -96,7 +96,7 @@ func (m _registerMap) runError(serverCallId int64) {
 	}
 }
 
-func (m _registerMap) isRunningTimeout(is bool) {
+func (m _registerMap) setIsRunningTimeout(is bool) {
     m.Lock()
     m.isRunningTimeout = is
     m.Unlock()
@@ -106,8 +106,8 @@ func (m _registerMap) runErrorOfTimeouts() {
     if m.isRunningTimeout {
         return
     }
-    m.isRunningTimeout(true)
-    defer m.isRunningTimeout(false)
+    m.setIsRunningTimeout(true)
+    defer m.setIsRunningTimeout(false)
 
 	//helper.DebugPrintln("runErrorOfTimeouts()")
 	var arr []callRespondCallback

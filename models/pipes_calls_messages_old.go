@@ -8,7 +8,7 @@ import (
 	"ms/sun/helper"
 )
 
-func MsgAddOne_Call(c base.Call) {
+func MsgAddOne_Call_old(c base.Call) {
 	fmt.Println("called MsgAddNew :", c)
 
 	myMsg := MessagesTableFromClient{}
@@ -49,7 +49,7 @@ func MsgAddOne_Call(c base.Call) {
 	//AllPipesMap.SendAndStoreCmdToUser(toUid, cmd)
 }
 
-func MsgReceivedToPeer_Call(c base.Call) {
+func MsgReceivedToPeer_Call_old(c base.Call) {
 	fmt.Printf("\ncalled MsgReceivedToPeer %v :\n", c)
 
 	metas := []MessageSyncMeta{}
@@ -83,7 +83,7 @@ func MsgReceivedToPeer_Call(c base.Call) {
 
 }
 
-func MsgSeenByPeer_Call(c *base.CmdAction) {
+func MsgSeenByPeer_Call_old(c *base.CmdAction) {
 	fmt.Println("called MsgSeenByPeer :", *c)
 
 	metas := []MessageSyncMeta{}
@@ -112,10 +112,10 @@ func MsgSeenByPeer_Call(c *base.CmdAction) {
 }
 
 ///NOT NEEDED IN SERVER
-func MsgDeletedFromServer_Call(c *base.CmdAction) {
+func MsgDeletedFromServer_Call_old(c *base.CmdAction) {
 	//needs for group
 }
 
-func MsgReceivedToServer_Call(c *base.CmdAction) {
+func MsgReceivedToServer_Call_old(c *base.CmdAction) {
 	//maybe some futuer work to be more reliable
 }
