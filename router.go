@@ -126,6 +126,11 @@ func registerRoutes() {
 
 	mux.Get("/sync_users", actionToFunc(ctrl.SyncUsersCtrl))
 
-	http.Handle("/", mux)
+    ///// v0.4 Msgs
+    http.HandleFunc("/msgs/v1/add_one", ctrl.MsgUploadV1)
+
+
+
+    http.Handle("/", mux)
 
 }
