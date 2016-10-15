@@ -95,32 +95,42 @@ func CallRecive_MsgReceivedToPeer(c base.Call) {
 
 }
 
-func CallRecive_MsgSeenByPeer(c *base.CmdAction) {
-	fmt.Println("called MsgSeenByPeer :", *c)
+//Todo : add security layer
+func CallRecive_MsgSeenByPeer(c base.Call) {
+	fmt.Println("called MsgSeenByPeer :", c)
 
-	metas := []MessageSyncMeta{}
+	seensRows := []MsgSeenByPeer{}
 
-	json.Unmarshal([]byte(c.Cmd.Data), &metas)
+	json.Unmarshal([]byte(c.Data), &seensRows)
 
-	for _, met := range metas {
-		toUid, err := RoomKeyToPeerUserId(met.RoomKey, c.UserId)
-		if err != nil {
-			continue
-		}
-		metRes := MessageSyncMeta{
-			MessageKey: met.MessageKey,
-			RoomKey:    met.RoomKey,
-			ByUserId:   c.UserId,
-			AtTimeMs:   met.AtTimeMs, // this is client time
-			ExtraData:  met.ExtraData,
-		}
+    mpGroupByuser := make(map[int][]MsgSeenByPeer)
+    for _, seen := range seensRows {
+        mpGroupByuser[seen.ToUserId] = append(mpGroupByuser[seen.ToUserId],seen)
+    }
 
-		data := []interface{}{metRes}
+    if len(mpGroupByuser) == 0 {
+        return
+    }
 
-		recivedCmd := base.NewCallWithData(constants.MsgsSeenByPeer, data)
+    if len(mpGroupByuser) == 1 {
+        var  touser int
+        var seens []MsgSeenByPeer
+        err:= func() {
+            for touser ,seens = range mpGroupByuser {
+            }
 
-		AllPipesMap.SendToUser(toUid, recivedCmd)
-	}
+            MassInsert_MsgSeenByPeer(seens,base.DB)
+        }
+
+        call:= base.NewCallWithData("CLIENT_CALL_MsgsSeenByPeerMany",seens)
+
+        AllPipesMap.SendToUserWithCallBacks(touser,call,nil,err)
+    }
+
+    for toUserId, seens := range mpGroupByuser {
+        MessageModel.SendListOfSeenMsgsByPeerToUser(toUserId,seens)
+    }
+
 }
 
 ///NOT NEEDED IN SERVER

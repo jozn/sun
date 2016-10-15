@@ -39,6 +39,7 @@ func registerCmdRouters() {
 
 	mp2["MsgsAddOne"] = models.CallReceive_MsgsAddOne
 	mp2["MsgsAddMany"] = models.CallReceive_MsgsAddMany
+	mp2["MsgsSeenMany"] = models.CallRecive_MsgSeenByPeer
 
 }
 
