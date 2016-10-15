@@ -106,8 +106,8 @@ func setResponseBody(c *Action, w http.ResponseWriter, t1 time.Time) {
 		log.Fatal("json Marshaling error in send json response: ", err)
 	}
 
-    w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-    if len(b) > 1300 { //860: Akami cdn defualts
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	if len(b) > 1300 { //860: Akami cdn defualts
 		//w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.Header().Set("Content-Encoding", "gzip")
 		bgzip, _ := gzip.NewWriterLevel(*c.Res, gzip.BestSpeed)

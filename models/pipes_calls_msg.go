@@ -11,33 +11,32 @@ import (
 func CallReceive_MsgsAddOne(c base.Call) {
 	helper.DebugPrintln("called CallReceive_MsgsAddOne() :")
 
-
 	myMsg := MessagesTableFromClient{}
 	json.Unmarshal([]byte(c.Data), &myMsg)
 
 	//toUid := helper.StrToInt(myMsg.RoomKey[1:], -1)
 	toUid, err := RoomKeyToPeerUserId(myMsg.RoomKey, c.UserId)
 	if err != nil {
-        helper.DebugPrintln(err)
+		helper.DebugPrintln(err)
 		return
 	}
 
-    MessageModel.SendAndStoreMessage(toUid,myMsg)
+	MessageModel.SendAndStoreMessage(toUid, myMsg)
 
-    /*msg := myMsg
+	/*msg := myMsg
 
-    msgTable := Message{
-        MessageKey: msg.MessageKey,
-        ToUserId:   toUid,
-        FromUserID: c.UserId,
-        Data:       helper.ToJson(msg),
-        TimeMs:     helper.TimeNowMs(),
-    }
+	  msgTable := Message{
+	      MessageKey: msg.MessageKey,
+	      ToUserId:   toUid,
+	      FromUserID: c.UserId,
+	      Data:       helper.ToJson(msg),
+	      TimeMs:     helper.TimeNowMs(),
+	  }
 
-    call := base.NewCallWithData(constants.MsgAddOne, msg)
-    AllPipesMap.SendToUser(toUid, call)
+	  call := base.NewCallWithData(constants.MsgAddOne, msg)
+	  AllPipesMap.SendToUser(toUid, call)
 
-    msgTable.Insert(base.DB)*/
+	  msgTable.Insert(base.DB)*/
 
 	//meta := CreateMsgRecivedToServerMetaResponse(&myMsg)                //ref
 
@@ -48,6 +47,18 @@ func CallReceive_MsgsAddOne(c base.Call) {
 	//send msg to peer
 	//cmd := commands.NewMsgsAddNew(msg)
 	//AllPipesMap.SendAndStoreCmdToUser(toUid, cmd)
+}
+
+func CallReceive_MsgsAddMany(c base.Call) {
+	helper.DebugPrintln("called CallReceive_MsgsAddMany() :")
+
+	var myMsgs []MessagesTableFromClient
+	err := json.Unmarshal([]byte(c.Data), &myMsgs)
+	if err != nil {
+		return
+	}
+
+	MessageModel.SendAndStoreManyMessages(c.UserId, myMsgs)
 }
 
 func CallRecive_MsgReceivedToPeer(c base.Call) {

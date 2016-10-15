@@ -22,7 +22,7 @@ type _messageModelImple int
 var MessageModel _messageModelImple
 
 func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableFromClient) {
-    helper.DebugPrintln("SendAndStoreMessage()")
+	helper.DebugPrintln("SendAndStoreMessage()")
 	if msg.CreatedMs == 0 {
 		t := helper.TimeNowMs()
 		msg.CreatedMs = t
@@ -61,6 +61,50 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 	}
 
 	AllPipesMap.SendToUserWithCallBacks(ToUserId, call, succ, errBack)
+}
+
+func (e _messageModelImple) SendAndStoreManyMessages(CuerrntUsrId int, msgs []MessagesTableFromClient) {
+	helper.DebugPrintln("SendAndStoreManyMessages()")
+	if len(msgs) == 0 {
+		return
+	}
+
+	/// group for each toSend (Reciver) user
+	groupByUser := make(map[int][]MessagesTableFromClient, len(msgs))
+	allMsgsRows := make([]Message, 0, len(msgs))
+
+	for _, msg := range msgs {
+		toUser, err := RoomKeyToPeerUserId(msg.RoomKey, CuerrntUsrId)
+		if err != nil || toUser < 1 {
+			continue
+		}
+
+		if msg.CreatedMs == 0 {
+			t := helper.TimeNowMs()
+			msg.CreatedMs = t
+		}
+
+		msgRow := Message{
+			FromUserID: msg.UserId,
+			ToUserId:   toUser,
+			MessageKey: msg.MessageKey,
+			RoomKey:    msg.RoomKey,
+			Data:       helper.ToJson(msg),
+			TimeMs:     msg.CreatedMs,
+		}
+
+		allMsgsRows = append(allMsgsRows, msgRow)
+		groupByUser[toUser] = append(groupByUser[toUser], msg)
+	}
+
+	/// Save all msgs
+	MassInsert_Message(allMsgsRows, base.DB)
+
+	///send to each online user
+	for toUserId, msgsClient := range groupByUser {
+		MessageModel.SendManyMessagesClientsToSingleUser(toUserId, msgsClient)
+	}
+
 }
 
 func (e _messageModelImple) SendAndStoreMsgsReceivedToPeer(msgs []Message) {
@@ -148,14 +192,10 @@ func (e _messageModelImple) SendAndStoreMsgsDeletedFromServer(msgs []Message) {
 
 }
 
-//////////////////////////////////////////////////////////////////////
-//////////////////////// Flushes methods /////////////////////////////
-//////////////////////////////////////////////////////////////////////
-func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
-	helper.DebugPrintln("FlushAllStoredMessagesToUser()")
+func (e _messageModelImple) SendManyMessagesRowsToSingleUser(ToUserId int, msgRows []Message) {
+	helper.DebugPrintln("SendManyMessagesRowsToUser()")
 
-	msgRows, err := NewMessage_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows(base.DB) // first msgs rows first in slice
-	if err != nil || len(msgRows) == 0 {
+	if len(msgRows) == 0 {
 		return
 	}
 
@@ -200,6 +240,106 @@ func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 	call := base.NewCallWithData(CLIENT_CALL_MsgAddMany, dataSend)
 
 	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
+}
+
+func (e _messageModelImple) SendManyMessagesClientsToSingleUser(ToUserId int, msgClients []MessagesTableFromClient) {
+	helper.DebugPrintln("SendManyMessagesRowsToUser()")
+
+	if len(msgClients) == 0 {
+		return
+	}
+
+	mapOfSenders := make(map[int]bool, len(msgClients))
+	for _, m := range msgClients {
+		mapOfSenders[m.UserId] = true
+	}
+
+	users := make([]*UserViewSyncAndMe, 0, len(mapOfSenders))
+	for id, _ := range mapOfSenders {
+		users = append(users, Views.UserViewSync(ToUserId, id))
+	}
+
+	succ := func() {
+		helper.DebugPrintln("SUCESS OF FlushAllStoredMessagesToUser()")
+		arrMsgs := make([]string, 0, len(mapOfSenders))
+		msgsRows := make([]Message, 0, len(msgClients))
+		for _, m := range msgClients {
+			arrMsgs = append(arrMsgs, m.MessageKey)
+			mRow := Message{}
+			mRow.FromClientMessageOptimized(ToUserId, m)
+			msgsRows = append(msgsRows, mRow)
+
+		}
+		NewMessage_Deleter().ToUserId_EQ(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
+		MessageModel.SendAndStoreMsgsReceivedToPeer(msgsRows)
+		MessageModel.SendAndStoreMsgsDeletedFromServer(msgsRows)
+	}
+
+	dataSend := struct {
+		Messages []MessagesTableFromClient
+		Users    []*UserViewSyncAndMe
+	}{
+		msgClients, users,
+	}
+
+	call := base.NewCallWithData(CLIENT_CALL_MsgAddMany, dataSend)
+
+	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
+}
+
+//////////////////////////////////////////////////////////////////////
+//////////////////////// Flushes methods /////////////////////////////
+//////////////////////////////////////////////////////////////////////
+func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
+	helper.DebugPrintln("FlushAllStoredMessagesToUser()")
+
+	msgRows, err := NewMessage_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows(base.DB) // first msgs rows first in slice
+	if err != nil || len(msgRows) == 0 {
+		return
+	}
+	MessageModel.SendManyMessagesRowsToSingleUser(ToUserId, msgRows)
+
+	/*mapOfSenders := make(map[int]bool, len(msgRows))
+	for _, m := range msgRows {
+		mapOfSenders[m.FromUserID] = true
+	}
+
+	//arr := make([]int,0,len(mp))
+	users := make([]*UserViewSyncAndMe, 0, len(mapOfSenders))
+	for id, _ := range mapOfSenders {
+		//arr = append(arr,id)
+		users = append(users, Views.UserViewSync(ToUserId, id))
+	}
+
+	//json unserilaize
+	msgsRes := make([]*MessagesTableFromClient, 0, len(mapOfSenders))
+	for _, m := range msgRows {
+		msgView := &MessagesTableFromClient{}
+		json.Unmarshal([]byte(m.Data), msgView)
+		msgsRes = append(msgsRes, msgView)
+	}
+
+	succ := func() {
+		helper.DebugPrintln("SUCESS OF FlushAllStoredMessagesToUser()")
+		arrMsgs := make([]string, 0, len(mapOfSenders))
+		for _, m := range msgRows {
+			arrMsgs = append(arrMsgs, m.MessageKey)
+		}
+		NewMessage_Deleter().ToUserId_EQ(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
+		MessageModel.SendAndStoreMsgsReceivedToPeer(msgRows)
+		MessageModel.SendAndStoreMsgsDeletedFromServer(msgRows)
+	}
+
+	dataSend := struct {
+		Messages []*MessagesTableFromClient
+		Users    []*UserViewSyncAndMe
+	}{
+		msgsRes, users,
+	}
+
+	call := base.NewCallWithData(CLIENT_CALL_MsgAddMany, dataSend)
+
+	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)*/
 }
 
 /////////////// Metas flush//////////////

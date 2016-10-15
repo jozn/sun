@@ -17,8 +17,8 @@ type callRespondCallback struct {
 
 type _registerMap struct {
 	sync.RWMutex
-	mp map[int64]callRespondCallback
-    isRunningTimeout bool
+	mp               map[int64]callRespondCallback
+	isRunningTimeout bool
 }
 
 var CallRespndMap _registerMap
@@ -97,17 +97,17 @@ func (m _registerMap) runError(serverCallId int64) {
 }
 
 func (m _registerMap) setIsRunningTimeout(is bool) {
-    m.Lock()
-    m.isRunningTimeout = is
-    m.Unlock()
+	m.Lock()
+	m.isRunningTimeout = is
+	m.Unlock()
 }
 
 func (m _registerMap) runErrorOfTimeouts() {
-    if m.isRunningTimeout {
-        return
-    }
-    m.setIsRunningTimeout(true)
-    defer m.setIsRunningTimeout(false)
+	if m.isRunningTimeout {
+		return
+	}
+	m.setIsRunningTimeout(true)
+	defer m.setIsRunningTimeout(false)
 
 	//helper.DebugPrintln("runErrorOfTimeouts()")
 	var arr []callRespondCallback

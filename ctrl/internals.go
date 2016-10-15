@@ -55,7 +55,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 			msg := models.MessagesTableFromClient{}
 			msg.RoomKey = models.UserIdsToRoomKey(toUserId, fromUserId) //"u" + helper.IntToStr(uid)
 			msg.UserId = fromUserId
-			msg.MessageKey = helper.IntToStr(fromUserId) + ":" + helper.RandString(15)
+			msg.MessageKey = helper.IntToStr(fromUserId) + "@:" + helper.RandString(10)
 			msg.CreatedMs = helper.TimeNowMs()
 			msg.MessageTypeId = 10
 			msg.Text = txt

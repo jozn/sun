@@ -15,7 +15,7 @@ import (
 //structRow: must be poniter
 func DbInsertStruct(structRow interface{}, table string) (sql.Result, error) {
 	//return DbInsertUpdateStruct(structRow, table, true)
-    defer helper.JustRecover()
+	defer helper.JustRecover()
 	keys, values := helper.StructToFiledsRejectsEscape(structRow, "Id")
 
 	ks := make([]string, len(keys))
@@ -34,7 +34,7 @@ func DbInsertStruct(structRow interface{}, table string) (sql.Result, error) {
 
 	r, err := DB.Exec(q, vals...)
 	//r, err := DB.Exec(q)
-    helper.DebugPrintln(err)
+	helper.DebugPrintln(err)
 
 	if config.DEBUG_LOG_SQL {
 		helper.DebugPrintln(q, vals)

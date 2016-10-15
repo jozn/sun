@@ -14,14 +14,14 @@ func CreateNewComment(UserId, PostId int, Text string) Comment {
 	//todo format text for security and size ,parsing ,tages,...
 	cmt.Text = Text
 
-    helper.DebugPrintln(cmt)
+	helper.DebugPrintln(cmt)
 	res, err := base.DbInsertStruct(&cmt, "comments")
 	if err == nil {
 		id, _ := res.LastInsertId()
 		cmt.Id = int(id)
 		QueryIncerPostCommentsCount(PostId, 1)
 	}
-    helper.DebugPrintln(err)
+	helper.DebugPrintln(err)
 
 	//Eventing
 	//todo clean this up: post alwayse load

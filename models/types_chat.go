@@ -1,5 +1,7 @@
 package models
 
+import "ms/sun/helper"
+
 type Message struct {
 	Id         int    `json:"Id"`         // Id -
 	ToUserId   int    `json:"ToUserId"`   // ToUserId -
@@ -11,6 +13,24 @@ type Message struct {
 
 	// xo fields
 	_exists, _deleted bool
+}
+
+func (m *Message) FromClientMessage(toUser int, msg MessagesTableFromClient) {
+	m.FromUserID = msg.UserId
+	m.ToUserId = toUser
+	m.MessageKey = msg.MessageKey
+	m.RoomKey = msg.RoomKey
+	m.Data = helper.ToJson(msg)
+	m.TimeMs = msg.CreatedMs
+}
+
+func (m *Message) FromClientMessageOptimized(toUser int, msg MessagesTableFromClient) {
+	m.FromUserID = msg.UserId
+	m.ToUserId = toUser
+	m.MessageKey = msg.MessageKey
+	m.RoomKey = msg.RoomKey
+	//m.Data=       helper.ToJson(msg)
+	m.TimeMs = msg.CreatedMs
 }
 
 type MsgDeletedFromServer struct {

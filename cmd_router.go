@@ -37,8 +37,8 @@ func registerCmdRouters() {
 	mp2["echo"] = models.EchoCmd
 	mp2["Echo"] = models.EchoCmd
 
-    mp2["MsgsAddOne"] = models.CallReceive_MsgsAddOne
-
+	mp2["MsgsAddOne"] = models.CallReceive_MsgsAddOne
+	mp2["MsgsAddMany"] = models.CallReceive_MsgsAddMany
 
 }
 

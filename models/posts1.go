@@ -17,8 +17,8 @@ func AddNewPostToDbAndItsMeta(post *Post) {
 	post.CreatedTime = helper.TimeNow()
 	UserMemoryStore.UpdateUserPostsCounts(post.UserId, 1)
 
-    post.Save(base.DB)
-    //
+	post.Save(base.DB)
+	//
 	//res, _ := base.DbInsertStruct(post, "post")
 	//pid, _ := res.LastInsertId()
 	//post.Id = int(pid)

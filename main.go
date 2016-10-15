@@ -49,14 +49,14 @@ func main() {
 	__DEV__ = true
 	var err error
 	//DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3308)/ms?charset=utf8mb4,utf8&collation=utf8mb4_general_ci")
-    base.DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms?charset=utf8mb4")
-    //DB, err = sqlx.Connect("mysql", "root:123456@localhost:3307/ms?charset=utf8mb4")
-    //DB.Exec("SET NAMES 'utf8mb4';")
-    // DB, err = sqlx.Connect("mysql", "root:123456@/ms3?charset=ascii")
+	base.DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms?charset=utf8mb4")
+	//DB, err = sqlx.Connect("mysql", "root:123456@localhost:3307/ms?charset=utf8mb4")
+	//DB.Exec("SET NAMES 'utf8mb4';")
+	// DB, err = sqlx.Connect("mysql", "root:123456@/ms3?charset=ascii")
 	noErr(err)
 	//xxx := DB.MapperFunc
 	//DB.MapperFunc = xxx
-    base.DB.MapperFunc(func(s string) string { return s })
+	base.DB.MapperFunc(func(s string) string { return s })
 	redisInit()
 
 	//x := re
@@ -85,7 +85,7 @@ func main() {
 	//	noErr(err)
 	//	DB.MapperFunc(func(s string) string { return s })
 	registerRoutes()
-    base.RegisterGlobTypes()
+	base.RegisterGlobTypes()
 
 	//registerWSRoutes()
 	//init_dbs()
@@ -114,7 +114,7 @@ func main() {
 	//}()
 
 	//in models
-    models.OnAppStart_Models()
+	models.OnAppStart_Models()
 
 	http.ListenAndServe(":5000", nil)
 	//runtime.MemProfileRecord{}.
