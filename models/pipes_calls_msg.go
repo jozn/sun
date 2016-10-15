@@ -115,10 +115,12 @@ func CallRecive_MsgSeenByPeer(c base.Call) {
     if len(mpGroupByuser) == 1 {
         var  touser int
         var seens []MsgSeenByPeer
+
+        for touser ,seens = range mpGroupByuser {
+        }
+
         err:= func() {
-            fmt.Println("**********************\n*********************\n********************")
-            for touser ,seens = range mpGroupByuser {
-            }
+            //fmt.Println("**********************\n*********************\n********************",touser)
 
             MassInsert_MsgSeenByPeer(seens,base.DB)
         }
