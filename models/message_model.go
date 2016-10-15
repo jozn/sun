@@ -388,17 +388,28 @@ func (e _messageModelImple) FlushAllSeenMsgsByPeerToUser(ToUserId int) {
 	if err != nil || len(metasRows) == 0 {
 		return
 	}
-	last := metasRows[len(metasRows)-1].Id
-	succ := func() {
-		helper.DebugPrintln("SUCESS OF FlushAllSeenMsgsByPeerToUser(): ", ToUserId)
 
-		NewMsgSeenByPeer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
-	}
-
-	call := base.NewCallWithData(CLIENT_CALL_MsgsSeenByPeerMany, metasRows)
-
-	AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
+	MessageModel.SendListOfSeenMsgsByPeerToUser(ToUserId,metasRows)
 }
+
+func (e _messageModelImple) SendListOfSeenMsgsByPeerToUser(ToUserId int, seenRows []MsgSeenByPeer) {
+    helper.DebugPrintln("SendListOfSeenMsgsByPeerToUser() ", ToUserId, len(seenRows))
+
+    if len(seenRows) == 0 {
+        return
+    }
+    last := seenRows[len(seenRows)-1].Id
+    succ := func() {
+        helper.DebugPrintln("SUCESS OF SendListOfSeenMsgsByPeerToUser(): ", ToUserId)
+
+        NewMsgSeenByPeer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
+    }
+
+    call := base.NewCallWithData(CLIENT_CALL_MsgsSeenByPeerMany, seenRows)
+
+    AllPipesMap.SendToUserWithCallBack(ToUserId, call, succ)
+}
+
 
 //deprecated
 func (e _messageModelImple) StoreMessage(ToUserId int, msg MessagesTableFromClient) {
