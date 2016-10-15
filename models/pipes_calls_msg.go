@@ -116,17 +116,20 @@ func CallRecive_MsgSeenByPeer(c base.Call) {
         var  touser int
         var seens []MsgSeenByPeer
         err:= func() {
+            fmt.Println("**********************\n*********************\n********************")
             for touser ,seens = range mpGroupByuser {
             }
 
             MassInsert_MsgSeenByPeer(seens,base.DB)
         }
 
-        call:= base.NewCallWithData("CLIENT_CALL_MsgsSeenByPeerMany",seens)
+        call:= base.NewCallWithData(CLIENT_CALL_MsgsSeenByPeerMany,seens)
 
         AllPipesMap.SendToUserWithCallBacks(touser,call,nil,err)
+        return
     }
 
+    MassInsert_MsgSeenByPeer(seensRows,base.DB)
     for toUserId, seens := range mpGroupByuser {
         MessageModel.SendListOfSeenMsgsByPeerToUser(toUserId,seens)
     }

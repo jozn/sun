@@ -38,7 +38,8 @@ func (m pipesMap) SendToUser(UserId int, call base.Call) {
 }
 
 func (m pipesMap) SendToUserWithCallBack(UserId int, call base.Call, callback func()) {
-	pipe, ok := m.GetUserPipe(UserId)
+    m.SendToUserWithCallBacks(UserId , call , callback,nil )
+	/*pipe, ok := m.GetUserPipe(UserId)
 	helper.Debugf("sending to user:%d %v %v ", UserId, ok)
 	if ok && pipe.IsOpen {
 		defer func() {
@@ -58,13 +59,13 @@ func (m pipesMap) SendToUserWithCallBack(UserId int, call base.Call, callback fu
 		CallRespndMap.Register(resCallback)
 
 		pipe.SendToUser(call)
-	}
+	}*/
 }
 
 func (m pipesMap) SendToUserWithCallBacks(UserId int, call base.Call, callback func(), errback func()) {
 	pipe, ok := m.GetUserPipe(UserId)
-	helper.Debugf("sending to user:%d %v %v ", UserId, ok)
-	if ok && pipe.IsOpen {
+	helper.Debugf("sending to user:%d  - pipe is: %v --- %s ", UserId, ok, call.Name)
+	if ok {//&& pipe.IsOpen {
 		defer func() {
 			if r := recover(); r != nil {
 				//pipe.IsOpen = false
@@ -83,7 +84,7 @@ func (m pipesMap) SendToUserWithCallBacks(UserId int, call base.Call, callback f
 		CallRespndMap.Register(resCallback)
 
 		pipe.SendToUser(call)
-	} else {
+	} else if errback != nil {
 		errback()
 	}
 }
