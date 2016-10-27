@@ -138,11 +138,11 @@ func CallRecive_MsgSeenByPeer(c base.Call) {
 
 }
 
-///NOT NEEDED IN SERVER
-func CallRecive_MsgDeletedFromServer(c *base.CmdAction) {
-	//needs for group
+func EchoCmd(c base.Call) {
+    //b, _ := json.Marshal(c)
+    //r := base.WSRes{Status: "BB", ReqKey: string(b)}
+    call := base.NewCallWithData("echo", "sad")
+    AllPipesMap.SendToUser(c.UserId, call)
+    //AllPipesMap.SendToUser_DEP(c.UserId, r)
 }
 
-func CallRecive_MsgReceivedToServer(c *base.CmdAction) {
-	//maybe some futuer work to be more reliable
-}

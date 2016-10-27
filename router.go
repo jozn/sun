@@ -71,7 +71,7 @@ func registerRoutes() {
 	http.Handle("/fact/post", actioner(fact.FactPost))
 
 	//messages
-	http.HandleFunc("/MsgUpload", MsgUpload)
+	//http.HandleFunc("/MsgUpload", MsgUpload)
 
 	//////////////////// New V1 apis //////////////////////////
 	//mux.Post("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))

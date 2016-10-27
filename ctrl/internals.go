@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 	"ms/sun/base"
-	"ms/sun/constants"
 	"ms/sun/helper"
 	"ms/sun/models"
 	"time"
@@ -46,9 +45,9 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 			}
 			if text != "" {
 				txt = text
-			}
-
-			txt = fmt.Sprintf("id: %d ", i) + txt
+			}else {
+                txt = fmt.Sprintf("id: %d ", i) + txt
+            }
 
 			fromUserId := helper.StrToInt(strFrom, rand.Intn(80)+1)
 			//msg := chat.MessagesTable{}
@@ -70,9 +69,9 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 				msg.MediaWidth = 960
 			}
 
-			cmd := base.NewCommand(constants.MsgsAddNew)
+			/*cmd := base.NewCommand(constants.MsgsAddNew)
 			cmd.AddSliceData(msg)
-			cmd.MakeDataReady()
+			cmd.MakeDataReady()*/
 			//res :=base.WSRes{
 			//}
 			//res.Commands = []*base.Command{&cmd}
