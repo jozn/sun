@@ -45,9 +45,9 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 			}
 			if text != "" {
 				txt = text
-			}else {
-                txt = fmt.Sprintf("id: %d ", i) + txt
-            }
+			} else {
+				txt = fmt.Sprintf("id: %d ", i) + txt
+			}
 
 			fromUserId := helper.StrToInt(strFrom, rand.Intn(80)+1)
 			//msg := chat.MessagesTable{}

@@ -99,17 +99,28 @@ func GetPostsStraemAction(c *base.Action) base.AppErr {
 	_ = last
 	_ = page
 
+	const LIMIT = 30
 	uid := c.UserId()
-	print(uid)
+	//print(uid)
 	//fids := models.GetAllPrimiryFollowingIds(uid)
 	fids := models.UserMemoryStore.GetAllFollowingsListOfUser(uid).Elements
-	// dbIns(len(fids))e
-	sql := "select * from post where UserId in(" + helper.IntsToSqlIn(fids) + ") order by Id Desc limit 100 "
 
-	var rs []models.Post
-	base.DB.Select(&rs, sql)
+	selctor := models.NewPost_Selector().UserId_In(fids).OrderBy_Id_Desc().Limit(LIMIT)
 
-	view := models.PostsToPostsAndDetailesV1(rs, uid)
+	if last > 0 {
+		selctor.Id_LT(last)
+	} else if page > 0 {
+		selctor.Offset((page - 1) * LIMIT)
+	}
+
+	posts, err := selctor.GetRows(base.DB)
+	if err != nil {
+		helper.DebugPrintln(err)
+		c.SendJson(nil)
+		return err
+	}
+
+	view := models.PostsToPostsAndDetailesV1(posts, uid)
 	c.SendJson(view)
 	return nil
 }
@@ -175,3 +186,44 @@ func GetPostsForProfileAction(c *base.Action) base.AppErr {
 	c.SendJson(res)
 	return nil
 }
+
+/*
+func GetPostsStraemAction(c *base.Action) base.AppErr {
+    MustBeUserAndUpdate(c)
+    laststr := c.Req.Form.Get("last") //last that have
+    pagestr := c.Req.Form.Get("page")
+    last := helper.StrToInt(laststr, 0)
+    page := helper.StrToInt(pagestr, 0)
+    _ = last
+    _ = page
+
+    const LIMIT  = 30
+    uid := c.UserId()
+    //print(uid)
+    //fids := models.GetAllPrimiryFollowingIds(uid)
+    fids := models.UserMemoryStore.GetAllFollowingsListOfUser(uid).Elements
+    // dbIns(len(fids))e
+    sql := "select * from post where UserId in(" + helper.IntsToSqlIn(fids) + ") order by Id Desc limit 100 "
+
+    selctor := models.NewPost_Selector().UserId_In(fids).OrderBy_Id_Desc().Limit(LIMIT)
+
+    if last > 0 {
+        selctor.UserId_LT(last)
+    }else if page > 0 {
+        selctor.Offset(page*LIMIT)
+    }
+
+    posts,err := selctor.GetRows(base.DB)
+    if err != nil{
+        helper.DebugPrintln(err)
+        c.SendJson(nil)
+        return err
+    }
+    var rs []models.Post
+    base.DB.Select(&rs, sql)
+
+    view := models.PostsToPostsAndDetailesV1(rs, uid)
+    c.SendJson(view)
+    return nil
+}
+*/

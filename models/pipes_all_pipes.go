@@ -38,7 +38,7 @@ func (m pipesMap) SendToUser(UserId int, call base.Call) {
 }
 
 func (m pipesMap) SendToUserWithCallBack(UserId int, call base.Call, callback func()) {
-    m.SendToUserWithCallBacks(UserId , call , callback,nil )
+	m.SendToUserWithCallBacks(UserId, call, callback, nil)
 	/*pipe, ok := m.GetUserPipe(UserId)
 	helper.Debugf("sending to user:%d %v %v ", UserId, ok)
 	if ok && pipe.IsOpen {

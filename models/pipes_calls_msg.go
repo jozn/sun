@@ -103,46 +103,45 @@ func CallRecive_MsgSeenByPeer(c base.Call) {
 
 	json.Unmarshal([]byte(c.Data), &seensRows)
 
-    mpGroupByuser := make(map[int][]MsgSeenByPeer)
-    for _, seen := range seensRows {
-        mpGroupByuser[seen.ToUserId] = append(mpGroupByuser[seen.ToUserId],seen)
-    }
+	mpGroupByuser := make(map[int][]MsgSeenByPeer)
+	for _, seen := range seensRows {
+		mpGroupByuser[seen.ToUserId] = append(mpGroupByuser[seen.ToUserId], seen)
+	}
 
-    if len(mpGroupByuser) == 0 {
-        return
-    }
+	if len(mpGroupByuser) == 0 {
+		return
+	}
 
-    if len(mpGroupByuser) == 1 {
-        var  touser int
-        var seens []MsgSeenByPeer
+	if len(mpGroupByuser) == 1 {
+		var touser int
+		var seens []MsgSeenByPeer
 
-        for touser ,seens = range mpGroupByuser {
-        }
+		for touser, seens = range mpGroupByuser {
+		}
 
-        err:= func() {
-            //fmt.Println("**********************\n*********************\n********************",touser)
+		err := func() {
+			//fmt.Println("**********************\n*********************\n********************",touser)
 
-            MassInsert_MsgSeenByPeer(seens,base.DB)
-        }
+			MassInsert_MsgSeenByPeer(seens, base.DB)
+		}
 
-        call:= base.NewCallWithData(CLIENT_CALL_MsgsSeenByPeerMany,seens)
+		call := base.NewCallWithData(CLIENT_CALL_MsgsSeenByPeerMany, seens)
 
-        AllPipesMap.SendToUserWithCallBacks(touser,call,nil,err)
-        return
-    }
+		AllPipesMap.SendToUserWithCallBacks(touser, call, nil, err)
+		return
+	}
 
-    MassInsert_MsgSeenByPeer(seensRows,base.DB)
-    for toUserId, seens := range mpGroupByuser {
-        MessageModel.SendListOfSeenMsgsByPeerToUser(toUserId,seens)
-    }
+	MassInsert_MsgSeenByPeer(seensRows, base.DB)
+	for toUserId, seens := range mpGroupByuser {
+		MessageModel.SendListOfSeenMsgsByPeerToUser(toUserId, seens)
+	}
 
 }
 
 func EchoCmd(c base.Call) {
-    //b, _ := json.Marshal(c)
-    //r := base.WSRes{Status: "BB", ReqKey: string(b)}
-    call := base.NewCallWithData("echo", "sad")
-    AllPipesMap.SendToUser(c.UserId, call)
-    //AllPipesMap.SendToUser_DEP(c.UserId, r)
+	//b, _ := json.Marshal(c)
+	//r := base.WSRes{Status: "BB", ReqKey: string(b)}
+	call := base.NewCallWithData("echo", "sad")
+	AllPipesMap.SendToUser(c.UserId, call)
+	//AllPipesMap.SendToUser_DEP(c.UserId, r)
 }
-
