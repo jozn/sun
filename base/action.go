@@ -22,7 +22,7 @@ type Action struct {
 	Fn        func(*Action)        //sub-action
 	Fn2       func(*Action) AppErr //sub-action
 	Req       *http.Request
-	Res       *http.ResponseWriter
+	Res       http.ResponseWriter
 	Ver       int
 	_userId   int
 	// UserId    int
@@ -52,6 +52,9 @@ func (c Action) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				c.SendJson(nil)
 				setResponseBody(&c, w, time.Now())
 			}
+
+            fmt.Println("PANIC 2: ",e)
+            w.Write([]byte(fmt.Sprintf("%v",e)))
 		}
 
 	}()
@@ -65,7 +68,7 @@ func (c Action) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	c.c = c.c + 1
 	c.Req = r
-	c.Res = &w
+	c.Res = w
 	c.Req.ParseForm()
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "x-ms-uuid")
@@ -110,11 +113,11 @@ func setResponseBody(c *Action, w http.ResponseWriter, t1 time.Time) {
 	if len(b) > 1300 { //860: Akami cdn defualts
 		//w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.Header().Set("Content-Encoding", "gzip")
-		bgzip, _ := gzip.NewWriterLevel(*c.Res, gzip.BestSpeed)
+		bgzip, _ := gzip.NewWriterLevel(c.Res, gzip.BestSpeed)
 		bgzip.Write(b)
 		bgzip.Close()
 	} else {
-		fmt.Fprintln(*c.Res, string(b))
+		fmt.Fprintln(c.Res, string(b))
 	}
 
 }

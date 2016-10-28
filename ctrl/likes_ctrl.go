@@ -6,6 +6,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
+    "fmt"
 )
 
 const LIKES_LIST_LIMIT = 50
@@ -36,6 +37,15 @@ func GetLikesAction(c *base.Action) base.AppErr {
 }
 
 func PostAddLikeAction(c *base.Action) base.AppErr {
+    defer func() {
+        e := recover()
+        if e != nil {
+
+            fmt.Println("PANIC 5: ",e)
+            c.SendJson(c)
+        }
+
+    }()
 	pids := c.Req.Form.Get("post_id")
 	pid := helper.StrToInt(pids, 0)
 	if pid < 1 {

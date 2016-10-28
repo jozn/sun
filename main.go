@@ -84,7 +84,7 @@ func main() {
 	// DB, err = sqlx.Connect("mysql", "root:123456@/ms3?charset=ascii")
 	//	noErr(err)
 	//	DB.MapperFunc(func(s string) string { return s })
-	registerRoutes()
+	v1Tree := registerRoutes()
 	base.RegisterGlobTypes()
 
 	//registerWSRoutes()
@@ -116,6 +116,7 @@ func main() {
 	//in models
 	models.OnAppStart_Models()
 
+    _ = v1Tree
 	http.ListenAndServe(":5000", nil)
 	//runtime.MemProfileRecord{}.
 }

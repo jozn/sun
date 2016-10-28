@@ -8,11 +8,22 @@ import (
 	//"github.com/drone/routes"
 	"ms/sun/ctrl"
 	"ms/sun/models"
-	"ms/sun/routes"
+	//"ms/sun/routes"
+    "github.com/dimfeld/httptreemux"
+    "ms/sun/base"
+    "fmt"
+    //"github.com/gorilla/mux"
 )
 
-func registerRoutes() {
-	mux := routes.NewPrefix("/v1")
+func registerRoutes() *httptreemux.TreeMux {
+	//v1 := routes.NewPrefix("/v1")
+
+    v1Tree := httptreemux.New()
+    v1Tree.PanicHandler = func(w http.ResponseWriter,r *http.Request,p interface{}){
+        fmt.Println("PANIC: ",p)
+        w.Write([]byte(fmt.Sprintf("%v",p)))
+    }
+    v1 := v1Tree.NewGroup("/v1")
 
 	http.Handle("/upload-avatar", actioner(UploadAvatarAction))
 	http.Handle("/remove-avatar", actioner(RemoveAvatarAction))
@@ -21,16 +32,16 @@ func registerRoutes() {
 
 	http.Handle("/search", actioner(SearchAllAction))
 	http.Handle("/tag", actioner(SearchTagsAction))
-	mux.Post("/sync-all-contacts", actionToFunc(SyncAllContactsAction))
-	mux.Post("/sync-followings", actionToFunc(ctrl.SyncFollowingsAction))
-	mux.Get("/sync-followings", actionToFunc(ctrl.SyncFollowingsAction))
+	v1.POST("/sync-all-contacts", toV1(SyncAllContactsAction))
+	v1.POST("/sync-followings", toV1(ctrl.SyncFollowingsAction))
+	v1.GET("/sync-followings", toV1(ctrl.SyncFollowingsAction))
 
 	http.Handle("/fact/user1", actioner(fact.FactUser1))
 
 	http.Handle("/fact/user_real", actioner(fact.FactRealUser))
 
-	mux.Get("/json2/:UserId", actionToFunc(TestJson1))
-	mux.Del("/json2/:UserId", actionToFunc(TestJson1))
+	v1.GET("/json2/:UserId", toV1(TestJson1))
+	v1.DELETE("/json2/:UserId", toV1(TestJson1))
 
 	http.Handle("/upload1", actioner(TestUpload1))
 	http.Handle("/upload3", actioner(PlayUpload3))
@@ -74,61 +85,75 @@ func registerRoutes() {
 	//http.HandleFunc("/MsgUpload", MsgUpload)
 
 	//////////////////// New V1 apis //////////////////////////
-	//mux.Post("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
-	//mux.Get("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
+	//mux.POST("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
+	//mux.GET("/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
 	http.Handle("/v1/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
 
-	mux.Post("/post/add", actionToFunc(ctrl.AddPostAction))
-	mux.Get("/post/add", actionToFunc(ctrl.AddPostAction))
-	mux.Get("/post/get", actionToFunc(ctrl.GetSinglePostAction))
-	mux.Get("/post/stream", actionToFunc(ctrl.GetPostsStraemAction))
-	mux.Get("/post/latest", actionToFunc(ctrl.GetPostsLatestAction))
-	mux.Get("/post/delete", actionToFunc(ctrl.PostDeleteAction))
-	mux.Get("/post/update", actionToFunc(ctrl.PostUpdateAction))
+	v1.POST("/post/add", toV1(ctrl.AddPostAction))
+	v1.GET("/post/add", toV1(ctrl.AddPostAction))
+	v1.GET("/post/get", toV1(ctrl.GetSinglePostAction))
+	v1.GET("/post/stream", toV1(ctrl.GetPostsStraemAction))
+	v1.GET("/post/latest", toV1(ctrl.GetPostsLatestAction))
+	v1.GET("/post/delete", toV1(ctrl.PostDeleteAction))
+	v1.GET("/post/update", toV1(ctrl.PostUpdateAction))
 
-	mux.Get("/follow", actionToFunc(ctrl.FollowAction))
-	mux.Get("/unfollow", actionToFunc(ctrl.UnfollowAction))
-	mux.Get("/followers", actionToFunc(ctrl.GetFollowersListAction))
-	mux.Get("/following", actionToFunc(ctrl.GetFollowingsListAction))
+	v1.GET("/follow", toV1(ctrl.FollowAction))
+	v1.GET("/unfollow", toV1(ctrl.UnfollowAction))
+	v1.GET("/followers", toV1(ctrl.GetFollowersListAction))
+	v1.GET("/following", toV1(ctrl.GetFollowingsListAction))
 
-	//mux.Get("/likes", actionToFunc(ctrl.GetFollowingsListAction))
-	mux.Get("/like", actionToFunc(ctrl.PostAddLikeAction))
-	mux.Get("/unlike", actionToFunc(ctrl.PostRemoveLikeAction))
-	mux.Get("/likes", actionToFunc(ctrl.GetLikesAction))
+	//mux.GET("/likes", toV1(ctrl.GetFollowingsListAction))
+	v1.GET("/like", toV1(ctrl.PostAddLikeAction))
+	v1.GET("/unlike", toV1(ctrl.PostRemoveLikeAction))
+	v1.GET("/likes", toV1(ctrl.GetLikesAction))
 
-	mux.Get("/comments/add", actionToFunc(ctrl.PostAddCommentAction))
-	mux.Post("/comments/add", actionToFunc(ctrl.PostAddCommentAction))
-	mux.Get("/comments/list", actionToFunc(ctrl.GetCommentsAction))
-	mux.Post("/comments/delete", actionToFunc(ctrl.RemoveCommentAction))
+	v1.GET("/comments/add", toV1(ctrl.PostAddCommentAction))
+	v1.POST("/comments/add", toV1(ctrl.PostAddCommentAction))
+	v1.GET("/comments/list", toV1(ctrl.GetCommentsAction))
+	v1.POST("/comments/delete", toV1(ctrl.RemoveCommentAction))
 
-	mux.Post("/session/info", actionToFunc(ctrl.SessionGetUserInfo))
-	mux.Get("/session/info", actionToFunc(ctrl.SessionGetUserInfo))
+	v1.POST("/session/info", toV1(ctrl.SessionGetUserInfo))
+	v1.GET("/session/info", toV1(ctrl.SessionGetUserInfo))
 
-	mux.Get("/profile/all", actionToFunc(ctrl.GetPostsForProfileAction))
+	v1.GET("/profile/all", toV1(ctrl.GetPostsForProfileAction))
 
-	mux.Get("/notifications", actionToFunc(ctrl.VNoftificationsCtrl))
-	//mux.Get("notifications", actionToFunc(ctrl.NoftificationsCtrl))
+	v1.GET("/notifications", toV1(ctrl.VNoftificationsCtrl))
+	//mux.GET("notifications", toV1(ctrl.NoftificationsCtrl))
 
-	mux.Get("/recommend/top_posts", actionToFunc(ctrl.RecommendPostsCtrl))
-	mux.Get("/recommend/users", actionToFunc(ctrl.RecommendUsersCtrl))
-	mux.Get("/recommend/top_tags", actionToFunc(ctrl.RecommendTagsCtrl))
-	mux.Get("/recommend/top_tags_discover", actionToFunc(ctrl.RecommendTagsWithPostsCtrl))
+	v1.GET("/recommend/top_posts", toV1(ctrl.RecommendPostsCtrl))
+	v1.GET("/recommend/users", toV1(ctrl.RecommendUsersCtrl))
+	v1.GET("/recommend/top_tags", toV1(ctrl.RecommendTagsCtrl))
+	v1.GET("/recommend/top_tags_discover", toV1(ctrl.RecommendTagsWithPostsCtrl))
 
-	mux.Get("/tags/list", actionToFunc(ctrl.TagsPostsListCtrl))
-	mux.Get("/search", actionToFunc(ctrl.SearchCtrl))
-	mux.Get("/search/tags", actionToFunc(ctrl.SearchTagsCtrl))
-	mux.Get("/search/users", actionToFunc(ctrl.SearchUsersCtrl))
+	v1.GET("/tags/list", toV1(ctrl.TagsPostsListCtrl))
+	v1.GET("/search", toV1(ctrl.SearchCtrl))
+	v1.GET("/search/tags", toV1(ctrl.SearchTagsCtrl))
+	v1.GET("/search/users", toV1(ctrl.SearchUsersCtrl))
 
-	mux.Get("/noti", actionToFunc(ctrl.NoftificationsCtrl2))
+	v1.GET("/noti", toV1(ctrl.NoftificationsCtrl2))
 
-	mux.Get("/not", actionToFunc(ctrl.VNoftificationsCtrl))
+	v1.GET("/not", toV1(ctrl.VNoftificationsCtrl))
 	http.Handle("/not2", actioner(ctrl.VNoftificationsCtrl2))
 
-	mux.Get("/sync_users", actionToFunc(ctrl.SyncUsersCtrl))
+	v1.GET("/sync_users", toV1(ctrl.SyncUsersCtrl))
 
 	///// v0.4 Msgs
 	http.HandleFunc("/msgs/v1/add_one", ctrl.MsgUploadV1)
 
-	http.Handle("/", mux)
 
+    
+    //v1.GET("/like",toV1(ctrl.PostAddLikeAction))
+
+
+    http.Handle("/", v1Tree)
+    //http.Handle("/", mux)
+
+    return v1Tree
+
+}
+
+func toV1( fn func (*base.Action) base.AppErr) func(http.ResponseWriter,*http.Request, map[string]string) {
+    return func(rw http.ResponseWriter,r *http.Request,parms map[string]string) {
+        (base.Action{Fn2:fn,Ver: 2}).ServeHTTP(rw,r)
+    }
 }
