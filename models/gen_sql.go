@@ -1652,7 +1652,7 @@ func (u *__Comment_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -4444,7 +4444,7 @@ func (u *__FollowingList_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -6776,7 +6776,7 @@ func (u *__FollowingListMember_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -9401,7 +9401,7 @@ func (u *__FollowingListMemberHistory_Selector) _stoSql() (string, []interface{}
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -11428,7 +11428,7 @@ func (u *__Like_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -13919,7 +13919,7 @@ func (u *__Media_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -16158,7 +16158,7 @@ func (u *__Message_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -18226,7 +18226,7 @@ func (u *__MsgDeletedFromServer_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -20290,7 +20290,7 @@ func (u *__MsgReceivedToPeer_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -22354,7 +22354,7 @@ func (u *__MsgSeenByPeer_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -25581,7 +25581,7 @@ func (u *__Notification_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -28601,7 +28601,7 @@ func (u *__PhoneContact_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -32959,7 +32959,7 @@ func (u *__Post_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -34733,7 +34733,7 @@ func (u *__RecommendUser_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -37477,7 +37477,7 @@ func (u *__Session_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -39386,7 +39386,7 @@ func (u *__Tag_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -41405,7 +41405,7 @@ func (u *__TagsPost_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -49772,7 +49772,7 @@ func (u *__User_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -51171,7 +51171,7 @@ func (u *__UserPassword_Selector) _stoSql() (string, []interface{}) {
 		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
 	}
 
-	if u.limit != 0 {
+	if u.offset != 0 {
 		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
 	}
 	return sqlstr, whereArgs
@@ -51601,45 +51601,6 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	return &flmh, nil
 }
 
-// LikesById retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'Id'.
-func LikesById(db XODB, id int) ([]*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Like{}
-	for q.Next() {
-		l := Like{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &l)
-	}
-
-	return res, nil
-}
-
 // LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId'.
@@ -51757,6 +51718,45 @@ func MediaById(db XODB, id int) (*Media, error) {
 	return &m, nil
 }
 
+// MessagesByToUserId retrieves a row from 'ms.message' as a Message.
+//
+// Generated from index 'ToUserId'.
+func MessagesByToUserId(db XODB, toUserId int) ([]*Message, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
+		`FROM ms.message ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Message{}
+	for q.Next() {
+		m := Message{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &m)
+	}
+
+	return res, nil
+}
+
 // MessagesByToUserIdTimeMs retrieves a row from 'ms.message' as a Message.
 //
 // Generated from index 'ToUserId_2'.
@@ -51846,45 +51846,6 @@ func MsgDeletedFromServerById(db XODB, id int) (*MsgDeletedFromServer, error) {
 	}
 
 	return &mdfs, nil
-}
-
-// MsgReceivedToPeersByToUserId retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
-//
-// Generated from index 'ToUserId'.
-func MsgReceivedToPeersByToUserId(db XODB, toUserId int) ([]*MsgReceivedToPeer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
-		`FROM ms.msg_received_to_peer ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgReceivedToPeer{}
-	for q.Next() {
-		mrtp := MsgReceivedToPeer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.RoomKey, &mrtp.PeerUserId, &mrtp.AtTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &mrtp)
-	}
-
-	return res, nil
 }
 
 // MsgReceivedToPeerById retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
@@ -52301,6 +52262,45 @@ func RecommendUserById(db XODB, id int) (*RecommendUser, error) {
 	}
 
 	return &ru, nil
+}
+
+// SessionsById retrieves a row from 'ms.session' as a Session.
+//
+// Generated from index 'Id'.
+func SessionsById(db XODB, id int) ([]*Session, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
+		`FROM ms.session ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Session{}
+	for q.Next() {
+		s := Session{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &s)
+	}
+
+	return res, nil
 }
 
 // SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
