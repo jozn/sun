@@ -9700,14 +9700,14 @@ func (l *Like) Insert(db XODB) error {
 
 	// sql query
 	const sqlstr = `INSERT INTO ms.likes (` +
-		`Id, PostId, TypeId, CreatedTime` +
+		`PostId, UserId, TypeId, CreatedTime` +
 		`) VALUES (` +
 		`?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, l.Id, l.PostId, l.TypeId, l.CreatedTime)
-	res, err := db.Exec(sqlstr, l.Id, l.PostId, l.TypeId, l.CreatedTime)
+	XOLog(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
+	res, err := db.Exec(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
 	if err != nil {
 		return err
 	}
@@ -9719,7 +9719,7 @@ func (l *Like) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	l.UserId = int(id)
+	l.Id = int(id)
 	l._exists = true
 
 	return nil
@@ -9731,14 +9731,14 @@ func (l *Like) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.likes (` +
-		`Id, PostId, TypeId, CreatedTime` +
+		`PostId, UserId, TypeId, CreatedTime` +
 		`) VALUES (` +
 		`?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, l.Id, l.PostId, l.TypeId, l.CreatedTime)
-	res, err := db.Exec(sqlstr, l.Id, l.PostId, l.TypeId, l.CreatedTime)
+	XOLog(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
+	res, err := db.Exec(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
 	if err != nil {
 		return err
 	}
@@ -9750,7 +9750,7 @@ func (l *Like) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	l.UserId = int(id)
+	l.Id = int(id)
 	l._exists = true
 
 	return nil
@@ -9772,12 +9772,12 @@ func (l *Like) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.likes SET ` +
-		`Id = ?, PostId = ?, TypeId = ?, CreatedTime = ?` +
-		` WHERE UserId = ?`
+		`PostId = ?, UserId = ?, TypeId = ?, CreatedTime = ?` +
+		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, l.Id, l.PostId, l.TypeId, l.CreatedTime, l.UserId)
-	_, err = db.Exec(sqlstr, l.Id, l.PostId, l.TypeId, l.CreatedTime, l.UserId)
+	XOLog(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
+	_, err = db.Exec(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
 	return err
 }
 
@@ -9805,11 +9805,11 @@ func (l *Like) Delete(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.likes WHERE UserId = ?`
+	const sqlstr = `DELETE FROM ms.likes WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, l.UserId)
-	_, err = db.Exec(sqlstr, l.UserId)
+	XOLog(sqlstr, l.Id)
+	_, err = db.Exec(sqlstr, l.Id)
 	if err != nil {
 		return err
 	}
@@ -11614,7 +11614,7 @@ func MassInsert_Like(rows []Like, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.likes (" +
-		"Id, PostId, TypeId, CreatedTime" +
+		"PostId, UserId, TypeId, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -11622,8 +11622,8 @@ func MassInsert_Like(rows []Like, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.Id)
 		vals = append(vals, row.PostId)
+		vals = append(vals, row.UserId)
 		vals = append(vals, row.TypeId)
 		vals = append(vals, row.CreatedTime)
 
@@ -11647,7 +11647,7 @@ func MassReplace_Like(rows []Like, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.likes (" +
-		"Id, PostId, TypeId, CreatedTime" +
+		"PostId, UserId, TypeId, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -11655,8 +11655,8 @@ func MassReplace_Like(rows []Like, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.Id)
 		vals = append(vals, row.PostId)
+		vals = append(vals, row.UserId)
 		vals = append(vals, row.TypeId)
 		vals = append(vals, row.CreatedTime)
 
@@ -51419,6 +51419,45 @@ func MassReplace_UserPassword(rows []UserPassword, db XODB) error {
 
 //
 
+// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
+//
+// Generated from index 'PostId'.
+func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, PostId, Text, CreatedTime ` +
+		`FROM ms.comments ` +
+		`WHERE PostId = ?`
+
+	// run query
+	XOLog(sqlstr, postId)
+	q, err := db.Query(sqlstr, postId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Comment{}
+	for q.Next() {
+		c := Comment{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &c)
+	}
+
+	return res, nil
+}
+
 // CommentById retrieves a row from 'ms.comments' as a Comment.
 //
 // Generated from index 'comments_Id_pkey'.
@@ -51508,6 +51547,32 @@ func FollowingListMembersByFollowedUserIdUserId(db XODB, followedUserId int, use
 	}
 
 	return res, nil
+}
+
+// FollowingListMemberByUserIdFollowedUserId retrieves a row from 'ms.following_list_member' as a FollowingListMember.
+//
+// Generated from index 'UserId'.
+func FollowingListMemberByUserIdFollowedUserId(db XODB, userId int, followedUserId int) (*FollowingListMember, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs ` +
+		`FROM ms.following_list_member ` +
+		`WHERE UserId = ? AND FollowedUserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId, followedUserId)
+	flm := FollowingListMember{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, userId, followedUserId).Scan(&flm.Id, &flm.ListId, &flm.UserId, &flm.FollowedUserId, &flm.FollowType, &flm.UpdatedTimeMs)
+	if err != nil {
+		return nil, err
+	}
+
+	return &flm, nil
 }
 
 // FollowingListMembersByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member' as a FollowingListMember.
@@ -51601,32 +51666,6 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	return &flmh, nil
 }
 
-// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'PostId'.
-func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE PostId = ? AND UserId = ?`
-
-	// run query
-	XOLog(sqlstr, postId, userId)
-	l := Like{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
-	if err != nil {
-		return nil, err
-	}
-
-	return &l, nil
-}
-
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId_2'.
@@ -51666,25 +51705,25 @@ func LikesByPostId(db XODB, postId int) ([]*Like, error) {
 	return res, nil
 }
 
-// LikeByUserId retrieves a row from 'ms.likes' as a Like.
+// LikeById retrieves a row from 'ms.likes' as a Like.
 //
-// Generated from index 'likes_UserId_pkey'.
-func LikeByUserId(db XODB, userId int) (*Like, error) {
+// Generated from index 'likes_Id_pkey'.
+func LikeById(db XODB, id int) (*Like, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
 		`Id, PostId, UserId, TypeId, CreatedTime ` +
 		`FROM ms.likes ` +
-		`WHERE UserId = ?`
+		`WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, userId)
+	XOLog(sqlstr, id)
 	l := Like{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+	err = db.QueryRow(sqlstr, id).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
 	if err != nil {
 		return nil, err
 	}
@@ -51716,45 +51755,6 @@ func MediaById(db XODB, id int) (*Media, error) {
 	}
 
 	return &m, nil
-}
-
-// MessagesByToUserId retrieves a row from 'ms.message' as a Message.
-//
-// Generated from index 'ToUserId'.
-func MessagesByToUserId(db XODB, toUserId int) ([]*Message, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
-		`FROM ms.message ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Message{}
-	for q.Next() {
-		m := Message{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &m)
-	}
-
-	return res, nil
 }
 
 // MessagesByToUserIdTimeMs retrieves a row from 'ms.message' as a Message.
@@ -51820,6 +51820,45 @@ func MessageById(db XODB, id int) (*Message, error) {
 	}
 
 	return &m, nil
+}
+
+// MsgDeletedFromServersByToUserId retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
+//
+// Generated from index 'ToUserId'.
+func MsgDeletedFromServersByToUserId(db XODB, toUserId int) ([]*MsgDeletedFromServer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, PeerUserId, RoomKey, AtTime ` +
+		`FROM ms.msg_deleted_from_server ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgDeletedFromServer{}
+	for q.Next() {
+		mdfs := MsgDeletedFromServer{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&mdfs.Id, &mdfs.ToUserId, &mdfs.MsgKey, &mdfs.PeerUserId, &mdfs.RoomKey, &mdfs.AtTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &mdfs)
+	}
+
+	return res, nil
 }
 
 // MsgDeletedFromServerById retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
@@ -52084,45 +52123,6 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 	// run query
 	XOLog(sqlstr, phoneNumber)
 	q, err := db.Query(sqlstr, phoneNumber)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*PhoneContact{}
-	for q.Next() {
-		pc := PhoneContact{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &pc)
-	}
-
-	return res, nil
-}
-
-// PhoneContactsByUserId retrieves a row from 'ms.phone_contacts' as a PhoneContact.
-//
-// Generated from index 'UserId'.
-func PhoneContactsByUserId(db XODB, userId int) ([]*PhoneContact, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime ` +
-		`FROM ms.phone_contacts ` +
-		`WHERE UserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId)
-	q, err := db.Query(sqlstr, userId)
 	if err != nil {
 		return nil, err
 	}

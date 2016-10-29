@@ -6,7 +6,6 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
-    "fmt"
 )
 
 const LIKES_LIST_LIMIT = 50
@@ -37,32 +36,28 @@ func GetLikesAction(c *base.Action) base.AppErr {
 }
 
 func PostAddLikeAction(c *base.Action) base.AppErr {
-    defer func() {
-        e := recover()
-        if e != nil {
+	MustBeUserAndUpdate(c)
 
-            fmt.Println("PANIC 5: ",e)
-            c.SendJson(c)
-        }
-
-    }()
 	pids := c.Req.Form.Get("post_id")
 	pid := helper.StrToInt(pids, 0)
 	if pid < 1 {
 		return nil
 	}
-	models.UserMemoryStore.AddPostLike(c.UserId(), pid)
+	//models.UserMemoryStore.AddPostLike(c.UserId(), pid)
+	models.CreatePostLike(c.UserId(), pid)
 	c.SendText("OK")
 	return nil
 }
 
 func PostRemoveLikeAction(c *base.Action) base.AppErr {
+	MustBeUserAndUpdate(c)
 	pids := c.Req.Form.Get("post_id")
 	pid := helper.StrToInt(pids, 0)
 	if pid < 1 {
 		return nil
 	}
-	models.UserMemoryStore.RemovePostLike(c.UserId(), pid)
+	//models.UserMemoryStore.RemovePostLike(c.UserId(), pid)
+	models.DeletePostLike(c.UserId(), pid)
 	c.SendText("OK")
 	return nil
 }

@@ -53,8 +53,8 @@ func (c Action) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				setResponseBody(&c, w, time.Now())
 			}
 
-            fmt.Println("PANIC 2: ",e)
-            w.Write([]byte(fmt.Sprintf("%v",e)))
+			fmt.Println("PANIC 2: ", e)
+			w.Write([]byte(fmt.Sprintf("%v", e)))
 		}
 
 	}()

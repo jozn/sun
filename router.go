@@ -9,21 +9,21 @@ import (
 	"ms/sun/ctrl"
 	"ms/sun/models"
 	//"ms/sun/routes"
-    "github.com/dimfeld/httptreemux"
-    "ms/sun/base"
-    "fmt"
-    //"github.com/gorilla/mux"
+	"fmt"
+	"github.com/dimfeld/httptreemux"
+	"ms/sun/base"
+	//"github.com/gorilla/mux"
 )
 
 func registerRoutes() *httptreemux.TreeMux {
 	//v1 := routes.NewPrefix("/v1")
 
-    v1Tree := httptreemux.New()
-    v1Tree.PanicHandler = func(w http.ResponseWriter,r *http.Request,p interface{}){
-        fmt.Println("PANIC: ",p)
-        w.Write([]byte(fmt.Sprintf("%v",p)))
-    }
-    v1 := v1Tree.NewGroup("/v1")
+	v1Tree := httptreemux.New()
+	v1Tree.PanicHandler = func(w http.ResponseWriter, r *http.Request, p interface{}) {
+		fmt.Println("PANIC: ", p)
+		w.Write([]byte(fmt.Sprintf("%v", p)))
+	}
+	v1 := v1Tree.NewGroup("/v1")
 
 	http.Handle("/upload-avatar", actioner(UploadAvatarAction))
 	http.Handle("/remove-avatar", actioner(RemoveAvatarAction))
@@ -140,20 +140,17 @@ func registerRoutes() *httptreemux.TreeMux {
 	///// v0.4 Msgs
 	http.HandleFunc("/msgs/v1/add_one", ctrl.MsgUploadV1)
 
+	//v1.GET("/like",toV1(ctrl.PostAddLikeAction))
 
-    
-    //v1.GET("/like",toV1(ctrl.PostAddLikeAction))
+	http.Handle("/", v1Tree)
+	//http.Handle("/", mux)
 
-
-    http.Handle("/", v1Tree)
-    //http.Handle("/", mux)
-
-    return v1Tree
+	return v1Tree
 
 }
 
-func toV1( fn func (*base.Action) base.AppErr) func(http.ResponseWriter,*http.Request, map[string]string) {
-    return func(rw http.ResponseWriter,r *http.Request,parms map[string]string) {
-        (base.Action{Fn2:fn,Ver: 2}).ServeHTTP(rw,r)
-    }
+func toV1(fn func(*base.Action) base.AppErr) func(http.ResponseWriter, *http.Request, map[string]string) {
+	return func(rw http.ResponseWriter, r *http.Request, parms map[string]string) {
+		(base.Action{Fn2: fn, Ver: 2}).ServeHTTP(rw, r)
+	}
 }

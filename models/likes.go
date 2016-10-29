@@ -5,13 +5,15 @@ import (
 	"ms/sun/helper"
 )
 
-func CreateLike(UserId, PostId int) {
+func CreatePostLike(UserId, PostId int) {
 	l := new(Like)
 	l.UserId = UserId
 	l.PostId = PostId
 	l.CreatedTime = helper.TimeNow()
 
-	_, err := base.DbInsertStruct(l, "likes")
+	//_, err := base.DbInsertStruct(l, "likes")
+
+	err := l.Save(base.DB)
 	if err == nil {
 		UserMemoryStore.AddPostLike(UserId, PostId)
 		OnPostLiked(l)
@@ -24,7 +26,7 @@ func AmILikePost(UserId, PostId int) bool {
 	return false
 }
 
-func DeleteLike(UserId, PostId int) {
+func DeletePostLike(UserId, PostId int) {
 	l, err := GetLikeOf(UserId, PostId)
 	if err != nil {
 		return

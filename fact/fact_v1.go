@@ -118,7 +118,7 @@ func FactComment(c *base.Action) {
 	// u.PostId = rand.Intn(450) + 1
 	UserId := rand.Intn(_factLastUserId()) + 1
 	PostId := rand.Intn(_factLastPostId()) + 1
-	n := rand.Intn(50) + 1
+	n := rand.Intn(50) + 10 //10 at leat
 	Text := helper.FactRandStrEmoji(n, true)
 	co := models.CreateNewComment(UserId, PostId, Text)
 	c.SendJson(co)
@@ -126,7 +126,7 @@ func FactComment(c *base.Action) {
 }
 
 func FactLike(c *base.Action) {
-	models.CreateLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
+	models.CreatePostLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
 	//models.UserMemoryStore.AddPostLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
 }
 

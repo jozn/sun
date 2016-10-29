@@ -169,7 +169,7 @@ func (db *mapMemoryStoreImpl) AddPostLike(UserId, PostId int) {
 		if !s.LikedPost.BinaryContains(PostId) { //don't duplicate
 			s.LikedPost.AddAndSort(PostId)
 		}
-		QueryIncerPostLikesCount(PostId, 1)
+		//QueryIncerPostLikesCount(PostId, 1)
 		//QueryReomePostLike(UserId,PostId)
 		/*err := QueryAddPostLike(UserId, PostId)
 		if err == nil {
