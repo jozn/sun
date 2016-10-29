@@ -68,6 +68,7 @@ func registerRoutes() *httptreemux.TreeMux {
 	http.Handle("/i/play", actionToFunc(PlaySomething))
 	http.Handle("/i/store1", actionToFunc(MemoryStore1))
 	http.Handle("/i/cache", actionToFunc(ShowCached))
+	http.Handle("/i/cacher", actionToFunc(ShowCacher))
 	http.Handle("/i/db", actionToFunc(DBStruct))
 	http.Handle("/i/java2", actionToFunc(DBStructsTojava))
 	http.Handle("/i/table", actionToFunc(DBStructsToTable))
@@ -103,8 +104,8 @@ func registerRoutes() *httptreemux.TreeMux {
 	v1.GET("/following", toV1(ctrl.GetFollowingsListAction))
 
 	//mux.GET("/likes", toV1(ctrl.GetFollowingsListAction))
-	v1.GET("/like", toV1(ctrl.PostAddLikeAction))
-	v1.GET("/unlike", toV1(ctrl.PostRemoveLikeAction))
+	v1.POST("/like", toV1(ctrl.PostAddLikeAction))
+	v1.POST("/unlike", toV1(ctrl.PostRemoveLikeAction))
 	v1.GET("/likes", toV1(ctrl.GetLikesAction))
 
 	v1.GET("/comments/add", toV1(ctrl.PostAddCommentAction))

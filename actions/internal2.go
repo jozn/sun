@@ -57,3 +57,11 @@ func ShowCached(a *base.Action) base.AppErr {
 	a.SendJson(models.Cache.Items())
 	return nil
 }
+
+func ShowCacher(a *base.Action) base.AppErr {
+
+    a.SendJson(models.Cacher.Items())
+    return nil
+}
+
+

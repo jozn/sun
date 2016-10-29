@@ -51,3 +51,42 @@ func (e _memoryStoreImpl) GetPhoneForUserIfIsContact(CurrentUserId, UserId int) 
 	}
 	return ""
 }
+
+func (e _memoryStoreImpl) UserLikedPostsList_Get(UserId int) *ds.IntList {
+	key := fmt.Sprintf("UserLikePosts:%d", UserId)
+	var collection *ds.IntList
+
+	val, ok := Cacher.Get(key)
+	if !ok {
+		collection = ds.New()
+
+		postsLiked, err := NewLike_Selector().Select_PostId().UserId_EQ(UserId).GetIntSlice(base.DB)
+		if err != nil {
+			return collection
+		}
+
+		for _, pid := range postsLiked {
+			collection.Add(pid)
+		}
+		collection.TrySortDesc()
+
+		t := time.Hour * 4
+		Cacher.Set(key, collection, t)
+	} else {
+		collection = val.(*ds.IntList)
+	}
+
+	return collection
+}
+
+func (e _memoryStoreImpl) UserLikedPostsList_Add(UserId int, PostId int) {
+	e.UserLikedPostsList_Get(UserId).AddAndSort(PostId)
+}
+
+func (e _memoryStoreImpl) UserLikedPostsList_Remove(UserId int, PostId int) {
+	e.UserLikedPostsList_Get(UserId).RemoveAndSort(PostId)
+}
+
+func (e _memoryStoreImpl) UserLikedPostsList_IsLiked(UserId int, PostId int) bool {
+	return e.UserLikedPostsList_Get(UserId).Contains(PostId)
+}

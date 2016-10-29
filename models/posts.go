@@ -209,7 +209,7 @@ func GetPostToPostAndDetailes(post *Post, UserId int) *PostAndDetailes {
 		v.Comments = nil //GetPostLastComments(post.Id)
 		v.Likes = nil    //GetPostLastLikes(post.Id)
 		//SetPostImages(&v)
-		v.AmIlike = UserMemoryStore.AmILikePost(UserId, post.Id)
+		v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
 		return &v
 	}
 	return nil

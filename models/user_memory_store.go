@@ -162,7 +162,7 @@ func (db *mapMemoryStoreImpl) ReloadUser(UserId int) {
 }
 
 //////////////////////// Likes - Post /////////////////////////////////
-
+//dep
 func (db *mapMemoryStoreImpl) AddPostLike(UserId, PostId int) {
 	s, ok := db.Map[UserId]
 	if ok {
@@ -188,6 +188,7 @@ func (db *mapMemoryStoreImpl) AmILikePost(UserId, PostId int) bool {
 	return false
 }
 
+//dep
 func (db *mapMemoryStoreImpl) RemovePostLike(UserId, PostId int) {
 	s, ok := db.Map[UserId]
 	if ok {

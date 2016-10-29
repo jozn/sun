@@ -253,8 +253,17 @@ func (list *IntList) shrink() {
 }
 
 //By me For sorting
-func (p *IntList) SortAsc()  { sort.Sort(p) }
-func (p *IntList) SortDesc() { sort.Sort(sort.Reverse(p)) }
+func (p *IntList) SortAsc() { sort.Sort(p) }
+
+func (p *IntList) SortDesc() {
+	sort.Sort(sort.Reverse(p))
+}
+
+func (p *IntList) TrySortDesc() {
+	if !sort.IsSorted(sort.Reverse(p)) {
+		p.SortDesc()
+	}
+}
 
 func (p *IntList) Len() int           { return p.size /*len(p.elements)*/ }
 func (p *IntList) Less(i, j int) bool { return p.Elements[i] < p.Elements[j] }

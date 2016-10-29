@@ -1507,6 +1507,18 @@ func (u *__Comment_Updater) Id(newVal int) *__Comment_Updater {
 	return u
 }
 
+func (u *__Comment_Updater) Id_Increment(count int) *__Comment_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -1516,12 +1528,36 @@ func (u *__Comment_Updater) UserId(newVal int) *__Comment_Updater {
 	return u
 }
 
+func (u *__Comment_Updater) UserId_Increment(count int) *__Comment_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Comment_Updater) PostId(newVal int) *__Comment_Updater {
 	u.updates[" PostId = ? "] = newVal
+	return u
+}
+
+func (u *__Comment_Updater) PostId_Increment(count int) *__Comment_Updater {
+	if count > 0 {
+		u.updates[" PostId = PostId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PostId = PostId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -1539,6 +1575,18 @@ func (u *__Comment_Updater) Text(newVal string) *__Comment_Updater {
 
 func (u *__Comment_Updater) CreatedTime(newVal int) *__Comment_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__Comment_Updater) CreatedTime_Increment(count int) *__Comment_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -4227,6 +4275,18 @@ func (u *__FollowingList_Updater) Id(newVal int) *__FollowingList_Updater {
 	return u
 }
 
+func (u *__FollowingList_Updater) Id_Increment(count int) *__FollowingList_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -4236,12 +4296,36 @@ func (u *__FollowingList_Updater) UserId(newVal int) *__FollowingList_Updater {
 	return u
 }
 
+func (u *__FollowingList_Updater) UserId_Increment(count int) *__FollowingList_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__FollowingList_Updater) ListType(newVal int) *__FollowingList_Updater {
 	u.updates[" ListType = ? "] = newVal
+	return u
+}
+
+func (u *__FollowingList_Updater) ListType_Increment(count int) *__FollowingList_Updater {
+	if count > 0 {
+		u.updates[" ListType = ListType+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ListType = ListType-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -4262,12 +4346,36 @@ func (u *__FollowingList_Updater) Count(newVal int) *__FollowingList_Updater {
 	return u
 }
 
+func (u *__FollowingList_Updater) Count_Increment(count int) *__FollowingList_Updater {
+	if count > 0 {
+		u.updates[" Count = Count+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Count = Count-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__FollowingList_Updater) IsAuto(newVal int) *__FollowingList_Updater {
 	u.updates[" IsAuto = ? "] = newVal
+	return u
+}
+
+func (u *__FollowingList_Updater) IsAuto_Increment(count int) *__FollowingList_Updater {
+	if count > 0 {
+		u.updates[" IsAuto = IsAuto+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" IsAuto = IsAuto-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -4280,12 +4388,36 @@ func (u *__FollowingList_Updater) IsPimiry(newVal int) *__FollowingList_Updater 
 	return u
 }
 
+func (u *__FollowingList_Updater) IsPimiry_Increment(count int) *__FollowingList_Updater {
+	if count > 0 {
+		u.updates[" IsPimiry = IsPimiry+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" IsPimiry = IsPimiry-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__FollowingList_Updater) CreatedTime(newVal int) *__FollowingList_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__FollowingList_Updater) CreatedTime_Increment(count int) *__FollowingList_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -6606,12 +6738,36 @@ func (u *__FollowingListMember_Updater) Id(newVal int) *__FollowingListMember_Up
 	return u
 }
 
+func (u *__FollowingListMember_Updater) Id_Increment(count int) *__FollowingListMember_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__FollowingListMember_Updater) ListId(newVal int) *__FollowingListMember_Updater {
 	u.updates[" ListId = ? "] = newVal
+	return u
+}
+
+func (u *__FollowingListMember_Updater) ListId_Increment(count int) *__FollowingListMember_Updater {
+	if count > 0 {
+		u.updates[" ListId = ListId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ListId = ListId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -6624,12 +6780,36 @@ func (u *__FollowingListMember_Updater) UserId(newVal int) *__FollowingListMembe
 	return u
 }
 
+func (u *__FollowingListMember_Updater) UserId_Increment(count int) *__FollowingListMember_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__FollowingListMember_Updater) FollowedUserId(newVal int) *__FollowingListMember_Updater {
 	u.updates[" FollowedUserId = ? "] = newVal
+	return u
+}
+
+func (u *__FollowingListMember_Updater) FollowedUserId_Increment(count int) *__FollowingListMember_Updater {
+	if count > 0 {
+		u.updates[" FollowedUserId = FollowedUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" FollowedUserId = FollowedUserId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -6642,12 +6822,36 @@ func (u *__FollowingListMember_Updater) FollowType(newVal int) *__FollowingListM
 	return u
 }
 
+func (u *__FollowingListMember_Updater) FollowType_Increment(count int) *__FollowingListMember_Updater {
+	if count > 0 {
+		u.updates[" FollowType = FollowType+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" FollowType = FollowType-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__FollowingListMember_Updater) UpdatedTimeMs(newVal int) *__FollowingListMember_Updater {
 	u.updates[" UpdatedTimeMs = ? "] = newVal
+	return u
+}
+
+func (u *__FollowingListMember_Updater) UpdatedTimeMs_Increment(count int) *__FollowingListMember_Updater {
+	if count > 0 {
+		u.updates[" UpdatedTimeMs = UpdatedTimeMs+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UpdatedTimeMs = UpdatedTimeMs-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -9207,12 +9411,36 @@ func (u *__FollowingListMemberHistory_Updater) Id(newVal int) *__FollowingListMe
 	return u
 }
 
+func (u *__FollowingListMemberHistory_Updater) Id_Increment(count int) *__FollowingListMemberHistory_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__FollowingListMemberHistory_Updater) ListId(newVal int) *__FollowingListMemberHistory_Updater {
 	u.updates[" ListId = ? "] = newVal
+	return u
+}
+
+func (u *__FollowingListMemberHistory_Updater) ListId_Increment(count int) *__FollowingListMemberHistory_Updater {
+	if count > 0 {
+		u.updates[" ListId = ListId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ListId = ListId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -9225,12 +9453,36 @@ func (u *__FollowingListMemberHistory_Updater) UserId(newVal int) *__FollowingLi
 	return u
 }
 
+func (u *__FollowingListMemberHistory_Updater) UserId_Increment(count int) *__FollowingListMemberHistory_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__FollowingListMemberHistory_Updater) FollowedUserId(newVal int) *__FollowingListMemberHistory_Updater {
 	u.updates[" FollowedUserId = ? "] = newVal
+	return u
+}
+
+func (u *__FollowingListMemberHistory_Updater) FollowedUserId_Increment(count int) *__FollowingListMemberHistory_Updater {
+	if count > 0 {
+		u.updates[" FollowedUserId = FollowedUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" FollowedUserId = FollowedUserId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -9243,6 +9495,18 @@ func (u *__FollowingListMemberHistory_Updater) FollowType(newVal int) *__Followi
 	return u
 }
 
+func (u *__FollowingListMemberHistory_Updater) FollowType_Increment(count int) *__FollowingListMemberHistory_Updater {
+	if count > 0 {
+		u.updates[" FollowType = FollowType+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" FollowType = FollowType-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -9252,12 +9516,36 @@ func (u *__FollowingListMemberHistory_Updater) UpdatedTimeMs(newVal int) *__Foll
 	return u
 }
 
+func (u *__FollowingListMemberHistory_Updater) UpdatedTimeMs_Increment(count int) *__FollowingListMemberHistory_Updater {
+	if count > 0 {
+		u.updates[" UpdatedTimeMs = UpdatedTimeMs+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UpdatedTimeMs = UpdatedTimeMs-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__FollowingListMemberHistory_Updater) FollowId(newVal int) *__FollowingListMemberHistory_Updater {
 	u.updates[" FollowId = ? "] = newVal
+	return u
+}
+
+func (u *__FollowingListMemberHistory_Updater) FollowId_Increment(count int) *__FollowingListMemberHistory_Updater {
+	if count > 0 {
+		u.updates[" FollowId = FollowId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" FollowId = FollowId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -11282,12 +11570,36 @@ func (u *__Like_Updater) Id(newVal int) *__Like_Updater {
 	return u
 }
 
+func (u *__Like_Updater) Id_Increment(count int) *__Like_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Like_Updater) PostId(newVal int) *__Like_Updater {
 	u.updates[" PostId = ? "] = newVal
+	return u
+}
+
+func (u *__Like_Updater) PostId_Increment(count int) *__Like_Updater {
+	if count > 0 {
+		u.updates[" PostId = PostId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PostId = PostId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -11300,6 +11612,18 @@ func (u *__Like_Updater) UserId(newVal int) *__Like_Updater {
 	return u
 }
 
+func (u *__Like_Updater) UserId_Increment(count int) *__Like_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -11309,12 +11633,36 @@ func (u *__Like_Updater) TypeId(newVal int) *__Like_Updater {
 	return u
 }
 
+func (u *__Like_Updater) TypeId_Increment(count int) *__Like_Updater {
+	if count > 0 {
+		u.updates[" TypeId = TypeId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" TypeId = TypeId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Like_Updater) CreatedTime(newVal int) *__Like_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__Like_Updater) CreatedTime_Increment(count int) *__Like_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -13726,12 +14074,36 @@ func (u *__Media_Updater) Id(newVal int) *__Media_Updater {
 	return u
 }
 
+func (u *__Media_Updater) Id_Increment(count int) *__Media_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Media_Updater) UserId(newVal int) *__Media_Updater {
 	u.updates[" UserId = ? "] = newVal
+	return u
+}
+
+func (u *__Media_Updater) UserId_Increment(count int) *__Media_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -13744,12 +14116,36 @@ func (u *__Media_Updater) PostId(newVal int) *__Media_Updater {
 	return u
 }
 
+func (u *__Media_Updater) PostId_Increment(count int) *__Media_Updater {
+	if count > 0 {
+		u.updates[" PostId = PostId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PostId = PostId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Media_Updater) AlbumId(newVal int) *__Media_Updater {
 	u.updates[" AlbumId = ? "] = newVal
+	return u
+}
+
+func (u *__Media_Updater) AlbumId_Increment(count int) *__Media_Updater {
+	if count > 0 {
+		u.updates[" AlbumId = AlbumId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" AlbumId = AlbumId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -13762,12 +14158,36 @@ func (u *__Media_Updater) TypeId(newVal int) *__Media_Updater {
 	return u
 }
 
+func (u *__Media_Updater) TypeId_Increment(count int) *__Media_Updater {
+	if count > 0 {
+		u.updates[" TypeId = TypeId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" TypeId = TypeId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Media_Updater) CreatedTime(newVal int) *__Media_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__Media_Updater) CreatedTime_Increment(count int) *__Media_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -15967,12 +16387,36 @@ func (u *__Message_Updater) Id(newVal int) *__Message_Updater {
 	return u
 }
 
+func (u *__Message_Updater) Id_Increment(count int) *__Message_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Message_Updater) ToUserId(newVal int) *__Message_Updater {
 	u.updates[" ToUserId = ? "] = newVal
+	return u
+}
+
+func (u *__Message_Updater) ToUserId_Increment(count int) *__Message_Updater {
+	if count > 0 {
+		u.updates[" ToUserId = ToUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -16001,6 +16445,18 @@ func (u *__Message_Updater) FromUserID(newVal int) *__Message_Updater {
 	return u
 }
 
+func (u *__Message_Updater) FromUserID_Increment(count int) *__Message_Updater {
+	if count > 0 {
+		u.updates[" FromUserID = FromUserID+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" FromUserID = FromUserID-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -16015,6 +16471,18 @@ func (u *__Message_Updater) Data(newVal string) *__Message_Updater {
 
 func (u *__Message_Updater) TimeMs(newVal int) *__Message_Updater {
 	u.updates[" TimeMs = ? "] = newVal
+	return u
+}
+
+func (u *__Message_Updater) TimeMs_Increment(count int) *__Message_Updater {
+	if count > 0 {
+		u.updates[" TimeMs = TimeMs+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" TimeMs = TimeMs-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -18058,12 +18526,36 @@ func (u *__MsgDeletedFromServer_Updater) Id(newVal int) *__MsgDeletedFromServer_
 	return u
 }
 
+func (u *__MsgDeletedFromServer_Updater) Id_Increment(count int) *__MsgDeletedFromServer_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__MsgDeletedFromServer_Updater) ToUserId(newVal int) *__MsgDeletedFromServer_Updater {
 	u.updates[" ToUserId = ? "] = newVal
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) ToUserId_Increment(count int) *__MsgDeletedFromServer_Updater {
+	if count > 0 {
+		u.updates[" ToUserId = ToUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -18084,6 +18576,18 @@ func (u *__MsgDeletedFromServer_Updater) PeerUserId(newVal int) *__MsgDeletedFro
 	return u
 }
 
+func (u *__MsgDeletedFromServer_Updater) PeerUserId_Increment(count int) *__MsgDeletedFromServer_Updater {
+	if count > 0 {
+		u.updates[" PeerUserId = PeerUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PeerUserId = PeerUserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -18098,6 +18602,18 @@ func (u *__MsgDeletedFromServer_Updater) RoomKey(newVal string) *__MsgDeletedFro
 
 func (u *__MsgDeletedFromServer_Updater) AtTime(newVal int) *__MsgDeletedFromServer_Updater {
 	u.updates[" AtTime = ? "] = newVal
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) AtTime_Increment(count int) *__MsgDeletedFromServer_Updater {
+	if count > 0 {
+		u.updates[" AtTime = AtTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" AtTime = AtTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -20122,12 +20638,36 @@ func (u *__MsgReceivedToPeer_Updater) Id(newVal int) *__MsgReceivedToPeer_Update
 	return u
 }
 
+func (u *__MsgReceivedToPeer_Updater) Id_Increment(count int) *__MsgReceivedToPeer_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__MsgReceivedToPeer_Updater) ToUserId(newVal int) *__MsgReceivedToPeer_Updater {
 	u.updates[" ToUserId = ? "] = newVal
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Updater) ToUserId_Increment(count int) *__MsgReceivedToPeer_Updater {
+	if count > 0 {
+		u.updates[" ToUserId = ToUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -20156,12 +20696,36 @@ func (u *__MsgReceivedToPeer_Updater) PeerUserId(newVal int) *__MsgReceivedToPee
 	return u
 }
 
+func (u *__MsgReceivedToPeer_Updater) PeerUserId_Increment(count int) *__MsgReceivedToPeer_Updater {
+	if count > 0 {
+		u.updates[" PeerUserId = PeerUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PeerUserId = PeerUserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__MsgReceivedToPeer_Updater) AtTime(newVal int) *__MsgReceivedToPeer_Updater {
 	u.updates[" AtTime = ? "] = newVal
+	return u
+}
+
+func (u *__MsgReceivedToPeer_Updater) AtTime_Increment(count int) *__MsgReceivedToPeer_Updater {
+	if count > 0 {
+		u.updates[" AtTime = AtTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" AtTime = AtTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -22186,12 +22750,36 @@ func (u *__MsgSeenByPeer_Updater) Id(newVal int) *__MsgSeenByPeer_Updater {
 	return u
 }
 
+func (u *__MsgSeenByPeer_Updater) Id_Increment(count int) *__MsgSeenByPeer_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__MsgSeenByPeer_Updater) ToUserId(newVal int) *__MsgSeenByPeer_Updater {
 	u.updates[" ToUserId = ? "] = newVal
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) ToUserId_Increment(count int) *__MsgSeenByPeer_Updater {
+	if count > 0 {
+		u.updates[" ToUserId = ToUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -22220,12 +22808,36 @@ func (u *__MsgSeenByPeer_Updater) PeerUserId(newVal int) *__MsgSeenByPeer_Update
 	return u
 }
 
+func (u *__MsgSeenByPeer_Updater) PeerUserId_Increment(count int) *__MsgSeenByPeer_Updater {
+	if count > 0 {
+		u.updates[" PeerUserId = PeerUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PeerUserId = PeerUserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__MsgSeenByPeer_Updater) AtTime(newVal int) *__MsgSeenByPeer_Updater {
 	u.updates[" AtTime = ? "] = newVal
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) AtTime_Increment(count int) *__MsgSeenByPeer_Updater {
+	if count > 0 {
+		u.updates[" AtTime = AtTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" AtTime = AtTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -25339,12 +25951,36 @@ func (u *__Notification_Updater) Id(newVal int) *__Notification_Updater {
 	return u
 }
 
+func (u *__Notification_Updater) Id_Increment(count int) *__Notification_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Notification_Updater) ForUserId(newVal int) *__Notification_Updater {
 	u.updates[" ForUserId = ? "] = newVal
+	return u
+}
+
+func (u *__Notification_Updater) ForUserId_Increment(count int) *__Notification_Updater {
+	if count > 0 {
+		u.updates[" ForUserId = ForUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ForUserId = ForUserId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -25357,12 +25993,36 @@ func (u *__Notification_Updater) ActorUserId(newVal int) *__Notification_Updater
 	return u
 }
 
+func (u *__Notification_Updater) ActorUserId_Increment(count int) *__Notification_Updater {
+	if count > 0 {
+		u.updates[" ActorUserId = ActorUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ActorUserId = ActorUserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Notification_Updater) ActionTypeId(newVal int) *__Notification_Updater {
 	u.updates[" ActionTypeId = ? "] = newVal
+	return u
+}
+
+func (u *__Notification_Updater) ActionTypeId_Increment(count int) *__Notification_Updater {
+	if count > 0 {
+		u.updates[" ActionTypeId = ActionTypeId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ActionTypeId = ActionTypeId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -25375,12 +26035,36 @@ func (u *__Notification_Updater) ObjectTypeId(newVal int) *__Notification_Update
 	return u
 }
 
+func (u *__Notification_Updater) ObjectTypeId_Increment(count int) *__Notification_Updater {
+	if count > 0 {
+		u.updates[" ObjectTypeId = ObjectTypeId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ObjectTypeId = ObjectTypeId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Notification_Updater) TargetId(newVal int) *__Notification_Updater {
 	u.updates[" TargetId = ? "] = newVal
+	return u
+}
+
+func (u *__Notification_Updater) TargetId_Increment(count int) *__Notification_Updater {
+	if count > 0 {
+		u.updates[" TargetId = TargetId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" TargetId = TargetId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -25393,6 +26077,18 @@ func (u *__Notification_Updater) ObjectId(newVal int) *__Notification_Updater {
 	return u
 }
 
+func (u *__Notification_Updater) ObjectId_Increment(count int) *__Notification_Updater {
+	if count > 0 {
+		u.updates[" ObjectId = ObjectId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ObjectId = ObjectId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -25402,12 +26098,36 @@ func (u *__Notification_Updater) SeenStatus(newVal int) *__Notification_Updater 
 	return u
 }
 
+func (u *__Notification_Updater) SeenStatus_Increment(count int) *__Notification_Updater {
+	if count > 0 {
+		u.updates[" SeenStatus = SeenStatus+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" SeenStatus = SeenStatus-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Notification_Updater) CreatedTime(newVal int) *__Notification_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__Notification_Updater) CreatedTime_Increment(count int) *__Notification_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -28339,6 +29059,18 @@ func (u *__PhoneContact_Updater) Id(newVal int) *__PhoneContact_Updater {
 	return u
 }
 
+func (u *__PhoneContact_Updater) Id_Increment(count int) *__PhoneContact_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -28380,12 +29112,36 @@ func (u *__PhoneContact_Updater) PhoneContactRowId(newVal int) *__PhoneContact_U
 	return u
 }
 
+func (u *__PhoneContact_Updater) PhoneContactRowId_Increment(count int) *__PhoneContact_Updater {
+	if count > 0 {
+		u.updates[" PhoneContactRowId = PhoneContactRowId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PhoneContactRowId = PhoneContactRowId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__PhoneContact_Updater) UserId(newVal int) *__PhoneContact_Updater {
 	u.updates[" UserId = ? "] = newVal
+	return u
+}
+
+func (u *__PhoneContact_Updater) UserId_Increment(count int) *__PhoneContact_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -28398,6 +29154,18 @@ func (u *__PhoneContact_Updater) DeviceUuidId(newVal int) *__PhoneContact_Update
 	return u
 }
 
+func (u *__PhoneContact_Updater) DeviceUuidId_Increment(count int) *__PhoneContact_Updater {
+	if count > 0 {
+		u.updates[" DeviceUuidId = DeviceUuidId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" DeviceUuidId = DeviceUuidId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -28407,12 +29175,36 @@ func (u *__PhoneContact_Updater) CreatedTime(newVal int) *__PhoneContact_Updater
 	return u
 }
 
+func (u *__PhoneContact_Updater) CreatedTime_Increment(count int) *__PhoneContact_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__PhoneContact_Updater) UpdatedTime(newVal int) *__PhoneContact_Updater {
 	u.updates[" UpdatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__PhoneContact_Updater) UpdatedTime_Increment(count int) *__PhoneContact_Updater {
+	if count > 0 {
+		u.updates[" UpdatedTime = UpdatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UpdatedTime = UpdatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -32600,6 +33392,18 @@ func (u *__Post_Updater) Id(newVal int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) Id_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -32609,12 +33413,36 @@ func (u *__Post_Updater) UserId(newVal int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) UserId_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Post_Updater) TypeId(newVal int) *__Post_Updater {
 	u.updates[" TypeId = ? "] = newVal
+	return u
+}
+
+func (u *__Post_Updater) TypeId_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" TypeId = TypeId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" TypeId = TypeId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -32651,12 +33479,36 @@ func (u *__Post_Updater) MediaServerId(newVal int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) MediaServerId_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" MediaServerId = MediaServerId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" MediaServerId = MediaServerId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Post_Updater) Width(newVal int) *__Post_Updater {
 	u.updates[" Width = ? "] = newVal
+	return u
+}
+
+func (u *__Post_Updater) Width_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" Width = Width+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Width = Width-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -32669,12 +33521,36 @@ func (u *__Post_Updater) Height(newVal int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) Height_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" Height = Height+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Height = Height-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Post_Updater) SharedTo(newVal int) *__Post_Updater {
 	u.updates[" SharedTo = ? "] = newVal
+	return u
+}
+
+func (u *__Post_Updater) SharedTo_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" SharedTo = SharedTo+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" SharedTo = SharedTo-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -32687,12 +33563,36 @@ func (u *__Post_Updater) HasTag(newVal int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) HasTag_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" HasTag = HasTag+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" HasTag = HasTag-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Post_Updater) LikesCount(newVal int) *__Post_Updater {
 	u.updates[" LikesCount = ? "] = newVal
+	return u
+}
+
+func (u *__Post_Updater) LikesCount_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" LikesCount = LikesCount+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LikesCount = LikesCount-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -32705,12 +33605,36 @@ func (u *__Post_Updater) CommentsCount(newVal int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) CommentsCount_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" CommentsCount = CommentsCount+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CommentsCount = CommentsCount-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Post_Updater) CreatedTime(newVal int) *__Post_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__Post_Updater) CreatedTime_Increment(count int) *__Post_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -34592,6 +35516,18 @@ func (u *__RecommendUser_Updater) Id(newVal int) *__RecommendUser_Updater {
 	return u
 }
 
+func (u *__RecommendUser_Updater) Id_Increment(count int) *__RecommendUser_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -34601,12 +35537,36 @@ func (u *__RecommendUser_Updater) UserId(newVal int) *__RecommendUser_Updater {
 	return u
 }
 
+func (u *__RecommendUser_Updater) UserId_Increment(count int) *__RecommendUser_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__RecommendUser_Updater) TargetId(newVal int) *__RecommendUser_Updater {
 	u.updates[" TargetId = ? "] = newVal
+	return u
+}
+
+func (u *__RecommendUser_Updater) TargetId_Increment(count int) *__RecommendUser_Updater {
+	if count > 0 {
+		u.updates[" TargetId = TargetId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" TargetId = TargetId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -34620,6 +35580,18 @@ func (u *__RecommendUser_Updater) TargetId(newVal int) *__RecommendUser_Updater 
 
 func (u *__RecommendUser_Updater) CreatedTime(newVal int) *__RecommendUser_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__RecommendUser_Updater) CreatedTime_Increment(count int) *__RecommendUser_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -37217,12 +38189,36 @@ func (u *__Session_Updater) Id(newVal int) *__Session_Updater {
 	return u
 }
 
+func (u *__Session_Updater) Id_Increment(count int) *__Session_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Session_Updater) UserId(newVal int) *__Session_Updater {
 	u.updates[" UserId = ? "] = newVal
+	return u
+}
+
+func (u *__Session_Updater) UserId_Increment(count int) *__Session_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -37259,6 +38255,18 @@ func (u *__Session_Updater) LastActivityTime(newVal int) *__Session_Updater {
 	return u
 }
 
+func (u *__Session_Updater) LastActivityTime_Increment(count int) *__Session_Updater {
+	if count > 0 {
+		u.updates[" LastActivityTime = LastActivityTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LastActivityTime = LastActivityTime-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -37289,6 +38297,18 @@ func (u *__Session_Updater) LastNetworkType(newVal string) *__Session_Updater {
 
 func (u *__Session_Updater) CreatedTime(newVal int) *__Session_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__Session_Updater) CreatedTime_Increment(count int) *__Session_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -39241,6 +40261,18 @@ func (u *__Tag_Updater) Id(newVal int) *__Tag_Updater {
 	return u
 }
 
+func (u *__Tag_Updater) Id_Increment(count int) *__Tag_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -39258,6 +40290,18 @@ func (u *__Tag_Updater) Count(newVal int) *__Tag_Updater {
 	return u
 }
 
+func (u *__Tag_Updater) Count_Increment(count int) *__Tag_Updater {
+	if count > 0 {
+		u.updates[" Count = Count+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Count = Count-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -39267,12 +40311,36 @@ func (u *__Tag_Updater) IsBlocked(newVal int) *__Tag_Updater {
 	return u
 }
 
+func (u *__Tag_Updater) IsBlocked_Increment(count int) *__Tag_Updater {
+	if count > 0 {
+		u.updates[" IsBlocked = IsBlocked+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" IsBlocked = IsBlocked-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__Tag_Updater) CreatedTime(newVal int) *__Tag_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__Tag_Updater) CreatedTime_Increment(count int) *__Tag_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -41259,12 +42327,36 @@ func (u *__TagsPost_Updater) Id(newVal int) *__TagsPost_Updater {
 	return u
 }
 
+func (u *__TagsPost_Updater) Id_Increment(count int) *__TagsPost_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__TagsPost_Updater) TagId(newVal int) *__TagsPost_Updater {
 	u.updates[" TagId = ? "] = newVal
+	return u
+}
+
+func (u *__TagsPost_Updater) TagId_Increment(count int) *__TagsPost_Updater {
+	if count > 0 {
+		u.updates[" TagId = TagId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" TagId = TagId-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -41277,6 +42369,18 @@ func (u *__TagsPost_Updater) PostId(newVal int) *__TagsPost_Updater {
 	return u
 }
 
+func (u *__TagsPost_Updater) PostId_Increment(count int) *__TagsPost_Updater {
+	if count > 0 {
+		u.updates[" PostId = PostId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PostId = PostId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -41286,12 +42390,36 @@ func (u *__TagsPost_Updater) TypeId(newVal int) *__TagsPost_Updater {
 	return u
 }
 
+func (u *__TagsPost_Updater) TypeId_Increment(count int) *__TagsPost_Updater {
+	if count > 0 {
+		u.updates[" TypeId = TypeId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" TypeId = TypeId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__TagsPost_Updater) CreatedTime(newVal int) *__TagsPost_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__TagsPost_Updater) CreatedTime_Increment(count int) *__TagsPost_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -48970,6 +50098,18 @@ func (u *__User_Updater) Id(newVal int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) Id_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -49035,6 +50175,18 @@ func (u *__User_Updater) PrivacyProfile(newVal int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) PrivacyProfile_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" PrivacyProfile = PrivacyProfile+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PrivacyProfile = PrivacyProfile-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -49057,6 +50209,18 @@ func (u *__User_Updater) Email(newVal string) *__User_Updater {
 
 func (u *__User_Updater) IsDeleted(newVal int) *__User_Updater {
 	u.updates[" IsDeleted = ? "] = newVal
+	return u
+}
+
+func (u *__User_Updater) IsDeleted_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" IsDeleted = IsDeleted+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" IsDeleted = IsDeleted-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -49085,12 +50249,36 @@ func (u *__User_Updater) FollowersCount(newVal int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) FollowersCount_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" FollowersCount = FollowersCount+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" FollowersCount = FollowersCount-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__User_Updater) FollowingCount(newVal int) *__User_Updater {
 	u.updates[" FollowingCount = ? "] = newVal
+	return u
+}
+
+func (u *__User_Updater) FollowingCount_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" FollowingCount = FollowingCount+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" FollowingCount = FollowingCount-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -49103,12 +50291,36 @@ func (u *__User_Updater) PostsCount(newVal int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) PostsCount_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" PostsCount = PostsCount+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PostsCount = PostsCount-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__User_Updater) MediaCount(newVal int) *__User_Updater {
 	u.updates[" MediaCount = ? "] = newVal
+	return u
+}
+
+func (u *__User_Updater) MediaCount_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" MediaCount = MediaCount+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" MediaCount = MediaCount-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -49121,12 +50333,36 @@ func (u *__User_Updater) LikesCount(newVal int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) LikesCount_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" LikesCount = LikesCount+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LikesCount = LikesCount-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__User_Updater) ResharedCount(newVal int) *__User_Updater {
 	u.updates[" ResharedCount = ? "] = newVal
+	return u
+}
+
+func (u *__User_Updater) ResharedCount_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" ResharedCount = ResharedCount+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ResharedCount = ResharedCount-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -49139,12 +50375,36 @@ func (u *__User_Updater) LastActionTime(newVal int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) LastActionTime_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" LastActionTime = LastActionTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LastActionTime = LastActionTime-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__User_Updater) LastPostTime(newVal int) *__User_Updater {
 	u.updates[" LastPostTime = ? "] = newVal
+	return u
+}
+
+func (u *__User_Updater) LastPostTime_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" LastPostTime = LastPostTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LastPostTime = LastPostTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -49157,6 +50417,18 @@ func (u *__User_Updater) PrimaryFollowingList(newVal int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) PrimaryFollowingList_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" PrimaryFollowingList = PrimaryFollowingList+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PrimaryFollowingList = PrimaryFollowingList-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -49166,12 +50438,36 @@ func (u *__User_Updater) CreatedTime(newVal int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) CreatedTime_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__User_Updater) UpdatedTime(newVal int) *__User_Updater {
 	u.updates[" UpdatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__User_Updater) UpdatedTime_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" UpdatedTime = UpdatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UpdatedTime = UpdatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -49216,6 +50512,18 @@ func (u *__User_Updater) AppVersion(newVal int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) AppVersion_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" AppVersion = AppVersion+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" AppVersion = AppVersion-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -49225,12 +50533,36 @@ func (u *__User_Updater) LastActivityTime(newVal int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) LastActivityTime_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" LastActivityTime = LastActivityTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LastActivityTime = LastActivityTime-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
 
 func (u *__User_Updater) LastLoginTime(newVal int) *__User_Updater {
 	u.updates[" LastLoginTime = ? "] = newVal
+	return u
+}
+
+func (u *__User_Updater) LastLoginTime_Increment(count int) *__User_Updater {
+	if count > 0 {
+		u.updates[" LastLoginTime = LastLoginTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LastLoginTime = LastLoginTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -51074,6 +52406,18 @@ func (u *__UserPassword_Updater) UserId(newVal int) *__UserPassword_Updater {
 	return u
 }
 
+func (u *__UserPassword_Updater) UserId_Increment(count int) *__UserPassword_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -51088,6 +52432,18 @@ func (u *__UserPassword_Updater) Password(newVal string) *__UserPassword_Updater
 
 func (u *__UserPassword_Updater) CreatedTime(newVal int) *__UserPassword_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__UserPassword_Updater) CreatedTime_Increment(count int) *__UserPassword_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+	}
+
 	return u
 }
 
@@ -51419,45 +52775,6 @@ func MassReplace_UserPassword(rows []UserPassword, db XODB) error {
 
 //
 
-// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
-//
-// Generated from index 'PostId'.
-func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, PostId, Text, CreatedTime ` +
-		`FROM ms.comments ` +
-		`WHERE PostId = ?`
-
-	// run query
-	XOLog(sqlstr, postId)
-	q, err := db.Query(sqlstr, postId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Comment{}
-	for q.Next() {
-		c := Comment{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &c)
-	}
-
-	return res, nil
-}
-
 // CommentById retrieves a row from 'ms.comments' as a Comment.
 //
 // Generated from index 'comments_Id_pkey'.
@@ -51549,32 +52866,6 @@ func FollowingListMembersByFollowedUserIdUserId(db XODB, followedUserId int, use
 	return res, nil
 }
 
-// FollowingListMemberByUserIdFollowedUserId retrieves a row from 'ms.following_list_member' as a FollowingListMember.
-//
-// Generated from index 'UserId'.
-func FollowingListMemberByUserIdFollowedUserId(db XODB, userId int, followedUserId int) (*FollowingListMember, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs ` +
-		`FROM ms.following_list_member ` +
-		`WHERE UserId = ? AND FollowedUserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId, followedUserId)
-	flm := FollowingListMember{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, userId, followedUserId).Scan(&flm.Id, &flm.ListId, &flm.UserId, &flm.FollowedUserId, &flm.FollowType, &flm.UpdatedTimeMs)
-	if err != nil {
-		return nil, err
-	}
-
-	return &flm, nil
-}
-
 // FollowingListMembersByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member' as a FollowingListMember.
 //
 // Generated from index 'UserId_2'.
@@ -51664,6 +52955,32 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	}
 
 	return &flmh, nil
+}
+
+// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'PostId'.
+func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE PostId = ? AND UserId = ?`
+
+	// run query
+	XOLog(sqlstr, postId, userId)
+	l := Like{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+	if err != nil {
+		return nil, err
+	}
+
+	return &l, nil
 }
 
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
@@ -51822,45 +53139,6 @@ func MessageById(db XODB, id int) (*Message, error) {
 	return &m, nil
 }
 
-// MsgDeletedFromServersByToUserId retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
-//
-// Generated from index 'ToUserId'.
-func MsgDeletedFromServersByToUserId(db XODB, toUserId int) ([]*MsgDeletedFromServer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, PeerUserId, RoomKey, AtTime ` +
-		`FROM ms.msg_deleted_from_server ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgDeletedFromServer{}
-	for q.Next() {
-		mdfs := MsgDeletedFromServer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&mdfs.Id, &mdfs.ToUserId, &mdfs.MsgKey, &mdfs.PeerUserId, &mdfs.RoomKey, &mdfs.AtTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &mdfs)
-	}
-
-	return res, nil
-}
-
 // MsgDeletedFromServerById retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
 //
 // Generated from index 'msg_deleted_from_server_Id_pkey'.
@@ -51911,6 +53189,45 @@ func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
 	}
 
 	return &mrtp, nil
+}
+
+// MsgSeenByPeersByToUserId retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
+//
+// Generated from index 'ToUserId'.
+func MsgSeenByPeersByToUserId(db XODB, toUserId int) ([]*MsgSeenByPeer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
+		`FROM ms.msg_seen_by_peer ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgSeenByPeer{}
+	for q.Next() {
+		msbp := MsgSeenByPeer{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &msbp)
+	}
+
+	return res, nil
 }
 
 // MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
@@ -52123,6 +53440,45 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 	// run query
 	XOLog(sqlstr, phoneNumber)
 	q, err := db.Query(sqlstr, phoneNumber)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*PhoneContact{}
+	for q.Next() {
+		pc := PhoneContact{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &pc)
+	}
+
+	return res, nil
+}
+
+// PhoneContactsByUserId retrieves a row from 'ms.phone_contacts' as a PhoneContact.
+//
+// Generated from index 'UserId'.
+func PhoneContactsByUserId(db XODB, userId int) ([]*PhoneContact, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime ` +
+		`FROM ms.phone_contacts ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
 	if err != nil {
 		return nil, err
 	}
