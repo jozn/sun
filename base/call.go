@@ -13,10 +13,15 @@ type Call struct {
 	Data            string        //marshilized json - don't set dirctly set via toJsonData
 	toJsonSliceData []interface{} //`json:"-"`
 	Meta            string        //marshilized json - don't set dirctly set via toJsonData
+    TimeMs          int
 }
 
 func NewCall(Name string) Call {
-	return Call{Name: Name, ServerCallId: time.Now().UnixNano()}
+	return Call{
+        Name: Name,
+        ServerCallId: time.Now().UnixNano(),
+        TimeMs: int(time.Now().UnixNano()/1000000),
+    }
 }
 
 func NewCallWithData(Name string, Data interface{}) Call {
