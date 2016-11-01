@@ -60,8 +60,6 @@ func ShowCached(a *base.Action) base.AppErr {
 
 func ShowCacher(a *base.Action) base.AppErr {
 
-    a.SendJson(models.Cacher.Items())
-    return nil
+	a.SendJson(models.Cacher.Items())
+	return nil
 }
-
-

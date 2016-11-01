@@ -16,7 +16,7 @@ func CreatePostLike(UserId, PostId int) {
 	err := l.Insert(base.DB)
 	if err == nil {
 		//UserMemoryStore.AddPostLike(UserId, PostId)
-        NewPost_Updater().LikesCount_Increment(1).Id_EQ(PostId).Update(base.DB)
+		NewPost_Updater().LikesCount_Increment(1).Id_EQ(PostId).Update(base.DB)
 		MemoryStore.UserLikedPostsList_Add(UserId, PostId)
 		OnPostLiked(l)
 	} else {
@@ -37,10 +37,10 @@ func DeletePostLike(UserId, PostId int) {
 	q := "DELETE FROM likes WHERE UserId = ? AND PostId = ?"
 	res, err := base.DB.Exec(q, UserId, PostId)
 	if err == nil {
-        if n,_:=res.RowsAffected();n > 0 {
-            NewPost_Updater().LikesCount_Increment(-1).Id_EQ(PostId).Update(base.DB)
-        }
-        //UserMemoryStore.RemovePostLike(UserId, PostId)
+		if n, _ := res.RowsAffected(); n > 0 {
+			NewPost_Updater().LikesCount_Increment(-1).Id_EQ(PostId).Update(base.DB)
+		}
+		//UserMemoryStore.RemovePostLike(UserId, PostId)
 		MemoryStore.UserLikedPostsList_Remove(UserId, PostId)
 		OnPostUnLiked(l)
 	} else {

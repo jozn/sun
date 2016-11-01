@@ -22,20 +22,20 @@ func (e _viewImpl) UserViewSync(CurrentUserId, UserId int) *UserViewSyncAndMe {
 }
 
 func (e _viewImpl) UserBasicAndMeForUsers(CurrentUserId int, Users []int) []UserBasicAndMe {
-    res:=make([]UserBasicAndMe,0,len(Users))
+	res := make([]UserBasicAndMe, 0, len(Users))
 
-    for _, u:= range Users {
-        user := UserMemoryStore.GetForUser(u)
-        if user!= nil {
-            v:= UserBasicAndMe{
-                UserId: u,
-                FollowingType: UserMemoryStore.GetFollowingTypeForUsers(CurrentUserId, u),
-            }
-            v.UserBasic = user.UserBasic
-            v.FullName = v.FirstName+ " " + v.LastName
-            res = append(res,v)
-        }
-    }
+	for _, u := range Users {
+		user := UserMemoryStore.GetForUser(u)
+		if user != nil {
+			v := UserBasicAndMe{
+				UserId:        u,
+				FollowingType: UserMemoryStore.GetFollowingTypeForUsers(CurrentUserId, u),
+			}
+			v.UserBasic = user.UserBasic
+			v.FullName = v.FirstName + " " + v.LastName
+			res = append(res, v)
+		}
+	}
 
-    return res
+	return res
 }
