@@ -9,6 +9,7 @@ import (
 	. "ms/sun/base"
 	. "ms/sun/models"
 	"time"
+    "ms/sun/helper"
 )
 
 func FactUser1(c *Action) {
@@ -48,6 +49,25 @@ func FactUser1(c *Action) {
 	pid, _ := r.LastInsertId()
 	DB.MustExec("update user set PrimaryFollowingList = ? where Id =?", pid, id)
 	e(u)
+
+}
+
+func FactUpdateAboutMe(c *Action) {
+    user,_ := NewUser_Selector().OrderBy_Id_Asc().GetRows(DB)
+
+    for _ ,u := range user {
+        s := helper.FactRandStrEmoji(80, true)
+        if len(s) > 150 {
+            //s = s[0:150]
+        }
+
+        u.About = s
+        //u.Id = i+1
+        err:=u.Update(DB)
+        if err != nil{
+            helper.DebugPrintln(err)
+        }
+    }
 
 }
 

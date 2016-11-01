@@ -81,6 +81,7 @@ func registerRoutes() *httptreemux.TreeMux {
 	http.Handle("/fact/like", actioner(fact.FactLike))
 	http.Handle("/fact/comment", actioner(fact.FactComment))
 	http.Handle("/fact/post", actioner(fact.FactPost))
+	http.Handle("/fact/about", actioner(fact.FactUpdateAboutMe))
 
 	//messages
 	//http.HandleFunc("/MsgUpload", MsgUpload)

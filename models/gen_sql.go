@@ -1513,7 +1513,7 @@ func (u *__Comment_Updater) Id_Increment(count int) *__Comment_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1534,7 +1534,7 @@ func (u *__Comment_Updater) UserId_Increment(count int) *__Comment_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1555,7 +1555,7 @@ func (u *__Comment_Updater) PostId_Increment(count int) *__Comment_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" PostId = PostId-? "] = -(count) //make it potive
+		u.updates[" PostId = PostId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1584,7 +1584,7 @@ func (u *__Comment_Updater) CreatedTime_Increment(count int) *__Comment_Updater 
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1720,6 +1720,8 @@ func (u *__Comment_Selector) GetRow(db *sqlx.DB) (*Comment, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -1735,6 +1737,10 @@ func (u *__Comment_Selector) GetRows(db *sqlx.DB) ([]Comment, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -4281,7 +4287,7 @@ func (u *__FollowingList_Updater) Id_Increment(count int) *__FollowingList_Updat
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4302,7 +4308,7 @@ func (u *__FollowingList_Updater) UserId_Increment(count int) *__FollowingList_U
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4323,7 +4329,7 @@ func (u *__FollowingList_Updater) ListType_Increment(count int) *__FollowingList
 	}
 
 	if count < 0 {
-		u.updates[" ListType = ListType-? "] = -(count) //make it potive
+		u.updates[" ListType = ListType-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4352,7 +4358,7 @@ func (u *__FollowingList_Updater) Count_Increment(count int) *__FollowingList_Up
 	}
 
 	if count < 0 {
-		u.updates[" Count = Count-? "] = -(count) //make it potive
+		u.updates[" Count = Count-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4373,7 +4379,7 @@ func (u *__FollowingList_Updater) IsAuto_Increment(count int) *__FollowingList_U
 	}
 
 	if count < 0 {
-		u.updates[" IsAuto = IsAuto-? "] = -(count) //make it potive
+		u.updates[" IsAuto = IsAuto-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4394,7 +4400,7 @@ func (u *__FollowingList_Updater) IsPimiry_Increment(count int) *__FollowingList
 	}
 
 	if count < 0 {
-		u.updates[" IsPimiry = IsPimiry-? "] = -(count) //make it potive
+		u.updates[" IsPimiry = IsPimiry-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4415,7 +4421,7 @@ func (u *__FollowingList_Updater) CreatedTime_Increment(count int) *__FollowingL
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4596,6 +4602,8 @@ func (u *__FollowingList_Selector) GetRow(db *sqlx.DB) (*FollowingList, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -4611,6 +4619,10 @@ func (u *__FollowingList_Selector) GetRows(db *sqlx.DB) ([]FollowingList, error)
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -6744,7 +6756,7 @@ func (u *__FollowingListMember_Updater) Id_Increment(count int) *__FollowingList
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -6765,7 +6777,7 @@ func (u *__FollowingListMember_Updater) ListId_Increment(count int) *__Following
 	}
 
 	if count < 0 {
-		u.updates[" ListId = ListId-? "] = -(count) //make it potive
+		u.updates[" ListId = ListId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -6786,7 +6798,7 @@ func (u *__FollowingListMember_Updater) UserId_Increment(count int) *__Following
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -6807,7 +6819,7 @@ func (u *__FollowingListMember_Updater) FollowedUserId_Increment(count int) *__F
 	}
 
 	if count < 0 {
-		u.updates[" FollowedUserId = FollowedUserId-? "] = -(count) //make it potive
+		u.updates[" FollowedUserId = FollowedUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -6828,7 +6840,7 @@ func (u *__FollowingListMember_Updater) FollowType_Increment(count int) *__Follo
 	}
 
 	if count < 0 {
-		u.updates[" FollowType = FollowType-? "] = -(count) //make it potive
+		u.updates[" FollowType = FollowType-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -6849,7 +6861,7 @@ func (u *__FollowingListMember_Updater) UpdatedTimeMs_Increment(count int) *__Fo
 	}
 
 	if count < 0 {
-		u.updates[" UpdatedTimeMs = UpdatedTimeMs-? "] = -(count) //make it potive
+		u.updates[" UpdatedTimeMs = UpdatedTimeMs-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -7000,6 +7012,8 @@ func (u *__FollowingListMember_Selector) GetRow(db *sqlx.DB) (*FollowingListMemb
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -7015,6 +7029,10 @@ func (u *__FollowingListMember_Selector) GetRows(db *sqlx.DB) ([]FollowingListMe
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -9417,7 +9435,7 @@ func (u *__FollowingListMemberHistory_Updater) Id_Increment(count int) *__Follow
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -9438,7 +9456,7 @@ func (u *__FollowingListMemberHistory_Updater) ListId_Increment(count int) *__Fo
 	}
 
 	if count < 0 {
-		u.updates[" ListId = ListId-? "] = -(count) //make it potive
+		u.updates[" ListId = ListId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -9459,7 +9477,7 @@ func (u *__FollowingListMemberHistory_Updater) UserId_Increment(count int) *__Fo
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -9480,7 +9498,7 @@ func (u *__FollowingListMemberHistory_Updater) FollowedUserId_Increment(count in
 	}
 
 	if count < 0 {
-		u.updates[" FollowedUserId = FollowedUserId-? "] = -(count) //make it potive
+		u.updates[" FollowedUserId = FollowedUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -9501,7 +9519,7 @@ func (u *__FollowingListMemberHistory_Updater) FollowType_Increment(count int) *
 	}
 
 	if count < 0 {
-		u.updates[" FollowType = FollowType-? "] = -(count) //make it potive
+		u.updates[" FollowType = FollowType-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -9522,7 +9540,7 @@ func (u *__FollowingListMemberHistory_Updater) UpdatedTimeMs_Increment(count int
 	}
 
 	if count < 0 {
-		u.updates[" UpdatedTimeMs = UpdatedTimeMs-? "] = -(count) //make it potive
+		u.updates[" UpdatedTimeMs = UpdatedTimeMs-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -9543,7 +9561,7 @@ func (u *__FollowingListMemberHistory_Updater) FollowId_Increment(count int) *__
 	}
 
 	if count < 0 {
-		u.updates[" FollowId = FollowId-? "] = -(count) //make it potive
+		u.updates[" FollowId = FollowId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -9709,6 +9727,8 @@ func (u *__FollowingListMemberHistory_Selector) GetRow(db *sqlx.DB) (*FollowingL
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -9724,6 +9744,10 @@ func (u *__FollowingListMemberHistory_Selector) GetRows(db *sqlx.DB) ([]Followin
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -11576,7 +11600,7 @@ func (u *__Like_Updater) Id_Increment(count int) *__Like_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -11597,7 +11621,7 @@ func (u *__Like_Updater) PostId_Increment(count int) *__Like_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" PostId = PostId-? "] = -(count) //make it potive
+		u.updates[" PostId = PostId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -11618,7 +11642,7 @@ func (u *__Like_Updater) UserId_Increment(count int) *__Like_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -11639,7 +11663,7 @@ func (u *__Like_Updater) TypeId_Increment(count int) *__Like_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" TypeId = TypeId-? "] = -(count) //make it potive
+		u.updates[" TypeId = TypeId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -11660,7 +11684,7 @@ func (u *__Like_Updater) CreatedTime_Increment(count int) *__Like_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -11796,6 +11820,8 @@ func (u *__Like_Selector) GetRow(db *sqlx.DB) (*Like, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -11811,6 +11837,10 @@ func (u *__Like_Selector) GetRows(db *sqlx.DB) ([]Like, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -14080,7 +14110,7 @@ func (u *__Media_Updater) Id_Increment(count int) *__Media_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -14101,7 +14131,7 @@ func (u *__Media_Updater) UserId_Increment(count int) *__Media_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -14122,7 +14152,7 @@ func (u *__Media_Updater) PostId_Increment(count int) *__Media_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" PostId = PostId-? "] = -(count) //make it potive
+		u.updates[" PostId = PostId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -14143,7 +14173,7 @@ func (u *__Media_Updater) AlbumId_Increment(count int) *__Media_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" AlbumId = AlbumId-? "] = -(count) //make it potive
+		u.updates[" AlbumId = AlbumId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -14164,7 +14194,7 @@ func (u *__Media_Updater) TypeId_Increment(count int) *__Media_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" TypeId = TypeId-? "] = -(count) //make it potive
+		u.updates[" TypeId = TypeId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -14185,7 +14215,7 @@ func (u *__Media_Updater) CreatedTime_Increment(count int) *__Media_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -14359,6 +14389,8 @@ func (u *__Media_Selector) GetRow(db *sqlx.DB) (*Media, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -14374,6 +14406,10 @@ func (u *__Media_Selector) GetRows(db *sqlx.DB) ([]Media, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -16393,7 +16429,7 @@ func (u *__Message_Updater) Id_Increment(count int) *__Message_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -16414,7 +16450,7 @@ func (u *__Message_Updater) ToUserId_Increment(count int) *__Message_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it potive
+		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -16451,7 +16487,7 @@ func (u *__Message_Updater) FromUserID_Increment(count int) *__Message_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" FromUserID = FromUserID-? "] = -(count) //make it potive
+		u.updates[" FromUserID = FromUserID-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -16480,7 +16516,7 @@ func (u *__Message_Updater) TimeMs_Increment(count int) *__Message_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" TimeMs = TimeMs-? "] = -(count) //make it potive
+		u.updates[" TimeMs = TimeMs-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -16646,6 +16682,8 @@ func (u *__Message_Selector) GetRow(db *sqlx.DB) (*Message, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -16661,6 +16699,10 @@ func (u *__Message_Selector) GetRows(db *sqlx.DB) ([]Message, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -18532,7 +18574,7 @@ func (u *__MsgDeletedFromServer_Updater) Id_Increment(count int) *__MsgDeletedFr
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -18553,7 +18595,7 @@ func (u *__MsgDeletedFromServer_Updater) ToUserId_Increment(count int) *__MsgDel
 	}
 
 	if count < 0 {
-		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it potive
+		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -18582,7 +18624,7 @@ func (u *__MsgDeletedFromServer_Updater) PeerUserId_Increment(count int) *__MsgD
 	}
 
 	if count < 0 {
-		u.updates[" PeerUserId = PeerUserId-? "] = -(count) //make it potive
+		u.updates[" PeerUserId = PeerUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -18611,7 +18653,7 @@ func (u *__MsgDeletedFromServer_Updater) AtTime_Increment(count int) *__MsgDelet
 	}
 
 	if count < 0 {
-		u.updates[" AtTime = AtTime-? "] = -(count) //make it potive
+		u.updates[" AtTime = AtTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -18762,6 +18804,8 @@ func (u *__MsgDeletedFromServer_Selector) GetRow(db *sqlx.DB) (*MsgDeletedFromSe
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -18777,6 +18821,10 @@ func (u *__MsgDeletedFromServer_Selector) GetRows(db *sqlx.DB) ([]MsgDeletedFrom
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -20644,7 +20692,7 @@ func (u *__MsgReceivedToPeer_Updater) Id_Increment(count int) *__MsgReceivedToPe
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -20665,7 +20713,7 @@ func (u *__MsgReceivedToPeer_Updater) ToUserId_Increment(count int) *__MsgReceiv
 	}
 
 	if count < 0 {
-		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it potive
+		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -20702,7 +20750,7 @@ func (u *__MsgReceivedToPeer_Updater) PeerUserId_Increment(count int) *__MsgRece
 	}
 
 	if count < 0 {
-		u.updates[" PeerUserId = PeerUserId-? "] = -(count) //make it potive
+		u.updates[" PeerUserId = PeerUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -20723,7 +20771,7 @@ func (u *__MsgReceivedToPeer_Updater) AtTime_Increment(count int) *__MsgReceived
 	}
 
 	if count < 0 {
-		u.updates[" AtTime = AtTime-? "] = -(count) //make it potive
+		u.updates[" AtTime = AtTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -20874,6 +20922,8 @@ func (u *__MsgReceivedToPeer_Selector) GetRow(db *sqlx.DB) (*MsgReceivedToPeer, 
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -20889,6 +20939,10 @@ func (u *__MsgReceivedToPeer_Selector) GetRows(db *sqlx.DB) ([]MsgReceivedToPeer
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -22756,7 +22810,7 @@ func (u *__MsgSeenByPeer_Updater) Id_Increment(count int) *__MsgSeenByPeer_Updat
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -22777,7 +22831,7 @@ func (u *__MsgSeenByPeer_Updater) ToUserId_Increment(count int) *__MsgSeenByPeer
 	}
 
 	if count < 0 {
-		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it potive
+		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -22814,7 +22868,7 @@ func (u *__MsgSeenByPeer_Updater) PeerUserId_Increment(count int) *__MsgSeenByPe
 	}
 
 	if count < 0 {
-		u.updates[" PeerUserId = PeerUserId-? "] = -(count) //make it potive
+		u.updates[" PeerUserId = PeerUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -22835,7 +22889,7 @@ func (u *__MsgSeenByPeer_Updater) AtTime_Increment(count int) *__MsgSeenByPeer_U
 	}
 
 	if count < 0 {
-		u.updates[" AtTime = AtTime-? "] = -(count) //make it potive
+		u.updates[" AtTime = AtTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -22986,6 +23040,8 @@ func (u *__MsgSeenByPeer_Selector) GetRow(db *sqlx.DB) (*MsgSeenByPeer, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -23001,6 +23057,10 @@ func (u *__MsgSeenByPeer_Selector) GetRows(db *sqlx.DB) ([]MsgSeenByPeer, error)
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -25957,7 +26017,7 @@ func (u *__Notification_Updater) Id_Increment(count int) *__Notification_Updater
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -25978,7 +26038,7 @@ func (u *__Notification_Updater) ForUserId_Increment(count int) *__Notification_
 	}
 
 	if count < 0 {
-		u.updates[" ForUserId = ForUserId-? "] = -(count) //make it potive
+		u.updates[" ForUserId = ForUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -25999,7 +26059,7 @@ func (u *__Notification_Updater) ActorUserId_Increment(count int) *__Notificatio
 	}
 
 	if count < 0 {
-		u.updates[" ActorUserId = ActorUserId-? "] = -(count) //make it potive
+		u.updates[" ActorUserId = ActorUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -26020,7 +26080,7 @@ func (u *__Notification_Updater) ActionTypeId_Increment(count int) *__Notificati
 	}
 
 	if count < 0 {
-		u.updates[" ActionTypeId = ActionTypeId-? "] = -(count) //make it potive
+		u.updates[" ActionTypeId = ActionTypeId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -26041,7 +26101,7 @@ func (u *__Notification_Updater) ObjectTypeId_Increment(count int) *__Notificati
 	}
 
 	if count < 0 {
-		u.updates[" ObjectTypeId = ObjectTypeId-? "] = -(count) //make it potive
+		u.updates[" ObjectTypeId = ObjectTypeId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -26062,7 +26122,7 @@ func (u *__Notification_Updater) TargetId_Increment(count int) *__Notification_U
 	}
 
 	if count < 0 {
-		u.updates[" TargetId = TargetId-? "] = -(count) //make it potive
+		u.updates[" TargetId = TargetId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -26083,7 +26143,7 @@ func (u *__Notification_Updater) ObjectId_Increment(count int) *__Notification_U
 	}
 
 	if count < 0 {
-		u.updates[" ObjectId = ObjectId-? "] = -(count) //make it potive
+		u.updates[" ObjectId = ObjectId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -26104,7 +26164,7 @@ func (u *__Notification_Updater) SeenStatus_Increment(count int) *__Notification
 	}
 
 	if count < 0 {
-		u.updates[" SeenStatus = SeenStatus-? "] = -(count) //make it potive
+		u.updates[" SeenStatus = SeenStatus-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -26125,7 +26185,7 @@ func (u *__Notification_Updater) CreatedTime_Increment(count int) *__Notificatio
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -26321,6 +26381,8 @@ func (u *__Notification_Selector) GetRow(db *sqlx.DB) (*Notification, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -26336,6 +26398,10 @@ func (u *__Notification_Selector) GetRows(db *sqlx.DB) ([]Notification, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -29065,7 +29131,7 @@ func (u *__PhoneContact_Updater) Id_Increment(count int) *__PhoneContact_Updater
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -29118,7 +29184,7 @@ func (u *__PhoneContact_Updater) PhoneContactRowId_Increment(count int) *__Phone
 	}
 
 	if count < 0 {
-		u.updates[" PhoneContactRowId = PhoneContactRowId-? "] = -(count) //make it potive
+		u.updates[" PhoneContactRowId = PhoneContactRowId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -29139,7 +29205,7 @@ func (u *__PhoneContact_Updater) UserId_Increment(count int) *__PhoneContact_Upd
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -29160,7 +29226,7 @@ func (u *__PhoneContact_Updater) DeviceUuidId_Increment(count int) *__PhoneConta
 	}
 
 	if count < 0 {
-		u.updates[" DeviceUuidId = DeviceUuidId-? "] = -(count) //make it potive
+		u.updates[" DeviceUuidId = DeviceUuidId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -29181,7 +29247,7 @@ func (u *__PhoneContact_Updater) CreatedTime_Increment(count int) *__PhoneContac
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -29202,7 +29268,7 @@ func (u *__PhoneContact_Updater) UpdatedTime_Increment(count int) *__PhoneContac
 	}
 
 	if count < 0 {
-		u.updates[" UpdatedTime = UpdatedTime-? "] = -(count) //make it potive
+		u.updates[" UpdatedTime = UpdatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -29413,6 +29479,8 @@ func (u *__PhoneContact_Selector) GetRow(db *sqlx.DB) (*PhoneContact, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -29428,6 +29496,10 @@ func (u *__PhoneContact_Selector) GetRows(db *sqlx.DB) ([]PhoneContact, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -33398,7 +33470,7 @@ func (u *__Post_Updater) Id_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33419,7 +33491,7 @@ func (u *__Post_Updater) UserId_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33440,7 +33512,7 @@ func (u *__Post_Updater) TypeId_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" TypeId = TypeId-? "] = -(count) //make it potive
+		u.updates[" TypeId = TypeId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33485,7 +33557,7 @@ func (u *__Post_Updater) MediaServerId_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" MediaServerId = MediaServerId-? "] = -(count) //make it potive
+		u.updates[" MediaServerId = MediaServerId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33506,7 +33578,7 @@ func (u *__Post_Updater) Width_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Width = Width-? "] = -(count) //make it potive
+		u.updates[" Width = Width-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33527,7 +33599,7 @@ func (u *__Post_Updater) Height_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Height = Height-? "] = -(count) //make it potive
+		u.updates[" Height = Height-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33548,7 +33620,7 @@ func (u *__Post_Updater) SharedTo_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" SharedTo = SharedTo-? "] = -(count) //make it potive
+		u.updates[" SharedTo = SharedTo-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33569,7 +33641,7 @@ func (u *__Post_Updater) HasTag_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" HasTag = HasTag-? "] = -(count) //make it potive
+		u.updates[" HasTag = HasTag-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33590,7 +33662,7 @@ func (u *__Post_Updater) LikesCount_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" LikesCount = LikesCount-? "] = -(count) //make it potive
+		u.updates[" LikesCount = LikesCount-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33611,7 +33683,7 @@ func (u *__Post_Updater) CommentsCount_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" CommentsCount = CommentsCount-? "] = -(count) //make it potive
+		u.updates[" CommentsCount = CommentsCount-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33632,7 +33704,7 @@ func (u *__Post_Updater) CreatedTime_Increment(count int) *__Post_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -33903,6 +33975,8 @@ func (u *__Post_Selector) GetRow(db *sqlx.DB) (*Post, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -33918,6 +33992,10 @@ func (u *__Post_Selector) GetRows(db *sqlx.DB) ([]Post, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -35522,7 +35600,7 @@ func (u *__RecommendUser_Updater) Id_Increment(count int) *__RecommendUser_Updat
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -35543,7 +35621,7 @@ func (u *__RecommendUser_Updater) UserId_Increment(count int) *__RecommendUser_U
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -35564,7 +35642,7 @@ func (u *__RecommendUser_Updater) TargetId_Increment(count int) *__RecommendUser
 	}
 
 	if count < 0 {
-		u.updates[" TargetId = TargetId-? "] = -(count) //make it potive
+		u.updates[" TargetId = TargetId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -35589,7 +35667,7 @@ func (u *__RecommendUser_Updater) CreatedTime_Increment(count int) *__RecommendU
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -35725,6 +35803,8 @@ func (u *__RecommendUser_Selector) GetRow(db *sqlx.DB) (*RecommendUser, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -35740,6 +35820,10 @@ func (u *__RecommendUser_Selector) GetRows(db *sqlx.DB) ([]RecommendUser, error)
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -38195,7 +38279,7 @@ func (u *__Session_Updater) Id_Increment(count int) *__Session_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -38216,7 +38300,7 @@ func (u *__Session_Updater) UserId_Increment(count int) *__Session_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -38261,7 +38345,7 @@ func (u *__Session_Updater) LastActivityTime_Increment(count int) *__Session_Upd
 	}
 
 	if count < 0 {
-		u.updates[" LastActivityTime = LastActivityTime-? "] = -(count) //make it potive
+		u.updates[" LastActivityTime = LastActivityTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -38306,7 +38390,7 @@ func (u *__Session_Updater) CreatedTime_Increment(count int) *__Session_Updater 
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -38517,6 +38601,8 @@ func (u *__Session_Selector) GetRow(db *sqlx.DB) (*Session, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -38532,6 +38618,10 @@ func (u *__Session_Selector) GetRows(db *sqlx.DB) ([]Session, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -40267,7 +40357,7 @@ func (u *__Tag_Updater) Id_Increment(count int) *__Tag_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -40296,7 +40386,7 @@ func (u *__Tag_Updater) Count_Increment(count int) *__Tag_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Count = Count-? "] = -(count) //make it potive
+		u.updates[" Count = Count-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -40317,7 +40407,7 @@ func (u *__Tag_Updater) IsBlocked_Increment(count int) *__Tag_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" IsBlocked = IsBlocked-? "] = -(count) //make it potive
+		u.updates[" IsBlocked = IsBlocked-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -40338,7 +40428,7 @@ func (u *__Tag_Updater) CreatedTime_Increment(count int) *__Tag_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -40474,6 +40564,8 @@ func (u *__Tag_Selector) GetRow(db *sqlx.DB) (*Tag, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -40489,6 +40581,10 @@ func (u *__Tag_Selector) GetRows(db *sqlx.DB) ([]Tag, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -42333,7 +42429,7 @@ func (u *__TagsPost_Updater) Id_Increment(count int) *__TagsPost_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -42354,7 +42450,7 @@ func (u *__TagsPost_Updater) TagId_Increment(count int) *__TagsPost_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" TagId = TagId-? "] = -(count) //make it potive
+		u.updates[" TagId = TagId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -42375,7 +42471,7 @@ func (u *__TagsPost_Updater) PostId_Increment(count int) *__TagsPost_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" PostId = PostId-? "] = -(count) //make it potive
+		u.updates[" PostId = PostId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -42396,7 +42492,7 @@ func (u *__TagsPost_Updater) TypeId_Increment(count int) *__TagsPost_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" TypeId = TypeId-? "] = -(count) //make it potive
+		u.updates[" TypeId = TypeId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -42417,7 +42513,7 @@ func (u *__TagsPost_Updater) CreatedTime_Increment(count int) *__TagsPost_Update
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -42553,6 +42649,8 @@ func (u *__TagsPost_Selector) GetRow(db *sqlx.DB) (*TagsPost, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -42568,6 +42666,10 @@ func (u *__TagsPost_Selector) GetRows(db *sqlx.DB) ([]TagsPost, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -50104,7 +50206,7 @@ func (u *__User_Updater) Id_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it potive
+		u.updates[" Id = Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50181,7 +50283,7 @@ func (u *__User_Updater) PrivacyProfile_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" PrivacyProfile = PrivacyProfile-? "] = -(count) //make it potive
+		u.updates[" PrivacyProfile = PrivacyProfile-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50218,7 +50320,7 @@ func (u *__User_Updater) IsDeleted_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" IsDeleted = IsDeleted-? "] = -(count) //make it potive
+		u.updates[" IsDeleted = IsDeleted-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50255,7 +50357,7 @@ func (u *__User_Updater) FollowersCount_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" FollowersCount = FollowersCount-? "] = -(count) //make it potive
+		u.updates[" FollowersCount = FollowersCount-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50276,7 +50378,7 @@ func (u *__User_Updater) FollowingCount_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" FollowingCount = FollowingCount-? "] = -(count) //make it potive
+		u.updates[" FollowingCount = FollowingCount-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50297,7 +50399,7 @@ func (u *__User_Updater) PostsCount_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" PostsCount = PostsCount-? "] = -(count) //make it potive
+		u.updates[" PostsCount = PostsCount-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50318,7 +50420,7 @@ func (u *__User_Updater) MediaCount_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" MediaCount = MediaCount-? "] = -(count) //make it potive
+		u.updates[" MediaCount = MediaCount-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50339,7 +50441,7 @@ func (u *__User_Updater) LikesCount_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" LikesCount = LikesCount-? "] = -(count) //make it potive
+		u.updates[" LikesCount = LikesCount-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50360,7 +50462,7 @@ func (u *__User_Updater) ResharedCount_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" ResharedCount = ResharedCount-? "] = -(count) //make it potive
+		u.updates[" ResharedCount = ResharedCount-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50381,7 +50483,7 @@ func (u *__User_Updater) LastActionTime_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" LastActionTime = LastActionTime-? "] = -(count) //make it potive
+		u.updates[" LastActionTime = LastActionTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50402,7 +50504,7 @@ func (u *__User_Updater) LastPostTime_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" LastPostTime = LastPostTime-? "] = -(count) //make it potive
+		u.updates[" LastPostTime = LastPostTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50423,7 +50525,7 @@ func (u *__User_Updater) PrimaryFollowingList_Increment(count int) *__User_Updat
 	}
 
 	if count < 0 {
-		u.updates[" PrimaryFollowingList = PrimaryFollowingList-? "] = -(count) //make it potive
+		u.updates[" PrimaryFollowingList = PrimaryFollowingList-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50444,7 +50546,7 @@ func (u *__User_Updater) CreatedTime_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50465,7 +50567,7 @@ func (u *__User_Updater) UpdatedTime_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" UpdatedTime = UpdatedTime-? "] = -(count) //make it potive
+		u.updates[" UpdatedTime = UpdatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50518,7 +50620,7 @@ func (u *__User_Updater) AppVersion_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" AppVersion = AppVersion-? "] = -(count) //make it potive
+		u.updates[" AppVersion = AppVersion-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50539,7 +50641,7 @@ func (u *__User_Updater) LastActivityTime_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" LastActivityTime = LastActivityTime-? "] = -(count) //make it potive
+		u.updates[" LastActivityTime = LastActivityTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -50560,7 +50662,7 @@ func (u *__User_Updater) LastLoginTime_Increment(count int) *__User_Updater {
 	}
 
 	if count < 0 {
-		u.updates[" LastLoginTime = LastLoginTime-? "] = -(count) //make it potive
+		u.updates[" LastLoginTime = LastLoginTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -51124,6 +51226,8 @@ func (u *__User_Selector) GetRow(db *sqlx.DB) (*User, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -51139,6 +51243,10 @@ func (u *__User_Selector) GetRows(db *sqlx.DB) ([]User, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -52412,7 +52520,7 @@ func (u *__UserPassword_Updater) UserId_Increment(count int) *__UserPassword_Upd
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it potive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -52441,7 +52549,7 @@ func (u *__UserPassword_Updater) CreatedTime_Increment(count int) *__UserPasswor
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it potive
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -52547,6 +52655,8 @@ func (u *__UserPassword_Selector) GetRow(db *sqlx.DB) (*UserPassword, error) {
 		return nil, err
 	}
 
+	row._exists = true
+
 	return row, nil
 }
 
@@ -52562,6 +52672,10 @@ func (u *__UserPassword_Selector) GetRows(db *sqlx.DB) ([]UserPassword, error) {
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
 		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
 	}
 
 	return rows, nil
@@ -52931,6 +53045,45 @@ func FollowingListMemberById(db XODB, id int) (*FollowingListMember, error) {
 	return &flm, nil
 }
 
+// FollowingListMemberHistoriesByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
+//
+// Generated from index 'UserId'.
+func FollowingListMemberHistoriesByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeMs int) ([]*FollowingListMemberHistory, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs, FollowId ` +
+		`FROM ms.following_list_member_history ` +
+		`WHERE UserId = ? AND UpdatedTimeMs = ?`
+
+	// run query
+	XOLog(sqlstr, userId, updatedTimeMs)
+	q, err := db.Query(sqlstr, userId, updatedTimeMs)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*FollowingListMemberHistory{}
+	for q.Next() {
+		flmh := FollowingListMemberHistory{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&flmh.Id, &flmh.ListId, &flmh.UserId, &flmh.FollowedUserId, &flmh.FollowType, &flmh.UpdatedTimeMs, &flmh.FollowId)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &flmh)
+	}
+
+	return res, nil
+}
+
 // FollowingListMemberHistoryById retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
 //
 // Generated from index 'following_list_member_history_Id_pkey'.
@@ -53139,6 +53292,45 @@ func MessageById(db XODB, id int) (*Message, error) {
 	return &m, nil
 }
 
+// MsgDeletedFromServersByToUserId retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
+//
+// Generated from index 'ToUserId'.
+func MsgDeletedFromServersByToUserId(db XODB, toUserId int) ([]*MsgDeletedFromServer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, PeerUserId, RoomKey, AtTime ` +
+		`FROM ms.msg_deleted_from_server ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgDeletedFromServer{}
+	for q.Next() {
+		mdfs := MsgDeletedFromServer{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&mdfs.Id, &mdfs.ToUserId, &mdfs.MsgKey, &mdfs.PeerUserId, &mdfs.RoomKey, &mdfs.AtTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &mdfs)
+	}
+
+	return res, nil
+}
+
 // MsgDeletedFromServerById retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
 //
 // Generated from index 'msg_deleted_from_server_Id_pkey'.
@@ -53189,45 +53381,6 @@ func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
 	}
 
 	return &mrtp, nil
-}
-
-// MsgSeenByPeersByToUserId retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
-//
-// Generated from index 'ToUserId'.
-func MsgSeenByPeersByToUserId(db XODB, toUserId int) ([]*MsgSeenByPeer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
-		`FROM ms.msg_seen_by_peer ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgSeenByPeer{}
-	for q.Next() {
-		msbp := MsgSeenByPeer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &msbp)
-	}
-
-	return res, nil
 }
 
 // MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
@@ -53440,45 +53593,6 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 	// run query
 	XOLog(sqlstr, phoneNumber)
 	q, err := db.Query(sqlstr, phoneNumber)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*PhoneContact{}
-	for q.Next() {
-		pc := PhoneContact{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &pc)
-	}
-
-	return res, nil
-}
-
-// PhoneContactsByUserId retrieves a row from 'ms.phone_contacts' as a PhoneContact.
-//
-// Generated from index 'UserId'.
-func PhoneContactsByUserId(db XODB, userId int) ([]*PhoneContact, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime ` +
-		`FROM ms.phone_contacts ` +
-		`WHERE UserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId)
-	q, err := db.Query(sqlstr, userId)
 	if err != nil {
 		return nil, err
 	}

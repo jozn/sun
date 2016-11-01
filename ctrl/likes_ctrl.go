@@ -14,9 +14,11 @@ const LIKES_LIST_LIMIT = 50
 func GetLikesAction(c *base.Action) base.AppErr {
 	pidStr := c.Req.Form.Get("post_id")
 	pageStr := c.Req.Form.Get("page")
+	lastId := c.GetParamInt("last",0)
 	post_id := helper.StrToInt(pidStr, 0)
 	page := helper.StrToInt(pageStr, 0)
 
+    _ = lastId
 	if post_id < 1 {
 		return nil
 	}
@@ -30,7 +32,8 @@ func GetLikesAction(c *base.Action) base.AppErr {
 		return nil
 	}
 
-	usersFollow := models.UsersToInlineFollowView(UserIds, c.UserId())
+	//usersFollow := models.UsersToInlineFollowView(UserIds, c.UserId())
+	usersFollow := models.Views.UserBasicAndMeForUsers(c.UserId(),UserIds)
 	c.SendJson(usersFollow)
 	return nil
 }
