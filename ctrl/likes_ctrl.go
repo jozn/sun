@@ -19,12 +19,11 @@ func GetLikesAction(c *base.Action) base.AppErr {
 	post_id := helper.StrToInt(pidStr, 0)
 	page := helper.StrToInt(pageStr, 0)
 
-	_ = last_id
 	if post_id < 1 {
 		return nil
 	}
 	//page indexed : >= 1
-	offset := (page - 1) * LIKES_LIST_LIMIT
+	offset := (page - 1) * limit
 
 	selector := models.NewLike_Selector().Select_UserId().PostId_EQ(post_id)
 
