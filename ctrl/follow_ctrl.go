@@ -99,7 +99,53 @@ func GetFollowersListAction(c *base.Action) base.AppErr {
 }
 
 func GetFollowingsListAction(c *base.Action) base.AppErr {
-	return genaeralListForFollowingsListActioner(c, LIST_TYPE_FOLLOWINGS)
+    UpdateSessionActivityIfUser(c)
+    cuid := c.UserId()
+
+    username := c.Req.Form.Get("username")
+    pageStr := c.Req.Form.Get("page")
+    page := helper.StrToInt(pageStr, 0)
+    limit := c.GetParamInt("limit",FOLLOW_LIST_SHOW_LIMIT)
+    offset := limit * (page-1)
+    last := c.GetParamInt("last", 1000000000)
+    peer_id := c.GetParamInt("peer_id", 0)
+
+    _ = last
+    var user models.UserTable
+    var err error
+    if peer_id < 1 {
+        user, err = models.GetUserByUsername2(username)
+    } else {
+        user = models.UserMemoryStore.GetForUser(peer_id).UserTable
+        peer_id = user.Id
+    }
+
+    if err != nil { //|| user == nil{
+        c.Protocol.Status = "ERR"
+        c.Protocol.Error = " کاربر پیدا نشد "
+        return nil
+    }
+
+    selector:=models.NewFollowingListMember_Selector().
+        Select_FollowedUserId().
+        UserId_EQ(peer_id).
+        OrderBy_Id_Desc().
+        Limit(limit);
+
+    if offset > 0{
+        selector.Offset(offset)
+    }
+
+    userIds,err:=selector.GetIntSlice(base.DB)
+    if err != nil {
+        helper.DebugErr(err)
+        return nil
+    }
+
+    usersFollow := models.GetListOfUserForFollowType(userIds, cuid)
+
+    c.SendJson(usersFollow)
+    return nil
 }
 
 func genaeralListForFollowingsListActioner(c *base.Action, listType int) base.AppErr {
