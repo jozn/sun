@@ -45,7 +45,7 @@ func UnfollowAction(c *base.Action) base.AppErr {
 	return nil
 }
 
-const FOLLOW_LIST_SHOW_LIMIT = 50
+const FOLLOW_LIST_SHOW_LIMIT = 30
 
 //followers of a user
 func GetFollowersListAction(c *base.Action) base.AppErr {
@@ -92,7 +92,8 @@ func GetFollowersListAction(c *base.Action) base.AppErr {
         return nil
     }
 
-    usersFollow := models.GetListOfUserForFollowType(userIds, cuid)
+    //usersFollow := models.GetListOfUserForFollowType(userIds, cuid)
+    usersFollow := models.Views.UserBasicAndMeForUsers(cuid,userIds)
 
     c.SendJson(usersFollow)
     return nil
@@ -142,7 +143,8 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
         return nil
     }
 
-    usersFollow := models.GetListOfUserForFollowType(userIds, cuid)
+    //usersFollow := models.GetListOfUserForFollowType(userIds, cuid)
+    usersFollow := models.Views.UserBasicAndMeForUsers(cuid,userIds)
 
     c.SendJson(usersFollow)
     return nil

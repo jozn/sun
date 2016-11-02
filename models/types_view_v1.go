@@ -34,6 +34,7 @@ func GetListOfUserForFollowType(userIds []int, CurrentUserId int) *[]UserBasicAn
 	return &list
 }
 
+//dep use Views.UserBasicAndMeForUsers
 func GetUserBasicAndMe(UserId, CurrentUserId int) *UserBasicAndMe {
 	userView := UserBasicAndMe{}
 	peerUser := UserMemoryStore.GetUserTableForUser(UserId)

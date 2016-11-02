@@ -42,6 +42,7 @@ func (e _viewImpl) UserBasicAndMeForUsers(CurrentUserId int, Users []int) []User
 
 //this is copy of GetListOfUserForFollowType()
 //todo merge with UserBasicAndMeForUsers()
+//dep use Views.UserBasicAndMeForUsers()
 func (e _viewImpl)GetListOfUserForFollowType(userIds []int, CurrentUserId int) *[]UserBasicAndMe {
     list := make([]UserBasicAndMe, 0, len(userIds))
     for _, uid := range userIds {
