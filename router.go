@@ -100,7 +100,9 @@ func registerRoutes() *httptreemux.TreeMux {
 	v1.GET("/post/update", toV1(ctrl.PostUpdateAction))
 
 	v1.GET("/follow", toV1(ctrl.FollowAction))
+	v1.POST("/follow", toV1(ctrl.FollowAction))
 	v1.GET("/unfollow", toV1(ctrl.UnfollowAction))
+	v1.POST("/unfollow", toV1(ctrl.UnfollowAction))
 	v1.GET("/followers", toV1(ctrl.GetFollowersListAction))
 	v1.GET("/following", toV1(ctrl.GetFollowingsListAction))
 
@@ -117,7 +119,9 @@ func registerRoutes() *httptreemux.TreeMux {
 	v1.POST("/session/info", toV1(ctrl.SessionGetUserInfo))
 	v1.GET("/session/info", toV1(ctrl.SessionGetUserInfo))
 
-	v1.GET("/profile/all", toV1(ctrl.GetPostsForProfileAction))
+	v1.GET("/profile/all", toV1(ctrl.GetPostsAndInfoForProfileAction))//dep
+	v1.GET("/profile/posts", toV1(ctrl.GetPostsForProfileAction))
+	v1.GET("/profile/info", toV1(ctrl.GetProfileInfoAction))
 
 	v1.GET("/notifications", toV1(ctrl.VNoftificationsCtrl))
 	//mux.GET("notifications", toV1(ctrl.NoftificationsCtrl))
