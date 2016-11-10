@@ -46,7 +46,8 @@ func Follow(UserId, FollowedPeerUserId int) {
 
 	follow, err := QueryInsertNewFollowing(UserId, FollowedPeerUserId, 1)
 	if err == nil {
-		UserMemoryStore.AddFollow(UserId, FollowedPeerUserId)
+		//UserMemoryStore.AddFollow(UserId, FollowedPeerUserId)
+		MemoryStore.UserFollowingList_Add(UserId, FollowedPeerUserId)
 		UserMemoryStore.UpdateUserFollowingCounts(UserId, 1)
 		UserMemoryStore.UpdateUserFollowersCounts(FollowedPeerUserId, 1)
 

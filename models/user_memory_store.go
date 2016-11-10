@@ -204,7 +204,8 @@ func (db *mapMemoryStoreImpl) RemovePostLike(UserId, PostId int) {
 //////////////////////// Followings -- all deprecated use MemoryStore.* ///////////////////////////////////
 
 func (db *mapMemoryStoreImpl) GetFollowingTypeForUsers(UserId, ReqFollowedUserId int) int {
-	s, ok := db.Map[UserId]
+    return MemoryStore.UserFollowingList_GetFollowingTypeForUsers(UserId, ReqFollowedUserId)
+	/*s, ok := db.Map[UserId]
 	ftype := 0
 	if ok {
 		//debug("xx: ",s.Followings)
@@ -215,9 +216,10 @@ func (db *mapMemoryStoreImpl) GetFollowingTypeForUsers(UserId, ReqFollowedUserId
 			ftype = 2
 		}
 	}
-	return ftype
+	return ftype*/
 }
 
+/*
 func (db *mapMemoryStoreImpl) AddFollow(UserId, FollowedUserId int) {
 	s, ok := db.Map[UserId]
 	if ok {
@@ -225,7 +227,9 @@ func (db *mapMemoryStoreImpl) AddFollow(UserId, FollowedUserId int) {
 		//QueryInsertNewFollowing(UserId,FollowedUserId,1)
 	}
 }
+*/
 
+/*
 func (db *mapMemoryStoreImpl) RemoveFollow(UserId, FollowedUserId int) {
 	s, ok := db.Map[UserId]
 	if ok {
@@ -233,7 +237,9 @@ func (db *mapMemoryStoreImpl) RemoveFollow(UserId, FollowedUserId int) {
 		//QueryInsertNewFollowing(UserId,FollowedUserId,0)
 	}
 }
+*/
 
+/*
 func (db *mapMemoryStoreImpl) GetAllFollowingsListOfUser(UserId int) *ds.IntList {
 	s, ok := db.Map[UserId]
 	if ok {
@@ -241,6 +247,7 @@ func (db *mapMemoryStoreImpl) GetAllFollowingsListOfUser(UserId int) *ds.IntList
 	}
 	return ds.New()
 }
+*/
 
 //////////////// User Actions Counts ////////////////
 func (db *mapMemoryStoreImpl) UpdateUserFollowingCounts(UserId int, cnt int) {

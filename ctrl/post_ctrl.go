@@ -106,7 +106,8 @@ func GetPostsStraemAction(c *base.Action) base.AppErr {
 	uid := c.UserId()
 	println("LIMIT: ",limit,c.Req.Form.Get("limit")," +")
 	//fids := models.GetAllPrimiryFollowingIds(uid)
-	fids := models.UserMemoryStore.GetAllFollowingsListOfUser(uid).Elements
+	//fids := models.UserMemoryStore.GetAllFollowingsListOfUser(uid).Elements
+	fids := models.MemoryStore.UserFollowingList_Get(uid).Elements
 
 	selctor := models.NewPost_Selector().UserId_In(fids).OrderBy_Id_Desc().Limit(limit)
 
