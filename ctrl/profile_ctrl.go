@@ -65,7 +65,20 @@ func GetProfileInfoAction(c *base.Action) base.AppErr {
     }
     u := mem.UserTable
 
-    c.SendJson(u)
+    type info struct {
+        models.UserCounts
+        models.UserViewSyncAndMe
+    }
+
+    res := info{
+        u.UserCounts,
+        *models.Views.UserViewSync(c.UserId(), u.Id),
+
+    }
+
+    //res := models.Views.UserViewSync(c.UserId(),u.Id)
+
+    c.SendJson(res)
     return nil
 
     return nil

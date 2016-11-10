@@ -158,7 +158,12 @@ func (c *Action) GetPage() int {
 
 func (c *Action) GetParamInt(param string, defulat int) int {
 	val := c.Req.Form.Get(param)
-	return helper.StrToInt(val, 0)
+    intVal :=helper.StrToInt(val, defulat)
+    if intVal == 0 {
+        return defulat
+    }
+    return intVal
+	//return helper.StrToInt(val, defulat)
 }
 
 func (c *Action) SendPalinText() {}

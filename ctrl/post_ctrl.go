@@ -98,13 +98,13 @@ func GetPostsStraemAction(c *base.Action) base.AppErr {
 	pagestr := c.Req.Form.Get("page")
 	last := helper.StrToInt(laststr, 0)
 	page := helper.StrToInt(pagestr, 0)
-    limit := c.GetParamInt("limit", LIMIT)
+    limit := c.GetParamInt("limit", 30)
 
     _ = last
 	_ = page
 
 	uid := c.UserId()
-	//print(uid)
+	println("LIMIT: ",limit,c.Req.Form.Get("limit")," +")
 	//fids := models.GetAllPrimiryFollowingIds(uid)
 	fids := models.UserMemoryStore.GetAllFollowingsListOfUser(uid).Elements
 
