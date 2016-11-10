@@ -72,7 +72,7 @@ func registerRoutes() *httptreemux.TreeMux {
 	http.Handle("/i/db", actionToFunc(DBStruct))
 	http.Handle("/i/java2", actionToFunc(DBStructsTojava))
 	http.Handle("/i/table", actionToFunc(DBStructsToTable))
-    //fixes
+	//fixes
 	http.Handle("/i/fix_counts", actionToFunc(ctrl.FixAllCountsCounts))
 	http.HandleFunc("/i/java", DBStructsTojava2)
 
@@ -121,7 +121,7 @@ func registerRoutes() *httptreemux.TreeMux {
 	v1.POST("/session/info", toV1(ctrl.SessionGetUserInfo))
 	v1.GET("/session/info", toV1(ctrl.SessionGetUserInfo))
 
-	v1.GET("/profile/all", toV1(ctrl.GetPostsAndInfoForProfileAction))//dep
+	v1.GET("/profile/all", toV1(ctrl.GetPostsAndInfoForProfileAction)) //dep
 	v1.GET("/profile/posts", toV1(ctrl.GetPostsForProfileAction))
 	v1.GET("/profile/info", toV1(ctrl.GetProfileInfoAction))
 

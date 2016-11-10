@@ -12,9 +12,9 @@ const LIKES_LIST_LIMIT = 20
 
 //todo: suport pagination + AmIFollowing
 func GetLikesAction(c *base.Action) base.AppErr {
-    UpdateSessionActivityIfUser(c)
+	UpdateSessionActivityIfUser(c)
 
-    pidStr := c.Req.Form.Get("post_id")
+	pidStr := c.Req.Form.Get("post_id")
 	pageStr := c.Req.Form.Get("page")
 	last_id := c.GetParamInt("last", 0)
 	limit := c.GetParamInt("limit", LIKES_LIST_LIMIT)
