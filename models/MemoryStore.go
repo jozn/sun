@@ -133,8 +133,8 @@ func (e _memoryStoreImpl) UserFollowingList_Add(UserId int, PostId int) {
     e.UserFollowingList_Get(UserId).AddAndSort(PostId)
 }
 
-func (e _memoryStoreImpl) UserFollowingList_Remove(UserId int, PostId int) {
-    e.UserFollowingList_Get(UserId).RemoveAndSort(PostId)
+func (e _memoryStoreImpl) UserFollowingList_Remove(UserId int, FollowedUserId int) {
+    e.UserFollowingList_Get(UserId).RemoveAndSort(FollowedUserId)
 }
 
 func (e _memoryStoreImpl) UserFollowingList_GetFollowingTypeForUsers(UserId int, PostId int) int {

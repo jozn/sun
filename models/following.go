@@ -195,8 +195,8 @@ func UsersToInlineFollowView(userIds []int, cuid int) []UserInlineFollowView {
 		userView.UserInlineView = GetUserView(uid)
 		if cuid > 0 {
 			//userView.AmIFollowing = IsUserFollowing(cuid, userView.UserId)
-			userView.IFollowType = UserMemoryStore.GetFollowingTypeForUsers(cuid, uid)
-			//debug("GetFollowingTypeForUsers: ", UserMemoryStore.GetFollowingTypeForUsers(cuid, uid))
+			userView.IFollowType = MemoryStore.UserFollowingList_GetFollowingTypeForUsers(cuid, uid)
+			//debug("GetFollowingTypeForUsers: ", MemoryStore.UserFollowingList_GetFollowingTypeForUsers(cuid, uid))
 		}
 		userListView = append(userListView, userView)
 	}
@@ -211,8 +211,8 @@ func UsersListForFollowView(userIds []int, cuid int) []UserInlineFollowView {
         userView.UserInlineView = GetUserView(uid)
         if cuid > 0 {
             //userView.AmIFollowing = IsUserFollowing(cuid, userView.UserId)
-            userView.IFollowType = UserMemoryStore.GetFollowingTypeForUsers(cuid, uid)
-            //debug("GetFollowingTypeForUsers: ", UserMemoryStore.GetFollowingTypeForUsers(cuid, uid))
+            userView.IFollowType = MemoryStore.UserFollowingList_GetFollowingTypeForUsers(cuid, uid)
+            //debug("GetFollowingTypeForUsers: ", MemoryStore.UserFollowingList_GetFollowingTypeForUsers(cuid, uid))
         }
         userListView = append(userListView, userView)
     }

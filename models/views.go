@@ -12,7 +12,7 @@ func (e _viewImpl) UserViewSync(CurrentUserId, UserId int) *UserViewSyncAndMe {
 
 	v := &UserViewSyncAndMe{
 		UserId:        u.Id,
-		FollowingType: UserMemoryStore.GetFollowingTypeForUsers(CurrentUserId, UserId),
+		FollowingType: MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, UserId),
 		AppVersion:    u.AppVersion,
 		Phone:         MemoryStore.GetPhoneForUserIfIsContact(CurrentUserId, UserId),
 		UpdatedTime:   u.UpdatedTime,
@@ -29,7 +29,7 @@ func (e _viewImpl) UserBasicAndMeForUsers(CurrentUserId int, Users []int) []User
 		if user != nil {
 			v := UserBasicAndMe{
 				UserId:        u,
-				FollowingType: UserMemoryStore.GetFollowingTypeForUsers(CurrentUserId, u),
+				FollowingType: MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, u),
 			}
 			v.UserBasic = user.UserBasic
 			v.FullName = v.FirstName + " " + v.LastName
@@ -54,7 +54,7 @@ func (e _viewImpl) GetListOfUserForFollowType(userIds []int, CurrentUserId int) 
 			if CurrentUserId > 0 {
 				userView.UpdatedTime = peerUser.UpdatedTime
 				userView.UserId = peerUser.Id
-				userView.FollowingType = UserMemoryStore.GetFollowingTypeForUsers(CurrentUserId, peerUser.Id)
+				userView.FollowingType = MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, peerUser.Id)
 				list = append(list, userView)
 			}
 		}

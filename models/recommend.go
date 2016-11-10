@@ -52,7 +52,7 @@ func GenrateRecommendUser(ForUserId int) {
 
 	//1:: contacts
 	for _, uid := range UserContactsIds {
-		if UserMemoryStore.GetFollowingTypeForUsers(ForUserId, uid) == 0 {
+		if MemoryStore.UserFollowingList_GetFollowingTypeForUsers(ForUserId, uid) == 0 {
 			r := RecommendUser{}
 			r.UserId = ForUserId
 			r.TargetId = uid
@@ -76,7 +76,7 @@ func GenrateRecommendUser(ForUserId int) {
 	for i := 0; i < l-100; i++ {
 		if len(TopUserIds) > i {
 			uid := TopUserIds[i]
-			if UserMemoryStore.GetFollowingTypeForUsers(ForUserId, uid) == 0 {
+			if MemoryStore.UserFollowingList_GetFollowingTypeForUsers(ForUserId, uid) == 0 {
 				r := RecommendUser{}
 				r.UserId = ForUserId
 				r.TargetId = uid

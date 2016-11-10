@@ -67,6 +67,8 @@ func UnFollow(UserId, FollowedPeerUserId int) {
 		return
 	}
 
+    MemoryStore.UserFollowingList_Remove(UserId,FollowedPeerUserId)
+
 	res, err := base.DbExecute("DELETE FROM following_list_member WHERE UserId = ? AND FollowedUserId = ?", UserId, FollowedPeerUserId)
 	if err == nil {
 		n, err := res.RowsAffected()

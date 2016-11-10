@@ -26,7 +26,7 @@ func GetListOfUserForFollowType(userIds []int, CurrentUserId int) *[]UserBasicAn
 			if CurrentUserId > 0 {
 				userView.UpdatedTime = peerUser.UpdatedTime
 				userView.UserId = peerUser.Id
-				userView.FollowingType = UserMemoryStore.GetFollowingTypeForUsers(CurrentUserId, peerUser.Id)
+				userView.FollowingType = MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, peerUser.Id)
 				list = append(list, userView)
 			}
 		}
@@ -44,7 +44,7 @@ func GetUserBasicAndMe(UserId, CurrentUserId int) *UserBasicAndMe {
 		if CurrentUserId > 0 {
 			userView.UpdatedTime = peerUser.UpdatedTime
 			userView.UserId = peerUser.Id
-			userView.FollowingType = UserMemoryStore.GetFollowingTypeForUsers(CurrentUserId, peerUser.Id)
+			userView.FollowingType = MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, peerUser.Id)
 		}
 	}
 
