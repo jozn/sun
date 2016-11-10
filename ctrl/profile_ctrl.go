@@ -14,7 +14,7 @@ func GetPostsForProfileAction(c *base.Action) base.AppErr {
     pagestr := c.Req.Form.Get("page")
     last := helper.StrToInt(laststr, 0)
     page := helper.StrToInt(pagestr, 0)
-    limit := helper.StrToInt("limit", LIMIT)
+    limit := c.GetParamInt("limit", LIMIT)
 
     uid := c.UserId()
     profileId := c.GetParamInt("profile_id", 0)
