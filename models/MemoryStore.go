@@ -17,6 +17,8 @@ func init() {
 	Cacher = c.New(time.Second*4*3600, time.Second*60)
 }
 
+/////////////////////////// Phone ////////////////////////////////////
+
 func (e _memoryStoreImpl) GetPhoneForUserIfIsContact(CurrentUserId, UserId int) string {
 	key := fmt.Sprintf("UserContacts:%d", CurrentUserId)
 	var collection *ds.IntList
@@ -51,6 +53,8 @@ func (e _memoryStoreImpl) GetPhoneForUserIfIsContact(CurrentUserId, UserId int) 
 	}
 	return ""
 }
+
+////////////////////////// UserLikedPostsList ////////////////////////////
 
 func (e _memoryStoreImpl) UserLikedPostsList_Get(UserId int) *ds.IntList {
 	key := fmt.Sprintf("UserLikePosts:%d", UserId)
@@ -90,3 +94,67 @@ func (e _memoryStoreImpl) UserLikedPostsList_Remove(UserId int, PostId int) {
 func (e _memoryStoreImpl) UserLikedPostsList_IsLiked(UserId int, PostId int) bool {
 	return e.UserLikedPostsList_Get(UserId).Contains(PostId)
 }
+
+func (e _memoryStoreImpl) UserLikedPostsList_Invalidate(UserId int) {
+    key := fmt.Sprintf("UserLikePosts:%d", UserId)
+    Cacher.Delete(key)
+}
+
+////////////////////////// UserFollowingList ////////////////////////////
+func (e _memoryStoreImpl) UserFollowingList_Get(UserId int) *ds.IntList {
+    key := fmt.Sprintf("UserFollowing:%d", UserId)
+    var collection *ds.IntList
+
+    val, ok := Cacher.Get(key)
+    if !ok {
+        collection = ds.New()
+
+        followed, err := NewFollowingListMember_Selector().Select_FollowedUserId().UserId_EQ(UserId).OrderBy_FollowedUserId_Desc().GetIntSlice(base.DB)
+        if err != nil {
+            return collection
+        }
+
+        /*for _, pid := range followed {
+            collection.Add(pid)
+        }*/
+        collection.Add(followed...)
+        collection.TrySortDesc()
+
+        t := time.Hour * 4
+        Cacher.Set(key, collection, t)
+    } else {
+        collection = val.(*ds.IntList)
+    }
+
+    return collection
+}
+
+func (e _memoryStoreImpl) UserFollowingList_Add(UserId int, PostId int) {
+    e.UserFollowingList_Get(UserId).AddAndSort(PostId)
+}
+
+func (e _memoryStoreImpl) UserFollowingList_Remove(UserId int, PostId int) {
+    e.UserFollowingList_Get(UserId).RemoveAndSort(PostId)
+}
+
+func (e _memoryStoreImpl) UserFollowingList_GetFollowingTypeForUsers(UserId int, PostId int) int {
+    l:=e.UserFollowingList_Get(UserId)
+    ftype:=0
+    if l.BinaryContains(PostId) {
+        //if s.Followings.Contains(ReqFollowedUserId){
+        ftype = 1
+    }
+    //todo add FollowingsRequested funcs
+    /*else if l.FollowingsRequested.BinaryContains(ReqFollowedUserId) {
+        ftype = 2
+    }*/
+
+    return ftype
+}
+
+func (e _memoryStoreImpl) UserFollowingList_Invalidate(UserId int) {
+    key := fmt.Sprintf("UserFollowing:%d", UserId)
+    Cacher.Delete(key)
+}
+
+////////////////////////////////////////////////////////////////
