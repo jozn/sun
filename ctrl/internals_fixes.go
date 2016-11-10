@@ -25,9 +25,12 @@ func _fixPostCounts() {
 
     q:= "SELECT UserId, COUNT(*) AS Cnt FROM post GROUP BY UserId"
 
-    models.NewUser_Updater().PostsCount(0).Update(base.DB)
+    err:= base.DB.Select(&res,q)
+    if err != nil {
+        return
+    }
 
-    base.DB.Select(&res,q)
+    models.NewUser_Updater().PostsCount(0).Update(base.DB)
 
     for _, row := range res {
         models.NewUser_Updater().PostsCount(row.Cnt).Id_EQ(row.UserId).Update(base.DB)
@@ -46,7 +49,10 @@ func _fixFolloingCounts() {
 
     q:= "SELECT UserId, COUNT(*) AS Cnt FROM following_list_member GROUP BY UserId"
 
-    base.DB.Select(&res,q)
+    err:=base.DB.Select(&res,q)
+    if err != nil {
+        return
+    }
 
     models.NewUser_Updater().FollowingCount(0).Update(base.DB)
 
@@ -65,8 +71,10 @@ func _fixFollowedCounts() {
 
     q:= "SELECT FollowedUserId As UserId , COUNT(*) AS Cnt FROM following_list_member GROUP BY FollowedUserId"
 
-    base.DB.Select(&res,q)
-
+    err:=base.DB.Select(&res,q)
+    if err != nil {
+        return
+    }
     //reset
     models.NewUser_Updater().FollowersCount(0).Update(base.DB)
 
