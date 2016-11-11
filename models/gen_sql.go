@@ -42901,7 +42901,6 @@ type __User struct {
 	LastName             string `json:"LastName"`             // LastName -
 	About                string `json:"About"`                // About -
 	FullName             string `json:"FullName"`             // FullName -
-	AvatarSrc            string `json:"AvatarSrc"`            // AvatarSrc -
 	AvatarUrl            string `json:"AvatarUrl"`            // AvatarUrl -
 	PrivacyProfile       int    `json:"PrivacyProfile"`       // PrivacyProfile -
 	Phone                string `json:"Phone"`                // Phone -
@@ -42954,14 +42953,14 @@ func (u *User) Insert(db XODB) error {
 
 	// sql query
 	const sqlstr = `INSERT INTO ms.user (` +
-		`UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress` +
+		`UserName, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarSrc, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
-	res, err := db.Exec(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarSrc, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
+	XOLog(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
+	res, err := db.Exec(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
 	if err != nil {
 		return err
 	}
@@ -42985,14 +42984,14 @@ func (u *User) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.user (` +
-		`UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress` +
+		`UserName, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarSrc, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
-	res, err := db.Exec(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarSrc, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
+	XOLog(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
+	res, err := db.Exec(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
 	if err != nil {
 		return err
 	}
@@ -43026,12 +43025,12 @@ func (u *User) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.user SET ` +
-		`UserName = ?, FirstName = ?, LastName = ?, About = ?, FullName = ?, AvatarSrc = ?, AvatarUrl = ?, PrivacyProfile = ?, Phone = ?, Email = ?, IsDeleted = ?, PasswordHash = ?, PasswordSalt = ?, FollowersCount = ?, FollowingCount = ?, PostsCount = ?, MediaCount = ?, LikesCount = ?, ResharedCount = ?, LastActionTime = ?, LastPostTime = ?, PrimaryFollowingList = ?, CreatedTime = ?, UpdatedTime = ?, SessionUuid = ?, DeviceUuid = ?, LastWifiMacAddress = ?, LastNetworkType = ?, AppVersion = ?, LastActivityTime = ?, LastLoginTime = ?, LastIpAddress = ?` +
+		`UserName = ?, FirstName = ?, LastName = ?, About = ?, FullName = ?, AvatarUrl = ?, PrivacyProfile = ?, Phone = ?, Email = ?, IsDeleted = ?, PasswordHash = ?, PasswordSalt = ?, FollowersCount = ?, FollowingCount = ?, PostsCount = ?, MediaCount = ?, LikesCount = ?, ResharedCount = ?, LastActionTime = ?, LastPostTime = ?, PrimaryFollowingList = ?, CreatedTime = ?, UpdatedTime = ?, SessionUuid = ?, DeviceUuid = ?, LastWifiMacAddress = ?, LastNetworkType = ?, AppVersion = ?, LastActivityTime = ?, LastLoginTime = ?, LastIpAddress = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarSrc, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress, u.Id)
-	_, err = db.Exec(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarSrc, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress, u.Id)
+	XOLog(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress, u.Id)
+	_, err = db.Exec(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress, u.Id)
 	return err
 }
 
@@ -48078,55 +48077,6 @@ func (d *__User_Deleter) FullName_EQ(val string) *__User_Deleter {
 	return d
 }
 
-func (u *__User_Deleter) AvatarSrc_In(ins []string) *__User_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " AvatarSrc IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__User_Deleter) AvatarSrc_NotIn(ins []string) *__User_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " AvatarSrc NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__User_Deleter) AvatarSrc_Like(val string) *__User_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " AvatarSrc LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__User_Deleter) AvatarSrc_EQ(val string) *__User_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " AvatarSrc = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__User_Deleter) AvatarUrl_In(ins []string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -48859,55 +48809,6 @@ func (d *__User_Updater) FullName_EQ(val string) *__User_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FullName = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__User_Updater) AvatarSrc_In(ins []string) *__User_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " AvatarSrc IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__User_Updater) AvatarSrc_NotIn(ins []string) *__User_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " AvatarSrc NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__User_Updater) AvatarSrc_Like(val string) *__User_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " AvatarSrc LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__User_Updater) AvatarSrc_EQ(val string) *__User_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " AvatarSrc = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -49650,55 +49551,6 @@ func (d *__User_Selector) FullName_EQ(val string) *__User_Selector {
 	return d
 }
 
-func (u *__User_Selector) AvatarSrc_In(ins []string) *__User_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " AvatarSrc IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__User_Selector) AvatarSrc_NotIn(ins []string) *__User_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " AvatarSrc NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__User_Selector) AvatarSrc_Like(val string) *__User_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " AvatarSrc LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__User_Selector) AvatarSrc_EQ(val string) *__User_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " AvatarSrc = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__User_Selector) AvatarUrl_In(ins []string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -50257,14 +50109,6 @@ func (u *__User_Updater) FullName(newVal string) *__User_Updater {
 //ints
 
 //string
-func (u *__User_Updater) AvatarSrc(newVal string) *__User_Updater {
-	u.updates[" AvatarSrc = ? "] = newVal
-	return u
-}
-
-//ints
-
-//string
 func (u *__User_Updater) AvatarUrl(newVal string) *__User_Updater {
 	u.updates[" AvatarUrl = ? "] = newVal
 	return u
@@ -50770,21 +50614,6 @@ func (u *__User_Selector) OrderBy_FullName_Asc() *__User_Selector {
 
 func (u *__User_Selector) Select_FullName() *__User_Selector {
 	u.selectCol = "FullName"
-	return u
-}
-
-func (u *__User_Selector) OrderBy_AvatarSrc_Desc() *__User_Selector {
-	u.orderBy = " ORDER BY AvatarSrc DESC "
-	return u
-}
-
-func (u *__User_Selector) OrderBy_AvatarSrc_Asc() *__User_Selector {
-	u.orderBy = " ORDER BY AvatarSrc ASC "
-	return u
-}
-
-func (u *__User_Selector) Select_AvatarSrc() *__User_Selector {
-	u.selectCol = "AvatarSrc"
 	return u
 }
 
@@ -51393,12 +51222,12 @@ func (d *__User_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_User(rows []User, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.user (" +
-		"UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress" +
+		"UserName, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress" +
 		") VALUES " + insVals
 
 	// run query
@@ -51411,7 +51240,6 @@ func MassInsert_User(rows []User, db XODB) error {
 		vals = append(vals, row.LastName)
 		vals = append(vals, row.About)
 		vals = append(vals, row.FullName)
-		vals = append(vals, row.AvatarSrc)
 		vals = append(vals, row.AvatarUrl)
 		vals = append(vals, row.PrivacyProfile)
 		vals = append(vals, row.Phone)
@@ -51454,12 +51282,12 @@ func MassInsert_User(rows []User, db XODB) error {
 func MassReplace_User(rows []User, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.user (" +
-		"UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress" +
+		"UserName, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress" +
 		") VALUES " + insVals
 
 	// run query
@@ -51472,7 +51300,6 @@ func MassReplace_User(rows []User, db XODB) error {
 		vals = append(vals, row.LastName)
 		vals = append(vals, row.About)
 		vals = append(vals, row.FullName)
-		vals = append(vals, row.AvatarSrc)
 		vals = append(vals, row.AvatarUrl)
 		vals = append(vals, row.PrivacyProfile)
 		vals = append(vals, row.Phone)
@@ -51513,8 +51340,6 @@ func MassReplace_User(rows []User, db XODB) error {
 }
 
 //////////////////// Play ///////////////////////////////
-
-//
 
 //
 
@@ -52889,6 +52714,45 @@ func MassReplace_UserPassword(rows []UserPassword, db XODB) error {
 
 //
 
+// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
+//
+// Generated from index 'PostId'.
+func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, PostId, Text, CreatedTime ` +
+		`FROM ms.comments ` +
+		`WHERE PostId = ?`
+
+	// run query
+	XOLog(sqlstr, postId)
+	q, err := db.Query(sqlstr, postId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Comment{}
+	for q.Next() {
+		c := Comment{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &c)
+	}
+
+	return res, nil
+}
+
 // CommentById retrieves a row from 'ms.comments' as a Comment.
 //
 // Generated from index 'comments_Id_pkey'.
@@ -53045,45 +52909,6 @@ func FollowingListMemberById(db XODB, id int) (*FollowingListMember, error) {
 	return &flm, nil
 }
 
-// FollowingListMemberHistoriesByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
-//
-// Generated from index 'UserId'.
-func FollowingListMemberHistoriesByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeMs int) ([]*FollowingListMemberHistory, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs, FollowId ` +
-		`FROM ms.following_list_member_history ` +
-		`WHERE UserId = ? AND UpdatedTimeMs = ?`
-
-	// run query
-	XOLog(sqlstr, userId, updatedTimeMs)
-	q, err := db.Query(sqlstr, userId, updatedTimeMs)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*FollowingListMemberHistory{}
-	for q.Next() {
-		flmh := FollowingListMemberHistory{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&flmh.Id, &flmh.ListId, &flmh.UserId, &flmh.FollowedUserId, &flmh.FollowType, &flmh.UpdatedTimeMs, &flmh.FollowId)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &flmh)
-	}
-
-	return res, nil
-}
-
 // FollowingListMemberHistoryById retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
 //
 // Generated from index 'following_list_member_history_Id_pkey'.
@@ -53108,32 +52933,6 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	}
 
 	return &flmh, nil
-}
-
-// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'PostId'.
-func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE PostId = ? AND UserId = ?`
-
-	// run query
-	XOLog(sqlstr, postId, userId)
-	l := Like{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
-	if err != nil {
-		return nil, err
-	}
-
-	return &l, nil
 }
 
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
@@ -53292,45 +53091,6 @@ func MessageById(db XODB, id int) (*Message, error) {
 	return &m, nil
 }
 
-// MsgDeletedFromServersByToUserId retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
-//
-// Generated from index 'ToUserId'.
-func MsgDeletedFromServersByToUserId(db XODB, toUserId int) ([]*MsgDeletedFromServer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, PeerUserId, RoomKey, AtTime ` +
-		`FROM ms.msg_deleted_from_server ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgDeletedFromServer{}
-	for q.Next() {
-		mdfs := MsgDeletedFromServer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&mdfs.Id, &mdfs.ToUserId, &mdfs.MsgKey, &mdfs.PeerUserId, &mdfs.RoomKey, &mdfs.AtTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &mdfs)
-	}
-
-	return res, nil
-}
-
 // MsgDeletedFromServerById retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
 //
 // Generated from index 'msg_deleted_from_server_Id_pkey'.
@@ -53381,6 +53141,45 @@ func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
 	}
 
 	return &mrtp, nil
+}
+
+// MsgSeenByPeersByToUserId retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
+//
+// Generated from index 'ToUserId'.
+func MsgSeenByPeersByToUserId(db XODB, toUserId int) ([]*MsgSeenByPeer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
+		`FROM ms.msg_seen_by_peer ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgSeenByPeer{}
+	for q.Next() {
+		msbp := MsgSeenByPeer{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &msbp)
+	}
+
+	return res, nil
 }
 
 // MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
@@ -53682,6 +53481,45 @@ func PhoneContactById(db XODB, id int) (*PhoneContact, error) {
 	return &pc, nil
 }
 
+// PostsByUserId retrieves a row from 'ms.post' as a Post.
+//
+// Generated from index 'UserId'.
+func PostsByUserId(db XODB, userId int) ([]*Post, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaServerId, Width, Height, SharedTo, HasTag, LikesCount, CommentsCount, CreatedTime ` +
+		`FROM ms.post ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Post{}
+	for q.Next() {
+		p := Post{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &p)
+	}
+
+	return res, nil
+}
+
 // PostById retrieves a row from 'ms.post' as a Post.
 //
 // Generated from index 'post_Id_pkey'.
@@ -53911,7 +53749,7 @@ func UserByEmail(db XODB, email string) (*User, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
+		`Id, UserName, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
 		`FROM ms.user ` +
 		`WHERE Email = ?`
 
@@ -53921,7 +53759,7 @@ func UserByEmail(db XODB, email string) (*User, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, email).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarSrc, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
+	err = db.QueryRow(sqlstr, email).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -53937,7 +53775,7 @@ func UsersByPhone(db XODB, phone string) ([]*User, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
+		`Id, UserName, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
 		`FROM ms.user ` +
 		`WHERE Phone = ?`
 
@@ -53957,7 +53795,7 @@ func UsersByPhone(db XODB, phone string) ([]*User, error) {
 		}
 
 		// scan
-		err = q.Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarSrc, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
+		err = q.Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
 		if err != nil {
 			return nil, err
 		}
@@ -53976,7 +53814,7 @@ func UsersBySessionUuid(db XODB, sessionUuid string) ([]*User, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
+		`Id, UserName, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
 		`FROM ms.user ` +
 		`WHERE SessionUuid = ?`
 
@@ -53996,7 +53834,7 @@ func UsersBySessionUuid(db XODB, sessionUuid string) ([]*User, error) {
 		}
 
 		// scan
-		err = q.Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarSrc, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
+		err = q.Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
 		if err != nil {
 			return nil, err
 		}
@@ -54015,7 +53853,7 @@ func UserByUserName(db XODB, userName string) (*User, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
+		`Id, UserName, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
 		`FROM ms.user ` +
 		`WHERE UserName = ?`
 
@@ -54025,7 +53863,7 @@ func UserByUserName(db XODB, userName string) (*User, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, userName).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarSrc, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
+	err = db.QueryRow(sqlstr, userName).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -54041,7 +53879,7 @@ func UserById(db XODB, id int) (*User, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserName, FirstName, LastName, About, FullName, AvatarSrc, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
+		`Id, UserName, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
 		`FROM ms.user ` +
 		`WHERE Id = ?`
 
@@ -54051,7 +53889,7 @@ func UserById(db XODB, id int) (*User, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarSrc, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
+	err = db.QueryRow(sqlstr, id).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
 	if err != nil {
 		return nil, err
 	}

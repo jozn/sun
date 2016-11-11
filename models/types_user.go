@@ -8,7 +8,7 @@ type UserBasic struct {
 	FirstName      string
 	LastName       string
 	FullName       string //deprecated
-	AvatarSrc      string //dep
+	//AvatarSrc      string //dep
 	AvatarUrl      string
 	PrivacyProfile int
 	About          string
