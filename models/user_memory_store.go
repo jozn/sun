@@ -203,9 +203,11 @@ func (db *mapMemoryStoreImpl) RemovePostLike(UserId, PostId int) {
 
 //////////////////////// Followings -- all deprecated use MemoryStore.* ///////////////////////////////////
 
+/*
 func (db *mapMemoryStoreImpl) GetFollowingTypeForUsers(UserId, ReqFollowedUserId int) int {
-    return MemoryStore.UserFollowingList_GetFollowingTypeForUsers(UserId, ReqFollowedUserId)
-	/*s, ok := db.Map[UserId]
+    //return MemoryStore.UserFollowingList_GetFollowingTypeForUsers(UserId, ReqFollowedUserId)
+	*/
+/*s, ok := db.Map[UserId]
 	ftype := 0
 	if ok {
 		//debug("xx: ",s.Followings)
@@ -216,8 +218,10 @@ func (db *mapMemoryStoreImpl) GetFollowingTypeForUsers(UserId, ReqFollowedUserId
 			ftype = 2
 		}
 	}
-	return ftype*/
+	return ftype*//*
+
 }
+*/
 
 /*
 func (db *mapMemoryStoreImpl) AddFollow(UserId, FollowedUserId int) {
