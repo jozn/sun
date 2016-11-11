@@ -44,38 +44,38 @@ func GetCommentsAction_old(c *base.Action) base.AppErr {
 }
 
 func GetCommentsAction(c *base.Action) base.AppErr {
-    UpdateSessionActivityIfUser(c)
+	UpdateSessionActivityIfUser(c)
 
-    pid := c.GetParamInt("post_id",0)
-    page := c.GetParamInt("page",0)
-    limit := c.GetParamInt("limit",COMMENTS_LIST_PAGE_LIMIT)
-    last := c.GetParamInt("last",0)
+	pid := c.GetParamInt("post_id", 0)
+	page := c.GetParamInt("page", 0)
+	limit := c.GetParamInt("limit", COMMENTS_LIST_PAGE_LIMIT)
+	last := c.GetParamInt("last", 0)
 
-    selector:=models.NewComment_Selector().PostId_EQ(pid).OrderBy_Id_Desc().Limit(limit)
+	selector := models.NewComment_Selector().PostId_EQ(pid).OrderBy_Id_Desc().Limit(limit)
 
-    if last >0{
-        selector.Id_LE(last)
-    }else if page>0 {
-        selector.Offset((page-1)*limit)
-    }
+	if last > 0 {
+		selector.Id_LE(last)
+	} else if page > 0 {
+		selector.Offset((page - 1) * limit)
+	}
 
-    comments,err:= selector.GetRows(base.DB)
+	comments, err := selector.GetRows(base.DB)
 
-    if err != nil {
-        helper.DebugErr(err)
-        return err
-    }
+	if err != nil {
+		helper.DebugErr(err)
+		return err
+	}
 
-    var commentsInline []models.CommentInlineInfo
-    for _, cmt := range comments {
-        cmtView := models.CommentInlineInfo{}
-        cmtView.Comment = cmt
-        cmtView.Sender = models.GetUserView(cmt.UserId)
-        commentsInline = append(commentsInline, cmtView)
-    }
-    c.SendJson(commentsInline)
-    // c.SendJson(comments)
-    return nil
+	var commentsInline []models.CommentInlineInfo
+	for _, cmt := range comments {
+		cmtView := models.CommentInlineInfo{}
+		cmtView.Comment = cmt
+		cmtView.Sender = models.GetUserView(cmt.UserId)
+		commentsInline = append(commentsInline, cmtView)
+	}
+	c.SendJson(commentsInline)
+	// c.SendJson(comments)
+	return nil
 }
 
 func PostAddCommentAction(c *base.Action) base.AppErr {

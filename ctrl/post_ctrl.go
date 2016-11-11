@@ -92,19 +92,19 @@ func PostUpdateAction(c *base.Action) base.AppErr {
 
 func GetPostsStraemAction(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
-    const LIMIT = 30
+	const LIMIT = 30
 
 	laststr := c.Req.Form.Get("last") //last that have
 	pagestr := c.Req.Form.Get("page")
 	last := helper.StrToInt(laststr, 0)
 	page := helper.StrToInt(pagestr, 0)
-    limit := c.GetParamInt("limit", 30)
+	limit := c.GetParamInt("limit", 30)
 
-    _ = last
+	_ = last
 	_ = page
 
 	uid := c.UserId()
-	println("LIMIT: ",limit,c.Req.Form.Get("limit")," +")
+	println("LIMIT: ", limit, c.Req.Form.Get("limit"), " +")
 	//fids := models.GetAllPrimiryFollowingIds(uid)
 	//fids := models.UserMemoryStore.GetAllFollowingsListOfUser(uid).Elements
 	fids := models.MemoryStore.UserFollowingList_Get(uid).Elements
@@ -136,9 +136,9 @@ func GetPostsLatestAction(c *base.Action) base.AppErr {
 	pagestr := c.Req.Form.Get("page")
 	last := helper.StrToInt(laststr, 0)
 	page := helper.StrToInt(pagestr, 0)
-    //limit := helper.StrToInt("limit", LIMIT)
+	//limit := helper.StrToInt("limit", LIMIT)
 
-    _ = last
+	_ = last
 	_ = page
 
 	uid := c.UserId()
@@ -196,7 +196,6 @@ func GetPostsAndInfoForProfileAction(c *base.Action) base.AppErr {
 	return nil
 }
 */
-
 
 /*
 func GetPostsStraemAction(c *base.Action) base.AppErr {

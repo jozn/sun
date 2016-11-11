@@ -206,19 +206,19 @@ func (db *mapMemoryStoreImpl) RemovePostLike(UserId, PostId int) {
 /*
 func (db *mapMemoryStoreImpl) GetFollowingTypeForUsers(UserId, ReqFollowedUserId int) int {
     //return MemoryStore.UserFollowingList_GetFollowingTypeForUsers(UserId, ReqFollowedUserId)
-	*/
+*/
 /*s, ok := db.Map[UserId]
-	ftype := 0
-	if ok {
-		//debug("xx: ",s.Followings)
-		if s.Followings.BinaryContains(ReqFollowedUserId) {
-			//if s.Followings.Contains(ReqFollowedUserId){
-			ftype = 1
-		} else if s.FollowingsRequested.BinaryContains(ReqFollowedUserId) {
-			ftype = 2
-		}
+ftype := 0
+if ok {
+	//debug("xx: ",s.Followings)
+	if s.Followings.BinaryContains(ReqFollowedUserId) {
+		//if s.Followings.Contains(ReqFollowedUserId){
+		ftype = 1
+	} else if s.FollowingsRequested.BinaryContains(ReqFollowedUserId) {
+		ftype = 2
 	}
-	return ftype*//*
+}
+return ftype*/ /*
 
 }
 */
