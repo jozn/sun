@@ -21,21 +21,7 @@ func GetUserById(id int) User {
 	return u
 }
 
-func GetUserByUsername2(username string) (UserTable, error) {
-	key := "user_" + username
-	if v, ok := cashe.Get(key); ok {
-		return v.(UserTable), nil
-	}
-	var u []UserTable
-	debug(u)
-	err := DB.Select(&u, "select * from user where UserName =? limit 1", username)
-	if err != nil || len(u) == 0 {
-		return UserTable{}, errors.New("error babe")
-	}
-	cashe.Set(key, u[0], 0)
-	return u[0], nil
-}
-
+//todo to VIews?
 func GetUserView(uid int) UserInlineView {
 	//debug("GetUserView: ", uid)
 	//u := GetUserById(uid)

@@ -64,18 +64,16 @@ func GetFollowersListAction(c *base.Action) base.AppErr {
 
 	_ = last
 	var user models.UserTable
-	var err error
 	var ok bool
 	if peer_id < 1 {
-		user, err = models.GetUserByUsername2(username)
+		//user, err = models.GetUserByUsername2(username)
+		user, ok = models.MemoryStore_User.GetUserByUserName(username)
 	} else {
 		user,ok = models.MemoryStore_User.GetUser(peer_id)
-        if ok{
-            peer_id = user.Id
-        }
+        peer_id = user.Id
 	}
 
-	if err != nil { //|| user == nil{
+	if !ok { //|| user == nil{
 		c.Protocol.Status = "ERR"
 		c.Protocol.Error = " کاربر پیدا نشد "
 		return nil
@@ -118,18 +116,16 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
 
 	_ = last
 	var user models.UserTable
-	var err error
     var ok bool
-	if peer_id < 1 {
-		user, err = models.GetUserByUsername2(username)
-	} else {
+    if peer_id < 1 {
+        //user, err = models.GetUserByUsername2(username)
+        user, ok = models.MemoryStore_User.GetUserByUserName(username)
+    } else {
         user,ok = models.MemoryStore_User.GetUser(peer_id)
-        if ok{
-            peer_id = user.Id
-        }
-	}
+        peer_id = user.Id
+    }
 
-	if err != nil { //|| user == nil{
+    if !ok {
 		c.Protocol.Status = "ERR"
 		c.Protocol.Error = " کاربر پیدا نشد "
 		return nil
