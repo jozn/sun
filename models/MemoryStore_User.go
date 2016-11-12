@@ -50,7 +50,7 @@ func (m *mapMemoryStore_UserImpl) ReloadAll() {
 	helper.DebugPrintln("Loaded User to models.MemoryStore_User counts: ", len(m.MapUserToData))
 }
 
-func (m *mapMemoryStore_UserImpl) GetUser(UserId int) (*User, bool) {
+func (m mapMemoryStore_UserImpl) GetUser(UserId int) (*User, bool) {
 	m.RLock()
 	defer m.RUnlock()
 	md, ok := m.MapUserToData[UserId]

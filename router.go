@@ -75,6 +75,7 @@ func registerRoutes() *httptreemux.TreeMux {
 	//fixes
 	http.Handle("/i/fix_counts", actionToFunc(ctrl.FixAllCountsCounts))
 	http.Handle("/i/mem_user", actionToFunc(ctrl.DebugMemUser_ctrl))
+	http.Handle("/i/mem_user2", actionToFunc(ctrl.DebugMemUser_ctrl2))
 	http.HandleFunc("/i/java", DBStructsTojava2)
 
 	////////////// New Facts from v0.4 /////////////////
