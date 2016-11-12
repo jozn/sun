@@ -32,9 +32,9 @@ func registerRoutes() *httptreemux.TreeMux {
 
 	http.Handle("/search", actioner(SearchAllAction))
 	http.Handle("/tag", actioner(SearchTagsAction))
-	v1.POST("/sync-all-contacts", toV1(SyncAllContactsAction))
-	v1.POST("/sync-followings", toV1(ctrl.SyncFollowingsAction))
-	v1.GET("/sync-followings", toV1(ctrl.SyncFollowingsAction))
+	//v1.POST("/sync-all-contacts", toV1(SyncAllContactsAction))
+	//v1.POST("/sync-followings", toV1(ctrl.SyncFollowingsAction))
+	//v1.GET("/sync-followings", toV1(ctrl.SyncFollowingsAction))
 
 	http.Handle("/fact/user1", actioner(fact.FactUser1))
 

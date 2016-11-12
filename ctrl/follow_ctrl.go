@@ -152,11 +152,14 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
 	return nil
 }
 
+/*
 type SyncFollowings struct {
 	Add    []models.UserBasicAndMe
 	Remove []int
 }
+*/
 
+/*
 func SyncFollowingsAction(a *base.Action) base.AppErr {
 	MustBeUserAndUpdate(a)
 	last_str := a.Req.Form.Get("last") //last TimeStamp
@@ -182,3 +185,4 @@ func SyncFollowingsAction(a *base.Action) base.AppErr {
 	a.SendJson(sync_res)
 	return nil
 }
+*/

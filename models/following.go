@@ -2,10 +2,8 @@ package models
 
 import (
 	// "sort"
-	"fmt"
 	"ms/sun/base"
 	"ms/sun/helper"
-	"strings"
 )
 
 func GetAllFollowingsUserIds(userId int, lastTimestamp int) (ids []int) {

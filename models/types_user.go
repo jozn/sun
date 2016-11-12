@@ -149,7 +149,7 @@ func (t *UserBasicAndMe) FormUserAndMe(u UserTable, meId int) {
 	t.UserBasic = u.UserBasic
 	t.UserId = u.Id
 	t.UpdatedTime = u.UpdatedTime
-	t.FollowingType = GetFollowingType(meId, u.Id)
+	t.FollowingType = MemoryStore.UserFollowingList_GetFollowingTypeForUsers(meId, u.Id)
 }
 
 func (ub *UserBasic) UpdateToTable() {
