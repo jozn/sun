@@ -5,7 +5,7 @@ type _viewImpl int
 var Views _viewImpl
 
 func (e _viewImpl) UserViewSync(CurrentUserId, UserId int) *UserViewSyncAndMe {
-	u,ok := MemoryStore_User.GetUser(UserId)
+	u, ok := MemoryStore_User.GetUser(UserId)
 	if !ok {
 		return &UserViewSyncAndMe{}
 	}
@@ -25,8 +25,8 @@ func (e _viewImpl) UserBasicAndMeForUsers(CurrentUserId int, Users []int) []User
 	res := make([]UserBasicAndMe, 0, len(Users))
 
 	for _, u := range Users {
-		user,ok := MemoryStore_User.GetUser(u)
-		if ok  {
+		user, ok := MemoryStore_User.GetUser(u)
+		if ok {
 			v := UserBasicAndMe{
 				UserId:        u,
 				FollowingType: MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, u),
@@ -47,7 +47,7 @@ func (e _viewImpl) GetListOfUserForFollowType(userIds []int, CurrentUserId int) 
 	list := make([]UserBasicAndMe, 0, len(userIds))
 	for _, uid := range userIds {
 		userView := UserBasicAndMe{}
-		peerUser,ok := MemoryStore_User.GetUser(uid)
+		peerUser, ok := MemoryStore_User.GetUser(uid)
 		if ok {
 			userView.UserBasic = peerUser.UserBasic
 			userView.FullName = peerUser.GetFullName()
