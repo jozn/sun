@@ -18,14 +18,13 @@ func GetPostsForProfileAction(c *base.Action) base.AppErr {
 
 	uid := c.UserId()
 	profileId := c.GetParamInt("profile_id", 0)
-	mem, ok := models.MemoryStore_User.GetUser(profileId)
+	u, ok := models.MemoryStore_User.GetUser(profileId)
 
 	if !ok {
 		c.Protocol.Error = "NOT FOUND"
 		c.Protocol.Status = "ERROR"
 		return nil
 	}
-	u := mem.UserTable
 
 	profileId = u.Id
 
@@ -55,14 +54,13 @@ func GetProfileInfoAction(c *base.Action) base.AppErr {
 	UpdateSessionActivityIfUser(c)
 
 	profileId := c.GetParamInt("profile_id", 0)
-	mem, ok := models.MemoryStore_User.GetUser(profileId)
+	u, ok := models.MemoryStore_User.GetUser(profileId)
 
 	if !ok {
 		c.Protocol.Error = "NOT FOUND"
 		c.Protocol.Status = "ERROR"
 		return nil
 	}
-	u := mem.UserTable
 
 	type info struct {
 		models.UserCounts

@@ -50,14 +50,14 @@ func (m *mapMemoryStore_UserImpl) ReloadAll() {
 	helper.DebugPrintln("Loaded User to models.MemoryStore_User counts: ", len(m.MapUserToData))
 }
 
-func (m mapMemoryStore_UserImpl) GetUser(UserId int) (*User, bool) {
+func (m mapMemoryStore_UserImpl) GetUser(UserId int) (User, bool) {
 	m.RLock()
 	defer m.RUnlock()
 	md, ok := m.MapUserToData[UserId]
 	if ok {
-		return &md.Row, true
+		return md.Row, true
 	}
-	return nil, false
+	return User{}, false
 }
 
 func (m *mapMemoryStore_UserImpl) GetMemRow(UserId int) (*userMemRowData, bool) {
@@ -67,25 +67,25 @@ func (m *mapMemoryStore_UserImpl) GetMemRow(UserId int) (*userMemRowData, bool) 
 	if ok {
 		return md, true
 	}
-	return nil, false
+    return nil, false
 }
 
-func (m *mapMemoryStore_UserImpl) GetUserByUserName(UserName string) (*User, bool) {
+func (m *mapMemoryStore_UserImpl) GetUserByUserName(UserName string) (User, bool) {
 	m.RLock()
 	defer m.RUnlock()
 	uid, ok := m.MapUsernameToId[UserName]
 	if ok {
 		return m.GetUser(uid)
 	}
-	return nil, false
+    return User{}, false
 }
 
-func (m *mapMemoryStore_UserImpl) GetUserBySession(Session string) (*User, bool) {
+func (m *mapMemoryStore_UserImpl) GetUserBySession(Session string) (User, bool) {
 	m.RLock()
 	defer m.RUnlock()
 	uid, ok := m.MapSessionToId[Session]
 	if ok {
 		return m.GetUser(uid)
 	}
-	return nil, false
+    return User{}, false
 }

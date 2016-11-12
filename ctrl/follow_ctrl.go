@@ -59,7 +59,7 @@ func GetFollowersListAction(c *base.Action) base.AppErr {
 	peer_id := c.GetParamInt("peer_id", 0)
 
 	_ = last
-	var user models.UserTable
+	var user models.User
 	var ok bool
 	if peer_id < 1 {
 		//user, err = models.GetUserByUsername2(username)
@@ -111,7 +111,7 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
 	peer_id := c.GetParamInt("peer_id", 0)
 
 	_ = last
-	var user models.UserTable
+	var user models.User
 	var ok bool
 	if peer_id < 1 {
 		//user, err = models.GetUserByUsername2(username)
