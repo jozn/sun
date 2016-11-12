@@ -3,7 +3,6 @@ package models
 import (
 	//	"github.com/jmoiron/sqlx"
 	cacheDrive "github.com/pmylund/go-cache"
-	"log"
 	"time"
 )
 
