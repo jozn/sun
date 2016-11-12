@@ -25,8 +25,8 @@ func (e _viewImpl) UserBasicAndMeForUsers(CurrentUserId int, Users []int) []User
 	res := make([]UserBasicAndMe, 0, len(Users))
 
 	for _, u := range Users {
-		user := UserMemoryStore.GetForUser(u)
-		if user != nil {
+		user,ok := MemoryStore_User.GetUser(u)
+		if ok != nil {
 			v := UserBasicAndMe{
 				UserId:        u,
 				FollowingType: MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, u),
@@ -47,8 +47,8 @@ func (e _viewImpl) GetListOfUserForFollowType(userIds []int, CurrentUserId int) 
 	list := make([]UserBasicAndMe, 0, len(userIds))
 	for _, uid := range userIds {
 		userView := UserBasicAndMe{}
-		peerUser := UserMemoryStore.GetUserTableForUser(uid)
-		if peerUser != nil {
+		peerUser,ok := MemoryStore_User.GetUser(uid)
+		if ok {
 			userView.UserBasic = peerUser.UserBasic
 			userView.FullName = peerUser.GetFullName()
 			if CurrentUserId > 0 {
