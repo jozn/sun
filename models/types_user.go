@@ -1,11 +1,11 @@
 package models
 
 type UserBasic struct {
-	Id             int
-	UserName       string
-	FirstName      string
-	LastName       string
-	FullName       string //deprecated
+	Id        int
+	UserName  string
+	FirstName string
+	LastName  string
+	FullName  string //deprecated
 	//AvatarSrc      string //dep
 	AvatarUrl      string
 	PrivacyProfile int
@@ -131,7 +131,6 @@ func (ub *UserBasic) ToUserInlineView() *UserInlineView {
 	v.AvatarUrl = ub.AvatarUrl
 	return &v
 }
-
 
 ///////////////////////////////////////////////////////////////////
 

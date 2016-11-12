@@ -42,5 +42,3 @@ func DeletePostLike(UserId, PostId int) {
 		helper.DebugPrintln(err)
 	}
 }
-
-

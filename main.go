@@ -5,11 +5,11 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	// "github.com/nfnt/resize"
-	"log"
-	"net/http"
 	_ "github.com/garyburd/redigo/redis"
+	"log"
 	"ms/sun/base"
 	"ms/sun/models"
+	"net/http"
 	//_ "net/http/pprof"
 	"github.com/mediocregopher/radix.v2/pool"
 )
@@ -69,7 +69,6 @@ func redisInit() {
 
 	redisPool.Put(conn)
 }
-
 
 func noErr(err error) {
 	if err != nil {

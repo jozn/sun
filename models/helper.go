@@ -26,7 +26,6 @@ func intToStr(i int) string {
 	return strconv.Itoa(i)
 }
 
-
 func now() int {
 	return int(time.Now().Unix())
 }

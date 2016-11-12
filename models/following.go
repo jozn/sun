@@ -16,4 +16,3 @@ func UsersToInlineFollowView(userIds []int, cuid int) []UserInlineFollowView {
 	}
 	return userListView
 }
-

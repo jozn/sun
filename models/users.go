@@ -35,7 +35,7 @@ func GetUserByUsername(username string) User {
 	}
 	var u []User
 	debug(u)
-	_= DB.Select(&u, "select * from user where UserName =? limit 1", username)
+	_ = DB.Select(&u, "select * from user where UserName =? limit 1", username)
 	cashe.Set(key, u[0], 0)
 	//noErr(err)
 	return u[0]

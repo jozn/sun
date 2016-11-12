@@ -72,4 +72,3 @@ func RemoveCommentAction(c *base.Action) base.AppErr {
 	c.SendJson(boolean)
 	return nil
 }
-
