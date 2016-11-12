@@ -24,12 +24,8 @@ func CreatePostLike(UserId, PostId int) {
 	}
 }
 
-func AmILikePost(UserId, PostId int) bool {
-	return MemoryStore.UserLikedPostsList_IsLiked(UserId, PostId)
-}
-
 func DeletePostLike(UserId, PostId int) {
-	l, err := GetLikeOf(UserId, PostId)
+	l, err := NewLike_Selector().UserId_EQ(UserId).PostId_EQ(PostId).GetRow(base.DB)
 	if err != nil {
 		return
 	}
@@ -40,7 +36,6 @@ func DeletePostLike(UserId, PostId int) {
 		if n, _ := res.RowsAffected(); n > 0 {
 			NewPost_Updater().LikesCount_Increment(-1).Id_EQ(PostId).Update(base.DB)
 		}
-		//UserMemoryStore.RemovePostLike(UserId, PostId)
 		MemoryStore.UserLikedPostsList_Remove(UserId, PostId)
 		OnPostUnLiked(l)
 	} else {
@@ -48,13 +43,4 @@ func DeletePostLike(UserId, PostId int) {
 	}
 }
 
-//todo: move to CacheModel
-func GetLikeOf(UserId, PostId int) (*Like, error) {
-	l := new(Like)
-	q := "select * FROM likes WHERE UserId = ? AND PostId = ?"
-	err := base.DB.Get(l, q, UserId, PostId)
-	if err == nil {
-		return l, nil
-	}
-	return nil, err
-}
+
