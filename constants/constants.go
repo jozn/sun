@@ -1,3 +1,4 @@
+//todo move to base
 package constants
 
 const MsgsAddNew = "MsgsAddNew"
