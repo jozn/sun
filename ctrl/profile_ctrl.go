@@ -18,9 +18,9 @@ func GetPostsForProfileAction(c *base.Action) base.AppErr {
 
 	uid := c.UserId()
 	profileId := c.GetParamInt("profile_id", 0)
-	mem := models.UserMemoryStore.GetForUser(profileId)
+	mem,ok := models.MemoryStore_User.GetUser(profileId)
 
-	if mem == nil {
+	if !ok {
 		c.Protocol.Error = "NOT FOUND"
 		c.Protocol.Status = "ERROR"
 		return nil
@@ -55,9 +55,9 @@ func GetProfileInfoAction(c *base.Action) base.AppErr {
 	UpdateSessionActivityIfUser(c)
 
 	profileId := c.GetParamInt("profile_id", 0)
-	mem := models.UserMemoryStore.GetForUser(profileId)
+	mem,ok := models.MemoryStore_User.GetUser(profileId)
 
-	if mem == nil {
+	if !ok {
 		c.Protocol.Error = "NOT FOUND"
 		c.Protocol.Status = "ERROR"
 		return nil

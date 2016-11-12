@@ -65,11 +65,14 @@ func GetFollowersListAction(c *base.Action) base.AppErr {
 	_ = last
 	var user models.UserTable
 	var err error
+	var ok bool
 	if peer_id < 1 {
 		user, err = models.GetUserByUsername2(username)
 	} else {
-		user = models.UserMemoryStore.GetForUser(peer_id).UserTable
-		peer_id = user.Id
+		user,ok = models.MemoryStore_User.GetUser(peer_id)
+        if ok{
+            peer_id = user.Id
+        }
 	}
 
 	if err != nil { //|| user == nil{
@@ -116,11 +119,14 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
 	_ = last
 	var user models.UserTable
 	var err error
+    var ok bool
 	if peer_id < 1 {
 		user, err = models.GetUserByUsername2(username)
 	} else {
-		user = models.UserMemoryStore.GetForUser(peer_id).UserTable
-		peer_id = user.Id
+        user,ok = models.MemoryStore_User.GetUser(peer_id)
+        if ok{
+            peer_id = user.Id
+        }
 	}
 
 	if err != nil { //|| user == nil{
