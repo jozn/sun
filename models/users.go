@@ -21,26 +21,6 @@ func GetUserById(id int) User {
 	return u
 }
 
-func GetUserById2(id int) UserTable {
-	var u UserTable
-	DB.Get(&u, "select * from user where Id =? limit 1", id)
-	return u
-}
-
-//todo cahcse with GetUserById
-func GetUserByUsername(username string) User {
-	key := "user_" + username
-	if v, ok := cashe.Get(key); ok {
-		return v.(User)
-	}
-	var u []User
-	debug(u)
-	_ = DB.Select(&u, "select * from user where UserName =? limit 1", username)
-	cashe.Set(key, u[0], 0)
-	//noErr(err)
-	return u[0]
-}
-
 func GetUserByUsername2(username string) (UserTable, error) {
 	key := "user_" + username
 	if v, ok := cashe.Get(key); ok {
@@ -54,19 +34,6 @@ func GetUserByUsername2(username string) (UserTable, error) {
 	}
 	cashe.Set(key, u[0], 0)
 	return u[0], nil
-}
-
-func GetUserInfo(id int) UserInfo {
-	// key := "user_" + username
-	// if v, ok := cashe.Get(key); ok {
-	// 	return v.(User)
-	// }
-	var u []UserInfo
-	// debug(u)
-	DB.Select(&u, "select * from user_info where UserId =? limit 1", id)
-	// cashe.Set(key, u[0], 0)
-	//noErr(err)
-	return u[0]
 }
 
 func GetUserView(uid int) UserInlineView {
