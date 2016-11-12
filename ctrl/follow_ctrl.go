@@ -8,10 +8,6 @@ import (
 	//"ms/sun/docs/del"
 )
 
-const LIST_TYPE_FOLLOWINGS = 1
-const LIST_TYPE_FOLLOWERS = 2
-const LIST_TYPE_LIKES = 3
-
 func PingAction(c *base.Action) base.AppErr {
 	c.SendText("PONG")
 	return nil
@@ -158,33 +154,5 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
 type SyncFollowings struct {
 	Add    []models.UserBasicAndMe
 	Remove []int
-}
-*/
-
-/*
-func SyncFollowingsAction(a *base.Action) base.AppErr {
-	MustBeUserAndUpdate(a)
-	last_str := a.Req.Form.Get("last") //last TimeStamp
-	last := helper.StrToInt(last_str, 0)
-
-	users := models.GetAllFollowingsUser(a.UserId(), last)
-
-	list := models.PreloadFollowingsListTypesForUser(a.UserId())
-	followings_res := []models.UserBasicAndMe{}
-	for _, u := range users {
-		cu := models.UserBasicAndMe{}
-		cu.FromUser(u, list)
-		//cu.UserBasic = u.UserBasic
-		//cu.UpdatedTimestamp = u.UpdatedTimestamp
-		//cu.FollowingType = list.FollowingType(u.Id)
-		followings_res = append(followings_res, cu)
-	}
-
-	sync_res := SyncFollowings{
-		Add:    followings_res,
-		Remove: models.GetAllUnFollowedUserIds(a.UserId(), last),
-	}
-	a.SendJson(sync_res)
-	return nil
 }
 */
