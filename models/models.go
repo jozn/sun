@@ -20,22 +20,3 @@ func init() {
 	cashe = cacheDrive.New(5*time.Minute, 30*time.Second)
 
 }
-
-func noErr(err error) {
-	if err != nil {
-		// log.Fatalln(err) //painc
-		log.Fatal("***** PANIC ****: ", err)
-	}
-}
-
-func noDevErr(err error) {
-	if __DEV__ && err != nil {
-		// log.Fatalln(err) //painc
-		log.Panic("***** PANIC ****: ", err)
-	}
-}
-
-//empty for fuell go nasty varible must used
-func e(...interface{}) {
-
-}

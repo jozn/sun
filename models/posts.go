@@ -44,8 +44,8 @@ func GetPostLastComments(id int) []CommentInlineInfo {
 		return v.([]CommentInlineInfo)
 	}
 	var rsCom []Comment
-	err := DB.Select(&rsCom, "select * from comments where PostId =? order by Id DESC limit 4 ", id)
-	noErr(err)
+	_ = DB.Select(&rsCom, "select * from comments where PostId =? order by Id DESC limit 4 ", id)
+	//noErr(err)
 	// debug(...)
 	for i := 0; i < len(rsCom); i++ {
 		r := CommentInlineInfo{}

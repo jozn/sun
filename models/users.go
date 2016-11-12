@@ -35,9 +35,9 @@ func GetUserByUsername(username string) User {
 	}
 	var u []User
 	debug(u)
-	err := DB.Select(&u, "select * from user where UserName =? limit 1", username)
+	_= DB.Select(&u, "select * from user where UserName =? limit 1", username)
 	cashe.Set(key, u[0], 0)
-	noErr(err)
+	//noErr(err)
 	return u[0]
 }
 
@@ -63,9 +63,9 @@ func GetUserInfo(id int) UserInfo {
 	// }
 	var u []UserInfo
 	// debug(u)
-	err := DB.Select(&u, "select * from user_info where UserId =? limit 1", id)
+	DB.Select(&u, "select * from user_info where UserId =? limit 1", id)
 	// cashe.Set(key, u[0], 0)
-	noErr(err)
+	//noErr(err)
 	return u[0]
 }
 
