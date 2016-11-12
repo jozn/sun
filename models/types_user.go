@@ -1,7 +1,5 @@
 package models
 
-import "ms/sun/base"
-
 type UserBasic struct {
 	Id             int
 	UserName       string
@@ -134,28 +132,6 @@ func (ub *UserBasic) ToUserInlineView() *UserInlineView {
 	return &v
 }
 
-/////////////////////////////////////////////////////////////
-
-// ALL are DEPRECATD they was for when we didint store all user data in memory
-
-func (t *UserBasicAndMe) FromUser(u UserTable, list FollowChecker) {
-	t.UserBasic = u.UserBasic
-	t.UserId = u.Id
-	t.UpdatedTime = u.UpdatedTime
-	t.FollowingType = list.FollowingType(u.Id)
-}
-
-func (t *UserBasicAndMe) FormUserAndMe(u UserTable, meId int) {
-	t.UserBasic = u.UserBasic
-	t.UserId = u.Id
-	t.UpdatedTime = u.UpdatedTime
-	t.FollowingType = MemoryStore.UserFollowingList_GetFollowingTypeForUsers(meId, u.Id)
-}
-
-func (ub *UserBasic) UpdateToTable() {
-	//UserMemoryStore.GetForUser(ub)
-	base.DbUpdateStruct(ub, "user")
-}
 
 ///////////////////////////////////////////////////////////////////
 

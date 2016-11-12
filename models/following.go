@@ -1,10 +1,5 @@
 package models
 
-type FollowChecker interface {
-	FollowingType(int) int
-	IsFollowing(int) bool
-}
-
 ////////////////////////////////// new Apis 0.4 ///////////////////////
 
 func UsersToInlineFollowView(userIds []int, cuid int) []UserInlineFollowView {

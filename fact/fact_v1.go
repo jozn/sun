@@ -96,7 +96,8 @@ func FactUserAvatars(c *base.Action) {
 			t := (time.Now().UnixNano() - t1) / 1e6
 			u := models.UserMemoryStore.GetForUser(uid)
 			u.AvatarUrl = userAvatr.FullUrl
-			u.UserBasic.UpdateToTable()
+			//u.UserBasic.UpdateToTable()
+            base.DbUpdateStruct(&u, "user")
 			fmt.Println("time for avatar gen:", t)
 
 		}
