@@ -9,6 +9,7 @@ import (
 	"testing"
 	"unicode"
 	//"time"
+    "ms/sun/helper"
 )
 
 // func BenchmarkHello(b *testing.B) {
@@ -19,13 +20,13 @@ import (
 
 func BenchmarkNow(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		now()
+		helper.TimeNow()
 	}
 }
 
 func BenchmarkDebug(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		debug("...")
+		//debug("...")
 	}
 }
 
