@@ -1,3 +1,4 @@
+//todo move to baase? and change base to shared?
 package shared
 
 import (

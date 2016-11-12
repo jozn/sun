@@ -4,6 +4,8 @@ func OnAppStart_Models() {
 
 	UserMemoryStore.ReloadAll()
 
+	MemoryStore_User.ReloadAll()
+
 	ReloadTopUserIds()
 
 	ReloadAllTags()
