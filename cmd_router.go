@@ -18,4 +18,3 @@ func registerCmdRouters() {
 	mp2["MsgsSeenMany"] = models.CallRecive_MsgSeenByPeer
 
 }
-
