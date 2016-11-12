@@ -34,9 +34,11 @@ type CommentInlineInfo struct {
 	Sender UserInlineView
 }
 
+/*
 type LikelineInfo struct {
 	UserInlineInfo
 }
+*/
 
 /*
 type UserMajorInfoMe struct {
@@ -78,12 +80,14 @@ type UserInlineFollowView struct {
 	Src  string
 }*/
 
+/*
 type UserInlineInfo struct {
 	UserId   int
 	UserName string
 	FullName string
 	// Avatars Avatars
 }
+*/
 
 /*
 
@@ -101,6 +105,7 @@ type Play1 struct {
 }
 */
 
+/*
 type ProfileView struct {
 	User         User
 	UserInfo     UserInfo //usercounts
@@ -109,3 +114,4 @@ type ProfileView struct {
 	Posts        []PostAndDetailes
 	OtherInfo    User
 }
+*/
