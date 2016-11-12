@@ -5,8 +5,8 @@ type _viewImpl int
 var Views _viewImpl
 
 func (e _viewImpl) UserViewSync(CurrentUserId, UserId int) *UserViewSyncAndMe {
-	u := UserMemoryStore.GetForUser(UserId)
-	if u == nil {
+	u,ok := MemoryStore_User.GetUser(UserId)
+	if !ok {
 		return &UserViewSyncAndMe{}
 	}
 
@@ -26,7 +26,7 @@ func (e _viewImpl) UserBasicAndMeForUsers(CurrentUserId int, Users []int) []User
 
 	for _, u := range Users {
 		user,ok := MemoryStore_User.GetUser(u)
-		if ok != nil {
+		if ok  {
 			v := UserBasicAndMe{
 				UserId:        u,
 				FollowingType: MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, u),
