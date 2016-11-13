@@ -7,7 +7,10 @@ import (
 
 func SessionGetUserInfo(c *base.Action) base.AppErr {
 	MustBeUser(c)
-	mem, _ := models.MemoryStore_User.GetUser(c.UserId())
-	c.SendJson(mem)
-	return nil
+	mem, ok := models.MemoryStore_User.GetUser(c.UserId())
+    if ok{
+        c.SendJson(mem)
+    }
+    c.SendJson(nil)
+    return nil
 }
