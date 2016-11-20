@@ -33,6 +33,7 @@ func GetUserView(uid int) UserInlineView {
 	v.AvatarUrl = u.AvatarUrl
 	return v
 }
+
 //todo merge
 func GetUserViewV2(uid int) (*UserInlineView, error) {
 	u := UserMemoryStore.GetUserTableForUser(uid)

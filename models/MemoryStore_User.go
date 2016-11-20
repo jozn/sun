@@ -67,7 +67,7 @@ func (m *mapMemoryStore_UserImpl) GetMemRow(UserId int) (*userMemRowData, bool) 
 	if ok {
 		return md, true
 	}
-    return nil, false
+	return nil, false
 }
 
 func (m *mapMemoryStore_UserImpl) GetUserByUserName(UserName string) (User, bool) {
@@ -77,7 +77,7 @@ func (m *mapMemoryStore_UserImpl) GetUserByUserName(UserName string) (User, bool
 	if ok {
 		return m.GetUser(uid)
 	}
-    return User{}, false
+	return User{}, false
 }
 
 func (m *mapMemoryStore_UserImpl) GetUserBySession(Session string) (User, bool) {
@@ -87,5 +87,5 @@ func (m *mapMemoryStore_UserImpl) GetUserBySession(Session string) (User, bool) 
 	if ok {
 		return m.GetUser(uid)
 	}
-    return User{}, false
+	return User{}, false
 }
