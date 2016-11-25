@@ -43,6 +43,7 @@ func TagsPostsListCtrl(c *base.Action) base.AppErr {
 	return nil
 }
 
+//dep
 func TagsPostsListCtrl_OLD(c *base.Action) base.AppErr {
 	UpdateSessionActivityIfUser(c)
 

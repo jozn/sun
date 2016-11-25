@@ -36045,6 +36045,1973 @@ func MassReplace_RecommendUser(rows []RecommendUser, db XODB) error {
 
 //
 
+// SearchClicked represents a row from 'ms.search_clicked'.
+
+// Manualy copy this to project
+type __SearchClicked struct {
+	Id        uint   `json:"Id"`        // Id -
+	Query     string `json:"Query"`     // Query -
+	ClickType int    `json:"ClickType"` // ClickType -
+	TargetId  int    `json:"TargetId"`  // TargetId -
+	UserId    int    `json:"UserId"`    // UserId -
+	CreatedAt int    `json:"CreatedAt"` // CreatedAt -
+
+	// xo fields
+	_exists, _deleted bool
+}
+
+// Exists determines if the SearchClicked exists in the database.
+func (sc *SearchClicked) Exists() bool {
+	return sc._exists
+}
+
+// Deleted provides information if the SearchClicked has been deleted from the database.
+func (sc *SearchClicked) Deleted() bool {
+	return sc._deleted
+}
+
+// Insert inserts the SearchClicked to the database.
+func (sc *SearchClicked) Insert(db XODB) error {
+	var err error
+
+	// if already exist, bail
+	if sc._exists {
+		return errors.New("insert failed: already exists")
+	}
+
+	// sql query
+	const sqlstr = `INSERT INTO ms.search_clicked (` +
+		`Query, ClickType, TargetId, UserId, CreatedAt` +
+		`) VALUES (` +
+		`?, ?, ?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt)
+	res, err := db.Exec(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	sc.Id = uint(id)
+	sc._exists = true
+
+	return nil
+}
+
+// Insert inserts the SearchClicked to the database.
+func (sc *SearchClicked) Replace(db XODB) error {
+	var err error
+
+	// sql query
+	const sqlstr = `REPLACE INTO ms.search_clicked (` +
+		`Query, ClickType, TargetId, UserId, CreatedAt` +
+		`) VALUES (` +
+		`?, ?, ?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt)
+	res, err := db.Exec(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	sc.Id = uint(id)
+	sc._exists = true
+
+	return nil
+}
+
+// Update updates the SearchClicked in the database.
+func (sc *SearchClicked) Update(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !sc._exists {
+		return errors.New("update failed: does not exist")
+	}
+
+	// if deleted, bail
+	if sc._deleted {
+		return errors.New("update failed: marked for deletion")
+	}
+
+	// sql query
+	const sqlstr = `UPDATE ms.search_clicked SET ` +
+		`Query = ?, ClickType = ?, TargetId = ?, UserId = ?, CreatedAt = ?` +
+		` WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt, sc.Id)
+	_, err = db.Exec(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt, sc.Id)
+	return err
+}
+
+// Save saves the SearchClicked to the database.
+func (sc *SearchClicked) Save(db XODB) error {
+	if sc.Exists() {
+		return sc.Update(db)
+	}
+
+	return sc.Replace(db)
+}
+
+// Delete deletes the SearchClicked from the database.
+func (sc *SearchClicked) Delete(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !sc._exists {
+		return nil
+	}
+
+	// if deleted, bail
+	if sc._deleted {
+		return nil
+	}
+
+	// sql query
+	const sqlstr = `DELETE FROM ms.search_clicked WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, sc.Id)
+	_, err = db.Exec(sqlstr, sc.Id)
+	if err != nil {
+		return err
+	}
+
+	// set deleted
+	sc._deleted = true
+
+	return nil
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// Querify gen - ME /////////////////////////////////////////
+//.Name = table name
+// _Deleter, _Updater
+
+// orma types
+type __SearchClicked_Deleter struct {
+	wheres   []whereClause
+	whereSep string
+}
+
+type __SearchClicked_Updater struct {
+	wheres   []whereClause
+	updates  map[string]interface{}
+	whereSep string
+}
+
+type __SearchClicked_Selector struct {
+	wheres    []whereClause
+	selectCol string
+	whereSep  string
+	orderBy   string //" order by id desc //for ints
+	limit     int
+	offset    int
+}
+
+func NewSearchClicked_Deleter() *__SearchClicked_Deleter {
+	d := __SearchClicked_Deleter{whereSep: " AND "}
+	return &d
+}
+
+func NewSearchClicked_Updater() *__SearchClicked_Updater {
+	u := __SearchClicked_Updater{whereSep: " AND "}
+	u.updates = make(map[string]interface{}, 10)
+	return &u
+}
+
+func NewSearchClicked_Selector() *__SearchClicked_Selector {
+	u := __SearchClicked_Selector{whereSep: " AND ", selectCol: "*"}
+	return &u
+}
+
+/////////////////////////////// Where for all /////////////////////////////
+//// for ints all selector updater, deleter
+
+////////ints
+func (u *__SearchClicked_Deleter) Or(ins []int) *__SearchClicked_Deleter {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__SearchClicked_Deleter) ClickType_In(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ClickType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Deleter) ClickType_NotIn(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ClickType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Deleter) ClickType_EQ(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) ClickType_NotEQ(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) ClickType_LT(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) ClickType_LE(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) ClickType_GT(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) ClickType_GE(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__SearchClicked_Deleter) TargetId_In(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Deleter) TargetId_NotIn(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Deleter) TargetId_EQ(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) TargetId_NotEQ(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) TargetId_LT(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) TargetId_LE(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) TargetId_GT(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) TargetId_GE(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__SearchClicked_Deleter) UserId_In(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Deleter) UserId_NotIn(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Deleter) UserId_EQ(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) UserId_NotEQ(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) UserId_LT(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) UserId_LE(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) UserId_GT(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) UserId_GE(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__SearchClicked_Deleter) CreatedAt_In(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Deleter) CreatedAt_NotIn(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Deleter) CreatedAt_EQ(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) CreatedAt_NotEQ(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) CreatedAt_LT(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) CreatedAt_LE(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) CreatedAt_GT(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) CreatedAt_GE(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__SearchClicked_Updater) Or(ins []int) *__SearchClicked_Updater {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__SearchClicked_Updater) ClickType_In(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ClickType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Updater) ClickType_NotIn(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ClickType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Updater) ClickType_EQ(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) ClickType_NotEQ(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) ClickType_LT(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) ClickType_LE(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) ClickType_GT(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) ClickType_GE(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__SearchClicked_Updater) TargetId_In(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Updater) TargetId_NotIn(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Updater) TargetId_EQ(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) TargetId_NotEQ(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) TargetId_LT(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) TargetId_LE(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) TargetId_GT(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) TargetId_GE(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__SearchClicked_Updater) UserId_In(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Updater) UserId_NotIn(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Updater) UserId_EQ(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) UserId_NotEQ(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) UserId_LT(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) UserId_LE(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) UserId_GT(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) UserId_GE(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__SearchClicked_Updater) CreatedAt_In(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Updater) CreatedAt_NotIn(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Updater) CreatedAt_EQ(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) CreatedAt_NotEQ(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) CreatedAt_LT(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) CreatedAt_LE(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) CreatedAt_GT(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) CreatedAt_GE(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__SearchClicked_Selector) Or(ins []int) *__SearchClicked_Selector {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__SearchClicked_Selector) ClickType_In(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ClickType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Selector) ClickType_NotIn(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ClickType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Selector) ClickType_EQ(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) ClickType_NotEQ(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) ClickType_LT(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) ClickType_LE(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) ClickType_GT(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) ClickType_GE(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClickType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__SearchClicked_Selector) TargetId_In(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Selector) TargetId_NotIn(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Selector) TargetId_EQ(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) TargetId_NotEQ(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) TargetId_LT(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) TargetId_LE(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) TargetId_GT(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) TargetId_GE(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__SearchClicked_Selector) UserId_In(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Selector) UserId_NotIn(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Selector) UserId_EQ(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) UserId_NotEQ(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) UserId_LT(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) UserId_LE(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) UserId_GT(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) UserId_GE(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__SearchClicked_Selector) CreatedAt_In(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Selector) CreatedAt_NotIn(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Selector) CreatedAt_EQ(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) CreatedAt_NotEQ(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) CreatedAt_LT(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) CreatedAt_LE(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) CreatedAt_GT(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) CreatedAt_GE(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
+
+////////ints
+
+func (u *__SearchClicked_Deleter) Query_In(ins []string) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Query IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Deleter) Query_NotIn(ins []string) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Query NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__SearchClicked_Deleter) Query_Like(val string) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Query LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Deleter) Query_EQ(val string) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Query = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__SearchClicked_Updater) Query_In(ins []string) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Query IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Updater) Query_NotIn(ins []string) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Query NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__SearchClicked_Updater) Query_Like(val string) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Query LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Updater) Query_EQ(val string) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Query = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__SearchClicked_Selector) Query_In(ins []string) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Query IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Selector) Query_NotIn(ins []string) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Query NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__SearchClicked_Selector) Query_Like(val string) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Query LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Selector) Query_EQ(val string) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Query = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+/// End of wheres for selectors , updators, deletor
+
+/////////////////////////////// Updater /////////////////////////////
+
+//ints
+
+//string
+
+//ints
+
+//string
+func (u *__SearchClicked_Updater) Query(newVal string) *__SearchClicked_Updater {
+	u.updates[" Query = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__SearchClicked_Updater) ClickType(newVal int) *__SearchClicked_Updater {
+	u.updates[" ClickType = ? "] = newVal
+	return u
+}
+
+func (u *__SearchClicked_Updater) ClickType_Increment(count int) *__SearchClicked_Updater {
+	if count > 0 {
+		u.updates[" ClickType = ClickType+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ClickType = ClickType-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__SearchClicked_Updater) TargetId(newVal int) *__SearchClicked_Updater {
+	u.updates[" TargetId = ? "] = newVal
+	return u
+}
+
+func (u *__SearchClicked_Updater) TargetId_Increment(count int) *__SearchClicked_Updater {
+	if count > 0 {
+		u.updates[" TargetId = TargetId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" TargetId = TargetId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__SearchClicked_Updater) UserId(newVal int) *__SearchClicked_Updater {
+	u.updates[" UserId = ? "] = newVal
+	return u
+}
+
+func (u *__SearchClicked_Updater) UserId_Increment(count int) *__SearchClicked_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__SearchClicked_Updater) CreatedAt(newVal int) *__SearchClicked_Updater {
+	u.updates[" CreatedAt = ? "] = newVal
+	return u
+}
+
+func (u *__SearchClicked_Updater) CreatedAt_Increment(count int) *__SearchClicked_Updater {
+	if count > 0 {
+		u.updates[" CreatedAt = CreatedAt+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedAt = CreatedAt-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////// Selector ///////////////////////////////////
+
+//Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
+
+func (u *__SearchClicked_Selector) OrderBy_Id_Desc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY Id DESC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_Id_Asc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY Id ASC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) Select_Id() *__SearchClicked_Selector {
+	u.selectCol = "Id"
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_Query_Desc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY Query DESC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_Query_Asc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY Query ASC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) Select_Query() *__SearchClicked_Selector {
+	u.selectCol = "Query"
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_ClickType_Desc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY ClickType DESC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_ClickType_Asc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY ClickType ASC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) Select_ClickType() *__SearchClicked_Selector {
+	u.selectCol = "ClickType"
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_TargetId_Desc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY TargetId DESC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_TargetId_Asc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY TargetId ASC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) Select_TargetId() *__SearchClicked_Selector {
+	u.selectCol = "TargetId"
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_UserId_Desc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY UserId DESC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_UserId_Asc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY UserId ASC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) Select_UserId() *__SearchClicked_Selector {
+	u.selectCol = "UserId"
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_CreatedAt_Desc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY CreatedAt DESC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) OrderBy_CreatedAt_Asc() *__SearchClicked_Selector {
+	u.orderBy = " ORDER BY CreatedAt ASC "
+	return u
+}
+
+func (u *__SearchClicked_Selector) Select_CreatedAt() *__SearchClicked_Selector {
+	u.selectCol = "CreatedAt"
+	return u
+}
+
+func (u *__SearchClicked_Selector) Limit(num int) *__SearchClicked_Selector {
+	u.limit = num
+	return u
+}
+
+func (u *__SearchClicked_Selector) Offset(num int) *__SearchClicked_Selector {
+	u.offset = num
+	return u
+}
+
+/////////////////////////  Queryer Selector  //////////////////////////////////
+func (u *__SearchClicked_Selector) _stoSql() (string, []interface{}) {
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.search_clicked"
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	if u.orderBy != "" {
+		sqlstr += u.orderBy
+	}
+
+	if u.limit != 0 {
+		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
+	}
+
+	if u.offset != 0 {
+		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
+	}
+	return sqlstr, whereArgs
+}
+
+func (u *__SearchClicked_Selector) GetRow(db *sqlx.DB) (*SearchClicked, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	row := &SearchClicked{}
+	//by Sqlx
+	err = db.Get(row, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	row._exists = true
+
+	return row, nil
+}
+
+func (u *__SearchClicked_Selector) GetRows(db *sqlx.DB) ([]SearchClicked, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []SearchClicked
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	return rows, nil
+}
+
+func (u *__SearchClicked_Selector) GetString(db *sqlx.DB) (string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res string
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return "", err
+	}
+
+	return res, nil
+}
+
+func (u *__SearchClicked_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []string
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__SearchClicked_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []int
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__SearchClicked_Selector) GetInt(db *sqlx.DB) (int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res int
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	return res, nil
+}
+
+/////////////////////////  Queryer Update Delete //////////////////////////////////
+func (u *__SearchClicked_Updater) Update(db XODB) (int, error) {
+	var err error
+
+	var updateArgs []interface{}
+	var sqlUpdateArr []string
+	for up, newVal := range u.updates {
+		sqlUpdateArr = append(sqlUpdateArr, up)
+		updateArgs = append(updateArgs, newVal)
+	}
+	sqlUpdate := strings.Join(sqlUpdateArr, ",")
+
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	var allArgs []interface{}
+	allArgs = append(allArgs, updateArgs...)
+	allArgs = append(allArgs, whereArgs...)
+
+	sqlstr := `UPDATE ms.search_clicked SET ` + sqlUpdate
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	XOLog(sqlstr, allArgs)
+	res, err := db.Exec(sqlstr, allArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+func (d *__SearchClicked_Deleter) Delete(db XODB) (int, error) {
+	var err error
+	var wheresArr []string
+	for _, w := range d.wheres {
+		wheresArr = append(wheresArr, w.condition)
+	}
+	wheresStr := strings.Join(wheresArr, d.whereSep)
+
+	var args []interface{}
+	for _, w := range d.wheres {
+		args = append(args, w.args...)
+	}
+
+	sqlstr := "DELETE FROM ms.search_clicked WHERE " + wheresStr
+
+	// run query
+	XOLog(sqlstr, args)
+	res, err := db.Exec(sqlstr, args...)
+	if err != nil {
+		return 0, err
+	}
+
+	// retrieve id
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+///////////////////////// Mass insert - replace for  SearchClicked ////////////////
+func MassInsert_SearchClicked(rows []SearchClicked, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.search_clicked (" +
+		"Query, ClickType, TargetId, UserId, CreatedAt" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Query)
+		vals = append(vals, row.ClickType)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.CreatedAt)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_SearchClicked(rows []SearchClicked, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.search_clicked (" +
+		"Query, ClickType, TargetId, UserId, CreatedAt" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Query)
+		vals = append(vals, row.ClickType)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.UserId)
+		vals = append(vals, row.CreatedAt)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+//////////////////// Play ///////////////////////////////
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
 // Session represents a row from 'ms.session'.
 
 // Manualy copy this to project
@@ -52844,6 +54811,32 @@ func FollowingListMembersByFollowedUserIdUserId(db XODB, followedUserId int, use
 	return res, nil
 }
 
+// FollowingListMemberByUserIdFollowedUserId retrieves a row from 'ms.following_list_member' as a FollowingListMember.
+//
+// Generated from index 'UserId'.
+func FollowingListMemberByUserIdFollowedUserId(db XODB, userId int, followedUserId int) (*FollowingListMember, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs ` +
+		`FROM ms.following_list_member ` +
+		`WHERE UserId = ? AND FollowedUserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId, followedUserId)
+	flm := FollowingListMember{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, userId, followedUserId).Scan(&flm.Id, &flm.ListId, &flm.UserId, &flm.FollowedUserId, &flm.FollowType, &flm.UpdatedTimeMs)
+	if err != nil {
+		return nil, err
+	}
+
+	return &flm, nil
+}
+
 // FollowingListMembersByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member' as a FollowingListMember.
 //
 // Generated from index 'UserId_2'.
@@ -52933,6 +54926,45 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	}
 
 	return &flmh, nil
+}
+
+// LikesById retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'Id'.
+func LikesById(db XODB, id int) ([]*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Like{}
+	for q.Next() {
+		l := Like{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &l)
+	}
+
+	return res, nil
 }
 
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
@@ -53481,45 +55513,6 @@ func PhoneContactById(db XODB, id int) (*PhoneContact, error) {
 	return &pc, nil
 }
 
-// PostsByUserId retrieves a row from 'ms.post' as a Post.
-//
-// Generated from index 'UserId'.
-func PostsByUserId(db XODB, userId int) ([]*Post, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaServerId, Width, Height, SharedTo, HasTag, LikesCount, CommentsCount, CreatedTime ` +
-		`FROM ms.post ` +
-		`WHERE UserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId)
-	q, err := db.Query(sqlstr, userId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Post{}
-	for q.Next() {
-		p := Post{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &p)
-	}
-
-	return res, nil
-}
-
 // PostById retrieves a row from 'ms.post' as a Post.
 //
 // Generated from index 'post_Id_pkey'.
@@ -53572,43 +55565,30 @@ func RecommendUserById(db XODB, id int) (*RecommendUser, error) {
 	return &ru, nil
 }
 
-// SessionsById retrieves a row from 'ms.session' as a Session.
+// SearchClickedById retrieves a row from 'ms.search_clicked' as a SearchClicked.
 //
-// Generated from index 'Id'.
-func SessionsById(db XODB, id int) ([]*Session, error) {
+// Generated from index 'search_clicked_Id_pkey'.
+func SearchClickedById(db XODB, id uint) (*SearchClicked, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
-		`FROM ms.session ` +
+		`Id, Query, ClickType, TargetId, UserId, CreatedAt ` +
+		`FROM ms.search_clicked ` +
 		`WHERE Id = ?`
 
 	// run query
 	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
+	sc := SearchClicked{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, id).Scan(&sc.Id, &sc.Query, &sc.ClickType, &sc.TargetId, &sc.UserId, &sc.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
-	defer q.Close()
 
-	// load results
-	res := []*Session{}
-	for q.Next() {
-		s := Session{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &s)
-	}
-
-	return res, nil
+	return &sc, nil
 }
 
 // SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
