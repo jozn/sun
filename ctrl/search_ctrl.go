@@ -70,17 +70,17 @@ func SearchUsersCtrl(c *base.Action) base.AppErr {
 }
 
 func SearchClickedCtrl(c *base.Action) base.AppErr {
-    UpdateSessionActivityIfUser(c)
-    q := c.Req.FormValue("q")
-    target_id := c.GetParamInt("target_id",0)
-    click_type := c.Req.FormValue("click_type")
+	UpdateSessionActivityIfUser(c)
+	q := c.Req.FormValue("q")
+	target_id := c.GetParamInt("target_id", 0)
+	click_type := c.Req.FormValue("click_type")
 
-   if q == ""{
-       return
-   }
+	if q == "" {
+		return
+	}
 
-    models.NewSearchClicked_Deleter()
-    return nil
+	models.NewSearchClicked_Deleter()
+	return nil
 }
 
 func NoftificationsCtrl2(c *base.Action) base.AppErr {
