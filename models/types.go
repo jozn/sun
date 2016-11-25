@@ -60,6 +60,16 @@ type Post struct {
 	_exists, _deleted bool
 }
 
+type SearchClicked struct {
+	Id                uint   `json:"Id"`        // Id -
+	Query             string `json:"Query"`     // Query -
+	ClickType         int    `json:"ClickType"` // ClickType -
+	TargetId          int    `json:"TargetId"`  // TargetId -
+	UserId            int    `json:"UserId"`    // UserId -
+	CreatedAt         int    `json:"CreatedAt"` // CreatedAt - // xo fields
+	_exists, _deleted bool
+}
+
 //not used in this version but maybe for futuer versions
 type Session struct {
 	Id                 int

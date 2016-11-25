@@ -2,6 +2,7 @@ package ctrl
 
 import (
 	"ms/sun/base"
+	"ms/sun/helper"
 	"ms/sun/models"
 	"strings"
 )
@@ -79,7 +80,23 @@ func SearchClickedCtrl(c *base.Action) base.AppErr {
 		return
 	}
 
-	models.NewSearchClicked_Deleter()
+	click_type_id := 1 //search
+	if click_type == "user" {
+		click_type_id = 2
+	} else if click_type == "tag" {
+		click_type_id = 3
+	}
+
+	row := models.SearchClicked{
+		Query:     q,
+		TargetId:  target_id,
+		ClickType: click_type_id,
+		UserId:    c.UserId(),
+		CreatedAt: helper.TimeNow(),
+	}
+
+	row.Save(base.DB)
+
 	return nil
 }
 
