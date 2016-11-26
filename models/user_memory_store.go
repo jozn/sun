@@ -43,7 +43,7 @@ func (db *mapMemoryStoreImpl) ReloadAll() {
 	db.ReloadAllUser() //must called first
 	//go
 	db.ReloadAllFollowings()
-	db.ReloadAllLikes()
+	//db.ReloadAllLikes()
 
 }
 
@@ -97,7 +97,7 @@ func (db *mapMemoryStoreImpl) ReloadAllFollowings() {
 	}
 }
 
-func (db *mapMemoryStoreImpl) ReloadAllLikes() {
+/*func (db *mapMemoryStoreImpl) ReloadAllLikes() {
 	for _, r := range db.Map {
 		r.LikedPost = ds.New()
 	}
@@ -117,7 +117,7 @@ func (db *mapMemoryStoreImpl) ReloadAllLikes() {
 			r.LikedPost.SortDesc()
 		}
 	}
-}
+}*/
 
 ////////////////////////////// ////////////////////////////////////////
 func (db *mapMemoryStoreImpl) GetForUser(UserId int) *userMemRow {
@@ -163,6 +163,7 @@ func (db *mapMemoryStoreImpl) ReloadUser(UserId int) {
 
 //////////////////////// Likes - Post /////////////////////////////////
 //dep
+/*
 func (db *mapMemoryStoreImpl) AddPostLike(UserId, PostId int) {
 	s, ok := db.Map[UserId]
 	if ok {
@@ -171,10 +172,12 @@ func (db *mapMemoryStoreImpl) AddPostLike(UserId, PostId int) {
 		}
 		//QueryIncerPostLikesCount(PostId, 1)
 		//QueryReomePostLike(UserId,PostId)
-		/*err := QueryAddPostLike(UserId, PostId)
+		*/
+/*err := QueryAddPostLike(UserId, PostId)
 		if err == nil {
 			QueryIncerPostLikesCount(PostId, 1)
-		}*/
+		}*//*
+
 	}
 }
 
@@ -194,12 +197,15 @@ func (db *mapMemoryStoreImpl) RemovePostLike(UserId, PostId int) {
 	if ok {
 		s.LikedPost.RemoveAndSort(PostId)
 		QueryDecerPostLikesCount(PostId, 1)
-		/*err := QueryReomePostLike(UserId, PostId)
+		*/
+/*err := QueryReomePostLike(UserId, PostId)
 		if err == nil {
 			QueryDecerPostLikesCount(PostId, 1)
-		}*/
+		}*//*
+
 	}
 }
+*/
 
 //////////////////////// Followings -- all deprecated use MemoryStore.* ///////////////////////////////////
 
