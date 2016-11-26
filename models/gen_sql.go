@@ -220,7 +220,7 @@ func NewComment_Selector() *__Comment_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Comment_Deleter) Or(ins []int) *__Comment_Deleter {
+func (u *__Comment_Deleter) Or() *__Comment_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -594,7 +594,7 @@ func (d *__Comment_Deleter) CreatedTime_GE(val int) *__Comment_Deleter {
 }
 
 ////////ints
-func (u *__Comment_Updater) Or(ins []int) *__Comment_Updater {
+func (u *__Comment_Updater) Or() *__Comment_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -968,7 +968,7 @@ func (d *__Comment_Updater) CreatedTime_GE(val int) *__Comment_Updater {
 }
 
 ////////ints
-func (u *__Comment_Selector) Or(ins []int) *__Comment_Selector {
+func (u *__Comment_Selector) Or() *__Comment_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -2166,7 +2166,7 @@ func NewFollowingList_Selector() *__FollowingList_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__FollowingList_Deleter) Or(ins []int) *__FollowingList_Deleter {
+func (u *__FollowingList_Deleter) Or() *__FollowingList_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -2816,7 +2816,7 @@ func (d *__FollowingList_Deleter) CreatedTime_GE(val int) *__FollowingList_Delet
 }
 
 ////////ints
-func (u *__FollowingList_Updater) Or(ins []int) *__FollowingList_Updater {
+func (u *__FollowingList_Updater) Or() *__FollowingList_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -3466,7 +3466,7 @@ func (d *__FollowingList_Updater) CreatedTime_GE(val int) *__FollowingList_Updat
 }
 
 ////////ints
-func (u *__FollowingList_Selector) Or(ins []int) *__FollowingList_Selector {
+func (u *__FollowingList_Selector) Or() *__FollowingList_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -5058,7 +5058,7 @@ func NewFollowingListMember_Selector() *__FollowingListMember_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__FollowingListMember_Deleter) Or(ins []int) *__FollowingListMember_Deleter {
+func (u *__FollowingListMember_Deleter) Or() *__FollowingListMember_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -5616,7 +5616,7 @@ func (d *__FollowingListMember_Deleter) UpdatedTimeMs_GE(val int) *__FollowingLi
 }
 
 ////////ints
-func (u *__FollowingListMember_Updater) Or(ins []int) *__FollowingListMember_Updater {
+func (u *__FollowingListMember_Updater) Or() *__FollowingListMember_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -6174,7 +6174,7 @@ func (d *__FollowingListMember_Updater) UpdatedTimeMs_GE(val int) *__FollowingLi
 }
 
 ////////ints
-func (u *__FollowingListMember_Selector) Or(ins []int) *__FollowingListMember_Selector {
+func (u *__FollowingListMember_Selector) Or() *__FollowingListMember_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -7461,7 +7461,7 @@ func NewFollowingListMemberHistory_Selector() *__FollowingListMemberHistory_Sele
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__FollowingListMemberHistory_Deleter) Or(ins []int) *__FollowingListMemberHistory_Deleter {
+func (u *__FollowingListMemberHistory_Deleter) Or() *__FollowingListMemberHistory_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -8111,7 +8111,7 @@ func (d *__FollowingListMemberHistory_Deleter) FollowId_GE(val int) *__Following
 }
 
 ////////ints
-func (u *__FollowingListMemberHistory_Updater) Or(ins []int) *__FollowingListMemberHistory_Updater {
+func (u *__FollowingListMemberHistory_Updater) Or() *__FollowingListMemberHistory_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -8761,7 +8761,7 @@ func (d *__FollowingListMemberHistory_Updater) FollowId_GE(val int) *__Following
 }
 
 ////////ints
-func (u *__FollowingListMemberHistory_Selector) Or(ins []int) *__FollowingListMemberHistory_Selector {
+func (u *__FollowingListMemberHistory_Selector) Or() *__FollowingListMemberHistory_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -10178,7 +10178,7 @@ func NewLike_Selector() *__Like_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Like_Deleter) Or(ins []int) *__Like_Deleter {
+func (u *__Like_Deleter) Or() *__Like_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -10644,7 +10644,7 @@ func (d *__Like_Deleter) CreatedTime_GE(val int) *__Like_Deleter {
 }
 
 ////////ints
-func (u *__Like_Updater) Or(ins []int) *__Like_Updater {
+func (u *__Like_Updater) Or() *__Like_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -11110,7 +11110,7 @@ func (d *__Like_Updater) CreatedTime_GE(val int) *__Like_Updater {
 }
 
 ////////ints
-func (u *__Like_Selector) Or(ins []int) *__Like_Selector {
+func (u *__Like_Selector) Or() *__Like_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -12265,7 +12265,7 @@ func NewMedia_Selector() *__Media_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Media_Deleter) Or(ins []int) *__Media_Deleter {
+func (u *__Media_Deleter) Or() *__Media_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -12823,7 +12823,7 @@ func (d *__Media_Deleter) CreatedTime_GE(val int) *__Media_Deleter {
 }
 
 ////////ints
-func (u *__Media_Updater) Or(ins []int) *__Media_Updater {
+func (u *__Media_Updater) Or() *__Media_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -13381,7 +13381,7 @@ func (d *__Media_Updater) CreatedTime_GE(val int) *__Media_Updater {
 }
 
 ////////ints
-func (u *__Media_Selector) Or(ins []int) *__Media_Selector {
+func (u *__Media_Selector) Or() *__Media_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -14842,7 +14842,7 @@ func NewMessage_Selector() *__Message_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Message_Deleter) Or(ins []int) *__Message_Deleter {
+func (u *__Message_Deleter) Or() *__Message_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -15216,7 +15216,7 @@ func (d *__Message_Deleter) TimeMs_GE(val int) *__Message_Deleter {
 }
 
 ////////ints
-func (u *__Message_Updater) Or(ins []int) *__Message_Updater {
+func (u *__Message_Updater) Or() *__Message_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -15590,7 +15590,7 @@ func (d *__Message_Updater) TimeMs_GE(val int) *__Message_Updater {
 }
 
 ////////ints
-func (u *__Message_Selector) Or(ins []int) *__Message_Selector {
+func (u *__Message_Selector) Or() *__Message_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -17134,7 +17134,7 @@ func NewMsgDeletedFromServer_Selector() *__MsgDeletedFromServer_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__MsgDeletedFromServer_Deleter) Or(ins []int) *__MsgDeletedFromServer_Deleter {
+func (u *__MsgDeletedFromServer_Deleter) Or() *__MsgDeletedFromServer_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -17508,7 +17508,7 @@ func (d *__MsgDeletedFromServer_Deleter) AtTime_GE(val int) *__MsgDeletedFromSer
 }
 
 ////////ints
-func (u *__MsgDeletedFromServer_Updater) Or(ins []int) *__MsgDeletedFromServer_Updater {
+func (u *__MsgDeletedFromServer_Updater) Or() *__MsgDeletedFromServer_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -17882,7 +17882,7 @@ func (d *__MsgDeletedFromServer_Updater) AtTime_GE(val int) *__MsgDeletedFromSer
 }
 
 ////////ints
-func (u *__MsgDeletedFromServer_Selector) Or(ins []int) *__MsgDeletedFromServer_Selector {
+func (u *__MsgDeletedFromServer_Selector) Or() *__MsgDeletedFromServer_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -19252,7 +19252,7 @@ func NewMsgReceivedToPeer_Selector() *__MsgReceivedToPeer_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__MsgReceivedToPeer_Deleter) Or(ins []int) *__MsgReceivedToPeer_Deleter {
+func (u *__MsgReceivedToPeer_Deleter) Or() *__MsgReceivedToPeer_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -19626,7 +19626,7 @@ func (d *__MsgReceivedToPeer_Deleter) AtTime_GE(val int) *__MsgReceivedToPeer_De
 }
 
 ////////ints
-func (u *__MsgReceivedToPeer_Updater) Or(ins []int) *__MsgReceivedToPeer_Updater {
+func (u *__MsgReceivedToPeer_Updater) Or() *__MsgReceivedToPeer_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -20000,7 +20000,7 @@ func (d *__MsgReceivedToPeer_Updater) AtTime_GE(val int) *__MsgReceivedToPeer_Up
 }
 
 ////////ints
-func (u *__MsgReceivedToPeer_Selector) Or(ins []int) *__MsgReceivedToPeer_Selector {
+func (u *__MsgReceivedToPeer_Selector) Or() *__MsgReceivedToPeer_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -21370,7 +21370,7 @@ func NewMsgSeenByPeer_Selector() *__MsgSeenByPeer_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__MsgSeenByPeer_Deleter) Or(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgSeenByPeer_Deleter) Or() *__MsgSeenByPeer_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -21744,7 +21744,7 @@ func (d *__MsgSeenByPeer_Deleter) AtTime_GE(val int) *__MsgSeenByPeer_Deleter {
 }
 
 ////////ints
-func (u *__MsgSeenByPeer_Updater) Or(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgSeenByPeer_Updater) Or() *__MsgSeenByPeer_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -22118,7 +22118,7 @@ func (d *__MsgSeenByPeer_Updater) AtTime_GE(val int) *__MsgSeenByPeer_Updater {
 }
 
 ////////ints
-func (u *__MsgSeenByPeer_Selector) Or(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgSeenByPeer_Selector) Or() *__MsgSeenByPeer_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -23491,7 +23491,7 @@ func NewNotification_Selector() *__Notification_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Notification_Deleter) Or(ins []int) *__Notification_Deleter {
+func (u *__Notification_Deleter) Or() *__Notification_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -24325,7 +24325,7 @@ func (d *__Notification_Deleter) CreatedTime_GE(val int) *__Notification_Deleter
 }
 
 ////////ints
-func (u *__Notification_Updater) Or(ins []int) *__Notification_Updater {
+func (u *__Notification_Updater) Or() *__Notification_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -25159,7 +25159,7 @@ func (d *__Notification_Updater) CreatedTime_GE(val int) *__Notification_Updater
 }
 
 ////////ints
-func (u *__Notification_Selector) Or(ins []int) *__Notification_Selector {
+func (u *__Notification_Selector) Or() *__Notification_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -26845,7 +26845,7 @@ func NewPhoneContact_Selector() *__PhoneContact_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__PhoneContact_Deleter) Or(ins []int) *__PhoneContact_Deleter {
+func (u *__PhoneContact_Deleter) Or() *__PhoneContact_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -27403,7 +27403,7 @@ func (d *__PhoneContact_Deleter) UpdatedTime_GE(val int) *__PhoneContact_Deleter
 }
 
 ////////ints
-func (u *__PhoneContact_Updater) Or(ins []int) *__PhoneContact_Updater {
+func (u *__PhoneContact_Updater) Or() *__PhoneContact_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -27961,7 +27961,7 @@ func (d *__PhoneContact_Updater) UpdatedTime_GE(val int) *__PhoneContact_Updater
 }
 
 ////////ints
-func (u *__PhoneContact_Selector) Or(ins []int) *__PhoneContact_Selector {
+func (u *__PhoneContact_Selector) Or() *__PhoneContact_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -29951,7 +29951,7 @@ func NewPost_Selector() *__Post_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Post_Deleter) Or(ins []int) *__Post_Deleter {
+func (u *__Post_Deleter) Or() *__Post_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -30969,7 +30969,7 @@ func (d *__Post_Deleter) CreatedTime_GE(val int) *__Post_Deleter {
 }
 
 ////////ints
-func (u *__Post_Updater) Or(ins []int) *__Post_Updater {
+func (u *__Post_Updater) Or() *__Post_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -31987,7 +31987,7 @@ func (d *__Post_Updater) CreatedTime_GE(val int) *__Post_Updater {
 }
 
 ////////ints
-func (u *__Post_Selector) Or(ins []int) *__Post_Selector {
+func (u *__Post_Selector) Or() *__Post_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -34454,7 +34454,7 @@ func NewRecommendUser_Selector() *__RecommendUser_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__RecommendUser_Deleter) Or(ins []int) *__RecommendUser_Deleter {
+func (u *__RecommendUser_Deleter) Or() *__RecommendUser_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -34828,7 +34828,7 @@ func (d *__RecommendUser_Deleter) CreatedTime_GE(val int) *__RecommendUser_Delet
 }
 
 ////////ints
-func (u *__RecommendUser_Updater) Or(ins []int) *__RecommendUser_Updater {
+func (u *__RecommendUser_Updater) Or() *__RecommendUser_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -35202,7 +35202,7 @@ func (d *__RecommendUser_Updater) CreatedTime_GE(val int) *__RecommendUser_Updat
 }
 
 ////////ints
-func (u *__RecommendUser_Selector) Or(ins []int) *__RecommendUser_Selector {
+func (u *__RecommendUser_Selector) Or() *__RecommendUser_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -36247,7 +36247,7 @@ func NewSearchClicked_Selector() *__SearchClicked_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__SearchClicked_Deleter) Or(ins []int) *__SearchClicked_Deleter {
+func (u *__SearchClicked_Deleter) Or() *__SearchClicked_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -36621,7 +36621,7 @@ func (d *__SearchClicked_Deleter) CreatedAt_GE(val int) *__SearchClicked_Deleter
 }
 
 ////////ints
-func (u *__SearchClicked_Updater) Or(ins []int) *__SearchClicked_Updater {
+func (u *__SearchClicked_Updater) Or() *__SearchClicked_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -36995,7 +36995,7 @@ func (d *__SearchClicked_Updater) CreatedAt_GE(val int) *__SearchClicked_Updater
 }
 
 ////////ints
-func (u *__SearchClicked_Selector) Or(ins []int) *__SearchClicked_Selector {
+func (u *__SearchClicked_Selector) Or() *__SearchClicked_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -38218,7 +38218,7 @@ func NewSession_Selector() *__Session_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Session_Deleter) Or(ins []int) *__Session_Deleter {
+func (u *__Session_Deleter) Or() *__Session_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -38592,7 +38592,7 @@ func (d *__Session_Deleter) CreatedTime_GE(val int) *__Session_Deleter {
 }
 
 ////////ints
-func (u *__Session_Updater) Or(ins []int) *__Session_Updater {
+func (u *__Session_Updater) Or() *__Session_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -38966,7 +38966,7 @@ func (d *__Session_Updater) CreatedTime_GE(val int) *__Session_Updater {
 }
 
 ////////ints
-func (u *__Session_Selector) Or(ins []int) *__Session_Selector {
+func (u *__Session_Selector) Or() *__Session_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -41031,7 +41031,7 @@ func NewTag_Selector() *__Tag_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Tag_Deleter) Or(ins []int) *__Tag_Deleter {
+func (u *__Tag_Deleter) Or() *__Tag_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -41405,7 +41405,7 @@ func (d *__Tag_Deleter) CreatedTime_GE(val int) *__Tag_Deleter {
 }
 
 ////////ints
-func (u *__Tag_Updater) Or(ins []int) *__Tag_Updater {
+func (u *__Tag_Updater) Or() *__Tag_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -41779,7 +41779,7 @@ func (d *__Tag_Updater) CreatedTime_GE(val int) *__Tag_Updater {
 }
 
 ////////ints
-func (u *__Tag_Selector) Or(ins []int) *__Tag_Selector {
+func (u *__Tag_Selector) Or() *__Tag_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -42974,7 +42974,7 @@ func NewTagsPost_Selector() *__TagsPost_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__TagsPost_Deleter) Or(ins []int) *__TagsPost_Deleter {
+func (u *__TagsPost_Deleter) Or() *__TagsPost_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -43440,7 +43440,7 @@ func (d *__TagsPost_Deleter) CreatedTime_GE(val int) *__TagsPost_Deleter {
 }
 
 ////////ints
-func (u *__TagsPost_Updater) Or(ins []int) *__TagsPost_Updater {
+func (u *__TagsPost_Updater) Or() *__TagsPost_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -43906,7 +43906,7 @@ func (d *__TagsPost_Updater) CreatedTime_GE(val int) *__TagsPost_Updater {
 }
 
 ////////ints
-func (u *__TagsPost_Selector) Or(ins []int) *__TagsPost_Selector {
+func (u *__TagsPost_Selector) Or() *__TagsPost_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -45086,7 +45086,7 @@ func NewUser_Selector() *__User_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__User_Deleter) Or(ins []int) *__User_Deleter {
+func (u *__User_Deleter) Or() *__User_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -46656,7 +46656,7 @@ func (d *__User_Deleter) LastLoginTime_GE(val int) *__User_Deleter {
 }
 
 ////////ints
-func (u *__User_Updater) Or(ins []int) *__User_Updater {
+func (u *__User_Updater) Or() *__User_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -48226,7 +48226,7 @@ func (d *__User_Updater) LastLoginTime_GE(val int) *__User_Updater {
 }
 
 ////////ints
-func (u *__User_Selector) Or(ins []int) *__User_Selector {
+func (u *__User_Selector) Or() *__User_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -53571,7 +53571,7 @@ func NewUserPassword_Selector() *__UserPassword_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__UserPassword_Deleter) Or(ins []int) *__UserPassword_Deleter {
+func (u *__UserPassword_Deleter) Or() *__UserPassword_Deleter {
 	u.whereSep = " OR "
 	return u
 }
@@ -53761,7 +53761,7 @@ func (d *__UserPassword_Deleter) CreatedTime_GE(val int) *__UserPassword_Deleter
 }
 
 ////////ints
-func (u *__UserPassword_Updater) Or(ins []int) *__UserPassword_Updater {
+func (u *__UserPassword_Updater) Or() *__UserPassword_Updater {
 	u.whereSep = " OR "
 	return u
 }
@@ -53951,7 +53951,7 @@ func (d *__UserPassword_Updater) CreatedTime_GE(val int) *__UserPassword_Updater
 }
 
 ////////ints
-func (u *__UserPassword_Selector) Or(ins []int) *__UserPassword_Selector {
+func (u *__UserPassword_Selector) Or() *__UserPassword_Selector {
 	u.whereSep = " OR "
 	return u
 }
@@ -54811,32 +54811,6 @@ func FollowingListMembersByFollowedUserIdUserId(db XODB, followedUserId int, use
 	return res, nil
 }
 
-// FollowingListMemberByUserIdFollowedUserId retrieves a row from 'ms.following_list_member' as a FollowingListMember.
-//
-// Generated from index 'UserId'.
-func FollowingListMemberByUserIdFollowedUserId(db XODB, userId int, followedUserId int) (*FollowingListMember, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs ` +
-		`FROM ms.following_list_member ` +
-		`WHERE UserId = ? AND FollowedUserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId, followedUserId)
-	flm := FollowingListMember{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, userId, followedUserId).Scan(&flm.Id, &flm.ListId, &flm.UserId, &flm.FollowedUserId, &flm.FollowType, &flm.UpdatedTimeMs)
-	if err != nil {
-		return nil, err
-	}
-
-	return &flm, nil
-}
-
 // FollowingListMembersByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member' as a FollowingListMember.
 //
 // Generated from index 'UserId_2'.
@@ -54902,6 +54876,45 @@ func FollowingListMemberById(db XODB, id int) (*FollowingListMember, error) {
 	return &flm, nil
 }
 
+// FollowingListMemberHistoriesByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
+//
+// Generated from index 'UserId'.
+func FollowingListMemberHistoriesByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeMs int) ([]*FollowingListMemberHistory, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs, FollowId ` +
+		`FROM ms.following_list_member_history ` +
+		`WHERE UserId = ? AND UpdatedTimeMs = ?`
+
+	// run query
+	XOLog(sqlstr, userId, updatedTimeMs)
+	q, err := db.Query(sqlstr, userId, updatedTimeMs)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*FollowingListMemberHistory{}
+	for q.Next() {
+		flmh := FollowingListMemberHistory{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&flmh.Id, &flmh.ListId, &flmh.UserId, &flmh.FollowedUserId, &flmh.FollowType, &flmh.UpdatedTimeMs, &flmh.FollowId)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &flmh)
+	}
+
+	return res, nil
+}
+
 // FollowingListMemberHistoryById retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
 //
 // Generated from index 'following_list_member_history_Id_pkey'.
@@ -54926,45 +54939,6 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	}
 
 	return &flmh, nil
-}
-
-// LikesById retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'Id'.
-func LikesById(db XODB, id int) ([]*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Like{}
-	for q.Next() {
-		l := Like{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &l)
-	}
-
-	return res, nil
 }
 
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
@@ -55589,6 +55563,45 @@ func SearchClickedById(db XODB, id uint) (*SearchClicked, error) {
 	}
 
 	return &sc, nil
+}
+
+// SessionsById retrieves a row from 'ms.session' as a Session.
+//
+// Generated from index 'Id'.
+func SessionsById(db XODB, id int) ([]*Session, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
+		`FROM ms.session ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Session{}
+	for q.Next() {
+		s := Session{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &s)
+	}
+
+	return res, nil
 }
 
 // SessionBySessionUuid retrieves a row from 'ms.session' as a Session.

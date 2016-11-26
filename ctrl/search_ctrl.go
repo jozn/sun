@@ -29,16 +29,29 @@ func SearchUsersCtrl(c *base.Action) base.AppErr {
 
 	q := c.Req.FormValue("q")
 
-	q = "%" + q
+	q =  q +"%"
 
-	var UsersIds []int
+    if strings.TrimSpace(q) != "" {
 
-	if strings.TrimSpace(q) != "" {
-		base.DB.Select(&UsersIds, "SELECT Id FROM USER WHERE UserName OR FirstName OR LastName LIKE ? LIMIT 20  ", q)
-	}
+        UsersIds, err := models.NewUser_Selector().
+            Select_Id().
+            Or().
+            UserName_Like(q).
+            FirstName_Like(q).
+            LastName_Like(q).
+            Limit(40).
+            GetIntSlice(base.DB)
 
-	usersFollow := models.UsersToInlineFollowView(UsersIds, c.UserId())
-	c.SendJson(usersFollow)
+        if err != nil {
+            return err
+        }
+
+        usersFollow := models.Views.GetListOfUserForFollowType(UsersIds, c.UserId())
+        c.SendJson(usersFollow)
+        return nil
+    }
+
+	c.SendJson(nil)
 	return nil
 }
 
@@ -49,7 +62,7 @@ func SearchClickedCtrl(c *base.Action) base.AppErr {
 	click_type := c.Req.FormValue("click_type")
 
 	if q == "" {
-		return
+		return nil
 	}
 
 	click_type_id := 1 //search
