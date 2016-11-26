@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+///ALL Deprecated
+
 ///////////////////// Followings /////////////////////////////
 func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int) (*FollowingListMember, error) {
 	flm := FollowingListMember{}
@@ -25,6 +27,7 @@ func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int) (*Following
 	return &flm, err
 }
 
+/*
 /////////////////////// Likes ////////////////////////
 //dep
 func QueryAddPostLike(UserId, PostId int) error {
@@ -70,6 +73,7 @@ func QueryDecerPostLikesCount(PostId, CountDiff int) {
 		devPrintn(err)
 	}
 }
+*/
 
 //////////////////// Comments ///////////////////////
 
