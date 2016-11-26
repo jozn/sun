@@ -136,10 +136,10 @@ func registerRoutes() *httptreemux.TreeMux {
 	v1.GET("/recommend/top_tags_discover", toV1(ctrl.RecommendTagsWithPostsCtrl))
 
 	v1.GET("/tags/list", toV1(ctrl.TagsPostsListCtrl))
-	v1.GET("/search", toV1(ctrl.SearchCtrl))
+	//v1.GET("/search", toV1(ctrl.SearchCtrl))
 	v1.GET("/search/tags", toV1(ctrl.SearchTagsCtrl))
 	v1.GET("/search/users", toV1(ctrl.SearchUsersCtrl))
-	v1.GET("/search/users", toV1(ctrl.SearchClickedCtrl))
+	v1.GET("/search/cliked", toV1(ctrl.SearchClickedCtrl))
 
 	v1.GET("/noti", toV1(ctrl.NoftificationsCtrl2))
 
