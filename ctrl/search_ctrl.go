@@ -29,27 +29,33 @@ func SearchUsersCtrl(c *base.Action) base.AppErr {
 
 	q := c.Req.FormValue("q")
 
-	q =  q +"%"
+	//q =  q +"%"
+	qs := strings.Split(q, " ")
 
-    if strings.TrimSpace(q) != "" {
+	if len(qs) > 0 {
+		selector := models.NewUser_Selector().Select_Id().Or()
 
-        UsersIds, err := models.NewUser_Selector().
-            Select_Id().
-            Or().
-            UserName_Like(q).
-            FirstName_Like(q).
-            LastName_Like(q).
-            Limit(40).
-            GetIntSlice(base.DB)
+		for _, q0 := range qs {
+			if q0 == "" {
+				continue
+			}
+			q0 = q0 + "%"
+			selector.
+				UserName_Like(q0).
+				FirstName_Like(q0).
+				LastName_Like(q0)
+		}
 
-        if err != nil {
-            return err
-        }
+		UsersIds, err := selector.Limit(30).GetIntSlice(base.DB)
 
-        usersFollow := models.Views.GetListOfUserForFollowType(UsersIds, c.UserId())
-        c.SendJson(usersFollow)
-        return nil
-    }
+		if err != nil {
+			return err
+		}
+
+		usersFollow := models.Views.GetListOfUserForFollowType(UsersIds, c.UserId())
+		c.SendJson(usersFollow)
+		return nil
+	}
 
 	c.SendJson(nil)
 	return nil
