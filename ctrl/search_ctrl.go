@@ -12,12 +12,12 @@ func SearchTagsCtrl(c *base.Action) base.AppErr {
 
 	q := c.Req.FormValue("q")
 
-	q = "%" + q
+	q = q + "%"
 
 	var tags []models.Tag
 
 	if strings.TrimSpace(q) != "" {
-		base.DB.Select(&tags, "select * from tags where `Name` like ? limit 20 ", q)
+		base.DB.Select(&tags, "select * from tags where `Name` like ? limit 30 ", q)
 	}
 
 	c.SendJson(tags)
