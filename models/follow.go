@@ -54,18 +54,10 @@ func Follow(UserId, FollowedPeerUserId int) {
     err:=flm.Insert(base.DB)
 
 	if err == nil {
-		//UserMemoryStore.AddFollow(UserId, FollowedPeerUserId)
 		MemoryStore.UserFollowingList_Add(UserId, FollowedPeerUserId)
-		UserMemoryStore.UpdateUserFollowingCounts(UserId, 1)
-		UserMemoryStore.UpdateUserFollowersCounts(FollowedPeerUserId, 1)
-
-		fh := FollowingListMemberHistory{}
-		//fh.FollowedUserId = FollowedPeerUserId// *follow
-		fh.FollowedUserId = follow.Id
-		fh.FollowType = 1
-		fh.FollowId = 0
-		fh.InsertToDb()
-
+		Counter.UpdateUserFollowingCounts(UserId, 1)
+        Counter.UpdateUserFollowersCounts(FollowedPeerUserId, 1)
+        
 		OnFollowed(UserId, FollowedPeerUserId)
 	}
 }
