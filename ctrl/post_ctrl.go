@@ -34,6 +34,7 @@ func AddPostAction(c *base.Action) base.AppErr {
 }
 
 func GetSinglePostAction(c *base.Action) base.AppErr {
+    UpdateSessionActivityIfUser(c)
 	idstr := c.Req.Form.Get("post_id")
 	id := helper.StrToInt(idstr, 0)
 	if id < 1 {
@@ -45,7 +46,7 @@ func GetSinglePostAction(c *base.Action) base.AppErr {
 		return nil
 	}
 
-	view := models.PostToPostAndDetailes(&post)
+	view := models.GetPostToPostAndDetailes(&post,c.UserId())
 	c.SendJson(view)
 	return nil
 }
