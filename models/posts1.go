@@ -5,13 +5,9 @@ import (
 	"ms/sun/helper"
 )
 
-/*
-func NewPostAddExtraDetails(post *Post)  {
-
-    AddTagsInPost(post)
-    AddUserMentionedInPost(post)
-}
-*/
+var POST_TYPE_TEXT = 1
+var POST_TYPE_PHOTO = 2
+var POST_TYPE_VIDEO = 3
 
 func AddNewPostToDbAndItsMeta(post *Post) {
 	post.CreatedTime = helper.TimeNow()
