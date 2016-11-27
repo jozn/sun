@@ -4,12 +4,12 @@ import (
 	"math"
 	"ms/sun/base"
 	"ms/sun/helper"
-	"strings"
 )
 
 ///ALL Deprecated
 
 ///////////////////// Followings /////////////////////////////
+/*
 func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int) (*FollowingListMember, error) {
 	flm := FollowingListMember{}
 	flm.FollowedUserId = FollowedUserId
@@ -26,6 +26,7 @@ func QueryInsertNewFollowing(UserId, FollowedUserId, FollowType int) (*Following
 	}
 	return &flm, err
 }
+*/
 
 /*
 /////////////////////// Likes ////////////////////////
@@ -76,6 +77,7 @@ func QueryDecerPostLikesCount(PostId, CountDiff int) {
 */
 
 //////////////////// Comments ///////////////////////
+/*
 
 func QueryIncerPostCommentsCount(PostId, CountDiff int) {
 	cnt := helper.IntToStr(CountDiff)
@@ -94,6 +96,7 @@ func QueryDecerPostCommentsCount(PostId, CountDiff int) {
 		devPrintn(err)
 	}
 }
+*/
 
 ///////////////////// User ///////////////////////////
 func QueryUpdateUserActionCounts(UserId, CountDiff int, column string) {
