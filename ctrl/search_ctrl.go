@@ -98,4 +98,3 @@ func NoftificationsCtrl2(c *base.Action) base.AppErr {
 	c.SendJson("asdsa")
 	return nil
 }
-

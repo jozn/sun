@@ -212,7 +212,6 @@ func (db *mapMemoryStoreImpl) IsUserSessionAndUpdateActivity(UserId int, Session
 	return is
 }
 
-
 //////////////////// End ///////////////////////////////
 
 //all below
@@ -233,4 +232,3 @@ type TwoArr [][2]int
 func (ft TwoArr) Len() int          { return len(ft) }
 func (p TwoArr) Less(i, j int) bool { return p[i][0] < p[j][0] }
 func (p TwoArr) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
-

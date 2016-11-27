@@ -35,4 +35,3 @@ func QueryUpdateSessionLastActivitiesOfUsers(UserIds []int) {
 	}
 	helper.DebugPrintln(q)
 }
-

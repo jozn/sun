@@ -45,19 +45,19 @@ func Follow(UserId, FollowedPeerUserId int) {
 		return
 	}
 
-    flm:=FollowingListMember{
-        ListId:UserId,
-        FollowedUserId:FollowedPeerUserId,
-        FollowType: 1, //remove
-        UpdatedTimeMs: helper.TimeNowMs(),
-    }
+	flm := FollowingListMember{
+		ListId:         UserId,
+		FollowedUserId: FollowedPeerUserId,
+		FollowType:     1, //remove
+		UpdatedTimeMs:  helper.TimeNowMs(),
+	}
 
-    err:=flm.Insert(base.DB)
+	err := flm.Insert(base.DB)
 
 	if err == nil {
 		MemoryStore.UserFollowingList_Add(UserId, FollowedPeerUserId)
 		Counter.UpdateUserFollowingCounts(UserId, 1)
-        Counter.UpdateUserFollowersCounts(FollowedPeerUserId, 1)
+		Counter.UpdateUserFollowersCounts(FollowedPeerUserId, 1)
 
 		OnFollowed(UserId, FollowedPeerUserId)
 	}
@@ -68,13 +68,13 @@ func UnFollow(UserId, FollowedPeerUserId int) {
 		return
 	}
 
-    MemoryStore.UserFollowingList_Remove(UserId, FollowedPeerUserId)
-    n,err:=NewFollowingListMember_Deleter().UserId_EQ(UserId).FollowedUserId_EQ(FollowedPeerUserId).Delete(base.DB)
+	MemoryStore.UserFollowingList_Remove(UserId, FollowedPeerUserId)
+	n, err := NewFollowingListMember_Deleter().UserId_EQ(UserId).FollowedUserId_EQ(FollowedPeerUserId).Delete(base.DB)
 
-    if err == nil && n > 0 {
-        Counter.UpdateUserFollowingCounts(UserId, -1)
-        Counter.UpdateUserFollowersCounts(FollowedPeerUserId, -1)
+	if err == nil && n > 0 {
+		Counter.UpdateUserFollowingCounts(UserId, -1)
+		Counter.UpdateUserFollowersCounts(FollowedPeerUserId, -1)
 
-        OnUnFollowed(UserId, FollowedPeerUserId)
-    }
+		OnUnFollowed(UserId, FollowedPeerUserId)
+	}
 }

@@ -46,10 +46,10 @@ func (e _memoryStoreImpl) GetPhoneForUserIfIsContact(CurrentUserId, UserId int) 
 
 	//vv := *ds.IntList(val)
 	if collection.Contains(UserId) {
-		u,ok  := MemoryStore_User.GetUser(UserId)
-        if ok {
-            return u.Phone
-        }
+		u, ok := MemoryStore_User.GetUser(UserId)
+		if ok {
+			return u.Phone
+		}
 	}
 	return ""
 }
