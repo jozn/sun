@@ -25,7 +25,8 @@ func RecommendUsersCtrl(c *base.Action) base.AppErr {
 
 	base.DB.Select(&ids, "select TargetId from recommend_user where UserId =?", c.UserId())
 
-	res := models.UsersToInlineFollowView(ids, c.UserId())
+	res := models.Views.GetListOfUserForFollowType(ids, c.UserId())
+	//res := models.UsersToInlineFollowView(ids, c.UserId())
 
 	c.SendJson(res)
 	return nil

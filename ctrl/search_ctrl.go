@@ -112,8 +112,8 @@ func SearchUsersCtrl_old(c *base.Action) base.AppErr {
 		base.DB.Select(&UsersIds, "SELECT Id FROM USER WHERE UserName OR FirstName OR LastName LIKE ? LIMIT 20  ", q)
 	}
 
-	usersFollow := models.UsersToInlineFollowView(UsersIds, c.UserId())
-	c.SendJson(usersFollow)
+	//usersFollow := models.UsersToInlineFollowView(UsersIds, c.UserId())
+	//c.SendJson(usersFollow)
 	return nil
 }
 
@@ -156,9 +156,9 @@ func SearchCtrl(c *base.Action) base.AppErr {
 		base.DB.Select(&tags, "select * from tags where `Name` like ? limit 20 ", q)
 	}
 
-	usersFollow := models.UsersToInlineFollowView(UsersIds, c.UserId())
-	res := SearchResultView{Tags: tags, Users: usersFollow}
-	_ = res
+	//usersFollow := models.UsersToInlineFollowView(UsersIds, c.UserId())
+	//res := SearchResultView{Tags: tags, Users: usersFollow}
+	//_ = res
 	c.SendJson("as")
 	return nil
 }
