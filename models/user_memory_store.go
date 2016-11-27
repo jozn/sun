@@ -97,28 +97,6 @@ func (db *mapMemoryStoreImpl) ReloadAllFollowings() {
 	}
 }
 
-/*func (db *mapMemoryStoreImpl) ReloadAllLikes() {
-	for _, r := range db.Map {
-		r.LikedPost = ds.New()
-	}
-
-	var ls []Like
-	err := DB.Select(&ls, "select * from likes")
-	_ = err
-	for _, l := range ls {
-		_, ok := db.Map[l.UserId]
-		if ok {
-			db.Map[l.UserId].LikedPost.Add(l.PostId) // = append(db.Map[l.UserId].LikedPost2, l.PostId)
-		}
-	}
-
-	for _, r := range db.Map {
-		if r.LikedPost != nil {
-			r.LikedPost.SortDesc()
-		}
-	}
-}*/
-
 ////////////////////////////// ////////////////////////////////////////
 func (db *mapMemoryStoreImpl) GetForUser(UserId int) *userMemRow {
 	db.RLock()
@@ -160,104 +138,6 @@ func (db *mapMemoryStoreImpl) ReloadUser(UserId int) {
 		}
 	}
 }
-
-//////////////////////// Likes - Post /////////////////////////////////
-//dep
-/*
-func (db *mapMemoryStoreImpl) AddPostLike(UserId, PostId int) {
-	s, ok := db.Map[UserId]
-	if ok {
-		if !s.LikedPost.BinaryContains(PostId) { //don't duplicate
-			s.LikedPost.AddAndSort(PostId)
-		}
-		//QueryIncerPostLikesCount(PostId, 1)
-		//QueryReomePostLike(UserId,PostId)
-		*/
-/*err := QueryAddPostLike(UserId, PostId)
-		if err == nil {
-			QueryIncerPostLikesCount(PostId, 1)
-		}*//*
-
-	}
-}
-
-func (db *mapMemoryStoreImpl) AmILikePost(UserId, PostId int) bool {
-	s := db.GetForUser(UserId)
-	if s != nil {
-		if s.LikedPost.BinaryContains(PostId) {
-			return true
-		}
-	}
-	return false
-}
-
-//dep
-func (db *mapMemoryStoreImpl) RemovePostLike(UserId, PostId int) {
-	s, ok := db.Map[UserId]
-	if ok {
-		s.LikedPost.RemoveAndSort(PostId)
-		QueryDecerPostLikesCount(PostId, 1)
-		*/
-/*err := QueryReomePostLike(UserId, PostId)
-		if err == nil {
-			QueryDecerPostLikesCount(PostId, 1)
-		}*//*
-
-	}
-}
-*/
-
-//////////////////////// Followings -- all deprecated use MemoryStore.* ///////////////////////////////////
-
-/*
-func (db *mapMemoryStoreImpl) GetFollowingTypeForUsers(UserId, ReqFollowedUserId int) int {
-    //return MemoryStore.UserFollowingList_GetFollowingTypeForUsers(UserId, ReqFollowedUserId)
-*/
-/*s, ok := db.Map[UserId]
-ftype := 0
-if ok {
-	//debug("xx: ",s.Followings)
-	if s.Followings.BinaryContains(ReqFollowedUserId) {
-		//if s.Followings.Contains(ReqFollowedUserId){
-		ftype = 1
-	} else if s.FollowingsRequested.BinaryContains(ReqFollowedUserId) {
-		ftype = 2
-	}
-}
-return ftype*/ /*
-
-}
-*/
-
-/*
-func (db *mapMemoryStoreImpl) AddFollow(UserId, FollowedUserId int) {
-	s, ok := db.Map[UserId]
-	if ok {
-		s.Followings.AddAndSort(FollowedUserId)
-		//QueryInsertNewFollowing(UserId,FollowedUserId,1)
-	}
-}
-*/
-
-/*
-func (db *mapMemoryStoreImpl) RemoveFollow(UserId, FollowedUserId int) {
-	s, ok := db.Map[UserId]
-	if ok {
-		s.Followings.RemoveAndSort(FollowedUserId)
-		//QueryInsertNewFollowing(UserId,FollowedUserId,0)
-	}
-}
-*/
-
-/*
-func (db *mapMemoryStoreImpl) GetAllFollowingsListOfUser(UserId int) *ds.IntList {
-	s, ok := db.Map[UserId]
-	if ok {
-		return s.Followings
-	}
-	return ds.New()
-}
-*/
 
 //////////////// User Actions Counts ////////////////
 func (db *mapMemoryStoreImpl) UpdateUserFollowingCounts(UserId int, cnt int) {
@@ -332,15 +212,6 @@ func (db *mapMemoryStoreImpl) IsUserSessionAndUpdateActivity(UserId int, Session
 	return is
 }
 
-/*
-func (db *memoryStoreImpl) UpdateUserCommentsCounts(UserId int, cnt int  ) {
-    user  :=  db.GetForUser(UserId)
-    if user != nil {
-        user.UserCounts.FollowingCount += 1
-        QueryUpdateUserActionCounts(UserId,cnt,"LikesCount")
-    }
-}
-*/
 
 //////////////////// End ///////////////////////////////
 
@@ -363,71 +234,3 @@ func (ft TwoArr) Len() int          { return len(ft) }
 func (p TwoArr) Less(i, j int) bool { return p[i][0] < p[j][0] }
 func (p TwoArr) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 
-/*
-func (db *memoryStoreImpl) ReloadAllFollowings(){
-    for _ ,r := range db.Map {
-        r.Followings = make([]int,0)
-    }
-
-    var fm []FollowingListMember
-    err := DB.Select(&fm, "select * from following_list_member")
-    _ = err
-    for _ ,f := range fm {
-        _,ok :=db.Map[f.UserId]
-        if ok {
-            db.Map[f.UserId].Followings = append(db.Map[f.UserId].Followings, f.FollowedUserId)
-        }
-    }
-
-    for _ ,r := range db.Map {
-        if r.Followings != nil{
-            sort.Ints(r.Followings)
-        }
-    }
-}
-
-func (db *memoryStoreImpl) ReloadAllFollowings2(){
-    for _ ,r := range db.Map {
-        r.Followings2 = make(_followingTypeSorter,0)
-    }
-
-    var fm []FollowingListMember
-    err := DB.Select(&fm, "select * from following_list_member")
-    _ = err
-    for _ ,f := range fm {
-        _,ok :=db.Map[f.UserId]
-        if ok {
-            db.Map[f.UserId].Followings2 = append(db.Map[f.UserId].Followings2, FollowingType{f.FollowedUserId, f.FollowType})
-        }
-    }
-
-    for _ ,r := range db.Map {
-        if r.Followings2 != nil{
-            sort.Sort(r.Followings2)
-        }
-    }
-}
-
-func (db *memoryStoreImpl) ReloadAllFollowings3(){
-    for _ ,r := range db.Map {
-        r.Followings3 = TwoArr{}
-    }
-
-    var fm []FollowingListMember
-    err := DB.Select(&fm, "select * from following_list_member")
-    _ = err
-    for _ ,f := range fm {
-        _,ok :=db.Map[f.UserId]
-        if ok {
-            db.Map[f.UserId].Followings3 = append(db.Map[f.UserId].Followings3 , [2]int{f.FollowedUserId,f.FollowType} )// = 1//f.FollowedUserId
-            //db.Map[f.UserId].Followings3[1] = f.FollowType
-        }
-    }
-
-    for _ ,r := range db.Map {
-        if r.Followings3 != nil{
-            sort.Sort(r.Followings3)
-        }
-    }
-}
-*/
