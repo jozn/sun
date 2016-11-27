@@ -30,3 +30,7 @@ func (t _cntImpl)UpdateUserPostsCounts (UserId int, cnt int) {
     }
 }
 
+func (t _cntImpl)IncerPostCommentsCount (PostId, CountDiff int) {
+    NewPost_Updater().Id_EQ(PostId).CommentsCount_Increment(CountDiff).Update(base.DB)
+}
+
