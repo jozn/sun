@@ -57,7 +57,7 @@ func Follow(UserId, FollowedPeerUserId int) {
 		MemoryStore.UserFollowingList_Add(UserId, FollowedPeerUserId)
 		Counter.UpdateUserFollowingCounts(UserId, 1)
         Counter.UpdateUserFollowersCounts(FollowedPeerUserId, 1)
-        
+
 		OnFollowed(UserId, FollowedPeerUserId)
 	}
 }
@@ -91,27 +91,47 @@ func UnFollow(UserId, FollowedPeerUserId int) {
 		return
 	}
 
-	MemoryStore.UserFollowingList_Remove(UserId, FollowedPeerUserId)
+    MemoryStore.UserFollowingList_Remove(UserId, FollowedPeerUserId)
+    n,err:=NewFollowingListMember_Deleter().UserId_EQ(UserId).FollowedUserId_EQ(FollowedPeerUserId).Delete(base.DB)
 
-	res, err := base.DbExecute("DELETE FROM following_list_member WHERE UserId = ? AND FollowedUserId = ?", UserId, FollowedPeerUserId)
-	if err == nil {
-		n, err := res.RowsAffected()
-		if err == nil && n > 0 {
-			UserMemoryStore.UpdateUserFollowingCounts(UserId, -1)
-			UserMemoryStore.UpdateUserFollowersCounts(FollowedPeerUserId, -1)
+    if err == nil && n > 0 {
+        Counter.UpdateUserFollowingCounts(UserId, -1)
+        Counter.UpdateUserFollowersCounts(FollowedPeerUserId, -1)
 
-			fh := FollowingListMemberHistory{}
-			fh.UserId = UserId
-			fh.FollowedUserId = FollowedPeerUserId
-			fh.UpdatedTimeMs = helper.TimeNowMs()
-			fh.FollowType = 2
-			fh.InsertToDb()
-
-			OnUnFollowed(UserId, FollowedPeerUserId)
-		}
-	}
+        OnUnFollowed(UserId, FollowedPeerUserId)
+    }
 }
 
+/*
+func UnFollow_kb(UserId, FollowedPeerUserId int) {
+    if UserId == FollowedPeerUserId || UserId < 1 || FollowedPeerUserId < 1 {
+        return
+    }
+
+    MemoryStore.UserFollowingList_Remove(UserId, FollowedPeerUserId)
+
+    res, err := base.DbExecute("DELETE FROM following_list_member WHERE UserId = ? AND FollowedUserId = ?", UserId, FollowedPeerUserId)
+    if err == nil {
+        n, err := res.RowsAffected()
+        if err == nil && n > 0 {
+            UserMemoryStore.UpdateUserFollowingCounts(UserId, -1)
+            UserMemoryStore.UpdateUserFollowersCounts(FollowedPeerUserId, -1)
+
+            fh := FollowingListMemberHistory{}
+            fh.UserId = UserId
+            fh.FollowedUserId = FollowedPeerUserId
+            fh.UpdatedTimeMs = helper.TimeNowMs()
+            fh.FollowType = 2
+            fh.InsertToDb()
+
+            OnUnFollowed(UserId, FollowedPeerUserId)
+        }
+    }
+}
+*/
+
+/*
 func (fh *FollowingListMemberHistory) InsertToDb() {
 	base.DbInsertStruct(fh, "following_list_member_history")
 }
+*/
