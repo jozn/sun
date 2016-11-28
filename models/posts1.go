@@ -73,7 +73,7 @@ func GetPostToPostAndDetailes(post *Post, UserId int) *PostAndDetailes {
 	v := PostAndDetailes{}
 	v.Post = *post
 	v.TypeName = PostTypeIdToName(post.TypeId)
-	u, err := GetUserViewV2(post.UserId)
+	u, err := Views.GetUserInlineView(post.UserId)
 	if err == nil {
 		v.Sender = *u
 		v.Comments = nil //GetPostLastComments(post.Id)

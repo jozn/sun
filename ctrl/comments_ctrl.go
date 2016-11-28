@@ -38,7 +38,7 @@ func GetCommentsAction(c *base.Action) base.AppErr {
 	for _, cmt := range comments {
 		cmtView := models.CommentInlineInfo{}
 		cmtView.Comment = cmt
-		cmtView.Sender = models.GetUserView(cmt.UserId)
+		cmtView.Sender,_ = models.Views.GetUserInlineView(cmt.UserId)
 		commentsInline = append(commentsInline, cmtView)
 	}
 	c.SendJson(commentsInline)

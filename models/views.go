@@ -1,5 +1,7 @@
 package models
 
+import "errors"
+
 type _viewImpl int
 
 var Views _viewImpl
@@ -60,4 +62,13 @@ func (e _viewImpl) GetListOfUserForFollowType(userIds []int, CurrentUserId int) 
 		}
 	}
 	return &list
+}
+
+
+func  (e _viewImpl)GetUserInlineView(uid int) (*UserInlineView, error) {
+    u,ok:=MemoryStore_User.GetUser(uid)
+    if ok {
+        return u.ToUserInlineView(), nil
+    }
+    return &UserInlineView{}, errors.New("User NOT Fund")
 }
