@@ -21,60 +21,6 @@ func registerRoutes() *httptreemux.TreeMux {
 	}
 	v1 := v1Tree.NewGroup("/v1")
 
-
-    if config.IS_DEBUG {
-
-        http.Handle("/upload-avatar", actioner(UploadAvatarAction))
-        http.Handle("/remove-avatar", actioner(RemoveAvatarAction))
-
-        http.Handle("/fact/user1", actioner(fact.FactUser1))
-
-        http.Handle("/fact/user_real", actioner(fact.FactRealUser))
-
-        v1.GET("/json2/:UserId", toV1(TestJson1))
-        v1.DELETE("/json2/:UserId", toV1(TestJson1))
-
-        http.Handle("/upload1", actioner(TestUpload1))
-        http.Handle("/upload3", actioner(PlayUpload3))
-        http.HandleFunc("/upload2", PlayUpload2)
-
-
-        http.Handle("/mysql1", actioner(fact.IsamPlay))
-        http.Handle("/f/msg", actioner(fact.ChatMsgFact1))
-        http.Handle("/f/gm", actioner(fact.GroupMemFact1))
-        http.Handle("/f/ginfo", actioner(fact.GroupInfoFact1))
-
-        //phone dbs
-        http.Handle("/mf/contacts", actioner(fact.FactPhoneContacts))
-
-        http.Handle("/ping", actionToFunc(ctrl.PingAction))
-
-        http.Handle("/i/msg", actionToFunc(ctrl.SendSampleMesgTable3_v04))
-        http.Handle("/i/redis", actionToFunc(RedisSavePlay))
-        http.Handle("/i/play", actionToFunc(PlaySomething))
-        http.Handle("/i/store1", actionToFunc(MemoryStore1))
-        http.Handle("/i/cache", actionToFunc(ShowCached))
-        http.Handle("/i/cacher", actionToFunc(ShowCacher))
-        http.Handle("/i/db", actionToFunc(DBStruct))
-        http.Handle("/i/java2", actionToFunc(DBStructsTojava))
-        http.Handle("/i/table", actionToFunc(DBStructsToTable))
-        //fixes
-        http.Handle("/i/fix_counts", actionToFunc(ctrl.FixAllCountsCounts))
-        http.Handle("/i/mem_user", actionToFunc(ctrl.DebugMemUser_ctrl))
-        http.Handle("/i/mem_user2", actionToFunc(ctrl.DebugMemUser_ctrl2))
-        http.HandleFunc("/i/java", DBStructsTojava2)
-
-        ////////////// New Facts from v0.4 /////////////////
-        http.Handle("/fact/follow", actioner(fact.FactFollow))
-        http.Handle("/fact/unfollow", actioner(fact.FactUnFollow))
-        http.Handle("/fact/avatar", actioner(fact.FactUserAvatars))
-        http.Handle("/fact/like", actioner(fact.FactLike))
-        http.Handle("/fact/comment", actioner(fact.FactComment))
-        http.Handle("/fact/post", actioner(fact.FactPost))
-        http.Handle("/fact/about", actioner(fact.FactUpdateAboutMe))
-
-    }
-
 	//messages
 
 	//////////////////// New V1 apis //////////////////////////
@@ -135,7 +81,61 @@ func registerRoutes() *httptreemux.TreeMux {
 
 	http.Handle("/", v1Tree)
 
-	return v1Tree
+
+    if config.IS_DEBUG {
+
+        http.Handle("/upload-avatar", actioner(UploadAvatarAction))
+        http.Handle("/remove-avatar", actioner(RemoveAvatarAction))
+
+        http.Handle("/fact/user1", actioner(fact.FactUser1))
+
+        http.Handle("/fact/user_real", actioner(fact.FactRealUser))
+
+        v1.GET("/json2/:UserId", toV1(TestJson1))
+        v1.DELETE("/json2/:UserId", toV1(TestJson1))
+
+        http.Handle("/upload1", actioner(TestUpload1))
+        http.Handle("/upload3", actioner(PlayUpload3))
+        http.HandleFunc("/upload2", PlayUpload2)
+
+
+        http.Handle("/mysql1", actioner(fact.IsamPlay))
+        http.Handle("/f/msg", actioner(fact.ChatMsgFact1))
+        http.Handle("/f/gm", actioner(fact.GroupMemFact1))
+        http.Handle("/f/ginfo", actioner(fact.GroupInfoFact1))
+
+        //phone dbs
+        http.Handle("/mf/contacts", actioner(fact.FactPhoneContacts))
+
+        http.Handle("/ping", actionToFunc(ctrl.PingAction))
+
+        http.Handle("/i/msg", actionToFunc(ctrl.SendSampleMesgTable3_v04))
+        http.Handle("/i/redis", actionToFunc(RedisSavePlay))
+        http.Handle("/i/play", actionToFunc(PlaySomething))
+        http.Handle("/i/store1", actionToFunc(MemoryStore1))
+        http.Handle("/i/cache", actionToFunc(ShowCached))
+        http.Handle("/i/cacher", actionToFunc(ShowCacher))
+        http.Handle("/i/db", actionToFunc(DBStruct))
+        http.Handle("/i/java2", actionToFunc(DBStructsTojava))
+        http.Handle("/i/table", actionToFunc(DBStructsToTable))
+        //fixes
+        http.Handle("/i/fix_counts", actionToFunc(ctrl.FixAllCountsCounts))
+        http.Handle("/i/mem_user", actionToFunc(ctrl.DebugMemUser_ctrl))
+        http.Handle("/i/mem_user2", actionToFunc(ctrl.DebugMemUser_ctrl2))
+        http.HandleFunc("/i/java", DBStructsTojava2)
+
+        ////////////// New Facts from v0.4 /////////////////
+        http.Handle("/fact/follow", actioner(fact.FactFollow))
+        http.Handle("/fact/unfollow", actioner(fact.FactUnFollow))
+        http.Handle("/fact/avatar", actioner(fact.FactUserAvatars))
+        http.Handle("/fact/like", actioner(fact.FactLike))
+        http.Handle("/fact/comment", actioner(fact.FactComment))
+        http.Handle("/fact/post", actioner(fact.FactPost))
+        http.Handle("/fact/about", actioner(fact.FactUpdateAboutMe))
+
+    }
+
+    return v1Tree
 
 }
 
