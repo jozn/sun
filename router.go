@@ -21,8 +21,6 @@ func registerRoutes() *httptreemux.TreeMux {
 	}
 	v1 := v1Tree.NewGroup("/v1")
 
-	//messages
-
 	//////////////////// New V1 apis //////////////////////////
 	http.Handle("/v1/grab_contacts", actionToFunc(ctrl.GrabAllUserContactsCtrl))
 

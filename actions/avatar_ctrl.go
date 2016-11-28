@@ -12,6 +12,10 @@ import (
 	"os"
 	// "strconv"
 	// "strings"
+    "strconv"
+    "path/filepath"
+    "time"
+    "log"
 )
 
 func UploadAvatarAction(c *Action) {
@@ -78,4 +82,28 @@ func RemoveAvatarAction(c *Action) {
 	DbUpdateStruct(&user, "user")
 
 	c.SendJson(user)*/
+}
+
+//Delete all with this file
+func noErr(err error) {
+    if err != nil {
+        // log.Fatalln(err) //painc
+        log.Panic("***** PANIC ****: ", err)
+    }
+}
+
+func fileExt(path string) string {
+    return filepath.Ext(path)
+}
+
+func devPrintn(p ...interface{}) {
+    fmt.Println(p...)
+}
+
+func intToStr(i int) string {
+    return strconv.Itoa(i)
+}
+
+func now() int {
+    return int(time.Now().Unix())
 }
