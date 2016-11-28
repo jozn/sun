@@ -75,7 +75,7 @@ func GetPostToPostAndDetailes(post *Post, UserId int) *PostAndDetailes {
 	v.TypeName = PostTypeIdToName(post.TypeId)
 	u, err := Views.GetUserInlineView(post.UserId)
 	if err == nil {
-		v.Sender = *u
+		v.Sender = u
 		v.Comments = nil //GetPostLastComments(post.Id)
 		v.Likes = nil    //GetPostLastLikes(post.Id)
 		//SetPostImages(&v)
