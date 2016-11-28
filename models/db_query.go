@@ -19,7 +19,7 @@ func QueryUpdateUserActionCounts(UserId, CountDiff int, column string) {
 	}
 	_, err := base.DbExecute(q, UserId)
 	if err != nil {
-		devPrintn(err)
+		//devPrintn(err)
 	}
 }
 
@@ -31,7 +31,7 @@ func QueryUpdateSessionLastActivitiesOfUsers(UserIds []int) {
 	q := "UPDATE user SET LastActivityTime = " + helper.IntToStr(helper.TimeNow()) + " WHERE Id in (" + helper.IntsToSqlIn(UserIds) + ")  "
 	_, err := base.DB.Exec(q)
 	if err != nil {
-		devPrintn(err)
+		//devPrintn(err)
 	}
 	helper.DebugPrintln(q)
 }

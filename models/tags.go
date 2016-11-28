@@ -153,31 +153,3 @@ func AddUserMentionedInPost(post *Post) {
 
 }
 
-func AddTagsInPost_OLD_DEP(post Post) {
-	parser := TextParser{}
-	parser.Parse(post.Text)
-	for _, tag := range parser.Tags {
-		var dbTags []Tag
-		var dbTag Tag
-		base.DB.Select(&dbTags, "select * from tags where Name = ? ", tag)
-		if len(dbTags) == 0 { //not exist ,insert it
-			dbTag = Tag{}
-			dbTag.Name = tag
-			dbTag.CreatedTime = now()
-			res, _ := base.DbInsertStruct(&dbTag, "tags")
-			tid, _ := res.LastInsertId()
-			dbTag.Id = int(tid)
-		} else {
-			dbTag = dbTags[0]
-		}
-
-		tagPost := TagsPost{}
-		tagPost.TagId = dbTag.Id
-		tagPost.PostId = post.Id
-		tagPost.TypeId = post.TypeId
-		tagPost.CreatedTime = now()
-
-		base.DbInsertStruct(&tagPost, "tags_posts")
-		//TODO increment dbTags.Count
-	}
-}
