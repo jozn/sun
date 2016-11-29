@@ -20,15 +20,16 @@ func OnPostUnLiked(like *Like) {
 }
 
 /////////////// Comments ////////////////////////
+//ep
 func OnPostCommented(comment *Comment, post *Post) {
 	Notification_OnPostCommented(comment, post, true)
 }
 
 func OnPostCommentedDelted(comment *Comment, post *Post) {
 
-	Notification_OnPostCommentedDelted(comment, post)
+	//Notification_OnPostCommentedDelted(comment, post)
 
-	CacheModels.RemoveCommentById(comment.Id)
+	//CacheModels.RemoveCommentById(comment.Id)
 
 }
 

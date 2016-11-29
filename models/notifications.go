@@ -41,9 +41,12 @@ func (n *Notification) InsertToDb() {
 //////////////// Events -Notifiactions ///////////////
 
 //////// Comments //////////
-func Notification_OnPostCommented(comment *Comment, post *Post, toAdd bool) {
-	objId := post.Id*1000 + ACTION_TYPE_POST_COMMENTED
+func Notification_OnPostCommented(comment *Comment, post *Post) {
+    if comment == nil || post || nil {
+        return
+    }
 
+	objId := post.Id*1000 + ACTION_TYPE_POST_COMMENTED
 	not := Notification{
 		Id:           0,
 		ForUserId:    post.UserId,
@@ -55,17 +58,33 @@ func Notification_OnPostCommented(comment *Comment, post *Post, toAdd bool) {
 		SeenStatus:   0,
 		CreatedTime:  helper.TimeNow(),
 	}
-	if toAdd == false {
-		not.ObjectId = -objId
-		not.ActionTypeId = -ACTION_TYPE_POST_COMMENTED
-	}
-	not.InsertToDb()
+    not.Save(base.DB)
+
+    Notification_PushToUserPipe(not)
 }
 
 func Notification_OnPostCommentedDelted(comment *Comment, post *Post) {
-	q := "delete from notification where ForUserId = ? and ActorUserId = ? and ActionTypeId = ? and TargetId = ?"
-	base.DbExecute(q, post.UserId, comment.UserId, ACTION_TYPE_POST_COMMENTED, post.Id)
-	Notification_OnPostCommented(comment, post, false)
+    if comment == nil || post || nil {
+        return
+    }
+
+    row,err:=NewNotification_Selector().
+        ForUserId_EQ(post.UserId).
+        ActorUserId_EQ(comment.UserId).
+        ActionTypeId_EQ(ACTION_TYPE_POST_COMMENTED).
+        GetRow(base.DB)
+
+    if err==nil{
+        nr:= NotificationRemoved{
+            NotificationId:row.Id,
+            ForUserId:comment.UserId,
+        }
+
+        row.Delete(base.DB)
+        nr.Save(base.DB)
+    }
+
+    Notification_PushToUserPipeRemoved(row.Id)
 }
 
 ////////// Follows ///////////
@@ -158,6 +177,7 @@ func Notification_Delete(nf Notification) {
     NewNotification_Deleter().ForUserId_EQ(nf.ForUserId).ActorUserId_EQ(nf.ActorUserId).ActionTypeId_EQ(aid).Delete(base.DB)
 }
 
+//fix: must be NotificationView
 func Notification_PushToUserPipe(nf Notification) {
     call := base.NewCallWithData("Notification",nf)
     AllPipesMap.SendToUser(nf.ForUserId,call)

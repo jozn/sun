@@ -42,7 +42,6 @@ func registerRoutes() *httptreemux.TreeMux {
 	v1.POST("/unlike", toV1(ctrl.PostRemoveLikeCtrl))
 	v1.GET("/likes", toV1(ctrl.GetLikesAction))
 
-	v1.GET("/comments/add", toV1(ctrl.PostAddCommentAction))
 	v1.POST("/comments/add", toV1(ctrl.PostAddCommentAction))
 	v1.GET("/comments/list", toV1(ctrl.GetCommentsAction))
 	v1.POST("/comments/delete", toV1(ctrl.RemoveCommentAction))

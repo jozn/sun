@@ -68,7 +68,6 @@ func PostRemoveLikeCtrl(c *base.Action) base.AppErr {
 	if pid < 1 {
 		return nil
 	}
-	//models.UserMemoryStore.RemovePostLike(c.UserId(), pid)
 	models.Like_UnlikePost(c.UserId(), pid)
 	c.SendText("OK")
 	return nil
