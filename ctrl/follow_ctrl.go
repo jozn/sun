@@ -17,7 +17,6 @@ func FollowAction(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 	cuid := c.UserId()
 
-	//fid := c.Req.Form.Get("followed_user_id")
 	fid := c.Req.Form.Get("followed_user_id")
 	fUserId := helper.StrToInt(fid, -1)
 	if fUserId < 1 {

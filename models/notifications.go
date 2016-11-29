@@ -28,7 +28,6 @@ func (n *Notification) InsertToDb() {
 		helper.DebugPrintln(res, err)
 	}
 
-    AllPipesMap.SendToUser()
 }
 
 //////////////////////////////////////////////////////
@@ -91,6 +90,8 @@ func Notification_OnFollowing_Imple(UserId, FollowedPeerUserId int, added bool) 
         nf.Save(base.DB)
 		Notification_Delete(nf)
 	}
+
+    Notification_PushToUserPipe(nf)
 }
 
 ////////////// Likes ///////////////
@@ -131,8 +132,13 @@ func Notification_OnPostLikeing_Imple(lk *Like, added bool) {
 
 //////////////////////////////////
 func Notification_Delete(nf Notification) {
-	aid := math.Abs(float64(nf.ActionTypeId)) // alwayse +
+	aid := int(math.Abs(float64(nf.ActionTypeId))) // alwayse +
     NewNotification_Deleter().ForUserId_EQ(nf.ForUserId).ActorUserId_EQ(nf.ActorUserId).ActionTypeId_EQ(aid).Delete(base.DB)
+}
+
+func Notification_PushToUserPipe(nf Notification) {
+    call := base.NewCallWithData("Notification",nf)
+    AllPipesMap.SendToUser(nf.ForUserId,call)
 }
 
 //////////////////////////////////////////////////
