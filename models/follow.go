@@ -47,6 +47,7 @@ func Follow(UserId, FollowedPeerUserId int) int {
 
 	flm := FollowingListMember{
 		ListId:         UserId,
+		UserId:         UserId,
 		FollowedUserId: FollowedPeerUserId,
 		FollowType:     1, //remove
 		UpdatedTimeMs:  helper.TimeNowMs(),

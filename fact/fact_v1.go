@@ -106,11 +106,11 @@ func FactUserAvatars(c *base.Action) {
 }
 
 func FactFollow(c *base.Action) {
-	models.Follow(rand.Intn(NUM_OF_USERS), rand.Intn(NUM_OF_USERS))
+	models.Follow(rand.Intn(NUM_OF_USERS)+1, rand.Intn(NUM_OF_USERS)+1)
 }
 
 func FactUnFollow(c *base.Action) {
-	models.UnFollow(rand.Intn(NUM_OF_USERS), rand.Intn(NUM_OF_USERS))
+	models.UnFollow(rand.Intn(NUM_OF_USERS)+1, rand.Intn(NUM_OF_USERS)+1)
 }
 
 func FactComment(c *base.Action) {
