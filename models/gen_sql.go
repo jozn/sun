@@ -26643,8 +26643,8 @@ func MassReplace_Notification(rows []Notification, db XODB) error {
 
 // Manualy copy this to project
 type __NotificationRemoved struct {
-	NotificationId int           `json:"NotificationId"` // NotificationId -
-	ForUserId      sql.NullInt64 `json:"ForUserId"`      // ForUserId -
+	NotificationId int `json:"NotificationId"` // NotificationId -
+	ForUserId      int `json:"ForUserId"`      // ForUserId -
 
 	// xo fields
 	_exists, _deleted bool
@@ -26934,6 +26934,98 @@ func (d *__NotificationRemoved_Deleter) NotificationId_GE(val int) *__Notificati
 	return d
 }
 
+func (u *__NotificationRemoved_Deleter) ForUserId_In(ins []int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ForUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__NotificationRemoved_Deleter) ForUserId_NotIn(ins []int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ForUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__NotificationRemoved_Deleter) ForUserId_EQ(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Deleter) ForUserId_NotEQ(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Deleter) ForUserId_LT(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Deleter) ForUserId_LE(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Deleter) ForUserId_GT(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Deleter) ForUserId_GE(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 func (u *__NotificationRemoved_Updater) Or() *__NotificationRemoved_Updater {
 	u.whereSep = " OR "
@@ -27027,6 +27119,98 @@ func (d *__NotificationRemoved_Updater) NotificationId_GE(val int) *__Notificati
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " NotificationId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__NotificationRemoved_Updater) ForUserId_In(ins []int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ForUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__NotificationRemoved_Updater) ForUserId_NotIn(ins []int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ForUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__NotificationRemoved_Updater) ForUserId_EQ(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Updater) ForUserId_NotEQ(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Updater) ForUserId_LT(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Updater) ForUserId_LE(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Updater) ForUserId_GT(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Updater) ForUserId_GE(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -27130,6 +27314,98 @@ func (d *__NotificationRemoved_Selector) NotificationId_GE(val int) *__Notificat
 	return d
 }
 
+func (u *__NotificationRemoved_Selector) ForUserId_In(ins []int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ForUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__NotificationRemoved_Selector) ForUserId_NotIn(ins []int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ForUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__NotificationRemoved_Selector) ForUserId_EQ(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Selector) ForUserId_NotEQ(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Selector) ForUserId_LT(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Selector) ForUserId_LE(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Selector) ForUserId_GT(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Selector) ForUserId_GE(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ForUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
 
 ////////ints
@@ -27164,6 +27440,23 @@ func (u *__NotificationRemoved_Updater) NotificationId_Increment(count int) *__N
 //string
 
 //ints
+
+func (u *__NotificationRemoved_Updater) ForUserId(newVal int) *__NotificationRemoved_Updater {
+	u.updates[" ForUserId = ? "] = newVal
+	return u
+}
+
+func (u *__NotificationRemoved_Updater) ForUserId_Increment(count int) *__NotificationRemoved_Updater {
+	if count > 0 {
+		u.updates[" ForUserId = ForUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ForUserId = ForUserId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
 
 //string
 
@@ -56812,45 +57105,6 @@ func FollowingListMemberById(db XODB, id int) (*FollowingListMember, error) {
 	return &flm, nil
 }
 
-// FollowingListMemberHistoriesByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
-//
-// Generated from index 'UserId'.
-func FollowingListMemberHistoriesByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeMs int) ([]*FollowingListMemberHistory, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs, FollowId ` +
-		`FROM ms.following_list_member_history ` +
-		`WHERE UserId = ? AND UpdatedTimeMs = ?`
-
-	// run query
-	XOLog(sqlstr, userId, updatedTimeMs)
-	q, err := db.Query(sqlstr, userId, updatedTimeMs)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*FollowingListMemberHistory{}
-	for q.Next() {
-		flmh := FollowingListMemberHistory{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&flmh.Id, &flmh.ListId, &flmh.UserId, &flmh.FollowedUserId, &flmh.FollowType, &flmh.UpdatedTimeMs, &flmh.FollowId)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &flmh)
-	}
-
-	return res, nil
-}
-
 // FollowingListMemberHistoryById retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
 //
 // Generated from index 'following_list_member_history_Id_pkey'.
@@ -56875,45 +57129,6 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	}
 
 	return &flmh, nil
-}
-
-// LikesById retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'Id'.
-func LikesById(db XODB, id int) ([]*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Like{}
-	for q.Next() {
-		l := Like{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &l)
-	}
-
-	return res, nil
 }
 
 // LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
@@ -57033,6 +57248,45 @@ func MediaById(db XODB, id int) (*Media, error) {
 	return &m, nil
 }
 
+// MessagesByToUserId retrieves a row from 'ms.message' as a Message.
+//
+// Generated from index 'ToUserId'.
+func MessagesByToUserId(db XODB, toUserId int) ([]*Message, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
+		`FROM ms.message ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Message{}
+	for q.Next() {
+		m := Message{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &m)
+	}
+
+	return res, nil
+}
+
 // MessagesByToUserIdTimeMs retrieves a row from 'ms.message' as a Message.
 //
 // Generated from index 'ToUserId_2'.
@@ -57122,45 +57376,6 @@ func MsgDeletedFromServerById(db XODB, id int) (*MsgDeletedFromServer, error) {
 	}
 
 	return &mdfs, nil
-}
-
-// MsgReceivedToPeersByToUserId retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
-//
-// Generated from index 'ToUserId'.
-func MsgReceivedToPeersByToUserId(db XODB, toUserId int) ([]*MsgReceivedToPeer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
-		`FROM ms.msg_received_to_peer ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgReceivedToPeer{}
-	for q.Next() {
-		mrtp := MsgReceivedToPeer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.RoomKey, &mrtp.PeerUserId, &mrtp.AtTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &mrtp)
-	}
-
-	return res, nil
 }
 
 // MsgReceivedToPeerById retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
@@ -57514,6 +57729,45 @@ func PhoneContactById(db XODB, id int) (*PhoneContact, error) {
 	return &pc, nil
 }
 
+// PostsByUserId retrieves a row from 'ms.post' as a Post.
+//
+// Generated from index 'UserId'.
+func PostsByUserId(db XODB, userId int) ([]*Post, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaServerId, Width, Height, SharedTo, HasTag, LikesCount, CommentsCount, CreatedTime ` +
+		`FROM ms.post ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Post{}
+	for q.Next() {
+		p := Post{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &p)
+	}
+
+	return res, nil
+}
+
 // PostById retrieves a row from 'ms.post' as a Post.
 //
 // Generated from index 'post_Id_pkey'.
@@ -57590,6 +57844,45 @@ func SearchClickedById(db XODB, id uint) (*SearchClicked, error) {
 	}
 
 	return &sc, nil
+}
+
+// SessionsById retrieves a row from 'ms.session' as a Session.
+//
+// Generated from index 'Id'.
+func SessionsById(db XODB, id int) ([]*Session, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
+		`FROM ms.session ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Session{}
+	for q.Next() {
+		s := Session{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &s)
+	}
+
+	return res, nil
 }
 
 // SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
