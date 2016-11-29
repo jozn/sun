@@ -40,9 +40,9 @@ type FollowingListMemberHistory struct {
 	_exists, _deleted bool
 }
 
-func Follow(UserId, FollowedPeerUserId int) {
+func Follow(UserId, FollowedPeerUserId int) int {
 	if UserId == FollowedPeerUserId || UserId < 1 || FollowedPeerUserId < 1 {
-		return
+		return 0
 	}
 
 	flm := FollowingListMember{
@@ -59,8 +59,10 @@ func Follow(UserId, FollowedPeerUserId int) {
 		Counter.UpdateUserFollowingCounts(UserId, 1)
 		Counter.UpdateUserFollowersCounts(FollowedPeerUserId, 1)
 
-		OnFollowed(UserId, FollowedPeerUserId)
+        Notification_OnFollowed(UserId, FollowedPeerUserId)
+        return 1
 	}
+    return 0
 }
 
 func UnFollow(UserId, FollowedPeerUserId int) {
@@ -75,6 +77,6 @@ func UnFollow(UserId, FollowedPeerUserId int) {
 		Counter.UpdateUserFollowingCounts(UserId, -1)
 		Counter.UpdateUserFollowersCounts(FollowedPeerUserId, -1)
 
-		OnUnFollowed(UserId, FollowedPeerUserId)
+        Notification_OnUnFollowed(UserId, FollowedPeerUserId)
 	}
 }

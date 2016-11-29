@@ -32,10 +32,12 @@ func OnPostCommentedDelted(comment *Comment, post *Post) {
 }
 
 ////////////// Followes /////////////////////////
+//dep
 func OnFollowed(UserId, FollowedPeerUserId int) {
-	Notification_OnFollowed(UserId, FollowedPeerUserId)
+	//Notification_OnFollowed(UserId, FollowedPeerUserId)
 }
 
+//dep
 func OnUnFollowed(UserId, FollowedPeerUserId int) {
 	Notification_OnUnFollowed(UserId, FollowedPeerUserId)
 }

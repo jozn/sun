@@ -17,7 +17,7 @@ const OBJECT_POST_URL = 23
 ////////////////////////////////////////////////////////////////
 /// Action_Types For Notifications
 // ALL Notifications ACTIONS 2XX GLOBAL OBJECTS TYPES
-//SPEC: all actions un-actions have negative like: 200:like => -200:unlike
+//SPEC: all actions un-actions have negative ex: 200:like => -200:unlike
 //20x POSTS LIKED
 const ACTION_TYPE_POST_LIKED = 200 //GENERAL
 const ACTION_TYPE_POST_TEXT_LIKED = 201

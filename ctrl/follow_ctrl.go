@@ -23,9 +23,8 @@ func FollowAction(c *base.Action) base.AppErr {
 	if fUserId < 1 {
 		return nil
 	}
-	models.Follow(cuid, fUserId)
-	//c.SendJson(models.MemoryStore.UserFollowingList_GetFollowingTypeForUsers(cuid, fUserId))
-	c.SendJson(models.MemoryStore.UserFollowingList_GetFollowingTypeForUsers(cuid, fUserId))
+	typ:=models.Follow(cuid, fUserId)
+	c.SendJson(typ)
 	return nil
 }
 

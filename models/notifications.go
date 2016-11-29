@@ -21,26 +21,17 @@ type Notification struct {
 	_exists, _deleted bool
 }
 
+//dep
 func (n *Notification) InsertToDb() {
 	res, err := base.DbInsertStruct(n, "notification")
 	if err != nil {
 		helper.DebugPrintln(res, err)
 	}
+
+    AllPipesMap.SendToUser()
 }
 
-/*
-func (n *Notification) Delete() {
-}
-*/
-
-func LoadLastNotificationsForUser(UserId, FromTime int) []Notification {
-	var res []Notification
-	q := "select * from notification where UserId = ? And CreatedTime > ? order by CreatedTime desc limit 200"
-	base.DB.Select(res, q, UserId, FromTime)
-	return res
-}
-
-////////////////////////////////////////
+//////////////////////////////////////////////////////
 //////////////// Events -Notifiactions ///////////////
 
 //////// Comments //////////
@@ -94,15 +85,15 @@ func Notification_OnFollowing_Imple(UserId, FollowedPeerUserId int, added bool) 
 	}
 
 	if added {
-		nf.InsertToDb()
+		nf.Save(base.DB)
 	} else {
 		nf.ActionTypeId = -ACTION_TYPE_FOLLOWED_YOU
-		nf.InsertToDb()
+        nf.Save(base.DB)
 		Notification_Delete(nf)
 	}
 }
 
-///////// Likes /////////////
+////////////// Likes ///////////////
 func Notification_OnPostLiked(lk *Like) {
 	Notification_OnPostLikeing_Imple(lk, true)
 }
@@ -140,10 +131,8 @@ func Notification_OnPostLikeing_Imple(lk *Like, added bool) {
 
 //////////////////////////////////
 func Notification_Delete(nf Notification) {
-	q := "delete from notification where ForUserId = ? and ActorUserId = ? and ActionTypeId = ? and TargetId = ?"
-	aid := math.Abs(float64(nf.ActionTypeId)) // alyase +
-	base.DbExecute(q, nf.ForUserId, nf.ActorUserId, aid, nf.TargetId)
-	//base.DbExecute(q, post.UserId, comment.UserId , ACTION_TYPE_POST_COMMENTED ,post.Id)
+	aid := math.Abs(float64(nf.ActionTypeId)) // alwayse +
+    NewNotification_Deleter().ForUserId_EQ(nf.ForUserId).ActorUserId_EQ(nf.ActorUserId).ActionTypeId_EQ(aid).Delete(base.DB)
 }
 
 //////////////////////////////////////////////////
@@ -210,52 +199,3 @@ func Notification_GetLastsViews(UserId int) []NotificationView {
 
 }
 
-/*
-
-func Notification_GetLastsViews_BK(UserId int) ([]NotificationView) {
-    q:= "select * from notification where ForUserId = ? order by Id desc limit 200 "
-
-    var nots []Notification
-    err := base.DB.Select(&nots, q, UserId)
-    if err != nil {
-        helper.DebugPrintln(err)
-    }
-    res := make([]NotificationView,0, len(nots))
-
-    for _, nf := range nots {
-        nv :=NotificationView{}
-        nv.Notification = nf
-
-        if (nf.ActionTypeId > 0 ){
-            nv.Actor = *GetUserBasicAndMe(nf.ActorUserId ,UserId)
-
-            switch nf.ActionTypeId {
-            case ACTION_TYPE_FOLLOWED_YOU:
-                nv.PayLoad = nv.Actor
-            case ACTION_TYPE_POST_LIKED:
-                post,err := CacheModels.GetPostById(nf.TargetId)
-                helper.DebugPrintln(err)
-                if err == nil {
-                    nv.PayLoad = *post
-                }else {
-                    helper.DebugPrintln(err)
-                }
-
-            case ACTION_TYPE_POST_COMMENTED:
-                com,err := CacheModels.GetCommentById(nf.TargetId)
-                if err == nil {
-                    nv.PayLoad = *com
-                }else {
-                    helper.DebugPrintln(err)
-                }
-            }
-
-        }
-        res = append(res,nv)
-
-    }
-
-    return res
-
-}
-*/
