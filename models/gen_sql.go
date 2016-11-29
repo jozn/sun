@@ -26639,6 +26639,847 @@ func MassReplace_Notification(rows []Notification, db XODB) error {
 
 //
 
+// NotificationRemoved represents a row from 'ms.notification_removed'.
+
+// Manualy copy this to project
+type __NotificationRemoved struct {
+	NotificationId int           `json:"NotificationId"` // NotificationId -
+	ForUserId      sql.NullInt64 `json:"ForUserId"`      // ForUserId -
+
+	// xo fields
+	_exists, _deleted bool
+}
+
+// Exists determines if the NotificationRemoved exists in the database.
+func (nr *NotificationRemoved) Exists() bool {
+	return nr._exists
+}
+
+// Deleted provides information if the NotificationRemoved has been deleted from the database.
+func (nr *NotificationRemoved) Deleted() bool {
+	return nr._deleted
+}
+
+// Insert inserts the NotificationRemoved to the database.
+func (nr *NotificationRemoved) Insert(db XODB) error {
+	var err error
+
+	// if already exist, bail
+	if nr._exists {
+		return errors.New("insert failed: already exists")
+	}
+
+	// sql query
+	const sqlstr = `INSERT INTO ms.notification_removed (` +
+		`ForUserId` +
+		`) VALUES (` +
+		`?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, nr.ForUserId)
+	res, err := db.Exec(sqlstr, nr.ForUserId)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	nr.NotificationId = int(id)
+	nr._exists = true
+
+	return nil
+}
+
+// Insert inserts the NotificationRemoved to the database.
+func (nr *NotificationRemoved) Replace(db XODB) error {
+	var err error
+
+	// sql query
+	const sqlstr = `REPLACE INTO ms.notification_removed (` +
+		`ForUserId` +
+		`) VALUES (` +
+		`?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, nr.ForUserId)
+	res, err := db.Exec(sqlstr, nr.ForUserId)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	nr.NotificationId = int(id)
+	nr._exists = true
+
+	return nil
+}
+
+// Update updates the NotificationRemoved in the database.
+func (nr *NotificationRemoved) Update(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !nr._exists {
+		return errors.New("update failed: does not exist")
+	}
+
+	// if deleted, bail
+	if nr._deleted {
+		return errors.New("update failed: marked for deletion")
+	}
+
+	// sql query
+	const sqlstr = `UPDATE ms.notification_removed SET ` +
+		`ForUserId = ?` +
+		` WHERE NotificationId = ?`
+
+	// run query
+	XOLog(sqlstr, nr.ForUserId, nr.NotificationId)
+	_, err = db.Exec(sqlstr, nr.ForUserId, nr.NotificationId)
+	return err
+}
+
+// Save saves the NotificationRemoved to the database.
+func (nr *NotificationRemoved) Save(db XODB) error {
+	if nr.Exists() {
+		return nr.Update(db)
+	}
+
+	return nr.Replace(db)
+}
+
+// Delete deletes the NotificationRemoved from the database.
+func (nr *NotificationRemoved) Delete(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !nr._exists {
+		return nil
+	}
+
+	// if deleted, bail
+	if nr._deleted {
+		return nil
+	}
+
+	// sql query
+	const sqlstr = `DELETE FROM ms.notification_removed WHERE NotificationId = ?`
+
+	// run query
+	XOLog(sqlstr, nr.NotificationId)
+	_, err = db.Exec(sqlstr, nr.NotificationId)
+	if err != nil {
+		return err
+	}
+
+	// set deleted
+	nr._deleted = true
+
+	return nil
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// Querify gen - ME /////////////////////////////////////////
+//.Name = table name
+// _Deleter, _Updater
+
+// orma types
+type __NotificationRemoved_Deleter struct {
+	wheres   []whereClause
+	whereSep string
+}
+
+type __NotificationRemoved_Updater struct {
+	wheres   []whereClause
+	updates  map[string]interface{}
+	whereSep string
+}
+
+type __NotificationRemoved_Selector struct {
+	wheres    []whereClause
+	selectCol string
+	whereSep  string
+	orderBy   string //" order by id desc //for ints
+	limit     int
+	offset    int
+}
+
+func NewNotificationRemoved_Deleter() *__NotificationRemoved_Deleter {
+	d := __NotificationRemoved_Deleter{whereSep: " AND "}
+	return &d
+}
+
+func NewNotificationRemoved_Updater() *__NotificationRemoved_Updater {
+	u := __NotificationRemoved_Updater{whereSep: " AND "}
+	u.updates = make(map[string]interface{}, 10)
+	return &u
+}
+
+func NewNotificationRemoved_Selector() *__NotificationRemoved_Selector {
+	u := __NotificationRemoved_Selector{whereSep: " AND ", selectCol: "*"}
+	return &u
+}
+
+/////////////////////////////// Where for all /////////////////////////////
+//// for ints all selector updater, deleter
+
+////////ints
+func (u *__NotificationRemoved_Deleter) Or() *__NotificationRemoved_Deleter {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__NotificationRemoved_Deleter) NotificationId_In(ins []int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " NotificationId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__NotificationRemoved_Deleter) NotificationId_NotIn(ins []int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " NotificationId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__NotificationRemoved_Deleter) NotificationId_EQ(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Deleter) NotificationId_NotEQ(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Deleter) NotificationId_LT(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Deleter) NotificationId_LE(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Deleter) NotificationId_GT(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Deleter) NotificationId_GE(val int) *__NotificationRemoved_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__NotificationRemoved_Updater) Or() *__NotificationRemoved_Updater {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__NotificationRemoved_Updater) NotificationId_In(ins []int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " NotificationId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__NotificationRemoved_Updater) NotificationId_NotIn(ins []int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " NotificationId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__NotificationRemoved_Updater) NotificationId_EQ(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Updater) NotificationId_NotEQ(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Updater) NotificationId_LT(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Updater) NotificationId_LE(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Updater) NotificationId_GT(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Updater) NotificationId_GE(val int) *__NotificationRemoved_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__NotificationRemoved_Selector) Or() *__NotificationRemoved_Selector {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__NotificationRemoved_Selector) NotificationId_In(ins []int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " NotificationId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__NotificationRemoved_Selector) NotificationId_NotIn(ins []int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " NotificationId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__NotificationRemoved_Selector) NotificationId_EQ(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Selector) NotificationId_NotEQ(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Selector) NotificationId_LT(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Selector) NotificationId_LE(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Selector) NotificationId_GT(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__NotificationRemoved_Selector) NotificationId_GE(val int) *__NotificationRemoved_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " NotificationId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
+
+////////ints
+
+////////ints
+
+////////ints
+
+/// End of wheres for selectors , updators, deletor
+
+/////////////////////////////// Updater /////////////////////////////
+
+//ints
+
+func (u *__NotificationRemoved_Updater) NotificationId(newVal int) *__NotificationRemoved_Updater {
+	u.updates[" NotificationId = ? "] = newVal
+	return u
+}
+
+func (u *__NotificationRemoved_Updater) NotificationId_Increment(count int) *__NotificationRemoved_Updater {
+	if count > 0 {
+		u.updates[" NotificationId = NotificationId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" NotificationId = NotificationId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+//string
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////// Selector ///////////////////////////////////
+
+//Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
+
+func (u *__NotificationRemoved_Selector) OrderBy_NotificationId_Desc() *__NotificationRemoved_Selector {
+	u.orderBy = " ORDER BY NotificationId DESC "
+	return u
+}
+
+func (u *__NotificationRemoved_Selector) OrderBy_NotificationId_Asc() *__NotificationRemoved_Selector {
+	u.orderBy = " ORDER BY NotificationId ASC "
+	return u
+}
+
+func (u *__NotificationRemoved_Selector) Select_NotificationId() *__NotificationRemoved_Selector {
+	u.selectCol = "NotificationId"
+	return u
+}
+
+func (u *__NotificationRemoved_Selector) OrderBy_ForUserId_Desc() *__NotificationRemoved_Selector {
+	u.orderBy = " ORDER BY ForUserId DESC "
+	return u
+}
+
+func (u *__NotificationRemoved_Selector) OrderBy_ForUserId_Asc() *__NotificationRemoved_Selector {
+	u.orderBy = " ORDER BY ForUserId ASC "
+	return u
+}
+
+func (u *__NotificationRemoved_Selector) Select_ForUserId() *__NotificationRemoved_Selector {
+	u.selectCol = "ForUserId"
+	return u
+}
+
+func (u *__NotificationRemoved_Selector) Limit(num int) *__NotificationRemoved_Selector {
+	u.limit = num
+	return u
+}
+
+func (u *__NotificationRemoved_Selector) Offset(num int) *__NotificationRemoved_Selector {
+	u.offset = num
+	return u
+}
+
+/////////////////////////  Queryer Selector  //////////////////////////////////
+func (u *__NotificationRemoved_Selector) _stoSql() (string, []interface{}) {
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.notification_removed"
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	if u.orderBy != "" {
+		sqlstr += u.orderBy
+	}
+
+	if u.limit != 0 {
+		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
+	}
+
+	if u.offset != 0 {
+		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
+	}
+	return sqlstr, whereArgs
+}
+
+func (u *__NotificationRemoved_Selector) GetRow(db *sqlx.DB) (*NotificationRemoved, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	row := &NotificationRemoved{}
+	//by Sqlx
+	err = db.Get(row, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	row._exists = true
+
+	return row, nil
+}
+
+func (u *__NotificationRemoved_Selector) GetRows(db *sqlx.DB) ([]NotificationRemoved, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []NotificationRemoved
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	return rows, nil
+}
+
+func (u *__NotificationRemoved_Selector) GetString(db *sqlx.DB) (string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res string
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return "", err
+	}
+
+	return res, nil
+}
+
+func (u *__NotificationRemoved_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []string
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__NotificationRemoved_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []int
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__NotificationRemoved_Selector) GetInt(db *sqlx.DB) (int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res int
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	return res, nil
+}
+
+/////////////////////////  Queryer Update Delete //////////////////////////////////
+func (u *__NotificationRemoved_Updater) Update(db XODB) (int, error) {
+	var err error
+
+	var updateArgs []interface{}
+	var sqlUpdateArr []string
+	for up, newVal := range u.updates {
+		sqlUpdateArr = append(sqlUpdateArr, up)
+		updateArgs = append(updateArgs, newVal)
+	}
+	sqlUpdate := strings.Join(sqlUpdateArr, ",")
+
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	var allArgs []interface{}
+	allArgs = append(allArgs, updateArgs...)
+	allArgs = append(allArgs, whereArgs...)
+
+	sqlstr := `UPDATE ms.notification_removed SET ` + sqlUpdate
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	XOLog(sqlstr, allArgs)
+	res, err := db.Exec(sqlstr, allArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+func (d *__NotificationRemoved_Deleter) Delete(db XODB) (int, error) {
+	var err error
+	var wheresArr []string
+	for _, w := range d.wheres {
+		wheresArr = append(wheresArr, w.condition)
+	}
+	wheresStr := strings.Join(wheresArr, d.whereSep)
+
+	var args []interface{}
+	for _, w := range d.wheres {
+		args = append(args, w.args...)
+	}
+
+	sqlstr := "DELETE FROM ms.notification_removed WHERE " + wheresStr
+
+	// run query
+	XOLog(sqlstr, args)
+	res, err := db.Exec(sqlstr, args...)
+	if err != nil {
+		return 0, err
+	}
+
+	// retrieve id
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+///////////////////////// Mass insert - replace for  NotificationRemoved ////////////////
+func MassInsert_NotificationRemoved(rows []NotificationRemoved, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.notification_removed (" +
+		"ForUserId" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ForUserId)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_NotificationRemoved(rows []NotificationRemoved, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.notification_removed (" +
+		"ForUserId" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ForUserId)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+//////////////////// Play ///////////////////////////////
+
+//
+
+//
+
 // PhoneContact represents a row from 'ms.phone_contacts'.
 
 // Manualy copy this to project
@@ -53372,6 +54213,1140 @@ func MassReplace_User(rows []User, db XODB) error {
 
 //
 
+// UserMetum represents a row from 'ms.user_meta'.
+
+// Manualy copy this to project
+type __UserMetum struct {
+	UserId              int `json:"UserId"`              // UserId -
+	IsNotificationDirty int `json:"IsNotificationDirty"` // IsNotificationDirty -
+
+	// xo fields
+	_exists, _deleted bool
+}
+
+// Exists determines if the UserMetum exists in the database.
+func (um *UserMetum) Exists() bool {
+	return um._exists
+}
+
+// Deleted provides information if the UserMetum has been deleted from the database.
+func (um *UserMetum) Deleted() bool {
+	return um._deleted
+}
+
+// Insert inserts the UserMetum to the database.
+func (um *UserMetum) Insert(db XODB) error {
+	var err error
+
+	// if already exist, bail
+	if um._exists {
+		return errors.New("insert failed: already exists")
+	}
+
+	// sql query
+	const sqlstr = `INSERT INTO ms.user_meta (` +
+		`IsNotificationDirty` +
+		`) VALUES (` +
+		`?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, um.IsNotificationDirty)
+	res, err := db.Exec(sqlstr, um.IsNotificationDirty)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	um.UserId = int(id)
+	um._exists = true
+
+	return nil
+}
+
+// Insert inserts the UserMetum to the database.
+func (um *UserMetum) Replace(db XODB) error {
+	var err error
+
+	// sql query
+	const sqlstr = `REPLACE INTO ms.user_meta (` +
+		`IsNotificationDirty` +
+		`) VALUES (` +
+		`?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, um.IsNotificationDirty)
+	res, err := db.Exec(sqlstr, um.IsNotificationDirty)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	um.UserId = int(id)
+	um._exists = true
+
+	return nil
+}
+
+// Update updates the UserMetum in the database.
+func (um *UserMetum) Update(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !um._exists {
+		return errors.New("update failed: does not exist")
+	}
+
+	// if deleted, bail
+	if um._deleted {
+		return errors.New("update failed: marked for deletion")
+	}
+
+	// sql query
+	const sqlstr = `UPDATE ms.user_meta SET ` +
+		`IsNotificationDirty = ?` +
+		` WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, um.IsNotificationDirty, um.UserId)
+	_, err = db.Exec(sqlstr, um.IsNotificationDirty, um.UserId)
+	return err
+}
+
+// Save saves the UserMetum to the database.
+func (um *UserMetum) Save(db XODB) error {
+	if um.Exists() {
+		return um.Update(db)
+	}
+
+	return um.Replace(db)
+}
+
+// Delete deletes the UserMetum from the database.
+func (um *UserMetum) Delete(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !um._exists {
+		return nil
+	}
+
+	// if deleted, bail
+	if um._deleted {
+		return nil
+	}
+
+	// sql query
+	const sqlstr = `DELETE FROM ms.user_meta WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, um.UserId)
+	_, err = db.Exec(sqlstr, um.UserId)
+	if err != nil {
+		return err
+	}
+
+	// set deleted
+	um._deleted = true
+
+	return nil
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// Querify gen - ME /////////////////////////////////////////
+//.Name = table name
+// _Deleter, _Updater
+
+// orma types
+type __UserMetum_Deleter struct {
+	wheres   []whereClause
+	whereSep string
+}
+
+type __UserMetum_Updater struct {
+	wheres   []whereClause
+	updates  map[string]interface{}
+	whereSep string
+}
+
+type __UserMetum_Selector struct {
+	wheres    []whereClause
+	selectCol string
+	whereSep  string
+	orderBy   string //" order by id desc //for ints
+	limit     int
+	offset    int
+}
+
+func NewUserMetum_Deleter() *__UserMetum_Deleter {
+	d := __UserMetum_Deleter{whereSep: " AND "}
+	return &d
+}
+
+func NewUserMetum_Updater() *__UserMetum_Updater {
+	u := __UserMetum_Updater{whereSep: " AND "}
+	u.updates = make(map[string]interface{}, 10)
+	return &u
+}
+
+func NewUserMetum_Selector() *__UserMetum_Selector {
+	u := __UserMetum_Selector{whereSep: " AND ", selectCol: "*"}
+	return &u
+}
+
+/////////////////////////////// Where for all /////////////////////////////
+//// for ints all selector updater, deleter
+
+////////ints
+func (u *__UserMetum_Deleter) Or() *__UserMetum_Deleter {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__UserMetum_Deleter) UserId_In(ins []int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetum_Deleter) UserId_NotIn(ins []int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetum_Deleter) UserId_EQ(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Deleter) UserId_NotEQ(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Deleter) UserId_LT(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Deleter) UserId_LE(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Deleter) UserId_GT(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Deleter) UserId_GE(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__UserMetum_Deleter) IsNotificationDirty_In(ins []int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsNotificationDirty IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetum_Deleter) IsNotificationDirty_NotIn(ins []int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsNotificationDirty NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetum_Deleter) IsNotificationDirty_EQ(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Deleter) IsNotificationDirty_NotEQ(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Deleter) IsNotificationDirty_LT(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Deleter) IsNotificationDirty_LE(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Deleter) IsNotificationDirty_GT(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Deleter) IsNotificationDirty_GE(val int) *__UserMetum_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__UserMetum_Updater) Or() *__UserMetum_Updater {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__UserMetum_Updater) UserId_In(ins []int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetum_Updater) UserId_NotIn(ins []int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetum_Updater) UserId_EQ(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Updater) UserId_NotEQ(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Updater) UserId_LT(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Updater) UserId_LE(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Updater) UserId_GT(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Updater) UserId_GE(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__UserMetum_Updater) IsNotificationDirty_In(ins []int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsNotificationDirty IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetum_Updater) IsNotificationDirty_NotIn(ins []int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsNotificationDirty NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetum_Updater) IsNotificationDirty_EQ(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Updater) IsNotificationDirty_NotEQ(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Updater) IsNotificationDirty_LT(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Updater) IsNotificationDirty_LE(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Updater) IsNotificationDirty_GT(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Updater) IsNotificationDirty_GE(val int) *__UserMetum_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__UserMetum_Selector) Or() *__UserMetum_Selector {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__UserMetum_Selector) UserId_In(ins []int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetum_Selector) UserId_NotIn(ins []int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetum_Selector) UserId_EQ(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Selector) UserId_NotEQ(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Selector) UserId_LT(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Selector) UserId_LE(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Selector) UserId_GT(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Selector) UserId_GE(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__UserMetum_Selector) IsNotificationDirty_In(ins []int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsNotificationDirty IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetum_Selector) IsNotificationDirty_NotIn(ins []int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsNotificationDirty NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetum_Selector) IsNotificationDirty_EQ(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Selector) IsNotificationDirty_NotEQ(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Selector) IsNotificationDirty_LT(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Selector) IsNotificationDirty_LE(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Selector) IsNotificationDirty_GT(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetum_Selector) IsNotificationDirty_GE(val int) *__UserMetum_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " IsNotificationDirty >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
+
+////////ints
+
+////////ints
+
+////////ints
+
+/// End of wheres for selectors , updators, deletor
+
+/////////////////////////////// Updater /////////////////////////////
+
+//ints
+
+func (u *__UserMetum_Updater) UserId(newVal int) *__UserMetum_Updater {
+	u.updates[" UserId = ? "] = newVal
+	return u
+}
+
+func (u *__UserMetum_Updater) UserId_Increment(count int) *__UserMetum_Updater {
+	if count > 0 {
+		u.updates[" UserId = UserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__UserMetum_Updater) IsNotificationDirty(newVal int) *__UserMetum_Updater {
+	u.updates[" IsNotificationDirty = ? "] = newVal
+	return u
+}
+
+func (u *__UserMetum_Updater) IsNotificationDirty_Increment(count int) *__UserMetum_Updater {
+	if count > 0 {
+		u.updates[" IsNotificationDirty = IsNotificationDirty+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" IsNotificationDirty = IsNotificationDirty-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////// Selector ///////////////////////////////////
+
+//Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
+
+func (u *__UserMetum_Selector) OrderBy_UserId_Desc() *__UserMetum_Selector {
+	u.orderBy = " ORDER BY UserId DESC "
+	return u
+}
+
+func (u *__UserMetum_Selector) OrderBy_UserId_Asc() *__UserMetum_Selector {
+	u.orderBy = " ORDER BY UserId ASC "
+	return u
+}
+
+func (u *__UserMetum_Selector) Select_UserId() *__UserMetum_Selector {
+	u.selectCol = "UserId"
+	return u
+}
+
+func (u *__UserMetum_Selector) OrderBy_IsNotificationDirty_Desc() *__UserMetum_Selector {
+	u.orderBy = " ORDER BY IsNotificationDirty DESC "
+	return u
+}
+
+func (u *__UserMetum_Selector) OrderBy_IsNotificationDirty_Asc() *__UserMetum_Selector {
+	u.orderBy = " ORDER BY IsNotificationDirty ASC "
+	return u
+}
+
+func (u *__UserMetum_Selector) Select_IsNotificationDirty() *__UserMetum_Selector {
+	u.selectCol = "IsNotificationDirty"
+	return u
+}
+
+func (u *__UserMetum_Selector) Limit(num int) *__UserMetum_Selector {
+	u.limit = num
+	return u
+}
+
+func (u *__UserMetum_Selector) Offset(num int) *__UserMetum_Selector {
+	u.offset = num
+	return u
+}
+
+/////////////////////////  Queryer Selector  //////////////////////////////////
+func (u *__UserMetum_Selector) _stoSql() (string, []interface{}) {
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.user_meta"
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	if u.orderBy != "" {
+		sqlstr += u.orderBy
+	}
+
+	if u.limit != 0 {
+		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
+	}
+
+	if u.offset != 0 {
+		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
+	}
+	return sqlstr, whereArgs
+}
+
+func (u *__UserMetum_Selector) GetRow(db *sqlx.DB) (*UserMetum, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	row := &UserMetum{}
+	//by Sqlx
+	err = db.Get(row, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	row._exists = true
+
+	return row, nil
+}
+
+func (u *__UserMetum_Selector) GetRows(db *sqlx.DB) ([]UserMetum, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []UserMetum
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	return rows, nil
+}
+
+func (u *__UserMetum_Selector) GetString(db *sqlx.DB) (string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res string
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return "", err
+	}
+
+	return res, nil
+}
+
+func (u *__UserMetum_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []string
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__UserMetum_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []int
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__UserMetum_Selector) GetInt(db *sqlx.DB) (int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res int
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	return res, nil
+}
+
+/////////////////////////  Queryer Update Delete //////////////////////////////////
+func (u *__UserMetum_Updater) Update(db XODB) (int, error) {
+	var err error
+
+	var updateArgs []interface{}
+	var sqlUpdateArr []string
+	for up, newVal := range u.updates {
+		sqlUpdateArr = append(sqlUpdateArr, up)
+		updateArgs = append(updateArgs, newVal)
+	}
+	sqlUpdate := strings.Join(sqlUpdateArr, ",")
+
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	var allArgs []interface{}
+	allArgs = append(allArgs, updateArgs...)
+	allArgs = append(allArgs, whereArgs...)
+
+	sqlstr := `UPDATE ms.user_meta SET ` + sqlUpdate
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	XOLog(sqlstr, allArgs)
+	res, err := db.Exec(sqlstr, allArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+func (d *__UserMetum_Deleter) Delete(db XODB) (int, error) {
+	var err error
+	var wheresArr []string
+	for _, w := range d.wheres {
+		wheresArr = append(wheresArr, w.condition)
+	}
+	wheresStr := strings.Join(wheresArr, d.whereSep)
+
+	var args []interface{}
+	for _, w := range d.wheres {
+		args = append(args, w.args...)
+	}
+
+	sqlstr := "DELETE FROM ms.user_meta WHERE " + wheresStr
+
+	// run query
+	XOLog(sqlstr, args)
+	res, err := db.Exec(sqlstr, args...)
+	if err != nil {
+		return 0, err
+	}
+
+	// retrieve id
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+///////////////////////// Mass insert - replace for  UserMetum ////////////////
+func MassInsert_UserMetum(rows []UserMetum, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.user_meta (" +
+		"IsNotificationDirty" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.IsNotificationDirty)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_UserMetum(rows []UserMetum, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.user_meta (" +
+		"IsNotificationDirty" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.IsNotificationDirty)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+//////////////////// Play ///////////////////////////////
+
+//
+
+//
+
 // UserPassword represents a row from 'ms.user_password'.
 
 // Manualy copy this to project
@@ -54681,45 +56656,6 @@ func MassReplace_UserPassword(rows []UserPassword, db XODB) error {
 
 //
 
-// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
-//
-// Generated from index 'PostId'.
-func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, PostId, Text, CreatedTime ` +
-		`FROM ms.comments ` +
-		`WHERE PostId = ?`
-
-	// run query
-	XOLog(sqlstr, postId)
-	q, err := db.Query(sqlstr, postId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Comment{}
-	for q.Next() {
-		c := Comment{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &c)
-	}
-
-	return res, nil
-}
-
 // CommentById retrieves a row from 'ms.comments' as a Comment.
 //
 // Generated from index 'comments_Id_pkey'.
@@ -54941,6 +56877,71 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	return &flmh, nil
 }
 
+// LikesById retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'Id'.
+func LikesById(db XODB, id int) ([]*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Like{}
+	for q.Next() {
+		l := Like{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &l)
+	}
+
+	return res, nil
+}
+
+// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'PostId'.
+func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE PostId = ? AND UserId = ?`
+
+	// run query
+	XOLog(sqlstr, postId, userId)
+	l := Like{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+	if err != nil {
+		return nil, err
+	}
+
+	return &l, nil
+}
+
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId_2'.
@@ -55123,6 +57124,45 @@ func MsgDeletedFromServerById(db XODB, id int) (*MsgDeletedFromServer, error) {
 	return &mdfs, nil
 }
 
+// MsgReceivedToPeersByToUserId retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
+//
+// Generated from index 'ToUserId'.
+func MsgReceivedToPeersByToUserId(db XODB, toUserId int) ([]*MsgReceivedToPeer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
+		`FROM ms.msg_received_to_peer ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgReceivedToPeer{}
+	for q.Next() {
+		mrtp := MsgReceivedToPeer{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.RoomKey, &mrtp.PeerUserId, &mrtp.AtTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &mrtp)
+	}
+
+	return res, nil
+}
+
 // MsgReceivedToPeerById retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
 //
 // Generated from index 'msg_received_to_peer_Id_pkey'.
@@ -55147,45 +57187,6 @@ func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
 	}
 
 	return &mrtp, nil
-}
-
-// MsgSeenByPeersByToUserId retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
-//
-// Generated from index 'ToUserId'.
-func MsgSeenByPeersByToUserId(db XODB, toUserId int) ([]*MsgSeenByPeer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
-		`FROM ms.msg_seen_by_peer ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgSeenByPeer{}
-	for q.Next() {
-		msbp := MsgSeenByPeer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &msbp)
-	}
-
-	return res, nil
 }
 
 // MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
@@ -55316,6 +57317,32 @@ func NotificationById(db XODB, id int) (*Notification, error) {
 	}
 
 	return &n, nil
+}
+
+// NotificationRemovedByNotificationId retrieves a row from 'ms.notification_removed' as a NotificationRemoved.
+//
+// Generated from index 'notification_removed_NotificationId_pkey'.
+func NotificationRemovedByNotificationId(db XODB, notificationId int) (*NotificationRemoved, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`NotificationId, ForUserId ` +
+		`FROM ms.notification_removed ` +
+		`WHERE NotificationId = ?`
+
+	// run query
+	XOLog(sqlstr, notificationId)
+	nr := NotificationRemoved{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, notificationId).Scan(&nr.NotificationId, &nr.ForUserId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &nr, nil
 }
 
 // PhoneContactByPhoneContactRowIdUserId retrieves a row from 'ms.phone_contacts' as a PhoneContact.
@@ -55563,45 +57590,6 @@ func SearchClickedById(db XODB, id uint) (*SearchClicked, error) {
 	}
 
 	return &sc, nil
-}
-
-// SessionsById retrieves a row from 'ms.session' as a Session.
-//
-// Generated from index 'Id'.
-func SessionsById(db XODB, id int) ([]*Session, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
-		`FROM ms.session ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Session{}
-	for q.Next() {
-		s := Session{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &s)
-	}
-
-	return res, nil
 }
 
 // SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
@@ -55888,6 +57876,32 @@ func UserById(db XODB, id int) (*User, error) {
 	}
 
 	return &u, nil
+}
+
+// UserMetumByUserId retrieves a row from 'ms.user_meta' as a UserMetum.
+//
+// Generated from index 'user_meta_UserId_pkey'.
+func UserMetumByUserId(db XODB, userId int) (*UserMetum, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`UserId, IsNotificationDirty ` +
+		`FROM ms.user_meta ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	um := UserMetum{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, userId).Scan(&um.UserId, &um.IsNotificationDirty)
+	if err != nil {
+		return nil, err
+	}
+
+	return &um, nil
 }
 
 // UserPasswordByUserId retrieves a row from 'ms.user_password' as a UserPassword.
