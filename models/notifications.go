@@ -22,25 +22,13 @@ type Notification struct {
 }
 
 type NotificationRemoved struct {
-    NotificationId int `json:"NotificationId"` // NotificationId -
-    ForUserId      int `json:"ForUserId"`      // ForUserId -
-                                               // xo fields
+    NotificationId int
+    ForUserId      int
+
     _exists, _deleted bool
 }
 
-//dep
-func (n *Notification) InsertToDb() {
-	res, err := base.DbInsertStruct(n, "notification")
-	if err != nil {
-		helper.DebugPrintln(res, err)
-	}
-
-}
-
-//////////////////////////////////////////////////////
-//////////////// Events -Notifiactions ///////////////
-
-//////// Comments //////////
+//////// For Comments //////////
 func Notification_OnPostCommented(comment *Comment, post *Post) {
     if comment == nil || post || nil {
         return
@@ -87,7 +75,7 @@ func Notification_OnPostCommentedDelted(comment *Comment, post *Post) {
     Notification_PushToUserPipeRemoved(row.Id)
 }
 
-////////// Follows ///////////
+////////// For Follows ///////////
 func Notification_OnFollowed(UserId, FollowedPeerUserId int) {
     nf := Notification{
         Id:           0,
@@ -126,7 +114,7 @@ func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
     Notification_PushToUserPipeRemoved(row.Id)
 }
 
-////////////// Likes ///////////////
+////////////// For Likes ///////////////
 func Notification_OnPostLiked(lk *Like) {
     post, err := CacheModels.GetPostById(lk.PostId)
     if err != nil {
@@ -171,12 +159,6 @@ func Notification_OnPostUnLiked(lk *Like) {
     }
 }
 
-//////////////////////////////////
-func Notification_Delete(nf Notification) {
-	aid := int(math.Abs(float64(nf.ActionTypeId))) // alwayse +
-    NewNotification_Deleter().ForUserId_EQ(nf.ForUserId).ActorUserId_EQ(nf.ActorUserId).ActionTypeId_EQ(aid).Delete(base.DB)
-}
-
 //fix: must be NotificationView
 func Notification_PushToUserPipe(nf Notification) {
     call := base.NewCallWithData("Notification",nf)
@@ -187,7 +169,7 @@ func Notification_PushToUserPipeRemoved(id int) {
 
 }
 
-//////////////////////////////////////////////////
+////////////////////// Views ////////////////////////////
 type NotificationView struct {
 	Notification
 	Load interface{}
