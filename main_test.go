@@ -10,6 +10,8 @@ import (
 	"unicode"
 	//"time"
 	"ms/sun/helper"
+    c "github.com/patrickmn/go-cache"
+    "time"
 )
 
 // func BenchmarkHello(b *testing.B) {
@@ -22,6 +24,112 @@ func BenchmarkNow(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		helper.TimeNow()
 	}
+}
+
+func Benchmark_Map(b *testing.B) {
+    type t struct{
+        str string
+        id int
+    }
+
+    mp := make(map[int]interface{})
+    for i:=0;i<100000 ;i++  {
+        mp[i] = t{}
+    }
+
+    b.ResetTimer()
+    for i := 0; i < b.N; i++ {
+        mp[i] = t{}
+    }
+}
+
+func Benchmark_CacheSet(b *testing.B) {
+    cashe := c.New(time.Hour,time.Hour)
+    type t struct{
+        str string
+        id int
+    }
+
+    for i:=0;i<100000 ;i++  {
+        cashe.Set("item_"+helper.IntToStr(i),t{},time.Hour)
+    }
+
+    b.ResetTimer()
+    for i := 0; i < b.N; i++ {
+        cashe.Set("item_"+helper.IntToStr(i),t{},time.Hour)
+    }
+}
+
+func Benchmark_CacheSet_2million(b *testing.B) {
+    cashe := c.New(time.Hour,time.Hour)
+    type t struct{
+        str string
+        id int
+    }
+
+    for i:=0;i<2000000 ;i++  {
+        cashe.Set("item_"+helper.IntToStr(i),t{},time.Hour)
+    }
+
+    b.ResetTimer()
+    for i := 0; i < b.N; i++ {
+        cashe.Set("item_"+helper.IntToStr(i),t{},time.Hour)
+    }
+}
+
+func Benchmark_CacheGet_100K(b *testing.B) {
+    cashe := c.New(time.Hour,time.Hour)
+    type t struct{
+        str string
+        id int
+    }
+
+    for i:=0;i<100000 ;i++  {
+        cashe.Set("item_"+helper.IntToStr(i),t{},time.Hour)
+    }
+
+    b.ResetTimer()
+    for i := 0; i < b.N; i++ {
+        cashe.Get("item_"+helper.IntToStr(i))
+    }
+}
+
+func Benchmark_CacheGet_2Millin(b *testing.B) {
+    cashe := c.New(time.Hour,time.Hour)
+    type t struct{
+        str string
+        id int
+    }
+
+    for i:=0;i<2000000 ;i++  {
+        cashe.Set("item_"+helper.IntToStr(i),t{},time.Hour)
+    }
+
+    b.ResetTimer()
+    for i := 0; i < b.N; i++ {
+        cashe.Get("item_"+helper.IntToStr(i))
+    }
+
+    //b.Log("cahe items: ",cashe.ItemCount(),"\n")
+}
+
+func Benchmark_CacheGet_10k(b *testing.B) {
+    cashe := c.New(time.Hour,time.Hour)
+    type t struct{
+        str string
+        id int
+    }
+
+    for i:=0;i<10000 ;i++  {
+        cashe.Set("item_"+helper.IntToStr(i),t{},time.Hour)
+    }
+
+    b.ResetTimer()
+    for i := 0; i < b.N; i++ {
+        cashe.Get("item_"+helper.IntToStr(5000))
+    }
+
+    //b.Log("cahe items: ",cashe.ItemCount(),"\n")
 }
 
 func BenchmarkDebug(b *testing.B) {
