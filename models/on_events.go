@@ -14,6 +14,7 @@ func OnPostDeleted(post *Post) {
 func OnPostLiked(like *Like) {
 	//Notification_OnPostLiked(like)
 }
+
 //dep
 func OnPostUnLiked(like *Like) {
 	//Notification_OnPostUnLiked(like)

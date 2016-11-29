@@ -152,4 +152,3 @@ func AddTagsInPost(post *Post) {
 func AddUserMentionedInPost(post *Post) {
 
 }
-

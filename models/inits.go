@@ -11,23 +11,22 @@ func init() {
 
 func OnAppStart_Models() {
 
-    UserMemoryStore.ReloadAll()
-    MemoryStore_User.ReloadAll()
+	UserMemoryStore.ReloadAll()
+	MemoryStore_User.ReloadAll()
 
-    ReloadTopUserIds()
+	ReloadTopUserIds()
 
-    ReloadAllTags()
-    ReloadTopTags()
+	ReloadAllTags()
+	ReloadTopTags()
 
-    go PeriodicReloadTopPostsForTopTags()
+	go PeriodicReloadTopPostsForTopTags()
 
-    Cache = NewCache()
-    CacheModels = _cacheModels{Cache}
+	Cache = NewCache()
+	CacheModels = _cacheModels{Cache}
 
-    //todo: del this
-    p := Post{}
-    p.Text = "sadasdasd"
+	//todo: del this
+	p := Post{}
+	p.Text = "sadasdasd"
 
-    Cache.Set("post_12", &p, 0)
+	Cache.Set("post_12", &p, 0)
 }
-

@@ -59,10 +59,10 @@ func Follow(UserId, FollowedPeerUserId int) int {
 		Counter.UpdateUserFollowingCounts(UserId, 1)
 		Counter.UpdateUserFollowersCounts(FollowedPeerUserId, 1)
 
-        Notification_OnFollowed(UserId, FollowedPeerUserId)
-        return 1
+		Notification_OnFollowed(UserId, FollowedPeerUserId)
+		return 1
 	}
-    return 0
+	return 0
 }
 
 func UnFollow(UserId, FollowedPeerUserId int) {
@@ -77,6 +77,6 @@ func UnFollow(UserId, FollowedPeerUserId int) {
 		Counter.UpdateUserFollowingCounts(UserId, -1)
 		Counter.UpdateUserFollowersCounts(FollowedPeerUserId, -1)
 
-        Notification_OnUnFollowed(UserId, FollowedPeerUserId)
+		Notification_OnUnFollowed(UserId, FollowedPeerUserId)
 	}
 }

@@ -22,7 +22,7 @@ func FollowAction(c *base.Action) base.AppErr {
 	if fUserId < 1 {
 		return nil
 	}
-	typ:=models.Follow(cuid, fUserId)
+	typ := models.Follow(cuid, fUserId)
 	c.SendJson(typ)
 	return nil
 }

@@ -12,10 +12,10 @@ import (
 	"os"
 	// "strconv"
 	// "strings"
-    "strconv"
-    "path/filepath"
-    "time"
-    "log"
+	"log"
+	"path/filepath"
+	"strconv"
+	"time"
 )
 
 func UploadAvatarAction(c *Action) {
@@ -67,7 +67,7 @@ func UploadAvatarAction(c *Action) {
 	}
 
 	//user := GetUserById(c.UserId())
-	user,_ := UserById(DB,c.UserId())
+	user, _ := UserById(DB, c.UserId())
 	user.AvatarUrl = avatrBuilderPath(userIdS, ext, "%s")
 	DbUpdateStruct(&user, "user")
 
@@ -86,24 +86,24 @@ func RemoveAvatarAction(c *Action) {
 
 //Delete all with this file
 func noErr(err error) {
-    if err != nil {
-        // log.Fatalln(err) //painc
-        log.Panic("***** PANIC ****: ", err)
-    }
+	if err != nil {
+		// log.Fatalln(err) //painc
+		log.Panic("***** PANIC ****: ", err)
+	}
 }
 
 func fileExt(path string) string {
-    return filepath.Ext(path)
+	return filepath.Ext(path)
 }
 
 func devPrintn(p ...interface{}) {
-    fmt.Println(p...)
+	fmt.Println(p...)
 }
 
 func intToStr(i int) string {
-    return strconv.Itoa(i)
+	return strconv.Itoa(i)
 }
 
 func now() int {
-    return int(time.Now().Unix())
+	return int(time.Now().Unix())
 }

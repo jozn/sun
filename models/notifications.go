@@ -22,17 +22,17 @@ type Notification struct {
 }
 
 type NotificationRemoved struct {
-    NotificationId int
-    ForUserId      int
+	NotificationId int
+	ForUserId      int
 
-    _exists, _deleted bool
+	_exists, _deleted bool
 }
 
 //////// For Comments //////////
 func Notification_OnPostCommented(comment *Comment, post *Post) {
-    if comment == nil || post || nil {
-        return
-    }
+	if comment == nil || post || nil {
+		return
+	}
 
 	objId := post.Id*1000 + ACTION_TYPE_POST_COMMENTED
 	not := Notification{
@@ -46,123 +46,123 @@ func Notification_OnPostCommented(comment *Comment, post *Post) {
 		SeenStatus:   0,
 		CreatedTime:  helper.TimeNow(),
 	}
-    not.Save(base.DB)
+	not.Save(base.DB)
 
-    Notification_PushToUserPipe(not)
+	Notification_PushToUserPipe(not)
 }
 
 func Notification_OnPostCommentedDelted(comment *Comment, post *Post) {
-    if comment == nil || post || nil {
-        return
-    }
+	if comment == nil || post || nil {
+		return
+	}
 
-    row,err:=NewNotification_Selector().
-        ForUserId_EQ(post.UserId).
-        ActorUserId_EQ(comment.UserId).
-        ActionTypeId_EQ(ACTION_TYPE_POST_COMMENTED).
-        GetRow(base.DB)
+	row, err := NewNotification_Selector().
+		ForUserId_EQ(post.UserId).
+		ActorUserId_EQ(comment.UserId).
+		ActionTypeId_EQ(ACTION_TYPE_POST_COMMENTED).
+		GetRow(base.DB)
 
-    if err==nil{
-        nr:= NotificationRemoved{
-            NotificationId:row.Id,
-            ForUserId:comment.UserId,
-        }
+	if err == nil {
+		nr := NotificationRemoved{
+			NotificationId: row.Id,
+			ForUserId:      comment.UserId,
+		}
 
-        row.Delete(base.DB)
-        nr.Save(base.DB)
-    }
+		row.Delete(base.DB)
+		nr.Save(base.DB)
+	}
 
-    Notification_PushToUserPipeRemoved(row.Id)
+	Notification_PushToUserPipeRemoved(row.Id)
 }
 
 ////////// For Follows ///////////
 func Notification_OnFollowed(UserId, FollowedPeerUserId int) {
-    nf := Notification{
-        Id:           0,
-        ForUserId:    FollowedPeerUserId,
-        ActorUserId:  UserId,
-        ActionTypeId: ACTION_TYPE_FOLLOWED_YOU,
-        ObjectTypeId: OBJECT_FOLLOWING,
-        TargetId:     UserId,
-        ObjectId:     0,
-        SeenStatus:   0,
-        CreatedTime:  helper.TimeNow(),
-    }
+	nf := Notification{
+		Id:           0,
+		ForUserId:    FollowedPeerUserId,
+		ActorUserId:  UserId,
+		ActionTypeId: ACTION_TYPE_FOLLOWED_YOU,
+		ObjectTypeId: OBJECT_FOLLOWING,
+		TargetId:     UserId,
+		ObjectId:     0,
+		SeenStatus:   0,
+		CreatedTime:  helper.TimeNow(),
+	}
 
-    nf.Save(base.DB)
+	nf.Save(base.DB)
 
-    Notification_PushToUserPipe(nf)
+	Notification_PushToUserPipe(nf)
 }
 
 func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
-    row,err:=NewNotification_Selector().
-        ForUserId_EQ(FollowedPeerUserId).
-        ActorUserId_EQ(UserId).
-        ActionTypeId_EQ(ACTION_TYPE_FOLLOWED_YOU).
-        GetRow(base.DB)
+	row, err := NewNotification_Selector().
+		ForUserId_EQ(FollowedPeerUserId).
+		ActorUserId_EQ(UserId).
+		ActionTypeId_EQ(ACTION_TYPE_FOLLOWED_YOU).
+		GetRow(base.DB)
 
-    if err==nil{
-        nr:= NotificationRemoved{
-            NotificationId:row.Id,
-            ForUserId:UserId,
-        }
+	if err == nil {
+		nr := NotificationRemoved{
+			NotificationId: row.Id,
+			ForUserId:      UserId,
+		}
 
-        row.Delete(base.DB)
-        nr.Save(base.DB)
-    }
+		row.Delete(base.DB)
+		nr.Save(base.DB)
+	}
 
-    Notification_PushToUserPipeRemoved(row.Id)
+	Notification_PushToUserPipeRemoved(row.Id)
 }
 
 ////////////// For Likes ///////////////
 func Notification_OnPostLiked(lk *Like) {
-    post, err := CacheModels.GetPostById(lk.PostId)
-    if err != nil {
-        return
-    }
+	post, err := CacheModels.GetPostById(lk.PostId)
+	if err != nil {
+		return
+	}
 
-    nf := Notification{
-        Id:           0,
-        ForUserId:    post.UserId,
-        ActorUserId:  lk.UserId,
-        ActionTypeId: ACTION_TYPE_POST_LIKED,
-        ObjectTypeId: OBJECT_LIKE,
-        TargetId:     post.Id,
-        ObjectId:     0,
-        SeenStatus:   0,
-        CreatedTime:  helper.TimeNow(),
-    }
+	nf := Notification{
+		Id:           0,
+		ForUserId:    post.UserId,
+		ActorUserId:  lk.UserId,
+		ActionTypeId: ACTION_TYPE_POST_LIKED,
+		ObjectTypeId: OBJECT_LIKE,
+		TargetId:     post.Id,
+		ObjectId:     0,
+		SeenStatus:   0,
+		CreatedTime:  helper.TimeNow(),
+	}
 
-    nf.Save(base.DB)
+	nf.Save(base.DB)
 }
 
 func Notification_OnPostUnLiked(lk *Like) {
-    post, err := CacheModels.GetPostById(lk.PostId)
-    if err != nil {
-        return
-    }
+	post, err := CacheModels.GetPostById(lk.PostId)
+	if err != nil {
+		return
+	}
 
-    row,err:=NewNotification_Selector().
-        ForUserId_EQ(post.UserId).
-        ActorUserId_EQ(lk.UserId).
-        ActionTypeId_EQ(ACTION_TYPE_POST_LIKED).
-        GetRow(base.DB)
+	row, err := NewNotification_Selector().
+		ForUserId_EQ(post.UserId).
+		ActorUserId_EQ(lk.UserId).
+		ActionTypeId_EQ(ACTION_TYPE_POST_LIKED).
+		GetRow(base.DB)
 
-    if err==nil{
-        nr:= NotificationRemoved{
-            NotificationId:row.Id,
-            ForUserId:post.UserId,
-        }
+	if err == nil {
+		nr := NotificationRemoved{
+			NotificationId: row.Id,
+			ForUserId:      post.UserId,
+		}
 
-        row.Delete(base.DB)
-        nr.Save(base.DB)
-    }
+		row.Delete(base.DB)
+		nr.Save(base.DB)
+	}
 }
 
 //fix: must be NotificationView
 func Notification_PushToUserPipe(nf Notification) {
-    call := base.NewCallWithData("Notification",nf)
-    AllPipesMap.SendToUser(nf.ForUserId,call)
+	call := base.NewCallWithData("Notification", nf)
+	AllPipesMap.SendToUser(nf.ForUserId, call)
 }
 
 func Notification_PushToUserPipeRemoved(id int) {
@@ -232,4 +232,3 @@ func Notification_GetLastsViews(UserId int) []NotificationView {
 	return res
 
 }
-

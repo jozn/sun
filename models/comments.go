@@ -18,7 +18,7 @@ func CreateNewComment(UserId, PostId int, Text string) Comment {
 	if err == nil {
 		Counter.IncerPostCommentsCount(PostId, 1)
 		post, _ := CacheModels.GetPostById(PostId)
-        Notification_OnPostCommented(&cmt, post)
+		Notification_OnPostCommented(&cmt, post)
 	}
 
 	return cmt
