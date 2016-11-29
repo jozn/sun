@@ -70,35 +70,41 @@ func Notification_OnPostCommentedDelted(comment *Comment, post *Post) {
 
 ////////// Follows ///////////
 func Notification_OnFollowed(UserId, FollowedPeerUserId int) {
-	Notification_OnFollowing_Imple(UserId, FollowedPeerUserId, true)
+    nf := Notification{
+        Id:           0,
+        ForUserId:    FollowedPeerUserId,
+        ActorUserId:  UserId,
+        ActionTypeId: ACTION_TYPE_FOLLOWED_YOU,
+        ObjectTypeId: OBJECT_FOLLOWING,
+        TargetId:     UserId,
+        ObjectId:     0,
+        SeenStatus:   0,
+        CreatedTime:  helper.TimeNow(),
+    }
+
+    nf.Save(base.DB)
+
+    Notification_PushToUserPipe(nf)
 }
 
 func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
-	Notification_OnFollowing_Imple(UserId, FollowedPeerUserId, false)
-}
+    row,err:=NewNotification_Selector().
+        ForUserId_EQ(FollowedPeerUserId).
+        ActorUserId_EQ(UserId).
+        ActionTypeId_EQ(ACTION_TYPE_FOLLOWED_YOU).
+        GetRow(base.DB)
 
-func Notification_OnFollowing_Imple(UserId, FollowedPeerUserId int, added bool) {
-	nf := Notification{
-		Id:           0,
-		ForUserId:    FollowedPeerUserId,
-		ActorUserId:  UserId,
-		ActionTypeId: ACTION_TYPE_FOLLOWED_YOU,
-		ObjectTypeId: OBJECT_FOLLOWING,
-		TargetId:     UserId,
-		ObjectId:     0,
-		SeenStatus:   0,
-		CreatedTime:  helper.TimeNow(),
-	}
+    if err==nil{
+        nr:= NotificationRemoved{
+            NotificationId:row.Id,
+            ForUserId:UserId,
+        }
 
-	if added {
-		nf.Save(base.DB)
-	} else {
-		nf.ActionTypeId = -ACTION_TYPE_FOLLOWED_YOU
-        nf.Save(base.DB)
-		Notification_Delete(nf)
-	}
+        row.Delete(base.DB)
+        nr.Save(base.DB)
+    }
 
-    Notification_PushToUserPipe(nf)
+    Notification_PushToUserPipeRemoved(row.Id)
 }
 
 ////////////// Likes ///////////////
@@ -146,6 +152,10 @@ func Notification_Delete(nf Notification) {
 func Notification_PushToUserPipe(nf Notification) {
     call := base.NewCallWithData("Notification",nf)
     AllPipesMap.SendToUser(nf.ForUserId,call)
+}
+
+func Notification_PushToUserPipeRemoved(id int) {
+
 }
 
 //////////////////////////////////////////////////
