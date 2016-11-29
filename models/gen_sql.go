@@ -54506,10 +54506,10 @@ func MassReplace_User(rows []User, db XODB) error {
 
 //
 
-// UserMetum represents a row from 'ms.user_meta'.
+// UserMetaInfo represents a row from 'ms.user_meta_info'.
 
 // Manualy copy this to project
-type __UserMetum struct {
+type __UserMetaInfo struct {
 	UserId              int `json:"UserId"`              // UserId -
 	IsNotificationDirty int `json:"IsNotificationDirty"` // IsNotificationDirty -
 
@@ -54517,35 +54517,35 @@ type __UserMetum struct {
 	_exists, _deleted bool
 }
 
-// Exists determines if the UserMetum exists in the database.
-func (um *UserMetum) Exists() bool {
-	return um._exists
+// Exists determines if the UserMetaInfo exists in the database.
+func (umi *UserMetaInfo) Exists() bool {
+	return umi._exists
 }
 
-// Deleted provides information if the UserMetum has been deleted from the database.
-func (um *UserMetum) Deleted() bool {
-	return um._deleted
+// Deleted provides information if the UserMetaInfo has been deleted from the database.
+func (umi *UserMetaInfo) Deleted() bool {
+	return umi._deleted
 }
 
-// Insert inserts the UserMetum to the database.
-func (um *UserMetum) Insert(db XODB) error {
+// Insert inserts the UserMetaInfo to the database.
+func (umi *UserMetaInfo) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
-	if um._exists {
+	if umi._exists {
 		return errors.New("insert failed: already exists")
 	}
 
 	// sql query
-	const sqlstr = `INSERT INTO ms.user_meta (` +
+	const sqlstr = `INSERT INTO ms.user_meta_info (` +
 		`IsNotificationDirty` +
 		`) VALUES (` +
 		`?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, um.IsNotificationDirty)
-	res, err := db.Exec(sqlstr, um.IsNotificationDirty)
+	XOLog(sqlstr, umi.IsNotificationDirty)
+	res, err := db.Exec(sqlstr, umi.IsNotificationDirty)
 	if err != nil {
 		return err
 	}
@@ -54557,26 +54557,26 @@ func (um *UserMetum) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	um.UserId = int(id)
-	um._exists = true
+	umi.UserId = int(id)
+	umi._exists = true
 
 	return nil
 }
 
-// Insert inserts the UserMetum to the database.
-func (um *UserMetum) Replace(db XODB) error {
+// Insert inserts the UserMetaInfo to the database.
+func (umi *UserMetaInfo) Replace(db XODB) error {
 	var err error
 
 	// sql query
-	const sqlstr = `REPLACE INTO ms.user_meta (` +
+	const sqlstr = `REPLACE INTO ms.user_meta_info (` +
 		`IsNotificationDirty` +
 		`) VALUES (` +
 		`?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, um.IsNotificationDirty)
-	res, err := db.Exec(sqlstr, um.IsNotificationDirty)
+	XOLog(sqlstr, umi.IsNotificationDirty)
+	res, err := db.Exec(sqlstr, umi.IsNotificationDirty)
 	if err != nil {
 		return err
 	}
@@ -54588,72 +54588,72 @@ func (um *UserMetum) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	um.UserId = int(id)
-	um._exists = true
+	umi.UserId = int(id)
+	umi._exists = true
 
 	return nil
 }
 
-// Update updates the UserMetum in the database.
-func (um *UserMetum) Update(db XODB) error {
+// Update updates the UserMetaInfo in the database.
+func (umi *UserMetaInfo) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !um._exists {
+	if !umi._exists {
 		return errors.New("update failed: does not exist")
 	}
 
 	// if deleted, bail
-	if um._deleted {
+	if umi._deleted {
 		return errors.New("update failed: marked for deletion")
 	}
 
 	// sql query
-	const sqlstr = `UPDATE ms.user_meta SET ` +
+	const sqlstr = `UPDATE ms.user_meta_info SET ` +
 		`IsNotificationDirty = ?` +
 		` WHERE UserId = ?`
 
 	// run query
-	XOLog(sqlstr, um.IsNotificationDirty, um.UserId)
-	_, err = db.Exec(sqlstr, um.IsNotificationDirty, um.UserId)
+	XOLog(sqlstr, umi.IsNotificationDirty, umi.UserId)
+	_, err = db.Exec(sqlstr, umi.IsNotificationDirty, umi.UserId)
 	return err
 }
 
-// Save saves the UserMetum to the database.
-func (um *UserMetum) Save(db XODB) error {
-	if um.Exists() {
-		return um.Update(db)
+// Save saves the UserMetaInfo to the database.
+func (umi *UserMetaInfo) Save(db XODB) error {
+	if umi.Exists() {
+		return umi.Update(db)
 	}
 
-	return um.Replace(db)
+	return umi.Replace(db)
 }
 
-// Delete deletes the UserMetum from the database.
-func (um *UserMetum) Delete(db XODB) error {
+// Delete deletes the UserMetaInfo from the database.
+func (umi *UserMetaInfo) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !um._exists {
+	if !umi._exists {
 		return nil
 	}
 
 	// if deleted, bail
-	if um._deleted {
+	if umi._deleted {
 		return nil
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.user_meta WHERE UserId = ?`
+	const sqlstr = `DELETE FROM ms.user_meta_info WHERE UserId = ?`
 
 	// run query
-	XOLog(sqlstr, um.UserId)
-	_, err = db.Exec(sqlstr, um.UserId)
+	XOLog(sqlstr, umi.UserId)
+	_, err = db.Exec(sqlstr, umi.UserId)
 	if err != nil {
 		return err
 	}
 
 	// set deleted
-	um._deleted = true
+	umi._deleted = true
 
 	return nil
 }
@@ -54664,18 +54664,18 @@ func (um *UserMetum) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __UserMetum_Deleter struct {
+type __UserMetaInfo_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __UserMetum_Updater struct {
+type __UserMetaInfo_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __UserMetum_Selector struct {
+type __UserMetaInfo_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -54684,19 +54684,19 @@ type __UserMetum_Selector struct {
 	offset    int
 }
 
-func NewUserMetum_Deleter() *__UserMetum_Deleter {
-	d := __UserMetum_Deleter{whereSep: " AND "}
+func NewUserMetaInfo_Deleter() *__UserMetaInfo_Deleter {
+	d := __UserMetaInfo_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewUserMetum_Updater() *__UserMetum_Updater {
-	u := __UserMetum_Updater{whereSep: " AND "}
+func NewUserMetaInfo_Updater() *__UserMetaInfo_Updater {
+	u := __UserMetaInfo_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewUserMetum_Selector() *__UserMetum_Selector {
-	u := __UserMetum_Selector{whereSep: " AND ", selectCol: "*"}
+func NewUserMetaInfo_Selector() *__UserMetaInfo_Selector {
+	u := __UserMetaInfo_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -54704,12 +54704,12 @@ func NewUserMetum_Selector() *__UserMetum_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__UserMetum_Deleter) Or() *__UserMetum_Deleter {
+func (u *__UserMetaInfo_Deleter) Or() *__UserMetaInfo_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__UserMetum_Deleter) UserId_In(ins []int) *__UserMetum_Deleter {
+func (u *__UserMetaInfo_Deleter) UserId_In(ins []int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -54722,7 +54722,7 @@ func (u *__UserMetum_Deleter) UserId_In(ins []int) *__UserMetum_Deleter {
 	return u
 }
 
-func (u *__UserMetum_Deleter) UserId_NotIn(ins []int) *__UserMetum_Deleter {
+func (u *__UserMetaInfo_Deleter) UserId_NotIn(ins []int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -54735,7 +54735,7 @@ func (u *__UserMetum_Deleter) UserId_NotIn(ins []int) *__UserMetum_Deleter {
 	return u
 }
 
-func (d *__UserMetum_Deleter) UserId_EQ(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) UserId_EQ(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54746,7 +54746,7 @@ func (d *__UserMetum_Deleter) UserId_EQ(val int) *__UserMetum_Deleter {
 	return d
 }
 
-func (d *__UserMetum_Deleter) UserId_NotEQ(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) UserId_NotEQ(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54757,7 +54757,7 @@ func (d *__UserMetum_Deleter) UserId_NotEQ(val int) *__UserMetum_Deleter {
 	return d
 }
 
-func (d *__UserMetum_Deleter) UserId_LT(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) UserId_LT(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54768,7 +54768,7 @@ func (d *__UserMetum_Deleter) UserId_LT(val int) *__UserMetum_Deleter {
 	return d
 }
 
-func (d *__UserMetum_Deleter) UserId_LE(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) UserId_LE(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54779,7 +54779,7 @@ func (d *__UserMetum_Deleter) UserId_LE(val int) *__UserMetum_Deleter {
 	return d
 }
 
-func (d *__UserMetum_Deleter) UserId_GT(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) UserId_GT(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54790,7 +54790,7 @@ func (d *__UserMetum_Deleter) UserId_GT(val int) *__UserMetum_Deleter {
 	return d
 }
 
-func (d *__UserMetum_Deleter) UserId_GE(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) UserId_GE(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54801,7 +54801,7 @@ func (d *__UserMetum_Deleter) UserId_GE(val int) *__UserMetum_Deleter {
 	return d
 }
 
-func (u *__UserMetum_Deleter) IsNotificationDirty_In(ins []int) *__UserMetum_Deleter {
+func (u *__UserMetaInfo_Deleter) IsNotificationDirty_In(ins []int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -54814,7 +54814,7 @@ func (u *__UserMetum_Deleter) IsNotificationDirty_In(ins []int) *__UserMetum_Del
 	return u
 }
 
-func (u *__UserMetum_Deleter) IsNotificationDirty_NotIn(ins []int) *__UserMetum_Deleter {
+func (u *__UserMetaInfo_Deleter) IsNotificationDirty_NotIn(ins []int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -54827,7 +54827,7 @@ func (u *__UserMetum_Deleter) IsNotificationDirty_NotIn(ins []int) *__UserMetum_
 	return u
 }
 
-func (d *__UserMetum_Deleter) IsNotificationDirty_EQ(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) IsNotificationDirty_EQ(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54838,7 +54838,7 @@ func (d *__UserMetum_Deleter) IsNotificationDirty_EQ(val int) *__UserMetum_Delet
 	return d
 }
 
-func (d *__UserMetum_Deleter) IsNotificationDirty_NotEQ(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) IsNotificationDirty_NotEQ(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54849,7 +54849,7 @@ func (d *__UserMetum_Deleter) IsNotificationDirty_NotEQ(val int) *__UserMetum_De
 	return d
 }
 
-func (d *__UserMetum_Deleter) IsNotificationDirty_LT(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) IsNotificationDirty_LT(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54860,7 +54860,7 @@ func (d *__UserMetum_Deleter) IsNotificationDirty_LT(val int) *__UserMetum_Delet
 	return d
 }
 
-func (d *__UserMetum_Deleter) IsNotificationDirty_LE(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) IsNotificationDirty_LE(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54871,7 +54871,7 @@ func (d *__UserMetum_Deleter) IsNotificationDirty_LE(val int) *__UserMetum_Delet
 	return d
 }
 
-func (d *__UserMetum_Deleter) IsNotificationDirty_GT(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) IsNotificationDirty_GT(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54882,7 +54882,7 @@ func (d *__UserMetum_Deleter) IsNotificationDirty_GT(val int) *__UserMetum_Delet
 	return d
 }
 
-func (d *__UserMetum_Deleter) IsNotificationDirty_GE(val int) *__UserMetum_Deleter {
+func (d *__UserMetaInfo_Deleter) IsNotificationDirty_GE(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54894,12 +54894,12 @@ func (d *__UserMetum_Deleter) IsNotificationDirty_GE(val int) *__UserMetum_Delet
 }
 
 ////////ints
-func (u *__UserMetum_Updater) Or() *__UserMetum_Updater {
+func (u *__UserMetaInfo_Updater) Or() *__UserMetaInfo_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__UserMetum_Updater) UserId_In(ins []int) *__UserMetum_Updater {
+func (u *__UserMetaInfo_Updater) UserId_In(ins []int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -54912,7 +54912,7 @@ func (u *__UserMetum_Updater) UserId_In(ins []int) *__UserMetum_Updater {
 	return u
 }
 
-func (u *__UserMetum_Updater) UserId_NotIn(ins []int) *__UserMetum_Updater {
+func (u *__UserMetaInfo_Updater) UserId_NotIn(ins []int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -54925,7 +54925,7 @@ func (u *__UserMetum_Updater) UserId_NotIn(ins []int) *__UserMetum_Updater {
 	return u
 }
 
-func (d *__UserMetum_Updater) UserId_EQ(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) UserId_EQ(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54936,7 +54936,7 @@ func (d *__UserMetum_Updater) UserId_EQ(val int) *__UserMetum_Updater {
 	return d
 }
 
-func (d *__UserMetum_Updater) UserId_NotEQ(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) UserId_NotEQ(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54947,7 +54947,7 @@ func (d *__UserMetum_Updater) UserId_NotEQ(val int) *__UserMetum_Updater {
 	return d
 }
 
-func (d *__UserMetum_Updater) UserId_LT(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) UserId_LT(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54958,7 +54958,7 @@ func (d *__UserMetum_Updater) UserId_LT(val int) *__UserMetum_Updater {
 	return d
 }
 
-func (d *__UserMetum_Updater) UserId_LE(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) UserId_LE(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54969,7 +54969,7 @@ func (d *__UserMetum_Updater) UserId_LE(val int) *__UserMetum_Updater {
 	return d
 }
 
-func (d *__UserMetum_Updater) UserId_GT(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) UserId_GT(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54980,7 +54980,7 @@ func (d *__UserMetum_Updater) UserId_GT(val int) *__UserMetum_Updater {
 	return d
 }
 
-func (d *__UserMetum_Updater) UserId_GE(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) UserId_GE(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -54991,7 +54991,7 @@ func (d *__UserMetum_Updater) UserId_GE(val int) *__UserMetum_Updater {
 	return d
 }
 
-func (u *__UserMetum_Updater) IsNotificationDirty_In(ins []int) *__UserMetum_Updater {
+func (u *__UserMetaInfo_Updater) IsNotificationDirty_In(ins []int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -55004,7 +55004,7 @@ func (u *__UserMetum_Updater) IsNotificationDirty_In(ins []int) *__UserMetum_Upd
 	return u
 }
 
-func (u *__UserMetum_Updater) IsNotificationDirty_NotIn(ins []int) *__UserMetum_Updater {
+func (u *__UserMetaInfo_Updater) IsNotificationDirty_NotIn(ins []int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -55017,7 +55017,7 @@ func (u *__UserMetum_Updater) IsNotificationDirty_NotIn(ins []int) *__UserMetum_
 	return u
 }
 
-func (d *__UserMetum_Updater) IsNotificationDirty_EQ(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) IsNotificationDirty_EQ(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55028,7 +55028,7 @@ func (d *__UserMetum_Updater) IsNotificationDirty_EQ(val int) *__UserMetum_Updat
 	return d
 }
 
-func (d *__UserMetum_Updater) IsNotificationDirty_NotEQ(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) IsNotificationDirty_NotEQ(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55039,7 +55039,7 @@ func (d *__UserMetum_Updater) IsNotificationDirty_NotEQ(val int) *__UserMetum_Up
 	return d
 }
 
-func (d *__UserMetum_Updater) IsNotificationDirty_LT(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) IsNotificationDirty_LT(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55050,7 +55050,7 @@ func (d *__UserMetum_Updater) IsNotificationDirty_LT(val int) *__UserMetum_Updat
 	return d
 }
 
-func (d *__UserMetum_Updater) IsNotificationDirty_LE(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) IsNotificationDirty_LE(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55061,7 +55061,7 @@ func (d *__UserMetum_Updater) IsNotificationDirty_LE(val int) *__UserMetum_Updat
 	return d
 }
 
-func (d *__UserMetum_Updater) IsNotificationDirty_GT(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) IsNotificationDirty_GT(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55072,7 +55072,7 @@ func (d *__UserMetum_Updater) IsNotificationDirty_GT(val int) *__UserMetum_Updat
 	return d
 }
 
-func (d *__UserMetum_Updater) IsNotificationDirty_GE(val int) *__UserMetum_Updater {
+func (d *__UserMetaInfo_Updater) IsNotificationDirty_GE(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55084,12 +55084,12 @@ func (d *__UserMetum_Updater) IsNotificationDirty_GE(val int) *__UserMetum_Updat
 }
 
 ////////ints
-func (u *__UserMetum_Selector) Or() *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) Or() *__UserMetaInfo_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__UserMetum_Selector) UserId_In(ins []int) *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) UserId_In(ins []int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -55102,7 +55102,7 @@ func (u *__UserMetum_Selector) UserId_In(ins []int) *__UserMetum_Selector {
 	return u
 }
 
-func (u *__UserMetum_Selector) UserId_NotIn(ins []int) *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) UserId_NotIn(ins []int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -55115,7 +55115,7 @@ func (u *__UserMetum_Selector) UserId_NotIn(ins []int) *__UserMetum_Selector {
 	return u
 }
 
-func (d *__UserMetum_Selector) UserId_EQ(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) UserId_EQ(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55126,7 +55126,7 @@ func (d *__UserMetum_Selector) UserId_EQ(val int) *__UserMetum_Selector {
 	return d
 }
 
-func (d *__UserMetum_Selector) UserId_NotEQ(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) UserId_NotEQ(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55137,7 +55137,7 @@ func (d *__UserMetum_Selector) UserId_NotEQ(val int) *__UserMetum_Selector {
 	return d
 }
 
-func (d *__UserMetum_Selector) UserId_LT(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) UserId_LT(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55148,7 +55148,7 @@ func (d *__UserMetum_Selector) UserId_LT(val int) *__UserMetum_Selector {
 	return d
 }
 
-func (d *__UserMetum_Selector) UserId_LE(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) UserId_LE(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55159,7 +55159,7 @@ func (d *__UserMetum_Selector) UserId_LE(val int) *__UserMetum_Selector {
 	return d
 }
 
-func (d *__UserMetum_Selector) UserId_GT(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) UserId_GT(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55170,7 +55170,7 @@ func (d *__UserMetum_Selector) UserId_GT(val int) *__UserMetum_Selector {
 	return d
 }
 
-func (d *__UserMetum_Selector) UserId_GE(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) UserId_GE(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55181,7 +55181,7 @@ func (d *__UserMetum_Selector) UserId_GE(val int) *__UserMetum_Selector {
 	return d
 }
 
-func (u *__UserMetum_Selector) IsNotificationDirty_In(ins []int) *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) IsNotificationDirty_In(ins []int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -55194,7 +55194,7 @@ func (u *__UserMetum_Selector) IsNotificationDirty_In(ins []int) *__UserMetum_Se
 	return u
 }
 
-func (u *__UserMetum_Selector) IsNotificationDirty_NotIn(ins []int) *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) IsNotificationDirty_NotIn(ins []int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -55207,7 +55207,7 @@ func (u *__UserMetum_Selector) IsNotificationDirty_NotIn(ins []int) *__UserMetum
 	return u
 }
 
-func (d *__UserMetum_Selector) IsNotificationDirty_EQ(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) IsNotificationDirty_EQ(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55218,7 +55218,7 @@ func (d *__UserMetum_Selector) IsNotificationDirty_EQ(val int) *__UserMetum_Sele
 	return d
 }
 
-func (d *__UserMetum_Selector) IsNotificationDirty_NotEQ(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) IsNotificationDirty_NotEQ(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55229,7 +55229,7 @@ func (d *__UserMetum_Selector) IsNotificationDirty_NotEQ(val int) *__UserMetum_S
 	return d
 }
 
-func (d *__UserMetum_Selector) IsNotificationDirty_LT(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) IsNotificationDirty_LT(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55240,7 +55240,7 @@ func (d *__UserMetum_Selector) IsNotificationDirty_LT(val int) *__UserMetum_Sele
 	return d
 }
 
-func (d *__UserMetum_Selector) IsNotificationDirty_LE(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) IsNotificationDirty_LE(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55251,7 +55251,7 @@ func (d *__UserMetum_Selector) IsNotificationDirty_LE(val int) *__UserMetum_Sele
 	return d
 }
 
-func (d *__UserMetum_Selector) IsNotificationDirty_GT(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) IsNotificationDirty_GT(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55262,7 +55262,7 @@ func (d *__UserMetum_Selector) IsNotificationDirty_GT(val int) *__UserMetum_Sele
 	return d
 }
 
-func (d *__UserMetum_Selector) IsNotificationDirty_GE(val int) *__UserMetum_Selector {
+func (d *__UserMetaInfo_Selector) IsNotificationDirty_GE(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -55287,12 +55287,12 @@ func (d *__UserMetum_Selector) IsNotificationDirty_GE(val int) *__UserMetum_Sele
 
 //ints
 
-func (u *__UserMetum_Updater) UserId(newVal int) *__UserMetum_Updater {
+func (u *__UserMetaInfo_Updater) UserId(newVal int) *__UserMetaInfo_Updater {
 	u.updates[" UserId = ? "] = newVal
 	return u
 }
 
-func (u *__UserMetum_Updater) UserId_Increment(count int) *__UserMetum_Updater {
+func (u *__UserMetaInfo_Updater) UserId_Increment(count int) *__UserMetaInfo_Updater {
 	if count > 0 {
 		u.updates[" UserId = UserId+? "] = count
 	}
@@ -55308,12 +55308,12 @@ func (u *__UserMetum_Updater) UserId_Increment(count int) *__UserMetum_Updater {
 
 //ints
 
-func (u *__UserMetum_Updater) IsNotificationDirty(newVal int) *__UserMetum_Updater {
+func (u *__UserMetaInfo_Updater) IsNotificationDirty(newVal int) *__UserMetaInfo_Updater {
 	u.updates[" IsNotificationDirty = ? "] = newVal
 	return u
 }
 
-func (u *__UserMetum_Updater) IsNotificationDirty_Increment(count int) *__UserMetum_Updater {
+func (u *__UserMetaInfo_Updater) IsNotificationDirty_Increment(count int) *__UserMetaInfo_Updater {
 	if count > 0 {
 		u.updates[" IsNotificationDirty = IsNotificationDirty+? "] = count
 	}
@@ -55332,51 +55332,51 @@ func (u *__UserMetum_Updater) IsNotificationDirty_Increment(count int) *__UserMe
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__UserMetum_Selector) OrderBy_UserId_Desc() *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) OrderBy_UserId_Desc() *__UserMetaInfo_Selector {
 	u.orderBy = " ORDER BY UserId DESC "
 	return u
 }
 
-func (u *__UserMetum_Selector) OrderBy_UserId_Asc() *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) OrderBy_UserId_Asc() *__UserMetaInfo_Selector {
 	u.orderBy = " ORDER BY UserId ASC "
 	return u
 }
 
-func (u *__UserMetum_Selector) Select_UserId() *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) Select_UserId() *__UserMetaInfo_Selector {
 	u.selectCol = "UserId"
 	return u
 }
 
-func (u *__UserMetum_Selector) OrderBy_IsNotificationDirty_Desc() *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) OrderBy_IsNotificationDirty_Desc() *__UserMetaInfo_Selector {
 	u.orderBy = " ORDER BY IsNotificationDirty DESC "
 	return u
 }
 
-func (u *__UserMetum_Selector) OrderBy_IsNotificationDirty_Asc() *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) OrderBy_IsNotificationDirty_Asc() *__UserMetaInfo_Selector {
 	u.orderBy = " ORDER BY IsNotificationDirty ASC "
 	return u
 }
 
-func (u *__UserMetum_Selector) Select_IsNotificationDirty() *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) Select_IsNotificationDirty() *__UserMetaInfo_Selector {
 	u.selectCol = "IsNotificationDirty"
 	return u
 }
 
-func (u *__UserMetum_Selector) Limit(num int) *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) Limit(num int) *__UserMetaInfo_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__UserMetum_Selector) Offset(num int) *__UserMetum_Selector {
+func (u *__UserMetaInfo_Selector) Offset(num int) *__UserMetaInfo_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__UserMetum_Selector) _stoSql() (string, []interface{}) {
+func (u *__UserMetaInfo_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
-	sqlstr := "SELECT " + u.selectCol + " FROM ms.user_meta"
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.user_meta_info"
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -55396,14 +55396,14 @@ func (u *__UserMetum_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__UserMetum_Selector) GetRow(db *sqlx.DB) (*UserMetum, error) {
+func (u *__UserMetaInfo_Selector) GetRow(db *sqlx.DB) (*UserMetaInfo, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &UserMetum{}
+	row := &UserMetaInfo{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -55415,14 +55415,14 @@ func (u *__UserMetum_Selector) GetRow(db *sqlx.DB) (*UserMetum, error) {
 	return row, nil
 }
 
-func (u *__UserMetum_Selector) GetRows(db *sqlx.DB) ([]UserMetum, error) {
+func (u *__UserMetaInfo_Selector) GetRows(db *sqlx.DB) ([]UserMetaInfo, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []UserMetum
+	var rows []UserMetaInfo
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -55436,7 +55436,7 @@ func (u *__UserMetum_Selector) GetRows(db *sqlx.DB) ([]UserMetum, error) {
 	return rows, nil
 }
 
-func (u *__UserMetum_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__UserMetaInfo_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -55453,7 +55453,7 @@ func (u *__UserMetum_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__UserMetum_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__UserMetaInfo_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -55470,7 +55470,7 @@ func (u *__UserMetum_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	return rows, nil
 }
 
-func (u *__UserMetum_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__UserMetaInfo_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -55487,7 +55487,7 @@ func (u *__UserMetum_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__UserMetum_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__UserMetaInfo_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -55505,7 +55505,7 @@ func (u *__UserMetum_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__UserMetum_Updater) Update(db XODB) (int, error) {
+func (u *__UserMetaInfo_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -55522,7 +55522,7 @@ func (u *__UserMetum_Updater) Update(db XODB) (int, error) {
 	allArgs = append(allArgs, updateArgs...)
 	allArgs = append(allArgs, whereArgs...)
 
-	sqlstr := `UPDATE ms.user_meta SET ` + sqlUpdate
+	sqlstr := `UPDATE ms.user_meta_info SET ` + sqlUpdate
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -55542,7 +55542,7 @@ func (u *__UserMetum_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__UserMetum_Deleter) Delete(db XODB) (int, error) {
+func (d *__UserMetaInfo_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -55555,7 +55555,7 @@ func (d *__UserMetum_Deleter) Delete(db XODB) (int, error) {
 		args = append(args, w.args...)
 	}
 
-	sqlstr := "DELETE FROM ms.user_meta WHERE " + wheresStr
+	sqlstr := "DELETE FROM ms.user_meta_info WHERE " + wheresStr
 
 	// run query
 	XOLog(sqlstr, args)
@@ -55573,15 +55573,15 @@ func (d *__UserMetum_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  UserMetum ////////////////
-func MassInsert_UserMetum(rows []UserMetum, db XODB) error {
+///////////////////////// Mass insert - replace for  UserMetaInfo ////////////////
+func MassInsert_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 	var err error
 	ln := len(rows)
 	s := "(?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "INSERT INTO ms.user_meta (" +
+	sqlstr := "INSERT INTO ms.user_meta_info (" +
 		"IsNotificationDirty" +
 		") VALUES " + insVals
 
@@ -55604,14 +55604,14 @@ func MassInsert_UserMetum(rows []UserMetum, db XODB) error {
 	return nil
 }
 
-func MassReplace_UserMetum(rows []UserMetum, db XODB) error {
+func MassReplace_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 	var err error
 	ln := len(rows)
 	s := "(?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "REPLACE INTO ms.user_meta (" +
+	sqlstr := "REPLACE INTO ms.user_meta_info (" +
 		"IsNotificationDirty" +
 		") VALUES " + insVals
 
@@ -57131,6 +57131,45 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	return &flmh, nil
 }
 
+// LikesById retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'Id'.
+func LikesById(db XODB, id int) ([]*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Like{}
+	for q.Next() {
+		l := Like{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &l)
+	}
+
+	return res, nil
+}
+
 // LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId'.
@@ -57248,45 +57287,6 @@ func MediaById(db XODB, id int) (*Media, error) {
 	return &m, nil
 }
 
-// MessagesByToUserId retrieves a row from 'ms.message' as a Message.
-//
-// Generated from index 'ToUserId'.
-func MessagesByToUserId(db XODB, toUserId int) ([]*Message, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
-		`FROM ms.message ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Message{}
-	for q.Next() {
-		m := Message{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &m)
-	}
-
-	return res, nil
-}
-
 // MessagesByToUserIdTimeMs retrieves a row from 'ms.message' as a Message.
 //
 // Generated from index 'ToUserId_2'.
@@ -57402,6 +57402,45 @@ func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
 	}
 
 	return &mrtp, nil
+}
+
+// MsgSeenByPeersByToUserId retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
+//
+// Generated from index 'ToUserId'.
+func MsgSeenByPeersByToUserId(db XODB, toUserId int) ([]*MsgSeenByPeer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
+		`FROM ms.msg_seen_by_peer ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgSeenByPeer{}
+	for q.Next() {
+		msbp := MsgSeenByPeer{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &msbp)
+	}
+
+	return res, nil
 }
 
 // MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
@@ -57664,6 +57703,45 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 	return res, nil
 }
 
+// PhoneContactsByUserId retrieves a row from 'ms.phone_contacts' as a PhoneContact.
+//
+// Generated from index 'UserId'.
+func PhoneContactsByUserId(db XODB, userId int) ([]*PhoneContact, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime ` +
+		`FROM ms.phone_contacts ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*PhoneContact{}
+	for q.Next() {
+		pc := PhoneContact{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &pc)
+	}
+
+	return res, nil
+}
+
 // PhoneContactsByUserIdCreatedTime retrieves a row from 'ms.phone_contacts' as a PhoneContact.
 //
 // Generated from index 'UserId_Time'.
@@ -57727,45 +57805,6 @@ func PhoneContactById(db XODB, id int) (*PhoneContact, error) {
 	}
 
 	return &pc, nil
-}
-
-// PostsByUserId retrieves a row from 'ms.post' as a Post.
-//
-// Generated from index 'UserId'.
-func PostsByUserId(db XODB, userId int) ([]*Post, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaServerId, Width, Height, SharedTo, HasTag, LikesCount, CommentsCount, CreatedTime ` +
-		`FROM ms.post ` +
-		`WHERE UserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId)
-	q, err := db.Query(sqlstr, userId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Post{}
-	for q.Next() {
-		p := Post{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &p)
-	}
-
-	return res, nil
 }
 
 // PostById retrieves a row from 'ms.post' as a Post.
@@ -57844,45 +57883,6 @@ func SearchClickedById(db XODB, id uint) (*SearchClicked, error) {
 	}
 
 	return &sc, nil
-}
-
-// SessionsById retrieves a row from 'ms.session' as a Session.
-//
-// Generated from index 'Id'.
-func SessionsById(db XODB, id int) ([]*Session, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
-		`FROM ms.session ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Session{}
-	for q.Next() {
-		s := Session{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &s)
-	}
-
-	return res, nil
 }
 
 // SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
@@ -58171,30 +58171,30 @@ func UserById(db XODB, id int) (*User, error) {
 	return &u, nil
 }
 
-// UserMetumByUserId retrieves a row from 'ms.user_meta' as a UserMetum.
+// UserMetaInfoByUserId retrieves a row from 'ms.user_meta_info' as a UserMetaInfo.
 //
-// Generated from index 'user_meta_UserId_pkey'.
-func UserMetumByUserId(db XODB, userId int) (*UserMetum, error) {
+// Generated from index 'user_meta_info_UserId_pkey'.
+func UserMetaInfoByUserId(db XODB, userId int) (*UserMetaInfo, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
 		`UserId, IsNotificationDirty ` +
-		`FROM ms.user_meta ` +
+		`FROM ms.user_meta_info ` +
 		`WHERE UserId = ?`
 
 	// run query
 	XOLog(sqlstr, userId)
-	um := UserMetum{
+	umi := UserMetaInfo{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, userId).Scan(&um.UserId, &um.IsNotificationDirty)
+	err = db.QueryRow(sqlstr, userId).Scan(&umi.UserId, &umi.IsNotificationDirty)
 	if err != nil {
 		return nil, err
 	}
 
-	return &um, nil
+	return &umi, nil
 }
 
 // UserPasswordByUserId retrieves a row from 'ms.user_password' as a UserPassword.

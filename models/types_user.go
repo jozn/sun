@@ -60,6 +60,13 @@ type User struct { //legacy switch to UserTable
 	_exists, _deleted bool
 }
 
+type UserMetaInfo struct {
+    UserId              int
+    IsNotificationDirty int
+
+    _exists, _deleted bool
+}
+
 type UserTable struct {
 	UserBasic
 	UserPhone

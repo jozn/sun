@@ -23,7 +23,7 @@ func OnPostUnLiked(like *Like) {
 /////////////// Comments ////////////////////////
 //ep
 func OnPostCommented(comment *Comment, post *Post) {
-	Notification_OnPostCommented(comment, post, true)
+	//Notification_OnPostCommented(comment, post, true)
 }
 
 func OnPostCommentedDelted(comment *Comment, post *Post) {

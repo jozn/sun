@@ -6,7 +6,7 @@ import (
 )
 
 func Like_LikePost(UserId, PostId int) {
-	l := Like{
+	l := &Like{
 		UserId:      UserId,
 		PostId:      PostId,
 		TypeId:      0,

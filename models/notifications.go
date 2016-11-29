@@ -1,7 +1,6 @@
 package models
 
 import (
-	"math"
 	"ms/sun/base"
 	"ms/sun/helper"
 )
@@ -30,7 +29,7 @@ type NotificationRemoved struct {
 
 //////// For Comments //////////
 func Notification_OnPostCommented(comment *Comment, post *Post) {
-	if comment == nil || post || nil {
+	if comment == nil || post == nil {
 		return
 	}
 
@@ -52,7 +51,7 @@ func Notification_OnPostCommented(comment *Comment, post *Post) {
 }
 
 func Notification_OnPostCommentedDelted(comment *Comment, post *Post) {
-	if comment == nil || post || nil {
+	if comment == nil || post == nil {
 		return
 	}
 
