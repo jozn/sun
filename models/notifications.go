@@ -21,6 +21,14 @@ type Notification struct {
 	_exists, _deleted bool
 }
 
+type __NotificationRemoved struct {
+    NotificationId int           `json:"NotificationId"` // NotificationId -
+    ForUserId      sql.NullInt64 `json:"ForUserId"`      // ForUserId -
+
+                                                         // xo fields
+    _exists, _deleted bool
+}
+
 //dep
 func (n *Notification) InsertToDb() {
 	res, err := base.DbInsertStruct(n, "notification")
