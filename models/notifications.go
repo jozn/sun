@@ -109,38 +109,47 @@ func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
 
 ////////////// Likes ///////////////
 func Notification_OnPostLiked(lk *Like) {
-	Notification_OnPostLikeing_Imple(lk, true)
+    post, err := CacheModels.GetPostById(lk.PostId)
+    if err != nil {
+        return
+    }
+
+    nf := Notification{
+        Id:           0,
+        ForUserId:    post.UserId,
+        ActorUserId:  lk.UserId,
+        ActionTypeId: ACTION_TYPE_POST_LIKED,
+        ObjectTypeId: OBJECT_LIKE,
+        TargetId:     post.Id,
+        ObjectId:     0,
+        SeenStatus:   0,
+        CreatedTime:  helper.TimeNow(),
+    }
+
+    nf.Save(base.DB)
 }
 
 func Notification_OnPostUnLiked(lk *Like) {
-	Notification_OnPostLikeing_Imple(lk, false)
-}
+    post, err := CacheModels.GetPostById(lk.PostId)
+    if err != nil {
+        return
+    }
 
-func Notification_OnPostLikeing_Imple(lk *Like, added bool) {
-	post, err := CacheModels.GetPostById(lk.PostId)
-	if err != nil {
-		return
-	}
+    row,err:=NewNotification_Selector().
+        ForUserId_EQ(post.UserId).
+        ActorUserId_EQ(lk.UserId).
+        ActionTypeId_EQ(ACTION_TYPE_POST_LIKED).
+        GetRow(base.DB)
 
-	nf := Notification{
-		Id:           0,
-		ForUserId:    post.UserId,
-		ActorUserId:  lk.UserId,
-		ActionTypeId: ACTION_TYPE_POST_LIKED,
-		ObjectTypeId: OBJECT_LIKE,
-		TargetId:     post.Id,
-		ObjectId:     0,
-		SeenStatus:   0,
-		CreatedTime:  helper.TimeNow(),
-	}
+    if err==nil{
+        nr:= NotificationRemoved{
+            NotificationId:row.Id,
+            ForUserId:post.UserId,
+        }
 
-	if added {
-		nf.InsertToDb()
-	} else {
-		nf.ActionTypeId = -nf.ActionTypeId
-		nf.InsertToDb()
-		Notification_Delete(nf)
-	}
+        row.Delete(base.DB)
+        nr.Save(base.DB)
+    }
 }
 
 //////////////////////////////////

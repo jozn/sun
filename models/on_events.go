@@ -10,12 +10,13 @@ func OnPostDeleted(post *Post) {
 }
 
 //////////////// Likes - Posts //////////////////////
+//dep
 func OnPostLiked(like *Like) {
-	Notification_OnPostLiked(like)
+	//Notification_OnPostLiked(like)
 }
-
+//dep
 func OnPostUnLiked(like *Like) {
-	Notification_OnPostUnLiked(like)
+	//Notification_OnPostUnLiked(like)
 }
 
 /////////////// Comments ////////////////////////

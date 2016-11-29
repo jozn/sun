@@ -127,7 +127,7 @@ func FactComment(c *base.Action) {
 }
 
 func FactLike(c *base.Action) {
-	models.CreatePostLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
+	models.Like_LikePost(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
 	//models.UserMemoryStore.AddPostLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
 }
 

@@ -47,7 +47,7 @@ func GetLikesAction(c *base.Action) base.AppErr {
 	return nil
 }
 
-func PostAddLikeAction(c *base.Action) base.AppErr {
+func PostAddLikeCtrl(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 
 	pids := c.Req.Form.Get("post_id")
@@ -55,13 +55,13 @@ func PostAddLikeAction(c *base.Action) base.AppErr {
 	if pid < 1 {
 		return nil
 	}
-	//models.UserMemoryStore.AddPostLike(c.UserId(), pid)
-	models.CreatePostLike(c.UserId(), pid)
+
+	models.Like_LikePost(c.UserId(), pid)
 	c.SendText("OK")
 	return nil
 }
 
-func PostRemoveLikeAction(c *base.Action) base.AppErr {
+func PostRemoveLikeCtrl(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 	pids := c.Req.Form.Get("post_id")
 	pid := helper.StrToInt(pids, 0)
@@ -69,7 +69,7 @@ func PostRemoveLikeAction(c *base.Action) base.AppErr {
 		return nil
 	}
 	//models.UserMemoryStore.RemovePostLike(c.UserId(), pid)
-	models.DeletePostLike(c.UserId(), pid)
+	models.Like_UnlikePost(c.UserId(), pid)
 	c.SendText("OK")
 	return nil
 }
