@@ -8,530 +8,508 @@ import (
 	"time"
 )
 
-//Comment Events
+//Comment Events - * (Manually copy this to other location)
 func OnComment_Insert__(o *Comment) {
-	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnComment_Update__(o *Comment) {
-	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnComment_Delete__(o *Comment) {
-	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnComment_LoadOne__(o *Comment) {
-	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnComment_LoadMany__(o []*Comment) {
 	for _, v := range o {
-		Cacher.Set("Comment:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("Comment:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//FollowingList Events
+//FollowingList Events - * (Manually copy this to other location)
 func OnFollowingList_Insert__(o *FollowingList) {
-	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnFollowingList_Update__(o *FollowingList) {
-	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnFollowingList_Delete__(o *FollowingList) {
-	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnFollowingList_LoadOne__(o *FollowingList) {
-	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnFollowingList_LoadMany__(o []*FollowingList) {
 	for _, v := range o {
-		Cacher.Set("FollowingList:"+strconv.Itoa(v.UserId), o, time.Hour*6)
+		Cacher.Set("FollowingList:"+strconv.Itoa(v.UserId), o, time.Hour*0)
 	}
-
 }
 
-//FollowingListMember Events
+//FollowingListMember Events - * (Manually copy this to other location)
 func OnFollowingListMember_Insert__(o *FollowingListMember) {
-	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnFollowingListMember_Update__(o *FollowingListMember) {
-	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnFollowingListMember_Delete__(o *FollowingListMember) {
-	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnFollowingListMember_LoadOne__(o *FollowingListMember) {
-	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnFollowingListMember_LoadMany__(o []*FollowingListMember) {
 	for _, v := range o {
-		Cacher.Set("FollowingListMember:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("FollowingListMember:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//FollowingListMemberHistory Events
+//FollowingListMemberHistory Events - * (Manually copy this to other location)
 func OnFollowingListMemberHistory_Insert__(o *FollowingListMemberHistory) {
-	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnFollowingListMemberHistory_Update__(o *FollowingListMemberHistory) {
-	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnFollowingListMemberHistory_Delete__(o *FollowingListMemberHistory) {
-	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnFollowingListMemberHistory_LoadOne__(o *FollowingListMemberHistory) {
-	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnFollowingListMemberHistory_LoadMany__(o []*FollowingListMemberHistory) {
 	for _, v := range o {
-		Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//Like Events
+//Like Events - * (Manually copy this to other location)
 func OnLike_Insert__(o *Like) {
-	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnLike_Update__(o *Like) {
-	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnLike_Delete__(o *Like) {
-	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnLike_LoadOne__(o *Like) {
-	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnLike_LoadMany__(o []*Like) {
 	for _, v := range o {
-		Cacher.Set("Like:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("Like:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//Media Events
+//Media Events - * (Manually copy this to other location)
 func OnMedia_Insert__(o *Media) {
-	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMedia_Update__(o *Media) {
-	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMedia_Delete__(o *Media) {
-	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMedia_LoadOne__(o *Media) {
-	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMedia_LoadMany__(o []*Media) {
 	for _, v := range o {
-		Cacher.Set("Media:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("Media:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//Message Events
+//Message Events - * (Manually copy this to other location)
 func OnMessage_Insert__(o *Message) {
-	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMessage_Update__(o *Message) {
-	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMessage_Delete__(o *Message) {
-	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMessage_LoadOne__(o *Message) {
-	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMessage_LoadMany__(o []*Message) {
 	for _, v := range o {
-		Cacher.Set("Message:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("Message:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//MsgDeletedFromServer Events
+//MsgDeletedFromServer Events - * (Manually copy this to other location)
 func OnMsgDeletedFromServer_Insert__(o *MsgDeletedFromServer) {
-	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgDeletedFromServer_Update__(o *MsgDeletedFromServer) {
-	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgDeletedFromServer_Delete__(o *MsgDeletedFromServer) {
-	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgDeletedFromServer_LoadOne__(o *MsgDeletedFromServer) {
-	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgDeletedFromServer_LoadMany__(o []*MsgDeletedFromServer) {
 	for _, v := range o {
-		Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//MsgReceivedToPeer Events
+//MsgReceivedToPeer Events - * (Manually copy this to other location)
 func OnMsgReceivedToPeer_Insert__(o *MsgReceivedToPeer) {
-	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgReceivedToPeer_Update__(o *MsgReceivedToPeer) {
-	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgReceivedToPeer_Delete__(o *MsgReceivedToPeer) {
-	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgReceivedToPeer_LoadOne__(o *MsgReceivedToPeer) {
-	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgReceivedToPeer_LoadMany__(o []*MsgReceivedToPeer) {
 	for _, v := range o {
-		Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//MsgSeenByPeer Events
+//MsgSeenByPeer Events - * (Manually copy this to other location)
 func OnMsgSeenByPeer_Insert__(o *MsgSeenByPeer) {
-	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgSeenByPeer_Update__(o *MsgSeenByPeer) {
-	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgSeenByPeer_Delete__(o *MsgSeenByPeer) {
-	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgSeenByPeer_LoadOne__(o *MsgSeenByPeer) {
-	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnMsgSeenByPeer_LoadMany__(o []*MsgSeenByPeer) {
 	for _, v := range o {
-		Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//Notification Events
+//Notification Events - * (Manually copy this to other location)
 func OnNotification_Insert__(o *Notification) {
-	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnNotification_Update__(o *Notification) {
-	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnNotification_Delete__(o *Notification) {
-	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnNotification_LoadOne__(o *Notification) {
-	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnNotification_LoadMany__(o []*Notification) {
 	for _, v := range o {
-		Cacher.Set("Notification:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("Notification:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//NotificationRemoved Events
+//NotificationRemoved Events - * (Manually copy this to other location)
 func OnNotificationRemoved_Insert__(o *NotificationRemoved) {
-	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*6)
+	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*0)
 }
 
 func OnNotificationRemoved_Update__(o *NotificationRemoved) {
-	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*6)
+	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*0)
 }
 
 func OnNotificationRemoved_Delete__(o *NotificationRemoved) {
-	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*6)
+	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*0)
 }
 
 func OnNotificationRemoved_LoadOne__(o *NotificationRemoved) {
-	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*6)
+	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*0)
 }
 
 func OnNotificationRemoved_LoadMany__(o []*NotificationRemoved) {
 	for _, v := range o {
-		Cacher.Set("NotificationRemoved:"+strconv.Itoa(v.NotificationId), o, time.Hour*6)
+		Cacher.Set("NotificationRemoved:"+strconv.Itoa(v.NotificationId), o, time.Hour*0)
 	}
-
 }
 
-//PhoneContact Events
+//PhoneContact Events - * (Manually copy this to other location)
 func OnPhoneContact_Insert__(o *PhoneContact) {
-	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnPhoneContact_Update__(o *PhoneContact) {
-	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnPhoneContact_Delete__(o *PhoneContact) {
-	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnPhoneContact_LoadOne__(o *PhoneContact) {
-	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnPhoneContact_LoadMany__(o []*PhoneContact) {
 	for _, v := range o {
-		Cacher.Set("PhoneContact:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("PhoneContact:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//Post Events
+//Post Events - * (Manually copy this to other location)
 func OnPost_Insert__(o *Post) {
-	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnPost_Update__(o *Post) {
-	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnPost_Delete__(o *Post) {
-	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnPost_LoadOne__(o *Post) {
-	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnPost_LoadMany__(o []*Post) {
 	for _, v := range o {
-		Cacher.Set("Post:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("Post:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//RecommendUser Events
+//RecommendUser Events - * (Manually copy this to other location)
 func OnRecommendUser_Insert__(o *RecommendUser) {
-	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnRecommendUser_Update__(o *RecommendUser) {
-	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnRecommendUser_Delete__(o *RecommendUser) {
-	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnRecommendUser_LoadOne__(o *RecommendUser) {
-	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnRecommendUser_LoadMany__(o []*RecommendUser) {
 	for _, v := range o {
-		Cacher.Set("RecommendUser:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("RecommendUser:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//SearchClicked Events
+//SearchClicked Events - * (Manually copy this to other location)
 func OnSearchClicked_Insert__(o *SearchClicked) {
-	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnSearchClicked_Update__(o *SearchClicked) {
-	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnSearchClicked_Delete__(o *SearchClicked) {
-	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnSearchClicked_LoadOne__(o *SearchClicked) {
-	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnSearchClicked_LoadMany__(o []*SearchClicked) {
 	for _, v := range o {
-		Cacher.Set("SearchClicked:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("SearchClicked:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//Session Events
+//Session Events - * (Manually copy this to other location)
 func OnSession_Insert__(o *Session) {
-	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*6)
+	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*0)
 }
 
 func OnSession_Update__(o *Session) {
-	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*6)
+	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*0)
 }
 
 func OnSession_Delete__(o *Session) {
-	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*6)
+	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*0)
 }
 
 func OnSession_LoadOne__(o *Session) {
-	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*6)
+	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*0)
 }
 
 func OnSession_LoadMany__(o []*Session) {
 	for _, v := range o {
-		Cacher.Set("Session:"+strconv.Itoa(v.SessionUuid), o, time.Hour*6)
+		Cacher.Set("Session:"+strconv.Itoa(v.SessionUuid), o, time.Hour*0)
 	}
-
 }
 
-//Tag Events
+//Tag Events - * (Manually copy this to other location)
 func OnTag_Insert__(o *Tag) {
-	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnTag_Update__(o *Tag) {
-	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnTag_Delete__(o *Tag) {
-	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnTag_LoadOne__(o *Tag) {
-	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnTag_LoadMany__(o []*Tag) {
 	for _, v := range o {
-		Cacher.Set("Tag:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("Tag:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//TagsPost Events
+//TagsPost Events - * (Manually copy this to other location)
 func OnTagsPost_Insert__(o *TagsPost) {
-	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnTagsPost_Update__(o *TagsPost) {
-	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnTagsPost_Delete__(o *TagsPost) {
-	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnTagsPost_LoadOne__(o *TagsPost) {
-	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnTagsPost_LoadMany__(o []*TagsPost) {
 	for _, v := range o {
-		Cacher.Set("TagsPost:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("TagsPost:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-    UserById()
 }
 
-//User Events
+//User Events - * (Manually copy this to other location)
 func OnUser_Insert__(o *User) {
-	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnUser_Update__(o *User) {
-	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnUser_Delete__(o *User) {
-	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnUser_LoadOne__(o *User) {
-	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*6)
+	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*0)
 }
 
 func OnUser_LoadMany__(o []*User) {
 	for _, v := range o {
-		Cacher.Set("User:"+strconv.Itoa(v.Id), o, time.Hour*6)
+		Cacher.Set("User:"+strconv.Itoa(v.Id), o, time.Hour*0)
 	}
-
 }
 
-//UserMetaInfo Events
+//UserMetaInfo Events - * (Manually copy this to other location)
 func OnUserMetaInfo_Insert__(o *UserMetaInfo) {
-	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnUserMetaInfo_Update__(o *UserMetaInfo) {
-	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnUserMetaInfo_Delete__(o *UserMetaInfo) {
-	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnUserMetaInfo_LoadOne__(o *UserMetaInfo) {
-	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnUserMetaInfo_LoadMany__(o []*UserMetaInfo) {
 	for _, v := range o {
-		Cacher.Set("UserMetaInfo:"+strconv.Itoa(v.UserId), o, time.Hour*6)
+		Cacher.Set("UserMetaInfo:"+strconv.Itoa(v.UserId), o, time.Hour*0)
 	}
-
 }
 
-//UserPassword Events
+//UserPassword Events - * (Manually copy this to other location)
 func OnUserPassword_Insert__(o *UserPassword) {
-	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnUserPassword_Update__(o *UserPassword) {
-	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnUserPassword_Delete__(o *UserPassword) {
-	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnUserPassword_LoadOne__(o *UserPassword) {
-	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*6)
+	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*0)
 }
 
 func OnUserPassword_LoadMany__(o []*UserPassword) {
 	for _, v := range o {
-		Cacher.Set("UserPassword:"+strconv.Itoa(v.UserId), o, time.Hour*6)
+		Cacher.Set("UserPassword:"+strconv.Itoa(v.UserId), o, time.Hour*0)
 	}
-
 }
