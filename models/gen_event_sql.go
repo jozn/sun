@@ -9,507 +9,507 @@ import (
 )
 
 //Comment Events
-func OnComment_Insert__(o *Comment) {
-	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnComment_AfterInsert__(row *Comment) {
+	Cacher.Set("Comment:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnComment_Update__(o *Comment) {
-	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnComment_AfterUpdate__(row *Comment) {
+	Cacher.Set("Comment:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnComment_Delete__(o *Comment) {
-	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnComment_AfterDelete__(row *Comment) {
+	Cacher.Delete("Comment:" + strconv.Itoa(row.Id))
 }
 
-func OnComment_LoadOne__(o *Comment) {
-	Cacher.Set("Comment:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnComment_LoadOne__(row *Comment) {
+	Cacher.Set("Comment:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnComment_LoadMany__(o []*Comment) {
-	for _, v := range o {
-		Cacher.Set("Comment:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnComment_LoadMany__(rows []*Comment) {
+	for _, row := range rows {
+		Cacher.Set("Comment:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //FollowingList Events
-func OnFollowingList_Insert__(o *FollowingList) {
-	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnFollowingList_AfterInsert__(row *FollowingList) {
+	Cacher.Set("FollowingList:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 }
 
-func OnFollowingList_Update__(o *FollowingList) {
-	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnFollowingList_AfterUpdate__(row *FollowingList) {
+	Cacher.Set("FollowingList:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 }
 
-func OnFollowingList_Delete__(o *FollowingList) {
-	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnFollowingList_AfterDelete__(row *FollowingList) {
+	Cacher.Delete("FollowingList:" + strconv.Itoa(row.UserId))
 }
 
-func OnFollowingList_LoadOne__(o *FollowingList) {
-	Cacher.Set("FollowingList:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnFollowingList_LoadOne__(row *FollowingList) {
+	Cacher.Set("FollowingList:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 }
 
-func OnFollowingList_LoadMany__(o []*FollowingList) {
-	for _, v := range o {
-		Cacher.Set("FollowingList:"+strconv.Itoa(v.UserId), o, time.Hour*0)
+func OnFollowingList_LoadMany__(rows []*FollowingList) {
+	for _, row := range rows {
+		Cacher.Set("FollowingList:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 	}
 }
 
 //FollowingListMember Events
-func OnFollowingListMember_Insert__(o *FollowingListMember) {
-	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnFollowingListMember_AfterInsert__(row *FollowingListMember) {
+	Cacher.Set("FollowingListMember:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnFollowingListMember_Update__(o *FollowingListMember) {
-	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnFollowingListMember_AfterUpdate__(row *FollowingListMember) {
+	Cacher.Set("FollowingListMember:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnFollowingListMember_Delete__(o *FollowingListMember) {
-	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnFollowingListMember_AfterDelete__(row *FollowingListMember) {
+	Cacher.Delete("FollowingListMember:" + strconv.Itoa(row.Id))
 }
 
-func OnFollowingListMember_LoadOne__(o *FollowingListMember) {
-	Cacher.Set("FollowingListMember:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnFollowingListMember_LoadOne__(row *FollowingListMember) {
+	Cacher.Set("FollowingListMember:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnFollowingListMember_LoadMany__(o []*FollowingListMember) {
-	for _, v := range o {
-		Cacher.Set("FollowingListMember:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnFollowingListMember_LoadMany__(rows []*FollowingListMember) {
+	for _, row := range rows {
+		Cacher.Set("FollowingListMember:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //FollowingListMemberHistory Events
-func OnFollowingListMemberHistory_Insert__(o *FollowingListMemberHistory) {
-	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnFollowingListMemberHistory_AfterInsert__(row *FollowingListMemberHistory) {
+	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnFollowingListMemberHistory_Update__(o *FollowingListMemberHistory) {
-	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnFollowingListMemberHistory_AfterUpdate__(row *FollowingListMemberHistory) {
+	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnFollowingListMemberHistory_Delete__(o *FollowingListMemberHistory) {
-	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnFollowingListMemberHistory_AfterDelete__(row *FollowingListMemberHistory) {
+	Cacher.Delete("FollowingListMemberHistory:" + strconv.Itoa(row.Id))
 }
 
-func OnFollowingListMemberHistory_LoadOne__(o *FollowingListMemberHistory) {
-	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnFollowingListMemberHistory_LoadOne__(row *FollowingListMemberHistory) {
+	Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnFollowingListMemberHistory_LoadMany__(o []*FollowingListMemberHistory) {
-	for _, v := range o {
-		Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnFollowingListMemberHistory_LoadMany__(rows []*FollowingListMemberHistory) {
+	for _, row := range rows {
+		Cacher.Set("FollowingListMemberHistory:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //Like Events
-func OnLike_Insert__(o *Like) {
-	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnLike_AfterInsert__(row *Like) {
+	Cacher.Set("Like:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnLike_Update__(o *Like) {
-	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnLike_AfterUpdate__(row *Like) {
+	Cacher.Set("Like:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnLike_Delete__(o *Like) {
-	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnLike_AfterDelete__(row *Like) {
+	Cacher.Delete("Like:" + strconv.Itoa(row.Id))
 }
 
-func OnLike_LoadOne__(o *Like) {
-	Cacher.Set("Like:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnLike_LoadOne__(row *Like) {
+	Cacher.Set("Like:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnLike_LoadMany__(o []*Like) {
-	for _, v := range o {
-		Cacher.Set("Like:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnLike_LoadMany__(rows []*Like) {
+	for _, row := range rows {
+		Cacher.Set("Like:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //Media Events
-func OnMedia_Insert__(o *Media) {
-	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMedia_AfterInsert__(row *Media) {
+	Cacher.Set("Media:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMedia_Update__(o *Media) {
-	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMedia_AfterUpdate__(row *Media) {
+	Cacher.Set("Media:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMedia_Delete__(o *Media) {
-	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMedia_AfterDelete__(row *Media) {
+	Cacher.Delete("Media:" + strconv.Itoa(row.Id))
 }
 
-func OnMedia_LoadOne__(o *Media) {
-	Cacher.Set("Media:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMedia_LoadOne__(row *Media) {
+	Cacher.Set("Media:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMedia_LoadMany__(o []*Media) {
-	for _, v := range o {
-		Cacher.Set("Media:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnMedia_LoadMany__(rows []*Media) {
+	for _, row := range rows {
+		Cacher.Set("Media:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //Message Events
-func OnMessage_Insert__(o *Message) {
-	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMessage_AfterInsert__(row *Message) {
+	Cacher.Set("Message:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMessage_Update__(o *Message) {
-	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMessage_AfterUpdate__(row *Message) {
+	Cacher.Set("Message:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMessage_Delete__(o *Message) {
-	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMessage_AfterDelete__(row *Message) {
+	Cacher.Delete("Message:" + strconv.Itoa(row.Id))
 }
 
-func OnMessage_LoadOne__(o *Message) {
-	Cacher.Set("Message:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMessage_LoadOne__(row *Message) {
+	Cacher.Set("Message:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMessage_LoadMany__(o []*Message) {
-	for _, v := range o {
-		Cacher.Set("Message:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnMessage_LoadMany__(rows []*Message) {
+	for _, row := range rows {
+		Cacher.Set("Message:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //MsgDeletedFromServer Events
-func OnMsgDeletedFromServer_Insert__(o *MsgDeletedFromServer) {
-	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgDeletedFromServer_AfterInsert__(row *MsgDeletedFromServer) {
+	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMsgDeletedFromServer_Update__(o *MsgDeletedFromServer) {
-	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgDeletedFromServer_AfterUpdate__(row *MsgDeletedFromServer) {
+	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMsgDeletedFromServer_Delete__(o *MsgDeletedFromServer) {
-	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgDeletedFromServer_AfterDelete__(row *MsgDeletedFromServer) {
+	Cacher.Delete("MsgDeletedFromServer:" + strconv.Itoa(row.Id))
 }
 
-func OnMsgDeletedFromServer_LoadOne__(o *MsgDeletedFromServer) {
-	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgDeletedFromServer_LoadOne__(row *MsgDeletedFromServer) {
+	Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMsgDeletedFromServer_LoadMany__(o []*MsgDeletedFromServer) {
-	for _, v := range o {
-		Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnMsgDeletedFromServer_LoadMany__(rows []*MsgDeletedFromServer) {
+	for _, row := range rows {
+		Cacher.Set("MsgDeletedFromServer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //MsgReceivedToPeer Events
-func OnMsgReceivedToPeer_Insert__(o *MsgReceivedToPeer) {
-	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgReceivedToPeer_AfterInsert__(row *MsgReceivedToPeer) {
+	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMsgReceivedToPeer_Update__(o *MsgReceivedToPeer) {
-	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgReceivedToPeer_AfterUpdate__(row *MsgReceivedToPeer) {
+	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMsgReceivedToPeer_Delete__(o *MsgReceivedToPeer) {
-	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgReceivedToPeer_AfterDelete__(row *MsgReceivedToPeer) {
+	Cacher.Delete("MsgReceivedToPeer:" + strconv.Itoa(row.Id))
 }
 
-func OnMsgReceivedToPeer_LoadOne__(o *MsgReceivedToPeer) {
-	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgReceivedToPeer_LoadOne__(row *MsgReceivedToPeer) {
+	Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMsgReceivedToPeer_LoadMany__(o []*MsgReceivedToPeer) {
-	for _, v := range o {
-		Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnMsgReceivedToPeer_LoadMany__(rows []*MsgReceivedToPeer) {
+	for _, row := range rows {
+		Cacher.Set("MsgReceivedToPeer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //MsgSeenByPeer Events
-func OnMsgSeenByPeer_Insert__(o *MsgSeenByPeer) {
-	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgSeenByPeer_AfterInsert__(row *MsgSeenByPeer) {
+	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMsgSeenByPeer_Update__(o *MsgSeenByPeer) {
-	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgSeenByPeer_AfterUpdate__(row *MsgSeenByPeer) {
+	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMsgSeenByPeer_Delete__(o *MsgSeenByPeer) {
-	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgSeenByPeer_AfterDelete__(row *MsgSeenByPeer) {
+	Cacher.Delete("MsgSeenByPeer:" + strconv.Itoa(row.Id))
 }
 
-func OnMsgSeenByPeer_LoadOne__(o *MsgSeenByPeer) {
-	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnMsgSeenByPeer_LoadOne__(row *MsgSeenByPeer) {
+	Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnMsgSeenByPeer_LoadMany__(o []*MsgSeenByPeer) {
-	for _, v := range o {
-		Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnMsgSeenByPeer_LoadMany__(rows []*MsgSeenByPeer) {
+	for _, row := range rows {
+		Cacher.Set("MsgSeenByPeer:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //Notification Events
-func OnNotification_Insert__(o *Notification) {
-	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnNotification_AfterInsert__(row *Notification) {
+	Cacher.Set("Notification:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnNotification_Update__(o *Notification) {
-	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnNotification_AfterUpdate__(row *Notification) {
+	Cacher.Set("Notification:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnNotification_Delete__(o *Notification) {
-	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnNotification_AfterDelete__(row *Notification) {
+	Cacher.Delete("Notification:" + strconv.Itoa(row.Id))
 }
 
-func OnNotification_LoadOne__(o *Notification) {
-	Cacher.Set("Notification:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnNotification_LoadOne__(row *Notification) {
+	Cacher.Set("Notification:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnNotification_LoadMany__(o []*Notification) {
-	for _, v := range o {
-		Cacher.Set("Notification:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnNotification_LoadMany__(rows []*Notification) {
+	for _, row := range rows {
+		Cacher.Set("Notification:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //NotificationRemoved Events
-func OnNotificationRemoved_Insert__(o *NotificationRemoved) {
-	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*0)
+func OnNotificationRemoved_AfterInsert__(row *NotificationRemoved) {
+	Cacher.Set("NotificationRemoved:"+strconv.Itoa(row.NotificationId), row, time.Hour*0)
 }
 
-func OnNotificationRemoved_Update__(o *NotificationRemoved) {
-	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*0)
+func OnNotificationRemoved_AfterUpdate__(row *NotificationRemoved) {
+	Cacher.Set("NotificationRemoved:"+strconv.Itoa(row.NotificationId), row, time.Hour*0)
 }
 
-func OnNotificationRemoved_Delete__(o *NotificationRemoved) {
-	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*0)
+func OnNotificationRemoved_AfterDelete__(row *NotificationRemoved) {
+	Cacher.Delete("NotificationRemoved:" + strconv.Itoa(row.NotificationId))
 }
 
-func OnNotificationRemoved_LoadOne__(o *NotificationRemoved) {
-	Cacher.Set("NotificationRemoved:"+strconv.Itoa(o.NotificationId), o, time.Hour*0)
+func OnNotificationRemoved_LoadOne__(row *NotificationRemoved) {
+	Cacher.Set("NotificationRemoved:"+strconv.Itoa(row.NotificationId), row, time.Hour*0)
 }
 
-func OnNotificationRemoved_LoadMany__(o []*NotificationRemoved) {
-	for _, v := range o {
-		Cacher.Set("NotificationRemoved:"+strconv.Itoa(v.NotificationId), o, time.Hour*0)
+func OnNotificationRemoved_LoadMany__(rows []*NotificationRemoved) {
+	for _, row := range rows {
+		Cacher.Set("NotificationRemoved:"+strconv.Itoa(row.NotificationId), row, time.Hour*0)
 	}
 }
 
 //PhoneContact Events
-func OnPhoneContact_Insert__(o *PhoneContact) {
-	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnPhoneContact_AfterInsert__(row *PhoneContact) {
+	Cacher.Set("PhoneContact:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnPhoneContact_Update__(o *PhoneContact) {
-	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnPhoneContact_AfterUpdate__(row *PhoneContact) {
+	Cacher.Set("PhoneContact:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnPhoneContact_Delete__(o *PhoneContact) {
-	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnPhoneContact_AfterDelete__(row *PhoneContact) {
+	Cacher.Delete("PhoneContact:" + strconv.Itoa(row.Id))
 }
 
-func OnPhoneContact_LoadOne__(o *PhoneContact) {
-	Cacher.Set("PhoneContact:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnPhoneContact_LoadOne__(row *PhoneContact) {
+	Cacher.Set("PhoneContact:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnPhoneContact_LoadMany__(o []*PhoneContact) {
-	for _, v := range o {
-		Cacher.Set("PhoneContact:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnPhoneContact_LoadMany__(rows []*PhoneContact) {
+	for _, row := range rows {
+		Cacher.Set("PhoneContact:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //Post Events
-func OnPost_Insert__(o *Post) {
-	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnPost_AfterInsert__(row *Post) {
+	Cacher.Set("Post:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnPost_Update__(o *Post) {
-	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnPost_AfterUpdate__(row *Post) {
+	Cacher.Set("Post:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnPost_Delete__(o *Post) {
-	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnPost_AfterDelete__(row *Post) {
+	Cacher.Delete("Post:" + strconv.Itoa(row.Id))
 }
 
-func OnPost_LoadOne__(o *Post) {
-	Cacher.Set("Post:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnPost_LoadOne__(row *Post) {
+	Cacher.Set("Post:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnPost_LoadMany__(o []*Post) {
-	for _, v := range o {
-		Cacher.Set("Post:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnPost_LoadMany__(rows []*Post) {
+	for _, row := range rows {
+		Cacher.Set("Post:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //RecommendUser Events
-func OnRecommendUser_Insert__(o *RecommendUser) {
-	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnRecommendUser_AfterInsert__(row *RecommendUser) {
+	Cacher.Set("RecommendUser:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnRecommendUser_Update__(o *RecommendUser) {
-	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnRecommendUser_AfterUpdate__(row *RecommendUser) {
+	Cacher.Set("RecommendUser:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnRecommendUser_Delete__(o *RecommendUser) {
-	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnRecommendUser_AfterDelete__(row *RecommendUser) {
+	Cacher.Delete("RecommendUser:" + strconv.Itoa(row.Id))
 }
 
-func OnRecommendUser_LoadOne__(o *RecommendUser) {
-	Cacher.Set("RecommendUser:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnRecommendUser_LoadOne__(row *RecommendUser) {
+	Cacher.Set("RecommendUser:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnRecommendUser_LoadMany__(o []*RecommendUser) {
-	for _, v := range o {
-		Cacher.Set("RecommendUser:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnRecommendUser_LoadMany__(rows []*RecommendUser) {
+	for _, row := range rows {
+		Cacher.Set("RecommendUser:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //SearchClicked Events
-func OnSearchClicked_Insert__(o *SearchClicked) {
-	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnSearchClicked_AfterInsert__(row *SearchClicked) {
+	Cacher.Set("SearchClicked:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnSearchClicked_Update__(o *SearchClicked) {
-	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnSearchClicked_AfterUpdate__(row *SearchClicked) {
+	Cacher.Set("SearchClicked:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnSearchClicked_Delete__(o *SearchClicked) {
-	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnSearchClicked_AfterDelete__(row *SearchClicked) {
+	Cacher.Delete("SearchClicked:" + strconv.Itoa(row.Id))
 }
 
-func OnSearchClicked_LoadOne__(o *SearchClicked) {
-	Cacher.Set("SearchClicked:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnSearchClicked_LoadOne__(row *SearchClicked) {
+	Cacher.Set("SearchClicked:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnSearchClicked_LoadMany__(o []*SearchClicked) {
-	for _, v := range o {
-		Cacher.Set("SearchClicked:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnSearchClicked_LoadMany__(rows []*SearchClicked) {
+	for _, row := range rows {
+		Cacher.Set("SearchClicked:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //Session Events
-func OnSession_Insert__(o *Session) {
-	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*0)
+func OnSession_AfterInsert__(row *Session) {
+	Cacher.Set("Session:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnSession_Update__(o *Session) {
-	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*0)
+func OnSession_AfterUpdate__(row *Session) {
+	Cacher.Set("Session:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnSession_Delete__(o *Session) {
-	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*0)
+func OnSession_AfterDelete__(row *Session) {
+	Cacher.Delete("Session:" + strconv.Itoa(row.Id))
 }
 
-func OnSession_LoadOne__(o *Session) {
-	Cacher.Set("Session:"+strconv.Itoa(o.SessionUuid), o, time.Hour*0)
+func OnSession_LoadOne__(row *Session) {
+	Cacher.Set("Session:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnSession_LoadMany__(o []*Session) {
-	for _, v := range o {
-		Cacher.Set("Session:"+strconv.Itoa(v.SessionUuid), o, time.Hour*0)
+func OnSession_LoadMany__(rows []*Session) {
+	for _, row := range rows {
+		Cacher.Set("Session:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //Tag Events
-func OnTag_Insert__(o *Tag) {
-	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnTag_AfterInsert__(row *Tag) {
+	Cacher.Set("Tag:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnTag_Update__(o *Tag) {
-	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnTag_AfterUpdate__(row *Tag) {
+	Cacher.Set("Tag:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnTag_Delete__(o *Tag) {
-	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnTag_AfterDelete__(row *Tag) {
+	Cacher.Delete("Tag:" + strconv.Itoa(row.Id))
 }
 
-func OnTag_LoadOne__(o *Tag) {
-	Cacher.Set("Tag:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnTag_LoadOne__(row *Tag) {
+	Cacher.Set("Tag:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnTag_LoadMany__(o []*Tag) {
-	for _, v := range o {
-		Cacher.Set("Tag:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnTag_LoadMany__(rows []*Tag) {
+	for _, row := range rows {
+		Cacher.Set("Tag:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //TagsPost Events
-func OnTagsPost_Insert__(o *TagsPost) {
-	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnTagsPost_AfterInsert__(row *TagsPost) {
+	Cacher.Set("TagsPost:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnTagsPost_Update__(o *TagsPost) {
-	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnTagsPost_AfterUpdate__(row *TagsPost) {
+	Cacher.Set("TagsPost:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnTagsPost_Delete__(o *TagsPost) {
-	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnTagsPost_AfterDelete__(row *TagsPost) {
+	Cacher.Delete("TagsPost:" + strconv.Itoa(row.Id))
 }
 
-func OnTagsPost_LoadOne__(o *TagsPost) {
-	Cacher.Set("TagsPost:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnTagsPost_LoadOne__(row *TagsPost) {
+	Cacher.Set("TagsPost:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnTagsPost_LoadMany__(o []*TagsPost) {
-	for _, v := range o {
-		Cacher.Set("TagsPost:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnTagsPost_LoadMany__(rows []*TagsPost) {
+	for _, row := range rows {
+		Cacher.Set("TagsPost:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //User Events
-func OnUser_Insert__(o *User) {
-	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnUser_AfterInsert__(row *User) {
+	Cacher.Set("User:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnUser_Update__(o *User) {
-	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnUser_AfterUpdate__(row *User) {
+	Cacher.Set("User:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnUser_Delete__(o *User) {
-	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnUser_AfterDelete__(row *User) {
+	Cacher.Delete("User:" + strconv.Itoa(row.Id))
 }
 
-func OnUser_LoadOne__(o *User) {
-	Cacher.Set("User:"+strconv.Itoa(o.Id), o, time.Hour*0)
+func OnUser_LoadOne__(row *User) {
+	Cacher.Set("User:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnUser_LoadMany__(o []*User) {
-	for _, v := range o {
-		Cacher.Set("User:"+strconv.Itoa(v.Id), o, time.Hour*0)
+func OnUser_LoadMany__(rows []*User) {
+	for _, row := range rows {
+		Cacher.Set("User:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
 //UserMetaInfo Events
-func OnUserMetaInfo_Insert__(o *UserMetaInfo) {
-	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnUserMetaInfo_AfterInsert__(row *UserMetaInfo) {
+	Cacher.Set("UserMetaInfo:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 }
 
-func OnUserMetaInfo_Update__(o *UserMetaInfo) {
-	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnUserMetaInfo_AfterUpdate__(row *UserMetaInfo) {
+	Cacher.Set("UserMetaInfo:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 }
 
-func OnUserMetaInfo_Delete__(o *UserMetaInfo) {
-	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnUserMetaInfo_AfterDelete__(row *UserMetaInfo) {
+	Cacher.Delete("UserMetaInfo:" + strconv.Itoa(row.UserId))
 }
 
-func OnUserMetaInfo_LoadOne__(o *UserMetaInfo) {
-	Cacher.Set("UserMetaInfo:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnUserMetaInfo_LoadOne__(row *UserMetaInfo) {
+	Cacher.Set("UserMetaInfo:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 }
 
-func OnUserMetaInfo_LoadMany__(o []*UserMetaInfo) {
-	for _, v := range o {
-		Cacher.Set("UserMetaInfo:"+strconv.Itoa(v.UserId), o, time.Hour*0)
+func OnUserMetaInfo_LoadMany__(rows []*UserMetaInfo) {
+	for _, row := range rows {
+		Cacher.Set("UserMetaInfo:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 	}
 }
 
 //UserPassword Events
-func OnUserPassword_Insert__(o *UserPassword) {
-	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnUserPassword_AfterInsert__(row *UserPassword) {
+	Cacher.Set("UserPassword:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 }
 
-func OnUserPassword_Update__(o *UserPassword) {
-	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnUserPassword_AfterUpdate__(row *UserPassword) {
+	Cacher.Set("UserPassword:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 }
 
-func OnUserPassword_Delete__(o *UserPassword) {
-	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnUserPassword_AfterDelete__(row *UserPassword) {
+	Cacher.Delete("UserPassword:" + strconv.Itoa(row.UserId))
 }
 
-func OnUserPassword_LoadOne__(o *UserPassword) {
-	Cacher.Set("UserPassword:"+strconv.Itoa(o.UserId), o, time.Hour*0)
+func OnUserPassword_LoadOne__(row *UserPassword) {
+	Cacher.Set("UserPassword:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 }
 
-func OnUserPassword_LoadMany__(o []*UserPassword) {
-	for _, v := range o {
-		Cacher.Set("UserPassword:"+strconv.Itoa(v.UserId), o, time.Hour*0)
+func OnUserPassword_LoadMany__(rows []*UserPassword) {
+	for _, row := range rows {
+		Cacher.Set("UserPassword:"+strconv.Itoa(row.UserId), row, time.Hour*0)
 	}
 }

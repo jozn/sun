@@ -53,7 +53,7 @@ func FactUser1(c *Action) {
 }
 
 func FactUpdateAboutMe(c *Action) {
-	user, _ := NewUser_Selector().OrderBy_Id_Asc().GetRows(DB)
+	user, _ := NewUser_Selector().OrderBy_Id_Asc().GetRows2(DB)
 
 	for _, u := range user {
 		s := helper.FactRandStrEmoji(80, true)

@@ -3,7 +3,7 @@ xo mysql://root:123456@localhost:3307/ms_test --single-file --template-path temp
 xo mysql://root:123456@localhost:3307/ms_test --single-file --template-path C:\Go\_gopath\src\ms\libs\go-orma --out "gen_sql.go" --suffix go --schema "" --package main
 
 For MS
-xo mysql://root:123456@localhost:3307/ms --single-file --template-path C:\Go\_gopath\src\ms\libs\go-orma --out "models/gen_sql.go" --suffix go --schema "" --package models
+xo mysql://root:123456@localhost:3307/ms --single-file --template-path C:\Go\_gopath\src\github.com\jozn\go-orma --out "models/gen_sql.go" --suffix go --schema "" --package models
 xo mysql://root:123456@localhost:3307/ms --single-file --template-path C:\Go\_gopath\src\github.com\jozn\go-orma-events --out "models/gen_event_sql.go" --suffix go --schema "" --package models
 xo mysql://root:123456@localhost:3307/ms --single-file --template-path C:\Go\_gopath\src\github.com\jozn\go-orma-cache --out "models/gen_cache_sql.go" --suffix go --schema "" --package models
 

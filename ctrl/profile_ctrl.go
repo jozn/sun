@@ -36,7 +36,7 @@ func GetPostsForProfileAction(c *base.Action) base.AppErr {
 		selctor.Offset((page - 1) * limit)
 	}
 
-	posts, err := selctor.GetRows(base.DB)
+	posts, err := selctor.GetRows2(base.DB)
 	if err != nil {
 		helper.DebugPrintln(err)
 		c.SendJson(nil)

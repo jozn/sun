@@ -31,7 +31,7 @@ func Benchmark__sql_UserById(b *testing.B) {
 func Benchmark__sql_NewUser_Selector_GetRows(b *testing.B) {
     prepareTest()
     for i := 0; i < b.N; i++ {
-        NewUser_Selector().GetRows(base.DB)
+        NewUser_Selector().GetRows2(base.DB)
     }
 }
 

@@ -293,10 +293,11 @@ func (e _messageModelImple) SendManyMessagesClientsToSingleUser(ToUserId int, ms
 func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 	helper.DebugPrintln("FlushAllStoredMessagesToUser()")
 
-	msgRows, err := NewMessage_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows(base.DB) // first msgs rows first in slice
+	msgRows, err := NewMessage_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
 	if err != nil || len(msgRows) == 0 {
 		return
 	}
+
 	MessageModel.SendManyMessagesRowsToSingleUser(ToUserId, msgRows)
 
 	/*mapOfSenders := make(map[int]bool, len(msgRows))
@@ -346,7 +347,7 @@ func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 func (e _messageModelImple) FlushAllReceivedMsgsToPeerToUser(ToUserId int) {
 	helper.DebugPrintln("FlushAllReceivedMsgsToPeerToUser()")
 
-	metasRows, err := NewMsgReceivedToPeer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows(base.DB) // first msgs rows first in slice
+	metasRows, err := NewMsgReceivedToPeer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
 	if err != nil || len(metasRows) == 0 {
 		return
 	}
@@ -365,7 +366,7 @@ func (e _messageModelImple) FlushAllReceivedMsgsToPeerToUser(ToUserId int) {
 func (e _messageModelImple) FlushAllDeletedMsgsToUser(ToUserId int) {
 	helper.DebugPrintln("FlushAllDeletedMsgsToUser() ", ToUserId)
 
-	metasRows, err := NewMsgDeletedFromServer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows(base.DB) // first msgs rows first in slice
+	metasRows, err := NewMsgDeletedFromServer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
 	if err != nil || len(metasRows) == 0 {
 		return
 	}
@@ -384,7 +385,7 @@ func (e _messageModelImple) FlushAllDeletedMsgsToUser(ToUserId int) {
 func (e _messageModelImple) FlushAllSeenMsgsByPeerToUser(ToUserId int) {
 	helper.DebugPrintln("FlushAllSeenMsgsByPeerToUser() ", ToUserId)
 
-	metasRows, err := NewMsgSeenByPeer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows(base.DB) // first msgs rows first in slice
+	metasRows, err := NewMsgSeenByPeer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
 	if err != nil || len(metasRows) == 0 {
 		return
 	}

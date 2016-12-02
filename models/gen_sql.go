@@ -76,6 +76,8 @@ func (c *Comment) Insert(db XODB) error {
 	c.Id = int(id)
 	c._exists = true
 
+	OnComment_AfterInsert(c)
+
 	return nil
 }
 
@@ -107,6 +109,8 @@ func (c *Comment) Replace(db XODB) error {
 	c.Id = int(id)
 	c._exists = true
 
+	OnComment_AfterInsert(c)
+
 	return nil
 }
 
@@ -132,6 +136,9 @@ func (c *Comment) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime, c.Id)
 	_, err = db.Exec(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime, c.Id)
+
+	OnComment_AfterUpdate(c)
+
 	return err
 }
 
@@ -170,6 +177,8 @@ func (c *Comment) Delete(db XODB) error {
 
 	// set deleted
 	c._deleted = true
+
+	OnComment_AfterDelete(c)
 
 	return nil
 }
@@ -1722,17 +1731,19 @@ func (u *__Comment_Selector) GetRow(db *sqlx.DB) (*Comment, error) {
 
 	row._exists = true
 
+	OnComment_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__Comment_Selector) GetRows(db *sqlx.DB) ([]Comment, error) {
+func (u *__Comment_Selector) GetRows(db *sqlx.DB) ([]*Comment, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []Comment
+	var rows []*Comment
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -1743,7 +1754,47 @@ func (u *__Comment_Selector) GetRows(db *sqlx.DB) ([]Comment, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnComment_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__Comment_Selector) GetRows2(db *sqlx.DB) ([]Comment, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*Comment
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnComment_LoadMany(rows)
+
+	rows2 := make([]Comment, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__Comment_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -2022,6 +2073,8 @@ func (fl *FollowingList) Insert(db XODB) error {
 	fl.UserId = int(id)
 	fl._exists = true
 
+	OnFollowingList_AfterInsert(fl)
+
 	return nil
 }
 
@@ -2053,6 +2106,8 @@ func (fl *FollowingList) Replace(db XODB) error {
 	fl.UserId = int(id)
 	fl._exists = true
 
+	OnFollowingList_AfterInsert(fl)
+
 	return nil
 }
 
@@ -2078,6 +2133,9 @@ func (fl *FollowingList) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, fl.Id, fl.ListType, fl.Name, fl.Count, fl.IsAuto, fl.IsPimiry, fl.CreatedTime, fl.UserId)
 	_, err = db.Exec(sqlstr, fl.Id, fl.ListType, fl.Name, fl.Count, fl.IsAuto, fl.IsPimiry, fl.CreatedTime, fl.UserId)
+
+	OnFollowingList_AfterUpdate(fl)
+
 	return err
 }
 
@@ -2116,6 +2174,8 @@ func (fl *FollowingList) Delete(db XODB) error {
 
 	// set deleted
 	fl._deleted = true
+
+	OnFollowingList_AfterDelete(fl)
 
 	return nil
 }
@@ -4604,17 +4664,19 @@ func (u *__FollowingList_Selector) GetRow(db *sqlx.DB) (*FollowingList, error) {
 
 	row._exists = true
 
+	OnFollowingList_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__FollowingList_Selector) GetRows(db *sqlx.DB) ([]FollowingList, error) {
+func (u *__FollowingList_Selector) GetRows(db *sqlx.DB) ([]*FollowingList, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []FollowingList
+	var rows []*FollowingList
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -4625,7 +4687,47 @@ func (u *__FollowingList_Selector) GetRows(db *sqlx.DB) ([]FollowingList, error)
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnFollowingList_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__FollowingList_Selector) GetRows2(db *sqlx.DB) ([]FollowingList, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*FollowingList
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnFollowingList_LoadMany(rows)
+
+	rows2 := make([]FollowingList, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__FollowingList_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -4914,6 +5016,8 @@ func (flm *FollowingListMember) Insert(db XODB) error {
 	flm.Id = int(id)
 	flm._exists = true
 
+	OnFollowingListMember_AfterInsert(flm)
+
 	return nil
 }
 
@@ -4945,6 +5049,8 @@ func (flm *FollowingListMember) Replace(db XODB) error {
 	flm.Id = int(id)
 	flm._exists = true
 
+	OnFollowingListMember_AfterInsert(flm)
+
 	return nil
 }
 
@@ -4970,6 +5076,9 @@ func (flm *FollowingListMember) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, flm.ListId, flm.UserId, flm.FollowedUserId, flm.FollowType, flm.UpdatedTimeMs, flm.Id)
 	_, err = db.Exec(sqlstr, flm.ListId, flm.UserId, flm.FollowedUserId, flm.FollowType, flm.UpdatedTimeMs, flm.Id)
+
+	OnFollowingListMember_AfterUpdate(flm)
+
 	return err
 }
 
@@ -5008,6 +5117,8 @@ func (flm *FollowingListMember) Delete(db XODB) error {
 
 	// set deleted
 	flm._deleted = true
+
+	OnFollowingListMember_AfterDelete(flm)
 
 	return nil
 }
@@ -7014,17 +7125,19 @@ func (u *__FollowingListMember_Selector) GetRow(db *sqlx.DB) (*FollowingListMemb
 
 	row._exists = true
 
+	OnFollowingListMember_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__FollowingListMember_Selector) GetRows(db *sqlx.DB) ([]FollowingListMember, error) {
+func (u *__FollowingListMember_Selector) GetRows(db *sqlx.DB) ([]*FollowingListMember, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []FollowingListMember
+	var rows []*FollowingListMember
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -7035,7 +7148,47 @@ func (u *__FollowingListMember_Selector) GetRows(db *sqlx.DB) ([]FollowingListMe
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnFollowingListMember_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__FollowingListMember_Selector) GetRows2(db *sqlx.DB) ([]FollowingListMember, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*FollowingListMember
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnFollowingListMember_LoadMany(rows)
+
+	rows2 := make([]FollowingListMember, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__FollowingListMember_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -7317,6 +7470,8 @@ func (flmh *FollowingListMemberHistory) Insert(db XODB) error {
 	flmh.Id = int(id)
 	flmh._exists = true
 
+	OnFollowingListMemberHistory_AfterInsert(flmh)
+
 	return nil
 }
 
@@ -7348,6 +7503,8 @@ func (flmh *FollowingListMemberHistory) Replace(db XODB) error {
 	flmh.Id = int(id)
 	flmh._exists = true
 
+	OnFollowingListMemberHistory_AfterInsert(flmh)
+
 	return nil
 }
 
@@ -7373,6 +7530,9 @@ func (flmh *FollowingListMemberHistory) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, flmh.ListId, flmh.UserId, flmh.FollowedUserId, flmh.FollowType, flmh.UpdatedTimeMs, flmh.FollowId, flmh.Id)
 	_, err = db.Exec(sqlstr, flmh.ListId, flmh.UserId, flmh.FollowedUserId, flmh.FollowType, flmh.UpdatedTimeMs, flmh.FollowId, flmh.Id)
+
+	OnFollowingListMemberHistory_AfterUpdate(flmh)
+
 	return err
 }
 
@@ -7411,6 +7571,8 @@ func (flmh *FollowingListMemberHistory) Delete(db XODB) error {
 
 	// set deleted
 	flmh._deleted = true
+
+	OnFollowingListMemberHistory_AfterDelete(flmh)
 
 	return nil
 }
@@ -9729,17 +9891,19 @@ func (u *__FollowingListMemberHistory_Selector) GetRow(db *sqlx.DB) (*FollowingL
 
 	row._exists = true
 
+	OnFollowingListMemberHistory_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__FollowingListMemberHistory_Selector) GetRows(db *sqlx.DB) ([]FollowingListMemberHistory, error) {
+func (u *__FollowingListMemberHistory_Selector) GetRows(db *sqlx.DB) ([]*FollowingListMemberHistory, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []FollowingListMemberHistory
+	var rows []*FollowingListMemberHistory
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -9750,7 +9914,47 @@ func (u *__FollowingListMemberHistory_Selector) GetRows(db *sqlx.DB) ([]Followin
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnFollowingListMemberHistory_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__FollowingListMemberHistory_Selector) GetRows2(db *sqlx.DB) ([]FollowingListMemberHistory, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*FollowingListMemberHistory
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnFollowingListMemberHistory_LoadMany(rows)
+
+	rows2 := make([]FollowingListMemberHistory, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__FollowingListMemberHistory_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -10034,6 +10238,8 @@ func (l *Like) Insert(db XODB) error {
 	l.Id = int(id)
 	l._exists = true
 
+	OnLike_AfterInsert(l)
+
 	return nil
 }
 
@@ -10065,6 +10271,8 @@ func (l *Like) Replace(db XODB) error {
 	l.Id = int(id)
 	l._exists = true
 
+	OnLike_AfterInsert(l)
+
 	return nil
 }
 
@@ -10090,6 +10298,9 @@ func (l *Like) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
 	_, err = db.Exec(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
+
+	OnLike_AfterUpdate(l)
+
 	return err
 }
 
@@ -10128,6 +10339,8 @@ func (l *Like) Delete(db XODB) error {
 
 	// set deleted
 	l._deleted = true
+
+	OnLike_AfterDelete(l)
 
 	return nil
 }
@@ -11822,17 +12035,19 @@ func (u *__Like_Selector) GetRow(db *sqlx.DB) (*Like, error) {
 
 	row._exists = true
 
+	OnLike_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__Like_Selector) GetRows(db *sqlx.DB) ([]Like, error) {
+func (u *__Like_Selector) GetRows(db *sqlx.DB) ([]*Like, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []Like
+	var rows []*Like
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -11843,7 +12058,47 @@ func (u *__Like_Selector) GetRows(db *sqlx.DB) ([]Like, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnLike_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__Like_Selector) GetRows2(db *sqlx.DB) ([]Like, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*Like
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnLike_LoadMany(rows)
+
+	rows2 := make([]Like, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__Like_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -12121,6 +12376,8 @@ func (m *Media) Insert(db XODB) error {
 	m.Id = int(id)
 	m._exists = true
 
+	OnMedia_AfterInsert(m)
+
 	return nil
 }
 
@@ -12152,6 +12409,8 @@ func (m *Media) Replace(db XODB) error {
 	m.Id = int(id)
 	m._exists = true
 
+	OnMedia_AfterInsert(m)
+
 	return nil
 }
 
@@ -12177,6 +12436,9 @@ func (m *Media) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, m.UserId, m.PostId, m.AlbumId, m.TypeId, m.CreatedTime, m.Src, m.Id)
 	_, err = db.Exec(sqlstr, m.UserId, m.PostId, m.AlbumId, m.TypeId, m.CreatedTime, m.Src, m.Id)
+
+	OnMedia_AfterUpdate(m)
+
 	return err
 }
 
@@ -12215,6 +12477,8 @@ func (m *Media) Delete(db XODB) error {
 
 	// set deleted
 	m._deleted = true
+
+	OnMedia_AfterDelete(m)
 
 	return nil
 }
@@ -14391,17 +14655,19 @@ func (u *__Media_Selector) GetRow(db *sqlx.DB) (*Media, error) {
 
 	row._exists = true
 
+	OnMedia_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__Media_Selector) GetRows(db *sqlx.DB) ([]Media, error) {
+func (u *__Media_Selector) GetRows(db *sqlx.DB) ([]*Media, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []Media
+	var rows []*Media
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -14412,7 +14678,47 @@ func (u *__Media_Selector) GetRows(db *sqlx.DB) ([]Media, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnMedia_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__Media_Selector) GetRows2(db *sqlx.DB) ([]Media, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*Media
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnMedia_LoadMany(rows)
+
+	rows2 := make([]Media, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__Media_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -14698,6 +15004,8 @@ func (m *Message) Insert(db XODB) error {
 	m.Id = int(id)
 	m._exists = true
 
+	OnMessage_AfterInsert(m)
+
 	return nil
 }
 
@@ -14729,6 +15037,8 @@ func (m *Message) Replace(db XODB) error {
 	m.Id = int(id)
 	m._exists = true
 
+	OnMessage_AfterInsert(m)
+
 	return nil
 }
 
@@ -14754,6 +15064,9 @@ func (m *Message) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs, m.Id)
 	_, err = db.Exec(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs, m.Id)
+
+	OnMessage_AfterUpdate(m)
+
 	return err
 }
 
@@ -14792,6 +15105,8 @@ func (m *Message) Delete(db XODB) error {
 
 	// set deleted
 	m._deleted = true
+
+	OnMessage_AfterDelete(m)
 
 	return nil
 }
@@ -16684,17 +16999,19 @@ func (u *__Message_Selector) GetRow(db *sqlx.DB) (*Message, error) {
 
 	row._exists = true
 
+	OnMessage_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__Message_Selector) GetRows(db *sqlx.DB) ([]Message, error) {
+func (u *__Message_Selector) GetRows(db *sqlx.DB) ([]*Message, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []Message
+	var rows []*Message
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -16705,7 +17022,47 @@ func (u *__Message_Selector) GetRows(db *sqlx.DB) ([]Message, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnMessage_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__Message_Selector) GetRows2(db *sqlx.DB) ([]Message, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*Message
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnMessage_LoadMany(rows)
+
+	rows2 := make([]Message, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__Message_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -16990,6 +17347,8 @@ func (mdfs *MsgDeletedFromServer) Insert(db XODB) error {
 	mdfs.Id = int(id)
 	mdfs._exists = true
 
+	OnMsgDeletedFromServer_AfterInsert(mdfs)
+
 	return nil
 }
 
@@ -17021,6 +17380,8 @@ func (mdfs *MsgDeletedFromServer) Replace(db XODB) error {
 	mdfs.Id = int(id)
 	mdfs._exists = true
 
+	OnMsgDeletedFromServer_AfterInsert(mdfs)
+
 	return nil
 }
 
@@ -17046,6 +17407,9 @@ func (mdfs *MsgDeletedFromServer) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.RoomKey, mdfs.AtTime, mdfs.Id)
 	_, err = db.Exec(sqlstr, mdfs.ToUserId, mdfs.MsgKey, mdfs.PeerUserId, mdfs.RoomKey, mdfs.AtTime, mdfs.Id)
+
+	OnMsgDeletedFromServer_AfterUpdate(mdfs)
+
 	return err
 }
 
@@ -17084,6 +17448,8 @@ func (mdfs *MsgDeletedFromServer) Delete(db XODB) error {
 
 	// set deleted
 	mdfs._deleted = true
+
+	OnMsgDeletedFromServer_AfterDelete(mdfs)
 
 	return nil
 }
@@ -18806,17 +19172,19 @@ func (u *__MsgDeletedFromServer_Selector) GetRow(db *sqlx.DB) (*MsgDeletedFromSe
 
 	row._exists = true
 
+	OnMsgDeletedFromServer_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__MsgDeletedFromServer_Selector) GetRows(db *sqlx.DB) ([]MsgDeletedFromServer, error) {
+func (u *__MsgDeletedFromServer_Selector) GetRows(db *sqlx.DB) ([]*MsgDeletedFromServer, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []MsgDeletedFromServer
+	var rows []*MsgDeletedFromServer
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -18827,7 +19195,47 @@ func (u *__MsgDeletedFromServer_Selector) GetRows(db *sqlx.DB) ([]MsgDeletedFrom
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnMsgDeletedFromServer_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__MsgDeletedFromServer_Selector) GetRows2(db *sqlx.DB) ([]MsgDeletedFromServer, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*MsgDeletedFromServer
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnMsgDeletedFromServer_LoadMany(rows)
+
+	rows2 := make([]MsgDeletedFromServer, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__MsgDeletedFromServer_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -19108,6 +19516,8 @@ func (mrtp *MsgReceivedToPeer) Insert(db XODB) error {
 	mrtp.Id = int(id)
 	mrtp._exists = true
 
+	OnMsgReceivedToPeer_AfterInsert(mrtp)
+
 	return nil
 }
 
@@ -19139,6 +19549,8 @@ func (mrtp *MsgReceivedToPeer) Replace(db XODB) error {
 	mrtp.Id = int(id)
 	mrtp._exists = true
 
+	OnMsgReceivedToPeer_AfterInsert(mrtp)
+
 	return nil
 }
 
@@ -19164,6 +19576,9 @@ func (mrtp *MsgReceivedToPeer) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime, mrtp.Id)
 	_, err = db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime, mrtp.Id)
+
+	OnMsgReceivedToPeer_AfterUpdate(mrtp)
+
 	return err
 }
 
@@ -19202,6 +19617,8 @@ func (mrtp *MsgReceivedToPeer) Delete(db XODB) error {
 
 	// set deleted
 	mrtp._deleted = true
+
+	OnMsgReceivedToPeer_AfterDelete(mrtp)
 
 	return nil
 }
@@ -20924,17 +21341,19 @@ func (u *__MsgReceivedToPeer_Selector) GetRow(db *sqlx.DB) (*MsgReceivedToPeer, 
 
 	row._exists = true
 
+	OnMsgReceivedToPeer_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__MsgReceivedToPeer_Selector) GetRows(db *sqlx.DB) ([]MsgReceivedToPeer, error) {
+func (u *__MsgReceivedToPeer_Selector) GetRows(db *sqlx.DB) ([]*MsgReceivedToPeer, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []MsgReceivedToPeer
+	var rows []*MsgReceivedToPeer
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -20945,7 +21364,47 @@ func (u *__MsgReceivedToPeer_Selector) GetRows(db *sqlx.DB) ([]MsgReceivedToPeer
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnMsgReceivedToPeer_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__MsgReceivedToPeer_Selector) GetRows2(db *sqlx.DB) ([]MsgReceivedToPeer, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*MsgReceivedToPeer
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnMsgReceivedToPeer_LoadMany(rows)
+
+	rows2 := make([]MsgReceivedToPeer, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__MsgReceivedToPeer_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -21226,6 +21685,8 @@ func (msbp *MsgSeenByPeer) Insert(db XODB) error {
 	msbp.Id = int(id)
 	msbp._exists = true
 
+	OnMsgSeenByPeer_AfterInsert(msbp)
+
 	return nil
 }
 
@@ -21257,6 +21718,8 @@ func (msbp *MsgSeenByPeer) Replace(db XODB) error {
 	msbp.Id = int(id)
 	msbp._exists = true
 
+	OnMsgSeenByPeer_AfterInsert(msbp)
+
 	return nil
 }
 
@@ -21282,6 +21745,9 @@ func (msbp *MsgSeenByPeer) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime, msbp.Id)
 	_, err = db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime, msbp.Id)
+
+	OnMsgSeenByPeer_AfterUpdate(msbp)
+
 	return err
 }
 
@@ -21320,6 +21786,8 @@ func (msbp *MsgSeenByPeer) Delete(db XODB) error {
 
 	// set deleted
 	msbp._deleted = true
+
+	OnMsgSeenByPeer_AfterDelete(msbp)
 
 	return nil
 }
@@ -23042,17 +23510,19 @@ func (u *__MsgSeenByPeer_Selector) GetRow(db *sqlx.DB) (*MsgSeenByPeer, error) {
 
 	row._exists = true
 
+	OnMsgSeenByPeer_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__MsgSeenByPeer_Selector) GetRows(db *sqlx.DB) ([]MsgSeenByPeer, error) {
+func (u *__MsgSeenByPeer_Selector) GetRows(db *sqlx.DB) ([]*MsgSeenByPeer, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []MsgSeenByPeer
+	var rows []*MsgSeenByPeer
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -23063,7 +23533,47 @@ func (u *__MsgSeenByPeer_Selector) GetRows(db *sqlx.DB) ([]MsgSeenByPeer, error)
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnMsgSeenByPeer_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__MsgSeenByPeer_Selector) GetRows2(db *sqlx.DB) ([]MsgSeenByPeer, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*MsgSeenByPeer
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnMsgSeenByPeer_LoadMany(rows)
+
+	rows2 := make([]MsgSeenByPeer, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__MsgSeenByPeer_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -23347,6 +23857,8 @@ func (n *Notification) Insert(db XODB) error {
 	n.Id = int(id)
 	n._exists = true
 
+	OnNotification_AfterInsert(n)
+
 	return nil
 }
 
@@ -23378,6 +23890,8 @@ func (n *Notification) Replace(db XODB) error {
 	n.Id = int(id)
 	n._exists = true
 
+	OnNotification_AfterInsert(n)
+
 	return nil
 }
 
@@ -23403,6 +23917,9 @@ func (n *Notification) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime, n.Id)
 	_, err = db.Exec(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime, n.Id)
+
+	OnNotification_AfterUpdate(n)
+
 	return err
 }
 
@@ -23441,6 +23958,8 @@ func (n *Notification) Delete(db XODB) error {
 
 	// set deleted
 	n._deleted = true
+
+	OnNotification_AfterDelete(n)
 
 	return nil
 }
@@ -26383,17 +26902,19 @@ func (u *__Notification_Selector) GetRow(db *sqlx.DB) (*Notification, error) {
 
 	row._exists = true
 
+	OnNotification_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__Notification_Selector) GetRows(db *sqlx.DB) ([]Notification, error) {
+func (u *__Notification_Selector) GetRows(db *sqlx.DB) ([]*Notification, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []Notification
+	var rows []*Notification
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -26404,7 +26925,47 @@ func (u *__Notification_Selector) GetRows(db *sqlx.DB) ([]Notification, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnNotification_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__Notification_Selector) GetRows2(db *sqlx.DB) ([]Notification, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*Notification
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnNotification_LoadMany(rows)
+
+	rows2 := make([]Notification, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__Notification_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -26693,6 +27254,8 @@ func (nr *NotificationRemoved) Insert(db XODB) error {
 	nr.NotificationId = int(id)
 	nr._exists = true
 
+	OnNotificationRemoved_AfterInsert(nr)
+
 	return nil
 }
 
@@ -26724,6 +27287,8 @@ func (nr *NotificationRemoved) Replace(db XODB) error {
 	nr.NotificationId = int(id)
 	nr._exists = true
 
+	OnNotificationRemoved_AfterInsert(nr)
+
 	return nil
 }
 
@@ -26749,6 +27314,9 @@ func (nr *NotificationRemoved) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, nr.ForUserId, nr.NotificationId)
 	_, err = db.Exec(sqlstr, nr.ForUserId, nr.NotificationId)
+
+	OnNotificationRemoved_AfterUpdate(nr)
+
 	return err
 }
 
@@ -26787,6 +27355,8 @@ func (nr *NotificationRemoved) Delete(db XODB) error {
 
 	// set deleted
 	nr._deleted = true
+
+	OnNotificationRemoved_AfterDelete(nr)
 
 	return nil
 }
@@ -27545,17 +28115,19 @@ func (u *__NotificationRemoved_Selector) GetRow(db *sqlx.DB) (*NotificationRemov
 
 	row._exists = true
 
+	OnNotificationRemoved_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__NotificationRemoved_Selector) GetRows(db *sqlx.DB) ([]NotificationRemoved, error) {
+func (u *__NotificationRemoved_Selector) GetRows(db *sqlx.DB) ([]*NotificationRemoved, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []NotificationRemoved
+	var rows []*NotificationRemoved
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -27566,7 +28138,47 @@ func (u *__NotificationRemoved_Selector) GetRows(db *sqlx.DB) ([]NotificationRem
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnNotificationRemoved_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__NotificationRemoved_Selector) GetRows2(db *sqlx.DB) ([]NotificationRemoved, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*NotificationRemoved
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnNotificationRemoved_LoadMany(rows)
+
+	rows2 := make([]NotificationRemoved, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__NotificationRemoved_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -27835,6 +28447,8 @@ func (pc *PhoneContact) Insert(db XODB) error {
 	pc.Id = int(id)
 	pc._exists = true
 
+	OnPhoneContact_AfterInsert(pc)
+
 	return nil
 }
 
@@ -27866,6 +28480,8 @@ func (pc *PhoneContact) Replace(db XODB) error {
 	pc.Id = int(id)
 	pc._exists = true
 
+	OnPhoneContact_AfterInsert(pc)
+
 	return nil
 }
 
@@ -27891,6 +28507,9 @@ func (pc *PhoneContact) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, pc.PhoneDisplayName, pc.PhoneFamilyName, pc.PhoneNumber, pc.PhoneNormalizedNumber, pc.PhoneContactRowId, pc.UserId, pc.DeviceUuidId, pc.CreatedTime, pc.UpdatedTime, pc.Id)
 	_, err = db.Exec(sqlstr, pc.PhoneDisplayName, pc.PhoneFamilyName, pc.PhoneNumber, pc.PhoneNormalizedNumber, pc.PhoneContactRowId, pc.UserId, pc.DeviceUuidId, pc.CreatedTime, pc.UpdatedTime, pc.Id)
+
+	OnPhoneContact_AfterUpdate(pc)
+
 	return err
 }
 
@@ -27929,6 +28548,8 @@ func (pc *PhoneContact) Delete(db XODB) error {
 
 	// set deleted
 	pc._deleted = true
+
+	OnPhoneContact_AfterDelete(pc)
 
 	return nil
 }
@@ -30615,17 +31236,19 @@ func (u *__PhoneContact_Selector) GetRow(db *sqlx.DB) (*PhoneContact, error) {
 
 	row._exists = true
 
+	OnPhoneContact_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__PhoneContact_Selector) GetRows(db *sqlx.DB) ([]PhoneContact, error) {
+func (u *__PhoneContact_Selector) GetRows(db *sqlx.DB) ([]*PhoneContact, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []PhoneContact
+	var rows []*PhoneContact
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -30636,7 +31259,47 @@ func (u *__PhoneContact_Selector) GetRows(db *sqlx.DB) ([]PhoneContact, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnPhoneContact_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__PhoneContact_Selector) GetRows2(db *sqlx.DB) ([]PhoneContact, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*PhoneContact
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnPhoneContact_LoadMany(rows)
+
+	rows2 := make([]PhoneContact, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__PhoneContact_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -30941,6 +31604,8 @@ func (p *Post) Insert(db XODB) error {
 	p.Id = int(id)
 	p._exists = true
 
+	OnPost_AfterInsert(p)
+
 	return nil
 }
 
@@ -30972,6 +31637,8 @@ func (p *Post) Replace(db XODB) error {
 	p.Id = int(id)
 	p._exists = true
 
+	OnPost_AfterInsert(p)
+
 	return nil
 }
 
@@ -30997,6 +31664,9 @@ func (p *Post) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.HasTag, p.LikesCount, p.CommentsCount, p.CreatedTime, p.Id)
 	_, err = db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.HasTag, p.LikesCount, p.CommentsCount, p.CreatedTime, p.Id)
+
+	OnPost_AfterUpdate(p)
+
 	return err
 }
 
@@ -31035,6 +31705,8 @@ func (p *Post) Delete(db XODB) error {
 
 	// set deleted
 	p._deleted = true
+
+	OnPost_AfterDelete(p)
 
 	return nil
 }
@@ -35111,17 +35783,19 @@ func (u *__Post_Selector) GetRow(db *sqlx.DB) (*Post, error) {
 
 	row._exists = true
 
+	OnPost_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__Post_Selector) GetRows(db *sqlx.DB) ([]Post, error) {
+func (u *__Post_Selector) GetRows(db *sqlx.DB) ([]*Post, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []Post
+	var rows []*Post
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -35132,7 +35806,47 @@ func (u *__Post_Selector) GetRows(db *sqlx.DB) ([]Post, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnPost_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__Post_Selector) GetRows2(db *sqlx.DB) ([]Post, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*Post
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnPost_LoadMany(rows)
+
+	rows2 := make([]Post, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__Post_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -35444,6 +36158,8 @@ func (ru *RecommendUser) Insert(db XODB) error {
 	ru.Id = int(id)
 	ru._exists = true
 
+	OnRecommendUser_AfterInsert(ru)
+
 	return nil
 }
 
@@ -35475,6 +36191,8 @@ func (ru *RecommendUser) Replace(db XODB) error {
 	ru.Id = int(id)
 	ru._exists = true
 
+	OnRecommendUser_AfterInsert(ru)
+
 	return nil
 }
 
@@ -35500,6 +36218,9 @@ func (ru *RecommendUser) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, ru.UserId, ru.TargetId, ru.Weight, ru.CreatedTime, ru.Id)
 	_, err = db.Exec(sqlstr, ru.UserId, ru.TargetId, ru.Weight, ru.CreatedTime, ru.Id)
+
+	OnRecommendUser_AfterUpdate(ru)
+
 	return err
 }
 
@@ -35538,6 +36259,8 @@ func (ru *RecommendUser) Delete(db XODB) error {
 
 	// set deleted
 	ru._deleted = true
+
+	OnRecommendUser_AfterDelete(ru)
 
 	return nil
 }
@@ -36939,17 +37662,19 @@ func (u *__RecommendUser_Selector) GetRow(db *sqlx.DB) (*RecommendUser, error) {
 
 	row._exists = true
 
+	OnRecommendUser_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__RecommendUser_Selector) GetRows(db *sqlx.DB) ([]RecommendUser, error) {
+func (u *__RecommendUser_Selector) GetRows(db *sqlx.DB) ([]*RecommendUser, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []RecommendUser
+	var rows []*RecommendUser
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -36960,7 +37685,47 @@ func (u *__RecommendUser_Selector) GetRows(db *sqlx.DB) ([]RecommendUser, error)
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnRecommendUser_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__RecommendUser_Selector) GetRows2(db *sqlx.DB) ([]RecommendUser, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*RecommendUser
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnRecommendUser_LoadMany(rows)
+
+	rows2 := make([]RecommendUser, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__RecommendUser_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -37183,7 +37948,7 @@ func MassReplace_RecommendUser(rows []RecommendUser, db XODB) error {
 
 // Manualy copy this to project
 type __SearchClicked struct {
-	Id        uint   `json:"Id"`        // Id -
+	Id        int    `json:"Id"`        // Id -
 	Query     string `json:"Query"`     // Query -
 	ClickType int    `json:"ClickType"` // ClickType -
 	TargetId  int    `json:"TargetId"`  // TargetId -
@@ -37234,8 +37999,10 @@ func (sc *SearchClicked) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	sc.Id = uint(id)
+	sc.Id = int(id)
 	sc._exists = true
+
+	OnSearchClicked_AfterInsert(sc)
 
 	return nil
 }
@@ -37265,8 +38032,10 @@ func (sc *SearchClicked) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	sc.Id = uint(id)
+	sc.Id = int(id)
 	sc._exists = true
+
+	OnSearchClicked_AfterInsert(sc)
 
 	return nil
 }
@@ -37293,6 +38062,9 @@ func (sc *SearchClicked) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt, sc.Id)
 	_, err = db.Exec(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt, sc.Id)
+
+	OnSearchClicked_AfterUpdate(sc)
+
 	return err
 }
 
@@ -37331,6 +38103,8 @@ func (sc *SearchClicked) Delete(db XODB) error {
 
 	// set deleted
 	sc._deleted = true
+
+	OnSearchClicked_AfterDelete(sc)
 
 	return nil
 }
@@ -37384,6 +38158,98 @@ func NewSearchClicked_Selector() *__SearchClicked_Selector {
 func (u *__SearchClicked_Deleter) Or() *__SearchClicked_Deleter {
 	u.whereSep = " OR "
 	return u
+}
+
+func (u *__SearchClicked_Deleter) Id_In(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Deleter) Id_NotIn(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Deleter) Id_EQ(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) Id_NotEQ(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) Id_LT(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) Id_LE(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) Id_GT(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) Id_GE(val int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
 }
 
 func (u *__SearchClicked_Deleter) ClickType_In(ins []int) *__SearchClicked_Deleter {
@@ -37760,6 +38626,98 @@ func (u *__SearchClicked_Updater) Or() *__SearchClicked_Updater {
 	return u
 }
 
+func (u *__SearchClicked_Updater) Id_In(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Updater) Id_NotIn(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Updater) Id_EQ(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) Id_NotEQ(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) Id_LT(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) Id_LE(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) Id_GT(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) Id_GE(val int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__SearchClicked_Updater) ClickType_In(ins []int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -38132,6 +39090,98 @@ func (d *__SearchClicked_Updater) CreatedAt_GE(val int) *__SearchClicked_Updater
 func (u *__SearchClicked_Selector) Or() *__SearchClicked_Selector {
 	u.whereSep = " OR "
 	return u
+}
+
+func (u *__SearchClicked_Selector) Id_In(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Selector) Id_NotIn(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__SearchClicked_Selector) Id_EQ(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) Id_NotEQ(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) Id_LT(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) Id_LE(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) Id_GT(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) Id_GE(val int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
 }
 
 func (u *__SearchClicked_Selector) ClickType_In(ins []int) *__SearchClicked_Selector {
@@ -38663,6 +39713,23 @@ func (d *__SearchClicked_Selector) Query_EQ(val string) *__SearchClicked_Selecto
 
 //ints
 
+func (u *__SearchClicked_Updater) Id(newVal int) *__SearchClicked_Updater {
+	u.updates[" Id = ? "] = newVal
+	return u
+}
+
+func (u *__SearchClicked_Updater) Id_Increment(count int) *__SearchClicked_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
 //string
 
 //ints
@@ -38902,17 +39969,19 @@ func (u *__SearchClicked_Selector) GetRow(db *sqlx.DB) (*SearchClicked, error) {
 
 	row._exists = true
 
+	OnSearchClicked_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__SearchClicked_Selector) GetRows(db *sqlx.DB) ([]SearchClicked, error) {
+func (u *__SearchClicked_Selector) GetRows(db *sqlx.DB) ([]*SearchClicked, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []SearchClicked
+	var rows []*SearchClicked
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -38923,7 +39992,47 @@ func (u *__SearchClicked_Selector) GetRows(db *sqlx.DB) ([]SearchClicked, error)
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnSearchClicked_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__SearchClicked_Selector) GetRows2(db *sqlx.DB) ([]SearchClicked, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*SearchClicked
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnSearchClicked_LoadMany(rows)
+
+	rows2 := make([]SearchClicked, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__SearchClicked_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -39186,14 +40295,14 @@ func (s *Session) Insert(db XODB) error {
 
 	// sql query
 	const sqlstr = `INSERT INTO ms.session (` +
-		`Id, UserId, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime` +
+		`UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, s.Id, s.UserId, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime)
-	res, err := db.Exec(sqlstr, s.Id, s.UserId, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime)
+	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime)
+	res, err := db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime)
 	if err != nil {
 		return err
 	}
@@ -39205,8 +40314,10 @@ func (s *Session) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	s.SessionUuid = string(id)
+	s.Id = int(id)
 	s._exists = true
+
+	OnSession_AfterInsert(s)
 
 	return nil
 }
@@ -39217,14 +40328,14 @@ func (s *Session) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.session (` +
-		`Id, UserId, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime` +
+		`UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, s.Id, s.UserId, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime)
-	res, err := db.Exec(sqlstr, s.Id, s.UserId, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime)
+	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime)
+	res, err := db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime)
 	if err != nil {
 		return err
 	}
@@ -39236,8 +40347,10 @@ func (s *Session) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	s.SessionUuid = string(id)
+	s.Id = int(id)
 	s._exists = true
+
+	OnSession_AfterInsert(s)
 
 	return nil
 }
@@ -39258,12 +40371,15 @@ func (s *Session) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.session SET ` +
-		`Id = ?, UserId = ?, ClientUuid = ?, DeviceUuid = ?, LastActivityTime = ?, LastIpAddress = ?, LastWifiMacAddress = ?, LastNetworkType = ?, CreatedTime = ?` +
-		` WHERE SessionUuid = ?`
+		`UserId = ?, SessionUuid = ?, ClientUuid = ?, DeviceUuid = ?, LastActivityTime = ?, LastIpAddress = ?, LastWifiMacAddress = ?, LastNetworkType = ?, CreatedTime = ?` +
+		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, s.Id, s.UserId, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime, s.SessionUuid)
-	_, err = db.Exec(sqlstr, s.Id, s.UserId, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime, s.SessionUuid)
+	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime, s.Id)
+	_, err = db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.CreatedTime, s.Id)
+
+	OnSession_AfterUpdate(s)
+
 	return err
 }
 
@@ -39291,17 +40407,19 @@ func (s *Session) Delete(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.session WHERE SessionUuid = ?`
+	const sqlstr = `DELETE FROM ms.session WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, s.SessionUuid)
-	_, err = db.Exec(sqlstr, s.SessionUuid)
+	XOLog(sqlstr, s.Id)
+	_, err = db.Exec(sqlstr, s.Id)
 	if err != nil {
 		return err
 	}
 
 	// set deleted
 	s._deleted = true
+
+	OnSession_AfterDelete(s)
 
 	return nil
 }
@@ -41704,17 +42822,19 @@ func (u *__Session_Selector) GetRow(db *sqlx.DB) (*Session, error) {
 
 	row._exists = true
 
+	OnSession_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__Session_Selector) GetRows(db *sqlx.DB) ([]Session, error) {
+func (u *__Session_Selector) GetRows(db *sqlx.DB) ([]*Session, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []Session
+	var rows []*Session
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -41725,7 +42845,47 @@ func (u *__Session_Selector) GetRows(db *sqlx.DB) ([]Session, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnSession_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__Session_Selector) GetRows2(db *sqlx.DB) ([]Session, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*Session
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnSession_LoadMany(rows)
+
+	rows2 := make([]Session, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__Session_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -41874,7 +43034,7 @@ func MassInsert_Session(rows []Session, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.session (" +
-		"Id, UserId, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime" +
+		"UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -41882,8 +43042,8 @@ func MassInsert_Session(rows []Session, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.Id)
 		vals = append(vals, row.UserId)
+		vals = append(vals, row.SessionUuid)
 		vals = append(vals, row.ClientUuid)
 		vals = append(vals, row.DeviceUuid)
 		vals = append(vals, row.LastActivityTime)
@@ -41912,7 +43072,7 @@ func MassReplace_Session(rows []Session, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.session (" +
-		"Id, UserId, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime" +
+		"UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -41920,8 +43080,8 @@ func MassReplace_Session(rows []Session, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.Id)
 		vals = append(vals, row.UserId)
+		vals = append(vals, row.SessionUuid)
 		vals = append(vals, row.ClientUuid)
 		vals = append(vals, row.DeviceUuid)
 		vals = append(vals, row.LastActivityTime)
@@ -42021,6 +43181,8 @@ func (t *Tag) Insert(db XODB) error {
 	t.Id = int(id)
 	t._exists = true
 
+	OnTag_AfterInsert(t)
+
 	return nil
 }
 
@@ -42052,6 +43214,8 @@ func (t *Tag) Replace(db XODB) error {
 	t.Id = int(id)
 	t._exists = true
 
+	OnTag_AfterInsert(t)
+
 	return nil
 }
 
@@ -42077,6 +43241,9 @@ func (t *Tag) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime, t.Id)
 	_, err = db.Exec(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime, t.Id)
+
+	OnTag_AfterUpdate(t)
+
 	return err
 }
 
@@ -42115,6 +43282,8 @@ func (t *Tag) Delete(db XODB) error {
 
 	// set deleted
 	t._deleted = true
+
+	OnTag_AfterDelete(t)
 
 	return nil
 }
@@ -43667,17 +44836,19 @@ func (u *__Tag_Selector) GetRow(db *sqlx.DB) (*Tag, error) {
 
 	row._exists = true
 
+	OnTag_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__Tag_Selector) GetRows(db *sqlx.DB) ([]Tag, error) {
+func (u *__Tag_Selector) GetRows(db *sqlx.DB) ([]*Tag, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []Tag
+	var rows []*Tag
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -43688,7 +44859,47 @@ func (u *__Tag_Selector) GetRows(db *sqlx.DB) ([]Tag, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnTag_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__Tag_Selector) GetRows2(db *sqlx.DB) ([]Tag, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*Tag
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnTag_LoadMany(rows)
+
+	rows2 := make([]Tag, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__Tag_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -43964,6 +45175,8 @@ func (tp *TagsPost) Insert(db XODB) error {
 	tp.Id = int(id)
 	tp._exists = true
 
+	OnTagsPost_AfterInsert(tp)
+
 	return nil
 }
 
@@ -43995,6 +45208,8 @@ func (tp *TagsPost) Replace(db XODB) error {
 	tp.Id = int(id)
 	tp._exists = true
 
+	OnTagsPost_AfterInsert(tp)
+
 	return nil
 }
 
@@ -44020,6 +45235,9 @@ func (tp *TagsPost) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, tp.TagId, tp.PostId, tp.TypeId, tp.CreatedTime, tp.Id)
 	_, err = db.Exec(sqlstr, tp.TagId, tp.PostId, tp.TypeId, tp.CreatedTime, tp.Id)
+
+	OnTagsPost_AfterUpdate(tp)
+
 	return err
 }
 
@@ -44058,6 +45276,8 @@ func (tp *TagsPost) Delete(db XODB) error {
 
 	// set deleted
 	tp._deleted = true
+
+	OnTagsPost_AfterDelete(tp)
 
 	return nil
 }
@@ -45752,17 +46972,19 @@ func (u *__TagsPost_Selector) GetRow(db *sqlx.DB) (*TagsPost, error) {
 
 	row._exists = true
 
+	OnTagsPost_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__TagsPost_Selector) GetRows(db *sqlx.DB) ([]TagsPost, error) {
+func (u *__TagsPost_Selector) GetRows(db *sqlx.DB) ([]*TagsPost, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []TagsPost
+	var rows []*TagsPost
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -45773,7 +46995,47 @@ func (u *__TagsPost_Selector) GetRows(db *sqlx.DB) ([]TagsPost, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnTagsPost_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__TagsPost_Selector) GetRows2(db *sqlx.DB) ([]TagsPost, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*TagsPost
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnTagsPost_LoadMany(rows)
+
+	rows2 := make([]TagsPost, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__TagsPost_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -46076,6 +47338,8 @@ func (u *User) Insert(db XODB) error {
 	u.Id = int(id)
 	u._exists = true
 
+	OnUser_AfterInsert(u)
+
 	return nil
 }
 
@@ -46107,6 +47371,8 @@ func (u *User) Replace(db XODB) error {
 	u.Id = int(id)
 	u._exists = true
 
+	OnUser_AfterInsert(u)
+
 	return nil
 }
 
@@ -46132,6 +47398,9 @@ func (u *User) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress, u.Id)
 	_, err = db.Exec(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress, u.Id)
+
+	OnUser_AfterUpdate(u)
+
 	return err
 }
 
@@ -46170,6 +47439,8 @@ func (u *User) Delete(db XODB) error {
 
 	// set deleted
 	u._deleted = true
+
+	OnUser_AfterDelete(u)
 
 	return nil
 }
@@ -54158,17 +55429,19 @@ func (u *__User_Selector) GetRow(db *sqlx.DB) (*User, error) {
 
 	row._exists = true
 
+	OnUser_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__User_Selector) GetRows(db *sqlx.DB) ([]User, error) {
+func (u *__User_Selector) GetRows(db *sqlx.DB) ([]*User, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []User
+	var rows []*User
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -54179,7 +55452,47 @@ func (u *__User_Selector) GetRows(db *sqlx.DB) ([]User, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnUser_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__User_Selector) GetRows2(db *sqlx.DB) ([]User, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*User
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnUser_LoadMany(rows)
+
+	rows2 := make([]User, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__User_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -54560,6 +55873,8 @@ func (umi *UserMetaInfo) Insert(db XODB) error {
 	umi.UserId = int(id)
 	umi._exists = true
 
+	OnUserMetaInfo_AfterInsert(umi)
+
 	return nil
 }
 
@@ -54591,6 +55906,8 @@ func (umi *UserMetaInfo) Replace(db XODB) error {
 	umi.UserId = int(id)
 	umi._exists = true
 
+	OnUserMetaInfo_AfterInsert(umi)
+
 	return nil
 }
 
@@ -54616,6 +55933,9 @@ func (umi *UserMetaInfo) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, umi.IsNotificationDirty, umi.UserId)
 	_, err = db.Exec(sqlstr, umi.IsNotificationDirty, umi.UserId)
+
+	OnUserMetaInfo_AfterUpdate(umi)
+
 	return err
 }
 
@@ -54654,6 +55974,8 @@ func (umi *UserMetaInfo) Delete(db XODB) error {
 
 	// set deleted
 	umi._deleted = true
+
+	OnUserMetaInfo_AfterDelete(umi)
 
 	return nil
 }
@@ -55412,17 +56734,19 @@ func (u *__UserMetaInfo_Selector) GetRow(db *sqlx.DB) (*UserMetaInfo, error) {
 
 	row._exists = true
 
+	OnUserMetaInfo_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__UserMetaInfo_Selector) GetRows(db *sqlx.DB) ([]UserMetaInfo, error) {
+func (u *__UserMetaInfo_Selector) GetRows(db *sqlx.DB) ([]*UserMetaInfo, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []UserMetaInfo
+	var rows []*UserMetaInfo
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -55433,7 +56757,47 @@ func (u *__UserMetaInfo_Selector) GetRows(db *sqlx.DB) ([]UserMetaInfo, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnUserMetaInfo_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__UserMetaInfo_Selector) GetRows2(db *sqlx.DB) ([]UserMetaInfo, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*UserMetaInfo
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnUserMetaInfo_LoadMany(rows)
+
+	rows2 := make([]UserMetaInfo, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__UserMetaInfo_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -55695,6 +57059,8 @@ func (up *UserPassword) Insert(db XODB) error {
 	up.UserId = int(id)
 	up._exists = true
 
+	OnUserPassword_AfterInsert(up)
+
 	return nil
 }
 
@@ -55726,6 +57092,8 @@ func (up *UserPassword) Replace(db XODB) error {
 	up.UserId = int(id)
 	up._exists = true
 
+	OnUserPassword_AfterInsert(up)
+
 	return nil
 }
 
@@ -55751,6 +57119,9 @@ func (up *UserPassword) Update(db XODB) error {
 	// run query
 	XOLog(sqlstr, up.Password, up.CreatedTime, up.UserId)
 	_, err = db.Exec(sqlstr, up.Password, up.CreatedTime, up.UserId)
+
+	OnUserPassword_AfterUpdate(up)
+
 	return err
 }
 
@@ -55789,6 +57160,8 @@ func (up *UserPassword) Delete(db XODB) error {
 
 	// set deleted
 	up._deleted = true
+
+	OnUserPassword_AfterDelete(up)
 
 	return nil
 }
@@ -56717,17 +58090,19 @@ func (u *__UserPassword_Selector) GetRow(db *sqlx.DB) (*UserPassword, error) {
 
 	row._exists = true
 
+	OnUserPassword_LoadOne(row)
+
 	return row, nil
 }
 
-func (u *__UserPassword_Selector) GetRows(db *sqlx.DB) ([]UserPassword, error) {
+func (u *__UserPassword_Selector) GetRows(db *sqlx.DB) ([]*UserPassword, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []UserPassword
+	var rows []*UserPassword
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -56738,7 +58113,47 @@ func (u *__UserPassword_Selector) GetRows(db *sqlx.DB) ([]UserPassword, error) {
 		rows[i]._exists = true
 	}
 
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnUserPassword_LoadMany(rows)
+
 	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__UserPassword_Selector) GetRows2(db *sqlx.DB) ([]UserPassword, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*UserPassword
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnUserPassword_LoadMany(rows)
+
+	rows2 := make([]UserPassword, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
 }
 
 func (u *__UserPassword_Selector) GetString(db *sqlx.DB) (string, error) {
@@ -56949,6 +58364,45 @@ func MassReplace_UserPassword(rows []UserPassword, db XODB) error {
 
 //
 
+// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
+//
+// Generated from index 'PostId'.
+func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, PostId, Text, CreatedTime ` +
+		`FROM ms.comments ` +
+		`WHERE PostId = ?`
+
+	// run query
+	XOLog(sqlstr, postId)
+	q, err := db.Query(sqlstr, postId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Comment{}
+	for q.Next() {
+		c := Comment{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &c)
+	}
+
+	return res, nil
+}
+
 // CommentById retrieves a row from 'ms.comments' as a Comment.
 //
 // Generated from index 'comments_Id_pkey'.
@@ -57131,71 +58585,6 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	return &flmh, nil
 }
 
-// LikesById retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'Id'.
-func LikesById(db XODB, id int) ([]*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Like{}
-	for q.Next() {
-		l := Like{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &l)
-	}
-
-	return res, nil
-}
-
-// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'PostId'.
-func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE PostId = ? AND UserId = ?`
-
-	// run query
-	XOLog(sqlstr, postId, userId)
-	l := Like{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
-	if err != nil {
-		return nil, err
-	}
-
-	return &l, nil
-}
-
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId_2'.
@@ -57285,6 +58674,45 @@ func MediaById(db XODB, id int) (*Media, error) {
 	}
 
 	return &m, nil
+}
+
+// MessagesByToUserId retrieves a row from 'ms.message' as a Message.
+//
+// Generated from index 'ToUserId'.
+func MessagesByToUserId(db XODB, toUserId int) ([]*Message, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
+		`FROM ms.message ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Message{}
+	for q.Next() {
+		m := Message{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &m)
+	}
+
+	return res, nil
 }
 
 // MessagesByToUserIdTimeMs retrieves a row from 'ms.message' as a Message.
@@ -57402,45 +58830,6 @@ func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
 	}
 
 	return &mrtp, nil
-}
-
-// MsgSeenByPeersByToUserId retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
-//
-// Generated from index 'ToUserId'.
-func MsgSeenByPeersByToUserId(db XODB, toUserId int) ([]*MsgSeenByPeer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
-		`FROM ms.msg_seen_by_peer ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgSeenByPeer{}
-	for q.Next() {
-		msbp := MsgSeenByPeer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &msbp)
-	}
-
-	return res, nil
 }
 
 // MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
@@ -57703,45 +59092,6 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 	return res, nil
 }
 
-// PhoneContactsByUserId retrieves a row from 'ms.phone_contacts' as a PhoneContact.
-//
-// Generated from index 'UserId'.
-func PhoneContactsByUserId(db XODB, userId int) ([]*PhoneContact, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime ` +
-		`FROM ms.phone_contacts ` +
-		`WHERE UserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId)
-	q, err := db.Query(sqlstr, userId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*PhoneContact{}
-	for q.Next() {
-		pc := PhoneContact{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &pc)
-	}
-
-	return res, nil
-}
-
 // PhoneContactsByUserIdCreatedTime retrieves a row from 'ms.phone_contacts' as a PhoneContact.
 //
 // Generated from index 'UserId_Time'.
@@ -57807,6 +59157,45 @@ func PhoneContactById(db XODB, id int) (*PhoneContact, error) {
 	return &pc, nil
 }
 
+// PostsByUserId retrieves a row from 'ms.post' as a Post.
+//
+// Generated from index 'UserId'.
+func PostsByUserId(db XODB, userId int) ([]*Post, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaServerId, Width, Height, SharedTo, HasTag, LikesCount, CommentsCount, CreatedTime ` +
+		`FROM ms.post ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Post{}
+	for q.Next() {
+		p := Post{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &p)
+	}
+
+	return res, nil
+}
+
 // PostById retrieves a row from 'ms.post' as a Post.
 //
 // Generated from index 'post_Id_pkey'.
@@ -57862,7 +59251,7 @@ func RecommendUserById(db XODB, id int) (*RecommendUser, error) {
 // SearchClickedById retrieves a row from 'ms.search_clicked' as a SearchClicked.
 //
 // Generated from index 'search_clicked_Id_pkey'.
-func SearchClickedById(db XODB, id uint) (*SearchClicked, error) {
+func SearchClickedById(db XODB, id int) (*SearchClicked, error) {
 	var err error
 
 	// sql query
@@ -57885,25 +59274,64 @@ func SearchClickedById(db XODB, id uint) (*SearchClicked, error) {
 	return &sc, nil
 }
 
-// SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
+// SessionsById retrieves a row from 'ms.session' as a Session.
 //
-// Generated from index 'session_SessionUuid_pkey'.
-func SessionBySessionUuid(db XODB, sessionUuid string) (*Session, error) {
+// Generated from index 'Id'.
+func SessionsById(db XODB, id int) ([]*Session, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
 		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
 		`FROM ms.session ` +
-		`WHERE SessionUuid = ?`
+		`WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, sessionUuid)
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Session{}
+	for q.Next() {
+		s := Session{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &s)
+	}
+
+	return res, nil
+}
+
+// SessionById retrieves a row from 'ms.session' as a Session.
+//
+// Generated from index 'session_Id_pkey'.
+func SessionById(db XODB, id int) (*Session, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
+		`FROM ms.session ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
 	s := Session{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, sessionUuid).Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
+	err = db.QueryRow(sqlstr, id).Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
 	if err != nil {
 		return nil, err
 	}

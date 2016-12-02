@@ -27,7 +27,7 @@ func GetCommentsAction(c *base.Action) base.AppErr {
 		selector.Offset((page - 1) * limit)
 	}
 
-	comments, err := selector.GetRows(base.DB)
+	comments, err := selector.GetRows2(base.DB)
 
 	if err != nil {
 		helper.DebugErr(err)

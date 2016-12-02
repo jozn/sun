@@ -29,7 +29,7 @@ func (m *mapMemoryStore_UserImpl) ReloadAll() {
 	m.MapUsernameToId = make(map[string]int, 10000)
 	m.MapSessionToId = make(map[string]int, 10000)
 
-	users, err := NewUser_Selector().GetRows(base.DB)
+	users, err := NewUser_Selector().GetRows2(base.DB)
 	if err != nil {
 		helper.DebugPrintln(err)
 	}
