@@ -1,5 +1,7 @@
 package models
 
+import "github.com/jozn/xo/examples/django/postgres"
+
 ////////////////// Posts /////////////////////
 func OnPostCreated(post *Post) {
 
@@ -24,6 +26,7 @@ func OnPostUnLiked(like *Like) {
 //ep
 func OnPostCommented(comment *Comment, post *Post) {
 	//Notification_OnPostCommented(comment, post, true)
+    
 }
 
 func OnPostCommentedDelted(comment *Comment, post *Post) {
