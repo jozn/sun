@@ -8,6 +8,29 @@ import (
 	"time"
 )
 
+//Activity Events
+func OnActivity_AfterInsert__(row *Activity) {
+	RowCache.Set("Activity:"+strconv.Itoa(row.Id), row, time.Hour*0)
+}
+
+func OnActivity_AfterUpdate__(row *Activity) {
+	RowCache.Set("Activity:"+strconv.Itoa(row.Id), row, time.Hour*0)
+}
+
+func OnActivity_AfterDelete__(row *Activity) {
+	RowCache.Delete("Activity:" + strconv.Itoa(row.Id))
+}
+
+func OnActivity_LoadOne__(row *Activity) {
+	RowCache.Set("Activity:"+strconv.Itoa(row.Id), row, time.Hour*0)
+}
+
+func OnActivity_LoadMany__(rows []*Activity) {
+	for _, row := range rows {
+		RowCache.Set("Activity:"+strconv.Itoa(row.Id), row, time.Hour*0)
+	}
+}
+
 //Comment Events
 func OnComment_AfterInsert__(row *Comment) {
 	RowCache.Set("Comment:"+strconv.Itoa(row.Id), row, time.Hour*0)

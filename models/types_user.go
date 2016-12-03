@@ -143,6 +143,7 @@ func (ub *UserBasic) ToUserInlineView() *UserInlineView {
 
 /////////// Deprecated //////////////////////////////
 
+/*
 type UserInfo struct { //deprecated
 	UserId             int
 	FollowersCount     int
@@ -153,6 +154,7 @@ type UserInfo struct { //deprecated
 	ResharedCount      int
 	LastLoginTimestamp int
 }
+*/
 
 type UserPassword struct {
 	UserId      int

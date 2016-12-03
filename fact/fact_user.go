@@ -29,13 +29,13 @@ func FactUser1(c *Action) {
 	u.AvatarUrl = "public/avatars/" + intToStr(rand.Intn(15)+1) + ".jpg"
 	u.CreatedTime = int(time.Now().Unix())
 
-	ui := UserInfo{}
+	//ui := UserInfo{}
 
 	res, err := DbInsertStruct(&u, "user")
 	noErr(err)
 	id, _ := res.LastInsertId()
-	ui.UserId = int(id)
-	DbInsertStruct(&ui, "user_info")
+	//ui.UserId = int(id)
+	//DbInsertStruct(&ui, "user_info")
 
 	//folowing list
 	fl := FollowingList{}

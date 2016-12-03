@@ -8,6 +8,19 @@ import (
 
 //Me Modified names
 
+func (c _StoreImpl) GetActivityById(Id int) (*Activity, bool) {
+    o, ok := RowCache.Get("Activity:" + strconv.Itoa(Id))
+    if ok {
+        if obj, ok := o.(*Activity); ok {
+            return obj, true
+        }
+    }
+    obj2, err := ActivityById(base.DB, Id)
+    if err == nil {
+        return obj2, true
+    }
+    return nil, false
+}
 
 func (c _StoreImpl) GetCommentById(Id int) (*Comment, bool) {
     o, ok := RowCache.Get("Comment:" + strconv.Itoa(Id))

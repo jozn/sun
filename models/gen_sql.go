@@ -19,6 +19,2459 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+// Activity represents a row from 'ms.activity'.
+
+// Manualy copy this to project
+type __Activity struct {
+	Id           int `json:"Id"`           // Id -
+	ActorUserId  int `json:"ActorUserId"`  // ActorUserId -
+	ActionTypeId int `json:"ActionTypeId"` // ActionTypeId -
+	TargetId     int `json:"TargetId"`     // TargetId -
+	RefId        int `json:"RefId"`        // RefId -
+	CreatedAt    int `json:"CreatedAt"`    // CreatedAt -
+
+	// xo fields
+	_exists, _deleted bool
+}
+
+// Exists determines if the Activity exists in the database.
+func (a *Activity) Exists() bool {
+	return a._exists
+}
+
+// Deleted provides information if the Activity has been deleted from the database.
+func (a *Activity) Deleted() bool {
+	return a._deleted
+}
+
+// Insert inserts the Activity to the database.
+func (a *Activity) Insert(db XODB) error {
+	var err error
+
+	// if already exist, bail
+	if a._exists {
+		return errors.New("insert failed: already exists")
+	}
+
+	// sql query
+	const sqlstr = `INSERT INTO ms.activity (` +
+		`ActorUserId, ActionTypeId, TargetId, RefId, CreatedAt` +
+		`) VALUES (` +
+		`?, ?, ?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt)
+	res, err := db.Exec(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	a.Id = int(id)
+	a._exists = true
+
+	OnActivity_AfterInsert(a)
+
+	return nil
+}
+
+// Insert inserts the Activity to the database.
+func (a *Activity) Replace(db XODB) error {
+	var err error
+
+	// sql query
+	const sqlstr = `REPLACE INTO ms.activity (` +
+		`ActorUserId, ActionTypeId, TargetId, RefId, CreatedAt` +
+		`) VALUES (` +
+		`?, ?, ?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt)
+	res, err := db.Exec(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt)
+	if err != nil {
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	// set primary key and existence
+	a.Id = int(id)
+	a._exists = true
+
+	OnActivity_AfterInsert(a)
+
+	return nil
+}
+
+// Update updates the Activity in the database.
+func (a *Activity) Update(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !a._exists {
+		return errors.New("update failed: does not exist")
+	}
+
+	// if deleted, bail
+	if a._deleted {
+		return errors.New("update failed: marked for deletion")
+	}
+
+	// sql query
+	const sqlstr = `UPDATE ms.activity SET ` +
+		`ActorUserId = ?, ActionTypeId = ?, TargetId = ?, RefId = ?, CreatedAt = ?` +
+		` WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt, a.Id)
+	_, err = db.Exec(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt, a.Id)
+
+	OnActivity_AfterUpdate(a)
+
+	return err
+}
+
+// Save saves the Activity to the database.
+func (a *Activity) Save(db XODB) error {
+	if a.Exists() {
+		return a.Update(db)
+	}
+
+	return a.Replace(db)
+}
+
+// Delete deletes the Activity from the database.
+func (a *Activity) Delete(db XODB) error {
+	var err error
+
+	// if doesn't exist, bail
+	if !a._exists {
+		return nil
+	}
+
+	// if deleted, bail
+	if a._deleted {
+		return nil
+	}
+
+	// sql query
+	const sqlstr = `DELETE FROM ms.activity WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, a.Id)
+	_, err = db.Exec(sqlstr, a.Id)
+	if err != nil {
+		return err
+	}
+
+	// set deleted
+	a._deleted = true
+
+	OnActivity_AfterDelete(a)
+
+	return nil
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// Querify gen - ME /////////////////////////////////////////
+//.Name = table name
+// _Deleter, _Updater
+
+// orma types
+type __Activity_Deleter struct {
+	wheres   []whereClause
+	whereSep string
+}
+
+type __Activity_Updater struct {
+	wheres   []whereClause
+	updates  map[string]interface{}
+	whereSep string
+}
+
+type __Activity_Selector struct {
+	wheres    []whereClause
+	selectCol string
+	whereSep  string
+	orderBy   string //" order by id desc //for ints
+	limit     int
+	offset    int
+}
+
+func NewActivity_Deleter() *__Activity_Deleter {
+	d := __Activity_Deleter{whereSep: " AND "}
+	return &d
+}
+
+func NewActivity_Updater() *__Activity_Updater {
+	u := __Activity_Updater{whereSep: " AND "}
+	u.updates = make(map[string]interface{}, 10)
+	return &u
+}
+
+func NewActivity_Selector() *__Activity_Selector {
+	u := __Activity_Selector{whereSep: " AND ", selectCol: "*"}
+	return &u
+}
+
+/////////////////////////////// Where for all /////////////////////////////
+//// for ints all selector updater, deleter
+
+////////ints
+func (u *__Activity_Deleter) Or() *__Activity_Deleter {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__Activity_Deleter) Id_In(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Deleter) Id_NotIn(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Deleter) Id_EQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) Id_NotEQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) Id_LT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) Id_LE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) Id_GT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) Id_GE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Deleter) ActorUserId_In(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Deleter) ActorUserId_NotIn(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Deleter) ActorUserId_EQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) ActorUserId_NotEQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) ActorUserId_LT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) ActorUserId_LE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) ActorUserId_GT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) ActorUserId_GE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Deleter) ActionTypeId_In(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Deleter) ActionTypeId_NotIn(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Deleter) ActionTypeId_EQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) ActionTypeId_NotEQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) ActionTypeId_LT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) ActionTypeId_LE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) ActionTypeId_GT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) ActionTypeId_GE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Deleter) TargetId_In(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Deleter) TargetId_NotIn(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Deleter) TargetId_EQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) TargetId_NotEQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) TargetId_LT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) TargetId_LE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) TargetId_GT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) TargetId_GE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Deleter) RefId_In(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Deleter) RefId_NotIn(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Deleter) RefId_EQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) RefId_NotEQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) RefId_LT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) RefId_LE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) RefId_GT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) RefId_GE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Deleter) CreatedAt_In(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Deleter) CreatedAt_NotIn(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Deleter) CreatedAt_EQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) CreatedAt_NotEQ(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) CreatedAt_LT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) CreatedAt_LE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) CreatedAt_GT(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Deleter) CreatedAt_GE(val int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__Activity_Updater) Or() *__Activity_Updater {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__Activity_Updater) Id_In(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Updater) Id_NotIn(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Updater) Id_EQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) Id_NotEQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) Id_LT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) Id_LE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) Id_GT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) Id_GE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Updater) ActorUserId_In(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Updater) ActorUserId_NotIn(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Updater) ActorUserId_EQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) ActorUserId_NotEQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) ActorUserId_LT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) ActorUserId_LE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) ActorUserId_GT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) ActorUserId_GE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Updater) ActionTypeId_In(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Updater) ActionTypeId_NotIn(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Updater) ActionTypeId_EQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) ActionTypeId_NotEQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) ActionTypeId_LT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) ActionTypeId_LE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) ActionTypeId_GT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) ActionTypeId_GE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Updater) TargetId_In(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Updater) TargetId_NotIn(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Updater) TargetId_EQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) TargetId_NotEQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) TargetId_LT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) TargetId_LE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) TargetId_GT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) TargetId_GE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Updater) RefId_In(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Updater) RefId_NotIn(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Updater) RefId_EQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) RefId_NotEQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) RefId_LT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) RefId_LE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) RefId_GT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) RefId_GE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Updater) CreatedAt_In(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Updater) CreatedAt_NotIn(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Updater) CreatedAt_EQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) CreatedAt_NotEQ(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) CreatedAt_LT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) CreatedAt_LE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) CreatedAt_GT(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Updater) CreatedAt_GE(val int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+func (u *__Activity_Selector) Or() *__Activity_Selector {
+	u.whereSep = " OR "
+	return u
+}
+
+func (u *__Activity_Selector) Id_In(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Selector) Id_NotIn(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Selector) Id_EQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) Id_NotEQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) Id_LT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) Id_LE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) Id_GT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) Id_GE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Selector) ActorUserId_In(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Selector) ActorUserId_NotIn(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Selector) ActorUserId_EQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) ActorUserId_NotEQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) ActorUserId_LT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) ActorUserId_LE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) ActorUserId_GT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) ActorUserId_GE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActorUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Selector) ActionTypeId_In(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Selector) ActionTypeId_NotIn(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Selector) ActionTypeId_EQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) ActionTypeId_NotEQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) ActionTypeId_LT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) ActionTypeId_LE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) ActionTypeId_GT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) ActionTypeId_GE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ActionTypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Selector) TargetId_In(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Selector) TargetId_NotIn(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Selector) TargetId_EQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) TargetId_NotEQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) TargetId_LT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) TargetId_LE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) TargetId_GT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) TargetId_GE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " TargetId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Selector) RefId_In(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Selector) RefId_NotIn(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Selector) RefId_EQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) RefId_NotEQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) RefId_LT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) RefId_LE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) RefId_GT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) RefId_GE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Activity_Selector) CreatedAt_In(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Selector) CreatedAt_NotIn(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Activity_Selector) CreatedAt_EQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) CreatedAt_NotEQ(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) CreatedAt_LT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) CreatedAt_LE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) CreatedAt_GT(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Activity_Selector) CreatedAt_GE(val int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedAt >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
+
+////////ints
+
+////////ints
+
+////////ints
+
+/// End of wheres for selectors , updators, deletor
+
+/////////////////////////////// Updater /////////////////////////////
+
+//ints
+
+func (u *__Activity_Updater) Id(newVal int) *__Activity_Updater {
+	u.updates[" Id = ? "] = newVal
+	return u
+}
+
+func (u *__Activity_Updater) Id_Increment(count int) *__Activity_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__Activity_Updater) ActorUserId(newVal int) *__Activity_Updater {
+	u.updates[" ActorUserId = ? "] = newVal
+	return u
+}
+
+func (u *__Activity_Updater) ActorUserId_Increment(count int) *__Activity_Updater {
+	if count > 0 {
+		u.updates[" ActorUserId = ActorUserId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ActorUserId = ActorUserId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__Activity_Updater) ActionTypeId(newVal int) *__Activity_Updater {
+	u.updates[" ActionTypeId = ? "] = newVal
+	return u
+}
+
+func (u *__Activity_Updater) ActionTypeId_Increment(count int) *__Activity_Updater {
+	if count > 0 {
+		u.updates[" ActionTypeId = ActionTypeId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ActionTypeId = ActionTypeId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__Activity_Updater) TargetId(newVal int) *__Activity_Updater {
+	u.updates[" TargetId = ? "] = newVal
+	return u
+}
+
+func (u *__Activity_Updater) TargetId_Increment(count int) *__Activity_Updater {
+	if count > 0 {
+		u.updates[" TargetId = TargetId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" TargetId = TargetId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__Activity_Updater) RefId(newVal int) *__Activity_Updater {
+	u.updates[" RefId = ? "] = newVal
+	return u
+}
+
+func (u *__Activity_Updater) RefId_Increment(count int) *__Activity_Updater {
+	if count > 0 {
+		u.updates[" RefId = RefId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" RefId = RefId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__Activity_Updater) CreatedAt(newVal int) *__Activity_Updater {
+	u.updates[" CreatedAt = ? "] = newVal
+	return u
+}
+
+func (u *__Activity_Updater) CreatedAt_Increment(count int) *__Activity_Updater {
+	if count > 0 {
+		u.updates[" CreatedAt = CreatedAt+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedAt = CreatedAt-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////// Selector ///////////////////////////////////
+
+//Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
+
+func (u *__Activity_Selector) OrderBy_Id_Desc() *__Activity_Selector {
+	u.orderBy = " ORDER BY Id DESC "
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_Id_Asc() *__Activity_Selector {
+	u.orderBy = " ORDER BY Id ASC "
+	return u
+}
+
+func (u *__Activity_Selector) Select_Id() *__Activity_Selector {
+	u.selectCol = "Id"
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_ActorUserId_Desc() *__Activity_Selector {
+	u.orderBy = " ORDER BY ActorUserId DESC "
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_ActorUserId_Asc() *__Activity_Selector {
+	u.orderBy = " ORDER BY ActorUserId ASC "
+	return u
+}
+
+func (u *__Activity_Selector) Select_ActorUserId() *__Activity_Selector {
+	u.selectCol = "ActorUserId"
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_ActionTypeId_Desc() *__Activity_Selector {
+	u.orderBy = " ORDER BY ActionTypeId DESC "
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_ActionTypeId_Asc() *__Activity_Selector {
+	u.orderBy = " ORDER BY ActionTypeId ASC "
+	return u
+}
+
+func (u *__Activity_Selector) Select_ActionTypeId() *__Activity_Selector {
+	u.selectCol = "ActionTypeId"
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_TargetId_Desc() *__Activity_Selector {
+	u.orderBy = " ORDER BY TargetId DESC "
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_TargetId_Asc() *__Activity_Selector {
+	u.orderBy = " ORDER BY TargetId ASC "
+	return u
+}
+
+func (u *__Activity_Selector) Select_TargetId() *__Activity_Selector {
+	u.selectCol = "TargetId"
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_RefId_Desc() *__Activity_Selector {
+	u.orderBy = " ORDER BY RefId DESC "
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_RefId_Asc() *__Activity_Selector {
+	u.orderBy = " ORDER BY RefId ASC "
+	return u
+}
+
+func (u *__Activity_Selector) Select_RefId() *__Activity_Selector {
+	u.selectCol = "RefId"
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_CreatedAt_Desc() *__Activity_Selector {
+	u.orderBy = " ORDER BY CreatedAt DESC "
+	return u
+}
+
+func (u *__Activity_Selector) OrderBy_CreatedAt_Asc() *__Activity_Selector {
+	u.orderBy = " ORDER BY CreatedAt ASC "
+	return u
+}
+
+func (u *__Activity_Selector) Select_CreatedAt() *__Activity_Selector {
+	u.selectCol = "CreatedAt"
+	return u
+}
+
+func (u *__Activity_Selector) Limit(num int) *__Activity_Selector {
+	u.limit = num
+	return u
+}
+
+func (u *__Activity_Selector) Offset(num int) *__Activity_Selector {
+	u.offset = num
+	return u
+}
+
+/////////////////////////  Queryer Selector  //////////////////////////////////
+func (u *__Activity_Selector) _stoSql() (string, []interface{}) {
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.activity"
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	if u.orderBy != "" {
+		sqlstr += u.orderBy
+	}
+
+	if u.limit != 0 {
+		sqlstr += " LIMIT " + strconv.Itoa(u.limit)
+	}
+
+	if u.offset != 0 {
+		sqlstr += " OFFSET " + strconv.Itoa(u.offset)
+	}
+	return sqlstr, whereArgs
+}
+
+func (u *__Activity_Selector) GetRow(db *sqlx.DB) (*Activity, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	row := &Activity{}
+	//by Sqlx
+	err = db.Get(row, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	row._exists = true
+
+	OnActivity_LoadOne(row)
+
+	return row, nil
+}
+
+func (u *__Activity_Selector) GetRows(db *sqlx.DB) ([]*Activity, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*Activity
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnActivity_LoadMany(rows)
+
+	return rows, nil
+}
+
+//dep use GetRows()
+func (u *__Activity_Selector) GetRows2(db *sqlx.DB) ([]Activity, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []*Activity
+	//by Sqlx
+	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	for i := 0; i < len(rows); i++ {
+		rows[i]._exists = true
+	}
+
+	OnActivity_LoadMany(rows)
+
+	rows2 := make([]Activity, len(rows))
+	for i := 0; i < len(rows); i++ {
+		cp := *rows[i]
+		rows2[i] = cp
+	}
+
+	return rows2, nil
+}
+
+func (u *__Activity_Selector) GetString(db *sqlx.DB) (string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res string
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return "", err
+	}
+
+	return res, nil
+}
+
+func (u *__Activity_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []string
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__Activity_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var rows []int
+	//by Sqlx
+	err = db.Select(&rows, sqlstr, whereArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+func (u *__Activity_Selector) GetInt(db *sqlx.DB) (int, error) {
+	var err error
+
+	sqlstr, whereArgs := u._stoSql()
+
+	XOLog(sqlstr, whereArgs)
+
+	var res int
+	//by Sqlx
+	err = db.Get(&res, sqlstr, whereArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	return res, nil
+}
+
+/////////////////////////  Queryer Update Delete //////////////////////////////////
+func (u *__Activity_Updater) Update(db XODB) (int, error) {
+	var err error
+
+	var updateArgs []interface{}
+	var sqlUpdateArr []string
+	for up, newVal := range u.updates {
+		sqlUpdateArr = append(sqlUpdateArr, up)
+		updateArgs = append(updateArgs, newVal)
+	}
+	sqlUpdate := strings.Join(sqlUpdateArr, ",")
+
+	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
+
+	var allArgs []interface{}
+	allArgs = append(allArgs, updateArgs...)
+	allArgs = append(allArgs, whereArgs...)
+
+	sqlstr := `UPDATE ms.activity SET ` + sqlUpdate
+
+	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
+		sqlstr += " WHERE " + sqlWherrs
+	}
+
+	XOLog(sqlstr, allArgs)
+	res, err := db.Exec(sqlstr, allArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+func (d *__Activity_Deleter) Delete(db XODB) (int, error) {
+	var err error
+	var wheresArr []string
+	for _, w := range d.wheres {
+		wheresArr = append(wheresArr, w.condition)
+	}
+	wheresStr := strings.Join(wheresArr, d.whereSep)
+
+	var args []interface{}
+	for _, w := range d.wheres {
+		args = append(args, w.args...)
+	}
+
+	sqlstr := "DELETE FROM ms.activity WHERE " + wheresStr
+
+	// run query
+	XOLog(sqlstr, args)
+	res, err := db.Exec(sqlstr, args...)
+	if err != nil {
+		return 0, err
+	}
+
+	// retrieve id
+	num, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(num), nil
+}
+
+///////////////////////// Mass insert - replace for  Activity ////////////////
+func MassInsert_Activity(rows []Activity, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "INSERT INTO ms.activity (" +
+		"ActorUserId, ActionTypeId, TargetId, RefId, CreatedAt" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ActorUserId)
+		vals = append(vals, row.ActionTypeId)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.RefId)
+		vals = append(vals, row.CreatedAt)
+
+	}
+
+	XOLog(sqlstr, " MassInsert len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func MassReplace_Activity(rows []Activity, db XODB) error {
+	var err error
+	ln := len(rows)
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	insVals_ := strings.Repeat(s, ln)
+	insVals := insVals_[0 : len(insVals_)-1]
+	// sql query
+	sqlstr := "REPLACE INTO ms.activity (" +
+		"ActorUserId, ActionTypeId, TargetId, RefId, CreatedAt" +
+		") VALUES " + insVals
+
+	// run query
+	vals := make([]interface{}, 0, ln*5) //5 fields
+
+	for _, row := range rows {
+		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ActorUserId)
+		vals = append(vals, row.ActionTypeId)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.RefId)
+		vals = append(vals, row.CreatedAt)
+
+	}
+
+	XOLog(sqlstr, " MassReplace len = ", ln, vals)
+
+	_, err = db.Exec(sqlstr, vals...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+//////////////////// Play ///////////////////////////////
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
 // Comment represents a row from 'ms.comments'.
 
 // Manualy copy this to project
@@ -58364,43 +60817,30 @@ func MassReplace_UserPassword(rows []UserPassword, db XODB) error {
 
 //
 
-// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
+// ActivityById retrieves a row from 'ms.activity' as a Activity.
 //
-// Generated from index 'PostId'.
-func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
+// Generated from index 'activity_Id_pkey'.
+func ActivityById(db XODB, id int) (*Activity, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserId, PostId, Text, CreatedTime ` +
-		`FROM ms.comments ` +
-		`WHERE PostId = ?`
+		`Id, ActorUserId, ActionTypeId, TargetId, RefId, CreatedAt ` +
+		`FROM ms.activity ` +
+		`WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, postId)
-	q, err := db.Query(sqlstr, postId)
+	XOLog(sqlstr, id)
+	a := Activity{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, id).Scan(&a.Id, &a.ActorUserId, &a.ActionTypeId, &a.TargetId, &a.RefId, &a.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
-	defer q.Close()
 
-	// load results
-	res := []*Comment{}
-	for q.Next() {
-		c := Comment{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &c)
-	}
-
-	return res, nil
+	return &a, nil
 }
 
 // CommentById retrieves a row from 'ms.comments' as a Comment.
@@ -58559,45 +60999,6 @@ func FollowingListMemberById(db XODB, id int) (*FollowingListMember, error) {
 	return &flm, nil
 }
 
-// FollowingListMemberHistoriesByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
-//
-// Generated from index 'UserId'.
-func FollowingListMemberHistoriesByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeMs int) ([]*FollowingListMemberHistory, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs, FollowId ` +
-		`FROM ms.following_list_member_history ` +
-		`WHERE UserId = ? AND UpdatedTimeMs = ?`
-
-	// run query
-	XOLog(sqlstr, userId, updatedTimeMs)
-	q, err := db.Query(sqlstr, userId, updatedTimeMs)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*FollowingListMemberHistory{}
-	for q.Next() {
-		flmh := FollowingListMemberHistory{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&flmh.Id, &flmh.ListId, &flmh.UserId, &flmh.FollowedUserId, &flmh.FollowType, &flmh.UpdatedTimeMs, &flmh.FollowId)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &flmh)
-	}
-
-	return res, nil
-}
-
 // FollowingListMemberHistoryById retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
 //
 // Generated from index 'following_list_member_history_Id_pkey'.
@@ -58622,6 +61023,32 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	}
 
 	return &flmh, nil
+}
+
+// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'PostId'.
+func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE PostId = ? AND UserId = ?`
+
+	// run query
+	XOLog(sqlstr, postId, userId)
+	l := Like{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+	if err != nil {
+		return nil, err
+	}
+
+	return &l, nil
 }
 
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
@@ -59194,6 +61621,45 @@ func PhoneContactById(db XODB, id int) (*PhoneContact, error) {
 	}
 
 	return &pc, nil
+}
+
+// PostsByUserId retrieves a row from 'ms.post' as a Post.
+//
+// Generated from index 'UserId'.
+func PostsByUserId(db XODB, userId int) ([]*Post, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaServerId, Width, Height, SharedTo, HasTag, LikesCount, CommentsCount, CreatedTime ` +
+		`FROM ms.post ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Post{}
+	for q.Next() {
+		p := Post{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &p)
+	}
+
+	return res, nil
 }
 
 // PostById retrieves a row from 'ms.post' as a Post.
