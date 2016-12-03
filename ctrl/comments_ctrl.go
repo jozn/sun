@@ -57,7 +57,7 @@ func PostAddCommentAction(c *base.Action) base.AppErr {
 	}
 
 	// c.SendText("ok")
-	cmt := models.CreateNewComment(c.UserId(), pid, texts)
+	cmt := models.Comment_Add(c.UserId(), pid, texts)
 	c.SendJson(cmt)
 	return nil
 }
@@ -68,7 +68,7 @@ func RemoveCommentAction(c *base.Action) base.AppErr {
 	pid := c.GetParamInt("post_id", -1)
 	comment_id := c.GetParamInt("comment_id", -1)
 
-	boolean := models.RemoveComment(c.UserId(), pid, comment_id)
+	boolean := models.Comment_Delete(c.UserId(), pid, comment_id)
 	c.SendJson(boolean)
 	return nil
 }

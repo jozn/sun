@@ -1,17 +1,5 @@
 package models
 
-type Activity struct {
-    Id           int `json:"Id"`           // Id -
-    ActorUserId  int `json:"ActorUserId"`  // ActorUserId -
-    ActionTypeId int `json:"ActionTypeId"` // ActionTypeId -
-    TargetId     int `json:"TargetId"`     // TargetId -
-    RefId        int `json:"RefId"`        // RefId -
-    CreatedAt    int `json:"CreatedAt"`    // CreatedAt -
-
-                                           // xo fields
-    _exists, _deleted bool
-}
-
 /*type Activity struct {
 	Id             int
 	ActorUserId    int

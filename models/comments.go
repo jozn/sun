@@ -5,7 +5,7 @@ import (
 	"ms/sun/helper"
 )
 
-func CreateNewComment(UserId, PostId int, Text string) Comment {
+func Comment_Add(UserId, PostId int, Text string) Comment {
 	cmt := Comment{
 		UserId:      UserId,
 		PostId:      PostId,
@@ -24,7 +24,7 @@ func CreateNewComment(UserId, PostId int, Text string) Comment {
 	return cmt
 }
 
-func RemoveComment(UserId, PostId, CommentId int) bool {
+func Comment_Delete(UserId, PostId, CommentId int) bool {
 	post, _ := CacheModels.GetPostById(PostId)
 
 	com, err := NewComment_Selector().Id_EQ(CommentId).UserId_EQ(UserId).PostId_EQ(PostId).GetRow(base.DB)
