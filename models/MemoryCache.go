@@ -1,8 +1,8 @@
 package models
 
-import(
-    "time"
-c "github.com/patrickmn/go-cache"
+import (
+	c "github.com/patrickmn/go-cache"
+	"time"
 )
 
 type _StoreImpl int
@@ -15,5 +15,3 @@ func init() {
 	RowCache = c.New(time.Second*6*3600, time.Second*60)
 	//Cacher = c.New(time.Second*6*3600, time.Second*60)
 }
-
-

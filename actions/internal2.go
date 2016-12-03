@@ -66,16 +66,16 @@ func ShowCacher(a *base.Action) base.AppErr {
 
 func ShowCacheKeys(a *base.Action) base.AppErr {
 
-    a.SendJson(models.RowCache.Items())
-    return nil
+	a.SendJson(models.RowCache.Items())
+	return nil
 }
 
 func ShowCacheRowKeys(a *base.Action) base.AppErr {
-    var arr []string
-    m:= models.RowCache.Items()
-    for k,_ := range m {
-        arr = append(arr,k)
-    }
-    a.SendJson(arr)
-    return nil
+	var arr []string
+	m := models.RowCache.Items()
+	for k, _ := range m {
+		arr = append(arr, k)
+	}
+	a.SendJson(arr)
+	return nil
 }

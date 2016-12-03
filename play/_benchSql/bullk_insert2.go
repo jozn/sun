@@ -50,7 +50,7 @@ func bulk_addMassToTable() {
 	N := 1000
 	var arr []string
 	for i := 0; i < N; i++ {
-		s := fmt.Sprintf("(%d, %d , %d, %d )", rand.Intn(50000),rand.Intn(500),rand.Intn(50000000), rand.Intn(500000000))
+		s := fmt.Sprintf("(%d, %d , %d, %d )", rand.Intn(50000), rand.Intn(500), rand.Intn(50000000), rand.Intn(500000000))
 		arr = append(arr, s)
 	}
 	strs := strings.Join(arr, ",")

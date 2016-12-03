@@ -22,34 +22,34 @@ func main() {
 	//runtime.MemProfileRecord{}.
 }
 
-func startApp()  {
-    var err error
-    //DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3308)/ms?charset=utf8mb4,utf8&collation=utf8mb4_general_ci")
-    base.DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms?charset=utf8mb4")
-    //DB, err = sqlx.Connect("mysql", "root:123456@localhost:3307/ms?charset=utf8mb4")
-    //DB.Exec("SET NAMES 'utf8mb4';")
-    noErr(err)
-    base.DB.MapperFunc(func(s string) string { return s })
-    redisInit()
+func startApp() {
+	var err error
+	//DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3308)/ms?charset=utf8mb4,utf8&collation=utf8mb4_general_ci")
+	base.DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms?charset=utf8mb4")
+	//DB, err = sqlx.Connect("mysql", "root:123456@localhost:3307/ms?charset=utf8mb4")
+	//DB.Exec("SET NAMES 'utf8mb4';")
+	noErr(err)
+	base.DB.MapperFunc(func(s string) string { return s })
+	redisInit()
 
-    fmt.Println("main start")
-    v1Tree := registerRoutes()
-    base.RegisterGlobTypes()
+	fmt.Println("main start")
+	v1Tree := registerRoutes()
+	base.RegisterGlobTypes()
 
-    //// Inits ///////////////
-    registerCmdRouters()
+	//// Inits ///////////////
+	registerCmdRouters()
 
-    http.HandleFunc("/public/", func(w http.ResponseWriter, r *http.Request) {
-        http.ServeFile(w, r, r.URL.Path[1:])
-    })
-    http.HandleFunc("/upload/", func(w http.ResponseWriter, r *http.Request) {
-        http.ServeFile(w, r, r.URL.Path[1:])
-    })
+	http.HandleFunc("/public/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, r.URL.Path[1:])
+	})
+	http.HandleFunc("/upload/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, r.URL.Path[1:])
+	})
 
-    //in models
-    models.OnAppStart_Models()
+	//in models
+	models.OnAppStart_Models()
 
-    _ = v1Tree
+	_ = v1Tree
 }
 
 func redisInit() {

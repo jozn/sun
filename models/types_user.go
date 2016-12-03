@@ -61,10 +61,10 @@ type User struct { //legacy switch to UserTable
 }
 
 type UserMetaInfo struct {
-    UserId              int
-    IsNotificationDirty int
+	UserId              int
+	IsNotificationDirty int
 
-    _exists, _deleted bool
+	_exists, _deleted bool
 }
 
 type UserTable struct {

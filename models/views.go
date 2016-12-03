@@ -24,18 +24,18 @@ func (e _viewImpl) UserViewSync(CurrentUserId, UserId int) *UserViewSyncAndMe {
 }
 
 func (e _viewImpl) UserBasicAndMeView(CurrentUserId, UserId int) *UserBasicAndMe {
-    u, ok := MemoryStore_User.GetUser(UserId)
-    if !ok {
-        return &UserBasicAndMe{}
-    }
+	u, ok := MemoryStore_User.GetUser(UserId)
+	if !ok {
+		return &UserBasicAndMe{}
+	}
 
-    v := &UserBasicAndMe{
-        UserId:        u.Id,
-        FollowingType: MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, UserId),
-        UpdatedTime:   u.UpdatedTime,
-    }
-    v.UserBasic = u.UserBasic
-    return v
+	v := &UserBasicAndMe{
+		UserId:        u.Id,
+		FollowingType: MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, UserId),
+		UpdatedTime:   u.UpdatedTime,
+	}
+	v.UserBasic = u.UserBasic
+	return v
 }
 func (e _viewImpl) UserBasicAndMeForUsers(CurrentUserId int, Users []int) []UserBasicAndMe {
 	res := make([]UserBasicAndMe, 0, len(Users))

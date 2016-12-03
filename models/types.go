@@ -61,7 +61,7 @@ type Post struct {
 }
 
 type SearchClicked struct {
-	Id                int   `json:"Id"`        // Id -
+	Id                int    `json:"Id"`        // Id -
 	Query             string `json:"Query"`     // Query -
 	ClickType         int    `json:"ClickType"` // ClickType -
 	TargetId          int    `json:"TargetId"`  // TargetId -
@@ -98,4 +98,3 @@ type Media struct {
 	// xo fields
 	_exists, _deleted bool
 }
-
