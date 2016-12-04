@@ -18,6 +18,7 @@ func Like_LikePost(UserId, PostId int) {
 		NewPost_Updater().LikesCount_Increment(1).Id_EQ(PostId).Update(base.DB)
 		MemoryStore.UserLikedPostsList_Add(UserId, PostId)
 		Notification_OnPostLiked(l)
+		Activity_OnPostLiked(l)
 	}
 }
 
@@ -31,5 +32,6 @@ func Like_UnlikePost(UserId, PostId int) {
 	if err == nil {
 		MemoryStore.UserLikedPostsList_Remove(UserId, PostId)
 		Notification_OnPostUnLiked(l)
+        Activity_OnPostUnLiked(l)
 	}
 }

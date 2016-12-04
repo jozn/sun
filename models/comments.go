@@ -19,6 +19,7 @@ func Comment_Add(UserId, PostId int, Text string) Comment {
 		Counter.IncerPostCommentsCount(PostId, 1)
 		post, _ := CacheModels.GetPostById(PostId)
 		Notification_OnPostCommented(&cmt, post)
+        Activity_OnPostCommented(&cmt, post)
 	}
 
 	return cmt
@@ -32,6 +33,7 @@ func Comment_Delete(UserId, PostId, CommentId int) bool {
 		com.Delete(base.DB)
 		Counter.IncerPostCommentsCount(PostId, -1)
 		Notification_OnPostCommentedDelted(com, post)
+		Activity_OnPostCommentedDelted(com, post)
 		return true
 	}
 
