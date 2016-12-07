@@ -32,6 +32,6 @@ func Like_UnlikePost(UserId, PostId int) {
 	if err == nil {
 		MemoryStore.UserLikedPostsList_Remove(UserId, PostId)
 		Notification_OnPostUnLiked(l)
-        Activity_OnPostUnLiked(l)
+		Activity_OnPostUnLiked(l)
 	}
 }

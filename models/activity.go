@@ -106,15 +106,15 @@ type ActivityPayload struct {
 	Comment *Comment
 }
 
-func Activity_GetLastsViews(UserId,Page,Limit,Last int) []ActivityView {
+func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 	uids := MemoryStore.UserFollowingList_Get(UserId).Elements
 
 	selector := NewActivity_Selector().ActorUserId_In(uids).OrderBy_Id_Desc().Limit(Limit)
-    if Last>0 {
-        selector.Id_LT(Last)
-    }else if Page > 0 {
-        selector.Offset((Page-1)*Limit)
-    }
+	if Last > 0 {
+		selector.Id_LT(Last)
+	} else if Page > 0 {
+		selector.Offset((Page - 1) * Limit)
+	}
 
 	nots, err := selector.GetRows2(base.DB)
 
@@ -123,8 +123,8 @@ func Activity_GetLastsViews(UserId,Page,Limit,Last int) []ActivityView {
 		return res
 	}
 
-    //fill caches
-    Activity_fillCaches(nots)
+	//fill caches
+	Activity_fillCaches(nots)
 
 	for _, nf := range nots {
 		nv := ActivityView{}
@@ -136,7 +136,7 @@ func Activity_GetLastsViews(UserId,Page,Limit,Last int) []ActivityView {
 		load.Actor = Views.UserBasicAndMeView(UserId, nf.ActorUserId)
 		switch nf.ActionTypeId {
 		case ACTION_TYPE_FOLLOWED_YOU:
-            //no load data
+			//no load data
 
 		case ACTION_TYPE_POST_LIKED:
 			post, ok := Store.GetPostById(nf.TargetId)
@@ -165,42 +165,41 @@ func Activity_GetLastsViews(UserId,Page,Limit,Last int) []ActivityView {
 
 }
 
-func Activity_fillCaches(nots []Activity){
-    //preload start
-    var pre_posts []int
-    var pre_comments []int
+func Activity_fillCaches(nots []Activity) {
+	//preload start
+	var pre_posts []int
+	var pre_comments []int
 
-    for _, nf := range nots {
-        switch nf.ActionTypeId {
-        case ACTION_TYPE_FOLLOWED_YOU:
+	for _, nf := range nots {
+		switch nf.ActionTypeId {
+		case ACTION_TYPE_FOLLOWED_YOU:
 
-        case ACTION_TYPE_POST_LIKED:
-            pre_posts = append(pre_posts, nf.TargetId)
+		case ACTION_TYPE_POST_LIKED:
+			pre_posts = append(pre_posts, nf.TargetId)
 
-        case ACTION_TYPE_POST_COMMENTED:
-            //pre_posts = append(pre_posts, nf.TargetId)
-            pre_comments = append(pre_comments, nf.TargetId)
-        }
-    }
+		case ACTION_TYPE_POST_COMMENTED:
+			//pre_posts = append(pre_posts, nf.TargetId)
+			pre_comments = append(pre_comments, nf.TargetId)
+		}
+	}
 
-    /*if len(pre_comments) >0 {
-        NewComment_Selector().Id_In(pre_comments).GetRows(base.DB)
-    }*/
+	/*if len(pre_comments) >0 {
+	    NewComment_Selector().Id_In(pre_comments).GetRows(base.DB)
+	}*/
 
-    Store.PreLoadCommentById(pre_comments)
+	Store.PreLoadCommentById(pre_comments)
 
-    for _,commentId := range pre_comments {
-        com, ok := Store.GetCommentById(commentId)
-        if ok {
-            pre_posts = append(pre_posts, com.PostId)
-        }
-    }
+	for _, commentId := range pre_comments {
+		com, ok := Store.GetCommentById(commentId)
+		if ok {
+			pre_posts = append(pre_posts, com.PostId)
+		}
+	}
 
-    Store.PreLoadPostById(pre_posts)
+	Store.PreLoadPostById(pre_posts)
 
-    /*if len(pre_posts) >0 {
-        NewPost_Selector().Id_In(pre_posts).GetRows(base.DB)
-    }*/
+	/*if len(pre_posts) >0 {
+	    NewPost_Selector().Id_In(pre_posts).GetRows(base.DB)
+	}*/
 
 }
-
