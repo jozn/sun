@@ -131,6 +131,21 @@ func FactLike(c *base.Action) {
 	//models.UserMemoryStore.AddPostLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
 }
 
+func FactMix(c *base.Action) {
+    i:=rand.Intn(4)+1
+
+    switch i {
+    case 1:
+        FactLike(c)
+    case 2:
+        FactComment(c)
+    case 3:
+        FactFollow(c)
+    case 4:
+        FactUnFollow(c)
+    }
+}
+
 func _factLastPostId() int {
 	var ps []models.Post
 	base.DB.Select(&ps, "select * from post order by Id DESC limit 2 ")

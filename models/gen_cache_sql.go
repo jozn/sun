@@ -23,7 +23,7 @@ func (c _StoreImpl) GetActivityById__(Id int) (*Activity, bool) {
 }
 
 func (c _StoreImpl) PreLoadActivityById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("Activity:" + strconv.Itoa(id))
@@ -52,7 +52,7 @@ func (c _StoreImpl) GetCommentById__(Id int) (*Comment, bool) {
 }
 
 func (c _StoreImpl) PreLoadCommentById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("Comment:" + strconv.Itoa(id))
@@ -81,7 +81,7 @@ func (c _StoreImpl) GetFollowingListByUserId__(UserId int) (*FollowingList, bool
 }
 
 func (c _StoreImpl) PreLoadFollowingListByUserId__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("FollowingList:" + strconv.Itoa(id))
@@ -110,7 +110,7 @@ func (c _StoreImpl) GetFollowingListMemberById__(Id int) (*FollowingListMember, 
 }
 
 func (c _StoreImpl) PreLoadFollowingListMemberById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("FollowingListMember:" + strconv.Itoa(id))
@@ -139,7 +139,7 @@ func (c _StoreImpl) GetFollowingListMemberHistoryById__(Id int) (*FollowingListM
 }
 
 func (c _StoreImpl) PreLoadFollowingListMemberHistoryById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("FollowingListMemberHistory:" + strconv.Itoa(id))
@@ -168,7 +168,7 @@ func (c _StoreImpl) GetLikeById__(Id int) (*Like, bool) {
 }
 
 func (c _StoreImpl) PreLoadLikeById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("Like:" + strconv.Itoa(id))
@@ -197,7 +197,7 @@ func (c _StoreImpl) GetMediaById__(Id int) (*Media, bool) {
 }
 
 func (c _StoreImpl) PreLoadMediaById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("Media:" + strconv.Itoa(id))
@@ -226,7 +226,7 @@ func (c _StoreImpl) GetMessageById__(Id int) (*Message, bool) {
 }
 
 func (c _StoreImpl) PreLoadMessageById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("Message:" + strconv.Itoa(id))
@@ -255,7 +255,7 @@ func (c _StoreImpl) GetMsgDeletedFromServerById__(Id int) (*MsgDeletedFromServer
 }
 
 func (c _StoreImpl) PreLoadMsgDeletedFromServerById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("MsgDeletedFromServer:" + strconv.Itoa(id))
@@ -284,7 +284,7 @@ func (c _StoreImpl) GetMsgReceivedToPeerById__(Id int) (*MsgReceivedToPeer, bool
 }
 
 func (c _StoreImpl) PreLoadMsgReceivedToPeerById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("MsgReceivedToPeer:" + strconv.Itoa(id))
@@ -313,7 +313,7 @@ func (c _StoreImpl) GetMsgSeenByPeerById__(Id int) (*MsgSeenByPeer, bool) {
 }
 
 func (c _StoreImpl) PreLoadMsgSeenByPeerById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("MsgSeenByPeer:" + strconv.Itoa(id))
@@ -342,7 +342,7 @@ func (c _StoreImpl) GetNotificationById__(Id int) (*Notification, bool) {
 }
 
 func (c _StoreImpl) PreLoadNotificationById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("Notification:" + strconv.Itoa(id))
@@ -371,7 +371,7 @@ func (c _StoreImpl) GetNotificationRemovedByNotificationId__(NotificationId int)
 }
 
 func (c _StoreImpl) PreLoadNotificationRemovedByNotificationId__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("NotificationRemoved:" + strconv.Itoa(id))
@@ -400,7 +400,7 @@ func (c _StoreImpl) GetPhoneContactById__(Id int) (*PhoneContact, bool) {
 }
 
 func (c _StoreImpl) PreLoadPhoneContactById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("PhoneContact:" + strconv.Itoa(id))
@@ -429,7 +429,7 @@ func (c _StoreImpl) GetPostById__(Id int) (*Post, bool) {
 }
 
 func (c _StoreImpl) PreLoadPostById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("Post:" + strconv.Itoa(id))
@@ -458,7 +458,7 @@ func (c _StoreImpl) GetRecommendUserById__(Id int) (*RecommendUser, bool) {
 }
 
 func (c _StoreImpl) PreLoadRecommendUserById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("RecommendUser:" + strconv.Itoa(id))
@@ -487,7 +487,7 @@ func (c _StoreImpl) GetSearchClickedById__(Id int) (*SearchClicked, bool) {
 }
 
 func (c _StoreImpl) PreLoadSearchClickedById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("SearchClicked:" + strconv.Itoa(id))
@@ -516,7 +516,7 @@ func (c _StoreImpl) GetSessionById__(Id int) (*Session, bool) {
 }
 
 func (c _StoreImpl) PreLoadSessionById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("Session:" + strconv.Itoa(id))
@@ -545,7 +545,7 @@ func (c _StoreImpl) GetTagById__(Id int) (*Tag, bool) {
 }
 
 func (c _StoreImpl) PreLoadTagById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("Tag:" + strconv.Itoa(id))
@@ -574,7 +574,7 @@ func (c _StoreImpl) GetTagsPostById__(Id int) (*TagsPost, bool) {
 }
 
 func (c _StoreImpl) PreLoadTagsPostById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("TagsPost:" + strconv.Itoa(id))
@@ -603,7 +603,7 @@ func (c _StoreImpl) GetUserById__(Id int) (*User, bool) {
 }
 
 func (c _StoreImpl) PreLoadUserById__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("User:" + strconv.Itoa(id))
@@ -632,7 +632,7 @@ func (c _StoreImpl) GetUserMetaInfoByUserId__(UserId int) (*UserMetaInfo, bool) 
 }
 
 func (c _StoreImpl) PreLoadUserMetaInfoByUserId__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("UserMetaInfo:" + strconv.Itoa(id))
@@ -661,7 +661,7 @@ func (c _StoreImpl) GetUserPasswordByUserId__(UserId int) (*UserPassword, bool) 
 }
 
 func (c _StoreImpl) PreLoadUserPasswordByUserId__(ids []int) {
-	var not_cached []int
+	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
 		_, ok := RowCache.Get("UserPassword:" + strconv.Itoa(id))

@@ -183,10 +183,6 @@ func Activity_fillCaches(nots []Activity) {
 		}
 	}
 
-	/*if len(pre_comments) >0 {
-	    NewComment_Selector().Id_In(pre_comments).GetRows(base.DB)
-	}*/
-
 	Store.PreLoadCommentById(pre_comments)
 
 	for _, commentId := range pre_comments {
