@@ -53,6 +53,7 @@ func registerRoutes() *httptreemux.TreeMux {
 	v1.GET("/profile/info", toV1(ctrl.GetProfileInfoAction))
 
 	v1.GET("/notifications", toV1(ctrl.VNoftificationsCtrl))
+	v1.GET("/activity", toV1(ctrl.ActivityListCtrl))
 
 	v1.GET("/recommend/top_posts", toV1(ctrl.RecommendPostsCtrl))
 	v1.GET("/recommend/users", toV1(ctrl.RecommendUsersCtrl))

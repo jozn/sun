@@ -22,6 +22,21 @@ func (c _StoreImpl) GetActivityById__(Id int) (*Activity, bool) {
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadActivityById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Activity:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewActivity_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetCommentById__(Id int) (*Comment, bool) {
 	o, ok := RowCache.Get("Comment:" + strconv.Itoa(Id))
 	if ok {
@@ -34,6 +49,21 @@ func (c _StoreImpl) GetCommentById__(Id int) (*Comment, bool) {
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadCommentById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Comment:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewComment_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
 }
 
 func (c _StoreImpl) GetFollowingListByUserId__(UserId int) (*FollowingList, bool) {
@@ -50,6 +80,21 @@ func (c _StoreImpl) GetFollowingListByUserId__(UserId int) (*FollowingList, bool
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadFollowingListByUserId__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("FollowingList:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewFollowingList_Selector().UserId_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetFollowingListMemberById__(Id int) (*FollowingListMember, bool) {
 	o, ok := RowCache.Get("FollowingListMember:" + strconv.Itoa(Id))
 	if ok {
@@ -62,6 +107,21 @@ func (c _StoreImpl) GetFollowingListMemberById__(Id int) (*FollowingListMember, 
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadFollowingListMemberById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("FollowingListMember:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewFollowingListMember_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
 }
 
 func (c _StoreImpl) GetFollowingListMemberHistoryById__(Id int) (*FollowingListMemberHistory, bool) {
@@ -78,6 +138,21 @@ func (c _StoreImpl) GetFollowingListMemberHistoryById__(Id int) (*FollowingListM
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadFollowingListMemberHistoryById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("FollowingListMemberHistory:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewFollowingListMemberHistory_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetLikeById__(Id int) (*Like, bool) {
 	o, ok := RowCache.Get("Like:" + strconv.Itoa(Id))
 	if ok {
@@ -90,6 +165,21 @@ func (c _StoreImpl) GetLikeById__(Id int) (*Like, bool) {
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadLikeById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Like:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewLike_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
 }
 
 func (c _StoreImpl) GetMediaById__(Id int) (*Media, bool) {
@@ -106,6 +196,21 @@ func (c _StoreImpl) GetMediaById__(Id int) (*Media, bool) {
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadMediaById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Media:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewMedia_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetMessageById__(Id int) (*Message, bool) {
 	o, ok := RowCache.Get("Message:" + strconv.Itoa(Id))
 	if ok {
@@ -118,6 +223,21 @@ func (c _StoreImpl) GetMessageById__(Id int) (*Message, bool) {
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadMessageById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Message:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewMessage_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
 }
 
 func (c _StoreImpl) GetMsgDeletedFromServerById__(Id int) (*MsgDeletedFromServer, bool) {
@@ -134,6 +254,21 @@ func (c _StoreImpl) GetMsgDeletedFromServerById__(Id int) (*MsgDeletedFromServer
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadMsgDeletedFromServerById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("MsgDeletedFromServer:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewMsgDeletedFromServer_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetMsgReceivedToPeerById__(Id int) (*MsgReceivedToPeer, bool) {
 	o, ok := RowCache.Get("MsgReceivedToPeer:" + strconv.Itoa(Id))
 	if ok {
@@ -146,6 +281,21 @@ func (c _StoreImpl) GetMsgReceivedToPeerById__(Id int) (*MsgReceivedToPeer, bool
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadMsgReceivedToPeerById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("MsgReceivedToPeer:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewMsgReceivedToPeer_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
 }
 
 func (c _StoreImpl) GetMsgSeenByPeerById__(Id int) (*MsgSeenByPeer, bool) {
@@ -162,6 +312,21 @@ func (c _StoreImpl) GetMsgSeenByPeerById__(Id int) (*MsgSeenByPeer, bool) {
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadMsgSeenByPeerById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("MsgSeenByPeer:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewMsgSeenByPeer_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetNotificationById__(Id int) (*Notification, bool) {
 	o, ok := RowCache.Get("Notification:" + strconv.Itoa(Id))
 	if ok {
@@ -174,6 +339,21 @@ func (c _StoreImpl) GetNotificationById__(Id int) (*Notification, bool) {
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadNotificationById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Notification:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewNotification_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
 }
 
 func (c _StoreImpl) GetNotificationRemovedByNotificationId__(NotificationId int) (*NotificationRemoved, bool) {
@@ -190,6 +370,21 @@ func (c _StoreImpl) GetNotificationRemovedByNotificationId__(NotificationId int)
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadNotificationRemovedByNotificationId__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("NotificationRemoved:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewNotificationRemoved_Selector().NotificationId_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetPhoneContactById__(Id int) (*PhoneContact, bool) {
 	o, ok := RowCache.Get("PhoneContact:" + strconv.Itoa(Id))
 	if ok {
@@ -202,6 +397,21 @@ func (c _StoreImpl) GetPhoneContactById__(Id int) (*PhoneContact, bool) {
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadPhoneContactById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("PhoneContact:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewPhoneContact_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
 }
 
 func (c _StoreImpl) GetPostById__(Id int) (*Post, bool) {
@@ -218,6 +428,21 @@ func (c _StoreImpl) GetPostById__(Id int) (*Post, bool) {
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadPostById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Post:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewPost_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetRecommendUserById__(Id int) (*RecommendUser, bool) {
 	o, ok := RowCache.Get("RecommendUser:" + strconv.Itoa(Id))
 	if ok {
@@ -230,6 +455,21 @@ func (c _StoreImpl) GetRecommendUserById__(Id int) (*RecommendUser, bool) {
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadRecommendUserById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("RecommendUser:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewRecommendUser_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
 }
 
 func (c _StoreImpl) GetSearchClickedById__(Id int) (*SearchClicked, bool) {
@@ -246,6 +486,21 @@ func (c _StoreImpl) GetSearchClickedById__(Id int) (*SearchClicked, bool) {
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadSearchClickedById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("SearchClicked:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewSearchClicked_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetSessionById__(Id int) (*Session, bool) {
 	o, ok := RowCache.Get("Session:" + strconv.Itoa(Id))
 	if ok {
@@ -258,6 +513,21 @@ func (c _StoreImpl) GetSessionById__(Id int) (*Session, bool) {
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadSessionById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Session:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewSession_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
 }
 
 func (c _StoreImpl) GetTagById__(Id int) (*Tag, bool) {
@@ -274,6 +544,21 @@ func (c _StoreImpl) GetTagById__(Id int) (*Tag, bool) {
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadTagById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Tag:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewTag_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetTagsPostById__(Id int) (*TagsPost, bool) {
 	o, ok := RowCache.Get("TagsPost:" + strconv.Itoa(Id))
 	if ok {
@@ -286,6 +571,21 @@ func (c _StoreImpl) GetTagsPostById__(Id int) (*TagsPost, bool) {
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadTagsPostById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("TagsPost:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewTagsPost_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
 }
 
 func (c _StoreImpl) GetUserById__(Id int) (*User, bool) {
@@ -302,6 +602,21 @@ func (c _StoreImpl) GetUserById__(Id int) (*User, bool) {
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadUserById__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("User:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewUser_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetUserMetaInfoByUserId__(UserId int) (*UserMetaInfo, bool) {
 	o, ok := RowCache.Get("UserMetaInfo:" + strconv.Itoa(UserId))
 	if ok {
@@ -316,6 +631,21 @@ func (c _StoreImpl) GetUserMetaInfoByUserId__(UserId int) (*UserMetaInfo, bool) 
 	return nil, false
 }
 
+func (c _StoreImpl) PreLoadUserMetaInfoByUserId__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("UserMetaInfo:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewUserMetaInfo_Selector().UserId_In(not_cached).GetRows(base.DB)
+	}
+}
+
 func (c _StoreImpl) GetUserPasswordByUserId__(UserId int) (*UserPassword, bool) {
 	o, ok := RowCache.Get("UserPassword:" + strconv.Itoa(UserId))
 	if ok {
@@ -328,4 +658,19 @@ func (c _StoreImpl) GetUserPasswordByUserId__(UserId int) (*UserPassword, bool) 
 		return obj2, true
 	}
 	return nil, false
+}
+
+func (c _StoreImpl) PreLoadUserPasswordByUserId__(ids []int) {
+	var not_cached []int
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("UserPassword:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewUserPassword_Selector().UserId_In(not_cached).GetRows(base.DB)
+	}
 }

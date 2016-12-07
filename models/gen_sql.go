@@ -60817,6 +60817,47 @@ func MassReplace_UserPassword(rows []UserPassword, db XODB) error {
 
 //
 
+// ActivitiesByActorUserId retrieves a row from 'ms.activity' as a Activity.
+//
+// Generated from index 'ActorUserId'.
+func ActivitiesByActorUserId(db XODB, actorUserId int) ([]*Activity, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ActorUserId, ActionTypeId, TargetId, RefId, CreatedAt ` +
+		`FROM ms.activity ` +
+		`WHERE ActorUserId = ?`
+
+	// run query
+	XOLog(sqlstr, actorUserId)
+	q, err := db.Query(sqlstr, actorUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Activity{}
+	for q.Next() {
+		a := Activity{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&a.Id, &a.ActorUserId, &a.ActionTypeId, &a.TargetId, &a.RefId, &a.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &a)
+	}
+
+	OnActivity_LoadMany(res)
+
+	return res, nil
+}
+
 // ActivityById retrieves a row from 'ms.activity' as a Activity.
 //
 // Generated from index 'activity_Id_pkey'.
@@ -60836,6 +60877,9 @@ func ActivityById(db XODB, id int) (*Activity, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&a.Id, &a.ActorUserId, &a.ActionTypeId, &a.TargetId, &a.RefId, &a.CreatedAt)
+
+	OnActivity_LoadOne(&a)
+
 	if err != nil {
 		return nil, err
 	}
@@ -60862,6 +60906,9 @@ func CommentById(db XODB, id int) (*Comment, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
+
+	OnComment_LoadOne(&c)
+
 	if err != nil {
 		return nil, err
 	}
@@ -60888,6 +60935,9 @@ func FollowingListByUserId(db XODB, userId int) (*FollowingList, error) {
 	}
 
 	err = db.QueryRow(sqlstr, userId).Scan(&fl.Id, &fl.UserId, &fl.ListType, &fl.Name, &fl.Count, &fl.IsAuto, &fl.IsPimiry, &fl.CreatedTime)
+
+	OnFollowingList_LoadOne(&fl)
+
 	if err != nil {
 		return nil, err
 	}
@@ -60931,7 +60981,38 @@ func FollowingListMembersByFollowedUserIdUserId(db XODB, followedUserId int, use
 		res = append(res, &flm)
 	}
 
+	OnFollowingListMember_LoadMany(res)
+
 	return res, nil
+}
+
+// FollowingListMemberByUserIdFollowedUserId retrieves a row from 'ms.following_list_member' as a FollowingListMember.
+//
+// Generated from index 'UserId'.
+func FollowingListMemberByUserIdFollowedUserId(db XODB, userId int, followedUserId int) (*FollowingListMember, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs ` +
+		`FROM ms.following_list_member ` +
+		`WHERE UserId = ? AND FollowedUserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId, followedUserId)
+	flm := FollowingListMember{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, userId, followedUserId).Scan(&flm.Id, &flm.ListId, &flm.UserId, &flm.FollowedUserId, &flm.FollowType, &flm.UpdatedTimeMs)
+
+	OnFollowingListMember_LoadOne(&flm)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &flm, nil
 }
 
 // FollowingListMembersByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member' as a FollowingListMember.
@@ -60970,6 +61051,8 @@ func FollowingListMembersByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeM
 		res = append(res, &flm)
 	}
 
+	OnFollowingListMember_LoadMany(res)
+
 	return res, nil
 }
 
@@ -60992,6 +61075,9 @@ func FollowingListMemberById(db XODB, id int) (*FollowingListMember, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&flm.Id, &flm.ListId, &flm.UserId, &flm.FollowedUserId, &flm.FollowType, &flm.UpdatedTimeMs)
+
+	OnFollowingListMember_LoadOne(&flm)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61018,11 +61104,55 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&flmh.Id, &flmh.ListId, &flmh.UserId, &flmh.FollowedUserId, &flmh.FollowType, &flmh.UpdatedTimeMs, &flmh.FollowId)
+
+	OnFollowingListMemberHistory_LoadOne(&flmh)
+
 	if err != nil {
 		return nil, err
 	}
 
 	return &flmh, nil
+}
+
+// LikesById retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'Id'.
+func LikesById(db XODB, id int) ([]*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Like{}
+	for q.Next() {
+		l := Like{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &l)
+	}
+
+	OnLike_LoadMany(res)
+
+	return res, nil
 }
 
 // LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
@@ -61044,6 +61174,9 @@ func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
 	}
 
 	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+
+	OnLike_LoadOne(&l)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61087,6 +61220,8 @@ func LikesByPostId(db XODB, postId int) ([]*Like, error) {
 		res = append(res, &l)
 	}
 
+	OnLike_LoadMany(res)
+
 	return res, nil
 }
 
@@ -61109,6 +61244,9 @@ func LikeById(db XODB, id int) (*Like, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+
+	OnLike_LoadOne(&l)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61135,6 +61273,9 @@ func MediaById(db XODB, id int) (*Media, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.UserId, &m.PostId, &m.AlbumId, &m.TypeId, &m.CreatedTime, &m.Src)
+
+	OnMedia_LoadOne(&m)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61178,6 +61319,8 @@ func MessagesByToUserIdTimeMs(db XODB, toUserId int, timeMs int) ([]*Message, er
 		res = append(res, &m)
 	}
 
+	OnMessage_LoadMany(res)
+
 	return res, nil
 }
 
@@ -61200,6 +61343,9 @@ func MessageById(db XODB, id int) (*Message, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
+
+	OnMessage_LoadOne(&m)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61226,50 +61372,14 @@ func MsgDeletedFromServerById(db XODB, id int) (*MsgDeletedFromServer, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&mdfs.Id, &mdfs.ToUserId, &mdfs.MsgKey, &mdfs.PeerUserId, &mdfs.RoomKey, &mdfs.AtTime)
+
+	OnMsgDeletedFromServer_LoadOne(&mdfs)
+
 	if err != nil {
 		return nil, err
 	}
 
 	return &mdfs, nil
-}
-
-// MsgReceivedToPeersByToUserId retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
-//
-// Generated from index 'ToUserId'.
-func MsgReceivedToPeersByToUserId(db XODB, toUserId int) ([]*MsgReceivedToPeer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
-		`FROM ms.msg_received_to_peer ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgReceivedToPeer{}
-	for q.Next() {
-		mrtp := MsgReceivedToPeer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.RoomKey, &mrtp.PeerUserId, &mrtp.AtTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &mrtp)
-	}
-
-	return res, nil
 }
 
 // MsgReceivedToPeerById retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
@@ -61291,11 +61401,55 @@ func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.RoomKey, &mrtp.PeerUserId, &mrtp.AtTime)
+
+	OnMsgReceivedToPeer_LoadOne(&mrtp)
+
 	if err != nil {
 		return nil, err
 	}
 
 	return &mrtp, nil
+}
+
+// MsgSeenByPeersByToUserId retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
+//
+// Generated from index 'ToUserId'.
+func MsgSeenByPeersByToUserId(db XODB, toUserId int) ([]*MsgSeenByPeer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
+		`FROM ms.msg_seen_by_peer ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgSeenByPeer{}
+	for q.Next() {
+		msbp := MsgSeenByPeer{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
+		if err != nil {
+			return nil, err
+		}
+
+		res = append(res, &msbp)
+	}
+
+	OnMsgSeenByPeer_LoadMany(res)
+
+	return res, nil
 }
 
 // MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
@@ -61317,6 +61471,9 @@ func MsgSeenByPeerById(db XODB, id int) (*MsgSeenByPeer, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
+
+	OnMsgSeenByPeer_LoadOne(&msbp)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61360,6 +61517,8 @@ func NotificationsByForUserId(db XODB, forUserId int) ([]*Notification, error) {
 		res = append(res, &n)
 	}
 
+	OnNotification_LoadMany(res)
+
 	return res, nil
 }
 
@@ -61399,6 +61558,8 @@ func NotificationsByTargetId(db XODB, targetId int) ([]*Notification, error) {
 		res = append(res, &n)
 	}
 
+	OnNotification_LoadMany(res)
+
 	return res, nil
 }
 
@@ -61421,6 +61582,9 @@ func NotificationById(db XODB, id int) (*Notification, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&n.Id, &n.ForUserId, &n.ActorUserId, &n.ActionTypeId, &n.ObjectTypeId, &n.TargetId, &n.ObjectId, &n.SeenStatus, &n.CreatedTime)
+
+	OnNotification_LoadOne(&n)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61447,6 +61611,9 @@ func NotificationRemovedByNotificationId(db XODB, notificationId int) (*Notifica
 	}
 
 	err = db.QueryRow(sqlstr, notificationId).Scan(&nr.NotificationId, &nr.ForUserId)
+
+	OnNotificationRemoved_LoadOne(&nr)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61473,6 +61640,9 @@ func PhoneContactByPhoneContactRowIdUserId(db XODB, phoneContactRowId int, userI
 	}
 
 	err = db.QueryRow(sqlstr, phoneContactRowId, userId).Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
+
+	OnPhoneContact_LoadOne(&pc)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61516,6 +61686,8 @@ func PhoneContactsByPhoneNormalizedNumber(db XODB, phoneNormalizedNumber string)
 		res = append(res, &pc)
 	}
 
+	OnPhoneContact_LoadMany(res)
+
 	return res, nil
 }
 
@@ -61554,6 +61726,8 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 
 		res = append(res, &pc)
 	}
+
+	OnPhoneContact_LoadMany(res)
 
 	return res, nil
 }
@@ -61594,6 +61768,8 @@ func PhoneContactsByUserIdCreatedTime(db XODB, userId int, createdTime int) ([]*
 		res = append(res, &pc)
 	}
 
+	OnPhoneContact_LoadMany(res)
+
 	return res, nil
 }
 
@@ -61616,50 +61792,14 @@ func PhoneContactById(db XODB, id int) (*PhoneContact, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
+
+	OnPhoneContact_LoadOne(&pc)
+
 	if err != nil {
 		return nil, err
 	}
 
 	return &pc, nil
-}
-
-// PostsByUserId retrieves a row from 'ms.post' as a Post.
-//
-// Generated from index 'UserId'.
-func PostsByUserId(db XODB, userId int) ([]*Post, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaServerId, Width, Height, SharedTo, HasTag, LikesCount, CommentsCount, CreatedTime ` +
-		`FROM ms.post ` +
-		`WHERE UserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId)
-	q, err := db.Query(sqlstr, userId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Post{}
-	for q.Next() {
-		p := Post{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &p)
-	}
-
-	return res, nil
 }
 
 // PostById retrieves a row from 'ms.post' as a Post.
@@ -61681,6 +61821,9 @@ func PostById(db XODB, id int) (*Post, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.CreatedTime)
+
+	OnPost_LoadOne(&p)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61707,6 +61850,9 @@ func RecommendUserById(db XODB, id int) (*RecommendUser, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&ru.Id, &ru.UserId, &ru.TargetId, &ru.Weight, &ru.CreatedTime)
+
+	OnRecommendUser_LoadOne(&ru)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61733,50 +61879,14 @@ func SearchClickedById(db XODB, id int) (*SearchClicked, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&sc.Id, &sc.Query, &sc.ClickType, &sc.TargetId, &sc.UserId, &sc.CreatedAt)
+
+	OnSearchClicked_LoadOne(&sc)
+
 	if err != nil {
 		return nil, err
 	}
 
 	return &sc, nil
-}
-
-// SessionsById retrieves a row from 'ms.session' as a Session.
-//
-// Generated from index 'Id'.
-func SessionsById(db XODB, id int) ([]*Session, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
-		`FROM ms.session ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Session{}
-	for q.Next() {
-		s := Session{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &s)
-	}
-
-	return res, nil
 }
 
 // SessionById retrieves a row from 'ms.session' as a Session.
@@ -61798,6 +61908,9 @@ func SessionById(db XODB, id int) (*Session, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
+
+	OnSession_LoadOne(&s)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61824,6 +61937,9 @@ func TagByName(db XODB, name string) (*Tag, error) {
 	}
 
 	err = db.QueryRow(sqlstr, name).Scan(&t.Id, &t.Name, &t.Count, &t.IsBlocked, &t.CreatedTime)
+
+	OnTag_LoadOne(&t)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61850,6 +61966,9 @@ func TagById(db XODB, id int) (*Tag, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&t.Id, &t.Name, &t.Count, &t.IsBlocked, &t.CreatedTime)
+
+	OnTag_LoadOne(&t)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61876,6 +61995,9 @@ func TagsPostByTagIdPostId(db XODB, tagId int, postId int) (*TagsPost, error) {
 	}
 
 	err = db.QueryRow(sqlstr, tagId, postId).Scan(&tp.Id, &tp.TagId, &tp.PostId, &tp.TypeId, &tp.CreatedTime)
+
+	OnTagsPost_LoadOne(&tp)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61902,6 +62024,9 @@ func TagsPostById(db XODB, id int) (*TagsPost, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&tp.Id, &tp.TagId, &tp.PostId, &tp.TypeId, &tp.CreatedTime)
+
+	OnTagsPost_LoadOne(&tp)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61928,6 +62053,9 @@ func UserByEmail(db XODB, email string) (*User, error) {
 	}
 
 	err = db.QueryRow(sqlstr, email).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
+
+	OnUser_LoadOne(&u)
+
 	if err != nil {
 		return nil, err
 	}
@@ -61971,6 +62099,8 @@ func UsersByPhone(db XODB, phone string) ([]*User, error) {
 		res = append(res, &u)
 	}
 
+	OnUser_LoadMany(res)
+
 	return res, nil
 }
 
@@ -62010,6 +62140,8 @@ func UsersBySessionUuid(db XODB, sessionUuid string) ([]*User, error) {
 		res = append(res, &u)
 	}
 
+	OnUser_LoadMany(res)
+
 	return res, nil
 }
 
@@ -62032,6 +62164,9 @@ func UserByUserName(db XODB, userName string) (*User, error) {
 	}
 
 	err = db.QueryRow(sqlstr, userName).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
+
+	OnUser_LoadOne(&u)
+
 	if err != nil {
 		return nil, err
 	}
@@ -62058,6 +62193,9 @@ func UserById(db XODB, id int) (*User, error) {
 	}
 
 	err = db.QueryRow(sqlstr, id).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
+
+	OnUser_LoadOne(&u)
+
 	if err != nil {
 		return nil, err
 	}
@@ -62084,6 +62222,9 @@ func UserMetaInfoByUserId(db XODB, userId int) (*UserMetaInfo, error) {
 	}
 
 	err = db.QueryRow(sqlstr, userId).Scan(&umi.UserId, &umi.IsNotificationDirty)
+
+	OnUserMetaInfo_LoadOne(&umi)
+
 	if err != nil {
 		return nil, err
 	}
@@ -62110,6 +62251,9 @@ func UserPasswordByUserId(db XODB, userId int) (*UserPassword, error) {
 	}
 
 	err = db.QueryRow(sqlstr, userId).Scan(&up.UserId, &up.Password, &up.CreatedTime)
+
+	OnUserPassword_LoadOne(&up)
+
 	if err != nil {
 		return nil, err
 	}
