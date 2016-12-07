@@ -9,6 +9,7 @@ import (
 	"ms/sun/helper"
 	"net/http"
 	"time"
+    "ms/sun/config"
 )
 
 //parent action of all actions
@@ -105,12 +106,15 @@ func setResponseBody(c *Action, w http.ResponseWriter, t1 time.Time) {
 
 	//TODO :mereg with SendJson
 	b, err := json.Marshal(c.Protocol)
-	if __DEV__ && err != nil {
+	if config.IS_DEBUG && err != nil {
 		log.Fatal("json Marshaling error in send json response: ", err)
 	}
 
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	if len(b) > 1300 { //860: Akami cdn defualts
+    w.Header().Set("X-ResTime", fmt.Sprint(time.Now().Sub(t1).Nanoseconds() / 1e6))
+    w.Header().Set("X-Time", fmt.Sprint(time.Now().UnixNano() / 1e9))
+
+    if len(b) > 1300 { //860: Akami cdn defualts
 		//w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.Header().Set("Content-Encoding", "gzip")
 		bgzip, _ := gzip.NewWriterLevel(c.Res, gzip.BestSpeed)
