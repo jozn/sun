@@ -22,7 +22,7 @@ func (c _StoreImpl) GetActivityById__(Id int) (*Activity, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadActivityById__(ids []int) {
+func (c _StoreImpl) PreLoadActivityByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -51,7 +51,7 @@ func (c _StoreImpl) GetCommentById__(Id int) (*Comment, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadCommentById__(ids []int) {
+func (c _StoreImpl) PreLoadCommentByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -80,7 +80,7 @@ func (c _StoreImpl) GetFollowingListByUserId__(UserId int) (*FollowingList, bool
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadFollowingListByUserId__(ids []int) {
+func (c _StoreImpl) PreLoadFollowingListByUserIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -109,7 +109,7 @@ func (c _StoreImpl) GetFollowingListMemberById__(Id int) (*FollowingListMember, 
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadFollowingListMemberById__(ids []int) {
+func (c _StoreImpl) PreLoadFollowingListMemberByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -138,7 +138,7 @@ func (c _StoreImpl) GetFollowingListMemberHistoryById__(Id int) (*FollowingListM
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadFollowingListMemberHistoryById__(ids []int) {
+func (c _StoreImpl) PreLoadFollowingListMemberHistoryByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -167,7 +167,7 @@ func (c _StoreImpl) GetLikeById__(Id int) (*Like, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadLikeById__(ids []int) {
+func (c _StoreImpl) PreLoadLikeByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -196,7 +196,7 @@ func (c _StoreImpl) GetMediaById__(Id int) (*Media, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadMediaById__(ids []int) {
+func (c _StoreImpl) PreLoadMediaByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -225,7 +225,7 @@ func (c _StoreImpl) GetMessageById__(Id int) (*Message, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadMessageById__(ids []int) {
+func (c _StoreImpl) PreLoadMessageByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -254,7 +254,7 @@ func (c _StoreImpl) GetMsgDeletedFromServerById__(Id int) (*MsgDeletedFromServer
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadMsgDeletedFromServerById__(ids []int) {
+func (c _StoreImpl) PreLoadMsgDeletedFromServerByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -283,7 +283,7 @@ func (c _StoreImpl) GetMsgReceivedToPeerById__(Id int) (*MsgReceivedToPeer, bool
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadMsgReceivedToPeerById__(ids []int) {
+func (c _StoreImpl) PreLoadMsgReceivedToPeerByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -312,7 +312,7 @@ func (c _StoreImpl) GetMsgSeenByPeerById__(Id int) (*MsgSeenByPeer, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadMsgSeenByPeerById__(ids []int) {
+func (c _StoreImpl) PreLoadMsgSeenByPeerByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -341,7 +341,7 @@ func (c _StoreImpl) GetNotificationById__(Id int) (*Notification, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadNotificationById__(ids []int) {
+func (c _StoreImpl) PreLoadNotificationByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -370,7 +370,7 @@ func (c _StoreImpl) GetNotificationRemovedByNotificationId__(NotificationId int)
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadNotificationRemovedByNotificationId__(ids []int) {
+func (c _StoreImpl) PreLoadNotificationRemovedByNotificationIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -399,7 +399,7 @@ func (c _StoreImpl) GetPhoneContactById__(Id int) (*PhoneContact, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadPhoneContactById__(ids []int) {
+func (c _StoreImpl) PreLoadPhoneContactByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -428,7 +428,7 @@ func (c _StoreImpl) GetPostById__(Id int) (*Post, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadPostById__(ids []int) {
+func (c _StoreImpl) PreLoadPostByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -457,7 +457,7 @@ func (c _StoreImpl) GetRecommendUserById__(Id int) (*RecommendUser, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadRecommendUserById__(ids []int) {
+func (c _StoreImpl) PreLoadRecommendUserByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -486,7 +486,7 @@ func (c _StoreImpl) GetSearchClickedById__(Id int) (*SearchClicked, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadSearchClickedById__(ids []int) {
+func (c _StoreImpl) PreLoadSearchClickedByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -515,7 +515,7 @@ func (c _StoreImpl) GetSessionById__(Id int) (*Session, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadSessionById__(ids []int) {
+func (c _StoreImpl) PreLoadSessionByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -544,7 +544,7 @@ func (c _StoreImpl) GetTagById__(Id int) (*Tag, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadTagById__(ids []int) {
+func (c _StoreImpl) PreLoadTagByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -573,7 +573,7 @@ func (c _StoreImpl) GetTagsPostById__(Id int) (*TagsPost, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadTagsPostById__(ids []int) {
+func (c _StoreImpl) PreLoadTagsPostByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -602,7 +602,7 @@ func (c _StoreImpl) GetUserById__(Id int) (*User, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadUserById__(ids []int) {
+func (c _StoreImpl) PreLoadUserByIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -631,7 +631,7 @@ func (c _StoreImpl) GetUserMetaInfoByUserId__(UserId int) (*UserMetaInfo, bool) 
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadUserMetaInfoByUserId__(ids []int) {
+func (c _StoreImpl) PreLoadUserMetaInfoByUserIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
@@ -660,7 +660,7 @@ func (c _StoreImpl) GetUserPasswordByUserId__(UserId int) (*UserPassword, bool) 
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadUserPasswordByUserId__(ids []int) {
+func (c _StoreImpl) PreLoadUserPasswordByUserIds__(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {

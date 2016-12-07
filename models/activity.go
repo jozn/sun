@@ -183,7 +183,7 @@ func Activity_fillCaches(nots []Activity) {
 		}
 	}
 
-	Store.PreLoadCommentById(pre_comments)
+	Store.PreLoadCommentByIds(pre_comments)
 
 	for _, commentId := range pre_comments {
 		com, ok := Store.GetCommentById(commentId)
@@ -192,7 +192,7 @@ func Activity_fillCaches(nots []Activity) {
 		}
 	}
 
-	Store.PreLoadPostById(pre_posts)
+	Store.PreLoadPostByIds(pre_posts)
 
 	/*if len(pre_posts) >0 {
 	    NewPost_Selector().Id_In(pre_posts).GetRows(base.DB)
