@@ -131,6 +131,19 @@ func FactLike(c *base.Action) {
 	//models.UserMemoryStore.AddPostLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
 }
 
+var _Cnt_Post int = 0
+var _Cnt_User int = 0
+func FactLikeFast(c *base.Action) {
+    if _Cnt_User == 0{
+        _Cnt_User = _factLastUserId()
+    }
+    if _Cnt_Post == 0{
+        _Cnt_Post = _factLastPostId()
+    }
+    models.Like_LikePost(rand.Intn(_Cnt_User)+1, rand.Intn(_Cnt_Post)+1)
+    //models.UserMemoryStore.AddPostLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
+}
+
 func FactMix(c *base.Action) {
     i:=rand.Intn(4)+1
 

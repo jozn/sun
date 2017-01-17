@@ -79,7 +79,7 @@ func registerRoutes() *httptreemux.TreeMux {
 
 	http.Handle("/", v1Tree)
 
-	if config.IS_DEBUG {
+	if config.IS_DEBUG || true {
 
 		http.Handle("/upload-avatar", actioner(UploadAvatarAction))
 		http.Handle("/remove-avatar", actioner(RemoveAvatarAction))
@@ -129,6 +129,7 @@ func registerRoutes() *httptreemux.TreeMux {
 		http.Handle("/fact/unfollow", actioner(fact.FactUnFollow))
 		http.Handle("/fact/avatar", actioner(fact.FactUserAvatars))
 		http.Handle("/fact/like", actioner(fact.FactLike))
+		http.Handle("/fact/like_fast", actioner(fact.FactLikeFast))
 		http.Handle("/fact/comment", actioner(fact.FactComment))
 		http.Handle("/fact/post", actioner(fact.FactPost))
 		http.Handle("/fact/mix", actioner(fact.FactMix))
