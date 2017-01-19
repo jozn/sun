@@ -33,7 +33,7 @@ func Activity_OnPostCommented(comment *Comment, post *Post) {
 	not.Save(base.DB)
 }
 
-func Activity_OnPostCommentedDelted(comment *Comment, post *Post) {
+func Activity_OnPostCommentedDeleted(comment *Comment, post *Post) {
 	if comment == nil || post == nil {
 		return
 	}
@@ -49,10 +49,10 @@ func Activity_OnPostCommentedDelted(comment *Comment, post *Post) {
 ////////// For Follows ///////////
 func Activity_OnFollowed(UserId, FollowedPeerUserId, FLId int) {
 
-	refId := FLId*1000 + ACTION_TYPE_FOLLOWED_YOU
+	refId := FLId*1000 + ACTION_TYPE_FOLLOWED_USER
 	not := Activity{
 		ActorUserId:  UserId,
-		ActionTypeId: ACTION_TYPE_FOLLOWED_YOU,
+		ActionTypeId: ACTION_TYPE_FOLLOWED_USER,
 		TargetId:     FollowedPeerUserId,
 		RefId:        refId,
 		CreatedAt:    helper.TimeNow(),
@@ -62,7 +62,7 @@ func Activity_OnFollowed(UserId, FollowedPeerUserId, FLId int) {
 }
 
 func Activity_OnUnFollowed(UserId, FollowedPeerUserId, FLId int) {
-	refId := FLId*1000 + ACTION_TYPE_FOLLOWED_YOU
+	refId := FLId*1000 + ACTION_TYPE_FOLLOWED_USER
 
 	NewActivity_Deleter().
 		ActorUserId_EQ(UserId).
@@ -72,6 +72,9 @@ func Activity_OnUnFollowed(UserId, FollowedPeerUserId, FLId int) {
 
 ////////////// For Likes ///////////////
 func Activity_OnPostLiked(lk *Like) {
+    if lk == nil{
+        return
+    }
 	refId := lk.Id*1000 + ACTION_TYPE_POST_LIKED
 	not := Activity{
 		ActorUserId:  lk.UserId,
@@ -85,6 +88,9 @@ func Activity_OnPostLiked(lk *Like) {
 }
 
 func Activity_OnPostUnLiked(lk *Like) {
+    if lk == nil{
+        return
+    }
 	refId := lk.Id*1000 + ACTION_TYPE_POST_LIKED
 
 	NewActivity_Deleter().
@@ -106,13 +112,14 @@ type ActivityPayload struct {
 	Comment *Comment
 }
 
+//page >= 1
 func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 	uids := MemoryStore.UserFollowingList_Get(UserId).Elements
 
 	selector := NewActivity_Selector().ActorUserId_In(uids).OrderBy_Id_Desc().Limit(Limit)
 	if Last > 0 {
 		selector.Id_LT(Last)
-	} else if Page > 0 {
+	} else if Page >= 1 {
 		selector.Offset((Page - 1) * Limit)
 	}
 
@@ -126,20 +133,20 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 	//fill caches
 	Activity_fillCaches(nots)
 
-	for _, nf := range nots {
-		nv := ActivityView{}
-		nv.Activity = nf
+	for _, act := range nots {
+		av := ActivityView{}
+		av.Activity = act
 
 		load := ActivityPayload{}
-		nv.Load = &load
+		av.Load = &load
 
-		load.Actor = Views.UserBasicAndMeView(UserId, nf.ActorUserId)
-		switch nf.ActionTypeId {
-		case ACTION_TYPE_FOLLOWED_YOU:
+		load.Actor = Views.UserBasicAndMeView(UserId, act.ActorUserId)
+		switch act.ActionTypeId {
+		case ACTION_TYPE_FOLLOWED_USER:
 			//no load data
 
 		case ACTION_TYPE_POST_LIKED:
-			post, ok := Store.GetPostById(nf.TargetId)
+			post, ok := Store.GetPostById(act.TargetId)
 			if ok {
 				load.Post = post
 			} else {
@@ -147,7 +154,7 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 			}
 
 		case ACTION_TYPE_POST_COMMENTED:
-			com, ok := Store.GetCommentById(nf.TargetId)
+			com, ok := Store.GetCommentById(act.TargetId)
 			if ok {
 				load.Comment = com
 				post, _ := Store.GetPostById(com.PostId)
@@ -157,7 +164,7 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 			}
 		}
 
-		res = append(res, nv)
+		res = append(res, av)
 
 	}
 
@@ -172,7 +179,7 @@ func Activity_fillCaches(nots []Activity) {
 
 	for _, nf := range nots {
 		switch nf.ActionTypeId {
-		case ACTION_TYPE_FOLLOWED_YOU:
+		case ACTION_TYPE_FOLLOWED_USER:
 
 		case ACTION_TYPE_POST_LIKED:
 			pre_posts = append(pre_posts, nf.TargetId)

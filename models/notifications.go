@@ -80,7 +80,7 @@ func Notification_OnFollowed(UserId, FollowedPeerUserId int) {
 		Id:           0,
 		ForUserId:    FollowedPeerUserId,
 		ActorUserId:  UserId,
-		ActionTypeId: ACTION_TYPE_FOLLOWED_YOU,
+		ActionTypeId: ACTION_TYPE_FOLLOWED_USER,
 		ObjectTypeId: OBJECT_FOLLOWING,
 		TargetId:     UserId,
 		ObjectId:     0,
@@ -97,7 +97,7 @@ func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
 	row, err := NewNotification_Selector().
 		ForUserId_EQ(FollowedPeerUserId).
 		ActorUserId_EQ(UserId).
-		ActionTypeId_EQ(ACTION_TYPE_FOLLOWED_YOU).
+		ActionTypeId_EQ(ACTION_TYPE_FOLLOWED_USER).
 		GetRow(base.DB)
 
 	if err == nil {
@@ -202,7 +202,7 @@ func Notification_GetLastsViews(UserId int) []NotificationView {
 			load.Actor = GetUserBasicAndMe(nf.ActorUserId, UserId)
 
 			switch nf.ActionTypeId {
-			case ACTION_TYPE_FOLLOWED_YOU:
+			case ACTION_TYPE_FOLLOWED_USER:
 
 			case ACTION_TYPE_POST_LIKED:
 				post, err := CacheModels.GetPostById(nf.TargetId)
