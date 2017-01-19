@@ -33,6 +33,10 @@ func Notification_OnPostCommented(comment *Comment, post *Post) {
 		return
 	}
 
+    if comment.UserId == post.UserId{
+        return
+    }
+
 	objId := post.Id*1000 + ACTION_TYPE_POST_COMMENTED
 	not := Notification{
 		Id:           0,
@@ -76,6 +80,9 @@ func Notification_OnPostCommentedDelted(comment *Comment, post *Post) {
 
 ////////// For Follows ///////////
 func Notification_OnFollowed(UserId, FollowedPeerUserId int) {
+    if UserId == FollowedPeerUserId {//must never reach here at all
+        return
+    }
 	nf := Notification{
 		Id:           0,
 		ForUserId:    FollowedPeerUserId,
@@ -119,6 +126,10 @@ func Notification_OnPostLiked(lk *Like) {
 	if err != nil {
 		return
 	}
+
+    if lk.UserId == post.UserId {
+        return
+    }
 
 	nf := Notification{
 		Id:           0,
