@@ -72,9 +72,9 @@ func Activity_OnUnFollowed(UserId, FollowedPeerUserId, FLId int) {
 
 ////////////// For Likes ///////////////
 func Activity_OnPostLiked(lk *Like) {
-    if lk == nil{
-        return
-    }
+	if lk == nil {
+		return
+	}
 	refId := lk.Id*1000 + ACTION_TYPE_POST_LIKED
 	not := Activity{
 		ActorUserId:  lk.UserId,
@@ -88,9 +88,9 @@ func Activity_OnPostLiked(lk *Like) {
 }
 
 func Activity_OnPostUnLiked(lk *Like) {
-    if lk == nil{
-        return
-    }
+	if lk == nil {
+		return
+	}
 	refId := lk.Id*1000 + ACTION_TYPE_POST_LIKED
 
 	NewActivity_Deleter().
