@@ -91,10 +91,10 @@ func SearchClickedCtrl(c *base.Action) base.AppErr {
 	return nil
 }
 
-func NoftificationsCtrl2(c *base.Action) base.AppErr {
+/*func NoftificationsCtrl2(c *base.Action) base.AppErr {
 	//MustBeUserAndUpdate(c)
 
 	_ = (models.Notification_GetLastsViews(c.UserId()))
 	c.SendJson("asdsa")
 	return nil
-}
+}*/

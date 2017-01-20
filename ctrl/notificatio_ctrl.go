@@ -1,11 +1,6 @@
 package ctrl
 
-import (
-	"ms/sun/base"
-	"ms/sun/helper"
-	"ms/sun/models"
-)
-
+/*
 func VNoftificationsCtrl(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 	helper.DebugPrintln("CCCCCCCCC")
@@ -20,3 +15,4 @@ func VNoftificationsCtrl2(c *base.Action) {
 	//_ =(models.Notification_GetLastsViews(c.UserId()))
 	c.SendJson("asdsa")
 }
+*/
