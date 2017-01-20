@@ -171,7 +171,8 @@ func Notification_OnPostUnLiked(lk *Like) {
 
 //fix: must be NotificationView
 func Notification_PushToUserPipe(nf Notification) {
-	call := base.NewCallWithData("Notification", nf)
+    nv := Notification_notifyToView(&nf,nf.ForUserId)
+	call := base.NewCallWithData("NotifyAddOne", nv)
 	AllPipesMap.SendToUser(nf.ForUserId, call)
 }
 
@@ -179,8 +180,11 @@ func Notification_PushToUserPipeRemoved(id int) {
 
 }
 
-func Notification_ListOfRemoved(UserId int) []int {
+func Notification_ListOfRemovedAndEmptyIt(UserId int) []int {
     res,_ := NewNotificationRemoved_Selector().Select_NotificationId().ForUserId_EQ(UserId).GetIntSlice(base.DB)
+    if res != nil && len(res) >0 {
+        NewNotificationRemoved_Deleter().ForUserId_EQ(UserId).Delete(base.DB)
+    }
     return res
 }
 
@@ -214,7 +218,7 @@ func Notification_GetLastsViews(UserId,last int) []NotificationView {
     Notification_fillCaches(nots)
 
 	for _, nf := range nots {
-		nv := NotificationView{}
+		/*nv := NotificationView{}
 		nv.Notification = nf
 
 		load := NotifPayload{}
@@ -245,13 +249,49 @@ func Notification_GetLastsViews(UserId,last int) []NotificationView {
 				}
 			}
 
-		}
-		res = append(res, nv)
+		}*/
+		res = append(res, Notification_notifyToView(nf,UserId))
 
 	}
 
 	return res
 
+}
+
+func Notification_notifyToView(nf *Notification,UserId int) NotificationView {
+    nv := NotificationView{}
+    nv.Notification = nf
+
+    load := NotifPayload{}
+    nv.Load = &load
+
+    if nf.ActionTypeId > 0 { //old check not need anymore (it was for when ActionTypedId could be negative)
+        load.Actor = GetUserBasicAndMe(nf.ActorUserId, UserId)
+
+        switch nf.ActionTypeId {
+        case ACTION_TYPE_FOLLOWED_USER:
+
+        case ACTION_TYPE_POST_LIKED:
+            post, err := CacheModels.GetPostById(nf.TargetId)
+            if err == nil {
+                load.Post = post
+            } else {
+                helper.DebugPrintln(err)
+            }
+
+        case ACTION_TYPE_POST_COMMENTED:
+            com, err := CacheModels.GetCommentById(nf.TargetId)
+            if err == nil {
+                load.Comment = com
+                post, _ := CacheModels.GetPostById(com.PostId)
+                load.Post = post
+            } else {
+                helper.DebugPrintln(err)
+            }
+        }
+
+    }
+    return nv
 }
 
 //copy of Activity_fillCaches with modificaion - make in sync

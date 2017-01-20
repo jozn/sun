@@ -20,7 +20,7 @@ func NotifyAddRemoveCtrl(c *base.Action) base.AppErr {
     last := c.GetParamInt("last",0)
     res := NotifyAddRemoveView{
         Add: models.Notification_GetLastsViews(c.UserId() ,last),
-        Remove: models.Notification_ListOfRemoved(c.UserId()),
+        Remove: models.Notification_ListOfRemovedAndEmptyIt(c.UserId()),
     }
 
     c.SendJson(res)

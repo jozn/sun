@@ -125,10 +125,12 @@ func registerRoutes() *httptreemux.TreeMux {
 		http.Handle("/fact/unfollow", actioner(fact.FactUnFollow))
 		http.Handle("/fact/avatar", actioner(fact.FactUserAvatars))
 		http.Handle("/fact/like", actioner(fact.FactLike))
+		http.Handle("/fact/unlike", actioner(fact.FactUnLike))
 		http.Handle("/fact/like_fast", actioner(fact.FactLikeFast))
 		http.Handle("/fact/comment", actioner(fact.FactComment))
 		http.Handle("/fact/post", actioner(fact.FactPost))
 		http.Handle("/fact/mix", actioner(fact.FactMix))
+		http.Handle("/fact/mix_delay", actioner(fact.FactDelayMix))
 		http.Handle("/fact/about", actioner(fact.FactUpdateAboutMe))
 
 	}
