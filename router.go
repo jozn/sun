@@ -66,11 +66,6 @@ func registerRoutes() *httptreemux.TreeMux {
 	v1.GET("/search/users", toV1(ctrl.SearchUsersCtrl))
 	v1.GET("/search/cliked", toV1(ctrl.SearchClickedCtrl))
 
-	//v1.GET("/noti", toV1(ctrl.NoftificationsCtrl2))
-
-	//v1.GET("/not", toV1(ctrl.VNoftificationsCtrl))
-	//http.Handle("/not2", actioner(ctrl.VNoftificationsCtrl2))
-
 	v1.GET("/sync_users", toV1(ctrl.SyncUsersCtrl))
 
 	http.HandleFunc("/ws_call", models.ServeHttpWs)
