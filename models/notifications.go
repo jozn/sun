@@ -179,6 +179,11 @@ func Notification_PushToUserPipeRemoved(id int) {
 
 }
 
+func Notification_ListOfRemoved(UserId int) []int {
+    res,_ := NewNotificationRemoved_Selector().Select_NotificationId().ForUserId_EQ(UserId).GetIntSlice(base.DB)
+    return res
+}
+
 ////////////////////// Views ////////////////////////////
 type NotificationView struct {
 	*Notification
