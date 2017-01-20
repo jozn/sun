@@ -32,7 +32,7 @@ func Comment_Delete(UserId, PostId, CommentId int) bool {
 	if err != nil {
 		com.Delete(base.DB)
 		Counter.IncerPostCommentsCount(PostId, -1)
-		Notification_OnPostCommentedDelted(com, post)
+		Notification_OnPostCommentedDeleted(com, post)
 		Activity_OnPostCommentedDeleted(com, post)
 		return true
 	}

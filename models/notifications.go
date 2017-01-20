@@ -54,7 +54,7 @@ func Notification_OnPostCommented(comment *Comment, post *Post) {
 	Notification_PushToUserPipe(not)
 }
 
-func Notification_OnPostCommentedDelted(comment *Comment, post *Post) {
+func Notification_OnPostCommentedDeleted(comment *Comment, post *Post) {
 	if comment == nil || post == nil {
 		return
 	}
@@ -181,7 +181,7 @@ func Notification_PushToUserPipeRemoved(id int) {
 
 ////////////////////// Views ////////////////////////////
 type NotificationView struct {
-	Notification
+	*Notification
 	Load interface{}
 	//Actor   UserBasicAndMe
 }
@@ -192,15 +192,21 @@ type NotifPayload struct {
 	Comment *Comment
 }
 
-func Notification_GetLastsViews(UserId int) []NotificationView {
-	q := "select * from notification where ForUserId = ? order by Id desc limit 200 "
+func Notification_GetLastsViews(UserId,last int) []NotificationView {
+    selector := NewNotification_Selector().ForUserId_EQ(UserId).Limit(100).OrderBy_Id_Desc()
+    if last > 0{
+        selector.Id_GT(last)
+    }
 
-	var nots []Notification
-	err := base.DB.Select(&nots, q, UserId)
+    nots,err := selector.GetRows(base.DB)
+
 	if err != nil {
 		helper.DebugPrintln(err)
 	}
+
 	res := make([]NotificationView, 0, len(nots))
+
+    Notification_fillCaches(nots)
 
 	for _, nf := range nots {
 		nv := NotificationView{}
@@ -209,7 +215,7 @@ func Notification_GetLastsViews(UserId int) []NotificationView {
 		load := NotifPayload{}
 		nv.Load = &load
 
-		if nf.ActionTypeId > 0 {
+		if nf.ActionTypeId > 0 { //old check not need anymore (it was for when ActionTypedId could be negative)
 			load.Actor = GetUserBasicAndMe(nf.ActorUserId, UserId)
 
 			switch nf.ActionTypeId {
@@ -242,3 +248,34 @@ func Notification_GetLastsViews(UserId int) []NotificationView {
 	return res
 
 }
+
+//copy of Activity_fillCaches with modificaion - make in sync
+func Notification_fillCaches(nots []*Notification) {
+    //preload start
+    var pre_posts []int
+    var pre_comments []int
+
+    for _, nf := range nots {
+        switch nf.ActionTypeId {
+        case ACTION_TYPE_FOLLOWED_USER:
+
+        case ACTION_TYPE_POST_LIKED:
+            pre_posts = append(pre_posts, nf.TargetId)
+
+        case ACTION_TYPE_POST_COMMENTED:
+            pre_comments = append(pre_comments, nf.TargetId)
+        }
+    }
+
+    Store.PreLoadCommentByIds(pre_comments)
+
+    for _, commentId := range pre_comments {
+        com, ok := Store.GetCommentById(commentId)
+        if ok {
+            pre_posts = append(pre_posts, com.PostId)
+        }
+    }
+
+    Store.PreLoadPostByIds(pre_posts)
+}
+
