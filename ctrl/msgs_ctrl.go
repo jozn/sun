@@ -58,8 +58,11 @@ func MsgUploadV1(w http.ResponseWriter, r *http.Request) {
 	defer newFile.Close()
 	i, err := io.Copy(newFile, upladedFile)
 
+    msgFile := &models.MsgFile{}
 	msgToSend := msgRecived
-	msgToSend.MediaServerSrc = "http://localhost:5000/" + fileName[2:]
+    msgFile.ServerSrc = "http://localhost:5000/" + fileName[2:]
+	//msgToSend.MediaServerSrc = "http://localhost:5000/" + fileName[2:]
+    msgToSend.MsgFile = msgFile
 
 	toUid, err := models.RoomKeyToPeerUserId(msgToSend.RoomKey, meUserId)
 	if err != nil {
@@ -67,7 +70,8 @@ func MsgUploadV1(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//msgToPeer := models.CreateNewMsgRecivedForSendingToPeer(&msgRecived, toUid, msgRecived.UserId) //copy
-	msgToSend.MediaServerSrc = "http://localhost:5000/" + fileName[2:] //remove: "./"
+	//msgToSend.MediaServerSrc = "http://localhost:5000/" + fileName[2:] //remove: "./"
+	//msgToSend.msgFile = "http://localhost:5000/" + fileName[2:] //remove: "./"
 
 	models.MessageModel.SendAndStoreMessage(toUid, msgToSend)
 

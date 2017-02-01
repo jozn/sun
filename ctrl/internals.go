@@ -59,7 +59,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 			msg.MessageTypeId = 10
 			msg.Text = txt
 
-			if is_image {
+			/*if is_image {
 				msg.MessageTypeId = 40
 				msg.MediaName = helper.RandString(10) + ".jpg"
 				msg.MediaServerSrc = "http://localhost:5000/public/photo/" + helper.IntToStr(rand.Intn(21)+1) + "_960.jpg"
@@ -67,6 +67,27 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 				msg.MediaSize = 200000
 				msg.MediaHeight = 600
 				msg.MediaWidth = 960
+			}*/
+
+            if is_image {
+                f:= &models.MsgFile{
+                    LocalSrc: "",
+                    Hash:  helper.IntToStr(rand.Intn(21)+1),
+                    ServerSrc:  "http://localhost:5000/public/photo/" + helper.IntToStr(rand.Intn(21)+1) + "_960.jpg",
+                    FileType: 1,
+                    Status:0,
+                    Originate:0,
+                    Thumb64:"",
+                    Name:  helper.RandString(10) + ".jpg",
+                    Size: 125,
+                    Duration:12,
+                    Height:600,
+                    Width:960,
+                    Extension:".jpg",
+                    CreatedMs: 15254542,
+                }
+                msg.MessageTypeId = 40
+                msg.MsgFile = f
 			}
 
 			/*cmd := base.NewCommand(constants.MsgsAddNew)
