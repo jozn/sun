@@ -76,7 +76,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
                     ServerSrc:  "http://localhost:5000/public/photo/" + helper.IntToStr(rand.Intn(21)+1) + "_960.jpg",
                     FileType: 1,
                     Status:0,
-                    Originate:0,
+                    Origin:0,
                     Thumb64:"",
                     Name:  helper.RandString(10) + ".jpg",
                     Size: 125,

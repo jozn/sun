@@ -155,7 +155,7 @@ type MsgFile struct {
     ServerSrc string
     FileType int
     Status int
-    Originate int
+    Origin int
     Thumb64 string
     Name string
     Size int

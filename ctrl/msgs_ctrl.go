@@ -14,7 +14,7 @@ import (
 //TODO: add session handlerer/checker
 func MsgUploadV1(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1e6)
-
+    time.Sleep(2*time.Second)
 	print("called MsgUpload: ", r)
 
 	upladedFile, fd, err := r.FormFile("file")
