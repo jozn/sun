@@ -4,6 +4,12 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
+    "net/http"
+    "fmt"
+    "time"
+    "os"
+    "io"
+    "strings"
 )
 
 //psost types: 1:text 2: media/photo
@@ -13,6 +19,33 @@ func AddPostAction(c *base.Action) base.AppErr {
 
 	txt := c.Req.Form.Get("text")
 
+    ///////////////// start of file functionality //////////////
+    upladedFile, fd, err := c.Req.FormFile("file")
+    if err != nil {
+        return err
+    }
+    defer upladedFile.Close()
+
+    t := time.Now()
+    dirName := fmt.Sprintf("./upload/posts/%v/%d/%v/%v/", t.Year(), t.Month(), t.Day(), t.Hour())
+    ext:= ".jpg"
+    index := strings.LastIndex(fd.Filename,".")
+    if index >0{
+        ext = fd.Filename[index:]
+    }
+    fileName := fmt.Sprintf("%v%v%v%v%s",dirName, (t.UnixNano()/1e6), "_" ,c.UserId(),ext)
+    err = os.MkdirAll(dirName, 0666)
+    newFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
+
+    if err != nil {
+        print(2, err.Error())
+        return err
+    }
+    defer newFile.Close()
+    i, err := io.Copy(newFile, upladedFile)
+    print("Upladed media Size Write: ", i)
+    //////////////// end of file functionality ////////////////
+    
 	post := models.Post{}
 	//TODO security: clean html of text
 	post.Text = txt
@@ -21,13 +54,9 @@ func AddPostAction(c *base.Action) base.AppErr {
 	post.CreatedTime = helper.TimeNow()
 	post.CommentsCount = 0
 	post.LikesCount = 0
+    post.MediaUrl = dirName[2:]
+    post.MediaServerId = 1
 
-	//res, _ := base.DbInsertStruct(&post, "post")
-	//pid, _ := res.LastInsertId()
-	//post.Id = int(pid)
-
-	//models.AddTagsInPost(post)
-	//models.AddUserMentionedInPost(post)
 	models.AddNewPostToDbAndItsMeta(&post)
 	c.SendJson(post)
 	return nil
