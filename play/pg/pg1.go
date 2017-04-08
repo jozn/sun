@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-    _ "github.com/lib/pq"
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"math/rand"
 	"strings"
 	"time"
@@ -39,20 +39,18 @@ func main() {
 
 	var i int64 = 0
 
+	go func() {
+		for i := 0; i < 1000000; i++ {
+			MIX()
+			if i%1000 == 0 {
+				fmt.Println("MIX: ", i)
+			}
+		}
+	}()
 
-    go func() {
-        for i := 0; i < 1000000; i++ {
-            MIX()
-            if i%1000 == 0 {
-                fmt.Println("MIX: ", i)
-            }
-        }
-    }()
+	time.Sleep(time.Second * 100000)
 
-    time.Sleep(time.Second * 100000)
-
-
-    for j := 0; j < 4; j++ {
+	for j := 0; j < 4; j++ {
 		n := j
 		go func() {
 			ts := time.Now()
@@ -73,9 +71,6 @@ func main() {
 			}
 		}()
 	}
-
-
-
 
 	//DB.Exec("LOCK TABLES a WRITE;")
 

@@ -62,7 +62,7 @@ func Notification_OnPostCommentedDeleted(comment *Comment, post *Post) {
 	row, err := NewNotification_Selector().
 		ForUserId_EQ(post.UserId).
 		ActorUserId_EQ(comment.UserId).
-        TargetId_EQ(comment.Id).
+		TargetId_EQ(comment.Id).
 		ActionTypeId_EQ(ACTION_TYPE_POST_COMMENTED).
 		GetRow(base.DB)
 
@@ -75,7 +75,7 @@ func Notification_OnPostCommentedDeleted(comment *Comment, post *Post) {
 		row.Delete(base.DB)
 		nr.Save(base.DB)
 
-        Notification_PushToUserPipeRemoved(row.Id)
+		Notification_PushToUserPipeRemoved(row.Id)
 	}
 }
 
@@ -117,7 +117,7 @@ func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
 		row.Delete(base.DB)
 		nr.Save(base.DB)
 
-        Notification_PushToUserPipeRemoved(row.Id)
+		Notification_PushToUserPipeRemoved(row.Id)
 	}
 }
 
@@ -156,7 +156,7 @@ func Notification_OnPostUnLiked(lk *Like) {
 	row, err := NewNotification_Selector().
 		ForUserId_EQ(post.UserId).
 		ActorUserId_EQ(lk.UserId).
-        TargetId_EQ(lk.PostId).
+		TargetId_EQ(lk.PostId).
 		ActionTypeId_EQ(ACTION_TYPE_POST_LIKED).
 		GetRow(base.DB)
 
@@ -173,7 +173,7 @@ func Notification_OnPostUnLiked(lk *Like) {
 
 //fix: must be NotificationView
 func Notification_PushToUserPipe(nf Notification) {
-    nv := Notification_notifyToView(&nf,nf.ForUserId)
+	nv := Notification_notifyToView(&nf, nf.ForUserId)
 	call := base.NewCallWithData("NotifyAddOne", nv)
 	AllPipesMap.SendToUser(nf.ForUserId, call)
 }
@@ -183,11 +183,11 @@ func Notification_PushToUserPipeRemoved(id int) {
 }
 
 func Notification_ListOfRemovedAndEmptyIt(UserId int) []int {
-    res,_ := NewNotificationRemoved_Selector().Select_NotificationId().ForUserId_EQ(UserId).GetIntSlice(base.DB)
-    if res != nil && len(res) >0 {
-        NewNotificationRemoved_Deleter().ForUserId_EQ(UserId).Delete(base.DB)
-    }
-    return res
+	res, _ := NewNotificationRemoved_Selector().Select_NotificationId().ForUserId_EQ(UserId).GetIntSlice(base.DB)
+	if res != nil && len(res) > 0 {
+		NewNotificationRemoved_Deleter().ForUserId_EQ(UserId).Delete(base.DB)
+	}
+	return res
 }
 
 ////////////////////// Views ////////////////////////////
@@ -203,13 +203,13 @@ type NotifPayload struct {
 	Comment *Comment
 }
 
-func Notification_GetLastsViews(UserId,last int) []NotificationView {
-    selector := NewNotification_Selector().ForUserId_EQ(UserId).Limit(100).OrderBy_Id_Desc()
-    if last > 0{
-        selector.Id_GT(last)
-    }
+func Notification_GetLastsViews(UserId, last int) []NotificationView {
+	selector := NewNotification_Selector().ForUserId_EQ(UserId).Limit(100).OrderBy_Id_Desc()
+	if last > 0 {
+		selector.Id_GT(last)
+	}
 
-    nots,err := selector.GetRows(base.DB)
+	nots, err := selector.GetRows(base.DB)
 
 	if err != nil {
 		helper.DebugPrintln(err)
@@ -217,7 +217,7 @@ func Notification_GetLastsViews(UserId,last int) []NotificationView {
 
 	res := make([]NotificationView, 0, len(nots))
 
-    Notification_fillCaches(nots)
+	Notification_fillCaches(nots)
 
 	for _, nf := range nots {
 		/*nv := NotificationView{}
@@ -252,7 +252,7 @@ func Notification_GetLastsViews(UserId,last int) []NotificationView {
 			}
 
 		}*/
-		res = append(res, Notification_notifyToView(nf,UserId))
+		res = append(res, Notification_notifyToView(nf, UserId))
 
 	}
 
@@ -260,69 +260,68 @@ func Notification_GetLastsViews(UserId,last int) []NotificationView {
 
 }
 
-func Notification_notifyToView(nf *Notification,UserId int) NotificationView {
-    nv := NotificationView{}
-    nv.Notification = nf
+func Notification_notifyToView(nf *Notification, UserId int) NotificationView {
+	nv := NotificationView{}
+	nv.Notification = nf
 
-    load := NotifPayload{}
-    nv.Load = &load
+	load := NotifPayload{}
+	nv.Load = &load
 
-    if nf.ActionTypeId > 0 { //old check not need anymore (it was for when ActionTypedId could be negative)
-        load.Actor = GetUserBasicAndMe(nf.ActorUserId, UserId)
+	if nf.ActionTypeId > 0 { //old check not need anymore (it was for when ActionTypedId could be negative)
+		load.Actor = GetUserBasicAndMe(nf.ActorUserId, UserId)
 
-        switch nf.ActionTypeId {
-        case ACTION_TYPE_FOLLOWED_USER:
+		switch nf.ActionTypeId {
+		case ACTION_TYPE_FOLLOWED_USER:
 
-        case ACTION_TYPE_POST_LIKED:
-            post, err := CacheModels.GetPostById(nf.TargetId)
-            if err == nil {
-                load.Post = post
-            } else {
-                helper.DebugPrintln(err)
-            }
+		case ACTION_TYPE_POST_LIKED:
+			post, err := CacheModels.GetPostById(nf.TargetId)
+			if err == nil {
+				load.Post = post
+			} else {
+				helper.DebugPrintln(err)
+			}
 
-        case ACTION_TYPE_POST_COMMENTED:
-            com, err := CacheModels.GetCommentById(nf.TargetId)
-            if err == nil {
-                load.Comment = com
-                post, _ := CacheModels.GetPostById(com.PostId)
-                load.Post = post
-            } else {
-                helper.DebugPrintln(err)
-            }
-        }
+		case ACTION_TYPE_POST_COMMENTED:
+			com, err := CacheModels.GetCommentById(nf.TargetId)
+			if err == nil {
+				load.Comment = com
+				post, _ := CacheModels.GetPostById(com.PostId)
+				load.Post = post
+			} else {
+				helper.DebugPrintln(err)
+			}
+		}
 
-    }
-    return nv
+	}
+	return nv
 }
 
 //copy of Activity_fillCaches with modificaion - make in sync
 func Notification_fillCaches(nots []*Notification) {
-    //preload start
-    var pre_posts []int
-    var pre_comments []int
+	//preload start
+	var pre_posts []int
+	var pre_comments []int
 
-    for _, nf := range nots {
-        switch nf.ActionTypeId {
-        case ACTION_TYPE_FOLLOWED_USER:
+	for _, nf := range nots {
+		switch nf.ActionTypeId {
+		case ACTION_TYPE_FOLLOWED_USER:
 
-        case ACTION_TYPE_POST_LIKED:
-            pre_posts = append(pre_posts, nf.TargetId)
+		case ACTION_TYPE_POST_LIKED:
+			pre_posts = append(pre_posts, nf.TargetId)
 
-        case ACTION_TYPE_POST_COMMENTED:
-            pre_comments = append(pre_comments, nf.TargetId)
-        }
-    }
+		case ACTION_TYPE_POST_COMMENTED:
+			pre_comments = append(pre_comments, nf.TargetId)
+		}
+	}
 
-    Store.PreLoadCommentByIds(pre_comments)
+	Store.PreLoadCommentByIds(pre_comments)
 
-    for _, commentId := range pre_comments {
-        com, ok := Store.GetCommentById(commentId)
-        if ok {
-            pre_posts = append(pre_posts, com.PostId)
-        }
-    }
+	for _, commentId := range pre_comments {
+		com, ok := Store.GetCommentById(commentId)
+		if ok {
+			pre_posts = append(pre_posts, com.PostId)
+		}
+	}
 
-    Store.PreLoadPostByIds(pre_posts)
+	Store.PreLoadPostByIds(pre_posts)
 }
-

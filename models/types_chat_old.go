@@ -133,9 +133,9 @@ type MessagesTableFromClient struct {
 	ExtraJson     string
 	CreatedMs     int
 
-    MsgFile_LocalSrc string
-    MsgFile_Status int
-    MsgFile *MsgFile//not in sqlite just json
+	MsgFile_LocalSrc string
+	MsgFile_Status   int
+	MsgFile          *MsgFile //not in sqlite just json
 
 	//media dep
 	/*MediaThumb64   string
@@ -150,21 +150,20 @@ type MessagesTableFromClient struct {
 }
 
 type MsgFile struct {
-    LocalSrc string
-    Hash string
-    ServerSrc string
-    FileType int
-    Status int
-    Origin int
-    Thumb64 string
-    Name string
-    Size int
-    Duration int
-    Height int
-    Width int
-    Extension string
-    CreatedMs int
-
+	LocalSrc  string
+	Hash      string
+	ServerSrc string
+	FileType  int
+	Status    int
+	Origin    int
+	Thumb64   string
+	Name      string
+	Size      int
+	Duration  int
+	Height    int
+	Width     int
+	Extension string
+	CreatedMs int
 }
 
 /////// Communication ///////

@@ -132,8 +132,8 @@ func FactLike(c *base.Action) {
 }
 
 func FactUnLike(c *base.Action) {
-    models.Like_UnlikePost(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
-    //models.UserMemoryStore.AddPostLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
+	models.Like_UnlikePost(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
+	//models.UserMemoryStore.AddPostLike(rand.Intn(_factLastUserId())+1, rand.Intn(_factLastPostId())+1)
 }
 
 var _Cnt_Post int = 0
@@ -165,15 +165,14 @@ func FactMix(c *base.Action) {
 }
 
 func FactDelayMix(c *base.Action) {
-    t := c.GetParamInt("delay",10)
-    num := c.GetParamInt("limit",10)
+	t := c.GetParamInt("delay", 10)
+	num := c.GetParamInt("limit", 10)
 
-    for i:=0;i<num;i++{
-        FactMix(c)
-        time.Sleep(time.Millisecond*time.Duration(t))
-    }
+	for i := 0; i < num; i++ {
+		FactMix(c)
+		time.Sleep(time.Millisecond * time.Duration(t))
+	}
 }
-
 
 func _factLastPostId() int {
 	var ps []models.Post
