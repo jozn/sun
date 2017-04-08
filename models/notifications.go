@@ -62,6 +62,7 @@ func Notification_OnPostCommentedDeleted(comment *Comment, post *Post) {
 	row, err := NewNotification_Selector().
 		ForUserId_EQ(post.UserId).
 		ActorUserId_EQ(comment.UserId).
+        TargetId_EQ(comment.Id).
 		ActionTypeId_EQ(ACTION_TYPE_POST_COMMENTED).
 		GetRow(base.DB)
 
@@ -73,9 +74,9 @@ func Notification_OnPostCommentedDeleted(comment *Comment, post *Post) {
 
 		row.Delete(base.DB)
 		nr.Save(base.DB)
-	}
 
-	Notification_PushToUserPipeRemoved(row.Id)
+        Notification_PushToUserPipeRemoved(row.Id)
+	}
 }
 
 ////////// For Follows ///////////
@@ -115,9 +116,9 @@ func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
 
 		row.Delete(base.DB)
 		nr.Save(base.DB)
-	}
 
-	Notification_PushToUserPipeRemoved(row.Id)
+        Notification_PushToUserPipeRemoved(row.Id)
+	}
 }
 
 ////////////// For Likes ///////////////
@@ -155,6 +156,7 @@ func Notification_OnPostUnLiked(lk *Like) {
 	row, err := NewNotification_Selector().
 		ForUserId_EQ(post.UserId).
 		ActorUserId_EQ(lk.UserId).
+        TargetId_EQ(lk.PostId).
 		ActionTypeId_EQ(ACTION_TYPE_POST_LIKED).
 		GetRow(base.DB)
 

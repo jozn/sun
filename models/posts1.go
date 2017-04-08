@@ -14,10 +14,6 @@ func AddNewPostToDbAndItsMeta(post *Post) {
 	UserMemoryStore.UpdateUserPostsCounts(post.UserId, 1)
 
 	post.Save(base.DB)
-	//
-	//res, _ := base.DbInsertStruct(post, "post")
-	//pid, _ := res.LastInsertId()
-	//post.Id = int(pid)
 
 	AddTagsInPost(post)
 	AddUserMentionedInPost(post)

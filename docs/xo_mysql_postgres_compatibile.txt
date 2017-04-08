@@ -1,0 +1,25 @@
+there is some things diffrent beteween mysql and postgresql. for migration from mysql to
+cockroachdb with postgresql api, we have some consideration diffrent between them:
+
+-in mysql columns is escaped with `` in postgres with ""
+ we must in fututer versin of mysql templte use "" and set mysql config to use ANSI_SQL
+ this way both templte clouns will use ""
+-mysql use ? and postgres use $1 for rows, we have in oure postgresql has succesfuly set $N
+  and it working, we just need for mysql change that $N to ? for any N and that will work
+  for both the databases
+-mysql uses 'replace into' , postgres uses 'upsert'; in xo we have method .Replace() for mysql
+   and .Upsert() for postgresql
+-in postgresl id of last inserted won't retuern automaticly we need '... RETURNING "Id" '
+-maybe for search postgersql use something other than % -- research this for LIKE %
+
+
+this is all the main diffrence between this two databases with api that we uses
+
+
+
+we are better off using mysql with inoodb, my benchmark has showed that
+ it work very well, postgersql on the other hand was overkill, slower, hard to debug,
+ it had vey bad performance for mixing of CRUD, mysql was much more better
+when our database has grow much more larger we will benchmark cockroachdb or we just
+ use one sloution of sharding of mysql or use vitnes of youtube, we NEVER will use
+  postgersql directly, just mysql and maybe cockroachdb

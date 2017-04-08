@@ -30,6 +30,7 @@ type _cacheModels struct {
 	cache cache
 }
 
+//deprecated just use Store. for rows of databases
 var CacheModels _cacheModels
 
 func (cm *_cacheModels) GetPostById(Id int) (*Post, error) {
