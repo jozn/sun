@@ -90,4 +90,3 @@ func SearchClickedCtrl(c *base.Action) base.AppErr {
 
 	return nil
 }
-

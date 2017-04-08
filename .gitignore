@@ -39,3 +39,5 @@ public/
 *.sublime-*
 log*
 logs/
+
+*.out

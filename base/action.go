@@ -70,7 +70,7 @@ func (c Action) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	c.c = c.c + 1
 	c.Req = r
 	c.Res = w
-	c.Req.ParseMultipartForm(1e6)//c.Req.ParseForm()
+	c.Req.ParseMultipartForm(1e6) //c.Req.ParseForm()
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Access-Control-Allow-Headers", "x-ms-uuid")
 	if r.Method != "OPTIONS" { //what was this for browser CROS

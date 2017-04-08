@@ -14,7 +14,7 @@ import (
 //TODO: add session handlerer/checker
 func MsgUploadV1(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1e6)
-    time.Sleep(2*time.Second)
+	time.Sleep(2 * time.Second)
 	print("called MsgUpload: ", r)
 
 	upladedFile, fd, err := r.FormFile("file")
@@ -58,11 +58,11 @@ func MsgUploadV1(w http.ResponseWriter, r *http.Request) {
 	defer newFile.Close()
 	i, err := io.Copy(newFile, upladedFile)
 
-    msgFile := &models.MsgFile{}
+	msgFile := &models.MsgFile{}
 	msgToSend := msgRecived
-    msgFile.ServerSrc = "http://localhost:5000/" + fileName[2:]
+	msgFile.ServerSrc = "http://localhost:5000/" + fileName[2:]
 	//msgToSend.MediaServerSrc = "http://localhost:5000/" + fileName[2:]
-    msgToSend.MsgFile = msgFile
+	msgToSend.MsgFile = msgFile
 
 	toUid, err := models.RoomKeyToPeerUserId(msgToSend.RoomKey, meUserId)
 	if err != nil {

@@ -7,3 +7,13 @@ xo mysql://root:123456@localhost:3307/ms --single-file --template-path C:\Go\_go
 xo mysql://root:123456@localhost:3307/ms --single-file --template-path C:\Go\_gopath\src\github.com\jozn\go-orma-events --out "models/gen_event_sql.go" --suffix go --schema "" --package models
 xo mysql://root:123456@localhost:3307/ms --single-file --template-path C:\Go\_gopath\src\github.com\jozn\go-orma-cache --out "models/gen_cache_sql.go" --suffix go --schema "" --package models
 
+xo mysql://root:123456@localhost:3307/ms --single-file --template-path C:\Go\_gopath\src\github.com\jozn\go-orma-cache --out "models/gen_cache_sql.go" --suffix go --schema "" --package models
+
+xo pgsql://postgres:123456@localhost/xo?sslmode=disable --single-file -o "model.go" --suffix go --schema "" --package models
+xo mysql://root:123456@localhost:3307/ms --single-file --template-path C:\Go\_gopath\src\github.com\jozn\go-orma-cache --out "models/gen_cache_sql___del.go" --suffix go --schema "" --package models
+
+
+xo_pg pgsql://postgres:123456@localhost/xo?sslmode=disable --single-file -o "model_xo_pg.go" --suffix go --schema "" --package models
+xo_pg pgsql://postgres:123456@localhost/xo?sslmode=disable --template-path C:\Go\_gopath\src\github.com\jozn\go-orma-pg --single-file -o "model_xo_pg2.go" --suffix go --schema "" --package models
+
+xo_pg pgsql://postgres:123456@localhost/xo?sslmode=disable --template-path C:\Go\_gopath\src\github.com\jozn\go-orma-pg --single-file -o "model_xo_pg2.go" --suffix go --schema "" --package models

@@ -8,26 +8,26 @@ import (
 func NotifyCtrl(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 
-    last := c.GetParamInt("last",0)
+	last := c.GetParamInt("last", 0)
 
-	c.SendJson(models.Notification_GetLastsViews(c.UserId() ,last))
+	c.SendJson(models.Notification_GetLastsViews(c.UserId(), last))
 	return nil
 }
 
 func NotifyAddRemoveCtrl(c *base.Action) base.AppErr {
-    MustBeUserAndUpdate(c)
+	MustBeUserAndUpdate(c)
 
-    last := c.GetParamInt("last",0)
-    res := NotifyAddRemoveView{
-        Add: models.Notification_GetLastsViews(c.UserId() ,last),
-        Remove: models.Notification_ListOfRemovedAndEmptyIt(c.UserId()),
-    }
+	last := c.GetParamInt("last", 0)
+	res := NotifyAddRemoveView{
+		Add:    models.Notification_GetLastsViews(c.UserId(), last),
+		Remove: models.Notification_ListOfRemovedAndEmptyIt(c.UserId()),
+	}
 
-    c.SendJson(res)
-    return nil
+	c.SendJson(res)
+	return nil
 }
 
 type NotifyAddRemoveView struct {
-    Add []models.NotificationView
-    Remove []int
+	Add    []models.NotificationView
+	Remove []int
 }

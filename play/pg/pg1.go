@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+    _ "github.com/lib/pq"
 	"github.com/jmoiron/sqlx"
 	"math/rand"
 	"strings"
@@ -24,16 +25,17 @@ type Bench struct {
 const NM = 100000 //modify
 const N = 100000  //select
 func main() {
-	DB, _ = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/tops?charset=utf8mb4")
+	//DB, _ = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/tops?charset=utf8mb4")
+	DB, _ = sqlx.Connect("postgres", "user=postgres dbname=tag sslmode=disable")
 
-	go func() {
-		for i := 0; i < -1; i++ {
+	/*go func() {
+		for i := 0; i < 1; i++ {
 			addMassToTable()
 			if i%1000 == 0 {
 				fmt.Println(" MASS : ", i)
 			}
 		}
-	}()
+	}()*/
 
 	var i int64 = 0
 
@@ -57,7 +59,7 @@ func main() {
 			lastI := i
 			for i < 10000000 {
 				MIX()
-				if n == 0 && i%20000 == 0 {
+				if n == 0 && i%1000 == 0 {
 					sec := time.Now().Sub(ts).Seconds()
 					ts = time.Now()
 					k := i
@@ -71,6 +73,7 @@ func main() {
 			}
 		}()
 	}
+
 
 
 
@@ -121,7 +124,7 @@ func main() {
 }
 
 func addToTable() {
-	DB.Exec("insert into bench5 (`Text`,`Time`,`Name`,Indexed) values(?,?,?,?)",
+	DB.Exec(`insert into bench4 ("Text","Time","Name","Indexed") values($1,$2,$3,$4)`,
 		" ahbdas askjn kjdnksd «تسدنتشسی ندنتد jdksdasd asdsajdnas kajdnasd dasdknjasdkad adkdnjadnadad asd diasdasd asda dadadajdbakdjbad m أ یشسینشستی",
 		rand.Intn(50000000),
 		"jasndkjas akj",
@@ -141,36 +144,36 @@ func addMassToTable() {
 		arr = append(arr, rand.Intn(500000000))
 	}
 
-	DB.Exec("replace into bench5 (`Text`,`Time`,`Name`,Indexed) values "+str, arr...)
+	DB.Exec("replace into bench4 (`Text`,`Time`,`Name`,Indexed) values "+str, arr...)
 }
 
 func update(cnt int) {
-	DB.Exec("update bench5 set `Text`= ? where id = ?",
+	DB.Exec(`update bench4 set "Text"= $1 where "Id" = $2`,
 		" UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED ",
 		rand.Intn(cnt))
 }
 
 func selectTable() (error, int) {
 	var res []Bench
-	err := DB.Unsafe().Select(&res, "select * from bench5 ")
+	err := DB.Unsafe().Select(&res, "select * from bench4 ")
 	return err, len(res)
 }
 
 func selectone(cnt int) (error, int) {
 	var res []Bench
-	err := DB.Unsafe().Select(&res, "select * from bench5 where Id = ? ", rand.Intn(cnt))
+	err := DB.Unsafe().Select(&res, `select * from bench4 where "Id" = $1 `, rand.Intn(cnt))
 	return err, len(res)
 }
 
 func selectoneIndexed(cnt int) (error, int) {
 	var res []Bench
-	err := DB.Unsafe().Select(&res, "select * from bench5 where Indexed = ? ", rand.Intn(500000000))
+	err := DB.Unsafe().Select(&res, "select * from bench4 where \"bench4.Indexed\" = $1 ", rand.Intn(500000000))
 	return err, len(res)
 }
 
 func delete() {
-	DB.Exec("delete  from bench5 where Indexed = ? ", rand.Intn(500000000)) // 500 Mil
-	DB.Exec("delete  from bench5 where Id = ? ", rand.Intn(5000000))        // 5 Mil
+	DB.Exec(`delete  from bench4 where "Indexed" = $1 `, rand.Intn(500000000)) // 500 Mil
+	DB.Exec(`delete  from bench4 where "Id" = $1 `, rand.Intn(5000000))        // 5 Mil
 }
 
 func MIX() {
