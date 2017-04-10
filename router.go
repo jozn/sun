@@ -91,13 +91,7 @@ func registerRoutes() *httptreemux.TreeMux {
 		http.Handle("/upload3", actioner(PlayUpload3))
 		http.HandleFunc("/upload2", PlayUpload2)
 
-		http.Handle("/mysql1", actioner(fact.IsamPlay))
-		http.Handle("/f/msg", actioner(fact.ChatMsgFact1))
-		http.Handle("/f/gm", actioner(fact.GroupMemFact1))
-		http.Handle("/f/ginfo", actioner(fact.GroupInfoFact1))
-
 		//phone dbs
-		http.Handle("/mf/contacts", actioner(fact.FactPhoneContacts))
 
 		http.Handle("/ping", actionToFunc(ctrl.PingAction))
 
