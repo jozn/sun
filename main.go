@@ -34,7 +34,7 @@ func startApp() {
 
 	fmt.Println("main start")
 	v1Tree := registerRoutes()
-	base.RegisterGlobTypes()
+	//base.RegisterGlobTypes()
 
 	//// Inits ///////////////
 	registerCmdRouters()

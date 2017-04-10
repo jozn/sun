@@ -151,8 +151,10 @@ func GetPostsStraemAction(c *base.Action) base.AppErr {
 	//fids := models.GetAllPrimiryFollowingIds(uid)
 	//fids := models.UserMemoryStore.GetAllFollowingsListOfUser(uid).Elements
 	fids := models.MemoryStore.UserFollowingList_Get(uid).Elements
-
-	selctor := models.NewPost_Selector().UserId_In(fids).OrderBy_Id_Desc().Limit(limit)
+	ins := make([]int, 0, len(fids))
+	copy(ins, fids)
+	ins = append(ins, c.UserId())
+	selctor := models.NewPost_Selector().UserId_In(ins).OrderBy_Id_Desc().Limit(limit)
 
 	if last > 0 {
 		selctor.Id_LT(last)
