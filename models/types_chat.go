@@ -68,3 +68,65 @@ type MsgSeenByPeer struct {
 	// xo fields
 	_exists, _deleted bool
 }
+
+/////////////////////// Others ////////////////
+type MessagesTableFromClient struct {
+    MessageKey    string
+    RoomKey       string
+    UserId        int
+    RoomTypeId    int
+    MessageTypeId int
+    Text          string
+    ExtraJson     string
+    CreatedMs     int
+
+    MsgFile_LocalSrc string
+    MsgFile_Status   int
+    MsgFile          *MsgFile //not in sqlite just json
+}
+
+type MsgFile struct {
+    LocalSrc  string
+    Hash      string
+    ServerSrc string
+    FileType  int
+    Status    int
+    Origin    int
+    Thumb64   string
+    Name      string
+    Size      int
+    Duration  int
+    Height    int
+    Width     int
+    Extension string
+    CreatedMs int
+}
+
+
+/////// Communication ///////
+
+type MessageSyncMeta struct {
+    MessageKey string
+    RoomKey    string
+    ByUserId   int
+    AtTimeMs   int // this is client time
+    ExtraData  interface{}
+}
+
+/////////////////////////
+// Orma
+type PhoneContact struct {
+    Id                    int    `json:"Id"`                    // Id -
+    PhoneDisplayName      string `json:"PhoneDisplayName"`      // PhoneDisplayName -
+    PhoneFamilyName       string `json:"PhoneFamilyName"`       // PhoneFamilyName -
+    PhoneNumber           string `json:"PhoneNumber"`           // PhoneNumber -
+    PhoneNormalizedNumber string `json:"PhoneNormalizedNumber"` // PhoneNormalizedNumber -
+    PhoneContactRowId     int    `json:"PhoneContactRowId"`     // PhoneContactRowId -
+    UserId                int    `json:"UserId"`                // UserId -
+    DeviceUuidId          int    `json:"DeviceUuidId"`          // DeviceUuidId -
+    CreatedTime           int    `json:"CreatedTime"`           // CreatedTime -
+    UpdatedTime           int    `json:"UpdatedTime"`           // UpdatedTime -
+
+                                                                // xo fields
+    _exists, _deleted bool
+}

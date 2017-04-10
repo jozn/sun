@@ -48,65 +48,6 @@ func TestJson1(c *Action) AppErr {
 	return nil
 }
 
-func TestUpload1(c *Action) {
-
-	c.Req.ParseForm()
-	d := c.Req.Form.Get("data2")
-	println(d)
-	f, err := os.OpenFile("./con.json", 0, 0666)
-
-	s, err2 := f.Write([]byte("dasdasdas"))
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(err, s, err2)
-	ioutil.WriteFile("./con2.json", []byte(d), 0666)
-	var contacts []PhoneContactTable
-	json.Unmarshal([]byte(d), &contacts)
-	println(contacts)
-
-	var interfaceSlice []interface{} = make([]interface{}, len(contacts))
-	for i, d := range contacts {
-		row := d
-		//		row :=PhoneContactTable{}
-		//		row.PhoneContact = d
-		row.UserId = c.UserId()
-		row.CreatedTime = now()
-		row.UpdatedTime = now()
-		interfaceSlice[i] = row //DbMassInsertStruct only accets real []interface{}
-		fmt.Println(i)
-		for i := 0; i < 1000; i++ {
-			// DbMassInsertStruct("phone_contacts2", interfaceSlice...)
-			// fmt.Println(i)
-			DbInsertStruct(&row, "phone_contacts2")
-		}
-
-	}
-
-	// DbMassInsertStruct("phone_contacts2", interfaceSlice...)
-	for i := 0; i < 1000; i++ {
-		// DbMassInsertStruct("phone_contacts2", interfaceSlice...)
-		// fmt.Println(i)
-		_ = i
-	}
-	f.Close()
-	c.SendJson(d)
-	//	for i:= 0;i<3 ; i++  {
-	////		interfaceSlice = append(interfaceSlice,interfaceSlice...)
-	//	}
-	//
-	//	for i:= 0;i<100000 ; i++  {
-	//		 DbMassInsertStruct("phone_contacts",interfaceSlice...)
-	//		fmt.Println(i)
-	////		time.Sleep(200 *time.Millisecond)
-	//	}
-	//	DbMassInsertStruct("phone_contacts",interfaceSlice...)
-	//	for i:=0;i<len(contacts);i++ {
-	//		DbInsertStruct(&contacts[i],"phone_contacts2")
-	//
-	//	}
-}
-
 //func PlayUpload2(c *Action) {
 func PlayUpload2(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1e6)

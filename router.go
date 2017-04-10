@@ -87,7 +87,6 @@ func registerRoutes() *httptreemux.TreeMux {
 		v1.GET("/json2/:UserId", toV1(TestJson1))
 		v1.DELETE("/json2/:UserId", toV1(TestJson1))
 
-		http.Handle("/upload1", actioner(TestUpload1))
 		http.Handle("/upload3", actioner(PlayUpload3))
 		http.HandleFunc("/upload2", PlayUpload2)
 
