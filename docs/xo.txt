@@ -1,4 +1,4 @@
-xo mysql://root:123456@localhost:3307/ms --single-file --template-path templates -o out_1
+xo mysql://root:123456@localhost:3307/ms --single-file --template-path templates -o "out_1.go" package main
 xo mysql://root:123456@localhost:3307/ms_test --single-file --template-path templates -o main
 xo mysql://root:123456@localhost:3307/ms_test --single-file --template-path C:\Go\_gopath\src\ms\libs\go-orma --out "gen_sql.go" --suffix go --schema "" --package main
 
@@ -17,3 +17,11 @@ xo_pg pgsql://postgres:123456@localhost/xo?sslmode=disable --single-file -o "mod
 xo_pg pgsql://postgres:123456@localhost/xo?sslmode=disable --template-path C:\Go\_gopath\src\github.com\jozn\go-orma-pg --single-file -o "model_xo_pg2.go" --suffix go --schema "" --package models
 
 xo_pg pgsql://postgres:123456@localhost/xo?sslmode=disable --template-path C:\Go\_gopath\src\github.com\jozn\go-orma-pg --single-file -o "model_xo_pg2.go" --suffix go --schema "" --package models
+
+xox.exe mysql://root:123456@localhost:3307/ms --single-file --template-path templates -o "out_1.go" --package main
+xox.exe mysql://root:123456@localhost:3307/ms --single-file -o "out_1.go" --package main
+xox.exe mysql://root:123456@localhost:3307/ms -o "out" --package main
+
+====================
+
+xox mysql://root:123456@localhost:3307/ms -o "models" --package models --template-path C:\Go\_gopath\src\ms\xox\templates

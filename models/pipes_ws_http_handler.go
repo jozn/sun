@@ -1,9 +1,10 @@
 package models
 
 import (
-	"github.com/gorilla/websocket"
 	"ms/sun/helper"
 	"net/http"
+
+	"github.com/gorilla/websocket"
 )
 
 func ServeHttpWs(w http.ResponseWriter, r *http.Request) {

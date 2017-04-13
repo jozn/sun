@@ -1,5 +1,6 @@
 package models
 
+// +gen slice:"Where,Count,GroupBy[string]"
 type UserBasic struct {
 	Id        int
 	UserName  string
@@ -12,6 +13,7 @@ type UserBasic struct {
 	About          string
 }
 
+// +gen * slice:"Where,Count,GroupBy[int],Any,Average[int],Average[int8]"
 type UserPhone struct {
 	Phone string //`json:"-"`
 }

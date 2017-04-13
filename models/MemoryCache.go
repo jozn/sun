@@ -1,8 +1,9 @@
 package models
 
 import (
-	c "github.com/patrickmn/go-cache"
 	"time"
+
+	c "github.com/patrickmn/go-cache"
 )
 
 type _StoreImpl int

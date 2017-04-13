@@ -12,6 +12,11 @@ package models
 // UserSlice is a slice of type User. Use it where you would use []User.
 type UserSlice []User
 
+func ssdsds() {
+	us := UserSlice{}
+	us.GroupByString(func(u User) { u.AvatarUrl })
+}
+
 // Where returns a new UserSlice whose elements return true for func. See: http://clipperhouse.github.io/gen/#Where
 func (rcv UserSlice) Where(fn func(User) bool) (result UserSlice) {
 	for _, v := range rcv {

@@ -1,10 +1,11 @@
 package models
 
 import (
-	"github.com/gorilla/websocket"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"sync"
+
+	"github.com/gorilla/websocket"
 )
 
 //todo change UserDevicePipe => *UserDevicePipe

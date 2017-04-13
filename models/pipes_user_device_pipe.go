@@ -1,8 +1,9 @@
 package models
 
 import (
-	"github.com/gorilla/websocket"
 	"sync"
+
+	"github.com/gorilla/websocket"
 	//"time"
 	"encoding/json"
 	"fmt"
