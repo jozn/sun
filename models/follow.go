@@ -5,6 +5,7 @@ import (
 	"ms/sun/helper"
 )
 
+/*
 // In Orma-gen
 type FollowingList struct {
 	Id          int
@@ -30,8 +31,9 @@ type FollowingListMember struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/
 
-//dep?
+/* ?
 //table: following_list_member_history
 type FollowingListMemberHistory struct {
 	FollowingListMember
@@ -39,6 +41,7 @@ type FollowingListMemberHistory struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/
 
 func Follow(UserId, FollowedPeerUserId int) int {
 	if UserId == FollowedPeerUserId || UserId < 1 || FollowedPeerUserId < 1 {

@@ -62,12 +62,12 @@ type User struct { //legacy switch to UserTable
 	_exists, _deleted bool
 }
 
-type UserMetaInfo struct {
+/*type UserMetaInfo struct {
 	UserId              int
 	IsNotificationDirty int
 
 	_exists, _deleted bool
-}
+}*/
 
 type UserTable struct {
 	UserBasic
@@ -158,6 +158,7 @@ type UserInfo struct { //deprecated
 }
 */
 
+/*
 type UserPassword struct {
 	UserId      int
 	Password    int
@@ -165,3 +166,4 @@ type UserPassword struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/

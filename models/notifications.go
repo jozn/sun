@@ -5,6 +5,7 @@ import (
 	"ms/sun/helper"
 )
 
+/*
 // In Orma-gen
 type Notification struct {
 	Id           int
@@ -26,6 +27,7 @@ type NotificationRemoved struct {
 
 	_exists, _deleted bool
 }
+*/
 
 //////// For Comments //////////
 func Notification_OnPostCommented(comment *Comment, post *Post) {

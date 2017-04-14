@@ -5,6 +5,7 @@ import (
 	"ms/sun/helper"
 )
 
+/*
 type Activity struct {
 	Id           int
 	ActorUserId  int
@@ -15,6 +16,7 @@ type Activity struct {
 
 	_exists, _deleted bool
 }
+*/
 
 func Activity_OnPostCommented(comment *Comment, post *Post) {
 	if comment == nil || post == nil {

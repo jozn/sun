@@ -2,6 +2,7 @@ package models
 
 import "ms/sun/helper"
 
+/*
 type Message struct {
 	Id         int    `json:"Id"`         // Id -
 	ToUserId   int    `json:"ToUserId"`   // ToUserId -
@@ -14,6 +15,7 @@ type Message struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/
 
 func (m *Message) FromClientMessage(toUser int, msg MessagesTableFromClient) {
 	m.FromUserID = msg.UserId
@@ -33,6 +35,7 @@ func (m *Message) FromClientMessageOptimized(toUser int, msg MessagesTableFromCl
 	m.TimeMs = msg.CreatedMs
 }
 
+/*
 type MsgDeletedFromServer struct {
 	Id         int    `json:"Id"`         // Id -
 	ToUserId   int    `json:"ToUserId"`   // ToUserId -
@@ -68,6 +71,7 @@ type MsgSeenByPeer struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/
 
 /////////////////////// Others ////////////////
 type MessagesTableFromClient struct {
@@ -114,7 +118,7 @@ type MessageSyncMeta struct {
 
 /////////////////////////
 // Orma
-type PhoneContact struct {
+/*type PhoneContact struct {
 	Id                    int    `json:"Id"`                    // Id -
 	PhoneDisplayName      string `json:"PhoneDisplayName"`      // PhoneDisplayName -
 	PhoneFamilyName       string `json:"PhoneFamilyName"`       // PhoneFamilyName -
@@ -128,4 +132,4 @@ type PhoneContact struct {
 
 	// xo fields
 	_exists, _deleted bool
-}
+}*/

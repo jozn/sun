@@ -8,6 +8,7 @@ import (
 
 ///////////////// Structs Database /////////////////////////////
 // Go-Orma
+/*
 type Tag struct {
 	Id          int
 	Name        string
@@ -27,6 +28,7 @@ type TagsPost struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/
 
 /////////////////////////////////////////////
 type tagsMap struct {

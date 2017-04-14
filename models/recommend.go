@@ -15,6 +15,7 @@ func ReloadTopUserIds() {
 
 /////////////////////////////////////////////////////////////
 
+/*
 type RecommendUser struct {
 	Id          int
 	UserId      int
@@ -24,6 +25,7 @@ type RecommendUser struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/
 
 func GenrateRecommends(ForUserId int) {
 	//NewRecommendUser_Deleter()

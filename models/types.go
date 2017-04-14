@@ -11,6 +11,7 @@ package models
 	_exists, _deleted bool
 }*/
 
+/*
 type Blocked struct {
 	Id            int
 	UserId        int
@@ -19,7 +20,9 @@ type Blocked struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/
 
+/*
 type Comment struct {
 	Id          int
 	UserId      int
@@ -29,8 +32,9 @@ type Comment struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/
 
-type Like struct {
+/*type Like struct {
 	Id          int
 	PostId      int
 	UserId      int
@@ -38,9 +42,9 @@ type Like struct {
 	CreatedTime int
 	// xo fields
 	_exists, _deleted bool
-}
+}*/
 
-type Post struct {
+/*type Post struct {
 	Id     int
 	UserId int
 	TypeId int
@@ -58,9 +62,9 @@ type Post struct {
 	CreatedTime   int
 	// xo fields
 	_exists, _deleted bool
-}
+}*/
 
-type SearchClicked struct {
+/*type SearchClicked struct {
 	Id                int    `json:"Id"`        // Id -
 	Query             string `json:"Query"`     // Query -
 	ClickType         int    `json:"ClickType"` // ClickType -
@@ -68,8 +72,9 @@ type SearchClicked struct {
 	UserId            int    `json:"UserId"`    // UserId -
 	CreatedAt         int    `json:"CreatedAt"` // CreatedAt - // xo fields
 	_exists, _deleted bool
-}
+}*/
 
+/*
 //not used in this version but maybe for futuer versions
 type Session struct {
 	Id                 int
@@ -85,7 +90,9 @@ type Session struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/
 
+/*
 //Deprecated
 type Media struct {
 	Id          int
@@ -98,3 +105,4 @@ type Media struct {
 	// xo fields
 	_exists, _deleted bool
 }
+*/
