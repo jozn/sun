@@ -68,12 +68,14 @@ func (p *Post) Insert(db XODB) error {
 	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
 	res, err := db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -101,12 +103,14 @@ func (p *Post) Replace(db XODB) error {
 	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
 	res, err := db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -142,6 +146,7 @@ func (p *Post) Update(db XODB) error {
 	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime, p.Id)
 	_, err = db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime, p.Id)
 
+	XOLogErr(err)
 	OnPost_AfterUpdate(p)
 
 	return err
@@ -177,6 +182,7 @@ func (p *Post) Delete(db XODB) error {
 	XOLog(sqlstr, p.Id)
 	_, err = db.Exec(sqlstr, p.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -5191,6 +5197,7 @@ func (u *__Post_Selector) GetRow(db *sqlx.DB) (*Post, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -5212,6 +5219,7 @@ func (u *__Post_Selector) GetRows(db *sqlx.DB) ([]*Post, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -5240,6 +5248,7 @@ func (u *__Post_Selector) GetRows2(db *sqlx.DB) ([]Post, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -5273,6 +5282,7 @@ func (u *__Post_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -5290,6 +5300,7 @@ func (u *__Post_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -5307,6 +5318,7 @@ func (u *__Post_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -5324,6 +5336,7 @@ func (u *__Post_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -5357,11 +5370,13 @@ func (u *__Post_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -5387,12 +5402,14 @@ func (d *__Post_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -5439,6 +5456,7 @@ func MassInsert_Post(rows []Post, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -5484,6 +5502,7 @@ func MassReplace_Post(rows []Post, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -5526,47 +5545,6 @@ func MassReplace_Post(rows []Post, db XODB) error {
 
 //
 
-// PostsByUserId retrieves a row from 'ms.post' as a Post.
-//
-// Generated from index 'UserId'.
-func PostsByUserId(db XODB, userId int) ([]*Post, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime ` +
-		`FROM ms.post ` +
-		`WHERE UserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId)
-	q, err := db.Query(sqlstr, userId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Post{}
-	for q.Next() {
-		p := Post{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaCount, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.DisableComment, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.EditedTime, &p.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &p)
-	}
-
-	OnPost_LoadMany(res)
-
-	return res, nil
-}
-
 // PostById retrieves a row from 'ms.post' as a Post.
 //
 // Generated from index 'post_Id_pkey'.
@@ -5587,6 +5565,7 @@ func PostById(db XODB, id int) (*Post, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaCount, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.DisableComment, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.EditedTime, &p.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

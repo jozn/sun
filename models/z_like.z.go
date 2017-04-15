@@ -56,12 +56,14 @@ func (l *Like) Insert(db XODB) error {
 	XOLog(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
 	res, err := db.Exec(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -89,12 +91,14 @@ func (l *Like) Replace(db XODB) error {
 	XOLog(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
 	res, err := db.Exec(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -130,6 +134,7 @@ func (l *Like) Update(db XODB) error {
 	XOLog(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
 	_, err = db.Exec(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
 
+	XOLogErr(err)
 	OnLike_AfterUpdate(l)
 
 	return err
@@ -165,6 +170,7 @@ func (l *Like) Delete(db XODB) error {
 	XOLog(sqlstr, l.Id)
 	_, err = db.Exec(sqlstr, l.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1861,6 +1867,7 @@ func (u *__Like_Selector) GetRow(db *sqlx.DB) (*Like, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1882,6 +1889,7 @@ func (u *__Like_Selector) GetRows(db *sqlx.DB) ([]*Like, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1910,6 +1918,7 @@ func (u *__Like_Selector) GetRows2(db *sqlx.DB) ([]Like, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1943,6 +1952,7 @@ func (u *__Like_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -1960,6 +1970,7 @@ func (u *__Like_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1977,6 +1988,7 @@ func (u *__Like_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1994,6 +2006,7 @@ func (u *__Like_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2027,11 +2040,13 @@ func (u *__Like_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2057,12 +2072,14 @@ func (d *__Like_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2097,6 +2114,7 @@ func MassInsert_Like(rows []Like, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2130,6 +2148,7 @@ func MassReplace_Like(rows []Like, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2148,6 +2167,49 @@ func MassReplace_Like(rows []Like, db XODB) error {
 
 //
 
+// LikesById retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'Id'.
+func LikesById(db XODB, id int) ([]*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Like{}
+	for q.Next() {
+		l := Like{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &l)
+	}
+
+	OnLike_LoadMany(res)
+
+	return res, nil
+}
+
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId_2'.
@@ -2164,6 +2226,7 @@ func LikesByPostId(db XODB, postId int) ([]*Like, error) {
 	XOLog(sqlstr, postId)
 	q, err := db.Query(sqlstr, postId)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 	defer q.Close()
@@ -2178,6 +2241,7 @@ func LikesByPostId(db XODB, postId int) ([]*Like, error) {
 		// scan
 		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
 		if err != nil {
+			XOLogErr(err)
 			return nil, err
 		}
 
@@ -2209,6 +2273,7 @@ func LikeById(db XODB, id int) (*Like, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

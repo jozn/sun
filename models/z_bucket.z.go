@@ -16,13 +16,14 @@ import (
 
 // Manualy copy this to project
 type Bucket__ struct {
-	BucketId            int `json:"BucketId"`            // BucketId -
-	Server1Id           int `json:"Server1Id"`           // Server1Id -
-	ServerId            int `json:"ServerId"`            // ServerId -
-	BackupServerId      int `json:"BackupServerId"`      // BackupServerId -
-	ContentObjectTypeId int `json:"ContentObjectTypeId"` // ContentObjectTypeId -
-	ContentObjectCount  int `json:"ContentObjectCount"`  // ContentObjectCount -
-	CreatedTime         int `json:"CreatedTime"`         // CreatedTime -
+	BucketId            int    `json:"BucketId"`            // BucketId -
+	BucketName          string `json:"BucketName"`          // BucketName -
+	Server1Id           int    `json:"Server1Id"`           // Server1Id -
+	Server2Id           int    `json:"Server2Id"`           // Server2Id -
+	BackupServerId      int    `json:"BackupServerId"`      // BackupServerId -
+	ContentObjectTypeId int    `json:"ContentObjectTypeId"` // ContentObjectTypeId -
+	ContentObjectCount  int    `json:"ContentObjectCount"`  // ContentObjectCount -
+	CreatedTime         int    `json:"CreatedTime"`         // CreatedTime -
 
 	// xo fields
 	_exists, _deleted bool
@@ -49,21 +50,23 @@ func (b *Bucket) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.bucket (` +
-		`Server1Id, ServerId, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime` +
+		`BucketName, Server1Id, Server2Id, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, b.Server1Id, b.ServerId, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime)
-	res, err := db.Exec(sqlstr, b.Server1Id, b.ServerId, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime)
+	XOLog(sqlstr, b.BucketName, b.Server1Id, b.Server2Id, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime)
+	res, err := db.Exec(sqlstr, b.BucketName, b.Server1Id, b.Server2Id, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -82,21 +85,23 @@ func (b *Bucket) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.bucket (` +
-		`Server1Id, ServerId, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime` +
+		`BucketName, Server1Id, Server2Id, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, b.Server1Id, b.ServerId, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime)
-	res, err := db.Exec(sqlstr, b.Server1Id, b.ServerId, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime)
+	XOLog(sqlstr, b.BucketName, b.Server1Id, b.Server2Id, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime)
+	res, err := db.Exec(sqlstr, b.BucketName, b.Server1Id, b.Server2Id, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -125,13 +130,14 @@ func (b *Bucket) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.bucket SET ` +
-		`Server1Id = ?, ServerId = ?, BackupServerId = ?, ContentObjectTypeId = ?, ContentObjectCount = ?, CreatedTime = ?` +
+		`BucketName = ?, Server1Id = ?, Server2Id = ?, BackupServerId = ?, ContentObjectTypeId = ?, ContentObjectCount = ?, CreatedTime = ?` +
 		` WHERE BucketId = ?`
 
 	// run query
-	XOLog(sqlstr, b.Server1Id, b.ServerId, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime, b.BucketId)
-	_, err = db.Exec(sqlstr, b.Server1Id, b.ServerId, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime, b.BucketId)
+	XOLog(sqlstr, b.BucketName, b.Server1Id, b.Server2Id, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime, b.BucketId)
+	_, err = db.Exec(sqlstr, b.BucketName, b.Server1Id, b.Server2Id, b.BackupServerId, b.ContentObjectTypeId, b.ContentObjectCount, b.CreatedTime, b.BucketId)
 
+	XOLogErr(err)
 	OnBucket_AfterUpdate(b)
 
 	return err
@@ -167,6 +173,7 @@ func (b *Bucket) Delete(db XODB) error {
 	XOLog(sqlstr, b.BucketId)
 	_, err = db.Exec(sqlstr, b.BucketId)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -413,93 +420,93 @@ func (d *__Bucket_Deleter) Server1Id_GE(val int) *__Bucket_Deleter {
 	return d
 }
 
-func (u *__Bucket_Deleter) ServerId_In(ins []int) *__Bucket_Deleter {
+func (u *__Bucket_Deleter) Server2Id_In(ins []int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Server2Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Bucket_Deleter) ServerId_NotIn(ins []int) *__Bucket_Deleter {
+func (u *__Bucket_Deleter) Server2Id_NotIn(ins []int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Server2Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Bucket_Deleter) ServerId_EQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) Server2Id_EQ(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId = ? "
+	w.condition = " Server2Id = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Deleter) ServerId_NotEQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) Server2Id_NotEQ(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId != ? "
+	w.condition = " Server2Id != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Deleter) ServerId_LT(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) Server2Id_LT(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId < ? "
+	w.condition = " Server2Id < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Deleter) ServerId_LE(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) Server2Id_LE(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId <= ? "
+	w.condition = " Server2Id <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Deleter) ServerId_GT(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) Server2Id_GT(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId > ? "
+	w.condition = " Server2Id > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Deleter) ServerId_GE(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) Server2Id_GE(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId >= ? "
+	w.condition = " Server2Id >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1063,93 +1070,93 @@ func (d *__Bucket_Updater) Server1Id_GE(val int) *__Bucket_Updater {
 	return d
 }
 
-func (u *__Bucket_Updater) ServerId_In(ins []int) *__Bucket_Updater {
+func (u *__Bucket_Updater) Server2Id_In(ins []int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Server2Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Bucket_Updater) ServerId_NotIn(ins []int) *__Bucket_Updater {
+func (u *__Bucket_Updater) Server2Id_NotIn(ins []int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Server2Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Bucket_Updater) ServerId_EQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) Server2Id_EQ(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId = ? "
+	w.condition = " Server2Id = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Updater) ServerId_NotEQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) Server2Id_NotEQ(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId != ? "
+	w.condition = " Server2Id != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Updater) ServerId_LT(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) Server2Id_LT(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId < ? "
+	w.condition = " Server2Id < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Updater) ServerId_LE(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) Server2Id_LE(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId <= ? "
+	w.condition = " Server2Id <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Updater) ServerId_GT(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) Server2Id_GT(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId > ? "
+	w.condition = " Server2Id > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Updater) ServerId_GE(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) Server2Id_GE(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId >= ? "
+	w.condition = " Server2Id >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1713,93 +1720,93 @@ func (d *__Bucket_Selector) Server1Id_GE(val int) *__Bucket_Selector {
 	return d
 }
 
-func (u *__Bucket_Selector) ServerId_In(ins []int) *__Bucket_Selector {
+func (u *__Bucket_Selector) Server2Id_In(ins []int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Server2Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Bucket_Selector) ServerId_NotIn(ins []int) *__Bucket_Selector {
+func (u *__Bucket_Selector) Server2Id_NotIn(ins []int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Server2Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Bucket_Selector) ServerId_EQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) Server2Id_EQ(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId = ? "
+	w.condition = " Server2Id = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Selector) ServerId_NotEQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) Server2Id_NotEQ(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId != ? "
+	w.condition = " Server2Id != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Selector) ServerId_LT(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) Server2Id_LT(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId < ? "
+	w.condition = " Server2Id < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Selector) ServerId_LE(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) Server2Id_LE(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId <= ? "
+	w.condition = " Server2Id <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Selector) ServerId_GT(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) Server2Id_GT(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId > ? "
+	w.condition = " Server2Id > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Bucket_Selector) ServerId_GE(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) Server2Id_GE(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ServerId >= ? "
+	w.condition = " Server2Id >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2177,9 +2184,156 @@ func (d *__Bucket_Selector) CreatedTime_GE(val int) *__Bucket_Selector {
 
 ////////ints
 
-////////ints
+func (u *__Bucket_Deleter) BucketName_In(ins []string) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketName IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Deleter) BucketName_NotIn(ins []string) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketName NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Bucket_Deleter) BucketName_Like(val string) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketName LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Bucket_Deleter) BucketName_EQ(val string) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 ////////ints
+
+func (u *__Bucket_Updater) BucketName_In(ins []string) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketName IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Updater) BucketName_NotIn(ins []string) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketName NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Bucket_Updater) BucketName_Like(val string) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketName LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Bucket_Updater) BucketName_EQ(val string) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__Bucket_Selector) BucketName_In(ins []string) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketName IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Selector) BucketName_NotIn(ins []string) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketName NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Bucket_Selector) BucketName_Like(val string) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketName LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Bucket_Selector) BucketName_EQ(val string) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 /// End of wheres for selectors , updators, deletor
 
@@ -2208,6 +2362,14 @@ func (u *__Bucket_Updater) BucketId_Increment(count int) *__Bucket_Updater {
 
 //ints
 
+//string
+func (u *__Bucket_Updater) BucketName(newVal string) *__Bucket_Updater {
+	u.updates[" BucketName = ? "] = newVal
+	return u
+}
+
+//ints
+
 func (u *__Bucket_Updater) Server1Id(newVal int) *__Bucket_Updater {
 	u.updates[" Server1Id = ? "] = newVal
 	return u
@@ -2229,18 +2391,18 @@ func (u *__Bucket_Updater) Server1Id_Increment(count int) *__Bucket_Updater {
 
 //ints
 
-func (u *__Bucket_Updater) ServerId(newVal int) *__Bucket_Updater {
-	u.updates[" ServerId = ? "] = newVal
+func (u *__Bucket_Updater) Server2Id(newVal int) *__Bucket_Updater {
+	u.updates[" Server2Id = ? "] = newVal
 	return u
 }
 
-func (u *__Bucket_Updater) ServerId_Increment(count int) *__Bucket_Updater {
+func (u *__Bucket_Updater) Server2Id_Increment(count int) *__Bucket_Updater {
 	if count > 0 {
-		u.updates[" ServerId = ServerId+? "] = count
+		u.updates[" Server2Id = Server2Id+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" ServerId = ServerId-? "] = -(count) //make it positive
+		u.updates[" Server2Id = Server2Id-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -2352,6 +2514,21 @@ func (u *__Bucket_Selector) Select_BucketId() *__Bucket_Selector {
 	return u
 }
 
+func (u *__Bucket_Selector) OrderBy_BucketName_Desc() *__Bucket_Selector {
+	u.orderBy = " ORDER BY BucketName DESC "
+	return u
+}
+
+func (u *__Bucket_Selector) OrderBy_BucketName_Asc() *__Bucket_Selector {
+	u.orderBy = " ORDER BY BucketName ASC "
+	return u
+}
+
+func (u *__Bucket_Selector) Select_BucketName() *__Bucket_Selector {
+	u.selectCol = "BucketName"
+	return u
+}
+
 func (u *__Bucket_Selector) OrderBy_Server1Id_Desc() *__Bucket_Selector {
 	u.orderBy = " ORDER BY Server1Id DESC "
 	return u
@@ -2367,18 +2544,18 @@ func (u *__Bucket_Selector) Select_Server1Id() *__Bucket_Selector {
 	return u
 }
 
-func (u *__Bucket_Selector) OrderBy_ServerId_Desc() *__Bucket_Selector {
-	u.orderBy = " ORDER BY ServerId DESC "
+func (u *__Bucket_Selector) OrderBy_Server2Id_Desc() *__Bucket_Selector {
+	u.orderBy = " ORDER BY Server2Id DESC "
 	return u
 }
 
-func (u *__Bucket_Selector) OrderBy_ServerId_Asc() *__Bucket_Selector {
-	u.orderBy = " ORDER BY ServerId ASC "
+func (u *__Bucket_Selector) OrderBy_Server2Id_Asc() *__Bucket_Selector {
+	u.orderBy = " ORDER BY Server2Id ASC "
 	return u
 }
 
-func (u *__Bucket_Selector) Select_ServerId() *__Bucket_Selector {
-	u.selectCol = "ServerId"
+func (u *__Bucket_Selector) Select_Server2Id() *__Bucket_Selector {
+	u.selectCol = "Server2Id"
 	return u
 }
 
@@ -2487,6 +2664,7 @@ func (u *__Bucket_Selector) GetRow(db *sqlx.DB) (*Bucket, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2508,6 +2686,7 @@ func (u *__Bucket_Selector) GetRows(db *sqlx.DB) ([]*Bucket, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2536,6 +2715,7 @@ func (u *__Bucket_Selector) GetRows2(db *sqlx.DB) ([]Bucket, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2569,6 +2749,7 @@ func (u *__Bucket_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -2586,6 +2767,7 @@ func (u *__Bucket_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2603,6 +2785,7 @@ func (u *__Bucket_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2620,6 +2803,7 @@ func (u *__Bucket_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2653,11 +2837,13 @@ func (u *__Bucket_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2683,12 +2869,14 @@ func (d *__Bucket_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2699,12 +2887,12 @@ func (d *__Bucket_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_Bucket(rows []Bucket, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.bucket (" +
-		"Server1Id, ServerId, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime" +
+		"BucketName, Server1Id, Server2Id, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -2712,8 +2900,9 @@ func MassInsert_Bucket(rows []Bucket, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.BucketName)
 		vals = append(vals, row.Server1Id)
-		vals = append(vals, row.ServerId)
+		vals = append(vals, row.Server2Id)
 		vals = append(vals, row.BackupServerId)
 		vals = append(vals, row.ContentObjectTypeId)
 		vals = append(vals, row.ContentObjectCount)
@@ -2725,6 +2914,7 @@ func MassInsert_Bucket(rows []Bucket, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2734,12 +2924,12 @@ func MassInsert_Bucket(rows []Bucket, db XODB) error {
 func MassReplace_Bucket(rows []Bucket, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.bucket (" +
-		"Server1Id, ServerId, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime" +
+		"BucketName, Server1Id, Server2Id, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -2747,8 +2937,9 @@ func MassReplace_Bucket(rows []Bucket, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.BucketName)
 		vals = append(vals, row.Server1Id)
-		vals = append(vals, row.ServerId)
+		vals = append(vals, row.Server2Id)
 		vals = append(vals, row.BackupServerId)
 		vals = append(vals, row.ContentObjectTypeId)
 		vals = append(vals, row.ContentObjectCount)
@@ -2760,6 +2951,7 @@ func MassReplace_Bucket(rows []Bucket, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2767,6 +2959,8 @@ func MassReplace_Bucket(rows []Bucket, db XODB) error {
 }
 
 //////////////////// Play ///////////////////////////////
+
+//
 
 //
 
@@ -2790,7 +2984,7 @@ func BucketByBucketId(db XODB, bucketId int) (*Bucket, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`BucketId, Server1Id, ServerId, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime ` +
+		`BucketId, BucketName, Server1Id, Server2Id, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime ` +
 		`FROM ms.bucket ` +
 		`WHERE BucketId = ?`
 
@@ -2800,8 +2994,9 @@ func BucketByBucketId(db XODB, bucketId int) (*Bucket, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, bucketId).Scan(&b.BucketId, &b.Server1Id, &b.ServerId, &b.BackupServerId, &b.ContentObjectTypeId, &b.ContentObjectCount, &b.CreatedTime)
+	err = db.QueryRow(sqlstr, bucketId).Scan(&b.BucketId, &b.BucketName, &b.Server1Id, &b.Server2Id, &b.BackupServerId, &b.ContentObjectTypeId, &b.ContentObjectCount, &b.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

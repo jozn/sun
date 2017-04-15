@@ -57,12 +57,14 @@ func (a *Activity) Insert(db XODB) error {
 	XOLog(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt)
 	res, err := db.Exec(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -90,12 +92,14 @@ func (a *Activity) Replace(db XODB) error {
 	XOLog(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt)
 	res, err := db.Exec(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -131,6 +135,7 @@ func (a *Activity) Update(db XODB) error {
 	XOLog(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt, a.Id)
 	_, err = db.Exec(sqlstr, a.ActorUserId, a.ActionTypeId, a.TargetId, a.RefId, a.CreatedAt, a.Id)
 
+	XOLogErr(err)
 	OnActivity_AfterUpdate(a)
 
 	return err
@@ -166,6 +171,7 @@ func (a *Activity) Delete(db XODB) error {
 	XOLog(sqlstr, a.Id)
 	_, err = db.Exec(sqlstr, a.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2174,6 +2180,7 @@ func (u *__Activity_Selector) GetRow(db *sqlx.DB) (*Activity, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2195,6 +2202,7 @@ func (u *__Activity_Selector) GetRows(db *sqlx.DB) ([]*Activity, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2223,6 +2231,7 @@ func (u *__Activity_Selector) GetRows2(db *sqlx.DB) ([]Activity, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2256,6 +2265,7 @@ func (u *__Activity_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -2273,6 +2283,7 @@ func (u *__Activity_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2290,6 +2301,7 @@ func (u *__Activity_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2307,6 +2319,7 @@ func (u *__Activity_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2340,11 +2353,13 @@ func (u *__Activity_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2370,12 +2385,14 @@ func (d *__Activity_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2411,6 +2428,7 @@ func MassInsert_Activity(rows []Activity, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2445,6 +2463,7 @@ func MassReplace_Activity(rows []Activity, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2481,6 +2500,7 @@ func ActivitiesByActorUserIdId(db XODB, actorUserId int, id int) ([]*Activity, e
 	XOLog(sqlstr, actorUserId, id)
 	q, err := db.Query(sqlstr, actorUserId, id)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 	defer q.Close()
@@ -2495,6 +2515,7 @@ func ActivitiesByActorUserIdId(db XODB, actorUserId int, id int) ([]*Activity, e
 		// scan
 		err = q.Scan(&a.Id, &a.ActorUserId, &a.ActionTypeId, &a.TargetId, &a.RefId, &a.CreatedAt)
 		if err != nil {
+			XOLogErr(err)
 			return nil, err
 		}
 
@@ -2522,6 +2543,7 @@ func ActivitiesByRefId(db XODB, refId int) ([]*Activity, error) {
 	XOLog(sqlstr, refId)
 	q, err := db.Query(sqlstr, refId)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 	defer q.Close()
@@ -2536,6 +2558,7 @@ func ActivitiesByRefId(db XODB, refId int) ([]*Activity, error) {
 		// scan
 		err = q.Scan(&a.Id, &a.ActorUserId, &a.ActionTypeId, &a.TargetId, &a.RefId, &a.CreatedAt)
 		if err != nil {
+			XOLogErr(err)
 			return nil, err
 		}
 
@@ -2567,6 +2590,7 @@ func ActivityById(db XODB, id int) (*Activity, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&a.Id, &a.ActorUserId, &a.ActionTypeId, &a.TargetId, &a.RefId, &a.CreatedAt)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

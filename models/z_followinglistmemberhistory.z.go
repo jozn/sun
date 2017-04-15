@@ -58,12 +58,14 @@ func (flmh *FollowingListMemberHistory) Insert(db XODB) error {
 	XOLog(sqlstr, flmh.ListId, flmh.UserId, flmh.FollowedUserId, flmh.FollowType, flmh.UpdatedTimeMs, flmh.FollowId)
 	res, err := db.Exec(sqlstr, flmh.ListId, flmh.UserId, flmh.FollowedUserId, flmh.FollowType, flmh.UpdatedTimeMs, flmh.FollowId)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -91,12 +93,14 @@ func (flmh *FollowingListMemberHistory) Replace(db XODB) error {
 	XOLog(sqlstr, flmh.ListId, flmh.UserId, flmh.FollowedUserId, flmh.FollowType, flmh.UpdatedTimeMs, flmh.FollowId)
 	res, err := db.Exec(sqlstr, flmh.ListId, flmh.UserId, flmh.FollowedUserId, flmh.FollowType, flmh.UpdatedTimeMs, flmh.FollowId)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -132,6 +136,7 @@ func (flmh *FollowingListMemberHistory) Update(db XODB) error {
 	XOLog(sqlstr, flmh.ListId, flmh.UserId, flmh.FollowedUserId, flmh.FollowType, flmh.UpdatedTimeMs, flmh.FollowId, flmh.Id)
 	_, err = db.Exec(sqlstr, flmh.ListId, flmh.UserId, flmh.FollowedUserId, flmh.FollowType, flmh.UpdatedTimeMs, flmh.FollowId, flmh.Id)
 
+	XOLogErr(err)
 	OnFollowingListMemberHistory_AfterUpdate(flmh)
 
 	return err
@@ -167,6 +172,7 @@ func (flmh *FollowingListMemberHistory) Delete(db XODB) error {
 	XOLog(sqlstr, flmh.Id)
 	_, err = db.Exec(sqlstr, flmh.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2487,6 +2493,7 @@ func (u *__FollowingListMemberHistory_Selector) GetRow(db *sqlx.DB) (*FollowingL
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2508,6 +2515,7 @@ func (u *__FollowingListMemberHistory_Selector) GetRows(db *sqlx.DB) ([]*Followi
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2536,6 +2544,7 @@ func (u *__FollowingListMemberHistory_Selector) GetRows2(db *sqlx.DB) ([]Followi
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2569,6 +2578,7 @@ func (u *__FollowingListMemberHistory_Selector) GetString(db *sqlx.DB) (string, 
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -2586,6 +2596,7 @@ func (u *__FollowingListMemberHistory_Selector) GetStringSlice(db *sqlx.DB) ([]s
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2603,6 +2614,7 @@ func (u *__FollowingListMemberHistory_Selector) GetIntSlice(db *sqlx.DB) ([]int,
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2620,6 +2632,7 @@ func (u *__FollowingListMemberHistory_Selector) GetInt(db *sqlx.DB) (int, error)
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2653,11 +2666,13 @@ func (u *__FollowingListMemberHistory_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2683,12 +2698,14 @@ func (d *__FollowingListMemberHistory_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2725,6 +2742,7 @@ func MassInsert_FollowingListMemberHistory(rows []FollowingListMemberHistory, db
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2760,6 +2778,7 @@ func MassReplace_FollowingListMemberHistory(rows []FollowingListMemberHistory, d
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2802,6 +2821,7 @@ func FollowingListMemberHistoryById(db XODB, id int) (*FollowingListMemberHistor
 
 	err = db.QueryRow(sqlstr, id).Scan(&flmh.Id, &flmh.ListId, &flmh.UserId, &flmh.FollowedUserId, &flmh.FollowType, &flmh.UpdatedTimeMs, &flmh.FollowId)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

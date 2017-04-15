@@ -79,12 +79,14 @@ func (nr *NotificationRemoved) Replace(db XODB) error {
 	XOLog(sqlstr, nr.ForUserId)
 	res, err := db.Exec(sqlstr, nr.ForUserId)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -120,6 +122,7 @@ func (nr *NotificationRemoved) Update(db XODB) error {
 	XOLog(sqlstr, nr.ForUserId, nr.NotificationId)
 	_, err = db.Exec(sqlstr, nr.ForUserId, nr.NotificationId)
 
+	XOLogErr(err)
 	OnNotificationRemoved_AfterUpdate(nr)
 
 	return err
@@ -155,6 +158,7 @@ func (nr *NotificationRemoved) Delete(db XODB) error {
 	XOLog(sqlstr, nr.NotificationId)
 	_, err = db.Exec(sqlstr, nr.NotificationId)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -915,6 +919,7 @@ func (u *__NotificationRemoved_Selector) GetRow(db *sqlx.DB) (*NotificationRemov
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -936,6 +941,7 @@ func (u *__NotificationRemoved_Selector) GetRows(db *sqlx.DB) ([]*NotificationRe
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -964,6 +970,7 @@ func (u *__NotificationRemoved_Selector) GetRows2(db *sqlx.DB) ([]NotificationRe
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -997,6 +1004,7 @@ func (u *__NotificationRemoved_Selector) GetString(db *sqlx.DB) (string, error) 
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -1014,6 +1022,7 @@ func (u *__NotificationRemoved_Selector) GetStringSlice(db *sqlx.DB) ([]string, 
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1031,6 +1040,7 @@ func (u *__NotificationRemoved_Selector) GetIntSlice(db *sqlx.DB) ([]int, error)
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1048,6 +1058,7 @@ func (u *__NotificationRemoved_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1081,11 +1092,13 @@ func (u *__NotificationRemoved_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1111,12 +1124,14 @@ func (d *__NotificationRemoved_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1148,6 +1163,7 @@ func MassInsert_NotificationRemoved(rows []NotificationRemoved, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1178,6 +1194,7 @@ func MassReplace_NotificationRemoved(rows []NotificationRemoved, db XODB) error 
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1210,6 +1227,7 @@ func NotificationRemovedByNotificationId(db XODB, notificationId int) (*Notifica
 
 	err = db.QueryRow(sqlstr, notificationId).Scan(&nr.NotificationId, &nr.ForUserId)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

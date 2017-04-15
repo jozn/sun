@@ -57,12 +57,14 @@ func (mrtp *MsgReceivedToPeer) Insert(db XODB) error {
 	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime)
 	res, err := db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -90,12 +92,14 @@ func (mrtp *MsgReceivedToPeer) Replace(db XODB) error {
 	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime)
 	res, err := db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -131,6 +135,7 @@ func (mrtp *MsgReceivedToPeer) Update(db XODB) error {
 	XOLog(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime, mrtp.Id)
 	_, err = db.Exec(sqlstr, mrtp.ToUserId, mrtp.MsgKey, mrtp.RoomKey, mrtp.PeerUserId, mrtp.AtTime, mrtp.Id)
 
+	XOLogErr(err)
 	OnMsgReceivedToPeer_AfterUpdate(mrtp)
 
 	return err
@@ -166,6 +171,7 @@ func (mrtp *MsgReceivedToPeer) Delete(db XODB) error {
 	XOLog(sqlstr, mrtp.Id)
 	_, err = db.Exec(sqlstr, mrtp.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1890,6 +1896,7 @@ func (u *__MsgReceivedToPeer_Selector) GetRow(db *sqlx.DB) (*MsgReceivedToPeer, 
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1911,6 +1918,7 @@ func (u *__MsgReceivedToPeer_Selector) GetRows(db *sqlx.DB) ([]*MsgReceivedToPee
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1939,6 +1947,7 @@ func (u *__MsgReceivedToPeer_Selector) GetRows2(db *sqlx.DB) ([]MsgReceivedToPee
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1972,6 +1981,7 @@ func (u *__MsgReceivedToPeer_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -1989,6 +1999,7 @@ func (u *__MsgReceivedToPeer_Selector) GetStringSlice(db *sqlx.DB) ([]string, er
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2006,6 +2017,7 @@ func (u *__MsgReceivedToPeer_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2023,6 +2035,7 @@ func (u *__MsgReceivedToPeer_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2056,11 +2069,13 @@ func (u *__MsgReceivedToPeer_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2086,12 +2101,14 @@ func (d *__MsgReceivedToPeer_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2127,6 +2144,7 @@ func MassInsert_MsgReceivedToPeer(rows []MsgReceivedToPeer, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2161,6 +2179,7 @@ func MassReplace_MsgReceivedToPeer(rows []MsgReceivedToPeer, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2201,6 +2220,7 @@ func MsgReceivedToPeerById(db XODB, id int) (*MsgReceivedToPeer, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.RoomKey, &mrtp.PeerUserId, &mrtp.AtTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

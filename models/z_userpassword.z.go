@@ -54,12 +54,14 @@ func (up *UserPassword) Insert(db XODB) error {
 	XOLog(sqlstr, up.Password, up.CreatedTime)
 	res, err := db.Exec(sqlstr, up.Password, up.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -87,12 +89,14 @@ func (up *UserPassword) Replace(db XODB) error {
 	XOLog(sqlstr, up.Password, up.CreatedTime)
 	res, err := db.Exec(sqlstr, up.Password, up.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -128,6 +132,7 @@ func (up *UserPassword) Update(db XODB) error {
 	XOLog(sqlstr, up.Password, up.CreatedTime, up.UserId)
 	_, err = db.Exec(sqlstr, up.Password, up.CreatedTime, up.UserId)
 
+	XOLogErr(err)
 	OnUserPassword_AfterUpdate(up)
 
 	return err
@@ -163,6 +168,7 @@ func (up *UserPassword) Delete(db XODB) error {
 	XOLog(sqlstr, up.UserId)
 	_, err = db.Exec(sqlstr, up.UserId)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1093,6 +1099,7 @@ func (u *__UserPassword_Selector) GetRow(db *sqlx.DB) (*UserPassword, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1114,6 +1121,7 @@ func (u *__UserPassword_Selector) GetRows(db *sqlx.DB) ([]*UserPassword, error) 
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1142,6 +1150,7 @@ func (u *__UserPassword_Selector) GetRows2(db *sqlx.DB) ([]UserPassword, error) 
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1175,6 +1184,7 @@ func (u *__UserPassword_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -1192,6 +1202,7 @@ func (u *__UserPassword_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) 
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1209,6 +1220,7 @@ func (u *__UserPassword_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1226,6 +1238,7 @@ func (u *__UserPassword_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1259,11 +1272,13 @@ func (u *__UserPassword_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1289,12 +1304,14 @@ func (d *__UserPassword_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1327,6 +1344,7 @@ func MassInsert_UserPassword(rows []UserPassword, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1358,6 +1376,7 @@ func MassReplace_UserPassword(rows []UserPassword, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1392,6 +1411,7 @@ func UserPasswordByUserId(db XODB, userId int) (*UserPassword, error) {
 
 	err = db.QueryRow(sqlstr, userId).Scan(&up.UserId, &up.Password, &up.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

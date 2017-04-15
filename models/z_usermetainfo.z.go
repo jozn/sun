@@ -79,12 +79,14 @@ func (umi *UserMetaInfo) Replace(db XODB) error {
 	XOLog(sqlstr, umi.IsNotificationDirty)
 	res, err := db.Exec(sqlstr, umi.IsNotificationDirty)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -120,6 +122,7 @@ func (umi *UserMetaInfo) Update(db XODB) error {
 	XOLog(sqlstr, umi.IsNotificationDirty, umi.UserId)
 	_, err = db.Exec(sqlstr, umi.IsNotificationDirty, umi.UserId)
 
+	XOLogErr(err)
 	OnUserMetaInfo_AfterUpdate(umi)
 
 	return err
@@ -155,6 +158,7 @@ func (umi *UserMetaInfo) Delete(db XODB) error {
 	XOLog(sqlstr, umi.UserId)
 	_, err = db.Exec(sqlstr, umi.UserId)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -915,6 +919,7 @@ func (u *__UserMetaInfo_Selector) GetRow(db *sqlx.DB) (*UserMetaInfo, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -936,6 +941,7 @@ func (u *__UserMetaInfo_Selector) GetRows(db *sqlx.DB) ([]*UserMetaInfo, error) 
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -964,6 +970,7 @@ func (u *__UserMetaInfo_Selector) GetRows2(db *sqlx.DB) ([]UserMetaInfo, error) 
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -997,6 +1004,7 @@ func (u *__UserMetaInfo_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -1014,6 +1022,7 @@ func (u *__UserMetaInfo_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) 
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1031,6 +1040,7 @@ func (u *__UserMetaInfo_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1048,6 +1058,7 @@ func (u *__UserMetaInfo_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1081,11 +1092,13 @@ func (u *__UserMetaInfo_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1111,12 +1124,14 @@ func (d *__UserMetaInfo_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1148,6 +1163,7 @@ func MassInsert_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1178,6 +1194,7 @@ func MassReplace_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1210,6 +1227,7 @@ func UserMetaInfoByUserId(db XODB, userId int) (*UserMetaInfo, error) {
 
 	err = db.QueryRow(sqlstr, userId).Scan(&umi.UserId, &umi.IsNotificationDirty)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

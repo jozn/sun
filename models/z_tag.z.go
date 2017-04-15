@@ -56,12 +56,14 @@ func (t *Tag) Insert(db XODB) error {
 	XOLog(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime)
 	res, err := db.Exec(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -89,12 +91,14 @@ func (t *Tag) Replace(db XODB) error {
 	XOLog(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime)
 	res, err := db.Exec(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -130,6 +134,7 @@ func (t *Tag) Update(db XODB) error {
 	XOLog(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime, t.Id)
 	_, err = db.Exec(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime, t.Id)
 
+	XOLogErr(err)
 	OnTag_AfterUpdate(t)
 
 	return err
@@ -165,6 +170,7 @@ func (t *Tag) Delete(db XODB) error {
 	XOLog(sqlstr, t.Id)
 	_, err = db.Exec(sqlstr, t.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1719,6 +1725,7 @@ func (u *__Tag_Selector) GetRow(db *sqlx.DB) (*Tag, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1740,6 +1747,7 @@ func (u *__Tag_Selector) GetRows(db *sqlx.DB) ([]*Tag, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1768,6 +1776,7 @@ func (u *__Tag_Selector) GetRows2(db *sqlx.DB) ([]Tag, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1801,6 +1810,7 @@ func (u *__Tag_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -1818,6 +1828,7 @@ func (u *__Tag_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1835,6 +1846,7 @@ func (u *__Tag_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1852,6 +1864,7 @@ func (u *__Tag_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1885,11 +1898,13 @@ func (u *__Tag_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1915,12 +1930,14 @@ func (d *__Tag_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1955,6 +1972,7 @@ func MassInsert_Tag(rows []Tag, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1988,6 +2006,7 @@ func MassReplace_Tag(rows []Tag, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2026,6 +2045,7 @@ func TagByName(db XODB, name string) (*Tag, error) {
 
 	err = db.QueryRow(sqlstr, name).Scan(&t.Id, &t.Name, &t.Count, &t.IsBlocked, &t.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2054,6 +2074,7 @@ func TagById(db XODB, id int) (*Tag, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&t.Id, &t.Name, &t.Count, &t.IsBlocked, &t.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

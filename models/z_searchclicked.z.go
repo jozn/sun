@@ -57,12 +57,14 @@ func (sc *SearchClicked) Insert(db XODB) error {
 	XOLog(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt)
 	res, err := db.Exec(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -90,12 +92,14 @@ func (sc *SearchClicked) Replace(db XODB) error {
 	XOLog(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt)
 	res, err := db.Exec(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -131,6 +135,7 @@ func (sc *SearchClicked) Update(db XODB) error {
 	XOLog(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt, sc.Id)
 	_, err = db.Exec(sqlstr, sc.Query, sc.ClickType, sc.TargetId, sc.UserId, sc.CreatedAt, sc.Id)
 
+	XOLogErr(err)
 	OnSearchClicked_AfterUpdate(sc)
 
 	return err
@@ -166,6 +171,7 @@ func (sc *SearchClicked) Delete(db XODB) error {
 	XOLog(sqlstr, sc.Id)
 	_, err = db.Exec(sqlstr, sc.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2032,6 +2038,7 @@ func (u *__SearchClicked_Selector) GetRow(db *sqlx.DB) (*SearchClicked, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2053,6 +2060,7 @@ func (u *__SearchClicked_Selector) GetRows(db *sqlx.DB) ([]*SearchClicked, error
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2081,6 +2089,7 @@ func (u *__SearchClicked_Selector) GetRows2(db *sqlx.DB) ([]SearchClicked, error
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2114,6 +2123,7 @@ func (u *__SearchClicked_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -2131,6 +2141,7 @@ func (u *__SearchClicked_Selector) GetStringSlice(db *sqlx.DB) ([]string, error)
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2148,6 +2159,7 @@ func (u *__SearchClicked_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2165,6 +2177,7 @@ func (u *__SearchClicked_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2198,11 +2211,13 @@ func (u *__SearchClicked_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2228,12 +2243,14 @@ func (d *__SearchClicked_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2269,6 +2286,7 @@ func MassInsert_SearchClicked(rows []SearchClicked, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2303,6 +2321,7 @@ func MassReplace_SearchClicked(rows []SearchClicked, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2343,6 +2362,7 @@ func SearchClickedById(db XODB, id int) (*SearchClicked, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&sc.Id, &sc.Query, &sc.ClickType, &sc.TargetId, &sc.UserId, &sc.CreatedAt)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

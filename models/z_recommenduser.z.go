@@ -56,12 +56,14 @@ func (ru *RecommendUser) Insert(db XODB) error {
 	XOLog(sqlstr, ru.UserId, ru.TargetId, ru.Weight, ru.CreatedTime)
 	res, err := db.Exec(sqlstr, ru.UserId, ru.TargetId, ru.Weight, ru.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -89,12 +91,14 @@ func (ru *RecommendUser) Replace(db XODB) error {
 	XOLog(sqlstr, ru.UserId, ru.TargetId, ru.Weight, ru.CreatedTime)
 	res, err := db.Exec(sqlstr, ru.UserId, ru.TargetId, ru.Weight, ru.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -130,6 +134,7 @@ func (ru *RecommendUser) Update(db XODB) error {
 	XOLog(sqlstr, ru.UserId, ru.TargetId, ru.Weight, ru.CreatedTime, ru.Id)
 	_, err = db.Exec(sqlstr, ru.UserId, ru.TargetId, ru.Weight, ru.CreatedTime, ru.Id)
 
+	XOLogErr(err)
 	OnRecommendUser_AfterUpdate(ru)
 
 	return err
@@ -165,6 +170,7 @@ func (ru *RecommendUser) Delete(db XODB) error {
 	XOLog(sqlstr, ru.Id)
 	_, err = db.Exec(sqlstr, ru.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1568,6 +1574,7 @@ func (u *__RecommendUser_Selector) GetRow(db *sqlx.DB) (*RecommendUser, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1589,6 +1596,7 @@ func (u *__RecommendUser_Selector) GetRows(db *sqlx.DB) ([]*RecommendUser, error
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1617,6 +1625,7 @@ func (u *__RecommendUser_Selector) GetRows2(db *sqlx.DB) ([]RecommendUser, error
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1650,6 +1659,7 @@ func (u *__RecommendUser_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -1667,6 +1677,7 @@ func (u *__RecommendUser_Selector) GetStringSlice(db *sqlx.DB) ([]string, error)
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1684,6 +1695,7 @@ func (u *__RecommendUser_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1701,6 +1713,7 @@ func (u *__RecommendUser_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1734,11 +1747,13 @@ func (u *__RecommendUser_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1764,12 +1779,14 @@ func (d *__RecommendUser_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1804,6 +1821,7 @@ func MassInsert_RecommendUser(rows []RecommendUser, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1837,6 +1855,7 @@ func MassReplace_RecommendUser(rows []RecommendUser, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1875,6 +1894,7 @@ func RecommendUserById(db XODB, id int) (*RecommendUser, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&ru.Id, &ru.UserId, &ru.TargetId, &ru.Weight, &ru.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

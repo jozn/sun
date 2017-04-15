@@ -56,12 +56,14 @@ func (tp *TagsPost) Insert(db XODB) error {
 	XOLog(sqlstr, tp.TagId, tp.PostId, tp.TypeId, tp.CreatedTime)
 	res, err := db.Exec(sqlstr, tp.TagId, tp.PostId, tp.TypeId, tp.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -89,12 +91,14 @@ func (tp *TagsPost) Replace(db XODB) error {
 	XOLog(sqlstr, tp.TagId, tp.PostId, tp.TypeId, tp.CreatedTime)
 	res, err := db.Exec(sqlstr, tp.TagId, tp.PostId, tp.TypeId, tp.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -130,6 +134,7 @@ func (tp *TagsPost) Update(db XODB) error {
 	XOLog(sqlstr, tp.TagId, tp.PostId, tp.TypeId, tp.CreatedTime, tp.Id)
 	_, err = db.Exec(sqlstr, tp.TagId, tp.PostId, tp.TypeId, tp.CreatedTime, tp.Id)
 
+	XOLogErr(err)
 	OnTagsPost_AfterUpdate(tp)
 
 	return err
@@ -165,6 +170,7 @@ func (tp *TagsPost) Delete(db XODB) error {
 	XOLog(sqlstr, tp.Id)
 	_, err = db.Exec(sqlstr, tp.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1861,6 +1867,7 @@ func (u *__TagsPost_Selector) GetRow(db *sqlx.DB) (*TagsPost, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1882,6 +1889,7 @@ func (u *__TagsPost_Selector) GetRows(db *sqlx.DB) ([]*TagsPost, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1910,6 +1918,7 @@ func (u *__TagsPost_Selector) GetRows2(db *sqlx.DB) ([]TagsPost, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1943,6 +1952,7 @@ func (u *__TagsPost_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -1960,6 +1970,7 @@ func (u *__TagsPost_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1977,6 +1988,7 @@ func (u *__TagsPost_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1994,6 +2006,7 @@ func (u *__TagsPost_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2027,11 +2040,13 @@ func (u *__TagsPost_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2057,12 +2072,14 @@ func (d *__TagsPost_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2097,6 +2114,7 @@ func MassInsert_TagsPost(rows []TagsPost, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2130,6 +2148,7 @@ func MassReplace_TagsPost(rows []TagsPost, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2168,6 +2187,7 @@ func TagsPostByTagIdPostId(db XODB, tagId int, postId int) (*TagsPost, error) {
 
 	err = db.QueryRow(sqlstr, tagId, postId).Scan(&tp.Id, &tp.TagId, &tp.PostId, &tp.TypeId, &tp.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2196,6 +2216,7 @@ func TagsPostById(db XODB, id int) (*TagsPost, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&tp.Id, &tp.TagId, &tp.PostId, &tp.TypeId, &tp.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

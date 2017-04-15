@@ -57,12 +57,14 @@ func (msbp *MsgSeenByPeer) Insert(db XODB) error {
 	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
 	res, err := db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -90,12 +92,14 @@ func (msbp *MsgSeenByPeer) Replace(db XODB) error {
 	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
 	res, err := db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -131,6 +135,7 @@ func (msbp *MsgSeenByPeer) Update(db XODB) error {
 	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime, msbp.Id)
 	_, err = db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime, msbp.Id)
 
+	XOLogErr(err)
 	OnMsgSeenByPeer_AfterUpdate(msbp)
 
 	return err
@@ -166,6 +171,7 @@ func (msbp *MsgSeenByPeer) Delete(db XODB) error {
 	XOLog(sqlstr, msbp.Id)
 	_, err = db.Exec(sqlstr, msbp.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1890,6 +1896,7 @@ func (u *__MsgSeenByPeer_Selector) GetRow(db *sqlx.DB) (*MsgSeenByPeer, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1911,6 +1918,7 @@ func (u *__MsgSeenByPeer_Selector) GetRows(db *sqlx.DB) ([]*MsgSeenByPeer, error
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1939,6 +1947,7 @@ func (u *__MsgSeenByPeer_Selector) GetRows2(db *sqlx.DB) ([]MsgSeenByPeer, error
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1972,6 +1981,7 @@ func (u *__MsgSeenByPeer_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -1989,6 +1999,7 @@ func (u *__MsgSeenByPeer_Selector) GetStringSlice(db *sqlx.DB) ([]string, error)
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2006,6 +2017,7 @@ func (u *__MsgSeenByPeer_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2023,6 +2035,7 @@ func (u *__MsgSeenByPeer_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2056,11 +2069,13 @@ func (u *__MsgSeenByPeer_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2086,12 +2101,14 @@ func (d *__MsgSeenByPeer_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2127,6 +2144,7 @@ func MassInsert_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2161,6 +2179,7 @@ func MassReplace_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2180,47 +2199,6 @@ func MassReplace_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
 //
 
 //
-
-// MsgSeenByPeersByToUserId retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
-//
-// Generated from index 'ToUserId'.
-func MsgSeenByPeersByToUserId(db XODB, toUserId int) ([]*MsgSeenByPeer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
-		`FROM ms.msg_seen_by_peer ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgSeenByPeer{}
-	for q.Next() {
-		msbp := MsgSeenByPeer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &msbp)
-	}
-
-	OnMsgSeenByPeer_LoadMany(res)
-
-	return res, nil
-}
 
 // MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
 //
@@ -2242,6 +2220,7 @@ func MsgSeenByPeerById(db XODB, id int) (*MsgSeenByPeer, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

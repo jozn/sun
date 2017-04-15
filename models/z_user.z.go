@@ -83,12 +83,14 @@ func (u *User) Insert(db XODB) error {
 	XOLog(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
 	res, err := db.Exec(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -116,12 +118,14 @@ func (u *User) Replace(db XODB) error {
 	XOLog(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
 	res, err := db.Exec(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -157,6 +161,7 @@ func (u *User) Update(db XODB) error {
 	XOLog(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress, u.Id)
 	_, err = db.Exec(sqlstr, u.UserName, u.FirstName, u.LastName, u.About, u.FullName, u.AvatarUrl, u.PrivacyProfile, u.Phone, u.Email, u.IsDeleted, u.PasswordHash, u.PasswordSalt, u.FollowersCount, u.FollowingCount, u.PostsCount, u.MediaCount, u.LikesCount, u.ResharedCount, u.LastActionTime, u.LastPostTime, u.PrimaryFollowingList, u.CreatedTime, u.UpdatedTime, u.SessionUuid, u.DeviceUuid, u.LastWifiMacAddress, u.LastNetworkType, u.AppVersion, u.LastActivityTime, u.LastLoginTime, u.LastIpAddress, u.Id)
 
+	XOLogErr(err)
 	OnUser_AfterUpdate(u)
 
 	return err
@@ -192,6 +197,7 @@ func (u *User) Delete(db XODB) error {
 	XOLog(sqlstr, u.Id)
 	_, err = db.Exec(sqlstr, u.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -8182,6 +8188,7 @@ func (u *__User_Selector) GetRow(db *sqlx.DB) (*User, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -8203,6 +8210,7 @@ func (u *__User_Selector) GetRows(db *sqlx.DB) ([]*User, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -8231,6 +8239,7 @@ func (u *__User_Selector) GetRows2(db *sqlx.DB) ([]User, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -8264,6 +8273,7 @@ func (u *__User_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -8281,6 +8291,7 @@ func (u *__User_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -8298,6 +8309,7 @@ func (u *__User_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -8315,6 +8327,7 @@ func (u *__User_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -8348,11 +8361,13 @@ func (u *__User_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -8378,12 +8393,14 @@ func (d *__User_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -8445,6 +8462,7 @@ func MassInsert_User(rows []User, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -8505,6 +8523,7 @@ func MassReplace_User(rows []User, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -8597,6 +8616,7 @@ func UserByEmail(db XODB, email string) (*User, error) {
 
 	err = db.QueryRow(sqlstr, email).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -8621,6 +8641,7 @@ func UsersByPhone(db XODB, phone string) ([]*User, error) {
 	XOLog(sqlstr, phone)
 	q, err := db.Query(sqlstr, phone)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 	defer q.Close()
@@ -8635,6 +8656,7 @@ func UsersByPhone(db XODB, phone string) ([]*User, error) {
 		// scan
 		err = q.Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
 		if err != nil {
+			XOLogErr(err)
 			return nil, err
 		}
 
@@ -8662,6 +8684,7 @@ func UsersBySessionUuid(db XODB, sessionUuid string) ([]*User, error) {
 	XOLog(sqlstr, sessionUuid)
 	q, err := db.Query(sqlstr, sessionUuid)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 	defer q.Close()
@@ -8676,6 +8699,7 @@ func UsersBySessionUuid(db XODB, sessionUuid string) ([]*User, error) {
 		// scan
 		err = q.Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
 		if err != nil {
+			XOLogErr(err)
 			return nil, err
 		}
 
@@ -8707,6 +8731,7 @@ func UserByUserName(db XODB, userName string) (*User, error) {
 
 	err = db.QueryRow(sqlstr, userName).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -8735,6 +8760,7 @@ func UserById(db XODB, id int) (*User, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

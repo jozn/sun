@@ -58,12 +58,14 @@ func (m *Media) Insert(db XODB) error {
 	XOLog(sqlstr, m.UserId, m.PostId, m.AlbumId, m.TypeId, m.CreatedTime, m.Src)
 	res, err := db.Exec(sqlstr, m.UserId, m.PostId, m.AlbumId, m.TypeId, m.CreatedTime, m.Src)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -91,12 +93,14 @@ func (m *Media) Replace(db XODB) error {
 	XOLog(sqlstr, m.UserId, m.PostId, m.AlbumId, m.TypeId, m.CreatedTime, m.Src)
 	res, err := db.Exec(sqlstr, m.UserId, m.PostId, m.AlbumId, m.TypeId, m.CreatedTime, m.Src)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -132,6 +136,7 @@ func (m *Media) Update(db XODB) error {
 	XOLog(sqlstr, m.UserId, m.PostId, m.AlbumId, m.TypeId, m.CreatedTime, m.Src, m.Id)
 	_, err = db.Exec(sqlstr, m.UserId, m.PostId, m.AlbumId, m.TypeId, m.CreatedTime, m.Src, m.Id)
 
+	XOLogErr(err)
 	OnMedia_AfterUpdate(m)
 
 	return err
@@ -167,6 +172,7 @@ func (m *Media) Delete(db XODB) error {
 	XOLog(sqlstr, m.Id)
 	_, err = db.Exec(sqlstr, m.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2345,6 +2351,7 @@ func (u *__Media_Selector) GetRow(db *sqlx.DB) (*Media, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2366,6 +2373,7 @@ func (u *__Media_Selector) GetRows(db *sqlx.DB) ([]*Media, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2394,6 +2402,7 @@ func (u *__Media_Selector) GetRows2(db *sqlx.DB) ([]Media, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2427,6 +2436,7 @@ func (u *__Media_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -2444,6 +2454,7 @@ func (u *__Media_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2461,6 +2472,7 @@ func (u *__Media_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2478,6 +2490,7 @@ func (u *__Media_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2511,11 +2524,13 @@ func (u *__Media_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2541,12 +2556,14 @@ func (d *__Media_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2583,6 +2600,7 @@ func MassInsert_Media(rows []Media, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2618,6 +2636,7 @@ func MassReplace_Media(rows []Media, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2660,6 +2679,7 @@ func MediaById(db XODB, id int) (*Media, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.UserId, &m.PostId, &m.AlbumId, &m.TypeId, &m.CreatedTime, &m.Src)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

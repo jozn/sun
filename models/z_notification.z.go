@@ -60,12 +60,14 @@ func (n *Notification) Insert(db XODB) error {
 	XOLog(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime)
 	res, err := db.Exec(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -93,12 +95,14 @@ func (n *Notification) Replace(db XODB) error {
 	XOLog(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime)
 	res, err := db.Exec(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -134,6 +138,7 @@ func (n *Notification) Update(db XODB) error {
 	XOLog(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime, n.Id)
 	_, err = db.Exec(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime, n.Id)
 
+	XOLogErr(err)
 	OnNotification_AfterUpdate(n)
 
 	return err
@@ -169,6 +174,7 @@ func (n *Notification) Delete(db XODB) error {
 	XOLog(sqlstr, n.Id)
 	_, err = db.Exec(sqlstr, n.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -3113,6 +3119,7 @@ func (u *__Notification_Selector) GetRow(db *sqlx.DB) (*Notification, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -3134,6 +3141,7 @@ func (u *__Notification_Selector) GetRows(db *sqlx.DB) ([]*Notification, error) 
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -3162,6 +3170,7 @@ func (u *__Notification_Selector) GetRows2(db *sqlx.DB) ([]Notification, error) 
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -3195,6 +3204,7 @@ func (u *__Notification_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -3212,6 +3222,7 @@ func (u *__Notification_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) 
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -3229,6 +3240,7 @@ func (u *__Notification_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -3246,6 +3258,7 @@ func (u *__Notification_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -3279,11 +3292,13 @@ func (u *__Notification_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -3309,12 +3324,14 @@ func (d *__Notification_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -3353,6 +3370,7 @@ func MassInsert_Notification(rows []Notification, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -3390,6 +3408,7 @@ func MassReplace_Notification(rows []Notification, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -3436,6 +3455,7 @@ func NotificationByForUserIdId(db XODB, forUserId int, id int) (*Notification, e
 
 	err = db.QueryRow(sqlstr, forUserId, id).Scan(&n.Id, &n.ForUserId, &n.ActorUserId, &n.ActionTypeId, &n.ObjectTypeId, &n.TargetId, &n.ObjectId, &n.SeenStatus, &n.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -3460,6 +3480,7 @@ func NotificationsByTargetId(db XODB, targetId int) ([]*Notification, error) {
 	XOLog(sqlstr, targetId)
 	q, err := db.Query(sqlstr, targetId)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 	defer q.Close()
@@ -3474,6 +3495,7 @@ func NotificationsByTargetId(db XODB, targetId int) ([]*Notification, error) {
 		// scan
 		err = q.Scan(&n.Id, &n.ForUserId, &n.ActorUserId, &n.ActionTypeId, &n.ObjectTypeId, &n.TargetId, &n.ObjectId, &n.SeenStatus, &n.CreatedTime)
 		if err != nil {
+			XOLogErr(err)
 			return nil, err
 		}
 
@@ -3505,6 +3527,7 @@ func NotificationById(db XODB, id int) (*Notification, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&n.Id, &n.ForUserId, &n.ActorUserId, &n.ActionTypeId, &n.ObjectTypeId, &n.TargetId, &n.ObjectId, &n.SeenStatus, &n.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

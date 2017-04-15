@@ -61,12 +61,14 @@ func (pc *PhoneContact) Insert(db XODB) error {
 	XOLog(sqlstr, pc.PhoneDisplayName, pc.PhoneFamilyName, pc.PhoneNumber, pc.PhoneNormalizedNumber, pc.PhoneContactRowId, pc.UserId, pc.DeviceUuidId, pc.CreatedTime, pc.UpdatedTime)
 	res, err := db.Exec(sqlstr, pc.PhoneDisplayName, pc.PhoneFamilyName, pc.PhoneNumber, pc.PhoneNormalizedNumber, pc.PhoneContactRowId, pc.UserId, pc.DeviceUuidId, pc.CreatedTime, pc.UpdatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -94,12 +96,14 @@ func (pc *PhoneContact) Replace(db XODB) error {
 	XOLog(sqlstr, pc.PhoneDisplayName, pc.PhoneFamilyName, pc.PhoneNumber, pc.PhoneNormalizedNumber, pc.PhoneContactRowId, pc.UserId, pc.DeviceUuidId, pc.CreatedTime, pc.UpdatedTime)
 	res, err := db.Exec(sqlstr, pc.PhoneDisplayName, pc.PhoneFamilyName, pc.PhoneNumber, pc.PhoneNormalizedNumber, pc.PhoneContactRowId, pc.UserId, pc.DeviceUuidId, pc.CreatedTime, pc.UpdatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -135,6 +139,7 @@ func (pc *PhoneContact) Update(db XODB) error {
 	XOLog(sqlstr, pc.PhoneDisplayName, pc.PhoneFamilyName, pc.PhoneNumber, pc.PhoneNormalizedNumber, pc.PhoneContactRowId, pc.UserId, pc.DeviceUuidId, pc.CreatedTime, pc.UpdatedTime, pc.Id)
 	_, err = db.Exec(sqlstr, pc.PhoneDisplayName, pc.PhoneFamilyName, pc.PhoneNumber, pc.PhoneNormalizedNumber, pc.PhoneContactRowId, pc.UserId, pc.DeviceUuidId, pc.CreatedTime, pc.UpdatedTime, pc.Id)
 
+	XOLogErr(err)
 	OnPhoneContact_AfterUpdate(pc)
 
 	return err
@@ -170,6 +175,7 @@ func (pc *PhoneContact) Delete(db XODB) error {
 	XOLog(sqlstr, pc.Id)
 	_, err = db.Exec(sqlstr, pc.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2858,6 +2864,7 @@ func (u *__PhoneContact_Selector) GetRow(db *sqlx.DB) (*PhoneContact, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2879,6 +2886,7 @@ func (u *__PhoneContact_Selector) GetRows(db *sqlx.DB) ([]*PhoneContact, error) 
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2907,6 +2915,7 @@ func (u *__PhoneContact_Selector) GetRows2(db *sqlx.DB) ([]PhoneContact, error) 
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2940,6 +2949,7 @@ func (u *__PhoneContact_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -2957,6 +2967,7 @@ func (u *__PhoneContact_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) 
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2974,6 +2985,7 @@ func (u *__PhoneContact_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2991,6 +3003,7 @@ func (u *__PhoneContact_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -3024,11 +3037,13 @@ func (u *__PhoneContact_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -3054,12 +3069,14 @@ func (d *__PhoneContact_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -3099,6 +3116,7 @@ func MassInsert_PhoneContact(rows []PhoneContact, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -3137,6 +3155,7 @@ func MassReplace_PhoneContact(rows []PhoneContact, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -3185,6 +3204,7 @@ func PhoneContactByPhoneContactRowIdUserId(db XODB, phoneContactRowId int, userI
 
 	err = db.QueryRow(sqlstr, phoneContactRowId, userId).Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -3209,6 +3229,7 @@ func PhoneContactsByPhoneNormalizedNumber(db XODB, phoneNormalizedNumber string)
 	XOLog(sqlstr, phoneNormalizedNumber)
 	q, err := db.Query(sqlstr, phoneNormalizedNumber)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 	defer q.Close()
@@ -3223,6 +3244,7 @@ func PhoneContactsByPhoneNormalizedNumber(db XODB, phoneNormalizedNumber string)
 		// scan
 		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
 		if err != nil {
+			XOLogErr(err)
 			return nil, err
 		}
 
@@ -3250,6 +3272,7 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 	XOLog(sqlstr, phoneNumber)
 	q, err := db.Query(sqlstr, phoneNumber)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 	defer q.Close()
@@ -3264,6 +3287,50 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 		// scan
 		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
 		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &pc)
+	}
+
+	OnPhoneContact_LoadMany(res)
+
+	return res, nil
+}
+
+// PhoneContactsByUserId retrieves a row from 'ms.phone_contacts' as a PhoneContact.
+//
+// Generated from index 'UserId'.
+func PhoneContactsByUserId(db XODB, userId int) ([]*PhoneContact, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime ` +
+		`FROM ms.phone_contacts ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*PhoneContact{}
+	for q.Next() {
+		pc := PhoneContact{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
+		if err != nil {
+			XOLogErr(err)
 			return nil, err
 		}
 
@@ -3291,6 +3358,7 @@ func PhoneContactsByUserIdCreatedTime(db XODB, userId int, createdTime int) ([]*
 	XOLog(sqlstr, userId, createdTime)
 	q, err := db.Query(sqlstr, userId, createdTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 	defer q.Close()
@@ -3305,6 +3373,7 @@ func PhoneContactsByUserIdCreatedTime(db XODB, userId int, createdTime int) ([]*
 		// scan
 		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
 		if err != nil {
+			XOLogErr(err)
 			return nil, err
 		}
 
@@ -3336,6 +3405,7 @@ func PhoneContactById(db XODB, id int) (*PhoneContact, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

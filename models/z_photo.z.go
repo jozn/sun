@@ -23,17 +23,19 @@ type Photo__ struct {
 	ImageTypeId int     `json:"ImageTypeId"` // ImageTypeId -
 	Title       string  `json:"Title"`       // Title -
 	Src         string  `json:"Src"`         // Src -
+	PathSrc     string  `json:"PathSrc"`     // PathSrc -
+	BucketId    int     `json:"BucketId"`    // BucketId -
 	Width       int     `json:"Width"`       // Width -
 	Height      int     `json:"Height"`      // Height -
 	Ratio       float32 `json:"Ratio"`       // Ratio -
 	HashMd5     string  `json:"HashMd5"`     // HashMd5 -
+	CreatedTime int     `json:"CreatedTime"` // CreatedTime -
 	W1080       int     `json:"W1080"`       // W1080 -
 	W720        int     `json:"W720"`        // W720 -
 	W480        int     `json:"W480"`        // W480 -
 	W320        int     `json:"W320"`        // W320 -
 	W160        int     `json:"W160"`        // W160 -
 	W80         int     `json:"W80"`         // W80 -
-	CreatedTime int     `json:"CreatedTime"` // CreatedTime -
 
 	// xo fields
 	_exists, _deleted bool
@@ -60,21 +62,23 @@ func (p *Photo) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.photo (` +
-		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime` +
+		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime)
-	res, err := db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime)
+	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
+	res, err := db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -93,21 +97,23 @@ func (p *Photo) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.photo (` +
-		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime` +
+		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime)
-	res, err := db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime)
+	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
+	res, err := db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -136,13 +142,14 @@ func (p *Photo) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.photo SET ` +
-		`UserId = ?, PostId = ?, AlbumId = ?, ImageTypeId = ?, Title = ?, Src = ?, Width = ?, Height = ?, Ratio = ?, HashMd5 = ?, W1080 = ?, W720 = ?, W480 = ?, W320 = ?, W160 = ?, W80 = ?, CreatedTime = ?` +
+		`UserId = ?, PostId = ?, AlbumId = ?, ImageTypeId = ?, Title = ?, Src = ?, PathSrc = ?, BucketId = ?, Width = ?, Height = ?, Ratio = ?, HashMd5 = ?, CreatedTime = ?, W1080 = ?, W720 = ?, W480 = ?, W320 = ?, W160 = ?, W80 = ?` +
 		` WHERE PhotoId = ?`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime, p.PhotoId)
-	_, err = db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime, p.PhotoId)
+	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.PhotoId)
+	_, err = db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.PhotoId)
 
+	XOLogErr(err)
 	OnPhoto_AfterUpdate(p)
 
 	return err
@@ -178,6 +185,7 @@ func (p *Photo) Delete(db XODB) error {
 	XOLog(sqlstr, p.PhotoId)
 	_, err = db.Exec(sqlstr, p.PhotoId)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -700,6 +708,98 @@ func (d *__Photo_Deleter) ImageTypeId_GE(val int) *__Photo_Deleter {
 	return d
 }
 
+func (u *__Photo_Deleter) BucketId_In(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) BucketId_NotIn(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Deleter) BucketId_EQ(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) BucketId_NotEQ(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) BucketId_LT(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) BucketId_LE(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) BucketId_GT(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) BucketId_GE(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Photo_Deleter) Width_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -879,6 +979,98 @@ func (d *__Photo_Deleter) Height_GE(val int) *__Photo_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Height >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Photo_Deleter) CreatedTime_In(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) CreatedTime_NotIn(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Deleter) CreatedTime_EQ(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) CreatedTime_NotEQ(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) CreatedTime_LT(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) CreatedTime_LE(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) CreatedTime_GT(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) CreatedTime_GE(val int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1436,98 +1628,6 @@ func (d *__Photo_Deleter) W80_GE(val int) *__Photo_Deleter {
 	return d
 }
 
-func (u *__Photo_Deleter) CreatedTime_In(ins []int) *__Photo_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Photo_Deleter) CreatedTime_NotIn(ins []int) *__Photo_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Photo_Deleter) CreatedTime_EQ(val int) *__Photo_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Deleter) CreatedTime_NotEQ(val int) *__Photo_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Deleter) CreatedTime_LT(val int) *__Photo_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Deleter) CreatedTime_LE(val int) *__Photo_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Deleter) CreatedTime_GT(val int) *__Photo_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Deleter) CreatedTime_GE(val int) *__Photo_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 ////////ints
 func (u *__Photo_Updater) Or() *__Photo_Updater {
 	u.whereSep = " OR "
@@ -1994,6 +2094,98 @@ func (d *__Photo_Updater) ImageTypeId_GE(val int) *__Photo_Updater {
 	return d
 }
 
+func (u *__Photo_Updater) BucketId_In(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) BucketId_NotIn(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Updater) BucketId_EQ(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) BucketId_NotEQ(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) BucketId_LT(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) BucketId_LE(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) BucketId_GT(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) BucketId_GE(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Photo_Updater) Width_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2173,6 +2365,98 @@ func (d *__Photo_Updater) Height_GE(val int) *__Photo_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Height >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Photo_Updater) CreatedTime_In(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) CreatedTime_NotIn(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Updater) CreatedTime_EQ(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) CreatedTime_NotEQ(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) CreatedTime_LT(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) CreatedTime_LE(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) CreatedTime_GT(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) CreatedTime_GE(val int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2730,98 +3014,6 @@ func (d *__Photo_Updater) W80_GE(val int) *__Photo_Updater {
 	return d
 }
 
-func (u *__Photo_Updater) CreatedTime_In(ins []int) *__Photo_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Photo_Updater) CreatedTime_NotIn(ins []int) *__Photo_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Photo_Updater) CreatedTime_EQ(val int) *__Photo_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Updater) CreatedTime_NotEQ(val int) *__Photo_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Updater) CreatedTime_LT(val int) *__Photo_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Updater) CreatedTime_LE(val int) *__Photo_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Updater) CreatedTime_GT(val int) *__Photo_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Updater) CreatedTime_GE(val int) *__Photo_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 ////////ints
 func (u *__Photo_Selector) Or() *__Photo_Selector {
 	u.whereSep = " OR "
@@ -3288,6 +3480,98 @@ func (d *__Photo_Selector) ImageTypeId_GE(val int) *__Photo_Selector {
 	return d
 }
 
+func (u *__Photo_Selector) BucketId_In(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) BucketId_NotIn(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Selector) BucketId_EQ(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) BucketId_NotEQ(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) BucketId_LT(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) BucketId_LE(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) BucketId_GT(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) BucketId_GE(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Photo_Selector) Width_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3467,6 +3751,98 @@ func (d *__Photo_Selector) Height_GE(val int) *__Photo_Selector {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Height >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Photo_Selector) CreatedTime_In(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) CreatedTime_NotIn(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Selector) CreatedTime_EQ(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) CreatedTime_NotEQ(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) CreatedTime_LT(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) CreatedTime_LE(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) CreatedTime_GT(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) CreatedTime_GE(val int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4024,98 +4400,6 @@ func (d *__Photo_Selector) W80_GE(val int) *__Photo_Selector {
 	return d
 }
 
-func (u *__Photo_Selector) CreatedTime_In(ins []int) *__Photo_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Photo_Selector) CreatedTime_NotIn(ins []int) *__Photo_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Photo_Selector) CreatedTime_EQ(val int) *__Photo_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Selector) CreatedTime_NotEQ(val int) *__Photo_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Selector) CreatedTime_LT(val int) *__Photo_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Selector) CreatedTime_LE(val int) *__Photo_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Selector) CreatedTime_GT(val int) *__Photo_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Photo_Selector) CreatedTime_GE(val int) *__Photo_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 ///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
 
 ////////ints
@@ -4213,6 +4497,55 @@ func (d *__Photo_Deleter) Src_EQ(val string) *__Photo_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Src = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Photo_Deleter) PathSrc_In(ins []string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PathSrc IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) PathSrc_NotIn(ins []string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PathSrc NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Photo_Deleter) PathSrc_Like(val string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PathSrc LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Deleter) PathSrc_EQ(val string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PathSrc = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4367,6 +4700,55 @@ func (d *__Photo_Updater) Src_EQ(val string) *__Photo_Updater {
 	return d
 }
 
+func (u *__Photo_Updater) PathSrc_In(ins []string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PathSrc IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) PathSrc_NotIn(ins []string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PathSrc NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Photo_Updater) PathSrc_Like(val string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PathSrc LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Updater) PathSrc_EQ(val string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PathSrc = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Photo_Updater) HashMd5_In(ins []string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4511,6 +4893,55 @@ func (d *__Photo_Selector) Src_EQ(val string) *__Photo_Selector {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Src = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Photo_Selector) PathSrc_In(ins []string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PathSrc IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) PathSrc_NotIn(ins []string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PathSrc NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Photo_Selector) PathSrc_Like(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PathSrc LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Selector) PathSrc_EQ(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PathSrc = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4692,6 +5123,35 @@ func (u *__Photo_Updater) Src(newVal string) *__Photo_Updater {
 
 //ints
 
+//string
+func (u *__Photo_Updater) PathSrc(newVal string) *__Photo_Updater {
+	u.updates[" PathSrc = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__Photo_Updater) BucketId(newVal int) *__Photo_Updater {
+	u.updates[" BucketId = ? "] = newVal
+	return u
+}
+
+func (u *__Photo_Updater) BucketId_Increment(count int) *__Photo_Updater {
+	if count > 0 {
+		u.updates[" BucketId = BucketId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" BucketId = BucketId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
 func (u *__Photo_Updater) Width(newVal int) *__Photo_Updater {
 	u.updates[" Width = ? "] = newVal
 	return u
@@ -4743,6 +5203,27 @@ func (u *__Photo_Updater) HashMd5(newVal string) *__Photo_Updater {
 	u.updates[" HashMd5 = ? "] = newVal
 	return u
 }
+
+//ints
+
+func (u *__Photo_Updater) CreatedTime(newVal int) *__Photo_Updater {
+	u.updates[" CreatedTime = ? "] = newVal
+	return u
+}
+
+func (u *__Photo_Updater) CreatedTime_Increment(count int) *__Photo_Updater {
+	if count > 0 {
+		u.updates[" CreatedTime = CreatedTime+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
 
 //ints
 
@@ -4870,27 +5351,6 @@ func (u *__Photo_Updater) W80_Increment(count int) *__Photo_Updater {
 
 //string
 
-//ints
-
-func (u *__Photo_Updater) CreatedTime(newVal int) *__Photo_Updater {
-	u.updates[" CreatedTime = ? "] = newVal
-	return u
-}
-
-func (u *__Photo_Updater) CreatedTime_Increment(count int) *__Photo_Updater {
-	if count > 0 {
-		u.updates[" CreatedTime = CreatedTime+? "] = count
-	}
-
-	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
-	}
-
-	return u
-}
-
-//string
-
 /////////////////////////////////////////////////////////////////////
 /////////////////////// Selector ///////////////////////////////////
 
@@ -5001,6 +5461,36 @@ func (u *__Photo_Selector) Select_Src() *__Photo_Selector {
 	return u
 }
 
+func (u *__Photo_Selector) OrderBy_PathSrc_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY PathSrc DESC "
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_PathSrc_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY PathSrc ASC "
+	return u
+}
+
+func (u *__Photo_Selector) Select_PathSrc() *__Photo_Selector {
+	u.selectCol = "PathSrc"
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_BucketId_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY BucketId DESC "
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_BucketId_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY BucketId ASC "
+	return u
+}
+
+func (u *__Photo_Selector) Select_BucketId() *__Photo_Selector {
+	u.selectCol = "BucketId"
+	return u
+}
+
 func (u *__Photo_Selector) OrderBy_Width_Desc() *__Photo_Selector {
 	u.orderBy = " ORDER BY Width DESC "
 	return u
@@ -5058,6 +5548,21 @@ func (u *__Photo_Selector) OrderBy_HashMd5_Asc() *__Photo_Selector {
 
 func (u *__Photo_Selector) Select_HashMd5() *__Photo_Selector {
 	u.selectCol = "HashMd5"
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_CreatedTime_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY CreatedTime DESC "
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_CreatedTime_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY CreatedTime ASC "
+	return u
+}
+
+func (u *__Photo_Selector) Select_CreatedTime() *__Photo_Selector {
+	u.selectCol = "CreatedTime"
 	return u
 }
 
@@ -5151,21 +5656,6 @@ func (u *__Photo_Selector) Select_W80() *__Photo_Selector {
 	return u
 }
 
-func (u *__Photo_Selector) OrderBy_CreatedTime_Desc() *__Photo_Selector {
-	u.orderBy = " ORDER BY CreatedTime DESC "
-	return u
-}
-
-func (u *__Photo_Selector) OrderBy_CreatedTime_Asc() *__Photo_Selector {
-	u.orderBy = " ORDER BY CreatedTime ASC "
-	return u
-}
-
-func (u *__Photo_Selector) Select_CreatedTime() *__Photo_Selector {
-	u.selectCol = "CreatedTime"
-	return u
-}
-
 func (u *__Photo_Selector) Limit(num int) *__Photo_Selector {
 	u.limit = num
 	return u
@@ -5211,6 +5701,7 @@ func (u *__Photo_Selector) GetRow(db *sqlx.DB) (*Photo, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -5232,6 +5723,7 @@ func (u *__Photo_Selector) GetRows(db *sqlx.DB) ([]*Photo, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -5260,6 +5752,7 @@ func (u *__Photo_Selector) GetRows2(db *sqlx.DB) ([]Photo, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -5293,6 +5786,7 @@ func (u *__Photo_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -5310,6 +5804,7 @@ func (u *__Photo_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -5327,6 +5822,7 @@ func (u *__Photo_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -5344,6 +5840,7 @@ func (u *__Photo_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -5377,11 +5874,13 @@ func (u *__Photo_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -5407,12 +5906,14 @@ func (d *__Photo_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -5423,12 +5924,12 @@ func (d *__Photo_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_Photo(rows []Photo, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.photo (" +
-		"UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime" +
+		"UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80" +
 		") VALUES " + insVals
 
 	// run query
@@ -5442,17 +5943,19 @@ func MassInsert_Photo(rows []Photo, db XODB) error {
 		vals = append(vals, row.ImageTypeId)
 		vals = append(vals, row.Title)
 		vals = append(vals, row.Src)
+		vals = append(vals, row.PathSrc)
+		vals = append(vals, row.BucketId)
 		vals = append(vals, row.Width)
 		vals = append(vals, row.Height)
 		vals = append(vals, row.Ratio)
 		vals = append(vals, row.HashMd5)
+		vals = append(vals, row.CreatedTime)
 		vals = append(vals, row.W1080)
 		vals = append(vals, row.W720)
 		vals = append(vals, row.W480)
 		vals = append(vals, row.W320)
 		vals = append(vals, row.W160)
 		vals = append(vals, row.W80)
-		vals = append(vals, row.CreatedTime)
 
 	}
 
@@ -5460,6 +5963,7 @@ func MassInsert_Photo(rows []Photo, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -5469,12 +5973,12 @@ func MassInsert_Photo(rows []Photo, db XODB) error {
 func MassReplace_Photo(rows []Photo, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.photo (" +
-		"UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime" +
+		"UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80" +
 		") VALUES " + insVals
 
 	// run query
@@ -5488,17 +5992,19 @@ func MassReplace_Photo(rows []Photo, db XODB) error {
 		vals = append(vals, row.ImageTypeId)
 		vals = append(vals, row.Title)
 		vals = append(vals, row.Src)
+		vals = append(vals, row.PathSrc)
+		vals = append(vals, row.BucketId)
 		vals = append(vals, row.Width)
 		vals = append(vals, row.Height)
 		vals = append(vals, row.Ratio)
 		vals = append(vals, row.HashMd5)
+		vals = append(vals, row.CreatedTime)
 		vals = append(vals, row.W1080)
 		vals = append(vals, row.W720)
 		vals = append(vals, row.W480)
 		vals = append(vals, row.W320)
 		vals = append(vals, row.W160)
 		vals = append(vals, row.W80)
-		vals = append(vals, row.CreatedTime)
 
 	}
 
@@ -5506,6 +6012,7 @@ func MassReplace_Photo(rows []Photo, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -5550,46 +6057,9 @@ func MassReplace_Photo(rows []Photo, db XODB) error {
 
 //
 
-// PhotosByPostId retrieves a row from 'ms.photo' as a Photo.
 //
-// Generated from index 'PostId'.
-func PhotosByPostId(db XODB, postId int) ([]*Photo, error) {
-	var err error
 
-	// sql query
-	const sqlstr = `SELECT ` +
-		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime ` +
-		`FROM ms.photo ` +
-		`WHERE PostId = ?`
-
-	// run query
-	XOLog(sqlstr, postId)
-	q, err := db.Query(sqlstr, postId)
-	if err != nil {
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Photo{}
-	for q.Next() {
-		p := Photo{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80, &p.CreatedTime)
-		if err != nil {
-			return nil, err
-		}
-
-		res = append(res, &p)
-	}
-
-	OnPhoto_LoadMany(res)
-
-	return res, nil
-}
+//
 
 // PhotoByPhotoId retrieves a row from 'ms.photo' as a Photo.
 //
@@ -5599,7 +6069,7 @@ func PhotoByPhotoId(db XODB, photoId int) (*Photo, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime ` +
+		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
 		`FROM ms.photo ` +
 		`WHERE PhotoId = ?`
 
@@ -5609,8 +6079,9 @@ func PhotoByPhotoId(db XODB, photoId int) (*Photo, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, photoId).Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80, &p.CreatedTime)
+	err = db.QueryRow(sqlstr, photoId).Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

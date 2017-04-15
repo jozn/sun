@@ -18,8 +18,9 @@ type Activity struct {
 // Bucket 'ms.bucket'.
 type Bucket struct {
 	BucketId            int
+	BucketName          string
 	Server1Id           int
-	ServerId            int
+	Server2Id           int
 	BackupServerId      int
 	ContentObjectTypeId int
 	ContentObjectCount  int
@@ -199,17 +200,19 @@ type Photo struct {
 	ImageTypeId int
 	Title       string
 	Src         string
+	PathSrc     string
+	BucketId    int
 	Width       int
 	Height      int
 	Ratio       float32
 	HashMd5     string
+	CreatedTime int
 	W1080       int
 	W720        int
 	W480        int
 	W320        int
 	W160        int
 	W80         int
-	CreatedTime int
 
 	_exists, _deleted bool
 }

@@ -59,12 +59,14 @@ func (fl *FollowingList) Insert(db XODB) error {
 	XOLog(sqlstr, fl.Id, fl.ListType, fl.Name, fl.Count, fl.IsAuto, fl.IsPimiry, fl.CreatedTime)
 	res, err := db.Exec(sqlstr, fl.Id, fl.ListType, fl.Name, fl.Count, fl.IsAuto, fl.IsPimiry, fl.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -92,12 +94,14 @@ func (fl *FollowingList) Replace(db XODB) error {
 	XOLog(sqlstr, fl.Id, fl.ListType, fl.Name, fl.Count, fl.IsAuto, fl.IsPimiry, fl.CreatedTime)
 	res, err := db.Exec(sqlstr, fl.Id, fl.ListType, fl.Name, fl.Count, fl.IsAuto, fl.IsPimiry, fl.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -133,6 +137,7 @@ func (fl *FollowingList) Update(db XODB) error {
 	XOLog(sqlstr, fl.Id, fl.ListType, fl.Name, fl.Count, fl.IsAuto, fl.IsPimiry, fl.CreatedTime, fl.UserId)
 	_, err = db.Exec(sqlstr, fl.Id, fl.ListType, fl.Name, fl.Count, fl.IsAuto, fl.IsPimiry, fl.CreatedTime, fl.UserId)
 
+	XOLogErr(err)
 	OnFollowingList_AfterUpdate(fl)
 
 	return err
@@ -168,6 +173,7 @@ func (fl *FollowingList) Delete(db XODB) error {
 	XOLog(sqlstr, fl.UserId)
 	_, err = db.Exec(sqlstr, fl.UserId)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2658,6 +2664,7 @@ func (u *__FollowingList_Selector) GetRow(db *sqlx.DB) (*FollowingList, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2679,6 +2686,7 @@ func (u *__FollowingList_Selector) GetRows(db *sqlx.DB) ([]*FollowingList, error
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2707,6 +2715,7 @@ func (u *__FollowingList_Selector) GetRows2(db *sqlx.DB) ([]FollowingList, error
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2740,6 +2749,7 @@ func (u *__FollowingList_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -2757,6 +2767,7 @@ func (u *__FollowingList_Selector) GetStringSlice(db *sqlx.DB) ([]string, error)
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2774,6 +2785,7 @@ func (u *__FollowingList_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2791,6 +2803,7 @@ func (u *__FollowingList_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2824,11 +2837,13 @@ func (u *__FollowingList_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2854,12 +2869,14 @@ func (d *__FollowingList_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2897,6 +2914,7 @@ func MassInsert_FollowingList(rows []FollowingList, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2933,6 +2951,7 @@ func MassReplace_FollowingList(rows []FollowingList, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2977,6 +2996,7 @@ func FollowingListByUserId(db XODB, userId int) (*FollowingList, error) {
 
 	err = db.QueryRow(sqlstr, userId).Scan(&fl.Id, &fl.UserId, &fl.ListType, &fl.Name, &fl.Count, &fl.IsAuto, &fl.IsPimiry, &fl.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

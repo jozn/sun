@@ -58,12 +58,14 @@ func (m *Message) Insert(db XODB) error {
 	XOLog(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
 	res, err := db.Exec(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -91,12 +93,14 @@ func (m *Message) Replace(db XODB) error {
 	XOLog(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
 	res, err := db.Exec(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -132,6 +136,7 @@ func (m *Message) Update(db XODB) error {
 	XOLog(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs, m.Id)
 	_, err = db.Exec(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs, m.Id)
 
+	XOLogErr(err)
 	OnMessage_AfterUpdate(m)
 
 	return err
@@ -167,6 +172,7 @@ func (m *Message) Delete(db XODB) error {
 	XOLog(sqlstr, m.Id)
 	_, err = db.Exec(sqlstr, m.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2061,6 +2067,7 @@ func (u *__Message_Selector) GetRow(db *sqlx.DB) (*Message, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2082,6 +2089,7 @@ func (u *__Message_Selector) GetRows(db *sqlx.DB) ([]*Message, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2110,6 +2118,7 @@ func (u *__Message_Selector) GetRows2(db *sqlx.DB) ([]Message, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2143,6 +2152,7 @@ func (u *__Message_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -2160,6 +2170,7 @@ func (u *__Message_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2177,6 +2188,7 @@ func (u *__Message_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -2194,6 +2206,7 @@ func (u *__Message_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2227,11 +2240,13 @@ func (u *__Message_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2257,12 +2272,14 @@ func (d *__Message_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -2299,6 +2316,7 @@ func MassInsert_Message(rows []Message, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2334,6 +2352,7 @@ func MassReplace_Message(rows []Message, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2356,6 +2375,49 @@ func MassReplace_Message(rows []Message, db XODB) error {
 
 //
 
+// MessagesByToUserId retrieves a row from 'ms.message' as a Message.
+//
+// Generated from index 'ToUserId'.
+func MessagesByToUserId(db XODB, toUserId int) ([]*Message, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
+		`FROM ms.message ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Message{}
+	for q.Next() {
+		m := Message{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &m)
+	}
+
+	OnMessage_LoadMany(res)
+
+	return res, nil
+}
+
 // MessagesByToUserIdTimeMs retrieves a row from 'ms.message' as a Message.
 //
 // Generated from index 'ToUserId_2'.
@@ -2372,6 +2434,7 @@ func MessagesByToUserIdTimeMs(db XODB, toUserId int, timeMs int) ([]*Message, er
 	XOLog(sqlstr, toUserId, timeMs)
 	q, err := db.Query(sqlstr, toUserId, timeMs)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 	defer q.Close()
@@ -2386,6 +2449,7 @@ func MessagesByToUserIdTimeMs(db XODB, toUserId int, timeMs int) ([]*Message, er
 		// scan
 		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
 		if err != nil {
+			XOLogErr(err)
 			return nil, err
 		}
 
@@ -2417,6 +2481,7 @@ func MessageById(db XODB, id int) (*Message, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

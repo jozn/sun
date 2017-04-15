@@ -56,12 +56,14 @@ func (c *Comment) Insert(db XODB) error {
 	XOLog(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime)
 	res, err := db.Exec(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -89,12 +91,14 @@ func (c *Comment) Replace(db XODB) error {
 	XOLog(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime)
 	res, err := db.Exec(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
 	// retrieve id
 	id, err := res.LastInsertId()
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -130,6 +134,7 @@ func (c *Comment) Update(db XODB) error {
 	XOLog(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime, c.Id)
 	_, err = db.Exec(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime, c.Id)
 
+	XOLogErr(err)
 	OnComment_AfterUpdate(c)
 
 	return err
@@ -165,6 +170,7 @@ func (c *Comment) Delete(db XODB) error {
 	XOLog(sqlstr, c.Id)
 	_, err = db.Exec(sqlstr, c.Id)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1719,6 +1725,7 @@ func (u *__Comment_Selector) GetRow(db *sqlx.DB) (*Comment, error) {
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1740,6 +1747,7 @@ func (u *__Comment_Selector) GetRows(db *sqlx.DB) ([]*Comment, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1768,6 +1776,7 @@ func (u *__Comment_Selector) GetRows2(db *sqlx.DB) ([]Comment, error) {
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1801,6 +1810,7 @@ func (u *__Comment_Selector) GetString(db *sqlx.DB) (string, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return "", err
 	}
 
@@ -1818,6 +1828,7 @@ func (u *__Comment_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1835,6 +1846,7 @@ func (u *__Comment_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	//by Sqlx
 	err = db.Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 
@@ -1852,6 +1864,7 @@ func (u *__Comment_Selector) GetInt(db *sqlx.DB) (int, error) {
 	//by Sqlx
 	err = db.Get(&res, sqlstr, whereArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1885,11 +1898,13 @@ func (u *__Comment_Updater) Update(db XODB) (int, error) {
 	XOLog(sqlstr, allArgs)
 	res, err := db.Exec(sqlstr, allArgs...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1915,12 +1930,14 @@ func (d *__Comment_Deleter) Delete(db XODB) (int, error) {
 	XOLog(sqlstr, args)
 	res, err := db.Exec(sqlstr, args...)
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
 	// retrieve id
 	num, err := res.RowsAffected()
 	if err != nil {
+		XOLogErr(err)
 		return 0, err
 	}
 
@@ -1955,6 +1972,7 @@ func MassInsert_Comment(rows []Comment, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -1988,6 +2006,7 @@ func MassReplace_Comment(rows []Comment, db XODB) error {
 
 	_, err = db.Exec(sqlstr, vals...)
 	if err != nil {
+		XOLogErr(err)
 		return err
 	}
 
@@ -2005,6 +2024,49 @@ func MassReplace_Comment(rows []Comment, db XODB) error {
 //
 
 //
+
+// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
+//
+// Generated from index 'PostId'.
+func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, PostId, Text, CreatedTime ` +
+		`FROM ms.comments ` +
+		`WHERE PostId = ?`
+
+	// run query
+	XOLog(sqlstr, postId)
+	q, err := db.Query(sqlstr, postId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Comment{}
+	for q.Next() {
+		c := Comment{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &c)
+	}
+
+	OnComment_LoadMany(res)
+
+	return res, nil
+}
 
 // CommentById retrieves a row from 'ms.comments' as a Comment.
 //
@@ -2026,6 +2088,7 @@ func CommentById(db XODB, id int) (*Comment, error) {
 
 	err = db.QueryRow(sqlstr, id).Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
 	if err != nil {
+		XOLogErr(err)
 		return nil, err
 	}
 

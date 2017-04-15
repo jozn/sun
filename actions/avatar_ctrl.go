@@ -85,12 +85,12 @@ func RemoveAvatarAction(c *Action) {
 }
 
 func RemoveAvatarAction2(c *Action) {
-    /*//user := GetUserById(c.UserId())
-    user := GetU(c.UserId())
-    user.AvatarUrl = ""
-    DbUpdateStruct(&user, "user")
+	/*//user := GetUserById(c.UserId())
+	  user := GetU(c.UserId())
+	  user.AvatarUrl = ""
+	  DbUpdateStruct(&user, "user")
 
-    c.SendJson(user)*/
+	  c.SendJson(user)*/
 }
 
 //Delete all with this file
