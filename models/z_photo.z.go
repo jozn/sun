@@ -12,44 +12,45 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// Post represents a row from 'ms.post'.
+// Photo represents a row from 'ms.photo'.
 
 // Manualy copy this to project
-type Post__ struct {
-	Id             int    `json:"Id"`             // Id -
-	UserId         int    `json:"UserId"`         // UserId -
-	TypeId         int    `json:"TypeId"`         // TypeId -
-	Text           string `json:"Text"`           // Text -
-	FormatedText   string `json:"FormatedText"`   // FormatedText -
-	MediaUrl       string `json:"MediaUrl"`       // MediaUrl -
-	MediaCount     int    `json:"MediaCount"`     // MediaCount -
-	MediaServerId  int    `json:"MediaServerId"`  // MediaServerId -
-	Width          int    `json:"Width"`          // Width -
-	Height         int    `json:"Height"`         // Height -
-	SharedTo       int    `json:"SharedTo"`       // SharedTo -
-	DisableComment int    `json:"DisableComment"` // DisableComment -
-	HasTag         int    `json:"HasTag"`         // HasTag -
-	LikesCount     int    `json:"LikesCount"`     // LikesCount -
-	CommentsCount  int    `json:"CommentsCount"`  // CommentsCount -
-	EditedTime     int    `json:"EditedTime"`     // EditedTime -
-	CreatedTime    int    `json:"CreatedTime"`    // CreatedTime -
+type Photo__ struct {
+	PhotoId     int     `json:"PhotoId"`     // PhotoId -
+	UserId      int     `json:"UserId"`      // UserId -
+	PostId      int     `json:"PostId"`      // PostId -
+	AlbumId     int     `json:"AlbumId"`     // AlbumId -
+	ImageTypeId int     `json:"ImageTypeId"` // ImageTypeId -
+	Title       string  `json:"Title"`       // Title -
+	Src         string  `json:"Src"`         // Src -
+	Width       int     `json:"Width"`       // Width -
+	Height      int     `json:"Height"`      // Height -
+	Ratio       float32 `json:"Ratio"`       // Ratio -
+	HashMd5     string  `json:"HashMd5"`     // HashMd5 -
+	W1080       int     `json:"W1080"`       // W1080 -
+	W720        int     `json:"W720"`        // W720 -
+	W480        int     `json:"W480"`        // W480 -
+	W320        int     `json:"W320"`        // W320 -
+	W160        int     `json:"W160"`        // W160 -
+	W80         int     `json:"W80"`         // W80 -
+	CreatedTime int     `json:"CreatedTime"` // CreatedTime -
 
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists determines if the Post exists in the database.
-func (p *Post) Exists() bool {
+// Exists determines if the Photo exists in the database.
+func (p *Photo) Exists() bool {
 	return p._exists
 }
 
-// Deleted provides information if the Post has been deleted from the database.
-func (p *Post) Deleted() bool {
+// Deleted provides information if the Photo has been deleted from the database.
+func (p *Photo) Deleted() bool {
 	return p._deleted
 }
 
-// Insert inserts the Post to the database.
-func (p *Post) Insert(db XODB) error {
+// Insert inserts the Photo to the database.
+func (p *Photo) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
@@ -58,15 +59,15 @@ func (p *Post) Insert(db XODB) error {
 	}
 
 	// sql insert query, primary key provided by autoincrement
-	const sqlstr = `INSERT INTO ms.post (` +
-		`UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime` +
+	const sqlstr = `INSERT INTO ms.photo (` +
+		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
-	res, err := db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
+	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime)
+	res, err := db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime)
 	if err != nil {
 		return err
 	}
@@ -78,28 +79,28 @@ func (p *Post) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	p.Id = int(id)
+	p.PhotoId = int(id)
 	p._exists = true
 
-	OnPost_AfterInsert(p)
+	OnPhoto_AfterInsert(p)
 
 	return nil
 }
 
-// Insert inserts the Post to the database.
-func (p *Post) Replace(db XODB) error {
+// Insert inserts the Photo to the database.
+func (p *Photo) Replace(db XODB) error {
 	var err error
 
 	// sql query
-	const sqlstr = `REPLACE INTO ms.post (` +
-		`UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime` +
+	const sqlstr = `REPLACE INTO ms.photo (` +
+		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
-	res, err := db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
+	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime)
+	res, err := db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime)
 	if err != nil {
 		return err
 	}
@@ -111,16 +112,16 @@ func (p *Post) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	p.Id = int(id)
+	p.PhotoId = int(id)
 	p._exists = true
 
-	OnPost_AfterInsert(p)
+	OnPhoto_AfterInsert(p)
 
 	return nil
 }
 
-// Update updates the Post in the database.
-func (p *Post) Update(db XODB) error {
+// Update updates the Photo in the database.
+func (p *Photo) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
@@ -134,21 +135,21 @@ func (p *Post) Update(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `UPDATE ms.post SET ` +
-		`UserId = ?, TypeId = ?, Text = ?, FormatedText = ?, MediaUrl = ?, MediaCount = ?, MediaServerId = ?, Width = ?, Height = ?, SharedTo = ?, DisableComment = ?, HasTag = ?, LikesCount = ?, CommentsCount = ?, EditedTime = ?, CreatedTime = ?` +
-		` WHERE Id = ?`
+	const sqlstr = `UPDATE ms.photo SET ` +
+		`UserId = ?, PostId = ?, AlbumId = ?, ImageTypeId = ?, Title = ?, Src = ?, Width = ?, Height = ?, Ratio = ?, HashMd5 = ?, W1080 = ?, W720 = ?, W480 = ?, W320 = ?, W160 = ?, W80 = ?, CreatedTime = ?` +
+		` WHERE PhotoId = ?`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime, p.Id)
-	_, err = db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime, p.Id)
+	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime, p.PhotoId)
+	_, err = db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.Width, p.Height, p.Ratio, p.HashMd5, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.CreatedTime, p.PhotoId)
 
-	OnPost_AfterUpdate(p)
+	OnPhoto_AfterUpdate(p)
 
 	return err
 }
 
-// Save saves the Post to the database.
-func (p *Post) Save(db XODB) error {
+// Save saves the Photo to the database.
+func (p *Photo) Save(db XODB) error {
 	if p.Exists() {
 		return p.Update(db)
 	}
@@ -156,8 +157,8 @@ func (p *Post) Save(db XODB) error {
 	return p.Replace(db)
 }
 
-// Delete deletes the Post from the database.
-func (p *Post) Delete(db XODB) error {
+// Delete deletes the Photo from the database.
+func (p *Photo) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
@@ -171,11 +172,11 @@ func (p *Post) Delete(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.post WHERE Id = ?`
+	const sqlstr = `DELETE FROM ms.photo WHERE PhotoId = ?`
 
 	// run query
-	XOLog(sqlstr, p.Id)
-	_, err = db.Exec(sqlstr, p.Id)
+	XOLog(sqlstr, p.PhotoId)
+	_, err = db.Exec(sqlstr, p.PhotoId)
 	if err != nil {
 		return err
 	}
@@ -183,7 +184,7 @@ func (p *Post) Delete(db XODB) error {
 	// set deleted
 	p._deleted = true
 
-	OnPost_AfterDelete(p)
+	OnPhoto_AfterDelete(p)
 
 	return nil
 }
@@ -194,18 +195,18 @@ func (p *Post) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __Post_Deleter struct {
+type __Photo_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __Post_Updater struct {
+type __Photo_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __Post_Selector struct {
+type __Photo_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -214,19 +215,19 @@ type __Post_Selector struct {
 	offset    int
 }
 
-func NewPost_Deleter() *__Post_Deleter {
-	d := __Post_Deleter{whereSep: " AND "}
+func NewPhoto_Deleter() *__Photo_Deleter {
+	d := __Photo_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewPost_Updater() *__Post_Updater {
-	u := __Post_Updater{whereSep: " AND "}
+func NewPhoto_Updater() *__Photo_Updater {
+	u := __Photo_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewPost_Selector() *__Post_Selector {
-	u := __Post_Selector{whereSep: " AND ", selectCol: "*"}
+func NewPhoto_Selector() *__Photo_Selector {
+	u := __Photo_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -234,104 +235,104 @@ func NewPost_Selector() *__Post_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Post_Deleter) Or() *__Post_Deleter {
+func (u *__Photo_Deleter) Or() *__Photo_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Post_Deleter) Id_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) PhotoId_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PhotoId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) Id_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) PhotoId_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PhotoId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) Id_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PhotoId_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id = ? "
+	w.condition = " PhotoId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) Id_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PhotoId_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id != ? "
+	w.condition = " PhotoId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) Id_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PhotoId_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id < ? "
+	w.condition = " PhotoId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) Id_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PhotoId_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id <= ? "
+	w.condition = " PhotoId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) Id_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PhotoId_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id > ? "
+	w.condition = " PhotoId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) Id_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PhotoId_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id >= ? "
+	w.condition = " PhotoId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) UserId_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) UserId_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -344,7 +345,7 @@ func (u *__Post_Deleter) UserId_In(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (u *__Post_Deleter) UserId_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) UserId_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -357,7 +358,7 @@ func (u *__Post_Deleter) UserId_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) UserId_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) UserId_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -368,7 +369,7 @@ func (d *__Post_Deleter) UserId_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) UserId_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) UserId_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -379,7 +380,7 @@ func (d *__Post_Deleter) UserId_NotEQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) UserId_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) UserId_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -390,7 +391,7 @@ func (d *__Post_Deleter) UserId_LT(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) UserId_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) UserId_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -401,7 +402,7 @@ func (d *__Post_Deleter) UserId_LE(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) UserId_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) UserId_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -412,7 +413,7 @@ func (d *__Post_Deleter) UserId_GT(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) UserId_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) UserId_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -423,283 +424,283 @@ func (d *__Post_Deleter) UserId_GE(val int) *__Post_Deleter {
 	return d
 }
 
-func (u *__Post_Deleter) TypeId_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) PostId_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) TypeId_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) PostId_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PostId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) TypeId_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PostId_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId = ? "
+	w.condition = " PostId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) TypeId_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PostId_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId != ? "
+	w.condition = " PostId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) TypeId_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PostId_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId < ? "
+	w.condition = " PostId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) TypeId_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PostId_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId <= ? "
+	w.condition = " PostId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) TypeId_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PostId_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId > ? "
+	w.condition = " PostId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) TypeId_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) PostId_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId >= ? "
+	w.condition = " PostId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) MediaCount_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) AlbumId_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AlbumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) MediaCount_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) AlbumId_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaCount NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AlbumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) MediaCount_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) AlbumId_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount = ? "
+	w.condition = " AlbumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) MediaCount_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) AlbumId_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount != ? "
+	w.condition = " AlbumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) MediaCount_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) AlbumId_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount < ? "
+	w.condition = " AlbumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) MediaCount_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) AlbumId_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount <= ? "
+	w.condition = " AlbumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) MediaCount_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) AlbumId_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount > ? "
+	w.condition = " AlbumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) MediaCount_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) AlbumId_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount >= ? "
+	w.condition = " AlbumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) MediaServerId_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) ImageTypeId_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ImageTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) MediaServerId_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) ImageTypeId_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ImageTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) MediaServerId_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) ImageTypeId_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId = ? "
+	w.condition = " ImageTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) MediaServerId_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) ImageTypeId_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId != ? "
+	w.condition = " ImageTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) MediaServerId_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) ImageTypeId_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId < ? "
+	w.condition = " ImageTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) MediaServerId_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) ImageTypeId_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId <= ? "
+	w.condition = " ImageTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) MediaServerId_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) ImageTypeId_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId > ? "
+	w.condition = " ImageTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) MediaServerId_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) ImageTypeId_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId >= ? "
+	w.condition = " ImageTypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) Width_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) Width_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -712,7 +713,7 @@ func (u *__Post_Deleter) Width_In(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (u *__Post_Deleter) Width_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) Width_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -725,7 +726,7 @@ func (u *__Post_Deleter) Width_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) Width_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Width_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -736,7 +737,7 @@ func (d *__Post_Deleter) Width_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Width_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Width_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -747,7 +748,7 @@ func (d *__Post_Deleter) Width_NotEQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Width_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Width_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -758,7 +759,7 @@ func (d *__Post_Deleter) Width_LT(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Width_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Width_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -769,7 +770,7 @@ func (d *__Post_Deleter) Width_LE(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Width_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Width_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -780,7 +781,7 @@ func (d *__Post_Deleter) Width_GT(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Width_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Width_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -791,7 +792,7 @@ func (d *__Post_Deleter) Width_GE(val int) *__Post_Deleter {
 	return d
 }
 
-func (u *__Post_Deleter) Height_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) Height_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -804,7 +805,7 @@ func (u *__Post_Deleter) Height_In(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (u *__Post_Deleter) Height_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) Height_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -817,7 +818,7 @@ func (u *__Post_Deleter) Height_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) Height_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Height_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -828,7 +829,7 @@ func (d *__Post_Deleter) Height_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Height_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Height_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -839,7 +840,7 @@ func (d *__Post_Deleter) Height_NotEQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Height_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Height_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -850,7 +851,7 @@ func (d *__Post_Deleter) Height_LT(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Height_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Height_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -861,7 +862,7 @@ func (d *__Post_Deleter) Height_LE(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Height_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Height_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -872,7 +873,7 @@ func (d *__Post_Deleter) Height_GT(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Height_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) Height_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -883,559 +884,559 @@ func (d *__Post_Deleter) Height_GE(val int) *__Post_Deleter {
 	return d
 }
 
-func (u *__Post_Deleter) SharedTo_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W1080_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SharedTo IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W1080 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) SharedTo_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W1080_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SharedTo NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W1080 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) SharedTo_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W1080_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo = ? "
+	w.condition = " W1080 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) SharedTo_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W1080_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo != ? "
+	w.condition = " W1080 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) SharedTo_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W1080_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo < ? "
+	w.condition = " W1080 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) SharedTo_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W1080_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo <= ? "
+	w.condition = " W1080 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) SharedTo_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W1080_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo > ? "
+	w.condition = " W1080 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) SharedTo_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W1080_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo >= ? "
+	w.condition = " W1080 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) DisableComment_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W720_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DisableComment IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W720 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) DisableComment_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W720_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DisableComment NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W720 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) DisableComment_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W720_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment = ? "
+	w.condition = " W720 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) DisableComment_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W720_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment != ? "
+	w.condition = " W720 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) DisableComment_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W720_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment < ? "
+	w.condition = " W720 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) DisableComment_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W720_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment <= ? "
+	w.condition = " W720 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) DisableComment_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W720_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment > ? "
+	w.condition = " W720 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) DisableComment_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W720_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment >= ? "
+	w.condition = " W720 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) HasTag_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W480_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " HasTag IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W480 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) HasTag_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W480_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " HasTag NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W480 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) HasTag_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W480_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag = ? "
+	w.condition = " W480 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) HasTag_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W480_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag != ? "
+	w.condition = " W480 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) HasTag_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W480_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag < ? "
+	w.condition = " W480 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) HasTag_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W480_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag <= ? "
+	w.condition = " W480 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) HasTag_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W480_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag > ? "
+	w.condition = " W480 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) HasTag_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W480_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag >= ? "
+	w.condition = " W480 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) LikesCount_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W320_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LikesCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W320 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) LikesCount_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W320_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LikesCount NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W320 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) LikesCount_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W320_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount = ? "
+	w.condition = " W320 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) LikesCount_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W320_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount != ? "
+	w.condition = " W320 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) LikesCount_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W320_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount < ? "
+	w.condition = " W320 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) LikesCount_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W320_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount <= ? "
+	w.condition = " W320 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) LikesCount_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W320_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount > ? "
+	w.condition = " W320 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) LikesCount_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W320_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount >= ? "
+	w.condition = " W320 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) CommentsCount_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W160_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CommentsCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W160 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) CommentsCount_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W160_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CommentsCount NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W160 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) CommentsCount_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W160_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount = ? "
+	w.condition = " W160 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) CommentsCount_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W160_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount != ? "
+	w.condition = " W160 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) CommentsCount_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W160_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount < ? "
+	w.condition = " W160 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) CommentsCount_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W160_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount <= ? "
+	w.condition = " W160 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) CommentsCount_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W160_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount > ? "
+	w.condition = " W160 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) CommentsCount_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W160_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount >= ? "
+	w.condition = " W160 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) EditedTime_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W80_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " EditedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W80 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) EditedTime_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) W80_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " EditedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W80 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) EditedTime_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W80_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime = ? "
+	w.condition = " W80 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) EditedTime_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W80_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime != ? "
+	w.condition = " W80 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) EditedTime_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W80_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime < ? "
+	w.condition = " W80 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) EditedTime_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W80_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime <= ? "
+	w.condition = " W80 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) EditedTime_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W80_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime > ? "
+	w.condition = " W80 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Deleter) EditedTime_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) W80_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime >= ? "
+	w.condition = " W80 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) CreatedTime_In(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) CreatedTime_In(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1448,7 +1449,7 @@ func (u *__Post_Deleter) CreatedTime_In(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (u *__Post_Deleter) CreatedTime_NotIn(ins []int) *__Post_Deleter {
+func (u *__Photo_Deleter) CreatedTime_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1461,7 +1462,7 @@ func (u *__Post_Deleter) CreatedTime_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) CreatedTime_EQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) CreatedTime_EQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1472,7 +1473,7 @@ func (d *__Post_Deleter) CreatedTime_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) CreatedTime_NotEQ(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) CreatedTime_NotEQ(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1483,7 +1484,7 @@ func (d *__Post_Deleter) CreatedTime_NotEQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) CreatedTime_LT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) CreatedTime_LT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1494,7 +1495,7 @@ func (d *__Post_Deleter) CreatedTime_LT(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) CreatedTime_LE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) CreatedTime_LE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1505,7 +1506,7 @@ func (d *__Post_Deleter) CreatedTime_LE(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) CreatedTime_GT(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) CreatedTime_GT(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1516,7 +1517,7 @@ func (d *__Post_Deleter) CreatedTime_GT(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) CreatedTime_GE(val int) *__Post_Deleter {
+func (d *__Photo_Deleter) CreatedTime_GE(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1528,104 +1529,104 @@ func (d *__Post_Deleter) CreatedTime_GE(val int) *__Post_Deleter {
 }
 
 ////////ints
-func (u *__Post_Updater) Or() *__Post_Updater {
+func (u *__Photo_Updater) Or() *__Photo_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Post_Updater) Id_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) PhotoId_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PhotoId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Updater) Id_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) PhotoId_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PhotoId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Updater) Id_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) PhotoId_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id = ? "
+	w.condition = " PhotoId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) Id_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) PhotoId_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id != ? "
+	w.condition = " PhotoId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) Id_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) PhotoId_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id < ? "
+	w.condition = " PhotoId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) Id_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) PhotoId_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id <= ? "
+	w.condition = " PhotoId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) Id_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) PhotoId_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id > ? "
+	w.condition = " PhotoId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) Id_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) PhotoId_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id >= ? "
+	w.condition = " PhotoId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Updater) UserId_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) UserId_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1638,7 +1639,7 @@ func (u *__Post_Updater) UserId_In(ins []int) *__Post_Updater {
 	return u
 }
 
-func (u *__Post_Updater) UserId_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) UserId_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1651,7 +1652,7 @@ func (u *__Post_Updater) UserId_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) UserId_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) UserId_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1662,7 +1663,7 @@ func (d *__Post_Updater) UserId_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) UserId_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) UserId_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1673,7 +1674,7 @@ func (d *__Post_Updater) UserId_NotEQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) UserId_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) UserId_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1684,7 +1685,7 @@ func (d *__Post_Updater) UserId_LT(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) UserId_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) UserId_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1695,7 +1696,7 @@ func (d *__Post_Updater) UserId_LE(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) UserId_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) UserId_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1706,7 +1707,7 @@ func (d *__Post_Updater) UserId_GT(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) UserId_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) UserId_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1717,283 +1718,283 @@ func (d *__Post_Updater) UserId_GE(val int) *__Post_Updater {
 	return d
 }
 
-func (u *__Post_Updater) TypeId_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) PostId_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Updater) TypeId_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) PostId_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PostId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Updater) TypeId_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) PostId_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId = ? "
+	w.condition = " PostId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) TypeId_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) PostId_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId != ? "
+	w.condition = " PostId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) TypeId_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) PostId_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId < ? "
+	w.condition = " PostId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) TypeId_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) PostId_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId <= ? "
+	w.condition = " PostId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) TypeId_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) PostId_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId > ? "
+	w.condition = " PostId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) TypeId_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) PostId_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId >= ? "
+	w.condition = " PostId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Updater) MediaCount_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) AlbumId_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AlbumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Updater) MediaCount_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) AlbumId_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaCount NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AlbumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Updater) MediaCount_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) AlbumId_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount = ? "
+	w.condition = " AlbumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) MediaCount_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) AlbumId_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount != ? "
+	w.condition = " AlbumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) MediaCount_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) AlbumId_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount < ? "
+	w.condition = " AlbumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) MediaCount_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) AlbumId_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount <= ? "
+	w.condition = " AlbumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) MediaCount_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) AlbumId_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount > ? "
+	w.condition = " AlbumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) MediaCount_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) AlbumId_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount >= ? "
+	w.condition = " AlbumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Updater) MediaServerId_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) ImageTypeId_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ImageTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Updater) MediaServerId_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) ImageTypeId_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ImageTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Updater) MediaServerId_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) ImageTypeId_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId = ? "
+	w.condition = " ImageTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) MediaServerId_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) ImageTypeId_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId != ? "
+	w.condition = " ImageTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) MediaServerId_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) ImageTypeId_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId < ? "
+	w.condition = " ImageTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) MediaServerId_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) ImageTypeId_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId <= ? "
+	w.condition = " ImageTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) MediaServerId_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) ImageTypeId_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId > ? "
+	w.condition = " ImageTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) MediaServerId_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) ImageTypeId_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId >= ? "
+	w.condition = " ImageTypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Updater) Width_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) Width_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2006,7 +2007,7 @@ func (u *__Post_Updater) Width_In(ins []int) *__Post_Updater {
 	return u
 }
 
-func (u *__Post_Updater) Width_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) Width_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2019,7 +2020,7 @@ func (u *__Post_Updater) Width_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) Width_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) Width_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2030,7 +2031,7 @@ func (d *__Post_Updater) Width_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Width_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) Width_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2041,7 +2042,7 @@ func (d *__Post_Updater) Width_NotEQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Width_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) Width_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2052,7 +2053,7 @@ func (d *__Post_Updater) Width_LT(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Width_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) Width_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2063,7 +2064,7 @@ func (d *__Post_Updater) Width_LE(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Width_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) Width_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2074,7 +2075,7 @@ func (d *__Post_Updater) Width_GT(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Width_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) Width_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2085,7 +2086,7 @@ func (d *__Post_Updater) Width_GE(val int) *__Post_Updater {
 	return d
 }
 
-func (u *__Post_Updater) Height_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) Height_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2098,7 +2099,7 @@ func (u *__Post_Updater) Height_In(ins []int) *__Post_Updater {
 	return u
 }
 
-func (u *__Post_Updater) Height_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) Height_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2111,7 +2112,7 @@ func (u *__Post_Updater) Height_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) Height_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) Height_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2122,7 +2123,7 @@ func (d *__Post_Updater) Height_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Height_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) Height_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2133,7 +2134,7 @@ func (d *__Post_Updater) Height_NotEQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Height_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) Height_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2144,7 +2145,7 @@ func (d *__Post_Updater) Height_LT(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Height_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) Height_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2155,7 +2156,7 @@ func (d *__Post_Updater) Height_LE(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Height_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) Height_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2166,7 +2167,7 @@ func (d *__Post_Updater) Height_GT(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Height_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) Height_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2177,559 +2178,559 @@ func (d *__Post_Updater) Height_GE(val int) *__Post_Updater {
 	return d
 }
 
-func (u *__Post_Updater) SharedTo_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W1080_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SharedTo IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W1080 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Updater) SharedTo_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W1080_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SharedTo NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W1080 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Updater) SharedTo_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W1080_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo = ? "
+	w.condition = " W1080 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) SharedTo_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W1080_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo != ? "
+	w.condition = " W1080 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) SharedTo_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W1080_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo < ? "
+	w.condition = " W1080 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) SharedTo_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W1080_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo <= ? "
+	w.condition = " W1080 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) SharedTo_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W1080_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo > ? "
+	w.condition = " W1080 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) SharedTo_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W1080_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo >= ? "
+	w.condition = " W1080 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Updater) DisableComment_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W720_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DisableComment IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W720 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Updater) DisableComment_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W720_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DisableComment NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W720 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Updater) DisableComment_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W720_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment = ? "
+	w.condition = " W720 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) DisableComment_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W720_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment != ? "
+	w.condition = " W720 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) DisableComment_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W720_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment < ? "
+	w.condition = " W720 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) DisableComment_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W720_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment <= ? "
+	w.condition = " W720 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) DisableComment_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W720_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment > ? "
+	w.condition = " W720 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) DisableComment_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W720_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment >= ? "
+	w.condition = " W720 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Updater) HasTag_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W480_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " HasTag IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W480 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Updater) HasTag_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W480_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " HasTag NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W480 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Updater) HasTag_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W480_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag = ? "
+	w.condition = " W480 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) HasTag_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W480_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag != ? "
+	w.condition = " W480 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) HasTag_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W480_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag < ? "
+	w.condition = " W480 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) HasTag_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W480_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag <= ? "
+	w.condition = " W480 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) HasTag_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W480_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag > ? "
+	w.condition = " W480 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) HasTag_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W480_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag >= ? "
+	w.condition = " W480 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Updater) LikesCount_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W320_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LikesCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W320 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Updater) LikesCount_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W320_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LikesCount NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W320 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Updater) LikesCount_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W320_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount = ? "
+	w.condition = " W320 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) LikesCount_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W320_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount != ? "
+	w.condition = " W320 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) LikesCount_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W320_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount < ? "
+	w.condition = " W320 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) LikesCount_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W320_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount <= ? "
+	w.condition = " W320 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) LikesCount_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W320_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount > ? "
+	w.condition = " W320 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) LikesCount_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W320_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount >= ? "
+	w.condition = " W320 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Updater) CommentsCount_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W160_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CommentsCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W160 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Updater) CommentsCount_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W160_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CommentsCount NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W160 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Updater) CommentsCount_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W160_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount = ? "
+	w.condition = " W160 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) CommentsCount_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W160_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount != ? "
+	w.condition = " W160 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) CommentsCount_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W160_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount < ? "
+	w.condition = " W160 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) CommentsCount_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W160_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount <= ? "
+	w.condition = " W160 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) CommentsCount_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W160_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount > ? "
+	w.condition = " W160 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) CommentsCount_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W160_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount >= ? "
+	w.condition = " W160 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Updater) EditedTime_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W80_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " EditedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W80 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Updater) EditedTime_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) W80_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " EditedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W80 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Updater) EditedTime_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W80_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime = ? "
+	w.condition = " W80 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) EditedTime_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) W80_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime != ? "
+	w.condition = " W80 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) EditedTime_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W80_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime < ? "
+	w.condition = " W80 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) EditedTime_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W80_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime <= ? "
+	w.condition = " W80 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) EditedTime_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) W80_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime > ? "
+	w.condition = " W80 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Updater) EditedTime_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) W80_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime >= ? "
+	w.condition = " W80 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Updater) CreatedTime_In(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) CreatedTime_In(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2742,7 +2743,7 @@ func (u *__Post_Updater) CreatedTime_In(ins []int) *__Post_Updater {
 	return u
 }
 
-func (u *__Post_Updater) CreatedTime_NotIn(ins []int) *__Post_Updater {
+func (u *__Photo_Updater) CreatedTime_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2755,7 +2756,7 @@ func (u *__Post_Updater) CreatedTime_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) CreatedTime_EQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) CreatedTime_EQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2766,7 +2767,7 @@ func (d *__Post_Updater) CreatedTime_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) CreatedTime_NotEQ(val int) *__Post_Updater {
+func (d *__Photo_Updater) CreatedTime_NotEQ(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2777,7 +2778,7 @@ func (d *__Post_Updater) CreatedTime_NotEQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) CreatedTime_LT(val int) *__Post_Updater {
+func (d *__Photo_Updater) CreatedTime_LT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2788,7 +2789,7 @@ func (d *__Post_Updater) CreatedTime_LT(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) CreatedTime_LE(val int) *__Post_Updater {
+func (d *__Photo_Updater) CreatedTime_LE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2799,7 +2800,7 @@ func (d *__Post_Updater) CreatedTime_LE(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) CreatedTime_GT(val int) *__Post_Updater {
+func (d *__Photo_Updater) CreatedTime_GT(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2810,7 +2811,7 @@ func (d *__Post_Updater) CreatedTime_GT(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) CreatedTime_GE(val int) *__Post_Updater {
+func (d *__Photo_Updater) CreatedTime_GE(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2822,104 +2823,104 @@ func (d *__Post_Updater) CreatedTime_GE(val int) *__Post_Updater {
 }
 
 ////////ints
-func (u *__Post_Selector) Or() *__Post_Selector {
+func (u *__Photo_Selector) Or() *__Photo_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Post_Selector) Id_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) PhotoId_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PhotoId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) Id_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) PhotoId_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PhotoId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) Id_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) PhotoId_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id = ? "
+	w.condition = " PhotoId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) Id_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) PhotoId_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id != ? "
+	w.condition = " PhotoId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) Id_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) PhotoId_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id < ? "
+	w.condition = " PhotoId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) Id_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) PhotoId_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id <= ? "
+	w.condition = " PhotoId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) Id_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) PhotoId_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id > ? "
+	w.condition = " PhotoId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) Id_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) PhotoId_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id >= ? "
+	w.condition = " PhotoId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) UserId_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) UserId_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2932,7 +2933,7 @@ func (u *__Post_Selector) UserId_In(ins []int) *__Post_Selector {
 	return u
 }
 
-func (u *__Post_Selector) UserId_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) UserId_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2945,7 +2946,7 @@ func (u *__Post_Selector) UserId_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) UserId_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) UserId_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2956,7 +2957,7 @@ func (d *__Post_Selector) UserId_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) UserId_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) UserId_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2967,7 +2968,7 @@ func (d *__Post_Selector) UserId_NotEQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) UserId_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) UserId_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2978,7 +2979,7 @@ func (d *__Post_Selector) UserId_LT(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) UserId_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) UserId_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2989,7 +2990,7 @@ func (d *__Post_Selector) UserId_LE(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) UserId_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) UserId_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3000,7 +3001,7 @@ func (d *__Post_Selector) UserId_GT(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) UserId_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) UserId_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3011,283 +3012,283 @@ func (d *__Post_Selector) UserId_GE(val int) *__Post_Selector {
 	return d
 }
 
-func (u *__Post_Selector) TypeId_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) PostId_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) TypeId_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) PostId_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " PostId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) TypeId_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) PostId_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId = ? "
+	w.condition = " PostId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) TypeId_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) PostId_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId != ? "
+	w.condition = " PostId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) TypeId_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) PostId_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId < ? "
+	w.condition = " PostId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) TypeId_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) PostId_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId <= ? "
+	w.condition = " PostId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) TypeId_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) PostId_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId > ? "
+	w.condition = " PostId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) TypeId_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) PostId_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId >= ? "
+	w.condition = " PostId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) MediaCount_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) AlbumId_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AlbumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) MediaCount_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) AlbumId_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaCount NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " AlbumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) MediaCount_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) AlbumId_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount = ? "
+	w.condition = " AlbumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) MediaCount_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) AlbumId_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount != ? "
+	w.condition = " AlbumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) MediaCount_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) AlbumId_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount < ? "
+	w.condition = " AlbumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) MediaCount_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) AlbumId_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount <= ? "
+	w.condition = " AlbumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) MediaCount_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) AlbumId_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount > ? "
+	w.condition = " AlbumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) MediaCount_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) AlbumId_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaCount >= ? "
+	w.condition = " AlbumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) MediaServerId_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) ImageTypeId_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ImageTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) MediaServerId_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) ImageTypeId_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ImageTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) MediaServerId_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) ImageTypeId_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId = ? "
+	w.condition = " ImageTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) MediaServerId_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) ImageTypeId_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId != ? "
+	w.condition = " ImageTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) MediaServerId_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) ImageTypeId_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId < ? "
+	w.condition = " ImageTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) MediaServerId_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) ImageTypeId_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId <= ? "
+	w.condition = " ImageTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) MediaServerId_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) ImageTypeId_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId > ? "
+	w.condition = " ImageTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) MediaServerId_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) ImageTypeId_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaServerId >= ? "
+	w.condition = " ImageTypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) Width_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) Width_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3300,7 +3301,7 @@ func (u *__Post_Selector) Width_In(ins []int) *__Post_Selector {
 	return u
 }
 
-func (u *__Post_Selector) Width_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) Width_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3313,7 +3314,7 @@ func (u *__Post_Selector) Width_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) Width_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) Width_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3324,7 +3325,7 @@ func (d *__Post_Selector) Width_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Width_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) Width_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3335,7 +3336,7 @@ func (d *__Post_Selector) Width_NotEQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Width_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) Width_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3346,7 +3347,7 @@ func (d *__Post_Selector) Width_LT(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Width_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) Width_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3357,7 +3358,7 @@ func (d *__Post_Selector) Width_LE(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Width_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) Width_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3368,7 +3369,7 @@ func (d *__Post_Selector) Width_GT(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Width_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) Width_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3379,7 +3380,7 @@ func (d *__Post_Selector) Width_GE(val int) *__Post_Selector {
 	return d
 }
 
-func (u *__Post_Selector) Height_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) Height_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3392,7 +3393,7 @@ func (u *__Post_Selector) Height_In(ins []int) *__Post_Selector {
 	return u
 }
 
-func (u *__Post_Selector) Height_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) Height_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3405,7 +3406,7 @@ func (u *__Post_Selector) Height_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) Height_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) Height_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3416,7 +3417,7 @@ func (d *__Post_Selector) Height_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Height_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) Height_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3427,7 +3428,7 @@ func (d *__Post_Selector) Height_NotEQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Height_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) Height_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3438,7 +3439,7 @@ func (d *__Post_Selector) Height_LT(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Height_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) Height_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3449,7 +3450,7 @@ func (d *__Post_Selector) Height_LE(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Height_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) Height_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3460,7 +3461,7 @@ func (d *__Post_Selector) Height_GT(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Height_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) Height_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3471,559 +3472,559 @@ func (d *__Post_Selector) Height_GE(val int) *__Post_Selector {
 	return d
 }
 
-func (u *__Post_Selector) SharedTo_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W1080_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SharedTo IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W1080 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) SharedTo_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W1080_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SharedTo NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W1080 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) SharedTo_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W1080_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo = ? "
+	w.condition = " W1080 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) SharedTo_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W1080_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo != ? "
+	w.condition = " W1080 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) SharedTo_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W1080_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo < ? "
+	w.condition = " W1080 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) SharedTo_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W1080_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo <= ? "
+	w.condition = " W1080 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) SharedTo_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W1080_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo > ? "
+	w.condition = " W1080 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) SharedTo_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W1080_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SharedTo >= ? "
+	w.condition = " W1080 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) DisableComment_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W720_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DisableComment IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W720 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) DisableComment_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W720_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DisableComment NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W720 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) DisableComment_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W720_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment = ? "
+	w.condition = " W720 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) DisableComment_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W720_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment != ? "
+	w.condition = " W720 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) DisableComment_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W720_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment < ? "
+	w.condition = " W720 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) DisableComment_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W720_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment <= ? "
+	w.condition = " W720 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) DisableComment_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W720_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment > ? "
+	w.condition = " W720 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) DisableComment_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W720_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DisableComment >= ? "
+	w.condition = " W720 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) HasTag_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W480_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " HasTag IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W480 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) HasTag_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W480_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " HasTag NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W480 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) HasTag_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W480_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag = ? "
+	w.condition = " W480 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) HasTag_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W480_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag != ? "
+	w.condition = " W480 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) HasTag_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W480_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag < ? "
+	w.condition = " W480 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) HasTag_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W480_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag <= ? "
+	w.condition = " W480 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) HasTag_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W480_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag > ? "
+	w.condition = " W480 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) HasTag_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W480_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " HasTag >= ? "
+	w.condition = " W480 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) LikesCount_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W320_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LikesCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W320 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) LikesCount_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W320_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LikesCount NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W320 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) LikesCount_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W320_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount = ? "
+	w.condition = " W320 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) LikesCount_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W320_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount != ? "
+	w.condition = " W320 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) LikesCount_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W320_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount < ? "
+	w.condition = " W320 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) LikesCount_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W320_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount <= ? "
+	w.condition = " W320 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) LikesCount_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W320_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount > ? "
+	w.condition = " W320 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) LikesCount_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W320_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LikesCount >= ? "
+	w.condition = " W320 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) CommentsCount_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W160_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CommentsCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W160 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) CommentsCount_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W160_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CommentsCount NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W160 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) CommentsCount_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W160_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount = ? "
+	w.condition = " W160 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) CommentsCount_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W160_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount != ? "
+	w.condition = " W160 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) CommentsCount_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W160_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount < ? "
+	w.condition = " W160 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) CommentsCount_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W160_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount <= ? "
+	w.condition = " W160 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) CommentsCount_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W160_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount > ? "
+	w.condition = " W160 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) CommentsCount_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W160_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CommentsCount >= ? "
+	w.condition = " W160 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) EditedTime_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W80_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " EditedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W80 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) EditedTime_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) W80_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " EditedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " W80 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) EditedTime_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W80_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime = ? "
+	w.condition = " W80 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) EditedTime_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) W80_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime != ? "
+	w.condition = " W80 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) EditedTime_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W80_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime < ? "
+	w.condition = " W80 < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) EditedTime_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W80_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime <= ? "
+	w.condition = " W80 <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) EditedTime_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) W80_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime > ? "
+	w.condition = " W80 > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Post_Selector) EditedTime_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) W80_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " EditedTime >= ? "
+	w.condition = " W80 >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) CreatedTime_In(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) CreatedTime_In(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -4036,7 +4037,7 @@ func (u *__Post_Selector) CreatedTime_In(ins []int) *__Post_Selector {
 	return u
 }
 
-func (u *__Post_Selector) CreatedTime_NotIn(ins []int) *__Post_Selector {
+func (u *__Photo_Selector) CreatedTime_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -4049,7 +4050,7 @@ func (u *__Post_Selector) CreatedTime_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) CreatedTime_EQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) CreatedTime_EQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4060,7 +4061,7 @@ func (d *__Post_Selector) CreatedTime_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) CreatedTime_NotEQ(val int) *__Post_Selector {
+func (d *__Photo_Selector) CreatedTime_NotEQ(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4071,7 +4072,7 @@ func (d *__Post_Selector) CreatedTime_NotEQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) CreatedTime_LT(val int) *__Post_Selector {
+func (d *__Photo_Selector) CreatedTime_LT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4082,7 +4083,7 @@ func (d *__Post_Selector) CreatedTime_LT(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) CreatedTime_LE(val int) *__Post_Selector {
+func (d *__Photo_Selector) CreatedTime_LE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4093,7 +4094,7 @@ func (d *__Post_Selector) CreatedTime_LE(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) CreatedTime_GT(val int) *__Post_Selector {
+func (d *__Photo_Selector) CreatedTime_GT(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4104,7 +4105,7 @@ func (d *__Post_Selector) CreatedTime_GT(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) CreatedTime_GE(val int) *__Post_Selector {
+func (d *__Photo_Selector) CreatedTime_GE(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4119,297 +4120,148 @@ func (d *__Post_Selector) CreatedTime_GE(val int) *__Post_Selector {
 
 ////////ints
 
-func (u *__Post_Deleter) Text_In(ins []string) *__Post_Deleter {
+func (u *__Photo_Deleter) Title_In(ins []string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Text IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Title IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) Text_NotIn(ins []string) *__Post_Deleter {
+func (u *__Photo_Deleter) Title_NotIn(ins []string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Text NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Title NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Post_Deleter) Text_Like(val string) *__Post_Deleter {
+func (u *__Photo_Deleter) Title_Like(val string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text LIKE ? "
+	w.condition = " Title LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) Text_EQ(val string) *__Post_Deleter {
+func (d *__Photo_Deleter) Title_EQ(val string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text = ? "
+	w.condition = " Title = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) FormatedText_In(ins []string) *__Post_Deleter {
+func (u *__Photo_Deleter) Src_In(ins []string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FormatedText IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Src IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) FormatedText_NotIn(ins []string) *__Post_Deleter {
+func (u *__Photo_Deleter) Src_NotIn(ins []string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FormatedText NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Src NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Post_Deleter) FormatedText_Like(val string) *__Post_Deleter {
+func (u *__Photo_Deleter) Src_Like(val string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FormatedText LIKE ? "
+	w.condition = " Src LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) FormatedText_EQ(val string) *__Post_Deleter {
+func (d *__Photo_Deleter) Src_EQ(val string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FormatedText = ? "
+	w.condition = " Src = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Deleter) MediaUrl_In(ins []string) *__Post_Deleter {
+func (u *__Photo_Deleter) HashMd5_In(ins []string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaUrl IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " HashMd5 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Deleter) MediaUrl_NotIn(ins []string) *__Post_Deleter {
+func (u *__Photo_Deleter) HashMd5_NotIn(ins []string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaUrl NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " HashMd5 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Post_Deleter) MediaUrl_Like(val string) *__Post_Deleter {
+func (u *__Photo_Deleter) HashMd5_Like(val string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaUrl LIKE ? "
+	w.condition = " HashMd5 LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Deleter) MediaUrl_EQ(val string) *__Post_Deleter {
+func (d *__Photo_Deleter) HashMd5_EQ(val string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaUrl = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-////////ints
-
-func (u *__Post_Updater) Text_In(ins []string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Text IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Updater) Text_NotIn(ins []string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Text NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Post_Updater) Text_Like(val string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Text LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Updater) Text_EQ(val string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Text = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Post_Updater) FormatedText_In(ins []string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " FormatedText IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Updater) FormatedText_NotIn(ins []string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " FormatedText NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Post_Updater) FormatedText_Like(val string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " FormatedText LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Updater) FormatedText_EQ(val string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " FormatedText = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Post_Updater) MediaUrl_In(ins []string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaUrl IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Updater) MediaUrl_NotIn(ins []string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaUrl NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Post_Updater) MediaUrl_Like(val string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Updater) MediaUrl_EQ(val string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl = ? "
+	w.condition = " HashMd5 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4417,148 +4269,297 @@ func (d *__Post_Updater) MediaUrl_EQ(val string) *__Post_Updater {
 
 ////////ints
 
-func (u *__Post_Selector) Text_In(ins []string) *__Post_Selector {
+func (u *__Photo_Updater) Title_In(ins []string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Text IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Title IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) Text_NotIn(ins []string) *__Post_Selector {
+func (u *__Photo_Updater) Title_NotIn(ins []string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Text NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Title NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Post_Selector) Text_Like(val string) *__Post_Selector {
+func (u *__Photo_Updater) Title_Like(val string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text LIKE ? "
+	w.condition = " Title LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) Text_EQ(val string) *__Post_Selector {
+func (d *__Photo_Updater) Title_EQ(val string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text = ? "
+	w.condition = " Title = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) FormatedText_In(ins []string) *__Post_Selector {
+func (u *__Photo_Updater) Src_In(ins []string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FormatedText IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Src IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) FormatedText_NotIn(ins []string) *__Post_Selector {
+func (u *__Photo_Updater) Src_NotIn(ins []string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FormatedText NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Src NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Post_Selector) FormatedText_Like(val string) *__Post_Selector {
+func (u *__Photo_Updater) Src_Like(val string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FormatedText LIKE ? "
+	w.condition = " Src LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) FormatedText_EQ(val string) *__Post_Selector {
+func (d *__Photo_Updater) Src_EQ(val string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FormatedText = ? "
+	w.condition = " Src = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Post_Selector) MediaUrl_In(ins []string) *__Post_Selector {
+func (u *__Photo_Updater) HashMd5_In(ins []string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaUrl IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " HashMd5 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Post_Selector) MediaUrl_NotIn(ins []string) *__Post_Selector {
+func (u *__Photo_Updater) HashMd5_NotIn(ins []string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MediaUrl NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " HashMd5 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Post_Selector) MediaUrl_Like(val string) *__Post_Selector {
+func (u *__Photo_Updater) HashMd5_Like(val string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaUrl LIKE ? "
+	w.condition = " HashMd5 LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Post_Selector) MediaUrl_EQ(val string) *__Post_Selector {
+func (d *__Photo_Updater) HashMd5_EQ(val string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MediaUrl = ? "
+	w.condition = " HashMd5 = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__Photo_Selector) Title_In(ins []string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Title IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) Title_NotIn(ins []string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Title NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Photo_Selector) Title_Like(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Title LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Selector) Title_EQ(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Title = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Photo_Selector) Src_In(ins []string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Src IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) Src_NotIn(ins []string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Src NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Photo_Selector) Src_Like(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Src LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Selector) Src_EQ(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Src = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Photo_Selector) HashMd5_In(ins []string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashMd5 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) HashMd5_NotIn(ins []string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashMd5 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Photo_Selector) HashMd5_Like(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashMd5 LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Selector) HashMd5_EQ(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashMd5 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4570,18 +4571,18 @@ func (d *__Post_Selector) MediaUrl_EQ(val string) *__Post_Selector {
 
 //ints
 
-func (u *__Post_Updater) Id(newVal int) *__Post_Updater {
-	u.updates[" Id = ? "] = newVal
+func (u *__Photo_Updater) PhotoId(newVal int) *__Photo_Updater {
+	u.updates[" PhotoId = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) Id_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) PhotoId_Increment(count int) *__Photo_Updater {
 	if count > 0 {
-		u.updates[" Id = Id+? "] = count
+		u.updates[" PhotoId = PhotoId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it positive
+		u.updates[" PhotoId = PhotoId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4591,12 +4592,12 @@ func (u *__Post_Updater) Id_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) UserId(newVal int) *__Post_Updater {
+func (u *__Photo_Updater) UserId(newVal int) *__Photo_Updater {
 	u.updates[" UserId = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) UserId_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) UserId_Increment(count int) *__Photo_Updater {
 	if count > 0 {
 		u.updates[" UserId = UserId+? "] = count
 	}
@@ -4612,18 +4613,18 @@ func (u *__Post_Updater) UserId_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) TypeId(newVal int) *__Post_Updater {
-	u.updates[" TypeId = ? "] = newVal
+func (u *__Photo_Updater) PostId(newVal int) *__Photo_Updater {
+	u.updates[" PostId = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) TypeId_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) PostId_Increment(count int) *__Photo_Updater {
 	if count > 0 {
-		u.updates[" TypeId = TypeId+? "] = count
+		u.updates[" PostId = PostId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" TypeId = TypeId-? "] = -(count) //make it positive
+		u.updates[" PostId = PostId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4633,42 +4634,18 @@ func (u *__Post_Updater) TypeId_Increment(count int) *__Post_Updater {
 
 //ints
 
-//string
-func (u *__Post_Updater) Text(newVal string) *__Post_Updater {
-	u.updates[" Text = ? "] = newVal
+func (u *__Photo_Updater) AlbumId(newVal int) *__Photo_Updater {
+	u.updates[" AlbumId = ? "] = newVal
 	return u
 }
 
-//ints
-
-//string
-func (u *__Post_Updater) FormatedText(newVal string) *__Post_Updater {
-	u.updates[" FormatedText = ? "] = newVal
-	return u
-}
-
-//ints
-
-//string
-func (u *__Post_Updater) MediaUrl(newVal string) *__Post_Updater {
-	u.updates[" MediaUrl = ? "] = newVal
-	return u
-}
-
-//ints
-
-func (u *__Post_Updater) MediaCount(newVal int) *__Post_Updater {
-	u.updates[" MediaCount = ? "] = newVal
-	return u
-}
-
-func (u *__Post_Updater) MediaCount_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) AlbumId_Increment(count int) *__Photo_Updater {
 	if count > 0 {
-		u.updates[" MediaCount = MediaCount+? "] = count
+		u.updates[" AlbumId = AlbumId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" MediaCount = MediaCount-? "] = -(count) //make it positive
+		u.updates[" AlbumId = AlbumId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4678,18 +4655,18 @@ func (u *__Post_Updater) MediaCount_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) MediaServerId(newVal int) *__Post_Updater {
-	u.updates[" MediaServerId = ? "] = newVal
+func (u *__Photo_Updater) ImageTypeId(newVal int) *__Photo_Updater {
+	u.updates[" ImageTypeId = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) MediaServerId_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) ImageTypeId_Increment(count int) *__Photo_Updater {
 	if count > 0 {
-		u.updates[" MediaServerId = MediaServerId+? "] = count
+		u.updates[" ImageTypeId = ImageTypeId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" MediaServerId = MediaServerId-? "] = -(count) //make it positive
+		u.updates[" ImageTypeId = ImageTypeId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4699,12 +4676,28 @@ func (u *__Post_Updater) MediaServerId_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) Width(newVal int) *__Post_Updater {
+//string
+func (u *__Photo_Updater) Title(newVal string) *__Photo_Updater {
+	u.updates[" Title = ? "] = newVal
+	return u
+}
+
+//ints
+
+//string
+func (u *__Photo_Updater) Src(newVal string) *__Photo_Updater {
+	u.updates[" Src = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__Photo_Updater) Width(newVal int) *__Photo_Updater {
 	u.updates[" Width = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) Width_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) Width_Increment(count int) *__Photo_Updater {
 	if count > 0 {
 		u.updates[" Width = Width+? "] = count
 	}
@@ -4720,12 +4713,12 @@ func (u *__Post_Updater) Width_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) Height(newVal int) *__Post_Updater {
+func (u *__Photo_Updater) Height(newVal int) *__Photo_Updater {
 	u.updates[" Height = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) Height_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) Height_Increment(count int) *__Photo_Updater {
 	if count > 0 {
 		u.updates[" Height = Height+? "] = count
 	}
@@ -4741,18 +4734,30 @@ func (u *__Post_Updater) Height_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) SharedTo(newVal int) *__Post_Updater {
-	u.updates[" SharedTo = ? "] = newVal
+//string
+
+//ints
+
+//string
+func (u *__Photo_Updater) HashMd5(newVal string) *__Photo_Updater {
+	u.updates[" HashMd5 = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) SharedTo_Increment(count int) *__Post_Updater {
+//ints
+
+func (u *__Photo_Updater) W1080(newVal int) *__Photo_Updater {
+	u.updates[" W1080 = ? "] = newVal
+	return u
+}
+
+func (u *__Photo_Updater) W1080_Increment(count int) *__Photo_Updater {
 	if count > 0 {
-		u.updates[" SharedTo = SharedTo+? "] = count
+		u.updates[" W1080 = W1080+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" SharedTo = SharedTo-? "] = -(count) //make it positive
+		u.updates[" W1080 = W1080-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4762,18 +4767,18 @@ func (u *__Post_Updater) SharedTo_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) DisableComment(newVal int) *__Post_Updater {
-	u.updates[" DisableComment = ? "] = newVal
+func (u *__Photo_Updater) W720(newVal int) *__Photo_Updater {
+	u.updates[" W720 = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) DisableComment_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) W720_Increment(count int) *__Photo_Updater {
 	if count > 0 {
-		u.updates[" DisableComment = DisableComment+? "] = count
+		u.updates[" W720 = W720+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" DisableComment = DisableComment-? "] = -(count) //make it positive
+		u.updates[" W720 = W720-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4783,18 +4788,18 @@ func (u *__Post_Updater) DisableComment_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) HasTag(newVal int) *__Post_Updater {
-	u.updates[" HasTag = ? "] = newVal
+func (u *__Photo_Updater) W480(newVal int) *__Photo_Updater {
+	u.updates[" W480 = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) HasTag_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) W480_Increment(count int) *__Photo_Updater {
 	if count > 0 {
-		u.updates[" HasTag = HasTag+? "] = count
+		u.updates[" W480 = W480+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" HasTag = HasTag-? "] = -(count) //make it positive
+		u.updates[" W480 = W480-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4804,18 +4809,18 @@ func (u *__Post_Updater) HasTag_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) LikesCount(newVal int) *__Post_Updater {
-	u.updates[" LikesCount = ? "] = newVal
+func (u *__Photo_Updater) W320(newVal int) *__Photo_Updater {
+	u.updates[" W320 = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) LikesCount_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) W320_Increment(count int) *__Photo_Updater {
 	if count > 0 {
-		u.updates[" LikesCount = LikesCount+? "] = count
+		u.updates[" W320 = W320+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" LikesCount = LikesCount-? "] = -(count) //make it positive
+		u.updates[" W320 = W320-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4825,18 +4830,18 @@ func (u *__Post_Updater) LikesCount_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) CommentsCount(newVal int) *__Post_Updater {
-	u.updates[" CommentsCount = ? "] = newVal
+func (u *__Photo_Updater) W160(newVal int) *__Photo_Updater {
+	u.updates[" W160 = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) CommentsCount_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) W160_Increment(count int) *__Photo_Updater {
 	if count > 0 {
-		u.updates[" CommentsCount = CommentsCount+? "] = count
+		u.updates[" W160 = W160+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" CommentsCount = CommentsCount-? "] = -(count) //make it positive
+		u.updates[" W160 = W160-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4846,18 +4851,18 @@ func (u *__Post_Updater) CommentsCount_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) EditedTime(newVal int) *__Post_Updater {
-	u.updates[" EditedTime = ? "] = newVal
+func (u *__Photo_Updater) W80(newVal int) *__Photo_Updater {
+	u.updates[" W80 = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) EditedTime_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) W80_Increment(count int) *__Photo_Updater {
 	if count > 0 {
-		u.updates[" EditedTime = EditedTime+? "] = count
+		u.updates[" W80 = W80+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" EditedTime = EditedTime-? "] = -(count) //make it positive
+		u.updates[" W80 = W80-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -4867,12 +4872,12 @@ func (u *__Post_Updater) EditedTime_Increment(count int) *__Post_Updater {
 
 //ints
 
-func (u *__Post_Updater) CreatedTime(newVal int) *__Post_Updater {
+func (u *__Photo_Updater) CreatedTime(newVal int) *__Photo_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
 	return u
 }
 
-func (u *__Post_Updater) CreatedTime_Increment(count int) *__Post_Updater {
+func (u *__Photo_Updater) CreatedTime_Increment(count int) *__Photo_Updater {
 	if count > 0 {
 		u.updates[" CreatedTime = CreatedTime+? "] = count
 	}
@@ -4891,276 +4896,291 @@ func (u *__Post_Updater) CreatedTime_Increment(count int) *__Post_Updater {
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__Post_Selector) OrderBy_Id_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY Id DESC "
+func (u *__Photo_Selector) OrderBy_PhotoId_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY PhotoId DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_Id_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY Id ASC "
+func (u *__Photo_Selector) OrderBy_PhotoId_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY PhotoId ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_Id() *__Post_Selector {
-	u.selectCol = "Id"
+func (u *__Photo_Selector) Select_PhotoId() *__Photo_Selector {
+	u.selectCol = "PhotoId"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_UserId_Desc() *__Post_Selector {
+func (u *__Photo_Selector) OrderBy_UserId_Desc() *__Photo_Selector {
 	u.orderBy = " ORDER BY UserId DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_UserId_Asc() *__Post_Selector {
+func (u *__Photo_Selector) OrderBy_UserId_Asc() *__Photo_Selector {
 	u.orderBy = " ORDER BY UserId ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_UserId() *__Post_Selector {
+func (u *__Photo_Selector) Select_UserId() *__Photo_Selector {
 	u.selectCol = "UserId"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_TypeId_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY TypeId DESC "
+func (u *__Photo_Selector) OrderBy_PostId_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY PostId DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_TypeId_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY TypeId ASC "
+func (u *__Photo_Selector) OrderBy_PostId_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY PostId ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_TypeId() *__Post_Selector {
-	u.selectCol = "TypeId"
+func (u *__Photo_Selector) Select_PostId() *__Photo_Selector {
+	u.selectCol = "PostId"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_Text_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY Text DESC "
+func (u *__Photo_Selector) OrderBy_AlbumId_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY AlbumId DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_Text_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY Text ASC "
+func (u *__Photo_Selector) OrderBy_AlbumId_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY AlbumId ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_Text() *__Post_Selector {
-	u.selectCol = "Text"
+func (u *__Photo_Selector) Select_AlbumId() *__Photo_Selector {
+	u.selectCol = "AlbumId"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_FormatedText_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY FormatedText DESC "
+func (u *__Photo_Selector) OrderBy_ImageTypeId_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY ImageTypeId DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_FormatedText_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY FormatedText ASC "
+func (u *__Photo_Selector) OrderBy_ImageTypeId_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY ImageTypeId ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_FormatedText() *__Post_Selector {
-	u.selectCol = "FormatedText"
+func (u *__Photo_Selector) Select_ImageTypeId() *__Photo_Selector {
+	u.selectCol = "ImageTypeId"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_MediaUrl_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY MediaUrl DESC "
+func (u *__Photo_Selector) OrderBy_Title_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY Title DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_MediaUrl_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY MediaUrl ASC "
+func (u *__Photo_Selector) OrderBy_Title_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY Title ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_MediaUrl() *__Post_Selector {
-	u.selectCol = "MediaUrl"
+func (u *__Photo_Selector) Select_Title() *__Photo_Selector {
+	u.selectCol = "Title"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_MediaCount_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY MediaCount DESC "
+func (u *__Photo_Selector) OrderBy_Src_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY Src DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_MediaCount_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY MediaCount ASC "
+func (u *__Photo_Selector) OrderBy_Src_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY Src ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_MediaCount() *__Post_Selector {
-	u.selectCol = "MediaCount"
+func (u *__Photo_Selector) Select_Src() *__Photo_Selector {
+	u.selectCol = "Src"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_MediaServerId_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY MediaServerId DESC "
-	return u
-}
-
-func (u *__Post_Selector) OrderBy_MediaServerId_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY MediaServerId ASC "
-	return u
-}
-
-func (u *__Post_Selector) Select_MediaServerId() *__Post_Selector {
-	u.selectCol = "MediaServerId"
-	return u
-}
-
-func (u *__Post_Selector) OrderBy_Width_Desc() *__Post_Selector {
+func (u *__Photo_Selector) OrderBy_Width_Desc() *__Photo_Selector {
 	u.orderBy = " ORDER BY Width DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_Width_Asc() *__Post_Selector {
+func (u *__Photo_Selector) OrderBy_Width_Asc() *__Photo_Selector {
 	u.orderBy = " ORDER BY Width ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_Width() *__Post_Selector {
+func (u *__Photo_Selector) Select_Width() *__Photo_Selector {
 	u.selectCol = "Width"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_Height_Desc() *__Post_Selector {
+func (u *__Photo_Selector) OrderBy_Height_Desc() *__Photo_Selector {
 	u.orderBy = " ORDER BY Height DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_Height_Asc() *__Post_Selector {
+func (u *__Photo_Selector) OrderBy_Height_Asc() *__Photo_Selector {
 	u.orderBy = " ORDER BY Height ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_Height() *__Post_Selector {
+func (u *__Photo_Selector) Select_Height() *__Photo_Selector {
 	u.selectCol = "Height"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_SharedTo_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY SharedTo DESC "
+func (u *__Photo_Selector) OrderBy_Ratio_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY Ratio DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_SharedTo_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY SharedTo ASC "
+func (u *__Photo_Selector) OrderBy_Ratio_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY Ratio ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_SharedTo() *__Post_Selector {
-	u.selectCol = "SharedTo"
+func (u *__Photo_Selector) Select_Ratio() *__Photo_Selector {
+	u.selectCol = "Ratio"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_DisableComment_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY DisableComment DESC "
+func (u *__Photo_Selector) OrderBy_HashMd5_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY HashMd5 DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_DisableComment_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY DisableComment ASC "
+func (u *__Photo_Selector) OrderBy_HashMd5_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY HashMd5 ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_DisableComment() *__Post_Selector {
-	u.selectCol = "DisableComment"
+func (u *__Photo_Selector) Select_HashMd5() *__Photo_Selector {
+	u.selectCol = "HashMd5"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_HasTag_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY HasTag DESC "
+func (u *__Photo_Selector) OrderBy_W1080_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W1080 DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_HasTag_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY HasTag ASC "
+func (u *__Photo_Selector) OrderBy_W1080_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W1080 ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_HasTag() *__Post_Selector {
-	u.selectCol = "HasTag"
+func (u *__Photo_Selector) Select_W1080() *__Photo_Selector {
+	u.selectCol = "W1080"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_LikesCount_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY LikesCount DESC "
+func (u *__Photo_Selector) OrderBy_W720_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W720 DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_LikesCount_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY LikesCount ASC "
+func (u *__Photo_Selector) OrderBy_W720_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W720 ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_LikesCount() *__Post_Selector {
-	u.selectCol = "LikesCount"
+func (u *__Photo_Selector) Select_W720() *__Photo_Selector {
+	u.selectCol = "W720"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_CommentsCount_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY CommentsCount DESC "
+func (u *__Photo_Selector) OrderBy_W480_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W480 DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_CommentsCount_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY CommentsCount ASC "
+func (u *__Photo_Selector) OrderBy_W480_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W480 ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_CommentsCount() *__Post_Selector {
-	u.selectCol = "CommentsCount"
+func (u *__Photo_Selector) Select_W480() *__Photo_Selector {
+	u.selectCol = "W480"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_EditedTime_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY EditedTime DESC "
+func (u *__Photo_Selector) OrderBy_W320_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W320 DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_EditedTime_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY EditedTime ASC "
+func (u *__Photo_Selector) OrderBy_W320_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W320 ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_EditedTime() *__Post_Selector {
-	u.selectCol = "EditedTime"
+func (u *__Photo_Selector) Select_W320() *__Photo_Selector {
+	u.selectCol = "W320"
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_CreatedTime_Desc() *__Post_Selector {
+func (u *__Photo_Selector) OrderBy_W160_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W160 DESC "
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_W160_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W160 ASC "
+	return u
+}
+
+func (u *__Photo_Selector) Select_W160() *__Photo_Selector {
+	u.selectCol = "W160"
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_W80_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W80 DESC "
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_W80_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY W80 ASC "
+	return u
+}
+
+func (u *__Photo_Selector) Select_W80() *__Photo_Selector {
+	u.selectCol = "W80"
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_CreatedTime_Desc() *__Photo_Selector {
 	u.orderBy = " ORDER BY CreatedTime DESC "
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_CreatedTime_Asc() *__Post_Selector {
+func (u *__Photo_Selector) OrderBy_CreatedTime_Asc() *__Photo_Selector {
 	u.orderBy = " ORDER BY CreatedTime ASC "
 	return u
 }
 
-func (u *__Post_Selector) Select_CreatedTime() *__Post_Selector {
+func (u *__Photo_Selector) Select_CreatedTime() *__Photo_Selector {
 	u.selectCol = "CreatedTime"
 	return u
 }
 
-func (u *__Post_Selector) Limit(num int) *__Post_Selector {
+func (u *__Photo_Selector) Limit(num int) *__Photo_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__Post_Selector) Offset(num int) *__Post_Selector {
+func (u *__Photo_Selector) Offset(num int) *__Photo_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__Post_Selector) _stoSql() (string, []interface{}) {
+func (u *__Photo_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
-	sqlstr := "SELECT " + u.selectCol + " FROM ms.post"
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.photo"
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -5180,14 +5200,14 @@ func (u *__Post_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__Post_Selector) GetRow(db *sqlx.DB) (*Post, error) {
+func (u *__Photo_Selector) GetRow(db *sqlx.DB) (*Photo, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &Post{}
+	row := &Photo{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -5196,19 +5216,19 @@ func (u *__Post_Selector) GetRow(db *sqlx.DB) (*Post, error) {
 
 	row._exists = true
 
-	OnPost_LoadOne(row)
+	OnPhoto_LoadOne(row)
 
 	return row, nil
 }
 
-func (u *__Post_Selector) GetRows(db *sqlx.DB) ([]*Post, error) {
+func (u *__Photo_Selector) GetRows(db *sqlx.DB) ([]*Photo, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*Post
+	var rows []*Photo
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -5223,20 +5243,20 @@ func (u *__Post_Selector) GetRows(db *sqlx.DB) ([]*Post, error) {
 		rows[i]._exists = true
 	}
 
-	OnPost_LoadMany(rows)
+	OnPhoto_LoadMany(rows)
 
 	return rows, nil
 }
 
 //dep use GetRows()
-func (u *__Post_Selector) GetRows2(db *sqlx.DB) ([]Post, error) {
+func (u *__Photo_Selector) GetRows2(db *sqlx.DB) ([]Photo, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*Post
+	var rows []*Photo
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -5251,9 +5271,9 @@ func (u *__Post_Selector) GetRows2(db *sqlx.DB) ([]Post, error) {
 		rows[i]._exists = true
 	}
 
-	OnPost_LoadMany(rows)
+	OnPhoto_LoadMany(rows)
 
-	rows2 := make([]Post, len(rows))
+	rows2 := make([]Photo, len(rows))
 	for i := 0; i < len(rows); i++ {
 		cp := *rows[i]
 		rows2[i] = cp
@@ -5262,7 +5282,7 @@ func (u *__Post_Selector) GetRows2(db *sqlx.DB) ([]Post, error) {
 	return rows2, nil
 }
 
-func (u *__Post_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__Photo_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -5279,7 +5299,7 @@ func (u *__Post_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__Post_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__Photo_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -5296,7 +5316,7 @@ func (u *__Post_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	return rows, nil
 }
 
-func (u *__Post_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__Photo_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -5313,7 +5333,7 @@ func (u *__Post_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__Post_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__Photo_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -5331,7 +5351,7 @@ func (u *__Post_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__Post_Updater) Update(db XODB) (int, error) {
+func (u *__Photo_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -5348,7 +5368,7 @@ func (u *__Post_Updater) Update(db XODB) (int, error) {
 	allArgs = append(allArgs, updateArgs...)
 	allArgs = append(allArgs, whereArgs...)
 
-	sqlstr := `UPDATE ms.post SET ` + sqlUpdate
+	sqlstr := `UPDATE ms.photo SET ` + sqlUpdate
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -5368,7 +5388,7 @@ func (u *__Post_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__Post_Deleter) Delete(db XODB) (int, error) {
+func (d *__Photo_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -5381,7 +5401,7 @@ func (d *__Post_Deleter) Delete(db XODB) (int, error) {
 		args = append(args, w.args...)
 	}
 
-	sqlstr := "DELETE FROM ms.post WHERE " + wheresStr
+	sqlstr := "DELETE FROM ms.photo WHERE " + wheresStr
 
 	// run query
 	XOLog(sqlstr, args)
@@ -5399,16 +5419,16 @@ func (d *__Post_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  Post ////////////////
-func MassInsert_Post(rows []Post, db XODB) error {
+///////////////////////// Mass insert - replace for  Photo ////////////////
+func MassInsert_Photo(rows []Photo, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "INSERT INTO ms.post (" +
-		"UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime" +
+	sqlstr := "INSERT INTO ms.photo (" +
+		"UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -5417,20 +5437,21 @@ func MassInsert_Post(rows []Post, db XODB) error {
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.UserId)
-		vals = append(vals, row.TypeId)
-		vals = append(vals, row.Text)
-		vals = append(vals, row.FormatedText)
-		vals = append(vals, row.MediaUrl)
-		vals = append(vals, row.MediaCount)
-		vals = append(vals, row.MediaServerId)
+		vals = append(vals, row.PostId)
+		vals = append(vals, row.AlbumId)
+		vals = append(vals, row.ImageTypeId)
+		vals = append(vals, row.Title)
+		vals = append(vals, row.Src)
 		vals = append(vals, row.Width)
 		vals = append(vals, row.Height)
-		vals = append(vals, row.SharedTo)
-		vals = append(vals, row.DisableComment)
-		vals = append(vals, row.HasTag)
-		vals = append(vals, row.LikesCount)
-		vals = append(vals, row.CommentsCount)
-		vals = append(vals, row.EditedTime)
+		vals = append(vals, row.Ratio)
+		vals = append(vals, row.HashMd5)
+		vals = append(vals, row.W1080)
+		vals = append(vals, row.W720)
+		vals = append(vals, row.W480)
+		vals = append(vals, row.W320)
+		vals = append(vals, row.W160)
+		vals = append(vals, row.W80)
 		vals = append(vals, row.CreatedTime)
 
 	}
@@ -5445,15 +5466,15 @@ func MassInsert_Post(rows []Post, db XODB) error {
 	return nil
 }
 
-func MassReplace_Post(rows []Post, db XODB) error {
+func MassReplace_Photo(rows []Photo, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "REPLACE INTO ms.post (" +
-		"UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime" +
+	sqlstr := "REPLACE INTO ms.photo (" +
+		"UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -5462,20 +5483,21 @@ func MassReplace_Post(rows []Post, db XODB) error {
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.UserId)
-		vals = append(vals, row.TypeId)
-		vals = append(vals, row.Text)
-		vals = append(vals, row.FormatedText)
-		vals = append(vals, row.MediaUrl)
-		vals = append(vals, row.MediaCount)
-		vals = append(vals, row.MediaServerId)
+		vals = append(vals, row.PostId)
+		vals = append(vals, row.AlbumId)
+		vals = append(vals, row.ImageTypeId)
+		vals = append(vals, row.Title)
+		vals = append(vals, row.Src)
 		vals = append(vals, row.Width)
 		vals = append(vals, row.Height)
-		vals = append(vals, row.SharedTo)
-		vals = append(vals, row.DisableComment)
-		vals = append(vals, row.HasTag)
-		vals = append(vals, row.LikesCount)
-		vals = append(vals, row.CommentsCount)
-		vals = append(vals, row.EditedTime)
+		vals = append(vals, row.Ratio)
+		vals = append(vals, row.HashMd5)
+		vals = append(vals, row.W1080)
+		vals = append(vals, row.W720)
+		vals = append(vals, row.W480)
+		vals = append(vals, row.W320)
+		vals = append(vals, row.W160)
+		vals = append(vals, row.W80)
 		vals = append(vals, row.CreatedTime)
 
 	}
@@ -5526,35 +5548,37 @@ func MassReplace_Post(rows []Post, db XODB) error {
 
 //
 
-// PostsByUserId retrieves a row from 'ms.post' as a Post.
 //
-// Generated from index 'UserId'.
-func PostsByUserId(db XODB, userId int) ([]*Post, error) {
+
+// PhotosByPostId retrieves a row from 'ms.photo' as a Photo.
+//
+// Generated from index 'PostId'.
+func PhotosByPostId(db XODB, postId int) ([]*Photo, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime ` +
-		`FROM ms.post ` +
-		`WHERE UserId = ?`
+		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime ` +
+		`FROM ms.photo ` +
+		`WHERE PostId = ?`
 
 	// run query
-	XOLog(sqlstr, userId)
-	q, err := db.Query(sqlstr, userId)
+	XOLog(sqlstr, postId)
+	q, err := db.Query(sqlstr, postId)
 	if err != nil {
 		return nil, err
 	}
 	defer q.Close()
 
 	// load results
-	res := []*Post{}
+	res := []*Photo{}
 	for q.Next() {
-		p := Post{
+		p := Photo{
 			_exists: true,
 		}
 
 		// scan
-		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaCount, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.DisableComment, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.EditedTime, &p.CreatedTime)
+		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80, &p.CreatedTime)
 		if err != nil {
 			return nil, err
 		}
@@ -5562,35 +5586,35 @@ func PostsByUserId(db XODB, userId int) ([]*Post, error) {
 		res = append(res, &p)
 	}
 
-	OnPost_LoadMany(res)
+	OnPhoto_LoadMany(res)
 
 	return res, nil
 }
 
-// PostById retrieves a row from 'ms.post' as a Post.
+// PhotoByPhotoId retrieves a row from 'ms.photo' as a Photo.
 //
-// Generated from index 'post_Id_pkey'.
-func PostById(db XODB, id int) (*Post, error) {
+// Generated from index 'photo_PhotoId_pkey'.
+func PhotoByPhotoId(db XODB, photoId int) (*Photo, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime ` +
-		`FROM ms.post ` +
-		`WHERE Id = ?`
+		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, Width, Height, Ratio, HashMd5, W1080, W720, W480, W320, W160, W80, CreatedTime ` +
+		`FROM ms.photo ` +
+		`WHERE PhotoId = ?`
 
 	// run query
-	XOLog(sqlstr, id)
-	p := Post{
+	XOLog(sqlstr, photoId)
+	p := Photo{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaCount, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.DisableComment, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.EditedTime, &p.CreatedTime)
+	err = db.QueryRow(sqlstr, photoId).Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80, &p.CreatedTime)
 	if err != nil {
 		return nil, err
 	}
 
-	OnPost_LoadOne(&p)
+	OnPhoto_LoadOne(&p)
 
 	return &p, nil
 }
