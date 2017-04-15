@@ -13,6 +13,6 @@ const DEBUG_LOG_SQL = IS_DEBUG
 const IS_PRODUCTION = false
 
 const UPLOAD_DIR = "./upload/"
-const UPLOAD_DIR_POSTS = UPLOAD_DIR + "posts/"
+const UPLOAD_DIR_POSTS = UPLOAD_DIR + ""
 
 const BUCKET_SIZE = 5
