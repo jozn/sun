@@ -248,6 +248,19 @@ func (u *__Message_Deleter) Id_In(ins []int) *__Message_Deleter {
 	return u
 }
 
+func (u *__Message_Deleter) Id_Ins(ins ...int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Message_Deleter) Id_NotIn(ins []int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -328,6 +341,19 @@ func (d *__Message_Deleter) Id_GE(val int) *__Message_Deleter {
 }
 
 func (u *__Message_Deleter) ToUserId_In(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) ToUserId_Ins(ins ...int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -432,6 +458,19 @@ func (u *__Message_Deleter) FromUserID_In(ins []int) *__Message_Deleter {
 	return u
 }
 
+func (u *__Message_Deleter) FromUserID_Ins(ins ...int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Message_Deleter) FromUserID_NotIn(ins []int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -512,6 +551,19 @@ func (d *__Message_Deleter) FromUserID_GE(val int) *__Message_Deleter {
 }
 
 func (u *__Message_Deleter) TimeMs_In(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) TimeMs_Ins(ins ...int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -622,6 +674,19 @@ func (u *__Message_Updater) Id_In(ins []int) *__Message_Updater {
 	return u
 }
 
+func (u *__Message_Updater) Id_Ins(ins ...int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Message_Updater) Id_NotIn(ins []int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -702,6 +767,19 @@ func (d *__Message_Updater) Id_GE(val int) *__Message_Updater {
 }
 
 func (u *__Message_Updater) ToUserId_In(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) ToUserId_Ins(ins ...int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -806,6 +884,19 @@ func (u *__Message_Updater) FromUserID_In(ins []int) *__Message_Updater {
 	return u
 }
 
+func (u *__Message_Updater) FromUserID_Ins(ins ...int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Message_Updater) FromUserID_NotIn(ins []int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -886,6 +977,19 @@ func (d *__Message_Updater) FromUserID_GE(val int) *__Message_Updater {
 }
 
 func (u *__Message_Updater) TimeMs_In(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) TimeMs_Ins(ins ...int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -996,6 +1100,19 @@ func (u *__Message_Selector) Id_In(ins []int) *__Message_Selector {
 	return u
 }
 
+func (u *__Message_Selector) Id_Ins(ins ...int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Message_Selector) Id_NotIn(ins []int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1076,6 +1193,19 @@ func (d *__Message_Selector) Id_GE(val int) *__Message_Selector {
 }
 
 func (u *__Message_Selector) ToUserId_In(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) ToUserId_Ins(ins ...int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1180,6 +1310,19 @@ func (u *__Message_Selector) FromUserID_In(ins []int) *__Message_Selector {
 	return u
 }
 
+func (u *__Message_Selector) FromUserID_Ins(ins ...int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Message_Selector) FromUserID_NotIn(ins []int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1260,6 +1403,19 @@ func (d *__Message_Selector) FromUserID_GE(val int) *__Message_Selector {
 }
 
 func (u *__Message_Selector) TimeMs_In(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) TimeMs_Ins(ins ...int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

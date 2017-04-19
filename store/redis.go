@@ -2,6 +2,7 @@ package store
 
 import (
 	"fmt"
+
 	"github.com/mediocregopher/radix.v2/pool"
 )
 

@@ -234,6 +234,19 @@ func (u *__UserMetaInfo_Deleter) UserId_In(ins []int) *__UserMetaInfo_Deleter {
 	return u
 }
 
+func (u *__UserMetaInfo_Deleter) UserId_Ins(ins ...int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__UserMetaInfo_Deleter) UserId_NotIn(ins []int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -314,6 +327,19 @@ func (d *__UserMetaInfo_Deleter) UserId_GE(val int) *__UserMetaInfo_Deleter {
 }
 
 func (u *__UserMetaInfo_Deleter) IsNotificationDirty_In(ins []int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsNotificationDirty IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Deleter) IsNotificationDirty_Ins(ins ...int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -424,6 +450,19 @@ func (u *__UserMetaInfo_Updater) UserId_In(ins []int) *__UserMetaInfo_Updater {
 	return u
 }
 
+func (u *__UserMetaInfo_Updater) UserId_Ins(ins ...int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__UserMetaInfo_Updater) UserId_NotIn(ins []int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -504,6 +543,19 @@ func (d *__UserMetaInfo_Updater) UserId_GE(val int) *__UserMetaInfo_Updater {
 }
 
 func (u *__UserMetaInfo_Updater) IsNotificationDirty_In(ins []int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsNotificationDirty IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Updater) IsNotificationDirty_Ins(ins ...int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -614,6 +666,19 @@ func (u *__UserMetaInfo_Selector) UserId_In(ins []int) *__UserMetaInfo_Selector 
 	return u
 }
 
+func (u *__UserMetaInfo_Selector) UserId_Ins(ins ...int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__UserMetaInfo_Selector) UserId_NotIn(ins []int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -694,6 +759,19 @@ func (d *__UserMetaInfo_Selector) UserId_GE(val int) *__UserMetaInfo_Selector {
 }
 
 func (u *__UserMetaInfo_Selector) IsNotificationDirty_In(ins []int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsNotificationDirty IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Selector) IsNotificationDirty_Ins(ins ...int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

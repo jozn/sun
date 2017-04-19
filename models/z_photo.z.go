@@ -261,6 +261,19 @@ func (u *__Photo_Deleter) PhotoId_In(ins []int) *__Photo_Deleter {
 	return u
 }
 
+func (u *__Photo_Deleter) PhotoId_Ins(ins ...int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PhotoId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Deleter) PhotoId_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -341,6 +354,19 @@ func (d *__Photo_Deleter) PhotoId_GE(val int) *__Photo_Deleter {
 }
 
 func (u *__Photo_Deleter) UserId_In(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) UserId_Ins(ins ...int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -445,6 +471,19 @@ func (u *__Photo_Deleter) PostId_In(ins []int) *__Photo_Deleter {
 	return u
 }
 
+func (u *__Photo_Deleter) PostId_Ins(ins ...int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Deleter) PostId_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -525,6 +564,19 @@ func (d *__Photo_Deleter) PostId_GE(val int) *__Photo_Deleter {
 }
 
 func (u *__Photo_Deleter) AlbumId_In(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AlbumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) AlbumId_Ins(ins ...int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -629,6 +681,19 @@ func (u *__Photo_Deleter) ImageTypeId_In(ins []int) *__Photo_Deleter {
 	return u
 }
 
+func (u *__Photo_Deleter) ImageTypeId_Ins(ins ...int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ImageTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Deleter) ImageTypeId_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -709,6 +774,19 @@ func (d *__Photo_Deleter) ImageTypeId_GE(val int) *__Photo_Deleter {
 }
 
 func (u *__Photo_Deleter) BucketId_In(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) BucketId_Ins(ins ...int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -813,6 +891,19 @@ func (u *__Photo_Deleter) Width_In(ins []int) *__Photo_Deleter {
 	return u
 }
 
+func (u *__Photo_Deleter) Width_Ins(ins ...int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Deleter) Width_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -893,6 +984,19 @@ func (d *__Photo_Deleter) Width_GE(val int) *__Photo_Deleter {
 }
 
 func (u *__Photo_Deleter) Height_In(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) Height_Ins(ins ...int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -997,6 +1101,19 @@ func (u *__Photo_Deleter) CreatedTime_In(ins []int) *__Photo_Deleter {
 	return u
 }
 
+func (u *__Photo_Deleter) CreatedTime_Ins(ins ...int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Deleter) CreatedTime_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1077,6 +1194,19 @@ func (d *__Photo_Deleter) CreatedTime_GE(val int) *__Photo_Deleter {
 }
 
 func (u *__Photo_Deleter) W1080_In(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W1080 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) W1080_Ins(ins ...int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1181,6 +1311,19 @@ func (u *__Photo_Deleter) W720_In(ins []int) *__Photo_Deleter {
 	return u
 }
 
+func (u *__Photo_Deleter) W720_Ins(ins ...int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W720 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Deleter) W720_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1261,6 +1404,19 @@ func (d *__Photo_Deleter) W720_GE(val int) *__Photo_Deleter {
 }
 
 func (u *__Photo_Deleter) W480_In(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W480 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) W480_Ins(ins ...int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1365,6 +1521,19 @@ func (u *__Photo_Deleter) W320_In(ins []int) *__Photo_Deleter {
 	return u
 }
 
+func (u *__Photo_Deleter) W320_Ins(ins ...int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W320 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Deleter) W320_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1457,6 +1626,19 @@ func (u *__Photo_Deleter) W160_In(ins []int) *__Photo_Deleter {
 	return u
 }
 
+func (u *__Photo_Deleter) W160_Ins(ins ...int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W160 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Deleter) W160_NotIn(ins []int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1537,6 +1719,19 @@ func (d *__Photo_Deleter) W160_GE(val int) *__Photo_Deleter {
 }
 
 func (u *__Photo_Deleter) W80_In(ins []int) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W80 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) W80_Ins(ins ...int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1647,6 +1842,19 @@ func (u *__Photo_Updater) PhotoId_In(ins []int) *__Photo_Updater {
 	return u
 }
 
+func (u *__Photo_Updater) PhotoId_Ins(ins ...int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PhotoId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Updater) PhotoId_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1727,6 +1935,19 @@ func (d *__Photo_Updater) PhotoId_GE(val int) *__Photo_Updater {
 }
 
 func (u *__Photo_Updater) UserId_In(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) UserId_Ins(ins ...int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1831,6 +2052,19 @@ func (u *__Photo_Updater) PostId_In(ins []int) *__Photo_Updater {
 	return u
 }
 
+func (u *__Photo_Updater) PostId_Ins(ins ...int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Updater) PostId_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1911,6 +2145,19 @@ func (d *__Photo_Updater) PostId_GE(val int) *__Photo_Updater {
 }
 
 func (u *__Photo_Updater) AlbumId_In(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AlbumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) AlbumId_Ins(ins ...int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2015,6 +2262,19 @@ func (u *__Photo_Updater) ImageTypeId_In(ins []int) *__Photo_Updater {
 	return u
 }
 
+func (u *__Photo_Updater) ImageTypeId_Ins(ins ...int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ImageTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Updater) ImageTypeId_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2095,6 +2355,19 @@ func (d *__Photo_Updater) ImageTypeId_GE(val int) *__Photo_Updater {
 }
 
 func (u *__Photo_Updater) BucketId_In(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) BucketId_Ins(ins ...int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2199,6 +2472,19 @@ func (u *__Photo_Updater) Width_In(ins []int) *__Photo_Updater {
 	return u
 }
 
+func (u *__Photo_Updater) Width_Ins(ins ...int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Updater) Width_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2279,6 +2565,19 @@ func (d *__Photo_Updater) Width_GE(val int) *__Photo_Updater {
 }
 
 func (u *__Photo_Updater) Height_In(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) Height_Ins(ins ...int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2383,6 +2682,19 @@ func (u *__Photo_Updater) CreatedTime_In(ins []int) *__Photo_Updater {
 	return u
 }
 
+func (u *__Photo_Updater) CreatedTime_Ins(ins ...int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Updater) CreatedTime_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2463,6 +2775,19 @@ func (d *__Photo_Updater) CreatedTime_GE(val int) *__Photo_Updater {
 }
 
 func (u *__Photo_Updater) W1080_In(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W1080 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) W1080_Ins(ins ...int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2567,6 +2892,19 @@ func (u *__Photo_Updater) W720_In(ins []int) *__Photo_Updater {
 	return u
 }
 
+func (u *__Photo_Updater) W720_Ins(ins ...int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W720 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Updater) W720_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2647,6 +2985,19 @@ func (d *__Photo_Updater) W720_GE(val int) *__Photo_Updater {
 }
 
 func (u *__Photo_Updater) W480_In(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W480 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) W480_Ins(ins ...int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2751,6 +3102,19 @@ func (u *__Photo_Updater) W320_In(ins []int) *__Photo_Updater {
 	return u
 }
 
+func (u *__Photo_Updater) W320_Ins(ins ...int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W320 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Updater) W320_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2843,6 +3207,19 @@ func (u *__Photo_Updater) W160_In(ins []int) *__Photo_Updater {
 	return u
 }
 
+func (u *__Photo_Updater) W160_Ins(ins ...int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W160 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Updater) W160_NotIn(ins []int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2923,6 +3300,19 @@ func (d *__Photo_Updater) W160_GE(val int) *__Photo_Updater {
 }
 
 func (u *__Photo_Updater) W80_In(ins []int) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W80 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) W80_Ins(ins ...int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3033,6 +3423,19 @@ func (u *__Photo_Selector) PhotoId_In(ins []int) *__Photo_Selector {
 	return u
 }
 
+func (u *__Photo_Selector) PhotoId_Ins(ins ...int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PhotoId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Selector) PhotoId_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3113,6 +3516,19 @@ func (d *__Photo_Selector) PhotoId_GE(val int) *__Photo_Selector {
 }
 
 func (u *__Photo_Selector) UserId_In(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) UserId_Ins(ins ...int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3217,6 +3633,19 @@ func (u *__Photo_Selector) PostId_In(ins []int) *__Photo_Selector {
 	return u
 }
 
+func (u *__Photo_Selector) PostId_Ins(ins ...int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Selector) PostId_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3297,6 +3726,19 @@ func (d *__Photo_Selector) PostId_GE(val int) *__Photo_Selector {
 }
 
 func (u *__Photo_Selector) AlbumId_In(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AlbumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) AlbumId_Ins(ins ...int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3401,6 +3843,19 @@ func (u *__Photo_Selector) ImageTypeId_In(ins []int) *__Photo_Selector {
 	return u
 }
 
+func (u *__Photo_Selector) ImageTypeId_Ins(ins ...int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ImageTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Selector) ImageTypeId_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3481,6 +3936,19 @@ func (d *__Photo_Selector) ImageTypeId_GE(val int) *__Photo_Selector {
 }
 
 func (u *__Photo_Selector) BucketId_In(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) BucketId_Ins(ins ...int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3585,6 +4053,19 @@ func (u *__Photo_Selector) Width_In(ins []int) *__Photo_Selector {
 	return u
 }
 
+func (u *__Photo_Selector) Width_Ins(ins ...int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Selector) Width_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3665,6 +4146,19 @@ func (d *__Photo_Selector) Width_GE(val int) *__Photo_Selector {
 }
 
 func (u *__Photo_Selector) Height_In(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) Height_Ins(ins ...int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3769,6 +4263,19 @@ func (u *__Photo_Selector) CreatedTime_In(ins []int) *__Photo_Selector {
 	return u
 }
 
+func (u *__Photo_Selector) CreatedTime_Ins(ins ...int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Selector) CreatedTime_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3849,6 +4356,19 @@ func (d *__Photo_Selector) CreatedTime_GE(val int) *__Photo_Selector {
 }
 
 func (u *__Photo_Selector) W1080_In(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W1080 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) W1080_Ins(ins ...int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3953,6 +4473,19 @@ func (u *__Photo_Selector) W720_In(ins []int) *__Photo_Selector {
 	return u
 }
 
+func (u *__Photo_Selector) W720_Ins(ins ...int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W720 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Selector) W720_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4033,6 +4566,19 @@ func (d *__Photo_Selector) W720_GE(val int) *__Photo_Selector {
 }
 
 func (u *__Photo_Selector) W480_In(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W480 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) W480_Ins(ins ...int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -4137,6 +4683,19 @@ func (u *__Photo_Selector) W320_In(ins []int) *__Photo_Selector {
 	return u
 }
 
+func (u *__Photo_Selector) W320_Ins(ins ...int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W320 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Selector) W320_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4229,6 +4788,19 @@ func (u *__Photo_Selector) W160_In(ins []int) *__Photo_Selector {
 	return u
 }
 
+func (u *__Photo_Selector) W160_Ins(ins ...int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W160 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Photo_Selector) W160_NotIn(ins []int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4309,6 +4881,19 @@ func (d *__Photo_Selector) W160_GE(val int) *__Photo_Selector {
 }
 
 func (u *__Photo_Selector) W80_In(ins []int) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " W80 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) W80_Ins(ins ...int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

@@ -247,6 +247,19 @@ func (u *__MsgDeletedFromServer_Deleter) Id_In(ins []int) *__MsgDeletedFromServe
 	return u
 }
 
+func (u *__MsgDeletedFromServer_Deleter) Id_Ins(ins ...int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgDeletedFromServer_Deleter) Id_NotIn(ins []int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -327,6 +340,19 @@ func (d *__MsgDeletedFromServer_Deleter) Id_GE(val int) *__MsgDeletedFromServer_
 }
 
 func (u *__MsgDeletedFromServer_Deleter) ToUserId_In(ins []int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Deleter) ToUserId_Ins(ins ...int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -431,6 +457,19 @@ func (u *__MsgDeletedFromServer_Deleter) PeerUserId_In(ins []int) *__MsgDeletedF
 	return u
 }
 
+func (u *__MsgDeletedFromServer_Deleter) PeerUserId_Ins(ins ...int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgDeletedFromServer_Deleter) PeerUserId_NotIn(ins []int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -511,6 +550,19 @@ func (d *__MsgDeletedFromServer_Deleter) PeerUserId_GE(val int) *__MsgDeletedFro
 }
 
 func (u *__MsgDeletedFromServer_Deleter) AtTime_In(ins []int) *__MsgDeletedFromServer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Deleter) AtTime_Ins(ins ...int) *__MsgDeletedFromServer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -621,6 +673,19 @@ func (u *__MsgDeletedFromServer_Updater) Id_In(ins []int) *__MsgDeletedFromServe
 	return u
 }
 
+func (u *__MsgDeletedFromServer_Updater) Id_Ins(ins ...int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgDeletedFromServer_Updater) Id_NotIn(ins []int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -701,6 +766,19 @@ func (d *__MsgDeletedFromServer_Updater) Id_GE(val int) *__MsgDeletedFromServer_
 }
 
 func (u *__MsgDeletedFromServer_Updater) ToUserId_In(ins []int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) ToUserId_Ins(ins ...int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -805,6 +883,19 @@ func (u *__MsgDeletedFromServer_Updater) PeerUserId_In(ins []int) *__MsgDeletedF
 	return u
 }
 
+func (u *__MsgDeletedFromServer_Updater) PeerUserId_Ins(ins ...int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgDeletedFromServer_Updater) PeerUserId_NotIn(ins []int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -885,6 +976,19 @@ func (d *__MsgDeletedFromServer_Updater) PeerUserId_GE(val int) *__MsgDeletedFro
 }
 
 func (u *__MsgDeletedFromServer_Updater) AtTime_In(ins []int) *__MsgDeletedFromServer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Updater) AtTime_Ins(ins ...int) *__MsgDeletedFromServer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -995,6 +1099,19 @@ func (u *__MsgDeletedFromServer_Selector) Id_In(ins []int) *__MsgDeletedFromServ
 	return u
 }
 
+func (u *__MsgDeletedFromServer_Selector) Id_Ins(ins ...int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgDeletedFromServer_Selector) Id_NotIn(ins []int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1075,6 +1192,19 @@ func (d *__MsgDeletedFromServer_Selector) Id_GE(val int) *__MsgDeletedFromServer
 }
 
 func (u *__MsgDeletedFromServer_Selector) ToUserId_In(ins []int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) ToUserId_Ins(ins ...int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1179,6 +1309,19 @@ func (u *__MsgDeletedFromServer_Selector) PeerUserId_In(ins []int) *__MsgDeleted
 	return u
 }
 
+func (u *__MsgDeletedFromServer_Selector) PeerUserId_Ins(ins ...int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgDeletedFromServer_Selector) PeerUserId_NotIn(ins []int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1259,6 +1402,19 @@ func (d *__MsgDeletedFromServer_Selector) PeerUserId_GE(val int) *__MsgDeletedFr
 }
 
 func (u *__MsgDeletedFromServer_Selector) AtTime_In(ins []int) *__MsgDeletedFromServer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgDeletedFromServer_Selector) AtTime_Ins(ins ...int) *__MsgDeletedFromServer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

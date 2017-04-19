@@ -3,8 +3,6 @@ package main
 import (
 	"crypto/md5"
 	"fmt"
-	"github.com/astaxie/beedb"
-	orm "gopkg.in/gorp.v1"
 	"html/template"
 	"io"
 	"log"
@@ -13,6 +11,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beedb"
+	orm "gopkg.in/gorp.v1"
 )
 
 func sayhelloName(w http.ResponseWriter, r *http.Request) {

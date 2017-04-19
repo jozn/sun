@@ -246,6 +246,19 @@ func (u *__Comment_Deleter) Id_In(ins []int) *__Comment_Deleter {
 	return u
 }
 
+func (u *__Comment_Deleter) Id_Ins(ins ...int) *__Comment_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Comment_Deleter) Id_NotIn(ins []int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -326,6 +339,19 @@ func (d *__Comment_Deleter) Id_GE(val int) *__Comment_Deleter {
 }
 
 func (u *__Comment_Deleter) UserId_In(ins []int) *__Comment_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Comment_Deleter) UserId_Ins(ins ...int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -430,6 +456,19 @@ func (u *__Comment_Deleter) PostId_In(ins []int) *__Comment_Deleter {
 	return u
 }
 
+func (u *__Comment_Deleter) PostId_Ins(ins ...int) *__Comment_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Comment_Deleter) PostId_NotIn(ins []int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -510,6 +549,19 @@ func (d *__Comment_Deleter) PostId_GE(val int) *__Comment_Deleter {
 }
 
 func (u *__Comment_Deleter) CreatedTime_In(ins []int) *__Comment_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Comment_Deleter) CreatedTime_Ins(ins ...int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -620,6 +672,19 @@ func (u *__Comment_Updater) Id_In(ins []int) *__Comment_Updater {
 	return u
 }
 
+func (u *__Comment_Updater) Id_Ins(ins ...int) *__Comment_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Comment_Updater) Id_NotIn(ins []int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -700,6 +765,19 @@ func (d *__Comment_Updater) Id_GE(val int) *__Comment_Updater {
 }
 
 func (u *__Comment_Updater) UserId_In(ins []int) *__Comment_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Comment_Updater) UserId_Ins(ins ...int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -804,6 +882,19 @@ func (u *__Comment_Updater) PostId_In(ins []int) *__Comment_Updater {
 	return u
 }
 
+func (u *__Comment_Updater) PostId_Ins(ins ...int) *__Comment_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Comment_Updater) PostId_NotIn(ins []int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -884,6 +975,19 @@ func (d *__Comment_Updater) PostId_GE(val int) *__Comment_Updater {
 }
 
 func (u *__Comment_Updater) CreatedTime_In(ins []int) *__Comment_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Comment_Updater) CreatedTime_Ins(ins ...int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -994,6 +1098,19 @@ func (u *__Comment_Selector) Id_In(ins []int) *__Comment_Selector {
 	return u
 }
 
+func (u *__Comment_Selector) Id_Ins(ins ...int) *__Comment_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Comment_Selector) Id_NotIn(ins []int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1074,6 +1191,19 @@ func (d *__Comment_Selector) Id_GE(val int) *__Comment_Selector {
 }
 
 func (u *__Comment_Selector) UserId_In(ins []int) *__Comment_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Comment_Selector) UserId_Ins(ins ...int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1178,6 +1308,19 @@ func (u *__Comment_Selector) PostId_In(ins []int) *__Comment_Selector {
 	return u
 }
 
+func (u *__Comment_Selector) PostId_Ins(ins ...int) *__Comment_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Comment_Selector) PostId_NotIn(ins []int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1258,6 +1401,19 @@ func (d *__Comment_Selector) PostId_GE(val int) *__Comment_Selector {
 }
 
 func (u *__Comment_Selector) CreatedTime_In(ins []int) *__Comment_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Comment_Selector) CreatedTime_Ins(ins ...int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

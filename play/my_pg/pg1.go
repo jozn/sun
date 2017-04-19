@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"time"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
-	"math/rand"
-	"time"
 	//"ms/sun/sync"
 )
 

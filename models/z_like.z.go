@@ -246,6 +246,19 @@ func (u *__Like_Deleter) Id_In(ins []int) *__Like_Deleter {
 	return u
 }
 
+func (u *__Like_Deleter) Id_Ins(ins ...int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Like_Deleter) Id_NotIn(ins []int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -326,6 +339,19 @@ func (d *__Like_Deleter) Id_GE(val int) *__Like_Deleter {
 }
 
 func (u *__Like_Deleter) PostId_In(ins []int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Deleter) PostId_Ins(ins ...int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -430,6 +456,19 @@ func (u *__Like_Deleter) UserId_In(ins []int) *__Like_Deleter {
 	return u
 }
 
+func (u *__Like_Deleter) UserId_Ins(ins ...int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Like_Deleter) UserId_NotIn(ins []int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -522,6 +561,19 @@ func (u *__Like_Deleter) TypeId_In(ins []int) *__Like_Deleter {
 	return u
 }
 
+func (u *__Like_Deleter) TypeId_Ins(ins ...int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Like_Deleter) TypeId_NotIn(ins []int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -602,6 +654,19 @@ func (d *__Like_Deleter) TypeId_GE(val int) *__Like_Deleter {
 }
 
 func (u *__Like_Deleter) CreatedTime_In(ins []int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Deleter) CreatedTime_Ins(ins ...int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -712,6 +777,19 @@ func (u *__Like_Updater) Id_In(ins []int) *__Like_Updater {
 	return u
 }
 
+func (u *__Like_Updater) Id_Ins(ins ...int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Like_Updater) Id_NotIn(ins []int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -792,6 +870,19 @@ func (d *__Like_Updater) Id_GE(val int) *__Like_Updater {
 }
 
 func (u *__Like_Updater) PostId_In(ins []int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Updater) PostId_Ins(ins ...int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -896,6 +987,19 @@ func (u *__Like_Updater) UserId_In(ins []int) *__Like_Updater {
 	return u
 }
 
+func (u *__Like_Updater) UserId_Ins(ins ...int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Like_Updater) UserId_NotIn(ins []int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -988,6 +1092,19 @@ func (u *__Like_Updater) TypeId_In(ins []int) *__Like_Updater {
 	return u
 }
 
+func (u *__Like_Updater) TypeId_Ins(ins ...int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Like_Updater) TypeId_NotIn(ins []int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1068,6 +1185,19 @@ func (d *__Like_Updater) TypeId_GE(val int) *__Like_Updater {
 }
 
 func (u *__Like_Updater) CreatedTime_In(ins []int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Updater) CreatedTime_Ins(ins ...int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1178,6 +1308,19 @@ func (u *__Like_Selector) Id_In(ins []int) *__Like_Selector {
 	return u
 }
 
+func (u *__Like_Selector) Id_Ins(ins ...int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Like_Selector) Id_NotIn(ins []int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1258,6 +1401,19 @@ func (d *__Like_Selector) Id_GE(val int) *__Like_Selector {
 }
 
 func (u *__Like_Selector) PostId_In(ins []int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Selector) PostId_Ins(ins ...int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1362,6 +1518,19 @@ func (u *__Like_Selector) UserId_In(ins []int) *__Like_Selector {
 	return u
 }
 
+func (u *__Like_Selector) UserId_Ins(ins ...int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Like_Selector) UserId_NotIn(ins []int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1454,6 +1623,19 @@ func (u *__Like_Selector) TypeId_In(ins []int) *__Like_Selector {
 	return u
 }
 
+func (u *__Like_Selector) TypeId_Ins(ins ...int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Like_Selector) TypeId_NotIn(ins []int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1534,6 +1716,19 @@ func (d *__Like_Selector) TypeId_GE(val int) *__Like_Selector {
 }
 
 func (u *__Like_Selector) CreatedTime_In(ins []int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Selector) CreatedTime_Ins(ins ...int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2166,49 +2361,6 @@ func MassReplace_Like(rows []Like, db XODB) error {
 //
 
 //
-
-// LikesById retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'Id'.
-func LikesById(db XODB, id int) ([]*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Like{}
-	for q.Next() {
-		l := Like{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &l)
-	}
-
-	OnLike_LoadMany(res)
-
-	return res, nil
-}
 
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
 //

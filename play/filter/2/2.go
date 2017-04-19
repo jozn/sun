@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/pravj/geopattern"
 	"io/ioutil"
+
+	"github.com/pravj/geopattern"
 )
 
 // Prints pattern's SVG string for a specific pattern

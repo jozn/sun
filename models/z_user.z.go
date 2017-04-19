@@ -273,6 +273,19 @@ func (u *__User_Deleter) Id_In(ins []int) *__User_Deleter {
 	return u
 }
 
+func (u *__User_Deleter) Id_Ins(ins ...int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Deleter) Id_NotIn(ins []int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -353,6 +366,19 @@ func (d *__User_Deleter) Id_GE(val int) *__User_Deleter {
 }
 
 func (u *__User_Deleter) PrivacyProfile_In(ins []int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrivacyProfile IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Deleter) PrivacyProfile_Ins(ins ...int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -457,6 +483,19 @@ func (u *__User_Deleter) IsDeleted_In(ins []int) *__User_Deleter {
 	return u
 }
 
+func (u *__User_Deleter) IsDeleted_Ins(ins ...int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsDeleted IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Deleter) IsDeleted_NotIn(ins []int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -537,6 +576,19 @@ func (d *__User_Deleter) IsDeleted_GE(val int) *__User_Deleter {
 }
 
 func (u *__User_Deleter) FollowersCount_In(ins []int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowersCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Deleter) FollowersCount_Ins(ins ...int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -641,6 +693,19 @@ func (u *__User_Deleter) FollowingCount_In(ins []int) *__User_Deleter {
 	return u
 }
 
+func (u *__User_Deleter) FollowingCount_Ins(ins ...int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowingCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Deleter) FollowingCount_NotIn(ins []int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -721,6 +786,19 @@ func (d *__User_Deleter) FollowingCount_GE(val int) *__User_Deleter {
 }
 
 func (u *__User_Deleter) PostsCount_In(ins []int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostsCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Deleter) PostsCount_Ins(ins ...int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -825,6 +903,19 @@ func (u *__User_Deleter) MediaCount_In(ins []int) *__User_Deleter {
 	return u
 }
 
+func (u *__User_Deleter) MediaCount_Ins(ins ...int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MediaCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Deleter) MediaCount_NotIn(ins []int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -905,6 +996,19 @@ func (d *__User_Deleter) MediaCount_GE(val int) *__User_Deleter {
 }
 
 func (u *__User_Deleter) LikesCount_In(ins []int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LikesCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Deleter) LikesCount_Ins(ins ...int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1009,6 +1113,19 @@ func (u *__User_Deleter) ResharedCount_In(ins []int) *__User_Deleter {
 	return u
 }
 
+func (u *__User_Deleter) ResharedCount_Ins(ins ...int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ResharedCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Deleter) ResharedCount_NotIn(ins []int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1089,6 +1206,19 @@ func (d *__User_Deleter) ResharedCount_GE(val int) *__User_Deleter {
 }
 
 func (u *__User_Deleter) LastActionTime_In(ins []int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastActionTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Deleter) LastActionTime_Ins(ins ...int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1193,6 +1323,19 @@ func (u *__User_Deleter) LastPostTime_In(ins []int) *__User_Deleter {
 	return u
 }
 
+func (u *__User_Deleter) LastPostTime_Ins(ins ...int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastPostTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Deleter) LastPostTime_NotIn(ins []int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1273,6 +1416,19 @@ func (d *__User_Deleter) LastPostTime_GE(val int) *__User_Deleter {
 }
 
 func (u *__User_Deleter) PrimaryFollowingList_In(ins []int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrimaryFollowingList IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Deleter) PrimaryFollowingList_Ins(ins ...int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1377,6 +1533,19 @@ func (u *__User_Deleter) CreatedTime_In(ins []int) *__User_Deleter {
 	return u
 }
 
+func (u *__User_Deleter) CreatedTime_Ins(ins ...int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Deleter) CreatedTime_NotIn(ins []int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1457,6 +1626,19 @@ func (d *__User_Deleter) CreatedTime_GE(val int) *__User_Deleter {
 }
 
 func (u *__User_Deleter) UpdatedTime_In(ins []int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Deleter) UpdatedTime_Ins(ins ...int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1561,6 +1743,19 @@ func (u *__User_Deleter) AppVersion_In(ins []int) *__User_Deleter {
 	return u
 }
 
+func (u *__User_Deleter) AppVersion_Ins(ins ...int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AppVersion IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Deleter) AppVersion_NotIn(ins []int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1653,6 +1848,19 @@ func (u *__User_Deleter) LastActivityTime_In(ins []int) *__User_Deleter {
 	return u
 }
 
+func (u *__User_Deleter) LastActivityTime_Ins(ins ...int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Deleter) LastActivityTime_NotIn(ins []int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1733,6 +1941,19 @@ func (d *__User_Deleter) LastActivityTime_GE(val int) *__User_Deleter {
 }
 
 func (u *__User_Deleter) LastLoginTime_In(ins []int) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastLoginTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Deleter) LastLoginTime_Ins(ins ...int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1843,6 +2064,19 @@ func (u *__User_Updater) Id_In(ins []int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) Id_Ins(ins ...int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Updater) Id_NotIn(ins []int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1923,6 +2157,19 @@ func (d *__User_Updater) Id_GE(val int) *__User_Updater {
 }
 
 func (u *__User_Updater) PrivacyProfile_In(ins []int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrivacyProfile IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Updater) PrivacyProfile_Ins(ins ...int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2027,6 +2274,19 @@ func (u *__User_Updater) IsDeleted_In(ins []int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) IsDeleted_Ins(ins ...int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsDeleted IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Updater) IsDeleted_NotIn(ins []int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2107,6 +2367,19 @@ func (d *__User_Updater) IsDeleted_GE(val int) *__User_Updater {
 }
 
 func (u *__User_Updater) FollowersCount_In(ins []int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowersCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Updater) FollowersCount_Ins(ins ...int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2211,6 +2484,19 @@ func (u *__User_Updater) FollowingCount_In(ins []int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) FollowingCount_Ins(ins ...int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowingCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Updater) FollowingCount_NotIn(ins []int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2291,6 +2577,19 @@ func (d *__User_Updater) FollowingCount_GE(val int) *__User_Updater {
 }
 
 func (u *__User_Updater) PostsCount_In(ins []int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostsCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Updater) PostsCount_Ins(ins ...int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2395,6 +2694,19 @@ func (u *__User_Updater) MediaCount_In(ins []int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) MediaCount_Ins(ins ...int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MediaCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Updater) MediaCount_NotIn(ins []int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2475,6 +2787,19 @@ func (d *__User_Updater) MediaCount_GE(val int) *__User_Updater {
 }
 
 func (u *__User_Updater) LikesCount_In(ins []int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LikesCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Updater) LikesCount_Ins(ins ...int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2579,6 +2904,19 @@ func (u *__User_Updater) ResharedCount_In(ins []int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) ResharedCount_Ins(ins ...int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ResharedCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Updater) ResharedCount_NotIn(ins []int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2659,6 +2997,19 @@ func (d *__User_Updater) ResharedCount_GE(val int) *__User_Updater {
 }
 
 func (u *__User_Updater) LastActionTime_In(ins []int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastActionTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Updater) LastActionTime_Ins(ins ...int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2763,6 +3114,19 @@ func (u *__User_Updater) LastPostTime_In(ins []int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) LastPostTime_Ins(ins ...int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastPostTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Updater) LastPostTime_NotIn(ins []int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2843,6 +3207,19 @@ func (d *__User_Updater) LastPostTime_GE(val int) *__User_Updater {
 }
 
 func (u *__User_Updater) PrimaryFollowingList_In(ins []int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrimaryFollowingList IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Updater) PrimaryFollowingList_Ins(ins ...int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2947,6 +3324,19 @@ func (u *__User_Updater) CreatedTime_In(ins []int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) CreatedTime_Ins(ins ...int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Updater) CreatedTime_NotIn(ins []int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3027,6 +3417,19 @@ func (d *__User_Updater) CreatedTime_GE(val int) *__User_Updater {
 }
 
 func (u *__User_Updater) UpdatedTime_In(ins []int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Updater) UpdatedTime_Ins(ins ...int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3131,6 +3534,19 @@ func (u *__User_Updater) AppVersion_In(ins []int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) AppVersion_Ins(ins ...int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AppVersion IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Updater) AppVersion_NotIn(ins []int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3223,6 +3639,19 @@ func (u *__User_Updater) LastActivityTime_In(ins []int) *__User_Updater {
 	return u
 }
 
+func (u *__User_Updater) LastActivityTime_Ins(ins ...int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Updater) LastActivityTime_NotIn(ins []int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3303,6 +3732,19 @@ func (d *__User_Updater) LastActivityTime_GE(val int) *__User_Updater {
 }
 
 func (u *__User_Updater) LastLoginTime_In(ins []int) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastLoginTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Updater) LastLoginTime_Ins(ins ...int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3413,6 +3855,19 @@ func (u *__User_Selector) Id_In(ins []int) *__User_Selector {
 	return u
 }
 
+func (u *__User_Selector) Id_Ins(ins ...int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Selector) Id_NotIn(ins []int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3493,6 +3948,19 @@ func (d *__User_Selector) Id_GE(val int) *__User_Selector {
 }
 
 func (u *__User_Selector) PrivacyProfile_In(ins []int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrivacyProfile IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Selector) PrivacyProfile_Ins(ins ...int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3597,6 +4065,19 @@ func (u *__User_Selector) IsDeleted_In(ins []int) *__User_Selector {
 	return u
 }
 
+func (u *__User_Selector) IsDeleted_Ins(ins ...int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsDeleted IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Selector) IsDeleted_NotIn(ins []int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3677,6 +4158,19 @@ func (d *__User_Selector) IsDeleted_GE(val int) *__User_Selector {
 }
 
 func (u *__User_Selector) FollowersCount_In(ins []int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowersCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Selector) FollowersCount_Ins(ins ...int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3781,6 +4275,19 @@ func (u *__User_Selector) FollowingCount_In(ins []int) *__User_Selector {
 	return u
 }
 
+func (u *__User_Selector) FollowingCount_Ins(ins ...int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowingCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Selector) FollowingCount_NotIn(ins []int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3861,6 +4368,19 @@ func (d *__User_Selector) FollowingCount_GE(val int) *__User_Selector {
 }
 
 func (u *__User_Selector) PostsCount_In(ins []int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostsCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Selector) PostsCount_Ins(ins ...int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3965,6 +4485,19 @@ func (u *__User_Selector) MediaCount_In(ins []int) *__User_Selector {
 	return u
 }
 
+func (u *__User_Selector) MediaCount_Ins(ins ...int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MediaCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Selector) MediaCount_NotIn(ins []int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4045,6 +4578,19 @@ func (d *__User_Selector) MediaCount_GE(val int) *__User_Selector {
 }
 
 func (u *__User_Selector) LikesCount_In(ins []int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LikesCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Selector) LikesCount_Ins(ins ...int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -4149,6 +4695,19 @@ func (u *__User_Selector) ResharedCount_In(ins []int) *__User_Selector {
 	return u
 }
 
+func (u *__User_Selector) ResharedCount_Ins(ins ...int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ResharedCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Selector) ResharedCount_NotIn(ins []int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4229,6 +4788,19 @@ func (d *__User_Selector) ResharedCount_GE(val int) *__User_Selector {
 }
 
 func (u *__User_Selector) LastActionTime_In(ins []int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastActionTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Selector) LastActionTime_Ins(ins ...int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -4333,6 +4905,19 @@ func (u *__User_Selector) LastPostTime_In(ins []int) *__User_Selector {
 	return u
 }
 
+func (u *__User_Selector) LastPostTime_Ins(ins ...int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastPostTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Selector) LastPostTime_NotIn(ins []int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4413,6 +4998,19 @@ func (d *__User_Selector) LastPostTime_GE(val int) *__User_Selector {
 }
 
 func (u *__User_Selector) PrimaryFollowingList_In(ins []int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PrimaryFollowingList IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Selector) PrimaryFollowingList_Ins(ins ...int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -4517,6 +5115,19 @@ func (u *__User_Selector) CreatedTime_In(ins []int) *__User_Selector {
 	return u
 }
 
+func (u *__User_Selector) CreatedTime_Ins(ins ...int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Selector) CreatedTime_NotIn(ins []int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4597,6 +5208,19 @@ func (d *__User_Selector) CreatedTime_GE(val int) *__User_Selector {
 }
 
 func (u *__User_Selector) UpdatedTime_In(ins []int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Selector) UpdatedTime_Ins(ins ...int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -4701,6 +5325,19 @@ func (u *__User_Selector) AppVersion_In(ins []int) *__User_Selector {
 	return u
 }
 
+func (u *__User_Selector) AppVersion_Ins(ins ...int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AppVersion IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Selector) AppVersion_NotIn(ins []int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4793,6 +5430,19 @@ func (u *__User_Selector) LastActivityTime_In(ins []int) *__User_Selector {
 	return u
 }
 
+func (u *__User_Selector) LastActivityTime_Ins(ins ...int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__User_Selector) LastActivityTime_NotIn(ins []int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4873,6 +5523,19 @@ func (d *__User_Selector) LastActivityTime_GE(val int) *__User_Selector {
 }
 
 func (u *__User_Selector) LastLoginTime_In(ins []int) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastLoginTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__User_Selector) LastLoginTime_Ins(ins ...int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

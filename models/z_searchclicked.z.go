@@ -247,6 +247,19 @@ func (u *__SearchClicked_Deleter) Id_In(ins []int) *__SearchClicked_Deleter {
 	return u
 }
 
+func (u *__SearchClicked_Deleter) Id_Ins(ins ...int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__SearchClicked_Deleter) Id_NotIn(ins []int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -327,6 +340,19 @@ func (d *__SearchClicked_Deleter) Id_GE(val int) *__SearchClicked_Deleter {
 }
 
 func (u *__SearchClicked_Deleter) ClickType_In(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ClickType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Deleter) ClickType_Ins(ins ...int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -431,6 +457,19 @@ func (u *__SearchClicked_Deleter) TargetId_In(ins []int) *__SearchClicked_Delete
 	return u
 }
 
+func (u *__SearchClicked_Deleter) TargetId_Ins(ins ...int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__SearchClicked_Deleter) TargetId_NotIn(ins []int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -523,6 +562,19 @@ func (u *__SearchClicked_Deleter) UserId_In(ins []int) *__SearchClicked_Deleter 
 	return u
 }
 
+func (u *__SearchClicked_Deleter) UserId_Ins(ins ...int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__SearchClicked_Deleter) UserId_NotIn(ins []int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -603,6 +655,19 @@ func (d *__SearchClicked_Deleter) UserId_GE(val int) *__SearchClicked_Deleter {
 }
 
 func (u *__SearchClicked_Deleter) CreatedAt_In(ins []int) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Deleter) CreatedAt_Ins(ins ...int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -713,6 +778,19 @@ func (u *__SearchClicked_Updater) Id_In(ins []int) *__SearchClicked_Updater {
 	return u
 }
 
+func (u *__SearchClicked_Updater) Id_Ins(ins ...int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__SearchClicked_Updater) Id_NotIn(ins []int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -793,6 +871,19 @@ func (d *__SearchClicked_Updater) Id_GE(val int) *__SearchClicked_Updater {
 }
 
 func (u *__SearchClicked_Updater) ClickType_In(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ClickType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Updater) ClickType_Ins(ins ...int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -897,6 +988,19 @@ func (u *__SearchClicked_Updater) TargetId_In(ins []int) *__SearchClicked_Update
 	return u
 }
 
+func (u *__SearchClicked_Updater) TargetId_Ins(ins ...int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__SearchClicked_Updater) TargetId_NotIn(ins []int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -989,6 +1093,19 @@ func (u *__SearchClicked_Updater) UserId_In(ins []int) *__SearchClicked_Updater 
 	return u
 }
 
+func (u *__SearchClicked_Updater) UserId_Ins(ins ...int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__SearchClicked_Updater) UserId_NotIn(ins []int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1069,6 +1186,19 @@ func (d *__SearchClicked_Updater) UserId_GE(val int) *__SearchClicked_Updater {
 }
 
 func (u *__SearchClicked_Updater) CreatedAt_In(ins []int) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Updater) CreatedAt_Ins(ins ...int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1179,6 +1309,19 @@ func (u *__SearchClicked_Selector) Id_In(ins []int) *__SearchClicked_Selector {
 	return u
 }
 
+func (u *__SearchClicked_Selector) Id_Ins(ins ...int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__SearchClicked_Selector) Id_NotIn(ins []int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1259,6 +1402,19 @@ func (d *__SearchClicked_Selector) Id_GE(val int) *__SearchClicked_Selector {
 }
 
 func (u *__SearchClicked_Selector) ClickType_In(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ClickType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Selector) ClickType_Ins(ins ...int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1363,6 +1519,19 @@ func (u *__SearchClicked_Selector) TargetId_In(ins []int) *__SearchClicked_Selec
 	return u
 }
 
+func (u *__SearchClicked_Selector) TargetId_Ins(ins ...int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__SearchClicked_Selector) TargetId_NotIn(ins []int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1455,6 +1624,19 @@ func (u *__SearchClicked_Selector) UserId_In(ins []int) *__SearchClicked_Selecto
 	return u
 }
 
+func (u *__SearchClicked_Selector) UserId_Ins(ins ...int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__SearchClicked_Selector) UserId_NotIn(ins []int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1535,6 +1717,19 @@ func (d *__SearchClicked_Selector) UserId_GE(val int) *__SearchClicked_Selector 
 }
 
 func (u *__SearchClicked_Selector) CreatedAt_In(ins []int) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__SearchClicked_Selector) CreatedAt_Ins(ins ...int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

@@ -246,6 +246,19 @@ func (u *__RecommendUser_Deleter) Id_In(ins []int) *__RecommendUser_Deleter {
 	return u
 }
 
+func (u *__RecommendUser_Deleter) Id_Ins(ins ...int) *__RecommendUser_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__RecommendUser_Deleter) Id_NotIn(ins []int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -326,6 +339,19 @@ func (d *__RecommendUser_Deleter) Id_GE(val int) *__RecommendUser_Deleter {
 }
 
 func (u *__RecommendUser_Deleter) UserId_In(ins []int) *__RecommendUser_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__RecommendUser_Deleter) UserId_Ins(ins ...int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -430,6 +456,19 @@ func (u *__RecommendUser_Deleter) TargetId_In(ins []int) *__RecommendUser_Delete
 	return u
 }
 
+func (u *__RecommendUser_Deleter) TargetId_Ins(ins ...int) *__RecommendUser_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__RecommendUser_Deleter) TargetId_NotIn(ins []int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -510,6 +549,19 @@ func (d *__RecommendUser_Deleter) TargetId_GE(val int) *__RecommendUser_Deleter 
 }
 
 func (u *__RecommendUser_Deleter) CreatedTime_In(ins []int) *__RecommendUser_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__RecommendUser_Deleter) CreatedTime_Ins(ins ...int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -620,6 +672,19 @@ func (u *__RecommendUser_Updater) Id_In(ins []int) *__RecommendUser_Updater {
 	return u
 }
 
+func (u *__RecommendUser_Updater) Id_Ins(ins ...int) *__RecommendUser_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__RecommendUser_Updater) Id_NotIn(ins []int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -700,6 +765,19 @@ func (d *__RecommendUser_Updater) Id_GE(val int) *__RecommendUser_Updater {
 }
 
 func (u *__RecommendUser_Updater) UserId_In(ins []int) *__RecommendUser_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__RecommendUser_Updater) UserId_Ins(ins ...int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -804,6 +882,19 @@ func (u *__RecommendUser_Updater) TargetId_In(ins []int) *__RecommendUser_Update
 	return u
 }
 
+func (u *__RecommendUser_Updater) TargetId_Ins(ins ...int) *__RecommendUser_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__RecommendUser_Updater) TargetId_NotIn(ins []int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -884,6 +975,19 @@ func (d *__RecommendUser_Updater) TargetId_GE(val int) *__RecommendUser_Updater 
 }
 
 func (u *__RecommendUser_Updater) CreatedTime_In(ins []int) *__RecommendUser_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__RecommendUser_Updater) CreatedTime_Ins(ins ...int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -994,6 +1098,19 @@ func (u *__RecommendUser_Selector) Id_In(ins []int) *__RecommendUser_Selector {
 	return u
 }
 
+func (u *__RecommendUser_Selector) Id_Ins(ins ...int) *__RecommendUser_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__RecommendUser_Selector) Id_NotIn(ins []int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1074,6 +1191,19 @@ func (d *__RecommendUser_Selector) Id_GE(val int) *__RecommendUser_Selector {
 }
 
 func (u *__RecommendUser_Selector) UserId_In(ins []int) *__RecommendUser_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__RecommendUser_Selector) UserId_Ins(ins ...int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1178,6 +1308,19 @@ func (u *__RecommendUser_Selector) TargetId_In(ins []int) *__RecommendUser_Selec
 	return u
 }
 
+func (u *__RecommendUser_Selector) TargetId_Ins(ins ...int) *__RecommendUser_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__RecommendUser_Selector) TargetId_NotIn(ins []int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1258,6 +1401,19 @@ func (d *__RecommendUser_Selector) TargetId_GE(val int) *__RecommendUser_Selecto
 }
 
 func (u *__RecommendUser_Selector) CreatedTime_In(ins []int) *__RecommendUser_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__RecommendUser_Selector) CreatedTime_Ins(ins ...int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

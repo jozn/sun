@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/disintegration/gift"
 	"image"
 	"image/jpeg"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/disintegration/gift"
 )
 
 func main() {

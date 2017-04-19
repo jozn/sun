@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/drone/routes"
 	"net/http"
+
+	"github.com/drone/routes"
 )
 
 func Whoami(w http.ResponseWriter, r *http.Request) {

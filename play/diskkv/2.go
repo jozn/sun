@@ -3,8 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/peterbourgon/diskv"
 	"time"
+
+	"github.com/peterbourgon/diskv"
 )
 
 func main() {

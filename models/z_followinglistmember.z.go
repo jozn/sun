@@ -247,6 +247,19 @@ func (u *__FollowingListMember_Deleter) Id_In(ins []int) *__FollowingListMember_
 	return u
 }
 
+func (u *__FollowingListMember_Deleter) Id_Ins(ins ...int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingListMember_Deleter) Id_NotIn(ins []int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -327,6 +340,19 @@ func (d *__FollowingListMember_Deleter) Id_GE(val int) *__FollowingListMember_De
 }
 
 func (u *__FollowingListMember_Deleter) ListId_In(ins []int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ListId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Deleter) ListId_Ins(ins ...int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -431,6 +457,19 @@ func (u *__FollowingListMember_Deleter) UserId_In(ins []int) *__FollowingListMem
 	return u
 }
 
+func (u *__FollowingListMember_Deleter) UserId_Ins(ins ...int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingListMember_Deleter) UserId_NotIn(ins []int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -511,6 +550,19 @@ func (d *__FollowingListMember_Deleter) UserId_GE(val int) *__FollowingListMembe
 }
 
 func (u *__FollowingListMember_Deleter) FollowedUserId_In(ins []int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowedUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Deleter) FollowedUserId_Ins(ins ...int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -615,6 +667,19 @@ func (u *__FollowingListMember_Deleter) FollowType_In(ins []int) *__FollowingLis
 	return u
 }
 
+func (u *__FollowingListMember_Deleter) FollowType_Ins(ins ...int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingListMember_Deleter) FollowType_NotIn(ins []int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -695,6 +760,19 @@ func (d *__FollowingListMember_Deleter) FollowType_GE(val int) *__FollowingListM
 }
 
 func (u *__FollowingListMember_Deleter) UpdatedTimeMs_In(ins []int) *__FollowingListMember_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedTimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Deleter) UpdatedTimeMs_Ins(ins ...int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -805,6 +883,19 @@ func (u *__FollowingListMember_Updater) Id_In(ins []int) *__FollowingListMember_
 	return u
 }
 
+func (u *__FollowingListMember_Updater) Id_Ins(ins ...int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingListMember_Updater) Id_NotIn(ins []int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -885,6 +976,19 @@ func (d *__FollowingListMember_Updater) Id_GE(val int) *__FollowingListMember_Up
 }
 
 func (u *__FollowingListMember_Updater) ListId_In(ins []int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ListId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Updater) ListId_Ins(ins ...int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -989,6 +1093,19 @@ func (u *__FollowingListMember_Updater) UserId_In(ins []int) *__FollowingListMem
 	return u
 }
 
+func (u *__FollowingListMember_Updater) UserId_Ins(ins ...int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingListMember_Updater) UserId_NotIn(ins []int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1069,6 +1186,19 @@ func (d *__FollowingListMember_Updater) UserId_GE(val int) *__FollowingListMembe
 }
 
 func (u *__FollowingListMember_Updater) FollowedUserId_In(ins []int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowedUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Updater) FollowedUserId_Ins(ins ...int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1173,6 +1303,19 @@ func (u *__FollowingListMember_Updater) FollowType_In(ins []int) *__FollowingLis
 	return u
 }
 
+func (u *__FollowingListMember_Updater) FollowType_Ins(ins ...int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingListMember_Updater) FollowType_NotIn(ins []int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1253,6 +1396,19 @@ func (d *__FollowingListMember_Updater) FollowType_GE(val int) *__FollowingListM
 }
 
 func (u *__FollowingListMember_Updater) UpdatedTimeMs_In(ins []int) *__FollowingListMember_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedTimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Updater) UpdatedTimeMs_Ins(ins ...int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1363,6 +1519,19 @@ func (u *__FollowingListMember_Selector) Id_In(ins []int) *__FollowingListMember
 	return u
 }
 
+func (u *__FollowingListMember_Selector) Id_Ins(ins ...int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingListMember_Selector) Id_NotIn(ins []int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1443,6 +1612,19 @@ func (d *__FollowingListMember_Selector) Id_GE(val int) *__FollowingListMember_S
 }
 
 func (u *__FollowingListMember_Selector) ListId_In(ins []int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ListId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Selector) ListId_Ins(ins ...int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1547,6 +1729,19 @@ func (u *__FollowingListMember_Selector) UserId_In(ins []int) *__FollowingListMe
 	return u
 }
 
+func (u *__FollowingListMember_Selector) UserId_Ins(ins ...int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingListMember_Selector) UserId_NotIn(ins []int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1627,6 +1822,19 @@ func (d *__FollowingListMember_Selector) UserId_GE(val int) *__FollowingListMemb
 }
 
 func (u *__FollowingListMember_Selector) FollowedUserId_In(ins []int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowedUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Selector) FollowedUserId_Ins(ins ...int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1731,6 +1939,19 @@ func (u *__FollowingListMember_Selector) FollowType_In(ins []int) *__FollowingLi
 	return u
 }
 
+func (u *__FollowingListMember_Selector) FollowType_Ins(ins ...int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FollowType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingListMember_Selector) FollowType_NotIn(ins []int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1811,6 +2032,19 @@ func (d *__FollowingListMember_Selector) FollowType_GE(val int) *__FollowingList
 }
 
 func (u *__FollowingListMember_Selector) UpdatedTimeMs_In(ins []int) *__FollowingListMember_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedTimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingListMember_Selector) UpdatedTimeMs_Ins(ins ...int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

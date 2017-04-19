@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	_ "strconv"
+	"time"
+
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/opt"
 	"github.com/syndtr/goleveldb/leveldb/util"
-	_ "strconv"
-	"time"
 )
 
 func main() {

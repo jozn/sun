@@ -251,6 +251,19 @@ func (u *__Session_Deleter) Id_In(ins []int) *__Session_Deleter {
 	return u
 }
 
+func (u *__Session_Deleter) Id_Ins(ins ...int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Session_Deleter) Id_NotIn(ins []int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -331,6 +344,19 @@ func (d *__Session_Deleter) Id_GE(val int) *__Session_Deleter {
 }
 
 func (u *__Session_Deleter) UserId_In(ins []int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Deleter) UserId_Ins(ins ...int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -435,6 +461,19 @@ func (u *__Session_Deleter) LastActivityTime_In(ins []int) *__Session_Deleter {
 	return u
 }
 
+func (u *__Session_Deleter) LastActivityTime_Ins(ins ...int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Session_Deleter) LastActivityTime_NotIn(ins []int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -515,6 +554,19 @@ func (d *__Session_Deleter) LastActivityTime_GE(val int) *__Session_Deleter {
 }
 
 func (u *__Session_Deleter) CreatedTime_In(ins []int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Deleter) CreatedTime_Ins(ins ...int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -625,6 +677,19 @@ func (u *__Session_Updater) Id_In(ins []int) *__Session_Updater {
 	return u
 }
 
+func (u *__Session_Updater) Id_Ins(ins ...int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Session_Updater) Id_NotIn(ins []int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -705,6 +770,19 @@ func (d *__Session_Updater) Id_GE(val int) *__Session_Updater {
 }
 
 func (u *__Session_Updater) UserId_In(ins []int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Updater) UserId_Ins(ins ...int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -809,6 +887,19 @@ func (u *__Session_Updater) LastActivityTime_In(ins []int) *__Session_Updater {
 	return u
 }
 
+func (u *__Session_Updater) LastActivityTime_Ins(ins ...int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Session_Updater) LastActivityTime_NotIn(ins []int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -889,6 +980,19 @@ func (d *__Session_Updater) LastActivityTime_GE(val int) *__Session_Updater {
 }
 
 func (u *__Session_Updater) CreatedTime_In(ins []int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Updater) CreatedTime_Ins(ins ...int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -999,6 +1103,19 @@ func (u *__Session_Selector) Id_In(ins []int) *__Session_Selector {
 	return u
 }
 
+func (u *__Session_Selector) Id_Ins(ins ...int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Session_Selector) Id_NotIn(ins []int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1079,6 +1196,19 @@ func (d *__Session_Selector) Id_GE(val int) *__Session_Selector {
 }
 
 func (u *__Session_Selector) UserId_In(ins []int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Selector) UserId_Ins(ins ...int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1183,6 +1313,19 @@ func (u *__Session_Selector) LastActivityTime_In(ins []int) *__Session_Selector 
 	return u
 }
 
+func (u *__Session_Selector) LastActivityTime_Ins(ins ...int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Session_Selector) LastActivityTime_NotIn(ins []int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1263,6 +1406,19 @@ func (d *__Session_Selector) LastActivityTime_GE(val int) *__Session_Selector {
 }
 
 func (u *__Session_Selector) CreatedTime_In(ins []int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Selector) CreatedTime_Ins(ins ...int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2899,6 +3055,49 @@ func MassReplace_Session(rows []Session, db XODB) error {
 //
 
 //
+
+// SessionsById retrieves a row from 'ms.session' as a Session.
+//
+// Generated from index 'Id'.
+func SessionsById(db XODB, id int) ([]*Session, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, CreatedTime ` +
+		`FROM ms.session ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Session{}
+	for q.Next() {
+		s := Session{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.CreatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &s)
+	}
+
+	OnSession_LoadMany(res)
+
+	return res, nil
+}
 
 // SessionById retrieves a row from 'ms.session' as a Session.
 //

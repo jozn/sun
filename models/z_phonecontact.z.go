@@ -251,6 +251,19 @@ func (u *__PhoneContact_Deleter) Id_In(ins []int) *__PhoneContact_Deleter {
 	return u
 }
 
+func (u *__PhoneContact_Deleter) Id_Ins(ins ...int) *__PhoneContact_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__PhoneContact_Deleter) Id_NotIn(ins []int) *__PhoneContact_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -331,6 +344,19 @@ func (d *__PhoneContact_Deleter) Id_GE(val int) *__PhoneContact_Deleter {
 }
 
 func (u *__PhoneContact_Deleter) PhoneContactRowId_In(ins []int) *__PhoneContact_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PhoneContactRowId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__PhoneContact_Deleter) PhoneContactRowId_Ins(ins ...int) *__PhoneContact_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -435,6 +461,19 @@ func (u *__PhoneContact_Deleter) UserId_In(ins []int) *__PhoneContact_Deleter {
 	return u
 }
 
+func (u *__PhoneContact_Deleter) UserId_Ins(ins ...int) *__PhoneContact_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__PhoneContact_Deleter) UserId_NotIn(ins []int) *__PhoneContact_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -515,6 +554,19 @@ func (d *__PhoneContact_Deleter) UserId_GE(val int) *__PhoneContact_Deleter {
 }
 
 func (u *__PhoneContact_Deleter) DeviceUuidId_In(ins []int) *__PhoneContact_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DeviceUuidId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__PhoneContact_Deleter) DeviceUuidId_Ins(ins ...int) *__PhoneContact_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -619,6 +671,19 @@ func (u *__PhoneContact_Deleter) CreatedTime_In(ins []int) *__PhoneContact_Delet
 	return u
 }
 
+func (u *__PhoneContact_Deleter) CreatedTime_Ins(ins ...int) *__PhoneContact_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__PhoneContact_Deleter) CreatedTime_NotIn(ins []int) *__PhoneContact_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -699,6 +764,19 @@ func (d *__PhoneContact_Deleter) CreatedTime_GE(val int) *__PhoneContact_Deleter
 }
 
 func (u *__PhoneContact_Deleter) UpdatedTime_In(ins []int) *__PhoneContact_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__PhoneContact_Deleter) UpdatedTime_Ins(ins ...int) *__PhoneContact_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -809,6 +887,19 @@ func (u *__PhoneContact_Updater) Id_In(ins []int) *__PhoneContact_Updater {
 	return u
 }
 
+func (u *__PhoneContact_Updater) Id_Ins(ins ...int) *__PhoneContact_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__PhoneContact_Updater) Id_NotIn(ins []int) *__PhoneContact_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -889,6 +980,19 @@ func (d *__PhoneContact_Updater) Id_GE(val int) *__PhoneContact_Updater {
 }
 
 func (u *__PhoneContact_Updater) PhoneContactRowId_In(ins []int) *__PhoneContact_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PhoneContactRowId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__PhoneContact_Updater) PhoneContactRowId_Ins(ins ...int) *__PhoneContact_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -993,6 +1097,19 @@ func (u *__PhoneContact_Updater) UserId_In(ins []int) *__PhoneContact_Updater {
 	return u
 }
 
+func (u *__PhoneContact_Updater) UserId_Ins(ins ...int) *__PhoneContact_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__PhoneContact_Updater) UserId_NotIn(ins []int) *__PhoneContact_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1073,6 +1190,19 @@ func (d *__PhoneContact_Updater) UserId_GE(val int) *__PhoneContact_Updater {
 }
 
 func (u *__PhoneContact_Updater) DeviceUuidId_In(ins []int) *__PhoneContact_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DeviceUuidId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__PhoneContact_Updater) DeviceUuidId_Ins(ins ...int) *__PhoneContact_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1177,6 +1307,19 @@ func (u *__PhoneContact_Updater) CreatedTime_In(ins []int) *__PhoneContact_Updat
 	return u
 }
 
+func (u *__PhoneContact_Updater) CreatedTime_Ins(ins ...int) *__PhoneContact_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__PhoneContact_Updater) CreatedTime_NotIn(ins []int) *__PhoneContact_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1257,6 +1400,19 @@ func (d *__PhoneContact_Updater) CreatedTime_GE(val int) *__PhoneContact_Updater
 }
 
 func (u *__PhoneContact_Updater) UpdatedTime_In(ins []int) *__PhoneContact_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__PhoneContact_Updater) UpdatedTime_Ins(ins ...int) *__PhoneContact_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1367,6 +1523,19 @@ func (u *__PhoneContact_Selector) Id_In(ins []int) *__PhoneContact_Selector {
 	return u
 }
 
+func (u *__PhoneContact_Selector) Id_Ins(ins ...int) *__PhoneContact_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__PhoneContact_Selector) Id_NotIn(ins []int) *__PhoneContact_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1447,6 +1616,19 @@ func (d *__PhoneContact_Selector) Id_GE(val int) *__PhoneContact_Selector {
 }
 
 func (u *__PhoneContact_Selector) PhoneContactRowId_In(ins []int) *__PhoneContact_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PhoneContactRowId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__PhoneContact_Selector) PhoneContactRowId_Ins(ins ...int) *__PhoneContact_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1551,6 +1733,19 @@ func (u *__PhoneContact_Selector) UserId_In(ins []int) *__PhoneContact_Selector 
 	return u
 }
 
+func (u *__PhoneContact_Selector) UserId_Ins(ins ...int) *__PhoneContact_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__PhoneContact_Selector) UserId_NotIn(ins []int) *__PhoneContact_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1631,6 +1826,19 @@ func (d *__PhoneContact_Selector) UserId_GE(val int) *__PhoneContact_Selector {
 }
 
 func (u *__PhoneContact_Selector) DeviceUuidId_In(ins []int) *__PhoneContact_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DeviceUuidId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__PhoneContact_Selector) DeviceUuidId_Ins(ins ...int) *__PhoneContact_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1735,6 +1943,19 @@ func (u *__PhoneContact_Selector) CreatedTime_In(ins []int) *__PhoneContact_Sele
 	return u
 }
 
+func (u *__PhoneContact_Selector) CreatedTime_Ins(ins ...int) *__PhoneContact_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__PhoneContact_Selector) CreatedTime_NotIn(ins []int) *__PhoneContact_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1815,6 +2036,19 @@ func (d *__PhoneContact_Selector) CreatedTime_GE(val int) *__PhoneContact_Select
 }
 
 func (u *__PhoneContact_Selector) UpdatedTime_In(ins []int) *__PhoneContact_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__PhoneContact_Selector) UpdatedTime_Ins(ins ...int) *__PhoneContact_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3271,6 +3505,49 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 	// run query
 	XOLog(sqlstr, phoneNumber)
 	q, err := db.Query(sqlstr, phoneNumber)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*PhoneContact{}
+	for q.Next() {
+		pc := PhoneContact{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &pc)
+	}
+
+	OnPhoneContact_LoadMany(res)
+
+	return res, nil
+}
+
+// PhoneContactsByUserId retrieves a row from 'ms.phone_contacts' as a PhoneContact.
+//
+// Generated from index 'UserId'.
+func PhoneContactsByUserId(db XODB, userId int) ([]*PhoneContact, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime ` +
+		`FROM ms.phone_contacts ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

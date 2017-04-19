@@ -247,6 +247,19 @@ func (u *__Activity_Deleter) Id_In(ins []int) *__Activity_Deleter {
 	return u
 }
 
+func (u *__Activity_Deleter) Id_Ins(ins ...int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Activity_Deleter) Id_NotIn(ins []int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -327,6 +340,19 @@ func (d *__Activity_Deleter) Id_GE(val int) *__Activity_Deleter {
 }
 
 func (u *__Activity_Deleter) ActorUserId_In(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Deleter) ActorUserId_Ins(ins ...int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -431,6 +457,19 @@ func (u *__Activity_Deleter) ActionTypeId_In(ins []int) *__Activity_Deleter {
 	return u
 }
 
+func (u *__Activity_Deleter) ActionTypeId_Ins(ins ...int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Activity_Deleter) ActionTypeId_NotIn(ins []int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -511,6 +550,19 @@ func (d *__Activity_Deleter) ActionTypeId_GE(val int) *__Activity_Deleter {
 }
 
 func (u *__Activity_Deleter) TargetId_In(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Deleter) TargetId_Ins(ins ...int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -615,6 +667,19 @@ func (u *__Activity_Deleter) RefId_In(ins []int) *__Activity_Deleter {
 	return u
 }
 
+func (u *__Activity_Deleter) RefId_Ins(ins ...int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Activity_Deleter) RefId_NotIn(ins []int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -695,6 +760,19 @@ func (d *__Activity_Deleter) RefId_GE(val int) *__Activity_Deleter {
 }
 
 func (u *__Activity_Deleter) CreatedAt_In(ins []int) *__Activity_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Deleter) CreatedAt_Ins(ins ...int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -805,6 +883,19 @@ func (u *__Activity_Updater) Id_In(ins []int) *__Activity_Updater {
 	return u
 }
 
+func (u *__Activity_Updater) Id_Ins(ins ...int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Activity_Updater) Id_NotIn(ins []int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -885,6 +976,19 @@ func (d *__Activity_Updater) Id_GE(val int) *__Activity_Updater {
 }
 
 func (u *__Activity_Updater) ActorUserId_In(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Updater) ActorUserId_Ins(ins ...int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -989,6 +1093,19 @@ func (u *__Activity_Updater) ActionTypeId_In(ins []int) *__Activity_Updater {
 	return u
 }
 
+func (u *__Activity_Updater) ActionTypeId_Ins(ins ...int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Activity_Updater) ActionTypeId_NotIn(ins []int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1069,6 +1186,19 @@ func (d *__Activity_Updater) ActionTypeId_GE(val int) *__Activity_Updater {
 }
 
 func (u *__Activity_Updater) TargetId_In(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Updater) TargetId_Ins(ins ...int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1173,6 +1303,19 @@ func (u *__Activity_Updater) RefId_In(ins []int) *__Activity_Updater {
 	return u
 }
 
+func (u *__Activity_Updater) RefId_Ins(ins ...int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Activity_Updater) RefId_NotIn(ins []int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1253,6 +1396,19 @@ func (d *__Activity_Updater) RefId_GE(val int) *__Activity_Updater {
 }
 
 func (u *__Activity_Updater) CreatedAt_In(ins []int) *__Activity_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Updater) CreatedAt_Ins(ins ...int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1363,6 +1519,19 @@ func (u *__Activity_Selector) Id_In(ins []int) *__Activity_Selector {
 	return u
 }
 
+func (u *__Activity_Selector) Id_Ins(ins ...int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Activity_Selector) Id_NotIn(ins []int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1443,6 +1612,19 @@ func (d *__Activity_Selector) Id_GE(val int) *__Activity_Selector {
 }
 
 func (u *__Activity_Selector) ActorUserId_In(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Selector) ActorUserId_Ins(ins ...int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1547,6 +1729,19 @@ func (u *__Activity_Selector) ActionTypeId_In(ins []int) *__Activity_Selector {
 	return u
 }
 
+func (u *__Activity_Selector) ActionTypeId_Ins(ins ...int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Activity_Selector) ActionTypeId_NotIn(ins []int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1627,6 +1822,19 @@ func (d *__Activity_Selector) ActionTypeId_GE(val int) *__Activity_Selector {
 }
 
 func (u *__Activity_Selector) TargetId_In(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Selector) TargetId_Ins(ins ...int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1731,6 +1939,19 @@ func (u *__Activity_Selector) RefId_In(ins []int) *__Activity_Selector {
 	return u
 }
 
+func (u *__Activity_Selector) RefId_Ins(ins ...int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Activity_Selector) RefId_NotIn(ins []int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1811,6 +2032,19 @@ func (d *__Activity_Selector) RefId_GE(val int) *__Activity_Selector {
 }
 
 func (u *__Activity_Selector) CreatedAt_In(ins []int) *__Activity_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedAt IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Activity_Selector) CreatedAt_Ins(ins ...int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

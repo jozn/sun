@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/steveyen/gkvlite"
 	"os"
 	"strconv"
+
+	"github.com/steveyen/gkvlite"
 )
 
 func main() {

@@ -10,7 +10,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
-    "time"
+	"time"
 )
 
 const BUCKET_TYPE_POST = 1
@@ -31,21 +31,21 @@ func Buket_getNextForPost() *Bucket {
 }
 
 func bucket_creatNextBucket() *Bucket {
-    buket := &Bucket{
-        BucketName:          helper.RandString(10),
-        Server1Id:           1,
-        ContentObjectTypeId: BUCKET_TYPE_POST,
-        CreatedTime:         helper.TimeNow(),
-    }
-    buket.Save(base.DB)
-    buket.BucketName = bucket_nextName(buket.BucketId)
-    buket.Save(base.DB)
-    return buket
+	buket := &Bucket{
+		BucketName:          helper.RandString(10),
+		Server1Id:           1,
+		ContentObjectTypeId: BUCKET_TYPE_POST,
+		CreatedTime:         helper.TimeNow(),
+	}
+	buket.Save(base.DB)
+	buket.BucketName = bucket_nextName(buket.BucketId)
+	buket.Save(base.DB)
+	return buket
 }
 
 func bucket_nextName(i int) string {
-    t:=time.Now()
-    return fmt.Sprintf("posts/%d_%02d_%02d/b%d",t.Year(),t.Month(),t.Day(), i)
+	t := time.Now()
+	return fmt.Sprintf("posts/%d_%02d_%02d/b%d", t.Year(), t.Month(), t.Day(), i)
 }
 
 func Bucket_savePhotoToBucket(photo *Photo, buket *Bucket, img image.Image, size int) {

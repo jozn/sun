@@ -244,6 +244,19 @@ func (u *__UserPassword_Deleter) UserId_In(ins []int) *__UserPassword_Deleter {
 	return u
 }
 
+func (u *__UserPassword_Deleter) UserId_Ins(ins ...int) *__UserPassword_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__UserPassword_Deleter) UserId_NotIn(ins []int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -324,6 +337,19 @@ func (d *__UserPassword_Deleter) UserId_GE(val int) *__UserPassword_Deleter {
 }
 
 func (u *__UserPassword_Deleter) CreatedTime_In(ins []int) *__UserPassword_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserPassword_Deleter) CreatedTime_Ins(ins ...int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -434,6 +460,19 @@ func (u *__UserPassword_Updater) UserId_In(ins []int) *__UserPassword_Updater {
 	return u
 }
 
+func (u *__UserPassword_Updater) UserId_Ins(ins ...int) *__UserPassword_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__UserPassword_Updater) UserId_NotIn(ins []int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -514,6 +553,19 @@ func (d *__UserPassword_Updater) UserId_GE(val int) *__UserPassword_Updater {
 }
 
 func (u *__UserPassword_Updater) CreatedTime_In(ins []int) *__UserPassword_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserPassword_Updater) CreatedTime_Ins(ins ...int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -624,6 +676,19 @@ func (u *__UserPassword_Selector) UserId_In(ins []int) *__UserPassword_Selector 
 	return u
 }
 
+func (u *__UserPassword_Selector) UserId_Ins(ins ...int) *__UserPassword_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__UserPassword_Selector) UserId_NotIn(ins []int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -704,6 +769,19 @@ func (d *__UserPassword_Selector) UserId_GE(val int) *__UserPassword_Selector {
 }
 
 func (u *__UserPassword_Selector) CreatedTime_In(ins []int) *__UserPassword_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserPassword_Selector) CreatedTime_Ins(ins ...int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

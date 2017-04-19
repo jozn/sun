@@ -5,13 +5,14 @@ import (
 	"net/http"
 
 	"bytes"
-	"github.com/PuerkitoBio/fetchbot"
-	"golang.org/x/net/html"
 	"io"
 	"io/ioutil"
 	"math/rand"
 	"os"
 	"strings"
+
+	"github.com/PuerkitoBio/fetchbot"
+	"golang.org/x/net/html"
 )
 
 var queue *fetchbot.Queue

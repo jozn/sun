@@ -1,21 +1,21 @@
 package fact
 
 import (
+	"bytes"
 	"fmt"
 	"image/jpeg"
+	"io"
 	"io/ioutil"
 	"log"
 	"math/rand"
+	"mime/multipart"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
 	"ms/sun/shared"
+	"net/http"
 	"os"
 	"time"
-    "net/http"
-    "io"
-    "mime/multipart"
-    "bytes"
 )
 
 const NUM_OF_USERS = 80
@@ -44,54 +44,53 @@ func FactPosts() {
 }
 
 func FactPosts2(c *base.Action) {
-    target_url := "http://localhost:5000/v1/post/add"
-    f,_,_:=randImage()
-    //filename := "./astaxie.pdf"
-    postFile(f, target_url,helper.FactRandStrEmoji(200, true))
+	target_url := "http://localhost:5000/v1/post/add"
+	f, _, _ := randImage()
+	//filename := "./astaxie.pdf"
+	postFile(f, target_url, helper.FactRandStrEmoji(200, true))
 }
 
 func postFile(filename string, targetUrl string, text string) error {
-    bodyBuf := &bytes.Buffer{}
-    bodyWriter := multipart.NewWriter(bodyBuf)
+	bodyBuf := &bytes.Buffer{}
+	bodyWriter := multipart.NewWriter(bodyBuf)
 
-    // this step is very important
-    fileWriter, err := bodyWriter.CreateFormFile("file", filename)
-    if err != nil {
-        fmt.Println("error writing to buffer")
-        return err
-    }
+	// this step is very important
+	fileWriter, err := bodyWriter.CreateFormFile("file", filename)
+	if err != nil {
+		fmt.Println("error writing to buffer")
+		return err
+	}
 
-    // open file handle
-    fh, err := os.Open(filename)
-    if err != nil {
-        fmt.Println("error opening file")
-        return err
-    }
+	// open file handle
+	fh, err := os.Open(filename)
+	if err != nil {
+		fmt.Println("error opening file")
+		return err
+	}
 
-    //iocopy
-    _, err = io.Copy(fileWriter, fh)
-    if err != nil {
-        return err
-    }
+	//iocopy
+	_, err = io.Copy(fileWriter, fh)
+	if err != nil {
+		return err
+	}
 
-    bodyWriter.WriteField("text",text)
-    contentType := bodyWriter.FormDataContentType()
-    bodyWriter.Close()
+	bodyWriter.WriteField("text", text)
+	contentType := bodyWriter.FormDataContentType()
+	bodyWriter.Close()
 
-    resp, err := http.Post(targetUrl, contentType, bodyBuf)
-    if err != nil {
-        return err
-    }
-    defer resp.Body.Close()
-    resp_body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        return err
-    }
-    fmt.Println(resp.Status)
-    fmt.Println(string(resp_body))
-    return nil
+	resp, err := http.Post(targetUrl, contentType, bodyBuf)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	resp_body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	fmt.Println(resp.Status)
+	fmt.Println(string(resp_body))
+	return nil
 }
-
 
 var imageFiles []os.FileInfo
 

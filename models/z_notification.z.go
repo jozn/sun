@@ -250,6 +250,19 @@ func (u *__Notification_Deleter) Id_In(ins []int) *__Notification_Deleter {
 	return u
 }
 
+func (u *__Notification_Deleter) Id_Ins(ins ...int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Deleter) Id_NotIn(ins []int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -330,6 +343,19 @@ func (d *__Notification_Deleter) Id_GE(val int) *__Notification_Deleter {
 }
 
 func (u *__Notification_Deleter) ForUserId_In(ins []int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ForUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Deleter) ForUserId_Ins(ins ...int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -434,6 +460,19 @@ func (u *__Notification_Deleter) ActorUserId_In(ins []int) *__Notification_Delet
 	return u
 }
 
+func (u *__Notification_Deleter) ActorUserId_Ins(ins ...int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Deleter) ActorUserId_NotIn(ins []int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -514,6 +553,19 @@ func (d *__Notification_Deleter) ActorUserId_GE(val int) *__Notification_Deleter
 }
 
 func (u *__Notification_Deleter) ActionTypeId_In(ins []int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Deleter) ActionTypeId_Ins(ins ...int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -618,6 +670,19 @@ func (u *__Notification_Deleter) ObjectTypeId_In(ins []int) *__Notification_Dele
 	return u
 }
 
+func (u *__Notification_Deleter) ObjectTypeId_Ins(ins ...int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ObjectTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Deleter) ObjectTypeId_NotIn(ins []int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -698,6 +763,19 @@ func (d *__Notification_Deleter) ObjectTypeId_GE(val int) *__Notification_Delete
 }
 
 func (u *__Notification_Deleter) TargetId_In(ins []int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Deleter) TargetId_Ins(ins ...int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -802,6 +880,19 @@ func (u *__Notification_Deleter) ObjectId_In(ins []int) *__Notification_Deleter 
 	return u
 }
 
+func (u *__Notification_Deleter) ObjectId_Ins(ins ...int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ObjectId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Deleter) ObjectId_NotIn(ins []int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -894,6 +985,19 @@ func (u *__Notification_Deleter) SeenStatus_In(ins []int) *__Notification_Delete
 	return u
 }
 
+func (u *__Notification_Deleter) SeenStatus_Ins(ins ...int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " SeenStatus IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Deleter) SeenStatus_NotIn(ins []int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -974,6 +1078,19 @@ func (d *__Notification_Deleter) SeenStatus_GE(val int) *__Notification_Deleter 
 }
 
 func (u *__Notification_Deleter) CreatedTime_In(ins []int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Deleter) CreatedTime_Ins(ins ...int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1084,6 +1201,19 @@ func (u *__Notification_Updater) Id_In(ins []int) *__Notification_Updater {
 	return u
 }
 
+func (u *__Notification_Updater) Id_Ins(ins ...int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Updater) Id_NotIn(ins []int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1164,6 +1294,19 @@ func (d *__Notification_Updater) Id_GE(val int) *__Notification_Updater {
 }
 
 func (u *__Notification_Updater) ForUserId_In(ins []int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ForUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Updater) ForUserId_Ins(ins ...int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1268,6 +1411,19 @@ func (u *__Notification_Updater) ActorUserId_In(ins []int) *__Notification_Updat
 	return u
 }
 
+func (u *__Notification_Updater) ActorUserId_Ins(ins ...int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Updater) ActorUserId_NotIn(ins []int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1348,6 +1504,19 @@ func (d *__Notification_Updater) ActorUserId_GE(val int) *__Notification_Updater
 }
 
 func (u *__Notification_Updater) ActionTypeId_In(ins []int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Updater) ActionTypeId_Ins(ins ...int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1452,6 +1621,19 @@ func (u *__Notification_Updater) ObjectTypeId_In(ins []int) *__Notification_Upda
 	return u
 }
 
+func (u *__Notification_Updater) ObjectTypeId_Ins(ins ...int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ObjectTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Updater) ObjectTypeId_NotIn(ins []int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1532,6 +1714,19 @@ func (d *__Notification_Updater) ObjectTypeId_GE(val int) *__Notification_Update
 }
 
 func (u *__Notification_Updater) TargetId_In(ins []int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Updater) TargetId_Ins(ins ...int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1636,6 +1831,19 @@ func (u *__Notification_Updater) ObjectId_In(ins []int) *__Notification_Updater 
 	return u
 }
 
+func (u *__Notification_Updater) ObjectId_Ins(ins ...int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ObjectId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Updater) ObjectId_NotIn(ins []int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1728,6 +1936,19 @@ func (u *__Notification_Updater) SeenStatus_In(ins []int) *__Notification_Update
 	return u
 }
 
+func (u *__Notification_Updater) SeenStatus_Ins(ins ...int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " SeenStatus IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Updater) SeenStatus_NotIn(ins []int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1808,6 +2029,19 @@ func (d *__Notification_Updater) SeenStatus_GE(val int) *__Notification_Updater 
 }
 
 func (u *__Notification_Updater) CreatedTime_In(ins []int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Updater) CreatedTime_Ins(ins ...int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1918,6 +2152,19 @@ func (u *__Notification_Selector) Id_In(ins []int) *__Notification_Selector {
 	return u
 }
 
+func (u *__Notification_Selector) Id_Ins(ins ...int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Selector) Id_NotIn(ins []int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1998,6 +2245,19 @@ func (d *__Notification_Selector) Id_GE(val int) *__Notification_Selector {
 }
 
 func (u *__Notification_Selector) ForUserId_In(ins []int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ForUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Selector) ForUserId_Ins(ins ...int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2102,6 +2362,19 @@ func (u *__Notification_Selector) ActorUserId_In(ins []int) *__Notification_Sele
 	return u
 }
 
+func (u *__Notification_Selector) ActorUserId_Ins(ins ...int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActorUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Selector) ActorUserId_NotIn(ins []int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2182,6 +2455,19 @@ func (d *__Notification_Selector) ActorUserId_GE(val int) *__Notification_Select
 }
 
 func (u *__Notification_Selector) ActionTypeId_In(ins []int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ActionTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Selector) ActionTypeId_Ins(ins ...int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2286,6 +2572,19 @@ func (u *__Notification_Selector) ObjectTypeId_In(ins []int) *__Notification_Sel
 	return u
 }
 
+func (u *__Notification_Selector) ObjectTypeId_Ins(ins ...int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ObjectTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Selector) ObjectTypeId_NotIn(ins []int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2366,6 +2665,19 @@ func (d *__Notification_Selector) ObjectTypeId_GE(val int) *__Notification_Selec
 }
 
 func (u *__Notification_Selector) TargetId_In(ins []int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Selector) TargetId_Ins(ins ...int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2470,6 +2782,19 @@ func (u *__Notification_Selector) ObjectId_In(ins []int) *__Notification_Selecto
 	return u
 }
 
+func (u *__Notification_Selector) ObjectId_Ins(ins ...int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ObjectId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Selector) ObjectId_NotIn(ins []int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2562,6 +2887,19 @@ func (u *__Notification_Selector) SeenStatus_In(ins []int) *__Notification_Selec
 	return u
 }
 
+func (u *__Notification_Selector) SeenStatus_Ins(ins ...int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " SeenStatus IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Notification_Selector) SeenStatus_NotIn(ins []int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2642,6 +2980,19 @@ func (d *__Notification_Selector) SeenStatus_GE(val int) *__Notification_Selecto
 }
 
 func (u *__Notification_Selector) CreatedTime_In(ins []int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Selector) CreatedTime_Ins(ins ...int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

@@ -249,6 +249,19 @@ func (u *__FollowingList_Deleter) Id_In(ins []int) *__FollowingList_Deleter {
 	return u
 }
 
+func (u *__FollowingList_Deleter) Id_Ins(ins ...int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Deleter) Id_NotIn(ins []int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -329,6 +342,19 @@ func (d *__FollowingList_Deleter) Id_GE(val int) *__FollowingList_Deleter {
 }
 
 func (u *__FollowingList_Deleter) UserId_In(ins []int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Deleter) UserId_Ins(ins ...int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -433,6 +459,19 @@ func (u *__FollowingList_Deleter) ListType_In(ins []int) *__FollowingList_Delete
 	return u
 }
 
+func (u *__FollowingList_Deleter) ListType_Ins(ins ...int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ListType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Deleter) ListType_NotIn(ins []int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -513,6 +552,19 @@ func (d *__FollowingList_Deleter) ListType_GE(val int) *__FollowingList_Deleter 
 }
 
 func (u *__FollowingList_Deleter) Count_In(ins []int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Deleter) Count_Ins(ins ...int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -617,6 +669,19 @@ func (u *__FollowingList_Deleter) IsAuto_In(ins []int) *__FollowingList_Deleter 
 	return u
 }
 
+func (u *__FollowingList_Deleter) IsAuto_Ins(ins ...int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsAuto IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Deleter) IsAuto_NotIn(ins []int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -709,6 +774,19 @@ func (u *__FollowingList_Deleter) IsPimiry_In(ins []int) *__FollowingList_Delete
 	return u
 }
 
+func (u *__FollowingList_Deleter) IsPimiry_Ins(ins ...int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsPimiry IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Deleter) IsPimiry_NotIn(ins []int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -789,6 +867,19 @@ func (d *__FollowingList_Deleter) IsPimiry_GE(val int) *__FollowingList_Deleter 
 }
 
 func (u *__FollowingList_Deleter) CreatedTime_In(ins []int) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Deleter) CreatedTime_Ins(ins ...int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -899,6 +990,19 @@ func (u *__FollowingList_Updater) Id_In(ins []int) *__FollowingList_Updater {
 	return u
 }
 
+func (u *__FollowingList_Updater) Id_Ins(ins ...int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Updater) Id_NotIn(ins []int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -979,6 +1083,19 @@ func (d *__FollowingList_Updater) Id_GE(val int) *__FollowingList_Updater {
 }
 
 func (u *__FollowingList_Updater) UserId_In(ins []int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Updater) UserId_Ins(ins ...int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1083,6 +1200,19 @@ func (u *__FollowingList_Updater) ListType_In(ins []int) *__FollowingList_Update
 	return u
 }
 
+func (u *__FollowingList_Updater) ListType_Ins(ins ...int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ListType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Updater) ListType_NotIn(ins []int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1163,6 +1293,19 @@ func (d *__FollowingList_Updater) ListType_GE(val int) *__FollowingList_Updater 
 }
 
 func (u *__FollowingList_Updater) Count_In(ins []int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Updater) Count_Ins(ins ...int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1267,6 +1410,19 @@ func (u *__FollowingList_Updater) IsAuto_In(ins []int) *__FollowingList_Updater 
 	return u
 }
 
+func (u *__FollowingList_Updater) IsAuto_Ins(ins ...int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsAuto IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Updater) IsAuto_NotIn(ins []int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1359,6 +1515,19 @@ func (u *__FollowingList_Updater) IsPimiry_In(ins []int) *__FollowingList_Update
 	return u
 }
 
+func (u *__FollowingList_Updater) IsPimiry_Ins(ins ...int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsPimiry IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Updater) IsPimiry_NotIn(ins []int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1439,6 +1608,19 @@ func (d *__FollowingList_Updater) IsPimiry_GE(val int) *__FollowingList_Updater 
 }
 
 func (u *__FollowingList_Updater) CreatedTime_In(ins []int) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Updater) CreatedTime_Ins(ins ...int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1549,6 +1731,19 @@ func (u *__FollowingList_Selector) Id_In(ins []int) *__FollowingList_Selector {
 	return u
 }
 
+func (u *__FollowingList_Selector) Id_Ins(ins ...int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Selector) Id_NotIn(ins []int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1629,6 +1824,19 @@ func (d *__FollowingList_Selector) Id_GE(val int) *__FollowingList_Selector {
 }
 
 func (u *__FollowingList_Selector) UserId_In(ins []int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Selector) UserId_Ins(ins ...int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1733,6 +1941,19 @@ func (u *__FollowingList_Selector) ListType_In(ins []int) *__FollowingList_Selec
 	return u
 }
 
+func (u *__FollowingList_Selector) ListType_Ins(ins ...int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ListType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Selector) ListType_NotIn(ins []int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1813,6 +2034,19 @@ func (d *__FollowingList_Selector) ListType_GE(val int) *__FollowingList_Selecto
 }
 
 func (u *__FollowingList_Selector) Count_In(ins []int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Selector) Count_Ins(ins ...int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1917,6 +2151,19 @@ func (u *__FollowingList_Selector) IsAuto_In(ins []int) *__FollowingList_Selecto
 	return u
 }
 
+func (u *__FollowingList_Selector) IsAuto_Ins(ins ...int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsAuto IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Selector) IsAuto_NotIn(ins []int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2009,6 +2256,19 @@ func (u *__FollowingList_Selector) IsPimiry_In(ins []int) *__FollowingList_Selec
 	return u
 }
 
+func (u *__FollowingList_Selector) IsPimiry_Ins(ins ...int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsPimiry IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__FollowingList_Selector) IsPimiry_NotIn(ins []int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2089,6 +2349,19 @@ func (d *__FollowingList_Selector) IsPimiry_GE(val int) *__FollowingList_Selecto
 }
 
 func (u *__FollowingList_Selector) CreatedTime_In(ins []int) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__FollowingList_Selector) CreatedTime_Ins(ins ...int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

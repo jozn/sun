@@ -247,6 +247,19 @@ func (u *__MsgSeenByPeer_Deleter) Id_In(ins []int) *__MsgSeenByPeer_Deleter {
 	return u
 }
 
+func (u *__MsgSeenByPeer_Deleter) Id_Ins(ins ...int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgSeenByPeer_Deleter) Id_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -327,6 +340,19 @@ func (d *__MsgSeenByPeer_Deleter) Id_GE(val int) *__MsgSeenByPeer_Deleter {
 }
 
 func (u *__MsgSeenByPeer_Deleter) ToUserId_In(ins []int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Deleter) ToUserId_Ins(ins ...int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -431,6 +457,19 @@ func (u *__MsgSeenByPeer_Deleter) PeerUserId_In(ins []int) *__MsgSeenByPeer_Dele
 	return u
 }
 
+func (u *__MsgSeenByPeer_Deleter) PeerUserId_Ins(ins ...int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgSeenByPeer_Deleter) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -511,6 +550,19 @@ func (d *__MsgSeenByPeer_Deleter) PeerUserId_GE(val int) *__MsgSeenByPeer_Delete
 }
 
 func (u *__MsgSeenByPeer_Deleter) AtTime_In(ins []int) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Deleter) AtTime_Ins(ins ...int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -621,6 +673,19 @@ func (u *__MsgSeenByPeer_Updater) Id_In(ins []int) *__MsgSeenByPeer_Updater {
 	return u
 }
 
+func (u *__MsgSeenByPeer_Updater) Id_Ins(ins ...int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgSeenByPeer_Updater) Id_NotIn(ins []int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -701,6 +766,19 @@ func (d *__MsgSeenByPeer_Updater) Id_GE(val int) *__MsgSeenByPeer_Updater {
 }
 
 func (u *__MsgSeenByPeer_Updater) ToUserId_In(ins []int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) ToUserId_Ins(ins ...int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -805,6 +883,19 @@ func (u *__MsgSeenByPeer_Updater) PeerUserId_In(ins []int) *__MsgSeenByPeer_Upda
 	return u
 }
 
+func (u *__MsgSeenByPeer_Updater) PeerUserId_Ins(ins ...int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgSeenByPeer_Updater) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -885,6 +976,19 @@ func (d *__MsgSeenByPeer_Updater) PeerUserId_GE(val int) *__MsgSeenByPeer_Update
 }
 
 func (u *__MsgSeenByPeer_Updater) AtTime_In(ins []int) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Updater) AtTime_Ins(ins ...int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -995,6 +1099,19 @@ func (u *__MsgSeenByPeer_Selector) Id_In(ins []int) *__MsgSeenByPeer_Selector {
 	return u
 }
 
+func (u *__MsgSeenByPeer_Selector) Id_Ins(ins ...int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgSeenByPeer_Selector) Id_NotIn(ins []int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1075,6 +1192,19 @@ func (d *__MsgSeenByPeer_Selector) Id_GE(val int) *__MsgSeenByPeer_Selector {
 }
 
 func (u *__MsgSeenByPeer_Selector) ToUserId_In(ins []int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) ToUserId_Ins(ins ...int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1179,6 +1309,19 @@ func (u *__MsgSeenByPeer_Selector) PeerUserId_In(ins []int) *__MsgSeenByPeer_Sel
 	return u
 }
 
+func (u *__MsgSeenByPeer_Selector) PeerUserId_Ins(ins ...int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PeerUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__MsgSeenByPeer_Selector) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1259,6 +1402,19 @@ func (d *__MsgSeenByPeer_Selector) PeerUserId_GE(val int) *__MsgSeenByPeer_Selec
 }
 
 func (u *__MsgSeenByPeer_Selector) AtTime_In(ins []int) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " AtTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgSeenByPeer_Selector) AtTime_Ins(ins ...int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2199,49 +2355,6 @@ func MassReplace_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
 //
 
 //
-
-// MsgSeenByPeersByToUserId retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
-//
-// Generated from index 'ToUserId'.
-func MsgSeenByPeersByToUserId(db XODB, toUserId int) ([]*MsgSeenByPeer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
-		`FROM ms.msg_seen_by_peer ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgSeenByPeer{}
-	for q.Next() {
-		msbp := MsgSeenByPeer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &msbp)
-	}
-
-	OnMsgSeenByPeer_LoadMany(res)
-
-	return res, nil
-}
 
 // MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
 //

@@ -1,13 +1,14 @@
 package helper
 
 import (
-	"github.com/nfnt/resize"
 	"image"
 	"image/draw"
 	"image/jpeg"
 	"log"
 	"math"
 	"os"
+
+	"github.com/nfnt/resize"
 )
 
 func ImageResize(imageFilePath, outDirectory, fileNamePrefix string, sizes []int) bool {

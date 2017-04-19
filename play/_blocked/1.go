@@ -6,17 +6,19 @@ import (
 
 	"bufio"
 	"bytes"
-	"github.com/PuerkitoBio/fetchbot"
-	"golang.org/x/net/html"
 	"io"
 	"io/ioutil"
 	"math/rand"
 	"os"
 	"strings"
 
+	"github.com/PuerkitoBio/fetchbot"
+	"golang.org/x/net/html"
+
+	"time"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"time"
 )
 
 var queue *fetchbot.Queue

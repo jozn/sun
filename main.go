@@ -2,14 +2,16 @@ package main
 
 import (
 	"fmt"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	// "github.com/nfnt/resize"
-	_ "github.com/garyburd/redigo/redis"
 	"log"
 	"ms/sun/base"
 	"ms/sun/models"
 	"net/http"
+
+	_ "github.com/garyburd/redigo/redis"
 	//_ "net/http/pprof"
 	"github.com/mediocregopher/radix.v2/pool"
 )

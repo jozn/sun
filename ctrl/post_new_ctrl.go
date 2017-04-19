@@ -2,15 +2,16 @@ package ctrl
 
 import (
 	"fmt"
-	"github.com/nfnt/resize"
+	"image"
 	"image/jpeg"
+	"math"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
 	"path/filepath"
 	"time"
-    "math"
-    "image"
+
+	"github.com/nfnt/resize"
 )
 
 func AddPostAction(c *base.Action) base.AppErr {
@@ -34,13 +35,13 @@ func AddPostAction(c *base.Action) base.AppErr {
 			return err
 		}
 
-        h := math.Ceil( float64 ((imageOrginal.Bounds().Dy()*1080) / imageOrginal.Bounds().Dx()) )
+		h := math.Ceil(float64((imageOrginal.Bounds().Dy() * 1080) / imageOrginal.Bounds().Dx()))
 		photo := &models.Photo{
 			UserId:      c.UserId(),
 			Title:       fd.Filename,
 			BucketId:    buket.BucketId,
-			Width:       1080,//imageOrginal.Bounds().Dx(),
-			Height:      int(h),//imageOrginal.Bounds().Dy(),
+			Width:       1080,   //imageOrginal.Bounds().Dx(),
+			Height:      int(h), //imageOrginal.Bounds().Dy(),
 			Ratio:       float32(imageOrginal.Bounds().Dx()) / float32(imageOrginal.Bounds().Dy()),
 			CreatedTime: helper.TimeNow(),
 			PathSrc:     PathSrc,
@@ -52,14 +53,14 @@ func AddPostAction(c *base.Action) base.AppErr {
 			W80:         1,
 		}
 
-        var lastImage image.Image = imageOrginal//otimization for faster image
+		var lastImage image.Image = imageOrginal //otimization for faster image
 		siezes := []int{1080, 720, 480, 320, 160, 80}
 		for _, size := range siezes {
 			img := resize.Resize(uint(size), 0, lastImage, resize.Lanczos3)
 			models.Bucket_savePhotoToBucket(photo, buket, img, size)
-            lastImage = img
-            if size == 1080{
-            }
+			lastImage = img
+			if size == 1080 {
+			}
 		}
 		/*
 		   dirName := fmt.Sprintf("./upload/posts/%v/%d/%v/%v/", t.Year(), t.Month(), t.Day(), t.Hour())
@@ -95,8 +96,8 @@ func AddPostAction(c *base.Action) base.AppErr {
 		post.Width = 640
 
 		models.AddNewPostToDbAndItsMeta(&post)
-        photo.PostId = post.Id
-        photo.Save(base.DB)
+		photo.PostId = post.Id
+		photo.Save(base.DB)
 
 		c.SendJson(post)
 		return nil
@@ -192,10 +193,11 @@ func GetPostsStraemAction_NEW(c *base.Action) base.AppErr {
 	//fids := models.GetAllPrimiryFollowingIds(uid)
 	//fids := models.UserMemoryStore.GetAllFollowingsListOfUser(uid).Elements
 	fids := models.MemoryStore.UserFollowingList_Get(uid).Elements
-	ins := make([]int, 0, len(fids))
+	ins := make([]int, 0, len(fids)+1)
 	copy(ins, fids)
 	ins = append(ins, c.UserId())
-	selctor := models.NewPost_Selector().UserId_In(ins).OrderBy_Id_Desc().Limit(limit)
+	print("ins: ", ins)
+	selctor := models.NewPost_Selector().UserId_Ins(fids...).Or().UserId_EQ(c.UserId()).OrderBy_Id_Desc().Limit(limit)
 
 	if last > 0 {
 		selctor.Id_LT(last)

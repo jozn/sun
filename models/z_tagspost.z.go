@@ -246,6 +246,19 @@ func (u *__TagsPost_Deleter) Id_In(ins []int) *__TagsPost_Deleter {
 	return u
 }
 
+func (u *__TagsPost_Deleter) Id_Ins(ins ...int) *__TagsPost_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__TagsPost_Deleter) Id_NotIn(ins []int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -326,6 +339,19 @@ func (d *__TagsPost_Deleter) Id_GE(val int) *__TagsPost_Deleter {
 }
 
 func (u *__TagsPost_Deleter) TagId_In(ins []int) *__TagsPost_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TagId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__TagsPost_Deleter) TagId_Ins(ins ...int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -430,6 +456,19 @@ func (u *__TagsPost_Deleter) PostId_In(ins []int) *__TagsPost_Deleter {
 	return u
 }
 
+func (u *__TagsPost_Deleter) PostId_Ins(ins ...int) *__TagsPost_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__TagsPost_Deleter) PostId_NotIn(ins []int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -522,6 +561,19 @@ func (u *__TagsPost_Deleter) TypeId_In(ins []int) *__TagsPost_Deleter {
 	return u
 }
 
+func (u *__TagsPost_Deleter) TypeId_Ins(ins ...int) *__TagsPost_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__TagsPost_Deleter) TypeId_NotIn(ins []int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -602,6 +654,19 @@ func (d *__TagsPost_Deleter) TypeId_GE(val int) *__TagsPost_Deleter {
 }
 
 func (u *__TagsPost_Deleter) CreatedTime_In(ins []int) *__TagsPost_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__TagsPost_Deleter) CreatedTime_Ins(ins ...int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -712,6 +777,19 @@ func (u *__TagsPost_Updater) Id_In(ins []int) *__TagsPost_Updater {
 	return u
 }
 
+func (u *__TagsPost_Updater) Id_Ins(ins ...int) *__TagsPost_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__TagsPost_Updater) Id_NotIn(ins []int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -792,6 +870,19 @@ func (d *__TagsPost_Updater) Id_GE(val int) *__TagsPost_Updater {
 }
 
 func (u *__TagsPost_Updater) TagId_In(ins []int) *__TagsPost_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TagId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__TagsPost_Updater) TagId_Ins(ins ...int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -896,6 +987,19 @@ func (u *__TagsPost_Updater) PostId_In(ins []int) *__TagsPost_Updater {
 	return u
 }
 
+func (u *__TagsPost_Updater) PostId_Ins(ins ...int) *__TagsPost_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__TagsPost_Updater) PostId_NotIn(ins []int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -988,6 +1092,19 @@ func (u *__TagsPost_Updater) TypeId_In(ins []int) *__TagsPost_Updater {
 	return u
 }
 
+func (u *__TagsPost_Updater) TypeId_Ins(ins ...int) *__TagsPost_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__TagsPost_Updater) TypeId_NotIn(ins []int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1068,6 +1185,19 @@ func (d *__TagsPost_Updater) TypeId_GE(val int) *__TagsPost_Updater {
 }
 
 func (u *__TagsPost_Updater) CreatedTime_In(ins []int) *__TagsPost_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__TagsPost_Updater) CreatedTime_Ins(ins ...int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1178,6 +1308,19 @@ func (u *__TagsPost_Selector) Id_In(ins []int) *__TagsPost_Selector {
 	return u
 }
 
+func (u *__TagsPost_Selector) Id_Ins(ins ...int) *__TagsPost_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__TagsPost_Selector) Id_NotIn(ins []int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1258,6 +1401,19 @@ func (d *__TagsPost_Selector) Id_GE(val int) *__TagsPost_Selector {
 }
 
 func (u *__TagsPost_Selector) TagId_In(ins []int) *__TagsPost_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TagId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__TagsPost_Selector) TagId_Ins(ins ...int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1362,6 +1518,19 @@ func (u *__TagsPost_Selector) PostId_In(ins []int) *__TagsPost_Selector {
 	return u
 }
 
+func (u *__TagsPost_Selector) PostId_Ins(ins ...int) *__TagsPost_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__TagsPost_Selector) PostId_NotIn(ins []int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1454,6 +1623,19 @@ func (u *__TagsPost_Selector) TypeId_In(ins []int) *__TagsPost_Selector {
 	return u
 }
 
+func (u *__TagsPost_Selector) TypeId_Ins(ins ...int) *__TagsPost_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__TagsPost_Selector) TypeId_NotIn(ins []int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1534,6 +1716,19 @@ func (d *__TagsPost_Selector) TypeId_GE(val int) *__TagsPost_Selector {
 }
 
 func (u *__TagsPost_Selector) CreatedTime_In(ins []int) *__TagsPost_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__TagsPost_Selector) CreatedTime_Ins(ins ...int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

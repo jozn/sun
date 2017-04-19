@@ -258,6 +258,19 @@ func (u *__Post_Deleter) Id_In(ins []int) *__Post_Deleter {
 	return u
 }
 
+func (u *__Post_Deleter) Id_Ins(ins ...int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Deleter) Id_NotIn(ins []int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -338,6 +351,19 @@ func (d *__Post_Deleter) Id_GE(val int) *__Post_Deleter {
 }
 
 func (u *__Post_Deleter) UserId_In(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Deleter) UserId_Ins(ins ...int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -442,6 +468,19 @@ func (u *__Post_Deleter) TypeId_In(ins []int) *__Post_Deleter {
 	return u
 }
 
+func (u *__Post_Deleter) TypeId_Ins(ins ...int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Deleter) TypeId_NotIn(ins []int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -522,6 +561,19 @@ func (d *__Post_Deleter) TypeId_GE(val int) *__Post_Deleter {
 }
 
 func (u *__Post_Deleter) MediaCount_In(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MediaCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Deleter) MediaCount_Ins(ins ...int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -626,6 +678,19 @@ func (u *__Post_Deleter) MediaServerId_In(ins []int) *__Post_Deleter {
 	return u
 }
 
+func (u *__Post_Deleter) MediaServerId_Ins(ins ...int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Deleter) MediaServerId_NotIn(ins []int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -706,6 +771,19 @@ func (d *__Post_Deleter) MediaServerId_GE(val int) *__Post_Deleter {
 }
 
 func (u *__Post_Deleter) Width_In(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Deleter) Width_Ins(ins ...int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -810,6 +888,19 @@ func (u *__Post_Deleter) Height_In(ins []int) *__Post_Deleter {
 	return u
 }
 
+func (u *__Post_Deleter) Height_Ins(ins ...int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Deleter) Height_NotIn(ins []int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -890,6 +981,19 @@ func (d *__Post_Deleter) Height_GE(val int) *__Post_Deleter {
 }
 
 func (u *__Post_Deleter) SharedTo_In(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " SharedTo IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Deleter) SharedTo_Ins(ins ...int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -994,6 +1098,19 @@ func (u *__Post_Deleter) DisableComment_In(ins []int) *__Post_Deleter {
 	return u
 }
 
+func (u *__Post_Deleter) DisableComment_Ins(ins ...int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DisableComment IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Deleter) DisableComment_NotIn(ins []int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1074,6 +1191,19 @@ func (d *__Post_Deleter) DisableComment_GE(val int) *__Post_Deleter {
 }
 
 func (u *__Post_Deleter) HasTag_In(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HasTag IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Deleter) HasTag_Ins(ins ...int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1178,6 +1308,19 @@ func (u *__Post_Deleter) LikesCount_In(ins []int) *__Post_Deleter {
 	return u
 }
 
+func (u *__Post_Deleter) LikesCount_Ins(ins ...int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LikesCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Deleter) LikesCount_NotIn(ins []int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1258,6 +1401,19 @@ func (d *__Post_Deleter) LikesCount_GE(val int) *__Post_Deleter {
 }
 
 func (u *__Post_Deleter) CommentsCount_In(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CommentsCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Deleter) CommentsCount_Ins(ins ...int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1362,6 +1518,19 @@ func (u *__Post_Deleter) EditedTime_In(ins []int) *__Post_Deleter {
 	return u
 }
 
+func (u *__Post_Deleter) EditedTime_Ins(ins ...int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EditedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Deleter) EditedTime_NotIn(ins []int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1442,6 +1611,19 @@ func (d *__Post_Deleter) EditedTime_GE(val int) *__Post_Deleter {
 }
 
 func (u *__Post_Deleter) CreatedTime_In(ins []int) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Deleter) CreatedTime_Ins(ins ...int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1552,6 +1734,19 @@ func (u *__Post_Updater) Id_In(ins []int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) Id_Ins(ins ...int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Updater) Id_NotIn(ins []int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1632,6 +1827,19 @@ func (d *__Post_Updater) Id_GE(val int) *__Post_Updater {
 }
 
 func (u *__Post_Updater) UserId_In(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Updater) UserId_Ins(ins ...int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1736,6 +1944,19 @@ func (u *__Post_Updater) TypeId_In(ins []int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) TypeId_Ins(ins ...int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Updater) TypeId_NotIn(ins []int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1816,6 +2037,19 @@ func (d *__Post_Updater) TypeId_GE(val int) *__Post_Updater {
 }
 
 func (u *__Post_Updater) MediaCount_In(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MediaCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Updater) MediaCount_Ins(ins ...int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1920,6 +2154,19 @@ func (u *__Post_Updater) MediaServerId_In(ins []int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) MediaServerId_Ins(ins ...int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Updater) MediaServerId_NotIn(ins []int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2000,6 +2247,19 @@ func (d *__Post_Updater) MediaServerId_GE(val int) *__Post_Updater {
 }
 
 func (u *__Post_Updater) Width_In(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Updater) Width_Ins(ins ...int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2104,6 +2364,19 @@ func (u *__Post_Updater) Height_In(ins []int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) Height_Ins(ins ...int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Updater) Height_NotIn(ins []int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2184,6 +2457,19 @@ func (d *__Post_Updater) Height_GE(val int) *__Post_Updater {
 }
 
 func (u *__Post_Updater) SharedTo_In(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " SharedTo IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Updater) SharedTo_Ins(ins ...int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2288,6 +2574,19 @@ func (u *__Post_Updater) DisableComment_In(ins []int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) DisableComment_Ins(ins ...int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DisableComment IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Updater) DisableComment_NotIn(ins []int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2368,6 +2667,19 @@ func (d *__Post_Updater) DisableComment_GE(val int) *__Post_Updater {
 }
 
 func (u *__Post_Updater) HasTag_In(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HasTag IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Updater) HasTag_Ins(ins ...int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2472,6 +2784,19 @@ func (u *__Post_Updater) LikesCount_In(ins []int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) LikesCount_Ins(ins ...int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LikesCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Updater) LikesCount_NotIn(ins []int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2552,6 +2877,19 @@ func (d *__Post_Updater) LikesCount_GE(val int) *__Post_Updater {
 }
 
 func (u *__Post_Updater) CommentsCount_In(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CommentsCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Updater) CommentsCount_Ins(ins ...int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2656,6 +2994,19 @@ func (u *__Post_Updater) EditedTime_In(ins []int) *__Post_Updater {
 	return u
 }
 
+func (u *__Post_Updater) EditedTime_Ins(ins ...int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EditedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Updater) EditedTime_NotIn(ins []int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2736,6 +3087,19 @@ func (d *__Post_Updater) EditedTime_GE(val int) *__Post_Updater {
 }
 
 func (u *__Post_Updater) CreatedTime_In(ins []int) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Updater) CreatedTime_Ins(ins ...int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2846,6 +3210,19 @@ func (u *__Post_Selector) Id_In(ins []int) *__Post_Selector {
 	return u
 }
 
+func (u *__Post_Selector) Id_Ins(ins ...int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Selector) Id_NotIn(ins []int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2926,6 +3303,19 @@ func (d *__Post_Selector) Id_GE(val int) *__Post_Selector {
 }
 
 func (u *__Post_Selector) UserId_In(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Selector) UserId_Ins(ins ...int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3030,6 +3420,19 @@ func (u *__Post_Selector) TypeId_In(ins []int) *__Post_Selector {
 	return u
 }
 
+func (u *__Post_Selector) TypeId_Ins(ins ...int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Selector) TypeId_NotIn(ins []int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3110,6 +3513,19 @@ func (d *__Post_Selector) TypeId_GE(val int) *__Post_Selector {
 }
 
 func (u *__Post_Selector) MediaCount_In(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MediaCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Selector) MediaCount_Ins(ins ...int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3214,6 +3630,19 @@ func (u *__Post_Selector) MediaServerId_In(ins []int) *__Post_Selector {
 	return u
 }
 
+func (u *__Post_Selector) MediaServerId_Ins(ins ...int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Selector) MediaServerId_NotIn(ins []int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3294,6 +3723,19 @@ func (d *__Post_Selector) MediaServerId_GE(val int) *__Post_Selector {
 }
 
 func (u *__Post_Selector) Width_In(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Selector) Width_Ins(ins ...int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3398,6 +3840,19 @@ func (u *__Post_Selector) Height_In(ins []int) *__Post_Selector {
 	return u
 }
 
+func (u *__Post_Selector) Height_Ins(ins ...int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Selector) Height_NotIn(ins []int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3478,6 +3933,19 @@ func (d *__Post_Selector) Height_GE(val int) *__Post_Selector {
 }
 
 func (u *__Post_Selector) SharedTo_In(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " SharedTo IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Selector) SharedTo_Ins(ins ...int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3582,6 +4050,19 @@ func (u *__Post_Selector) DisableComment_In(ins []int) *__Post_Selector {
 	return u
 }
 
+func (u *__Post_Selector) DisableComment_Ins(ins ...int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DisableComment IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Selector) DisableComment_NotIn(ins []int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3662,6 +4143,19 @@ func (d *__Post_Selector) DisableComment_GE(val int) *__Post_Selector {
 }
 
 func (u *__Post_Selector) HasTag_In(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HasTag IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Selector) HasTag_Ins(ins ...int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3766,6 +4260,19 @@ func (u *__Post_Selector) LikesCount_In(ins []int) *__Post_Selector {
 	return u
 }
 
+func (u *__Post_Selector) LikesCount_Ins(ins ...int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LikesCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Selector) LikesCount_NotIn(ins []int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3846,6 +4353,19 @@ func (d *__Post_Selector) LikesCount_GE(val int) *__Post_Selector {
 }
 
 func (u *__Post_Selector) CommentsCount_In(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CommentsCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Selector) CommentsCount_Ins(ins ...int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3950,6 +4470,19 @@ func (u *__Post_Selector) EditedTime_In(ins []int) *__Post_Selector {
 	return u
 }
 
+func (u *__Post_Selector) EditedTime_Ins(ins ...int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EditedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Post_Selector) EditedTime_NotIn(ins []int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4030,6 +4563,19 @@ func (d *__Post_Selector) EditedTime_GE(val int) *__Post_Selector {
 }
 
 func (u *__Post_Selector) CreatedTime_In(ins []int) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Post_Selector) CreatedTime_Ins(ins ...int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

@@ -29,18 +29,6 @@ type PostAndDetailes struct {
 	Sender   UserInlineView
 }
 
-type PostAndDetailesNew struct {
-                    // *Post
-    Post
-    TypeName string //for text, photo video
-    Comments []CommentInlineInfo
-    Likes    []Like
-    Photo *Photo
-    Images   *ImageResHolder
-    AmIlike  bool
-    Sender   UserInlineView
-}
-
 type CommentInlineInfo struct {
 	Comment
 	Sender UserInlineView

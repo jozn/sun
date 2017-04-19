@@ -8,7 +8,6 @@ import (
 	"errors"
 	"fmt"
 	//"github.com/pcdummy/skynet2/rpc/bsonrpc"
-	"github.com/ugorji/go/codec"
 	"log"
 	"net"
 	"net/rpc"
@@ -17,6 +16,8 @@ import (
 	"sync"
 	"sync/atomic"
 	"testing"
+
+	"github.com/ugorji/go/codec"
 )
 
 var (

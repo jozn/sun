@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/boltdb/bolt"
 	"log"
 	"math/rand"
 	"strconv"
+
+	"github.com/boltdb/bolt"
 )
 
 func main() {

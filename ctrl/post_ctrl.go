@@ -124,25 +124,25 @@ func AddPostAction(c *base.Action) base.AppErr {
             if size == 1080{
             }
 		}
-		*/
+*/
 /*
-		   dirName := fmt.Sprintf("./upload/posts/%v/%d/%v/%v/", t.Year(), t.Month(), t.Day(), t.Hour())
-		   ext := ".jpg"
-		   index := strings.LastIndex(fd.Filename, ".")
-		   if index > 0 {
-		       ext = fd.Filename[index:]
-		   }
-		   fileName := fmt.Sprintf("%v%v%v%v%s", dirName, (t.UnixNano() / 1e6), "_", c.UserId(), ext)
-		   err = os.MkdirAll(dirName, 0666)
-		   newFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
+   dirName := fmt.Sprintf("./upload/posts/%v/%d/%v/%v/", t.Year(), t.Month(), t.Day(), t.Hour())
+   ext := ".jpg"
+   index := strings.LastIndex(fd.Filename, ".")
+   if index > 0 {
+       ext = fd.Filename[index:]
+   }
+   fileName := fmt.Sprintf("%v%v%v%v%s", dirName, (t.UnixNano() / 1e6), "_", c.UserId(), ext)
+   err = os.MkdirAll(dirName, 0666)
+   newFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
 
-		   if err != nil {
-		       print(2, err.Error())
-		       return err
-		   }
-		   defer newFile.Close()
-		   i, err := io.Copy(newFile, upladedFile)
-		   print("Upladed media Size Write: ", i)*//*
+   if err != nil {
+       print(2, err.Error())
+       return err
+   }
+   defer newFile.Close()
+   i, err := io.Copy(newFile, upladedFile)
+   print("Upladed media Size Write: ", i)*/ /*
 
 		//////////////// end of file functionality ////////////////
 

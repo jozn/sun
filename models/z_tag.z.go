@@ -246,6 +246,19 @@ func (u *__Tag_Deleter) Id_In(ins []int) *__Tag_Deleter {
 	return u
 }
 
+func (u *__Tag_Deleter) Id_Ins(ins ...int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Tag_Deleter) Id_NotIn(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -326,6 +339,19 @@ func (d *__Tag_Deleter) Id_GE(val int) *__Tag_Deleter {
 }
 
 func (u *__Tag_Deleter) Count_In(ins []int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Deleter) Count_Ins(ins ...int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -430,6 +456,19 @@ func (u *__Tag_Deleter) IsBlocked_In(ins []int) *__Tag_Deleter {
 	return u
 }
 
+func (u *__Tag_Deleter) IsBlocked_Ins(ins ...int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Tag_Deleter) IsBlocked_NotIn(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -510,6 +549,19 @@ func (d *__Tag_Deleter) IsBlocked_GE(val int) *__Tag_Deleter {
 }
 
 func (u *__Tag_Deleter) CreatedTime_In(ins []int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Deleter) CreatedTime_Ins(ins ...int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -620,6 +672,19 @@ func (u *__Tag_Updater) Id_In(ins []int) *__Tag_Updater {
 	return u
 }
 
+func (u *__Tag_Updater) Id_Ins(ins ...int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Tag_Updater) Id_NotIn(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -700,6 +765,19 @@ func (d *__Tag_Updater) Id_GE(val int) *__Tag_Updater {
 }
 
 func (u *__Tag_Updater) Count_In(ins []int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Updater) Count_Ins(ins ...int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -804,6 +882,19 @@ func (u *__Tag_Updater) IsBlocked_In(ins []int) *__Tag_Updater {
 	return u
 }
 
+func (u *__Tag_Updater) IsBlocked_Ins(ins ...int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Tag_Updater) IsBlocked_NotIn(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -884,6 +975,19 @@ func (d *__Tag_Updater) IsBlocked_GE(val int) *__Tag_Updater {
 }
 
 func (u *__Tag_Updater) CreatedTime_In(ins []int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Updater) CreatedTime_Ins(ins ...int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -994,6 +1098,19 @@ func (u *__Tag_Selector) Id_In(ins []int) *__Tag_Selector {
 	return u
 }
 
+func (u *__Tag_Selector) Id_Ins(ins ...int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Tag_Selector) Id_NotIn(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1074,6 +1191,19 @@ func (d *__Tag_Selector) Id_GE(val int) *__Tag_Selector {
 }
 
 func (u *__Tag_Selector) Count_In(ins []int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Selector) Count_Ins(ins ...int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1178,6 +1308,19 @@ func (u *__Tag_Selector) IsBlocked_In(ins []int) *__Tag_Selector {
 	return u
 }
 
+func (u *__Tag_Selector) IsBlocked_Ins(ins ...int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Tag_Selector) IsBlocked_NotIn(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1258,6 +1401,19 @@ func (d *__Tag_Selector) IsBlocked_GE(val int) *__Tag_Selector {
 }
 
 func (u *__Tag_Selector) CreatedTime_In(ins []int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Selector) CreatedTime_Ins(ins ...int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {

@@ -249,6 +249,19 @@ func (u *__Bucket_Deleter) BucketId_In(ins []int) *__Bucket_Deleter {
 	return u
 }
 
+func (u *__Bucket_Deleter) BucketId_Ins(ins ...int) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Deleter) BucketId_NotIn(ins []int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -329,6 +342,19 @@ func (d *__Bucket_Deleter) BucketId_GE(val int) *__Bucket_Deleter {
 }
 
 func (u *__Bucket_Deleter) Server1Id_In(ins []int) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Server1Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Deleter) Server1Id_Ins(ins ...int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -433,6 +459,19 @@ func (u *__Bucket_Deleter) Server2Id_In(ins []int) *__Bucket_Deleter {
 	return u
 }
 
+func (u *__Bucket_Deleter) Server2Id_Ins(ins ...int) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Server2Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Deleter) Server2Id_NotIn(ins []int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -513,6 +552,19 @@ func (d *__Bucket_Deleter) Server2Id_GE(val int) *__Bucket_Deleter {
 }
 
 func (u *__Bucket_Deleter) BackupServerId_In(ins []int) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BackupServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Deleter) BackupServerId_Ins(ins ...int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -617,6 +669,19 @@ func (u *__Bucket_Deleter) ContentObjectTypeId_In(ins []int) *__Bucket_Deleter {
 	return u
 }
 
+func (u *__Bucket_Deleter) ContentObjectTypeId_Ins(ins ...int) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ContentObjectTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Deleter) ContentObjectTypeId_NotIn(ins []int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -709,6 +774,19 @@ func (u *__Bucket_Deleter) ContentObjectCount_In(ins []int) *__Bucket_Deleter {
 	return u
 }
 
+func (u *__Bucket_Deleter) ContentObjectCount_Ins(ins ...int) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ContentObjectCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Deleter) ContentObjectCount_NotIn(ins []int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -789,6 +867,19 @@ func (d *__Bucket_Deleter) ContentObjectCount_GE(val int) *__Bucket_Deleter {
 }
 
 func (u *__Bucket_Deleter) CreatedTime_In(ins []int) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Deleter) CreatedTime_Ins(ins ...int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -899,6 +990,19 @@ func (u *__Bucket_Updater) BucketId_In(ins []int) *__Bucket_Updater {
 	return u
 }
 
+func (u *__Bucket_Updater) BucketId_Ins(ins ...int) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Updater) BucketId_NotIn(ins []int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -979,6 +1083,19 @@ func (d *__Bucket_Updater) BucketId_GE(val int) *__Bucket_Updater {
 }
 
 func (u *__Bucket_Updater) Server1Id_In(ins []int) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Server1Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Updater) Server1Id_Ins(ins ...int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1083,6 +1200,19 @@ func (u *__Bucket_Updater) Server2Id_In(ins []int) *__Bucket_Updater {
 	return u
 }
 
+func (u *__Bucket_Updater) Server2Id_Ins(ins ...int) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Server2Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Updater) Server2Id_NotIn(ins []int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1163,6 +1293,19 @@ func (d *__Bucket_Updater) Server2Id_GE(val int) *__Bucket_Updater {
 }
 
 func (u *__Bucket_Updater) BackupServerId_In(ins []int) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BackupServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Updater) BackupServerId_Ins(ins ...int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1267,6 +1410,19 @@ func (u *__Bucket_Updater) ContentObjectTypeId_In(ins []int) *__Bucket_Updater {
 	return u
 }
 
+func (u *__Bucket_Updater) ContentObjectTypeId_Ins(ins ...int) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ContentObjectTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Updater) ContentObjectTypeId_NotIn(ins []int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1359,6 +1515,19 @@ func (u *__Bucket_Updater) ContentObjectCount_In(ins []int) *__Bucket_Updater {
 	return u
 }
 
+func (u *__Bucket_Updater) ContentObjectCount_Ins(ins ...int) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ContentObjectCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Updater) ContentObjectCount_NotIn(ins []int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1439,6 +1608,19 @@ func (d *__Bucket_Updater) ContentObjectCount_GE(val int) *__Bucket_Updater {
 }
 
 func (u *__Bucket_Updater) CreatedTime_In(ins []int) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Updater) CreatedTime_Ins(ins ...int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1549,6 +1731,19 @@ func (u *__Bucket_Selector) BucketId_In(ins []int) *__Bucket_Selector {
 	return u
 }
 
+func (u *__Bucket_Selector) BucketId_Ins(ins ...int) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BucketId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Selector) BucketId_NotIn(ins []int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1629,6 +1824,19 @@ func (d *__Bucket_Selector) BucketId_GE(val int) *__Bucket_Selector {
 }
 
 func (u *__Bucket_Selector) Server1Id_In(ins []int) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Server1Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Selector) Server1Id_Ins(ins ...int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1733,6 +1941,19 @@ func (u *__Bucket_Selector) Server2Id_In(ins []int) *__Bucket_Selector {
 	return u
 }
 
+func (u *__Bucket_Selector) Server2Id_Ins(ins ...int) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Server2Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Selector) Server2Id_NotIn(ins []int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1813,6 +2034,19 @@ func (d *__Bucket_Selector) Server2Id_GE(val int) *__Bucket_Selector {
 }
 
 func (u *__Bucket_Selector) BackupServerId_In(ins []int) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " BackupServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Selector) BackupServerId_Ins(ins ...int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1917,6 +2151,19 @@ func (u *__Bucket_Selector) ContentObjectTypeId_In(ins []int) *__Bucket_Selector
 	return u
 }
 
+func (u *__Bucket_Selector) ContentObjectTypeId_Ins(ins ...int) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ContentObjectTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Selector) ContentObjectTypeId_NotIn(ins []int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2009,6 +2256,19 @@ func (u *__Bucket_Selector) ContentObjectCount_In(ins []int) *__Bucket_Selector 
 	return u
 }
 
+func (u *__Bucket_Selector) ContentObjectCount_Ins(ins ...int) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ContentObjectCount IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
 func (u *__Bucket_Selector) ContentObjectCount_NotIn(ins []int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2089,6 +2349,19 @@ func (d *__Bucket_Selector) ContentObjectCount_GE(val int) *__Bucket_Selector {
 }
 
 func (u *__Bucket_Selector) CreatedTime_In(ins []int) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Bucket_Selector) CreatedTime_Ins(ins ...int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
