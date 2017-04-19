@@ -6646,6 +6646,49 @@ func MassReplace_Photo(rows []Photo, db XODB) error {
 
 //
 
+// PhotosByAlbumId retrieves a row from 'ms.photo' as a Photo.
+//
+// Generated from index 'AlbumId'.
+func PhotosByAlbumId(db XODB, albumId int) ([]*Photo, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
+		`FROM ms.photo ` +
+		`WHERE AlbumId = ?`
+
+	// run query
+	XOLog(sqlstr, albumId)
+	q, err := db.Query(sqlstr, albumId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Photo{}
+	for q.Next() {
+		p := Photo{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &p)
+	}
+
+	OnPhoto_LoadMany(res)
+
+	return res, nil
+}
+
 // PhotosByCreatedTime retrieves a row from 'ms.photo' as a Photo.
 //
 // Generated from index 'CreatedTime'.
@@ -6732,64 +6775,21 @@ func PhotosByHashMd5(db XODB, hashMd5 string) ([]*Photo, error) {
 	return res, nil
 }
 
-// PhotosBySrcBucketId retrieves a row from 'ms.photo' as a Photo.
+// PhotosByPostId retrieves a row from 'ms.photo' as a Photo.
 //
-// Generated from index 'Src_Buket'.
-func PhotosBySrcBucketId(db XODB, src string, bucketId int) ([]*Photo, error) {
+// Generated from index 'PostId'.
+func PhotosByPostId(db XODB, postId int) ([]*Photo, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
 		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
 		`FROM ms.photo ` +
-		`WHERE Src = ? AND BucketId = ?`
+		`WHERE PostId = ?`
 
 	// run query
-	XOLog(sqlstr, src, bucketId)
-	q, err := db.Query(sqlstr, src, bucketId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Photo{}
-	for q.Next() {
-		p := Photo{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &p)
-	}
-
-	OnPhoto_LoadMany(res)
-
-	return res, nil
-}
-
-// PhotosByUserIdHashMd5 retrieves a row from 'ms.photo' as a Photo.
-//
-// Generated from index 'UserIdHash5'.
-func PhotosByUserIdHashMd5(db XODB, userId int, hashMd5 string) ([]*Photo, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
-		`FROM ms.photo ` +
-		`WHERE UserId = ? AND HashMd5 = ?`
-
-	// run query
-	XOLog(sqlstr, userId, hashMd5)
-	q, err := db.Query(sqlstr, userId, hashMd5)
+	XOLog(sqlstr, postId)
+	q, err := db.Query(sqlstr, postId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

@@ -2531,49 +2531,6 @@ func MassReplace_Message(rows []Message, db XODB) error {
 
 //
 
-// MessagesByToUserId retrieves a row from 'ms.message' as a Message.
-//
-// Generated from index 'ToUserId'.
-func MessagesByToUserId(db XODB, toUserId int) ([]*Message, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
-		`FROM ms.message ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Message{}
-	for q.Next() {
-		m := Message{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &m)
-	}
-
-	OnMessage_LoadMany(res)
-
-	return res, nil
-}
-
 // MessagesByToUserIdTimeMs retrieves a row from 'ms.message' as a Message.
 //
 // Generated from index 'ToUserId_2'.
