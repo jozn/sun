@@ -54,14 +54,6 @@ type WithMe struct {
 }
 */
 
-type UserInlineView struct {
-	// User
-	UserId    int
-	UserName  string
-	FullName  string
-	AvatarUrl string
-}
-
 type UserInlineFollowView struct {
 	UserInlineView
 	IsProfilePrivate bool

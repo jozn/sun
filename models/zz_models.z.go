@@ -98,7 +98,7 @@ type Media struct {
 	AlbumId     int
 	TypeId      int
 	CreatedTime int
-	Src         string
+	Src         string //json of sizes
 
 	_exists, _deleted bool
 }
@@ -199,7 +199,7 @@ type Photo struct {
 	AlbumId     int
 	ImageTypeId int
 	Title       string
-	Src         string
+	Src         string //json of sizes
 	PathSrc     string
 	BucketId    int
 	Width       int
@@ -212,7 +212,7 @@ type Photo struct {
 	W480        int
 	W320        int
 	W160        int
-	W80         int
+	W80         int `json:"-"` //nojson
 
 	_exists, _deleted bool
 }

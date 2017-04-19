@@ -11,7 +11,7 @@ type PostView struct {
 	Photo *Photo
 	//Images   *ImageResHolder
 	AmIlike bool //dep
-	MyLike  int//type of like
+	MyLike  int  //type of like
 	Sender  UserInlineView
 }
 
@@ -44,21 +44,21 @@ func (e _viewImpl) PostsViews(posts []*Post, UserId int) (viw []*PostView) {
 
 func (e _viewImpl) PostSingleView(post *Post, UserId int, mp map[int]*Photo) *PostView {
 	v := &PostView{}
-    if post != nil{
-        v.Post = post
-        v.TypeName = PostTypeIdToName(post.TypeId)
-        u, err := Views.GetUserInlineView(post.UserId)
-        if err == nil {
-            v.Sender = u
-            //v.Comments = nil //GetPostLastComments(post.Id)
-            //v.Likes = nil    //GetPostLastLikes(post.Id)
-            //SetPostImages(&v)
-            v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
-            if post.TypeId == 2 {
-                v.Photo = mp[post.Id]
-            }
-            return v
-        }
-    }
+	if post != nil {
+		v.Post = post
+		v.TypeName = PostTypeIdToName(post.TypeId)
+		u, err := Views.GetUserInlineView(post.UserId)
+		if err == nil {
+			v.Sender = u
+			//v.Comments = nil //GetPostLastComments(post.Id)
+			//v.Likes = nil    //GetPostLastLikes(post.Id)
+			//SetPostImages(&v)
+			v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
+			if post.TypeId == 2 {
+				v.Photo = mp[post.Id]
+			}
+			return v
+		}
+	}
 	return v
 }
