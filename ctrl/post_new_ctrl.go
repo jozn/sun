@@ -212,7 +212,7 @@ func GetPostsStraemAction_NEW(c *base.Action) base.AppErr {
 		return err
 	}
 
-	view := models.PostsToPostsAndDetailesNew(posts, uid)
+	view := models.Views.PostsViews(posts, uid)
 	c.SendJson(view)
 	return nil
 }
