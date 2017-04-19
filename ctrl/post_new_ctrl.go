@@ -2,80 +2,17 @@ package ctrl
 
 import (
 	"fmt"
-	"io"
+	"github.com/nfnt/resize"
+	"image/jpeg"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
-	"os"
-	"strings"
+	"path/filepath"
 	"time"
+    "math"
+    "image"
 )
 
-//psost types: 1:text 2: media/photo
-
-func AddPostAction_bk(c *base.Action) base.AppErr {
-	MustBeUserAndUpdate(c)
-
-	txt := c.Req.Form.Get("text")
-
-	///////////////// start of file functionality //////////////
-	upladedFile, fd, err := c.Req.FormFile("file")
-	if err == nil { //image
-		defer upladedFile.Close()
-
-		t := time.Now()
-		dirName := fmt.Sprintf("./upload/posts/%v/%d/%v/%v/", t.Year(), t.Month(), t.Day(), t.Hour())
-		ext := ".jpg"
-		index := strings.LastIndex(fd.Filename, ".")
-		if index > 0 {
-			ext = fd.Filename[index:]
-		}
-		fileName := fmt.Sprintf("%v%v%v%v%s", dirName, (t.UnixNano() / 1e6), "_", c.UserId(), ext)
-		err = os.MkdirAll(dirName, 0666)
-		newFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
-
-		if err != nil {
-			print(2, err.Error())
-			return err
-		}
-		defer newFile.Close()
-		i, err := io.Copy(newFile, upladedFile)
-		print("Upladed media Size Write: ", i)
-		//////////////// end of file functionality ////////////////
-
-		post := models.Post{}
-		//TODO security: clean html of text
-		post.Text = txt
-		post.UserId = c.UserId()
-		post.TypeId = models.POST_TYPE_PHOTO
-		post.CreatedTime = helper.TimeNow()
-		post.CommentsCount = 0
-		post.LikesCount = 0
-		post.MediaUrl = fileName[2:]
-		post.MediaServerId = 1
-		post.Height = 640
-		post.Width = 640
-
-		models.AddNewPostToDbAndItsMeta(&post)
-		c.SendJson(post)
-		return nil
-	} else { ///just text
-		post := models.Post{}
-		//TODO security: clean html of text
-		post.Text = txt
-		post.UserId = c.UserId()
-		post.TypeId = models.POST_TYPE_TEXT
-		post.CreatedTime = helper.TimeNow()
-		post.CommentsCount = 0
-		post.LikesCount = 0
-
-		models.AddNewPostToDbAndItsMeta(&post)
-		c.SendJson(post)
-		return nil
-	}
-}
-
-/*
 func AddPostAction(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 
@@ -124,8 +61,7 @@ func AddPostAction(c *base.Action) base.AppErr {
             if size == 1080{
             }
 		}
-		*/
-/*
+		/*
 		   dirName := fmt.Sprintf("./upload/posts/%v/%d/%v/%v/", t.Year(), t.Month(), t.Day(), t.Hour())
 		   ext := ".jpg"
 		   index := strings.LastIndex(fd.Filename, ".")
@@ -142,8 +78,7 @@ func AddPostAction(c *base.Action) base.AppErr {
 		   }
 		   defer newFile.Close()
 		   i, err := io.Copy(newFile, upladedFile)
-		   print("Upladed media Size Write: ", i)*//*
-
+		   print("Upladed media Size Write: ", i)*/
 		//////////////// end of file functionality ////////////////
 
 		post := models.Post{}
@@ -180,9 +115,8 @@ func AddPostAction(c *base.Action) base.AppErr {
 		return nil
 	}
 }
-*/
 
-func GetSinglePostAction(c *base.Action) base.AppErr {
+func GetSinglePostAction_NEW(c *base.Action) base.AppErr {
 	UpdateSessionActivityIfUser(c)
 	idstr := c.Req.Form.Get("post_id")
 	id := helper.StrToInt(idstr, 0)
@@ -200,7 +134,7 @@ func GetSinglePostAction(c *base.Action) base.AppErr {
 	return nil
 }
 
-func PostDeleteAction(c *base.Action) base.AppErr {
+func PostDeleteAction_NEW(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 
 	idstr := c.Req.Form.Get("post_id")
@@ -214,7 +148,7 @@ func PostDeleteAction(c *base.Action) base.AppErr {
 	return nil
 }
 
-func PostUpdateAction(c *base.Action) base.AppErr {
+func PostUpdateAction_NEW(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 	idstr := c.Req.Form.Get("post_id")
 	text := c.Req.Form.Get("text")
@@ -240,7 +174,7 @@ func PostUpdateAction(c *base.Action) base.AppErr {
 	return nil
 }
 
-func GetPostsStraemAction(c *base.Action) base.AppErr {
+func GetPostsStraemAction_NEW(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 	const LIMIT = 30
 
@@ -269,19 +203,19 @@ func GetPostsStraemAction(c *base.Action) base.AppErr {
 		selctor.Offset((page - 1) * limit)
 	}
 
-	posts, err := selctor.GetRows2(base.DB)
+	posts, err := selctor.GetRows(base.DB)
 	if err != nil {
 		helper.DebugPrintln(err)
 		c.SendJson(nil)
 		return err
 	}
 
-	view := models.PostsToPostsAndDetailesV1(posts, uid)
+	view := models.PostsToPostsAndDetailesNew(posts, uid)
 	c.SendJson(view)
 	return nil
 }
 
-func GetPostsLatestAction(c *base.Action) base.AppErr {
+func GetPostsLatestAction_NEW(c *base.Action) base.AppErr {
 	UpdateSessionActivityIfUser(c)
 
 	laststr := c.Req.Form.Get("last") //last that have
