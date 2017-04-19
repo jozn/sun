@@ -45,7 +45,7 @@ func bucket_creatNextBucket() *Bucket {
 
 func bucket_nextName(i int) string {
     t:=time.Now()
-    return fmt.Sprintf("posts/%d/%d/%d/b%d",t.Year(),t.Month(),t.Day(), i)
+    return fmt.Sprintf("posts/%d_%02d_%02d/b%d",t.Year(),t.Month(),t.Day(), i)
 }
 
 func Bucket_savePhotoToBucket(photo *Photo, buket *Bucket, img image.Image, size int) {

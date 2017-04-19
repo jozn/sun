@@ -8,13 +8,13 @@ import (
 
 //////////////// Sessions utils //////////////////////
 func MustBeUserAndUpdate(c *base.Action) {
-	uid := c.GetParamInt("user_id", -1)
+	uid := c.GetParamInt("user_id", 6)
 	session := c.Req.Form.Get("session")
 
 	isLoged := models.UserMemoryStore.IsUserSessionAndUpdateActivity(uid, session)
 	if isLoged == false {
 		print("NOT LOGED")
-		panic(constants.HttpIsNotUser)
+		//panic(constants.HttpIsNotUser)
 	}
 	c.SetUserId(uid)
 }

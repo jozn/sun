@@ -13,6 +13,7 @@ import (
 	"strings"
 	"time"
     "math"
+    "image"
 )
 
 //psost types: 1:text 2: media/photo
@@ -118,10 +119,12 @@ func AddPostAction(c *base.Action) base.AppErr {
 			W80:         1,
 		}
 
+        var lastImage image.Image = imageOrginal//otimization for faster image
 		siezes := []int{1080, 720, 480, 320, 160, 80}
 		for _, size := range siezes {
-			img := resize.Resize(uint(size), 0, imageOrginal, resize.Lanczos3)
+			img := resize.Resize(uint(size), 0, lastImage, resize.Lanczos3)
 			models.Bucket_savePhotoToBucket(photo, buket, img, size)
+            lastImage = img
             if size == 1080{
             }
 		}

@@ -3299,49 +3299,6 @@ func PhoneContactsByPhoneNumber(db XODB, phoneNumber string) ([]*PhoneContact, e
 	return res, nil
 }
 
-// PhoneContactsByUserId retrieves a row from 'ms.phone_contacts' as a PhoneContact.
-//
-// Generated from index 'UserId'.
-func PhoneContactsByUserId(db XODB, userId int) ([]*PhoneContact, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PhoneDisplayName, PhoneFamilyName, PhoneNumber, PhoneNormalizedNumber, PhoneContactRowId, UserId, DeviceUuidId, CreatedTime, UpdatedTime ` +
-		`FROM ms.phone_contacts ` +
-		`WHERE UserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId)
-	q, err := db.Query(sqlstr, userId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*PhoneContact{}
-	for q.Next() {
-		pc := PhoneContact{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&pc.Id, &pc.PhoneDisplayName, &pc.PhoneFamilyName, &pc.PhoneNumber, &pc.PhoneNormalizedNumber, &pc.PhoneContactRowId, &pc.UserId, &pc.DeviceUuidId, &pc.CreatedTime, &pc.UpdatedTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &pc)
-	}
-
-	OnPhoneContact_LoadMany(res)
-
-	return res, nil
-}
-
 // PhoneContactsByUserIdCreatedTime retrieves a row from 'ms.phone_contacts' as a PhoneContact.
 //
 // Generated from index 'UserId_Time'.
