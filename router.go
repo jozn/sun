@@ -104,6 +104,7 @@ func registerRoutes() *httptreemux.TreeMux {
 		http.Handle("/i/cacher", actionToFunc(ShowCacher))
 		http.Handle("/i/cache_row", actionToFunc(ShowCacheKeys))
 		http.Handle("/i/cache_row_keys", actionToFunc(ShowCacheRowKeys))
+		http.Handle("/i/cache_index", actionToFunc(ShowCacheIndex))
 		http.Handle("/i/db", actionToFunc(DBStruct))
 		http.Handle("/i/java2", actionToFunc(DBStructsTojava))
 		http.Handle("/i/table", actionToFunc(DBStructsToTable))

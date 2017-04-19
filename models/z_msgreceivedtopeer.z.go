@@ -2356,49 +2356,6 @@ func MassReplace_MsgReceivedToPeer(rows []MsgReceivedToPeer, db XODB) error {
 
 //
 
-// MsgReceivedToPeersByToUserId retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
-//
-// Generated from index 'ToUserId'.
-func MsgReceivedToPeersByToUserId(db XODB, toUserId int) ([]*MsgReceivedToPeer, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
-		`FROM ms.msg_received_to_peer ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgReceivedToPeer{}
-	for q.Next() {
-		mrtp := MsgReceivedToPeer{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&mrtp.Id, &mrtp.ToUserId, &mrtp.MsgKey, &mrtp.RoomKey, &mrtp.PeerUserId, &mrtp.AtTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &mrtp)
-	}
-
-	OnMsgReceivedToPeer_LoadMany(res)
-
-	return res, nil
-}
-
 // MsgReceivedToPeerById retrieves a row from 'ms.msg_received_to_peer' as a MsgReceivedToPeer.
 //
 // Generated from index 'msg_received_to_peer_Id_pkey'.

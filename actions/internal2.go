@@ -79,3 +79,8 @@ func ShowCacheRowKeys(a *base.Action) base.AppErr {
 	a.SendJson(arr)
 	return nil
 }
+
+func ShowCacheIndex(a *base.Action) base.AppErr {
+	a.SendJson(models.RowCacheIndex.Items())
+	return nil
+}

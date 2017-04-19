@@ -8,7 +8,8 @@ type PostView struct {
 	TypeName string //for text, photo video
 	//Comments []CommentInlineInfo
 	//Likes    []Like
-	Photo *Photo
+	Photo     *Photo
+	PhotoView *PhotoView
 	//Images   *ImageResHolder
 	AmIlike bool //dep
 	MyLike  int  //type of like
@@ -56,6 +57,7 @@ func (e _viewImpl) PostSingleView(post *Post, UserId int, mp map[int]*Photo) *Po
 			v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
 			if post.TypeId == 2 {
 				v.Photo = mp[post.Id]
+				v.PhotoView = Convert_PhotoToNewPhotoView(mp[post.Id])
 			}
 			return v
 		}
