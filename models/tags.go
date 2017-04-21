@@ -25,29 +25,6 @@ func Tags_RepeatedlyJobs() {
 
 }
 
-/////////////////////////////////////////////
-type tagsMap struct {
-	m    sync.RWMutex
-	_map map[string]*Tag
-}
-
-func (mp *tagsMap) GetTag(Name string) (*Tag, bool) {
-	mp.m.RLock()
-	t := mp._map[Name]
-
-	if t == nil {
-		return nil, false
-	}
-	return t, true
-}
-
-func newTagsMap() *tagsMap {
-	tm := tagsMap{}
-	tm._map = make(map[string]*Tag)
-	return &tm
-}
-
-var TagsMap = newTagsMap() //new(tagsMap)
 var TopTags = make([]*Tag, 0, 50)
 var TopTagsWithPostsResult = make([]*TopTagsWithPostsView, 0, 50)
 
@@ -105,6 +82,7 @@ func AddTagsInPost(post *Post) {
 			TagId:  tg.Id,
 			PostId: post.Id,
 			TypeId: post.TypeId,
+            CreatedTime: helper.TimeNow(),
 		}
 
 		tags = append(tags, tg)
