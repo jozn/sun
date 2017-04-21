@@ -4,13 +4,8 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"sync"
+	"time"
 )
-
-type TopTagsWithPosts struct {
-	Tag   Tag
-	Posts []*PostAndDetailes
-	//Posts []PostAndDetailes
-}
 
 type TopTagsWithPostsView struct {
 	Tag   *Tag
@@ -18,8 +13,16 @@ type TopTagsWithPostsView struct {
 }
 
 func Tags_RepeatedlyJobs() {
-	//ReloadAllTags()
-	ReloadTopTags()
+
+	//top tags
+	go func() {
+		for {
+			ReloadTopTags()
+			ReloadTopPostsForTopTags()
+			time.Sleep(time.Minute * 15)
+		}
+	}()
+
 }
 
 /////////////////////////////////////////////
@@ -76,55 +79,41 @@ func ReloadTopPostsForTopTags() {
 	TopTagsWithPostsResult = newTopTagsWithPosts
 }
 
-//////////////////  New Apis   ///////////////////////////
 func AddTagsInPost(post *Post) {
 	parser := TextParser{}
 	parser.Parse(post.Text)
 
-	//create new Tags if for first time
-	TagsMap.m.Lock()
-	defer TagsMap.m.Unlock()
+	if len(post.Text) == 0 {
+		return
+	}
 
+	Store.PreLoadTag_ByNames(parser.Tags)
+
+	tags := []*Tag{}
+	tagPosts := []TagsPost{}
+	tagsIds := []int{}
 	for _, tagName := range parser.Tags {
-		tg, ok := TagsMap._map[tagName]
-
-		if !ok { // first post whit this tag with
-			tg = &Tag{}
-			tg.Name = tagName
-			tg.CreatedTime = helper.TimeNow()
-			res, _ := base.DbInsertStruct(tg, "tags")
-			tid, _ := res.LastInsertId()
-			tg.Id = int(tid)
-
-			TagsMap._map[tg.Name] = tg
+		tg, ok := Store.Tag_ByName(tagName)
+		if !ok {
+			tg = &Tag{
+				Name:        tagName,
+				CreatedTime: helper.TimeNow(),
+			}
+			tg.Save(base.DB)
 		}
-		//add in memeory counter
-		tg.Count += 1
-	}
-
-	var postTagPonters []interface{}
-	for _, tagName := range parser.Tags {
-		tg, ok := TagsMap._map[tagName]
-		if ok {
-			tagPost := TagsPost{}
-			tagPost.TagId = tg.Id
-			tagPost.PostId = post.Id
-			tagPost.TypeId = post.TypeId
-			tagPost.CreatedTime = helper.TimeNow()
-
-			postTagPonters = append(postTagPonters, &tagPost)
+		tgp := TagsPost{
+			TagId:  tg.Id,
+			PostId: post.Id,
+			TypeId: post.TypeId,
 		}
-		//base.DbInsertStruct(&tagPost, "tags_posts")
-	}
-	base.DbMassReplacetStructPoninters("tags_posts", postTagPonters...)
 
-	var tgsNames []interface{}
-	for _, tagName := range parser.Tags {
-		n := tagName
-		tgsNames = append(tgsNames, &n)
+		tags = append(tags, tg)
+		tagPosts = append(tagPosts, tgp)
+		tagsIds = append(tagsIds, tg.Id)
 	}
 
-	base.DbExecute("update tags set `Count` = `Count`+1 where Name in ("+helper.DbQuestionForSqlIn(len(tgsNames))+")", tgsNames...)
+	MassInsert_TagsPost(tagPosts, base.DB)
+	NewTag_Updater().Count_Increment(1).Id_In(tagsIds).Update(base.DB)
 }
 
 func AddUserMentionedInPost(post *Post) {
