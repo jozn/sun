@@ -6091,6 +6091,49 @@ func MassReplace_Post(rows []Post, db XODB) error {
 
 //
 
+// PostsByUserId retrieves a row from 'ms.post' as a Post.
+//
+// Generated from index 'UserId'.
+func PostsByUserId(db XODB, userId int) ([]*Post, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime ` +
+		`FROM ms.post ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Post{}
+	for q.Next() {
+		p := Post{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaCount, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.DisableComment, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.EditedTime, &p.CreatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &p)
+	}
+
+	OnPost_LoadMany(res)
+
+	return res, nil
+}
+
 // PostById retrieves a row from 'ms.post' as a Post.
 //
 // Generated from index 'post_Id_pkey'.

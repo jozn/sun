@@ -4,17 +4,6 @@ package models
 //    UserBasicAndMe
 //}
 
-type TopTagsWithPosts struct {
-	Tag   Tag
-	Posts []*PostAndDetailes
-	//Posts []PostAndDetailes
-}
-
-type TopTagsWithPostsView struct {
-	Tag  Tag
-	Post []PostAndDetailes
-}
-
 func GetListOfUserForFollowType(userIds []int, CurrentUserId int) *[]UserBasicAndMe {
 	list := make([]UserBasicAndMe, 0, len(userIds))
 	for _, uid := range userIds {

@@ -16,8 +16,9 @@ func OnAppStart_Models() {
 
 	ReloadTopUserIds()
 
-	ReloadAllTags()
-	ReloadTopTags()
+	/*ReloadAllTags()
+	ReloadTopTags()*/
+	Tags_RepeatedlyJobs()
 
 	go PeriodicReloadTopPostsForTopTags()
 	go Session_periodicllyUpdateDB()

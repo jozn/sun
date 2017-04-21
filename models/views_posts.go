@@ -50,19 +50,18 @@ func (e _viewImpl) PostSingleView(post *Post, UserId int, mp map[int]*Photo) *Po
 	if post != nil {
 		v.Post = post
 		v.TypeName = PostTypeIdToName(post.TypeId)
+		if UserId > 0 {
+			v.MyLike = 0
+			v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
+		}
+		if post.TypeId == 2 {
+			ph, _ := Store.Photo_ByPostId(post.Id)
+			v.Photo = ph
+			v.PhotoView = Convert_PhotoToNewPhotoView(ph)
+		}
 		u, err := Views.GetUserInlineView(post.UserId)
 		if err == nil {
 			v.Sender = u
-			//v.Comments = nil //GetPostLastComments(post.Id)
-			//v.Likes = nil    //GetPostLastLikes(post.Id)
-			//SetPostImages(&v)
-			v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
-			if post.TypeId == 2 {
-				ph, _ := Store.Photo_ByPostId(post.Id)
-				v.Photo = ph
-				v.PhotoView = Convert_PhotoToNewPhotoView(ph)
-			}
-			return v
 		}
 	}
 	return v

@@ -6,29 +6,21 @@ import (
 	"sync"
 )
 
-///////////////// Structs Database /////////////////////////////
-// Go-Orma
-/*
-type Tag struct {
-	Id          int
-	Name        string
-	Count       int
-	IsBlocked   int
-	CreatedTime int
-	// xo fields
-	_exists, _deleted bool
+type TopTagsWithPosts struct {
+	Tag   Tag
+	Posts []*PostAndDetailes
+	//Posts []PostAndDetailes
 }
 
-type TagsPost struct {
-	Id          int
-	TagId       int
-	PostId      int
-	TypeId      int // text? photo? video?
-	CreatedTime int
-	// xo fields
-	_exists, _deleted bool
+type TopTagsWithPostsView struct {
+	Tag   *Tag
+	Posts []*PostView
 }
-*/
+
+func Tags_RepeatedlyJobs() {
+	//ReloadAllTags()
+	ReloadTopTags()
+}
 
 /////////////////////////////////////////////
 type tagsMap struct {
@@ -53,47 +45,31 @@ func newTagsMap() *tagsMap {
 }
 
 var TagsMap = newTagsMap() //new(tagsMap)
-var TopTags = make([]Tag, 0, 50)
-var TopTagsWithPostsResult = make([]TopTagsWithPosts, 0, 50)
-
-//called on inits
-func ReloadAllTags() {
-	var tags []Tag
-	base.DB.Select(&tags, "select * from tags")
-
-	TagsMap.m.Lock()
-	for _, t := range tags {
-		t2 := t
-		TagsMap._map[t2.Name] = &t2
-	}
-	TagsMap.m.Unlock()
-}
+var TopTags = make([]*Tag, 0, 50)
+var TopTagsWithPostsResult = make([]*TopTagsWithPostsView, 0, 50)
 
 func ReloadTopTags() {
-	var tags []Tag
-	base.DB.Select(&tags, "SELECT * FROM tags ORDER BY `count` DESC LIMIT 50 ")
-
-	TopTags = tags
+	tags, err := NewTag_Selector().OrderBy_Count_Desc().Limit(50).GetRows(base.DB)
+	if err == nil {
+		TopTags = tags
+	}
 }
 
 func ReloadTopPostsForTopTags() {
-
 	tags := TopTags
-	tagsId := []int{}
-
-	var newTopTagsWithPosts = make([]TopTagsWithPosts, 0, 50)
+	var newTopTagsWithPosts = make([]*TopTagsWithPostsView, 0, 50)
 
 	for _, t := range tags {
-		tagsId = append(tagsId, t.Id) //useless
-		var PostsIds []int
+		postsIds, err := NewTagsPost_Selector().Select_PostId().TagId_EQ(t.Id).Limit(4).OrderBy_Id_Desc().GetIntSlice(base.DB)
+		if err != nil {
+			continue
+		}
 
-		base.DB.Select(&PostsIds, "SELECT PostId FROM tags_posts where TagId = ? AND TypeId = 2 ORDER BY Id DESC LIMIT 4 ", t.Id)
+		v := &TopTagsWithPostsView{
+			Tag:   t,
+			Posts: Views.PostsViewsForPostIds(postsIds, 0),
+		}
 
-		post := GetPostsAndItsDetails(PostsIds, 0)
-
-		v := TopTagsWithPosts{}
-		v.Tag = t
-		v.Posts = post
 		newTopTagsWithPosts = append(newTopTagsWithPosts, v)
 	}
 
