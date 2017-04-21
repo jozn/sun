@@ -7,12 +7,12 @@ import (
 )
 
 //////////////// Sessions utils //////////////////////
-func MustBeUserAndUpdate(c *base.Action) {
+func MustBeUserAndUpdate_OLD(c *base.Action) {
 	uid := c.GetParamInt("user_id", 6)
 	session := c.Req.Form.Get("session")
-    _ = session
+	_ = session
 
-	isLoged := true//models.UserMemoryStore.IsUserSessionAndUpdateActivity(uid, session)
+	isLoged := true //models.UserMemoryStore.IsUserSessionAndUpdateActivity(uid, session)
 	if isLoged == false {
 		print("NOT LOGED")
 		//panic(constants.HttpIsNotUser)
@@ -20,7 +20,7 @@ func MustBeUserAndUpdate(c *base.Action) {
 	c.SetUserId(uid)
 }
 
-func MustBeUser(c *base.Action) {
+func MustBeUser_OLD(c *base.Action) {
 	uid := c.GetParamInt("user_id", -1)
 	session := c.Req.Form.Get("session")
 
@@ -31,7 +31,7 @@ func MustBeUser(c *base.Action) {
 	c.SetUserId(uid)
 }
 
-func UpdateSessionActivityIfUser(c *base.Action) {
+func UpdateSessionActivityIfUser_OLD(c *base.Action) {
 	uid := c.GetParamInt("user_id", -1)
 	session := c.Req.Form.Get("session")
 
@@ -42,7 +42,7 @@ func UpdateSessionActivityIfUser(c *base.Action) {
 	c.SetUserId(uid)
 }
 
-func GetSessionUserId(c *base.Action) int {
+func GetSessionUserId_OLD(c *base.Action) int {
 	if c.UserId() > 0 {
 		return c.UserId()
 	}

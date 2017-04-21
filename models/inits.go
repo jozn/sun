@@ -20,6 +20,7 @@ func OnAppStart_Models() {
 	ReloadTopTags()
 
 	go PeriodicReloadTopPostsForTopTags()
+	go Session_periodicllyUpdateDB()
 
 	Cache = NewCache()
 	CacheModels = _cacheModels{Cache}
