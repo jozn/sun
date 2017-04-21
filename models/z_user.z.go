@@ -9331,49 +9331,6 @@ func UsersByPhone(db XODB, phone string) ([]*User, error) {
 	return res, nil
 }
 
-// UsersBySessionUuid retrieves a row from 'ms.user' as a User.
-//
-// Generated from index 'SessionUuid'.
-func UsersBySessionUuid(db XODB, sessionUuid string) ([]*User, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserName, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress ` +
-		`FROM ms.user ` +
-		`WHERE SessionUuid = ?`
-
-	// run query
-	XOLog(sqlstr, sessionUuid)
-	q, err := db.Query(sqlstr, sessionUuid)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*User{}
-	for q.Next() {
-		u := User{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&u.Id, &u.UserName, &u.FirstName, &u.LastName, &u.About, &u.FullName, &u.AvatarUrl, &u.PrivacyProfile, &u.Phone, &u.Email, &u.IsDeleted, &u.PasswordHash, &u.PasswordSalt, &u.FollowersCount, &u.FollowingCount, &u.PostsCount, &u.MediaCount, &u.LikesCount, &u.ResharedCount, &u.LastActionTime, &u.LastPostTime, &u.PrimaryFollowingList, &u.CreatedTime, &u.UpdatedTime, &u.SessionUuid, &u.DeviceUuid, &u.LastWifiMacAddress, &u.LastNetworkType, &u.AppVersion, &u.LastActivityTime, &u.LastLoginTime, &u.LastIpAddress)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &u)
-	}
-
-	OnUser_LoadMany(res)
-
-	return res, nil
-}
-
 // UserByUserName retrieves a row from 'ms.user' as a User.
 //
 // Generated from index 'UserName'.

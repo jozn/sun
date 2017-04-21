@@ -6777,7 +6777,7 @@ func PhotosByHashMd5(db XODB, hashMd5 string) ([]*Photo, error) {
 
 // PhotosByPostId retrieves a row from 'ms.photo' as a Photo.
 //
-// Generated from index 'PostId'.
+// Generated from index 'PostId2'.
 func PhotosByPostId(db XODB, postId int) ([]*Photo, error) {
 	var err error
 

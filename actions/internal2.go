@@ -81,6 +81,18 @@ func ShowCacheRowKeys(a *base.Action) base.AppErr {
 }
 
 func ShowCacheIndex(a *base.Action) base.AppErr {
-	a.SendJson(models.RowCacheIndex.Items())
+    /*if rand.Intn(3) == 2 {
+        i:=rand.Intn(1000000000000)
+        e:=i+1000000
+        for ;i<e;i++ {
+            models.RowCacheIndex.Set("kjslkjlkjlkjlkjljlj:"+strconv.Itoa(i),&models.Photo{},0)
+        }
+    }
+
+    for i:=0;i<100000;i++ {
+        models.RowCacheIndex.Get("kjslkjlkjlkjlkjljlj:"+strconv.Itoa(i))
+    }
+	a.SendJson(len(models.RowCacheIndex.Items()))*/
+    a.SendJson(models.RowCacheIndex.Items())
 	return nil
 }

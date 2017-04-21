@@ -274,6 +274,9 @@ type Session struct {
 	LastIpAddress      string
 	LastWifiMacAddress string
 	LastNetworkType    string
+	LastNetworkTypeId  int
+	AppVersion         int
+	UpdatedTime        int
 	CreatedTime        int
 
 	_exists, _deleted bool
