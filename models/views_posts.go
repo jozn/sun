@@ -37,6 +37,14 @@ func (e _viewImpl) PostsViews(posts []*Post, UserId int) (viw []*PostView) {
 	return viw
 }
 
+func (e _viewImpl) PostsViewsForPostIds(postsIds []int, UserId int) (viw []*PostView) {
+	if len(postsIds) != 0 {
+		posts, _ := Post_PostsByIds(postsIds)
+		viw = Views.PostsViews(posts, UserId)
+	}
+	return
+}
+
 func (e _viewImpl) PostSingleView(post *Post, UserId int, mp map[int]*Photo) *PostView {
 	v := &PostView{}
 	if post != nil {
