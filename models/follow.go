@@ -4,45 +4,11 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 )
-
 /*
-// In Orma-gen
-type FollowingList struct {
-	Id          int
-	UserId      int
-	ListType    int
-	Name        string
-	Count       int
-	IsAuto      int
-	IsPimiry    int
-	CreatedTime int
-	// xo fields
-	_exists, _deleted bool
-}
-
-//following_list_member
-type FollowingListMember struct {
-	Id             int
-	ListId         int
-	UserId         int
-	FollowedUserId int
-	FollowType     int
-	UpdatedTimeMs  int
-	// xo fields
-	_exists, _deleted bool
-}
-*/
-
-/* ?
-//table: following_list_member_history
-type FollowingListMemberHistory struct {
-	FollowingListMember
-	FollowId int
-	// xo fields
-	_exists, _deleted bool
-}
-*/
-
+spec: 1: following
+      2: requested
+      0: not following or could not
+ */
 func Follow(UserId, FollowedPeerUserId int) int {
 	if UserId == FollowedPeerUserId || UserId < 1 || FollowedPeerUserId < 1 {
 		return 0

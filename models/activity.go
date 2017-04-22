@@ -18,7 +18,7 @@ type Activity struct {
 }
 */
 
-func Activity_OnPostCommented(comment *Comment, post *Post) {
+func Activity_OnPostCommentAdd(comment *Comment, post *Post) {
 	if comment == nil || post == nil {
 		return
 	}
@@ -35,7 +35,7 @@ func Activity_OnPostCommented(comment *Comment, post *Post) {
 	not.Save(base.DB)
 }
 
-func Activity_OnPostCommentedDeleted(comment *Comment, post *Post) {
+func Activity_OnPostCommentDeleted(comment *Comment, post *Post) {
 	if comment == nil || post == nil {
 		return
 	}

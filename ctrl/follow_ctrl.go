@@ -8,11 +8,6 @@ import (
 	//"ms/sun/docs/del"
 )
 
-func PingAction(c *base.Action) base.AppErr {
-	c.SendText("PONG")
-	return nil
-}
-
 func FollowAction(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 	cuid := c.UserId()
@@ -60,7 +55,6 @@ func GetFollowersListAction(c *base.Action) base.AppErr {
 	var user models.User
 	var ok bool
 	if peer_id < 1 {
-		//user, err = models.GetUserByUsername2(username)
 		user, ok = models.MemoryStore_User.GetUserByUserName(username)
 	} else {
 		user, ok = models.MemoryStore_User.GetUser(peer_id)
@@ -89,7 +83,6 @@ func GetFollowersListAction(c *base.Action) base.AppErr {
 		return nil
 	}
 
-	//usersFollow := models.GetListOfUserForFollowType(userIds, cuid)
 	usersFollow := models.Views.UserBasicAndMeForUsers(cuid, userIds)
 
 	c.SendJson(usersFollow)
@@ -141,16 +134,9 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
 		return nil
 	}
 
-	//usersFollow := models.GetListOfUserForFollowType(userIds, cuid)
 	usersFollow := models.Views.UserBasicAndMeForUsers(cuid, userIds)
 
 	c.SendJson(usersFollow)
 	return nil
 }
 
-/*
-type SyncFollowings struct {
-	Add    []models.UserBasicAndMe
-	Remove []int
-}
-*/

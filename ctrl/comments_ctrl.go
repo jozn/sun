@@ -42,7 +42,6 @@ func GetCommentsAction(c *base.Action) base.AppErr {
 		commentsInline = append(commentsInline, cmtView)
 	}
 	c.SendJson(commentsInline)
-	// c.SendJson(comments)
 	return nil
 }
 
@@ -52,10 +51,10 @@ func PostAddCommentAction(c *base.Action) base.AppErr {
 	pid := c.GetParamInt("post_id", 0)
 	texts := c.Req.Form.Get("text")
 	texts = strings.Trim(texts, " ")
-	if len(texts) == 0 {
+	if len(texts) == 0 || pid < 1 {
 		return nil
 	}
-
+    
 	// c.SendText("ok")
 	cmt := models.Comment_Add(c.UserId(), pid, texts)
 	c.SendJson(cmt)
