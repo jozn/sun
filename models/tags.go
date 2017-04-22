@@ -3,7 +3,6 @@ package models
 import (
 	"ms/sun/base"
 	"ms/sun/helper"
-	"sync"
 	"time"
 )
 
@@ -79,10 +78,10 @@ func AddTagsInPost(post *Post) {
 			tg.Save(base.DB)
 		}
 		tgp := TagsPost{
-			TagId:  tg.Id,
-			PostId: post.Id,
-			TypeId: post.TypeId,
-            CreatedTime: helper.TimeNow(),
+			TagId:       tg.Id,
+			PostId:      post.Id,
+			TypeId:      post.TypeId,
+			CreatedTime: helper.TimeNow(),
 		}
 
 		tags = append(tags, tg)
