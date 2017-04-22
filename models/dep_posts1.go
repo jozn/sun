@@ -2,18 +2,7 @@ package models
 
 import (
 	"ms/sun/base"
-	"ms/sun/helper"
 )
-
-func AddNewPostToDbAndItsMeta(post *Post) {
-	post.CreatedTime = helper.TimeNow()
-	UserMemoryStore.UpdateUserPostsCounts(post.UserId, 1)
-
-	post.Save(base.DB)
-
-	AddTagsInPost(post)
-	AddUserMentionedInPost(post)
-}
 
 /////////// From version 0.4 /////////////
 
@@ -32,8 +21,8 @@ func DeletePost(UserId, PostId int) bool {
 	base.DbExecute("delete from likes where PostId = ? And UserId = ? ", PostId, UserId)
 	base.DbExecute("delete from comments where PostId = ? And UserId = ? ", PostId, UserId)
 	//todo delete from more
-	UserMemoryStore.UpdateUserPostsCounts(UserId, -1)
-
+	//UserMemoryStore.UpdateUserPostsCounts(UserId, -1)
+	Counter.UpdateUserPostsCounts(post.UserId, -1)
 	return true
 }
 

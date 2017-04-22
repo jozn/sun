@@ -38,7 +38,7 @@ func FactPosts() {
 		p.TypeId = 2
 	}
 
-	models.AddNewPostToDbAndItsMeta(&p)
+	models.Post_AddNewPostToDbAndItsTagsAndCounters(&p)
 	//base.DbInsertStruct(&p,"post")
 
 }

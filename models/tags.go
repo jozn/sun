@@ -55,7 +55,7 @@ func ReloadTopPostsForTopTags() {
 	TopTagsWithPostsResult = newTopTagsWithPosts
 }
 
-func AddTagsInPost(post *Post) {
+func Tags_AddTagsInPost(post *Post) {
 	parser := TextParser{}
 	parser.Parse(post.Text)
 
@@ -93,6 +93,6 @@ func AddTagsInPost(post *Post) {
 	NewTag_Updater().Count_Increment(1).Id_In(tagsIds).Update(base.DB)
 }
 
-func AddUserMentionedInPost(post *Post) {
+func Mentioned_AddUserMentionedInPost(post *Post) {
 
 }
