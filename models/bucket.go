@@ -13,12 +13,12 @@ import (
 	"time"
 )
 
-const BUCKET_TYPE_POST = 1
+const BUCKET_TYPE_POST_PHOTO = 1
 
-func Buket_getNextForPost() *Bucket {
+func Buket_GetNextForPostPhoto() *Bucket {
 	buket, err := NewBucket_Selector().
-		ContentObjectTypeId_EQ(BUCKET_TYPE_POST).
-		OrderBy_CreatedTime_Desc().
+		ContentObjectTypeId_EQ(BUCKET_TYPE_POST_PHOTO).
+		OrderBy_BucketId_Desc().
 		GetRow(base.DB)
 
 	if err != nil || buket.ContentObjectCount >= config.BUCKET_SIZE {
@@ -32,9 +32,9 @@ func Buket_getNextForPost() *Bucket {
 
 func bucket_creatNextBucket() *Bucket {
 	buket := &Bucket{
-		BucketName:          helper.RandString(10),
+		BucketName:          helper.RandString(15),
 		Server1Id:           1,
-		ContentObjectTypeId: BUCKET_TYPE_POST,
+		ContentObjectTypeId: BUCKET_TYPE_POST_PHOTO,
 		CreatedTime:         helper.TimeNow(),
 	}
 	buket.Save(base.DB)

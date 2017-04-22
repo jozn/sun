@@ -4,9 +4,6 @@ func init() {
 
 	go impleOfPeriodaclyUpdateLastActivityOfUser()
 
-	//load all tags
-	//ReloadAllTags()
-
 }
 
 func OnAppStart_Models() {
@@ -16,8 +13,6 @@ func OnAppStart_Models() {
 
 	ReloadTopUserIds()
 
-	/*ReloadAllTags()
-	ReloadTopTags()*/
 	Tags_RepeatedlyJobs()
 
 	go PeriodicReloadTopPostsForTopTags()
@@ -26,9 +21,4 @@ func OnAppStart_Models() {
 	Cache = NewCache()
 	CacheModels = _cacheModels{Cache}
 
-	//todo: del this
-	p := Post{}
-	p.Text = "sadasdasd"
-
-	Cache.Set("post_12", &p, 0)
 }

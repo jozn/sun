@@ -20,7 +20,7 @@ func Session_ProcessHttpReq(h *http.Request) *ReqParams {
 		SessionUuid: h.Form.Get("session"),
 		Page:        helper.StrToInt(h.Form.Get("page"), 1),
 		Last:        helper.StrToInt(h.Form.Get("last"), 0),
-		Limit:       helper.StrToInt(h.Form.Get("limit"), 0),
+		Limit:       helper.StrToInt(h.Form.Get("limit"), 30),
 	}
 
 	isUser := Session_CheckAndSetUserSession(req)
