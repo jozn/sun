@@ -15,6 +15,16 @@ type Activity struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &Activity {
+	Id: 0,
+	ActorUserId: 0,
+	ActionTypeId: 0,
+	TargetId: 0,
+	RefId: 0,
+	CreatedAt: 0,
+*/
+
 // Bucket 'ms.bucket'.
 type Bucket struct {
 	BucketId            int
@@ -29,6 +39,18 @@ type Bucket struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &Bucket {
+	BucketId: 0,
+	BucketName: "",
+	Server1Id: 0,
+	Server2Id: 0,
+	BackupServerId: 0,
+	ContentObjectTypeId: 0,
+	ContentObjectCount: 0,
+	CreatedTime: 0,
+*/
+
 // Comment 'ms.comments'.
 type Comment struct {
 	Id          int
@@ -39,6 +61,15 @@ type Comment struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &Comment {
+	Id: 0,
+	UserId: 0,
+	PostId: 0,
+	Text: "",
+	CreatedTime: 0,
+*/
 
 // FollowingList 'ms.following_list'.
 type FollowingList struct {
@@ -54,6 +85,18 @@ type FollowingList struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &FollowingList {
+	Id: 0,
+	UserId: 0,
+	ListType: 0,
+	Name: "",
+	Count: 0,
+	IsAuto: 0,
+	IsPimiry: 0,
+	CreatedTime: 0,
+*/
+
 // FollowingListMember 'ms.following_list_member'.
 type FollowingListMember struct {
 	Id             int
@@ -65,6 +108,16 @@ type FollowingListMember struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &FollowingListMember {
+	Id: 0,
+	ListId: 0,
+	UserId: 0,
+	FollowedUserId: 0,
+	FollowType: 0,
+	UpdatedTimeMs: 0,
+*/
 
 // FollowingListMemberHistory 'ms.following_list_member_history'.
 type FollowingListMemberHistory struct {
@@ -79,6 +132,17 @@ type FollowingListMemberHistory struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &FollowingListMemberHistory {
+	Id: 0,
+	ListId: 0,
+	UserId: 0,
+	FollowedUserId: 0,
+	FollowType: 0,
+	UpdatedTimeMs: 0,
+	FollowId: 0,
+*/
+
 // Like 'ms.likes'.
 type Like struct {
 	Id          int
@@ -89,6 +153,15 @@ type Like struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &Like {
+	Id: 0,
+	PostId: 0,
+	UserId: 0,
+	TypeId: 0,
+	CreatedTime: 0,
+*/
 
 // Media 'ms.media'.
 type Media struct {
@@ -103,6 +176,17 @@ type Media struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &Media {
+	Id: 0,
+	UserId: 0,
+	PostId: 0,
+	AlbumId: 0,
+	TypeId: 0,
+	CreatedTime: 0,
+	Src: "",
+*/
+
 // Message 'ms.message'.
 type Message struct {
 	Id         int
@@ -116,6 +200,17 @@ type Message struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &Message {
+	Id: 0,
+	ToUserId: 0,
+	RoomKey: "",
+	MessageKey: "",
+	FromUserID: 0,
+	Data: "",
+	TimeMs: 0,
+*/
+
 // MsgDeletedFromServer 'ms.msg_deleted_from_server'.
 type MsgDeletedFromServer struct {
 	Id         int
@@ -127,6 +222,16 @@ type MsgDeletedFromServer struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &MsgDeletedFromServer {
+	Id: 0,
+	ToUserId: 0,
+	MsgKey: "",
+	PeerUserId: 0,
+	RoomKey: "",
+	AtTime: 0,
+*/
 
 // MsgReceivedToPeer 'ms.msg_received_to_peer'.
 type MsgReceivedToPeer struct {
@@ -140,6 +245,16 @@ type MsgReceivedToPeer struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &MsgReceivedToPeer {
+	Id: 0,
+	ToUserId: 0,
+	MsgKey: "",
+	RoomKey: "",
+	PeerUserId: 0,
+	AtTime: 0,
+*/
+
 // MsgSeenByPeer 'ms.msg_seen_by_peer'.
 type MsgSeenByPeer struct {
 	Id         int
@@ -151,6 +266,16 @@ type MsgSeenByPeer struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &MsgSeenByPeer {
+	Id: 0,
+	ToUserId: 0,
+	MsgKey: "",
+	RoomKey: "",
+	PeerUserId: 0,
+	AtTime: 0,
+*/
 
 // Notification 'ms.notification'.
 type Notification struct {
@@ -167,6 +292,19 @@ type Notification struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &Notification {
+	Id: 0,
+	ForUserId: 0,
+	ActorUserId: 0,
+	ActionTypeId: 0,
+	ObjectTypeId: 0,
+	TargetId: 0,
+	ObjectId: 0,
+	SeenStatus: 0,
+	CreatedTime: 0,
+*/
+
 // NotificationRemoved 'ms.notification_removed'.
 type NotificationRemoved struct {
 	NotificationId int
@@ -174,6 +312,12 @@ type NotificationRemoved struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &NotificationRemoved {
+	NotificationId: 0,
+	ForUserId: 0,
+*/
 
 // PhoneContact 'ms.phone_contacts'.
 type PhoneContact struct {
@@ -190,6 +334,20 @@ type PhoneContact struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &PhoneContact {
+	Id: 0,
+	PhoneDisplayName: "",
+	PhoneFamilyName: "",
+	PhoneNumber: "",
+	PhoneNormalizedNumber: "",
+	PhoneContactRowId: 0,
+	UserId: 0,
+	DeviceUuidId: 0,
+	CreatedTime: 0,
+	UpdatedTime: 0,
+*/
 
 // Photo 'ms.photo'.
 type Photo struct {
@@ -217,6 +375,30 @@ type Photo struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &Photo {
+	PhotoId: 0,
+	UserId: 0,
+	PostId: 0,
+	AlbumId: 0,
+	ImageTypeId: 0,
+	Title: "",
+	Src: "",
+	PathSrc: "",
+	BucketId: 0,
+	Width: 0,
+	Height: 0,
+	Ratio: float32(0),
+	HashMd5: "",
+	CreatedTime: 0,
+	W1080: 0,
+	W720: 0,
+	W480: 0,
+	W320: 0,
+	W160: 0,
+	W80: 0,
+*/
+
 // Post 'ms.post'.
 type Post struct {
 	Id             int
@@ -240,6 +422,27 @@ type Post struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &Post {
+	Id: 0,
+	UserId: 0,
+	TypeId: 0,
+	Text: "",
+	FormatedText: "",
+	MediaUrl: "",
+	MediaCount: 0,
+	MediaServerId: 0,
+	Width: 0,
+	Height: 0,
+	SharedTo: 0,
+	DisableComment: 0,
+	HasTag: 0,
+	LikesCount: 0,
+	CommentsCount: 0,
+	EditedTime: 0,
+	CreatedTime: 0,
+*/
+
 // RecommendUser 'ms.recommend_user'.
 type RecommendUser struct {
 	Id          int
@@ -250,6 +453,15 @@ type RecommendUser struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &RecommendUser {
+	Id: 0,
+	UserId: 0,
+	TargetId: 0,
+	Weight: float32(0),
+	CreatedTime: 0,
+*/
 
 // SearchClicked 'ms.search_clicked'.
 type SearchClicked struct {
@@ -262,6 +474,16 @@ type SearchClicked struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &SearchClicked {
+	Id: 0,
+	Query: "",
+	ClickType: 0,
+	TargetId: 0,
+	UserId: 0,
+	CreatedAt: 0,
+*/
 
 // Session 'ms.session'.
 type Session struct {
@@ -282,6 +504,23 @@ type Session struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &Session {
+	Id: 0,
+	UserId: 0,
+	SessionUuid: "",
+	ClientUuid: "",
+	DeviceUuid: "",
+	LastActivityTime: 0,
+	LastIpAddress: "",
+	LastWifiMacAddress: "",
+	LastNetworkType: "",
+	LastNetworkTypeId: 0,
+	AppVersion: 0,
+	UpdatedTime: 0,
+	CreatedTime: 0,
+*/
+
 // Tag 'ms.tags'.
 type Tag struct {
 	Id          int
@@ -292,6 +531,15 @@ type Tag struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &Tag {
+	Id: 0,
+	Name: "",
+	Count: 0,
+	IsBlocked: 0,
+	CreatedTime: 0,
+*/
 
 // TagsPost 'ms.tags_posts'.
 type TagsPost struct {
@@ -304,6 +552,15 @@ type TagsPost struct {
 	_exists, _deleted bool
 }
 
+/*
+:= &TagsPost {
+	Id: 0,
+	TagId: 0,
+	PostId: 0,
+	TypeId: 0,
+	CreatedTime: 0,
+*/
+
 // UserMetaInfo 'ms.user_meta_info'.
 type UserMetaInfo struct {
 	UserId              int
@@ -311,6 +568,12 @@ type UserMetaInfo struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &UserMetaInfo {
+	UserId: 0,
+	IsNotificationDirty: 0,
+*/
 
 // UserPassword 'ms.user_password'.
 type UserPassword struct {
@@ -320,3 +583,10 @@ type UserPassword struct {
 
 	_exists, _deleted bool
 }
+
+/*
+:= &UserPassword {
+	UserId: 0,
+	Password: "",
+	CreatedTime: 0,
+*/

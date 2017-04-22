@@ -56,7 +56,7 @@ func Bucket_savePhotoToBucket(photo *Photo, buket *Bucket, img image.Image, size
 
 	newFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
-		print(2, err.Error())
+		print(err.Error())
 		return //err
 	}
 	defer newFile.Close()

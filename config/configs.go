@@ -15,4 +15,4 @@ const IS_PRODUCTION = false
 const UPLOAD_DIR = "./upload/"
 const UPLOAD_DIR_POSTS = UPLOAD_DIR + ""
 
-const BUCKET_SIZE = 10
+const BUCKET_SIZE = 30

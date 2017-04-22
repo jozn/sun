@@ -65,18 +65,36 @@ func AddPostAction(c *base.Action) base.AppErr {
 
 		//////////////// end of file functionality ////////////////
 
-		post := models.Post{}
+		post := models.Post{
+            Id: 0,
+            UserId:c.UserId(),
+            TypeId: models.POST_TYPE_PHOTO,
+            Text: txt,
+            FormatedText: "",
+            MediaUrl: "",
+            MediaCount: 0,
+            MediaServerId: 0,
+            Width: 0,
+            Height: 0,
+            SharedTo: 0,
+            DisableComment: 0,
+            HasTag: 0,
+            LikesCount: 0,
+            CommentsCount: 0,
+            EditedTime: 0,
+            CreatedTime: helper.TimeNow(),
+        }
 		//TODO security: clean html of text
-		post.Text = txt
+		/*post.Text = txt
 		post.UserId = c.UserId()
 		post.TypeId = models.POST_TYPE_PHOTO
 		post.CreatedTime = helper.TimeNow()
 		post.CommentsCount = 0
-		post.LikesCount = 0
+		post.LikesCount = 0*/
 		//post.MediaUrl = fileName[2:]
-		post.MediaServerId = 1
-		post.Height = 640
-		post.Width = 640
+		//post.MediaServerId = 1
+		//post.Height = 640
+		//post.Width = 640
 
 		models.AddNewPostToDbAndItsMeta(&post)
 		photo.PostId = post.Id
