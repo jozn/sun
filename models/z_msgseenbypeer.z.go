@@ -273,7 +273,7 @@ func (u *__MsgSeenByPeer_Deleter) Id_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) Id_EQ(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) Id_Eq(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -284,7 +284,7 @@ func (d *__MsgSeenByPeer_Deleter) Id_EQ(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Id_NotEQ(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) Id_NotEq(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -378,7 +378,7 @@ func (u *__MsgSeenByPeer_Deleter) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Del
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) ToUserId_EQ(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) ToUserId_Eq(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -389,7 +389,7 @@ func (d *__MsgSeenByPeer_Deleter) ToUserId_EQ(val int) *__MsgSeenByPeer_Deleter 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) ToUserId_NotEQ(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) ToUserId_NotEq(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -483,7 +483,7 @@ func (u *__MsgSeenByPeer_Deleter) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_D
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) PeerUserId_EQ(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) PeerUserId_Eq(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -494,7 +494,7 @@ func (d *__MsgSeenByPeer_Deleter) PeerUserId_EQ(val int) *__MsgSeenByPeer_Delete
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) PeerUserId_NotEQ(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) PeerUserId_NotEq(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -588,7 +588,7 @@ func (u *__MsgSeenByPeer_Deleter) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Delet
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) AtTime_EQ(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) AtTime_Eq(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -599,7 +599,7 @@ func (d *__MsgSeenByPeer_Deleter) AtTime_EQ(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) AtTime_NotEQ(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) AtTime_NotEq(val int) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -699,7 +699,7 @@ func (u *__MsgSeenByPeer_Updater) Id_NotIn(ins []int) *__MsgSeenByPeer_Updater {
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) Id_EQ(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) Id_Eq(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -710,7 +710,7 @@ func (d *__MsgSeenByPeer_Updater) Id_EQ(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Id_NotEQ(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) Id_NotEq(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -804,7 +804,7 @@ func (u *__MsgSeenByPeer_Updater) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Upd
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) ToUserId_EQ(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) ToUserId_Eq(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -815,7 +815,7 @@ func (d *__MsgSeenByPeer_Updater) ToUserId_EQ(val int) *__MsgSeenByPeer_Updater 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) ToUserId_NotEQ(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) ToUserId_NotEq(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -909,7 +909,7 @@ func (u *__MsgSeenByPeer_Updater) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_U
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) PeerUserId_EQ(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) PeerUserId_Eq(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -920,7 +920,7 @@ func (d *__MsgSeenByPeer_Updater) PeerUserId_EQ(val int) *__MsgSeenByPeer_Update
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) PeerUserId_NotEQ(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) PeerUserId_NotEq(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1014,7 +1014,7 @@ func (u *__MsgSeenByPeer_Updater) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Updat
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) AtTime_EQ(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) AtTime_Eq(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1025,7 +1025,7 @@ func (d *__MsgSeenByPeer_Updater) AtTime_EQ(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) AtTime_NotEQ(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) AtTime_NotEq(val int) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1125,7 +1125,7 @@ func (u *__MsgSeenByPeer_Selector) Id_NotIn(ins []int) *__MsgSeenByPeer_Selector
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) Id_EQ(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) Id_Eq(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1136,7 +1136,7 @@ func (d *__MsgSeenByPeer_Selector) Id_EQ(val int) *__MsgSeenByPeer_Selector {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Id_NotEQ(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) Id_NotEq(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1230,7 +1230,7 @@ func (u *__MsgSeenByPeer_Selector) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Se
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) ToUserId_EQ(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) ToUserId_Eq(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1241,7 +1241,7 @@ func (d *__MsgSeenByPeer_Selector) ToUserId_EQ(val int) *__MsgSeenByPeer_Selecto
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) ToUserId_NotEQ(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) ToUserId_NotEq(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1335,7 +1335,7 @@ func (u *__MsgSeenByPeer_Selector) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) PeerUserId_EQ(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) PeerUserId_Eq(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1346,7 +1346,7 @@ func (d *__MsgSeenByPeer_Selector) PeerUserId_EQ(val int) *__MsgSeenByPeer_Selec
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) PeerUserId_NotEQ(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) PeerUserId_NotEq(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1440,7 +1440,7 @@ func (u *__MsgSeenByPeer_Selector) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Sele
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) AtTime_EQ(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) AtTime_Eq(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1451,7 +1451,7 @@ func (d *__MsgSeenByPeer_Selector) AtTime_EQ(val int) *__MsgSeenByPeer_Selector 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) AtTime_NotEQ(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) AtTime_NotEq(val int) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1548,12 +1548,23 @@ func (u *__MsgSeenByPeer_Deleter) MsgKey_Like(val string) *__MsgSeenByPeer_Delet
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) MsgKey_EQ(val string) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) MsgKey_Eq(val string) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) MsgKey_NotEq(val string) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1597,12 +1608,23 @@ func (u *__MsgSeenByPeer_Deleter) RoomKey_Like(val string) *__MsgSeenByPeer_Dele
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) RoomKey_EQ(val string) *__MsgSeenByPeer_Deleter {
+func (d *__MsgSeenByPeer_Deleter) RoomKey_Eq(val string) *__MsgSeenByPeer_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Deleter) RoomKey_NotEq(val string) *__MsgSeenByPeer_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1648,12 +1670,23 @@ func (u *__MsgSeenByPeer_Updater) MsgKey_Like(val string) *__MsgSeenByPeer_Updat
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) MsgKey_EQ(val string) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) MsgKey_Eq(val string) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) MsgKey_NotEq(val string) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1697,12 +1730,23 @@ func (u *__MsgSeenByPeer_Updater) RoomKey_Like(val string) *__MsgSeenByPeer_Upda
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) RoomKey_EQ(val string) *__MsgSeenByPeer_Updater {
+func (d *__MsgSeenByPeer_Updater) RoomKey_Eq(val string) *__MsgSeenByPeer_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Updater) RoomKey_NotEq(val string) *__MsgSeenByPeer_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1748,12 +1792,23 @@ func (u *__MsgSeenByPeer_Selector) MsgKey_Like(val string) *__MsgSeenByPeer_Sele
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) MsgKey_EQ(val string) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) MsgKey_Eq(val string) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MsgKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) MsgKey_NotEq(val string) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1797,12 +1852,23 @@ func (u *__MsgSeenByPeer_Selector) RoomKey_Like(val string) *__MsgSeenByPeer_Sel
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) RoomKey_EQ(val string) *__MsgSeenByPeer_Selector {
+func (d *__MsgSeenByPeer_Selector) RoomKey_Eq(val string) *__MsgSeenByPeer_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgSeenByPeer_Selector) RoomKey_NotEq(val string) *__MsgSeenByPeer_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d

@@ -273,7 +273,7 @@ func (u *__Activity_Deleter) Id_NotIn(ins []int) *__Activity_Deleter {
 	return u
 }
 
-func (d *__Activity_Deleter) Id_EQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) Id_Eq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -284,7 +284,7 @@ func (d *__Activity_Deleter) Id_EQ(val int) *__Activity_Deleter {
 	return d
 }
 
-func (d *__Activity_Deleter) Id_NotEQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) Id_NotEq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -378,7 +378,7 @@ func (u *__Activity_Deleter) ActorUserId_NotIn(ins []int) *__Activity_Deleter {
 	return u
 }
 
-func (d *__Activity_Deleter) ActorUserId_EQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) ActorUserId_Eq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -389,7 +389,7 @@ func (d *__Activity_Deleter) ActorUserId_EQ(val int) *__Activity_Deleter {
 	return d
 }
 
-func (d *__Activity_Deleter) ActorUserId_NotEQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) ActorUserId_NotEq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -483,7 +483,7 @@ func (u *__Activity_Deleter) ActionTypeId_NotIn(ins []int) *__Activity_Deleter {
 	return u
 }
 
-func (d *__Activity_Deleter) ActionTypeId_EQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) ActionTypeId_Eq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -494,7 +494,7 @@ func (d *__Activity_Deleter) ActionTypeId_EQ(val int) *__Activity_Deleter {
 	return d
 }
 
-func (d *__Activity_Deleter) ActionTypeId_NotEQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) ActionTypeId_NotEq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -588,7 +588,7 @@ func (u *__Activity_Deleter) TargetId_NotIn(ins []int) *__Activity_Deleter {
 	return u
 }
 
-func (d *__Activity_Deleter) TargetId_EQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) TargetId_Eq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -599,7 +599,7 @@ func (d *__Activity_Deleter) TargetId_EQ(val int) *__Activity_Deleter {
 	return d
 }
 
-func (d *__Activity_Deleter) TargetId_NotEQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) TargetId_NotEq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -693,7 +693,7 @@ func (u *__Activity_Deleter) RefId_NotIn(ins []int) *__Activity_Deleter {
 	return u
 }
 
-func (d *__Activity_Deleter) RefId_EQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) RefId_Eq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -704,7 +704,7 @@ func (d *__Activity_Deleter) RefId_EQ(val int) *__Activity_Deleter {
 	return d
 }
 
-func (d *__Activity_Deleter) RefId_NotEQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) RefId_NotEq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -798,7 +798,7 @@ func (u *__Activity_Deleter) CreatedAt_NotIn(ins []int) *__Activity_Deleter {
 	return u
 }
 
-func (d *__Activity_Deleter) CreatedAt_EQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) CreatedAt_Eq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -809,7 +809,7 @@ func (d *__Activity_Deleter) CreatedAt_EQ(val int) *__Activity_Deleter {
 	return d
 }
 
-func (d *__Activity_Deleter) CreatedAt_NotEQ(val int) *__Activity_Deleter {
+func (d *__Activity_Deleter) CreatedAt_NotEq(val int) *__Activity_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -909,7 +909,7 @@ func (u *__Activity_Updater) Id_NotIn(ins []int) *__Activity_Updater {
 	return u
 }
 
-func (d *__Activity_Updater) Id_EQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) Id_Eq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -920,7 +920,7 @@ func (d *__Activity_Updater) Id_EQ(val int) *__Activity_Updater {
 	return d
 }
 
-func (d *__Activity_Updater) Id_NotEQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) Id_NotEq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1014,7 +1014,7 @@ func (u *__Activity_Updater) ActorUserId_NotIn(ins []int) *__Activity_Updater {
 	return u
 }
 
-func (d *__Activity_Updater) ActorUserId_EQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) ActorUserId_Eq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1025,7 +1025,7 @@ func (d *__Activity_Updater) ActorUserId_EQ(val int) *__Activity_Updater {
 	return d
 }
 
-func (d *__Activity_Updater) ActorUserId_NotEQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) ActorUserId_NotEq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1119,7 +1119,7 @@ func (u *__Activity_Updater) ActionTypeId_NotIn(ins []int) *__Activity_Updater {
 	return u
 }
 
-func (d *__Activity_Updater) ActionTypeId_EQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) ActionTypeId_Eq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1130,7 +1130,7 @@ func (d *__Activity_Updater) ActionTypeId_EQ(val int) *__Activity_Updater {
 	return d
 }
 
-func (d *__Activity_Updater) ActionTypeId_NotEQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) ActionTypeId_NotEq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1224,7 +1224,7 @@ func (u *__Activity_Updater) TargetId_NotIn(ins []int) *__Activity_Updater {
 	return u
 }
 
-func (d *__Activity_Updater) TargetId_EQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) TargetId_Eq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1235,7 +1235,7 @@ func (d *__Activity_Updater) TargetId_EQ(val int) *__Activity_Updater {
 	return d
 }
 
-func (d *__Activity_Updater) TargetId_NotEQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) TargetId_NotEq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1329,7 +1329,7 @@ func (u *__Activity_Updater) RefId_NotIn(ins []int) *__Activity_Updater {
 	return u
 }
 
-func (d *__Activity_Updater) RefId_EQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) RefId_Eq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1340,7 +1340,7 @@ func (d *__Activity_Updater) RefId_EQ(val int) *__Activity_Updater {
 	return d
 }
 
-func (d *__Activity_Updater) RefId_NotEQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) RefId_NotEq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1434,7 +1434,7 @@ func (u *__Activity_Updater) CreatedAt_NotIn(ins []int) *__Activity_Updater {
 	return u
 }
 
-func (d *__Activity_Updater) CreatedAt_EQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) CreatedAt_Eq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1445,7 +1445,7 @@ func (d *__Activity_Updater) CreatedAt_EQ(val int) *__Activity_Updater {
 	return d
 }
 
-func (d *__Activity_Updater) CreatedAt_NotEQ(val int) *__Activity_Updater {
+func (d *__Activity_Updater) CreatedAt_NotEq(val int) *__Activity_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1545,7 +1545,7 @@ func (u *__Activity_Selector) Id_NotIn(ins []int) *__Activity_Selector {
 	return u
 }
 
-func (d *__Activity_Selector) Id_EQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) Id_Eq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1556,7 +1556,7 @@ func (d *__Activity_Selector) Id_EQ(val int) *__Activity_Selector {
 	return d
 }
 
-func (d *__Activity_Selector) Id_NotEQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) Id_NotEq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1650,7 +1650,7 @@ func (u *__Activity_Selector) ActorUserId_NotIn(ins []int) *__Activity_Selector 
 	return u
 }
 
-func (d *__Activity_Selector) ActorUserId_EQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) ActorUserId_Eq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1661,7 +1661,7 @@ func (d *__Activity_Selector) ActorUserId_EQ(val int) *__Activity_Selector {
 	return d
 }
 
-func (d *__Activity_Selector) ActorUserId_NotEQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) ActorUserId_NotEq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1755,7 +1755,7 @@ func (u *__Activity_Selector) ActionTypeId_NotIn(ins []int) *__Activity_Selector
 	return u
 }
 
-func (d *__Activity_Selector) ActionTypeId_EQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) ActionTypeId_Eq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1766,7 +1766,7 @@ func (d *__Activity_Selector) ActionTypeId_EQ(val int) *__Activity_Selector {
 	return d
 }
 
-func (d *__Activity_Selector) ActionTypeId_NotEQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) ActionTypeId_NotEq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1860,7 +1860,7 @@ func (u *__Activity_Selector) TargetId_NotIn(ins []int) *__Activity_Selector {
 	return u
 }
 
-func (d *__Activity_Selector) TargetId_EQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) TargetId_Eq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1871,7 +1871,7 @@ func (d *__Activity_Selector) TargetId_EQ(val int) *__Activity_Selector {
 	return d
 }
 
-func (d *__Activity_Selector) TargetId_NotEQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) TargetId_NotEq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1965,7 +1965,7 @@ func (u *__Activity_Selector) RefId_NotIn(ins []int) *__Activity_Selector {
 	return u
 }
 
-func (d *__Activity_Selector) RefId_EQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) RefId_Eq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1976,7 +1976,7 @@ func (d *__Activity_Selector) RefId_EQ(val int) *__Activity_Selector {
 	return d
 }
 
-func (d *__Activity_Selector) RefId_NotEQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) RefId_NotEq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2070,7 +2070,7 @@ func (u *__Activity_Selector) CreatedAt_NotIn(ins []int) *__Activity_Selector {
 	return u
 }
 
-func (d *__Activity_Selector) CreatedAt_EQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) CreatedAt_Eq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2081,7 +2081,7 @@ func (d *__Activity_Selector) CreatedAt_EQ(val int) *__Activity_Selector {
 	return d
 }
 
-func (d *__Activity_Selector) CreatedAt_NotEQ(val int) *__Activity_Selector {
+func (d *__Activity_Selector) CreatedAt_NotEq(val int) *__Activity_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)

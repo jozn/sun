@@ -284,7 +284,7 @@ func (u *__Post_Deleter) Id_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) Id_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) Id_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -295,7 +295,7 @@ func (d *__Post_Deleter) Id_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Id_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) Id_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -389,7 +389,7 @@ func (u *__Post_Deleter) UserId_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) UserId_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) UserId_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -400,7 +400,7 @@ func (d *__Post_Deleter) UserId_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) UserId_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) UserId_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -494,7 +494,7 @@ func (u *__Post_Deleter) TypeId_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) TypeId_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) TypeId_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -505,7 +505,7 @@ func (d *__Post_Deleter) TypeId_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) TypeId_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) TypeId_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -599,7 +599,7 @@ func (u *__Post_Deleter) MediaCount_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) MediaCount_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) MediaCount_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -610,7 +610,7 @@ func (d *__Post_Deleter) MediaCount_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) MediaCount_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) MediaCount_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -704,7 +704,7 @@ func (u *__Post_Deleter) MediaServerId_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) MediaServerId_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) MediaServerId_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -715,7 +715,7 @@ func (d *__Post_Deleter) MediaServerId_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) MediaServerId_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) MediaServerId_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -809,7 +809,7 @@ func (u *__Post_Deleter) Width_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) Width_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) Width_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -820,7 +820,7 @@ func (d *__Post_Deleter) Width_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Width_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) Width_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -914,7 +914,7 @@ func (u *__Post_Deleter) Height_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) Height_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) Height_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -925,7 +925,7 @@ func (d *__Post_Deleter) Height_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) Height_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) Height_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1019,7 +1019,7 @@ func (u *__Post_Deleter) SharedTo_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) SharedTo_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) SharedTo_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1030,7 +1030,7 @@ func (d *__Post_Deleter) SharedTo_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) SharedTo_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) SharedTo_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1124,7 +1124,7 @@ func (u *__Post_Deleter) DisableComment_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) DisableComment_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) DisableComment_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1135,7 +1135,7 @@ func (d *__Post_Deleter) DisableComment_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) DisableComment_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) DisableComment_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1229,7 +1229,7 @@ func (u *__Post_Deleter) HasTag_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) HasTag_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) HasTag_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1240,7 +1240,7 @@ func (d *__Post_Deleter) HasTag_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) HasTag_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) HasTag_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1334,7 +1334,7 @@ func (u *__Post_Deleter) LikesCount_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) LikesCount_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) LikesCount_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1345,7 +1345,7 @@ func (d *__Post_Deleter) LikesCount_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) LikesCount_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) LikesCount_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1439,7 +1439,7 @@ func (u *__Post_Deleter) CommentsCount_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) CommentsCount_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) CommentsCount_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1450,7 +1450,7 @@ func (d *__Post_Deleter) CommentsCount_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) CommentsCount_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) CommentsCount_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1544,7 +1544,7 @@ func (u *__Post_Deleter) EditedTime_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) EditedTime_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) EditedTime_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1555,7 +1555,7 @@ func (d *__Post_Deleter) EditedTime_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) EditedTime_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) EditedTime_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1649,7 +1649,7 @@ func (u *__Post_Deleter) CreatedTime_NotIn(ins []int) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) CreatedTime_EQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) CreatedTime_Eq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1660,7 +1660,7 @@ func (d *__Post_Deleter) CreatedTime_EQ(val int) *__Post_Deleter {
 	return d
 }
 
-func (d *__Post_Deleter) CreatedTime_NotEQ(val int) *__Post_Deleter {
+func (d *__Post_Deleter) CreatedTime_NotEq(val int) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1760,7 +1760,7 @@ func (u *__Post_Updater) Id_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) Id_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) Id_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1771,7 +1771,7 @@ func (d *__Post_Updater) Id_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Id_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) Id_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1865,7 +1865,7 @@ func (u *__Post_Updater) UserId_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) UserId_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) UserId_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1876,7 +1876,7 @@ func (d *__Post_Updater) UserId_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) UserId_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) UserId_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1970,7 +1970,7 @@ func (u *__Post_Updater) TypeId_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) TypeId_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) TypeId_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1981,7 +1981,7 @@ func (d *__Post_Updater) TypeId_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) TypeId_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) TypeId_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2075,7 +2075,7 @@ func (u *__Post_Updater) MediaCount_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) MediaCount_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) MediaCount_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2086,7 +2086,7 @@ func (d *__Post_Updater) MediaCount_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) MediaCount_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) MediaCount_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2180,7 +2180,7 @@ func (u *__Post_Updater) MediaServerId_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) MediaServerId_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) MediaServerId_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2191,7 +2191,7 @@ func (d *__Post_Updater) MediaServerId_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) MediaServerId_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) MediaServerId_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2285,7 +2285,7 @@ func (u *__Post_Updater) Width_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) Width_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) Width_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2296,7 +2296,7 @@ func (d *__Post_Updater) Width_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Width_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) Width_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2390,7 +2390,7 @@ func (u *__Post_Updater) Height_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) Height_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) Height_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2401,7 +2401,7 @@ func (d *__Post_Updater) Height_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) Height_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) Height_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2495,7 +2495,7 @@ func (u *__Post_Updater) SharedTo_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) SharedTo_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) SharedTo_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2506,7 +2506,7 @@ func (d *__Post_Updater) SharedTo_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) SharedTo_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) SharedTo_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2600,7 +2600,7 @@ func (u *__Post_Updater) DisableComment_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) DisableComment_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) DisableComment_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2611,7 +2611,7 @@ func (d *__Post_Updater) DisableComment_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) DisableComment_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) DisableComment_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2705,7 +2705,7 @@ func (u *__Post_Updater) HasTag_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) HasTag_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) HasTag_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2716,7 +2716,7 @@ func (d *__Post_Updater) HasTag_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) HasTag_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) HasTag_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2810,7 +2810,7 @@ func (u *__Post_Updater) LikesCount_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) LikesCount_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) LikesCount_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2821,7 +2821,7 @@ func (d *__Post_Updater) LikesCount_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) LikesCount_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) LikesCount_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2915,7 +2915,7 @@ func (u *__Post_Updater) CommentsCount_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) CommentsCount_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) CommentsCount_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2926,7 +2926,7 @@ func (d *__Post_Updater) CommentsCount_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) CommentsCount_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) CommentsCount_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3020,7 +3020,7 @@ func (u *__Post_Updater) EditedTime_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) EditedTime_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) EditedTime_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3031,7 +3031,7 @@ func (d *__Post_Updater) EditedTime_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) EditedTime_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) EditedTime_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3125,7 +3125,7 @@ func (u *__Post_Updater) CreatedTime_NotIn(ins []int) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) CreatedTime_EQ(val int) *__Post_Updater {
+func (d *__Post_Updater) CreatedTime_Eq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3136,7 +3136,7 @@ func (d *__Post_Updater) CreatedTime_EQ(val int) *__Post_Updater {
 	return d
 }
 
-func (d *__Post_Updater) CreatedTime_NotEQ(val int) *__Post_Updater {
+func (d *__Post_Updater) CreatedTime_NotEq(val int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3236,7 +3236,7 @@ func (u *__Post_Selector) Id_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) Id_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) Id_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3247,7 +3247,7 @@ func (d *__Post_Selector) Id_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Id_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) Id_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3341,7 +3341,7 @@ func (u *__Post_Selector) UserId_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) UserId_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) UserId_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3352,7 +3352,7 @@ func (d *__Post_Selector) UserId_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) UserId_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) UserId_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3446,7 +3446,7 @@ func (u *__Post_Selector) TypeId_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) TypeId_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) TypeId_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3457,7 +3457,7 @@ func (d *__Post_Selector) TypeId_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) TypeId_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) TypeId_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3551,7 +3551,7 @@ func (u *__Post_Selector) MediaCount_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) MediaCount_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) MediaCount_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3562,7 +3562,7 @@ func (d *__Post_Selector) MediaCount_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) MediaCount_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) MediaCount_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3656,7 +3656,7 @@ func (u *__Post_Selector) MediaServerId_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) MediaServerId_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) MediaServerId_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3667,7 +3667,7 @@ func (d *__Post_Selector) MediaServerId_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) MediaServerId_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) MediaServerId_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3761,7 +3761,7 @@ func (u *__Post_Selector) Width_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) Width_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) Width_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3772,7 +3772,7 @@ func (d *__Post_Selector) Width_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Width_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) Width_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3866,7 +3866,7 @@ func (u *__Post_Selector) Height_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) Height_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) Height_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3877,7 +3877,7 @@ func (d *__Post_Selector) Height_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) Height_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) Height_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3971,7 +3971,7 @@ func (u *__Post_Selector) SharedTo_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) SharedTo_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) SharedTo_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3982,7 +3982,7 @@ func (d *__Post_Selector) SharedTo_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) SharedTo_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) SharedTo_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4076,7 +4076,7 @@ func (u *__Post_Selector) DisableComment_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) DisableComment_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) DisableComment_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4087,7 +4087,7 @@ func (d *__Post_Selector) DisableComment_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) DisableComment_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) DisableComment_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4181,7 +4181,7 @@ func (u *__Post_Selector) HasTag_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) HasTag_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) HasTag_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4192,7 +4192,7 @@ func (d *__Post_Selector) HasTag_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) HasTag_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) HasTag_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4286,7 +4286,7 @@ func (u *__Post_Selector) LikesCount_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) LikesCount_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) LikesCount_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4297,7 +4297,7 @@ func (d *__Post_Selector) LikesCount_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) LikesCount_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) LikesCount_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4391,7 +4391,7 @@ func (u *__Post_Selector) CommentsCount_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) CommentsCount_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) CommentsCount_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4402,7 +4402,7 @@ func (d *__Post_Selector) CommentsCount_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) CommentsCount_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) CommentsCount_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4496,7 +4496,7 @@ func (u *__Post_Selector) EditedTime_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) EditedTime_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) EditedTime_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4507,7 +4507,7 @@ func (d *__Post_Selector) EditedTime_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) EditedTime_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) EditedTime_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4601,7 +4601,7 @@ func (u *__Post_Selector) CreatedTime_NotIn(ins []int) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) CreatedTime_EQ(val int) *__Post_Selector {
+func (d *__Post_Selector) CreatedTime_Eq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4612,7 +4612,7 @@ func (d *__Post_Selector) CreatedTime_EQ(val int) *__Post_Selector {
 	return d
 }
 
-func (d *__Post_Selector) CreatedTime_NotEQ(val int) *__Post_Selector {
+func (d *__Post_Selector) CreatedTime_NotEq(val int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4709,12 +4709,23 @@ func (u *__Post_Deleter) Text_Like(val string) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) Text_EQ(val string) *__Post_Deleter {
+func (d *__Post_Deleter) Text_Eq(val string) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Text = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) Text_NotEq(val string) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4758,12 +4769,23 @@ func (u *__Post_Deleter) FormatedText_Like(val string) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) FormatedText_EQ(val string) *__Post_Deleter {
+func (d *__Post_Deleter) FormatedText_Eq(val string) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FormatedText = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) FormatedText_NotEq(val string) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FormatedText != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4807,12 +4829,23 @@ func (u *__Post_Deleter) MediaUrl_Like(val string) *__Post_Deleter {
 	return u
 }
 
-func (d *__Post_Deleter) MediaUrl_EQ(val string) *__Post_Deleter {
+func (d *__Post_Deleter) MediaUrl_Eq(val string) *__Post_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MediaUrl = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Deleter) MediaUrl_NotEq(val string) *__Post_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MediaUrl != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4858,12 +4891,23 @@ func (u *__Post_Updater) Text_Like(val string) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) Text_EQ(val string) *__Post_Updater {
+func (d *__Post_Updater) Text_Eq(val string) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Text = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) Text_NotEq(val string) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4907,12 +4951,23 @@ func (u *__Post_Updater) FormatedText_Like(val string) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) FormatedText_EQ(val string) *__Post_Updater {
+func (d *__Post_Updater) FormatedText_Eq(val string) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FormatedText = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) FormatedText_NotEq(val string) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FormatedText != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4956,12 +5011,23 @@ func (u *__Post_Updater) MediaUrl_Like(val string) *__Post_Updater {
 	return u
 }
 
-func (d *__Post_Updater) MediaUrl_EQ(val string) *__Post_Updater {
+func (d *__Post_Updater) MediaUrl_Eq(val string) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MediaUrl = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Updater) MediaUrl_NotEq(val string) *__Post_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MediaUrl != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5007,12 +5073,23 @@ func (u *__Post_Selector) Text_Like(val string) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) Text_EQ(val string) *__Post_Selector {
+func (d *__Post_Selector) Text_Eq(val string) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Text = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) Text_NotEq(val string) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5056,12 +5133,23 @@ func (u *__Post_Selector) FormatedText_Like(val string) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) FormatedText_EQ(val string) *__Post_Selector {
+func (d *__Post_Selector) FormatedText_Eq(val string) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FormatedText = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) FormatedText_NotEq(val string) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FormatedText != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5105,12 +5193,23 @@ func (u *__Post_Selector) MediaUrl_Like(val string) *__Post_Selector {
 	return u
 }
 
-func (d *__Post_Selector) MediaUrl_EQ(val string) *__Post_Selector {
+func (d *__Post_Selector) MediaUrl_Eq(val string) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MediaUrl = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Post_Selector) MediaUrl_NotEq(val string) *__Post_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MediaUrl != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6090,6 +6189,49 @@ func MassReplace_Post(rows []Post, db XODB) error {
 //
 
 //
+
+// PostsByUserId retrieves a row from 'ms.post' as a Post.
+//
+// Generated from index 'UserId'.
+func PostsByUserId(db XODB, userId int) ([]*Post, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime ` +
+		`FROM ms.post ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Post{}
+	for q.Next() {
+		p := Post{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaCount, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.DisableComment, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.EditedTime, &p.CreatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &p)
+	}
+
+	OnPost_LoadMany(res)
+
+	return res, nil
+}
 
 // PostById retrieves a row from 'ms.post' as a Post.
 //

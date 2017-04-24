@@ -272,7 +272,7 @@ func (u *__RecommendUser_Deleter) Id_NotIn(ins []int) *__RecommendUser_Deleter {
 	return u
 }
 
-func (d *__RecommendUser_Deleter) Id_EQ(val int) *__RecommendUser_Deleter {
+func (d *__RecommendUser_Deleter) Id_Eq(val int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -283,7 +283,7 @@ func (d *__RecommendUser_Deleter) Id_EQ(val int) *__RecommendUser_Deleter {
 	return d
 }
 
-func (d *__RecommendUser_Deleter) Id_NotEQ(val int) *__RecommendUser_Deleter {
+func (d *__RecommendUser_Deleter) Id_NotEq(val int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -377,7 +377,7 @@ func (u *__RecommendUser_Deleter) UserId_NotIn(ins []int) *__RecommendUser_Delet
 	return u
 }
 
-func (d *__RecommendUser_Deleter) UserId_EQ(val int) *__RecommendUser_Deleter {
+func (d *__RecommendUser_Deleter) UserId_Eq(val int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -388,7 +388,7 @@ func (d *__RecommendUser_Deleter) UserId_EQ(val int) *__RecommendUser_Deleter {
 	return d
 }
 
-func (d *__RecommendUser_Deleter) UserId_NotEQ(val int) *__RecommendUser_Deleter {
+func (d *__RecommendUser_Deleter) UserId_NotEq(val int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -482,7 +482,7 @@ func (u *__RecommendUser_Deleter) TargetId_NotIn(ins []int) *__RecommendUser_Del
 	return u
 }
 
-func (d *__RecommendUser_Deleter) TargetId_EQ(val int) *__RecommendUser_Deleter {
+func (d *__RecommendUser_Deleter) TargetId_Eq(val int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -493,7 +493,7 @@ func (d *__RecommendUser_Deleter) TargetId_EQ(val int) *__RecommendUser_Deleter 
 	return d
 }
 
-func (d *__RecommendUser_Deleter) TargetId_NotEQ(val int) *__RecommendUser_Deleter {
+func (d *__RecommendUser_Deleter) TargetId_NotEq(val int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -587,7 +587,7 @@ func (u *__RecommendUser_Deleter) CreatedTime_NotIn(ins []int) *__RecommendUser_
 	return u
 }
 
-func (d *__RecommendUser_Deleter) CreatedTime_EQ(val int) *__RecommendUser_Deleter {
+func (d *__RecommendUser_Deleter) CreatedTime_Eq(val int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -598,7 +598,7 @@ func (d *__RecommendUser_Deleter) CreatedTime_EQ(val int) *__RecommendUser_Delet
 	return d
 }
 
-func (d *__RecommendUser_Deleter) CreatedTime_NotEQ(val int) *__RecommendUser_Deleter {
+func (d *__RecommendUser_Deleter) CreatedTime_NotEq(val int) *__RecommendUser_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -698,7 +698,7 @@ func (u *__RecommendUser_Updater) Id_NotIn(ins []int) *__RecommendUser_Updater {
 	return u
 }
 
-func (d *__RecommendUser_Updater) Id_EQ(val int) *__RecommendUser_Updater {
+func (d *__RecommendUser_Updater) Id_Eq(val int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -709,7 +709,7 @@ func (d *__RecommendUser_Updater) Id_EQ(val int) *__RecommendUser_Updater {
 	return d
 }
 
-func (d *__RecommendUser_Updater) Id_NotEQ(val int) *__RecommendUser_Updater {
+func (d *__RecommendUser_Updater) Id_NotEq(val int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -803,7 +803,7 @@ func (u *__RecommendUser_Updater) UserId_NotIn(ins []int) *__RecommendUser_Updat
 	return u
 }
 
-func (d *__RecommendUser_Updater) UserId_EQ(val int) *__RecommendUser_Updater {
+func (d *__RecommendUser_Updater) UserId_Eq(val int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -814,7 +814,7 @@ func (d *__RecommendUser_Updater) UserId_EQ(val int) *__RecommendUser_Updater {
 	return d
 }
 
-func (d *__RecommendUser_Updater) UserId_NotEQ(val int) *__RecommendUser_Updater {
+func (d *__RecommendUser_Updater) UserId_NotEq(val int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -908,7 +908,7 @@ func (u *__RecommendUser_Updater) TargetId_NotIn(ins []int) *__RecommendUser_Upd
 	return u
 }
 
-func (d *__RecommendUser_Updater) TargetId_EQ(val int) *__RecommendUser_Updater {
+func (d *__RecommendUser_Updater) TargetId_Eq(val int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -919,7 +919,7 @@ func (d *__RecommendUser_Updater) TargetId_EQ(val int) *__RecommendUser_Updater 
 	return d
 }
 
-func (d *__RecommendUser_Updater) TargetId_NotEQ(val int) *__RecommendUser_Updater {
+func (d *__RecommendUser_Updater) TargetId_NotEq(val int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1013,7 +1013,7 @@ func (u *__RecommendUser_Updater) CreatedTime_NotIn(ins []int) *__RecommendUser_
 	return u
 }
 
-func (d *__RecommendUser_Updater) CreatedTime_EQ(val int) *__RecommendUser_Updater {
+func (d *__RecommendUser_Updater) CreatedTime_Eq(val int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1024,7 +1024,7 @@ func (d *__RecommendUser_Updater) CreatedTime_EQ(val int) *__RecommendUser_Updat
 	return d
 }
 
-func (d *__RecommendUser_Updater) CreatedTime_NotEQ(val int) *__RecommendUser_Updater {
+func (d *__RecommendUser_Updater) CreatedTime_NotEq(val int) *__RecommendUser_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1124,7 +1124,7 @@ func (u *__RecommendUser_Selector) Id_NotIn(ins []int) *__RecommendUser_Selector
 	return u
 }
 
-func (d *__RecommendUser_Selector) Id_EQ(val int) *__RecommendUser_Selector {
+func (d *__RecommendUser_Selector) Id_Eq(val int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1135,7 +1135,7 @@ func (d *__RecommendUser_Selector) Id_EQ(val int) *__RecommendUser_Selector {
 	return d
 }
 
-func (d *__RecommendUser_Selector) Id_NotEQ(val int) *__RecommendUser_Selector {
+func (d *__RecommendUser_Selector) Id_NotEq(val int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1229,7 +1229,7 @@ func (u *__RecommendUser_Selector) UserId_NotIn(ins []int) *__RecommendUser_Sele
 	return u
 }
 
-func (d *__RecommendUser_Selector) UserId_EQ(val int) *__RecommendUser_Selector {
+func (d *__RecommendUser_Selector) UserId_Eq(val int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1240,7 +1240,7 @@ func (d *__RecommendUser_Selector) UserId_EQ(val int) *__RecommendUser_Selector 
 	return d
 }
 
-func (d *__RecommendUser_Selector) UserId_NotEQ(val int) *__RecommendUser_Selector {
+func (d *__RecommendUser_Selector) UserId_NotEq(val int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1334,7 +1334,7 @@ func (u *__RecommendUser_Selector) TargetId_NotIn(ins []int) *__RecommendUser_Se
 	return u
 }
 
-func (d *__RecommendUser_Selector) TargetId_EQ(val int) *__RecommendUser_Selector {
+func (d *__RecommendUser_Selector) TargetId_Eq(val int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1345,7 +1345,7 @@ func (d *__RecommendUser_Selector) TargetId_EQ(val int) *__RecommendUser_Selecto
 	return d
 }
 
-func (d *__RecommendUser_Selector) TargetId_NotEQ(val int) *__RecommendUser_Selector {
+func (d *__RecommendUser_Selector) TargetId_NotEq(val int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1439,7 +1439,7 @@ func (u *__RecommendUser_Selector) CreatedTime_NotIn(ins []int) *__RecommendUser
 	return u
 }
 
-func (d *__RecommendUser_Selector) CreatedTime_EQ(val int) *__RecommendUser_Selector {
+func (d *__RecommendUser_Selector) CreatedTime_Eq(val int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1450,7 +1450,7 @@ func (d *__RecommendUser_Selector) CreatedTime_EQ(val int) *__RecommendUser_Sele
 	return d
 }
 
-func (d *__RecommendUser_Selector) CreatedTime_NotEQ(val int) *__RecommendUser_Selector {
+func (d *__RecommendUser_Selector) CreatedTime_NotEq(val int) *__RecommendUser_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)

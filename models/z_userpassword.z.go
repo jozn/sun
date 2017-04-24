@@ -270,7 +270,7 @@ func (u *__UserPassword_Deleter) UserId_NotIn(ins []int) *__UserPassword_Deleter
 	return u
 }
 
-func (d *__UserPassword_Deleter) UserId_EQ(val int) *__UserPassword_Deleter {
+func (d *__UserPassword_Deleter) UserId_Eq(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -281,7 +281,7 @@ func (d *__UserPassword_Deleter) UserId_EQ(val int) *__UserPassword_Deleter {
 	return d
 }
 
-func (d *__UserPassword_Deleter) UserId_NotEQ(val int) *__UserPassword_Deleter {
+func (d *__UserPassword_Deleter) UserId_NotEq(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -375,7 +375,7 @@ func (u *__UserPassword_Deleter) CreatedTime_NotIn(ins []int) *__UserPassword_De
 	return u
 }
 
-func (d *__UserPassword_Deleter) CreatedTime_EQ(val int) *__UserPassword_Deleter {
+func (d *__UserPassword_Deleter) CreatedTime_Eq(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -386,7 +386,7 @@ func (d *__UserPassword_Deleter) CreatedTime_EQ(val int) *__UserPassword_Deleter
 	return d
 }
 
-func (d *__UserPassword_Deleter) CreatedTime_NotEQ(val int) *__UserPassword_Deleter {
+func (d *__UserPassword_Deleter) CreatedTime_NotEq(val int) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -486,7 +486,7 @@ func (u *__UserPassword_Updater) UserId_NotIn(ins []int) *__UserPassword_Updater
 	return u
 }
 
-func (d *__UserPassword_Updater) UserId_EQ(val int) *__UserPassword_Updater {
+func (d *__UserPassword_Updater) UserId_Eq(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -497,7 +497,7 @@ func (d *__UserPassword_Updater) UserId_EQ(val int) *__UserPassword_Updater {
 	return d
 }
 
-func (d *__UserPassword_Updater) UserId_NotEQ(val int) *__UserPassword_Updater {
+func (d *__UserPassword_Updater) UserId_NotEq(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -591,7 +591,7 @@ func (u *__UserPassword_Updater) CreatedTime_NotIn(ins []int) *__UserPassword_Up
 	return u
 }
 
-func (d *__UserPassword_Updater) CreatedTime_EQ(val int) *__UserPassword_Updater {
+func (d *__UserPassword_Updater) CreatedTime_Eq(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -602,7 +602,7 @@ func (d *__UserPassword_Updater) CreatedTime_EQ(val int) *__UserPassword_Updater
 	return d
 }
 
-func (d *__UserPassword_Updater) CreatedTime_NotEQ(val int) *__UserPassword_Updater {
+func (d *__UserPassword_Updater) CreatedTime_NotEq(val int) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -702,7 +702,7 @@ func (u *__UserPassword_Selector) UserId_NotIn(ins []int) *__UserPassword_Select
 	return u
 }
 
-func (d *__UserPassword_Selector) UserId_EQ(val int) *__UserPassword_Selector {
+func (d *__UserPassword_Selector) UserId_Eq(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -713,7 +713,7 @@ func (d *__UserPassword_Selector) UserId_EQ(val int) *__UserPassword_Selector {
 	return d
 }
 
-func (d *__UserPassword_Selector) UserId_NotEQ(val int) *__UserPassword_Selector {
+func (d *__UserPassword_Selector) UserId_NotEq(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -807,7 +807,7 @@ func (u *__UserPassword_Selector) CreatedTime_NotIn(ins []int) *__UserPassword_S
 	return u
 }
 
-func (d *__UserPassword_Selector) CreatedTime_EQ(val int) *__UserPassword_Selector {
+func (d *__UserPassword_Selector) CreatedTime_Eq(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -818,7 +818,7 @@ func (d *__UserPassword_Selector) CreatedTime_EQ(val int) *__UserPassword_Select
 	return d
 }
 
-func (d *__UserPassword_Selector) CreatedTime_NotEQ(val int) *__UserPassword_Selector {
+func (d *__UserPassword_Selector) CreatedTime_NotEq(val int) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -915,12 +915,23 @@ func (u *__UserPassword_Deleter) Password_Like(val string) *__UserPassword_Delet
 	return u
 }
 
-func (d *__UserPassword_Deleter) Password_EQ(val string) *__UserPassword_Deleter {
+func (d *__UserPassword_Deleter) Password_Eq(val string) *__UserPassword_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Password = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserPassword_Deleter) Password_NotEq(val string) *__UserPassword_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Password != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -966,12 +977,23 @@ func (u *__UserPassword_Updater) Password_Like(val string) *__UserPassword_Updat
 	return u
 }
 
-func (d *__UserPassword_Updater) Password_EQ(val string) *__UserPassword_Updater {
+func (d *__UserPassword_Updater) Password_Eq(val string) *__UserPassword_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Password = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserPassword_Updater) Password_NotEq(val string) *__UserPassword_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Password != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1017,12 +1039,23 @@ func (u *__UserPassword_Selector) Password_Like(val string) *__UserPassword_Sele
 	return u
 }
 
-func (d *__UserPassword_Selector) Password_EQ(val string) *__UserPassword_Selector {
+func (d *__UserPassword_Selector) Password_Eq(val string) *__UserPassword_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Password = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserPassword_Selector) Password_NotEq(val string) *__UserPassword_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Password != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d

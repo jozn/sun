@@ -276,7 +276,7 @@ func (u *__Notification_Deleter) Id_NotIn(ins []int) *__Notification_Deleter {
 	return u
 }
 
-func (d *__Notification_Deleter) Id_EQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) Id_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -287,7 +287,7 @@ func (d *__Notification_Deleter) Id_EQ(val int) *__Notification_Deleter {
 	return d
 }
 
-func (d *__Notification_Deleter) Id_NotEQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) Id_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -381,7 +381,7 @@ func (u *__Notification_Deleter) ForUserId_NotIn(ins []int) *__Notification_Dele
 	return u
 }
 
-func (d *__Notification_Deleter) ForUserId_EQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) ForUserId_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -392,7 +392,7 @@ func (d *__Notification_Deleter) ForUserId_EQ(val int) *__Notification_Deleter {
 	return d
 }
 
-func (d *__Notification_Deleter) ForUserId_NotEQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) ForUserId_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -486,7 +486,7 @@ func (u *__Notification_Deleter) ActorUserId_NotIn(ins []int) *__Notification_De
 	return u
 }
 
-func (d *__Notification_Deleter) ActorUserId_EQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) ActorUserId_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -497,7 +497,7 @@ func (d *__Notification_Deleter) ActorUserId_EQ(val int) *__Notification_Deleter
 	return d
 }
 
-func (d *__Notification_Deleter) ActorUserId_NotEQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) ActorUserId_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -591,7 +591,7 @@ func (u *__Notification_Deleter) ActionTypeId_NotIn(ins []int) *__Notification_D
 	return u
 }
 
-func (d *__Notification_Deleter) ActionTypeId_EQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) ActionTypeId_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -602,7 +602,7 @@ func (d *__Notification_Deleter) ActionTypeId_EQ(val int) *__Notification_Delete
 	return d
 }
 
-func (d *__Notification_Deleter) ActionTypeId_NotEQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) ActionTypeId_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -696,7 +696,7 @@ func (u *__Notification_Deleter) ObjectTypeId_NotIn(ins []int) *__Notification_D
 	return u
 }
 
-func (d *__Notification_Deleter) ObjectTypeId_EQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) ObjectTypeId_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -707,7 +707,7 @@ func (d *__Notification_Deleter) ObjectTypeId_EQ(val int) *__Notification_Delete
 	return d
 }
 
-func (d *__Notification_Deleter) ObjectTypeId_NotEQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) ObjectTypeId_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -801,7 +801,7 @@ func (u *__Notification_Deleter) TargetId_NotIn(ins []int) *__Notification_Delet
 	return u
 }
 
-func (d *__Notification_Deleter) TargetId_EQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) TargetId_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -812,7 +812,7 @@ func (d *__Notification_Deleter) TargetId_EQ(val int) *__Notification_Deleter {
 	return d
 }
 
-func (d *__Notification_Deleter) TargetId_NotEQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) TargetId_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -906,7 +906,7 @@ func (u *__Notification_Deleter) ObjectId_NotIn(ins []int) *__Notification_Delet
 	return u
 }
 
-func (d *__Notification_Deleter) ObjectId_EQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) ObjectId_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -917,7 +917,7 @@ func (d *__Notification_Deleter) ObjectId_EQ(val int) *__Notification_Deleter {
 	return d
 }
 
-func (d *__Notification_Deleter) ObjectId_NotEQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) ObjectId_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1011,7 +1011,7 @@ func (u *__Notification_Deleter) SeenStatus_NotIn(ins []int) *__Notification_Del
 	return u
 }
 
-func (d *__Notification_Deleter) SeenStatus_EQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) SeenStatus_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1022,7 +1022,7 @@ func (d *__Notification_Deleter) SeenStatus_EQ(val int) *__Notification_Deleter 
 	return d
 }
 
-func (d *__Notification_Deleter) SeenStatus_NotEQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) SeenStatus_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1116,7 +1116,7 @@ func (u *__Notification_Deleter) CreatedTime_NotIn(ins []int) *__Notification_De
 	return u
 }
 
-func (d *__Notification_Deleter) CreatedTime_EQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) CreatedTime_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1127,7 +1127,7 @@ func (d *__Notification_Deleter) CreatedTime_EQ(val int) *__Notification_Deleter
 	return d
 }
 
-func (d *__Notification_Deleter) CreatedTime_NotEQ(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) CreatedTime_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1227,7 +1227,7 @@ func (u *__Notification_Updater) Id_NotIn(ins []int) *__Notification_Updater {
 	return u
 }
 
-func (d *__Notification_Updater) Id_EQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) Id_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1238,7 +1238,7 @@ func (d *__Notification_Updater) Id_EQ(val int) *__Notification_Updater {
 	return d
 }
 
-func (d *__Notification_Updater) Id_NotEQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) Id_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1332,7 +1332,7 @@ func (u *__Notification_Updater) ForUserId_NotIn(ins []int) *__Notification_Upda
 	return u
 }
 
-func (d *__Notification_Updater) ForUserId_EQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) ForUserId_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1343,7 +1343,7 @@ func (d *__Notification_Updater) ForUserId_EQ(val int) *__Notification_Updater {
 	return d
 }
 
-func (d *__Notification_Updater) ForUserId_NotEQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) ForUserId_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1437,7 +1437,7 @@ func (u *__Notification_Updater) ActorUserId_NotIn(ins []int) *__Notification_Up
 	return u
 }
 
-func (d *__Notification_Updater) ActorUserId_EQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) ActorUserId_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1448,7 +1448,7 @@ func (d *__Notification_Updater) ActorUserId_EQ(val int) *__Notification_Updater
 	return d
 }
 
-func (d *__Notification_Updater) ActorUserId_NotEQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) ActorUserId_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1542,7 +1542,7 @@ func (u *__Notification_Updater) ActionTypeId_NotIn(ins []int) *__Notification_U
 	return u
 }
 
-func (d *__Notification_Updater) ActionTypeId_EQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) ActionTypeId_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1553,7 +1553,7 @@ func (d *__Notification_Updater) ActionTypeId_EQ(val int) *__Notification_Update
 	return d
 }
 
-func (d *__Notification_Updater) ActionTypeId_NotEQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) ActionTypeId_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1647,7 +1647,7 @@ func (u *__Notification_Updater) ObjectTypeId_NotIn(ins []int) *__Notification_U
 	return u
 }
 
-func (d *__Notification_Updater) ObjectTypeId_EQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) ObjectTypeId_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1658,7 +1658,7 @@ func (d *__Notification_Updater) ObjectTypeId_EQ(val int) *__Notification_Update
 	return d
 }
 
-func (d *__Notification_Updater) ObjectTypeId_NotEQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) ObjectTypeId_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1752,7 +1752,7 @@ func (u *__Notification_Updater) TargetId_NotIn(ins []int) *__Notification_Updat
 	return u
 }
 
-func (d *__Notification_Updater) TargetId_EQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) TargetId_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1763,7 +1763,7 @@ func (d *__Notification_Updater) TargetId_EQ(val int) *__Notification_Updater {
 	return d
 }
 
-func (d *__Notification_Updater) TargetId_NotEQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) TargetId_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1857,7 +1857,7 @@ func (u *__Notification_Updater) ObjectId_NotIn(ins []int) *__Notification_Updat
 	return u
 }
 
-func (d *__Notification_Updater) ObjectId_EQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) ObjectId_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1868,7 +1868,7 @@ func (d *__Notification_Updater) ObjectId_EQ(val int) *__Notification_Updater {
 	return d
 }
 
-func (d *__Notification_Updater) ObjectId_NotEQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) ObjectId_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1962,7 +1962,7 @@ func (u *__Notification_Updater) SeenStatus_NotIn(ins []int) *__Notification_Upd
 	return u
 }
 
-func (d *__Notification_Updater) SeenStatus_EQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) SeenStatus_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1973,7 +1973,7 @@ func (d *__Notification_Updater) SeenStatus_EQ(val int) *__Notification_Updater 
 	return d
 }
 
-func (d *__Notification_Updater) SeenStatus_NotEQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) SeenStatus_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2067,7 +2067,7 @@ func (u *__Notification_Updater) CreatedTime_NotIn(ins []int) *__Notification_Up
 	return u
 }
 
-func (d *__Notification_Updater) CreatedTime_EQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) CreatedTime_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2078,7 +2078,7 @@ func (d *__Notification_Updater) CreatedTime_EQ(val int) *__Notification_Updater
 	return d
 }
 
-func (d *__Notification_Updater) CreatedTime_NotEQ(val int) *__Notification_Updater {
+func (d *__Notification_Updater) CreatedTime_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2178,7 +2178,7 @@ func (u *__Notification_Selector) Id_NotIn(ins []int) *__Notification_Selector {
 	return u
 }
 
-func (d *__Notification_Selector) Id_EQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) Id_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2189,7 +2189,7 @@ func (d *__Notification_Selector) Id_EQ(val int) *__Notification_Selector {
 	return d
 }
 
-func (d *__Notification_Selector) Id_NotEQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) Id_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2283,7 +2283,7 @@ func (u *__Notification_Selector) ForUserId_NotIn(ins []int) *__Notification_Sel
 	return u
 }
 
-func (d *__Notification_Selector) ForUserId_EQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) ForUserId_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2294,7 +2294,7 @@ func (d *__Notification_Selector) ForUserId_EQ(val int) *__Notification_Selector
 	return d
 }
 
-func (d *__Notification_Selector) ForUserId_NotEQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) ForUserId_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2388,7 +2388,7 @@ func (u *__Notification_Selector) ActorUserId_NotIn(ins []int) *__Notification_S
 	return u
 }
 
-func (d *__Notification_Selector) ActorUserId_EQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) ActorUserId_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2399,7 +2399,7 @@ func (d *__Notification_Selector) ActorUserId_EQ(val int) *__Notification_Select
 	return d
 }
 
-func (d *__Notification_Selector) ActorUserId_NotEQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) ActorUserId_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2493,7 +2493,7 @@ func (u *__Notification_Selector) ActionTypeId_NotIn(ins []int) *__Notification_
 	return u
 }
 
-func (d *__Notification_Selector) ActionTypeId_EQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) ActionTypeId_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2504,7 +2504,7 @@ func (d *__Notification_Selector) ActionTypeId_EQ(val int) *__Notification_Selec
 	return d
 }
 
-func (d *__Notification_Selector) ActionTypeId_NotEQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) ActionTypeId_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2598,7 +2598,7 @@ func (u *__Notification_Selector) ObjectTypeId_NotIn(ins []int) *__Notification_
 	return u
 }
 
-func (d *__Notification_Selector) ObjectTypeId_EQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) ObjectTypeId_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2609,7 +2609,7 @@ func (d *__Notification_Selector) ObjectTypeId_EQ(val int) *__Notification_Selec
 	return d
 }
 
-func (d *__Notification_Selector) ObjectTypeId_NotEQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) ObjectTypeId_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2703,7 +2703,7 @@ func (u *__Notification_Selector) TargetId_NotIn(ins []int) *__Notification_Sele
 	return u
 }
 
-func (d *__Notification_Selector) TargetId_EQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) TargetId_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2714,7 +2714,7 @@ func (d *__Notification_Selector) TargetId_EQ(val int) *__Notification_Selector 
 	return d
 }
 
-func (d *__Notification_Selector) TargetId_NotEQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) TargetId_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2808,7 +2808,7 @@ func (u *__Notification_Selector) ObjectId_NotIn(ins []int) *__Notification_Sele
 	return u
 }
 
-func (d *__Notification_Selector) ObjectId_EQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) ObjectId_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2819,7 +2819,7 @@ func (d *__Notification_Selector) ObjectId_EQ(val int) *__Notification_Selector 
 	return d
 }
 
-func (d *__Notification_Selector) ObjectId_NotEQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) ObjectId_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2913,7 +2913,7 @@ func (u *__Notification_Selector) SeenStatus_NotIn(ins []int) *__Notification_Se
 	return u
 }
 
-func (d *__Notification_Selector) SeenStatus_EQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) SeenStatus_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2924,7 +2924,7 @@ func (d *__Notification_Selector) SeenStatus_EQ(val int) *__Notification_Selecto
 	return d
 }
 
-func (d *__Notification_Selector) SeenStatus_NotEQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) SeenStatus_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3018,7 +3018,7 @@ func (u *__Notification_Selector) CreatedTime_NotIn(ins []int) *__Notification_S
 	return u
 }
 
-func (d *__Notification_Selector) CreatedTime_EQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) CreatedTime_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3029,7 +3029,7 @@ func (d *__Notification_Selector) CreatedTime_EQ(val int) *__Notification_Select
 	return d
 }
 
-func (d *__Notification_Selector) CreatedTime_NotEQ(val int) *__Notification_Selector {
+func (d *__Notification_Selector) CreatedTime_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)

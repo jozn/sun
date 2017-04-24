@@ -43,7 +43,7 @@ func ReloadTopPostsForTopTags() {
 	var newTopTagsWithPosts = make([]*TopTagsWithPostsView, 0, 50)
 
 	for _, t := range tags {
-		postsIds, err := NewTagsPost_Selector().Select_PostId().TagId_EQ(t.Id).Limit(4).OrderBy_Id_Desc().GetIntSlice(base.DB)
+		postsIds, err := NewTagsPost_Selector().Select_PostId().TagId_Eq(t.Id).Limit(4).OrderBy_Id_Desc().GetIntSlice(base.DB)
 		if err != nil {
 			continue
 		}

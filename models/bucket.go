@@ -17,7 +17,7 @@ const BUCKET_TYPE_POST_PHOTO = 1
 
 func Buket_GetNextForPostPhoto() *Bucket {
 	buket, err := NewBucket_Selector().
-		ContentObjectTypeId_EQ(BUCKET_TYPE_POST_PHOTO).
+		ContentObjectTypeId_Eq(BUCKET_TYPE_POST_PHOTO).
 		OrderBy_BucketId_Desc().
 		GetRow(base.DB)
 

@@ -43,7 +43,7 @@ func UnFollow(UserId, FollowedPeerUserId int) {
 	}
 
 	MemoryStore.UserFollowingList_Remove(UserId, FollowedPeerUserId)
-	flm, err := NewFollowingListMember_Selector().UserId_EQ(UserId).FollowedUserId_EQ(FollowedPeerUserId).GetRow(base.DB)
+	flm, err := NewFollowingListMember_Selector().UserId_Eq(UserId).FollowedUserId_Eq(FollowedPeerUserId).GetRow(base.DB)
 	if err != nil {
 		return
 	}
@@ -57,5 +57,5 @@ func UnFollow(UserId, FollowedPeerUserId int) {
 		Notification_OnUnFollowed(UserId, FollowedPeerUserId)
 		Activity_OnUnFollowed(UserId, FollowedPeerUserId, flm.Id)
 	}
-	//n, err := NewFollowingListMember_Deleter().UserId_EQ(UserId).FollowedUserId_EQ(FollowedPeerUserId).Delete(base.DB)
+	//n, err := NewFollowingListMember_Deleter().UserId_Eq(UserId).FollowedUserId_Eq(FollowedPeerUserId).Delete(base.DB)
 }

@@ -272,7 +272,7 @@ func (u *__TagsPost_Deleter) Id_NotIn(ins []int) *__TagsPost_Deleter {
 	return u
 }
 
-func (d *__TagsPost_Deleter) Id_EQ(val int) *__TagsPost_Deleter {
+func (d *__TagsPost_Deleter) Id_Eq(val int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -283,7 +283,7 @@ func (d *__TagsPost_Deleter) Id_EQ(val int) *__TagsPost_Deleter {
 	return d
 }
 
-func (d *__TagsPost_Deleter) Id_NotEQ(val int) *__TagsPost_Deleter {
+func (d *__TagsPost_Deleter) Id_NotEq(val int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -377,7 +377,7 @@ func (u *__TagsPost_Deleter) TagId_NotIn(ins []int) *__TagsPost_Deleter {
 	return u
 }
 
-func (d *__TagsPost_Deleter) TagId_EQ(val int) *__TagsPost_Deleter {
+func (d *__TagsPost_Deleter) TagId_Eq(val int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -388,7 +388,7 @@ func (d *__TagsPost_Deleter) TagId_EQ(val int) *__TagsPost_Deleter {
 	return d
 }
 
-func (d *__TagsPost_Deleter) TagId_NotEQ(val int) *__TagsPost_Deleter {
+func (d *__TagsPost_Deleter) TagId_NotEq(val int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -482,7 +482,7 @@ func (u *__TagsPost_Deleter) PostId_NotIn(ins []int) *__TagsPost_Deleter {
 	return u
 }
 
-func (d *__TagsPost_Deleter) PostId_EQ(val int) *__TagsPost_Deleter {
+func (d *__TagsPost_Deleter) PostId_Eq(val int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -493,7 +493,7 @@ func (d *__TagsPost_Deleter) PostId_EQ(val int) *__TagsPost_Deleter {
 	return d
 }
 
-func (d *__TagsPost_Deleter) PostId_NotEQ(val int) *__TagsPost_Deleter {
+func (d *__TagsPost_Deleter) PostId_NotEq(val int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -587,7 +587,7 @@ func (u *__TagsPost_Deleter) TypeId_NotIn(ins []int) *__TagsPost_Deleter {
 	return u
 }
 
-func (d *__TagsPost_Deleter) TypeId_EQ(val int) *__TagsPost_Deleter {
+func (d *__TagsPost_Deleter) TypeId_Eq(val int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -598,7 +598,7 @@ func (d *__TagsPost_Deleter) TypeId_EQ(val int) *__TagsPost_Deleter {
 	return d
 }
 
-func (d *__TagsPost_Deleter) TypeId_NotEQ(val int) *__TagsPost_Deleter {
+func (d *__TagsPost_Deleter) TypeId_NotEq(val int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -692,7 +692,7 @@ func (u *__TagsPost_Deleter) CreatedTime_NotIn(ins []int) *__TagsPost_Deleter {
 	return u
 }
 
-func (d *__TagsPost_Deleter) CreatedTime_EQ(val int) *__TagsPost_Deleter {
+func (d *__TagsPost_Deleter) CreatedTime_Eq(val int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -703,7 +703,7 @@ func (d *__TagsPost_Deleter) CreatedTime_EQ(val int) *__TagsPost_Deleter {
 	return d
 }
 
-func (d *__TagsPost_Deleter) CreatedTime_NotEQ(val int) *__TagsPost_Deleter {
+func (d *__TagsPost_Deleter) CreatedTime_NotEq(val int) *__TagsPost_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -803,7 +803,7 @@ func (u *__TagsPost_Updater) Id_NotIn(ins []int) *__TagsPost_Updater {
 	return u
 }
 
-func (d *__TagsPost_Updater) Id_EQ(val int) *__TagsPost_Updater {
+func (d *__TagsPost_Updater) Id_Eq(val int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -814,7 +814,7 @@ func (d *__TagsPost_Updater) Id_EQ(val int) *__TagsPost_Updater {
 	return d
 }
 
-func (d *__TagsPost_Updater) Id_NotEQ(val int) *__TagsPost_Updater {
+func (d *__TagsPost_Updater) Id_NotEq(val int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -908,7 +908,7 @@ func (u *__TagsPost_Updater) TagId_NotIn(ins []int) *__TagsPost_Updater {
 	return u
 }
 
-func (d *__TagsPost_Updater) TagId_EQ(val int) *__TagsPost_Updater {
+func (d *__TagsPost_Updater) TagId_Eq(val int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -919,7 +919,7 @@ func (d *__TagsPost_Updater) TagId_EQ(val int) *__TagsPost_Updater {
 	return d
 }
 
-func (d *__TagsPost_Updater) TagId_NotEQ(val int) *__TagsPost_Updater {
+func (d *__TagsPost_Updater) TagId_NotEq(val int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1013,7 +1013,7 @@ func (u *__TagsPost_Updater) PostId_NotIn(ins []int) *__TagsPost_Updater {
 	return u
 }
 
-func (d *__TagsPost_Updater) PostId_EQ(val int) *__TagsPost_Updater {
+func (d *__TagsPost_Updater) PostId_Eq(val int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1024,7 +1024,7 @@ func (d *__TagsPost_Updater) PostId_EQ(val int) *__TagsPost_Updater {
 	return d
 }
 
-func (d *__TagsPost_Updater) PostId_NotEQ(val int) *__TagsPost_Updater {
+func (d *__TagsPost_Updater) PostId_NotEq(val int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1118,7 +1118,7 @@ func (u *__TagsPost_Updater) TypeId_NotIn(ins []int) *__TagsPost_Updater {
 	return u
 }
 
-func (d *__TagsPost_Updater) TypeId_EQ(val int) *__TagsPost_Updater {
+func (d *__TagsPost_Updater) TypeId_Eq(val int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1129,7 +1129,7 @@ func (d *__TagsPost_Updater) TypeId_EQ(val int) *__TagsPost_Updater {
 	return d
 }
 
-func (d *__TagsPost_Updater) TypeId_NotEQ(val int) *__TagsPost_Updater {
+func (d *__TagsPost_Updater) TypeId_NotEq(val int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1223,7 +1223,7 @@ func (u *__TagsPost_Updater) CreatedTime_NotIn(ins []int) *__TagsPost_Updater {
 	return u
 }
 
-func (d *__TagsPost_Updater) CreatedTime_EQ(val int) *__TagsPost_Updater {
+func (d *__TagsPost_Updater) CreatedTime_Eq(val int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1234,7 +1234,7 @@ func (d *__TagsPost_Updater) CreatedTime_EQ(val int) *__TagsPost_Updater {
 	return d
 }
 
-func (d *__TagsPost_Updater) CreatedTime_NotEQ(val int) *__TagsPost_Updater {
+func (d *__TagsPost_Updater) CreatedTime_NotEq(val int) *__TagsPost_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1334,7 +1334,7 @@ func (u *__TagsPost_Selector) Id_NotIn(ins []int) *__TagsPost_Selector {
 	return u
 }
 
-func (d *__TagsPost_Selector) Id_EQ(val int) *__TagsPost_Selector {
+func (d *__TagsPost_Selector) Id_Eq(val int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1345,7 +1345,7 @@ func (d *__TagsPost_Selector) Id_EQ(val int) *__TagsPost_Selector {
 	return d
 }
 
-func (d *__TagsPost_Selector) Id_NotEQ(val int) *__TagsPost_Selector {
+func (d *__TagsPost_Selector) Id_NotEq(val int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1439,7 +1439,7 @@ func (u *__TagsPost_Selector) TagId_NotIn(ins []int) *__TagsPost_Selector {
 	return u
 }
 
-func (d *__TagsPost_Selector) TagId_EQ(val int) *__TagsPost_Selector {
+func (d *__TagsPost_Selector) TagId_Eq(val int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1450,7 +1450,7 @@ func (d *__TagsPost_Selector) TagId_EQ(val int) *__TagsPost_Selector {
 	return d
 }
 
-func (d *__TagsPost_Selector) TagId_NotEQ(val int) *__TagsPost_Selector {
+func (d *__TagsPost_Selector) TagId_NotEq(val int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1544,7 +1544,7 @@ func (u *__TagsPost_Selector) PostId_NotIn(ins []int) *__TagsPost_Selector {
 	return u
 }
 
-func (d *__TagsPost_Selector) PostId_EQ(val int) *__TagsPost_Selector {
+func (d *__TagsPost_Selector) PostId_Eq(val int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1555,7 +1555,7 @@ func (d *__TagsPost_Selector) PostId_EQ(val int) *__TagsPost_Selector {
 	return d
 }
 
-func (d *__TagsPost_Selector) PostId_NotEQ(val int) *__TagsPost_Selector {
+func (d *__TagsPost_Selector) PostId_NotEq(val int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1649,7 +1649,7 @@ func (u *__TagsPost_Selector) TypeId_NotIn(ins []int) *__TagsPost_Selector {
 	return u
 }
 
-func (d *__TagsPost_Selector) TypeId_EQ(val int) *__TagsPost_Selector {
+func (d *__TagsPost_Selector) TypeId_Eq(val int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1660,7 +1660,7 @@ func (d *__TagsPost_Selector) TypeId_EQ(val int) *__TagsPost_Selector {
 	return d
 }
 
-func (d *__TagsPost_Selector) TypeId_NotEQ(val int) *__TagsPost_Selector {
+func (d *__TagsPost_Selector) TypeId_NotEq(val int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1754,7 +1754,7 @@ func (u *__TagsPost_Selector) CreatedTime_NotIn(ins []int) *__TagsPost_Selector 
 	return u
 }
 
-func (d *__TagsPost_Selector) CreatedTime_EQ(val int) *__TagsPost_Selector {
+func (d *__TagsPost_Selector) CreatedTime_Eq(val int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1765,7 +1765,7 @@ func (d *__TagsPost_Selector) CreatedTime_EQ(val int) *__TagsPost_Selector {
 	return d
 }
 
-func (d *__TagsPost_Selector) CreatedTime_NotEQ(val int) *__TagsPost_Selector {
+func (d *__TagsPost_Selector) CreatedTime_NotEq(val int) *__TagsPost_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)

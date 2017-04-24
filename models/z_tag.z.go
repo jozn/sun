@@ -272,7 +272,7 @@ func (u *__Tag_Deleter) Id_NotIn(ins []int) *__Tag_Deleter {
 	return u
 }
 
-func (d *__Tag_Deleter) Id_EQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) Id_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -283,7 +283,7 @@ func (d *__Tag_Deleter) Id_EQ(val int) *__Tag_Deleter {
 	return d
 }
 
-func (d *__Tag_Deleter) Id_NotEQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) Id_NotEq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -377,7 +377,7 @@ func (u *__Tag_Deleter) Count_NotIn(ins []int) *__Tag_Deleter {
 	return u
 }
 
-func (d *__Tag_Deleter) Count_EQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) Count_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -388,7 +388,7 @@ func (d *__Tag_Deleter) Count_EQ(val int) *__Tag_Deleter {
 	return d
 }
 
-func (d *__Tag_Deleter) Count_NotEQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) Count_NotEq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -482,7 +482,7 @@ func (u *__Tag_Deleter) IsBlocked_NotIn(ins []int) *__Tag_Deleter {
 	return u
 }
 
-func (d *__Tag_Deleter) IsBlocked_EQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) IsBlocked_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -493,7 +493,7 @@ func (d *__Tag_Deleter) IsBlocked_EQ(val int) *__Tag_Deleter {
 	return d
 }
 
-func (d *__Tag_Deleter) IsBlocked_NotEQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) IsBlocked_NotEq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -587,7 +587,7 @@ func (u *__Tag_Deleter) CreatedTime_NotIn(ins []int) *__Tag_Deleter {
 	return u
 }
 
-func (d *__Tag_Deleter) CreatedTime_EQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) CreatedTime_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -598,7 +598,7 @@ func (d *__Tag_Deleter) CreatedTime_EQ(val int) *__Tag_Deleter {
 	return d
 }
 
-func (d *__Tag_Deleter) CreatedTime_NotEQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) CreatedTime_NotEq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -698,7 +698,7 @@ func (u *__Tag_Updater) Id_NotIn(ins []int) *__Tag_Updater {
 	return u
 }
 
-func (d *__Tag_Updater) Id_EQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) Id_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -709,7 +709,7 @@ func (d *__Tag_Updater) Id_EQ(val int) *__Tag_Updater {
 	return d
 }
 
-func (d *__Tag_Updater) Id_NotEQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) Id_NotEq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -803,7 +803,7 @@ func (u *__Tag_Updater) Count_NotIn(ins []int) *__Tag_Updater {
 	return u
 }
 
-func (d *__Tag_Updater) Count_EQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) Count_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -814,7 +814,7 @@ func (d *__Tag_Updater) Count_EQ(val int) *__Tag_Updater {
 	return d
 }
 
-func (d *__Tag_Updater) Count_NotEQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) Count_NotEq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -908,7 +908,7 @@ func (u *__Tag_Updater) IsBlocked_NotIn(ins []int) *__Tag_Updater {
 	return u
 }
 
-func (d *__Tag_Updater) IsBlocked_EQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) IsBlocked_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -919,7 +919,7 @@ func (d *__Tag_Updater) IsBlocked_EQ(val int) *__Tag_Updater {
 	return d
 }
 
-func (d *__Tag_Updater) IsBlocked_NotEQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) IsBlocked_NotEq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1013,7 +1013,7 @@ func (u *__Tag_Updater) CreatedTime_NotIn(ins []int) *__Tag_Updater {
 	return u
 }
 
-func (d *__Tag_Updater) CreatedTime_EQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) CreatedTime_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1024,7 +1024,7 @@ func (d *__Tag_Updater) CreatedTime_EQ(val int) *__Tag_Updater {
 	return d
 }
 
-func (d *__Tag_Updater) CreatedTime_NotEQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) CreatedTime_NotEq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1124,7 +1124,7 @@ func (u *__Tag_Selector) Id_NotIn(ins []int) *__Tag_Selector {
 	return u
 }
 
-func (d *__Tag_Selector) Id_EQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) Id_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1135,7 +1135,7 @@ func (d *__Tag_Selector) Id_EQ(val int) *__Tag_Selector {
 	return d
 }
 
-func (d *__Tag_Selector) Id_NotEQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) Id_NotEq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1229,7 +1229,7 @@ func (u *__Tag_Selector) Count_NotIn(ins []int) *__Tag_Selector {
 	return u
 }
 
-func (d *__Tag_Selector) Count_EQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) Count_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1240,7 +1240,7 @@ func (d *__Tag_Selector) Count_EQ(val int) *__Tag_Selector {
 	return d
 }
 
-func (d *__Tag_Selector) Count_NotEQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) Count_NotEq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1334,7 +1334,7 @@ func (u *__Tag_Selector) IsBlocked_NotIn(ins []int) *__Tag_Selector {
 	return u
 }
 
-func (d *__Tag_Selector) IsBlocked_EQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) IsBlocked_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1345,7 +1345,7 @@ func (d *__Tag_Selector) IsBlocked_EQ(val int) *__Tag_Selector {
 	return d
 }
 
-func (d *__Tag_Selector) IsBlocked_NotEQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) IsBlocked_NotEq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1439,7 +1439,7 @@ func (u *__Tag_Selector) CreatedTime_NotIn(ins []int) *__Tag_Selector {
 	return u
 }
 
-func (d *__Tag_Selector) CreatedTime_EQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) CreatedTime_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1450,7 +1450,7 @@ func (d *__Tag_Selector) CreatedTime_EQ(val int) *__Tag_Selector {
 	return d
 }
 
-func (d *__Tag_Selector) CreatedTime_NotEQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) CreatedTime_NotEq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1547,12 +1547,23 @@ func (u *__Tag_Deleter) Name_Like(val string) *__Tag_Deleter {
 	return u
 }
 
-func (d *__Tag_Deleter) Name_EQ(val string) *__Tag_Deleter {
+func (d *__Tag_Deleter) Name_Eq(val string) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Name = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Deleter) Name_NotEq(val string) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1598,12 +1609,23 @@ func (u *__Tag_Updater) Name_Like(val string) *__Tag_Updater {
 	return u
 }
 
-func (d *__Tag_Updater) Name_EQ(val string) *__Tag_Updater {
+func (d *__Tag_Updater) Name_Eq(val string) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Name = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Updater) Name_NotEq(val string) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1649,12 +1671,23 @@ func (u *__Tag_Selector) Name_Like(val string) *__Tag_Selector {
 	return u
 }
 
-func (d *__Tag_Selector) Name_EQ(val string) *__Tag_Selector {
+func (d *__Tag_Selector) Name_Eq(val string) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Name = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Tag_Selector) Name_NotEq(val string) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d

@@ -26,7 +26,7 @@ func (e _memoryStoreImpl) GetPhoneForUserIfIsContact(CurrentUserId, UserId int) 
 
 	val, ok := Cacher.Get(key)
 	if !ok {
-		phones, err := NewPhoneContact_Selector().Select_PhoneNormalizedNumber().UserId_EQ(CurrentUserId).GetStringSlice(base.DB)
+		phones, err := NewPhoneContact_Selector().Select_PhoneNormalizedNumber().UserId_Eq(CurrentUserId).GetStringSlice(base.DB)
 		if err != nil {
 			return ""
 		}
@@ -65,7 +65,7 @@ func (e _memoryStoreImpl) UserLikedPostsList_Get(UserId int) *ds.IntList {
 	if !ok {
 		collection = ds.New()
 
-		postsLiked, err := NewLike_Selector().Select_PostId().UserId_EQ(UserId).GetIntSlice(base.DB)
+		postsLiked, err := NewLike_Selector().Select_PostId().UserId_Eq(UserId).GetIntSlice(base.DB)
 		if err != nil {
 			return collection
 		}
@@ -110,7 +110,7 @@ func (e _memoryStoreImpl) UserFollowingList_Get(UserId int) *ds.IntList {
 	if !ok {
 		collection = ds.New()
 
-		followed, err := NewFollowingListMember_Selector().Select_FollowedUserId().UserId_EQ(UserId).OrderBy_FollowedUserId_Desc().GetIntSlice(base.DB)
+		followed, err := NewFollowingListMember_Selector().Select_FollowedUserId().UserId_Eq(UserId).OrderBy_FollowedUserId_Desc().GetIntSlice(base.DB)
 		if err != nil {
 			return collection
 		}

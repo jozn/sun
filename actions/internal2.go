@@ -54,7 +54,7 @@ func DBStructsToTable(a *base.Action) base.AppErr {
 
 func ShowCached(a *base.Action) base.AppErr {
 
-	a.SendJson(models.Cache.Items())
+	a.SendJson(models.RowCache.Items())
 	return nil
 }
 

@@ -1,39 +1,57 @@
 package models
 
 import (
+	"fmt"
 	"ms/sun/base"
+	"ms/sun/ds"
 	"ms/sun/helper"
+	"time"
 )
 
 //TODO: must add update users as well
-func SyncGetAllChangedUser(CurrentUserId, LastTime int) []UserViewSync {
+func SyncGetAllChangedUser(CurrentUserId, LastTime int) (res []*UserViewSyncAndMe) {
+	var contactsUsers []int
+	var followedUsers []int
 
-	//contacts
-	var usersContacts []User
-	q := "SELECT u.* FROM `user` AS u JOIN phone_contacts AS pc WHERE pc.UserId=? AND pc.CreatedTime >= ? AND u.Phone = pc.PhoneNormalizedNumber AND u.Phone != '' "
-	err1 := base.DB.Select(&usersContacts, q, CurrentUserId, LastTime)
+	sel := NewPhoneContact_Selector().Select_PhoneNormalizedNumber().
+		UserId_Eq(CurrentUserId).
+		PhoneNormalizedNumber_NotEq("")
 
-	var usersFollowd []User
-	q2 := "SELECT u.* FROM `user` AS u JOIN following_list_member AS fm ON u.Id = fm.FollowedUserId WHERE fm.UserId=? AND fm.UpdatedTimeMs >= ?"
-	err2 := base.DB.Select(&usersFollowd, q2, CurrentUserId, LastTime*1000)
-
-	usersRes := make([]UserViewSync, 0, len(usersContacts)+len(usersFollowd))
-
-	//first do for followings - Phone filed maybe overide if a user existi in both
-
-	for _, u := range usersFollowd {
-		v := UserViewSync{}
-		v.FromUser(CurrentUserId, u, false)
-		usersRes = append(usersRes, v)
+	if LastTime > 0 {
+		sel.CreatedTime_GE(LastTime)
 	}
 
-	for _, u := range usersContacts {
-		v := UserViewSync{}
-		v.FromUser(CurrentUserId, u, true)
-		usersRes = append(usersRes, v)
+	phones, err := sel.GetStringSlice(base.DB)
+	if err != nil {
+		return
 	}
 
-	helper.Debug("SyncGetAllChangedUser()", len(usersContacts), err1, err2)
+	if len(phones) > 0 {
+		contactsUsers, err = NewUser_Selector().Select_Id().Phone_In(phones).OrderBy_Id_Desc().GetIntSlice(base.DB)
+		if err != nil {
+			return
+		}
+		collection := ds.New()
+		collection.AddAndSort(contactsUsers...)
+		//this is used in MemoryStore.GetPhoneForUserIfIsContact()
+		Cacher.Set(fmt.Sprintf("UserContacts:%d", CurrentUserId), collection, time.Hour*4)
+	}
 
-	return usersRes
+	sel2 := NewFollowingListMember_Selector().Select_FollowedUserId().
+		UserId_Eq(CurrentUserId)
+
+	if LastTime > 0 {
+		sel2.UpdatedTimeMs_GE(LastTime)
+	}
+	followedUsers, err = sel2.GetIntSlice(base.DB)
+
+	//can improve use a map to not duplicate res
+	for _, u := range contactsUsers {
+		res = append(res, Views.UserViewSync(CurrentUserId, u))
+	}
+
+	for _, u := range followedUsers {
+		res = append(res, Views.UserViewSync(CurrentUserId, u))
+	}
+	return
 }

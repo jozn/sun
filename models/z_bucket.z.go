@@ -275,7 +275,7 @@ func (u *__Bucket_Deleter) BucketId_NotIn(ins []int) *__Bucket_Deleter {
 	return u
 }
 
-func (d *__Bucket_Deleter) BucketId_EQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) BucketId_Eq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -286,7 +286,7 @@ func (d *__Bucket_Deleter) BucketId_EQ(val int) *__Bucket_Deleter {
 	return d
 }
 
-func (d *__Bucket_Deleter) BucketId_NotEQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) BucketId_NotEq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -380,7 +380,7 @@ func (u *__Bucket_Deleter) Server1Id_NotIn(ins []int) *__Bucket_Deleter {
 	return u
 }
 
-func (d *__Bucket_Deleter) Server1Id_EQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) Server1Id_Eq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -391,7 +391,7 @@ func (d *__Bucket_Deleter) Server1Id_EQ(val int) *__Bucket_Deleter {
 	return d
 }
 
-func (d *__Bucket_Deleter) Server1Id_NotEQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) Server1Id_NotEq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -485,7 +485,7 @@ func (u *__Bucket_Deleter) Server2Id_NotIn(ins []int) *__Bucket_Deleter {
 	return u
 }
 
-func (d *__Bucket_Deleter) Server2Id_EQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) Server2Id_Eq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -496,7 +496,7 @@ func (d *__Bucket_Deleter) Server2Id_EQ(val int) *__Bucket_Deleter {
 	return d
 }
 
-func (d *__Bucket_Deleter) Server2Id_NotEQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) Server2Id_NotEq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -590,7 +590,7 @@ func (u *__Bucket_Deleter) BackupServerId_NotIn(ins []int) *__Bucket_Deleter {
 	return u
 }
 
-func (d *__Bucket_Deleter) BackupServerId_EQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) BackupServerId_Eq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -601,7 +601,7 @@ func (d *__Bucket_Deleter) BackupServerId_EQ(val int) *__Bucket_Deleter {
 	return d
 }
 
-func (d *__Bucket_Deleter) BackupServerId_NotEQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) BackupServerId_NotEq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -695,7 +695,7 @@ func (u *__Bucket_Deleter) ContentObjectTypeId_NotIn(ins []int) *__Bucket_Delete
 	return u
 }
 
-func (d *__Bucket_Deleter) ContentObjectTypeId_EQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) ContentObjectTypeId_Eq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -706,7 +706,7 @@ func (d *__Bucket_Deleter) ContentObjectTypeId_EQ(val int) *__Bucket_Deleter {
 	return d
 }
 
-func (d *__Bucket_Deleter) ContentObjectTypeId_NotEQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) ContentObjectTypeId_NotEq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -800,7 +800,7 @@ func (u *__Bucket_Deleter) ContentObjectCount_NotIn(ins []int) *__Bucket_Deleter
 	return u
 }
 
-func (d *__Bucket_Deleter) ContentObjectCount_EQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) ContentObjectCount_Eq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -811,7 +811,7 @@ func (d *__Bucket_Deleter) ContentObjectCount_EQ(val int) *__Bucket_Deleter {
 	return d
 }
 
-func (d *__Bucket_Deleter) ContentObjectCount_NotEQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) ContentObjectCount_NotEq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -905,7 +905,7 @@ func (u *__Bucket_Deleter) CreatedTime_NotIn(ins []int) *__Bucket_Deleter {
 	return u
 }
 
-func (d *__Bucket_Deleter) CreatedTime_EQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) CreatedTime_Eq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -916,7 +916,7 @@ func (d *__Bucket_Deleter) CreatedTime_EQ(val int) *__Bucket_Deleter {
 	return d
 }
 
-func (d *__Bucket_Deleter) CreatedTime_NotEQ(val int) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) CreatedTime_NotEq(val int) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1016,7 +1016,7 @@ func (u *__Bucket_Updater) BucketId_NotIn(ins []int) *__Bucket_Updater {
 	return u
 }
 
-func (d *__Bucket_Updater) BucketId_EQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) BucketId_Eq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1027,7 +1027,7 @@ func (d *__Bucket_Updater) BucketId_EQ(val int) *__Bucket_Updater {
 	return d
 }
 
-func (d *__Bucket_Updater) BucketId_NotEQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) BucketId_NotEq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1121,7 +1121,7 @@ func (u *__Bucket_Updater) Server1Id_NotIn(ins []int) *__Bucket_Updater {
 	return u
 }
 
-func (d *__Bucket_Updater) Server1Id_EQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) Server1Id_Eq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1132,7 +1132,7 @@ func (d *__Bucket_Updater) Server1Id_EQ(val int) *__Bucket_Updater {
 	return d
 }
 
-func (d *__Bucket_Updater) Server1Id_NotEQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) Server1Id_NotEq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1226,7 +1226,7 @@ func (u *__Bucket_Updater) Server2Id_NotIn(ins []int) *__Bucket_Updater {
 	return u
 }
 
-func (d *__Bucket_Updater) Server2Id_EQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) Server2Id_Eq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1237,7 +1237,7 @@ func (d *__Bucket_Updater) Server2Id_EQ(val int) *__Bucket_Updater {
 	return d
 }
 
-func (d *__Bucket_Updater) Server2Id_NotEQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) Server2Id_NotEq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1331,7 +1331,7 @@ func (u *__Bucket_Updater) BackupServerId_NotIn(ins []int) *__Bucket_Updater {
 	return u
 }
 
-func (d *__Bucket_Updater) BackupServerId_EQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) BackupServerId_Eq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1342,7 +1342,7 @@ func (d *__Bucket_Updater) BackupServerId_EQ(val int) *__Bucket_Updater {
 	return d
 }
 
-func (d *__Bucket_Updater) BackupServerId_NotEQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) BackupServerId_NotEq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1436,7 +1436,7 @@ func (u *__Bucket_Updater) ContentObjectTypeId_NotIn(ins []int) *__Bucket_Update
 	return u
 }
 
-func (d *__Bucket_Updater) ContentObjectTypeId_EQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) ContentObjectTypeId_Eq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1447,7 +1447,7 @@ func (d *__Bucket_Updater) ContentObjectTypeId_EQ(val int) *__Bucket_Updater {
 	return d
 }
 
-func (d *__Bucket_Updater) ContentObjectTypeId_NotEQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) ContentObjectTypeId_NotEq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1541,7 +1541,7 @@ func (u *__Bucket_Updater) ContentObjectCount_NotIn(ins []int) *__Bucket_Updater
 	return u
 }
 
-func (d *__Bucket_Updater) ContentObjectCount_EQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) ContentObjectCount_Eq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1552,7 +1552,7 @@ func (d *__Bucket_Updater) ContentObjectCount_EQ(val int) *__Bucket_Updater {
 	return d
 }
 
-func (d *__Bucket_Updater) ContentObjectCount_NotEQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) ContentObjectCount_NotEq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1646,7 +1646,7 @@ func (u *__Bucket_Updater) CreatedTime_NotIn(ins []int) *__Bucket_Updater {
 	return u
 }
 
-func (d *__Bucket_Updater) CreatedTime_EQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) CreatedTime_Eq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1657,7 +1657,7 @@ func (d *__Bucket_Updater) CreatedTime_EQ(val int) *__Bucket_Updater {
 	return d
 }
 
-func (d *__Bucket_Updater) CreatedTime_NotEQ(val int) *__Bucket_Updater {
+func (d *__Bucket_Updater) CreatedTime_NotEq(val int) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1757,7 +1757,7 @@ func (u *__Bucket_Selector) BucketId_NotIn(ins []int) *__Bucket_Selector {
 	return u
 }
 
-func (d *__Bucket_Selector) BucketId_EQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) BucketId_Eq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1768,7 +1768,7 @@ func (d *__Bucket_Selector) BucketId_EQ(val int) *__Bucket_Selector {
 	return d
 }
 
-func (d *__Bucket_Selector) BucketId_NotEQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) BucketId_NotEq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1862,7 +1862,7 @@ func (u *__Bucket_Selector) Server1Id_NotIn(ins []int) *__Bucket_Selector {
 	return u
 }
 
-func (d *__Bucket_Selector) Server1Id_EQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) Server1Id_Eq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1873,7 +1873,7 @@ func (d *__Bucket_Selector) Server1Id_EQ(val int) *__Bucket_Selector {
 	return d
 }
 
-func (d *__Bucket_Selector) Server1Id_NotEQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) Server1Id_NotEq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1967,7 +1967,7 @@ func (u *__Bucket_Selector) Server2Id_NotIn(ins []int) *__Bucket_Selector {
 	return u
 }
 
-func (d *__Bucket_Selector) Server2Id_EQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) Server2Id_Eq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1978,7 +1978,7 @@ func (d *__Bucket_Selector) Server2Id_EQ(val int) *__Bucket_Selector {
 	return d
 }
 
-func (d *__Bucket_Selector) Server2Id_NotEQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) Server2Id_NotEq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2072,7 +2072,7 @@ func (u *__Bucket_Selector) BackupServerId_NotIn(ins []int) *__Bucket_Selector {
 	return u
 }
 
-func (d *__Bucket_Selector) BackupServerId_EQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) BackupServerId_Eq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2083,7 +2083,7 @@ func (d *__Bucket_Selector) BackupServerId_EQ(val int) *__Bucket_Selector {
 	return d
 }
 
-func (d *__Bucket_Selector) BackupServerId_NotEQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) BackupServerId_NotEq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2177,7 +2177,7 @@ func (u *__Bucket_Selector) ContentObjectTypeId_NotIn(ins []int) *__Bucket_Selec
 	return u
 }
 
-func (d *__Bucket_Selector) ContentObjectTypeId_EQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) ContentObjectTypeId_Eq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2188,7 +2188,7 @@ func (d *__Bucket_Selector) ContentObjectTypeId_EQ(val int) *__Bucket_Selector {
 	return d
 }
 
-func (d *__Bucket_Selector) ContentObjectTypeId_NotEQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) ContentObjectTypeId_NotEq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2282,7 +2282,7 @@ func (u *__Bucket_Selector) ContentObjectCount_NotIn(ins []int) *__Bucket_Select
 	return u
 }
 
-func (d *__Bucket_Selector) ContentObjectCount_EQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) ContentObjectCount_Eq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2293,7 +2293,7 @@ func (d *__Bucket_Selector) ContentObjectCount_EQ(val int) *__Bucket_Selector {
 	return d
 }
 
-func (d *__Bucket_Selector) ContentObjectCount_NotEQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) ContentObjectCount_NotEq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2387,7 +2387,7 @@ func (u *__Bucket_Selector) CreatedTime_NotIn(ins []int) *__Bucket_Selector {
 	return u
 }
 
-func (d *__Bucket_Selector) CreatedTime_EQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) CreatedTime_Eq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2398,7 +2398,7 @@ func (d *__Bucket_Selector) CreatedTime_EQ(val int) *__Bucket_Selector {
 	return d
 }
 
-func (d *__Bucket_Selector) CreatedTime_NotEQ(val int) *__Bucket_Selector {
+func (d *__Bucket_Selector) CreatedTime_NotEq(val int) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2495,12 +2495,23 @@ func (u *__Bucket_Deleter) BucketName_Like(val string) *__Bucket_Deleter {
 	return u
 }
 
-func (d *__Bucket_Deleter) BucketName_EQ(val string) *__Bucket_Deleter {
+func (d *__Bucket_Deleter) BucketName_Eq(val string) *__Bucket_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " BucketName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Bucket_Deleter) BucketName_NotEq(val string) *__Bucket_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2546,12 +2557,23 @@ func (u *__Bucket_Updater) BucketName_Like(val string) *__Bucket_Updater {
 	return u
 }
 
-func (d *__Bucket_Updater) BucketName_EQ(val string) *__Bucket_Updater {
+func (d *__Bucket_Updater) BucketName_Eq(val string) *__Bucket_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " BucketName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Bucket_Updater) BucketName_NotEq(val string) *__Bucket_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2597,12 +2619,23 @@ func (u *__Bucket_Selector) BucketName_Like(val string) *__Bucket_Selector {
 	return u
 }
 
-func (d *__Bucket_Selector) BucketName_EQ(val string) *__Bucket_Selector {
+func (d *__Bucket_Selector) BucketName_Eq(val string) *__Bucket_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " BucketName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Bucket_Selector) BucketName_NotEq(val string) *__Bucket_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " BucketName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d

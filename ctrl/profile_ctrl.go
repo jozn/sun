@@ -28,7 +28,7 @@ func GetPostsForProfileAction(c *base.Action) base.AppErr {
 
 	profileId = u.Id
 
-	selctor := models.NewPost_Selector().UserId_EQ(profileId).OrderBy_Id_Desc().Limit(limit)
+	selctor := models.NewPost_Selector().UserId_Eq(profileId).OrderBy_Id_Desc().Limit(limit)
 
 	if last > 0 {
 		selctor.Id_LT(last)

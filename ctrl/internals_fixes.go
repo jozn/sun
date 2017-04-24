@@ -33,7 +33,7 @@ func _fixPostCounts() {
 	models.NewUser_Updater().PostsCount(0).Update(base.DB)
 
 	for _, row := range res {
-		models.NewUser_Updater().PostsCount(row.Cnt).Id_EQ(row.UserId).Update(base.DB)
+		models.NewUser_Updater().PostsCount(row.Cnt).Id_Eq(row.UserId).Update(base.DB)
 	}
 }
 
@@ -56,7 +56,7 @@ func _fixFolloingCounts() {
 	models.NewUser_Updater().FollowingCount(0).Update(base.DB)
 
 	for _, row := range res {
-		models.NewUser_Updater().FollowingCount(row.Cnt).Id_EQ(row.UserId).Update(base.DB)
+		models.NewUser_Updater().FollowingCount(row.Cnt).Id_Eq(row.UserId).Update(base.DB)
 	}
 }
 
@@ -78,6 +78,6 @@ func _fixFollowedCounts() {
 	models.NewUser_Updater().FollowersCount(0).Update(base.DB)
 
 	for _, row := range res {
-		models.NewUser_Updater().FollowersCount(row.Cnt).Id_EQ(row.UserId).Update(base.DB)
+		models.NewUser_Updater().FollowersCount(row.Cnt).Id_Eq(row.UserId).Update(base.DB)
 	}
 }

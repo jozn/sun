@@ -29,8 +29,8 @@ func Activity_OnPostCommentDeleted(comment *Comment, post *Post) {
 
 	refId := comment.Id*1000 + ACTION_TYPE_POST_COMMENTED
 	NewActivity_Deleter().
-		ActorUserId_EQ(comment.UserId).
-		RefId_EQ(refId).
+		ActorUserId_Eq(comment.UserId).
+		RefId_Eq(refId).
 		Delete(base.DB)
 
 }
@@ -54,8 +54,8 @@ func Activity_OnUnFollowed(UserId, FollowedPeerUserId, FLId int) {
 	refId := FLId*1000 + ACTION_TYPE_FOLLOWED_USER
 
 	NewActivity_Deleter().
-		ActorUserId_EQ(UserId).
-		RefId_EQ(refId).
+		ActorUserId_Eq(UserId).
+		RefId_Eq(refId).
 		Delete(base.DB)
 }
 
@@ -83,8 +83,8 @@ func Activity_OnPostUnLiked(lk *Like) {
 	refId := lk.Id*1000 + ACTION_TYPE_POST_LIKED
 
 	NewActivity_Deleter().
-		ActorUserId_EQ(lk.UserId).
-		RefId_EQ(refId).
+		ActorUserId_Eq(lk.UserId).
+		RefId_Eq(refId).
 		Delete(base.DB)
 }
 

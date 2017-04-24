@@ -275,7 +275,7 @@ func (u *__FollowingList_Deleter) Id_NotIn(ins []int) *__FollowingList_Deleter {
 	return u
 }
 
-func (d *__FollowingList_Deleter) Id_EQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) Id_Eq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -286,7 +286,7 @@ func (d *__FollowingList_Deleter) Id_EQ(val int) *__FollowingList_Deleter {
 	return d
 }
 
-func (d *__FollowingList_Deleter) Id_NotEQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) Id_NotEq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -380,7 +380,7 @@ func (u *__FollowingList_Deleter) UserId_NotIn(ins []int) *__FollowingList_Delet
 	return u
 }
 
-func (d *__FollowingList_Deleter) UserId_EQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) UserId_Eq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -391,7 +391,7 @@ func (d *__FollowingList_Deleter) UserId_EQ(val int) *__FollowingList_Deleter {
 	return d
 }
 
-func (d *__FollowingList_Deleter) UserId_NotEQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) UserId_NotEq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -485,7 +485,7 @@ func (u *__FollowingList_Deleter) ListType_NotIn(ins []int) *__FollowingList_Del
 	return u
 }
 
-func (d *__FollowingList_Deleter) ListType_EQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) ListType_Eq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -496,7 +496,7 @@ func (d *__FollowingList_Deleter) ListType_EQ(val int) *__FollowingList_Deleter 
 	return d
 }
 
-func (d *__FollowingList_Deleter) ListType_NotEQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) ListType_NotEq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -590,7 +590,7 @@ func (u *__FollowingList_Deleter) Count_NotIn(ins []int) *__FollowingList_Delete
 	return u
 }
 
-func (d *__FollowingList_Deleter) Count_EQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) Count_Eq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -601,7 +601,7 @@ func (d *__FollowingList_Deleter) Count_EQ(val int) *__FollowingList_Deleter {
 	return d
 }
 
-func (d *__FollowingList_Deleter) Count_NotEQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) Count_NotEq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -695,7 +695,7 @@ func (u *__FollowingList_Deleter) IsAuto_NotIn(ins []int) *__FollowingList_Delet
 	return u
 }
 
-func (d *__FollowingList_Deleter) IsAuto_EQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) IsAuto_Eq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -706,7 +706,7 @@ func (d *__FollowingList_Deleter) IsAuto_EQ(val int) *__FollowingList_Deleter {
 	return d
 }
 
-func (d *__FollowingList_Deleter) IsAuto_NotEQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) IsAuto_NotEq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -800,7 +800,7 @@ func (u *__FollowingList_Deleter) IsPimiry_NotIn(ins []int) *__FollowingList_Del
 	return u
 }
 
-func (d *__FollowingList_Deleter) IsPimiry_EQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) IsPimiry_Eq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -811,7 +811,7 @@ func (d *__FollowingList_Deleter) IsPimiry_EQ(val int) *__FollowingList_Deleter 
 	return d
 }
 
-func (d *__FollowingList_Deleter) IsPimiry_NotEQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) IsPimiry_NotEq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -905,7 +905,7 @@ func (u *__FollowingList_Deleter) CreatedTime_NotIn(ins []int) *__FollowingList_
 	return u
 }
 
-func (d *__FollowingList_Deleter) CreatedTime_EQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) CreatedTime_Eq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -916,7 +916,7 @@ func (d *__FollowingList_Deleter) CreatedTime_EQ(val int) *__FollowingList_Delet
 	return d
 }
 
-func (d *__FollowingList_Deleter) CreatedTime_NotEQ(val int) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) CreatedTime_NotEq(val int) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1016,7 +1016,7 @@ func (u *__FollowingList_Updater) Id_NotIn(ins []int) *__FollowingList_Updater {
 	return u
 }
 
-func (d *__FollowingList_Updater) Id_EQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) Id_Eq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1027,7 +1027,7 @@ func (d *__FollowingList_Updater) Id_EQ(val int) *__FollowingList_Updater {
 	return d
 }
 
-func (d *__FollowingList_Updater) Id_NotEQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) Id_NotEq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1121,7 +1121,7 @@ func (u *__FollowingList_Updater) UserId_NotIn(ins []int) *__FollowingList_Updat
 	return u
 }
 
-func (d *__FollowingList_Updater) UserId_EQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) UserId_Eq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1132,7 +1132,7 @@ func (d *__FollowingList_Updater) UserId_EQ(val int) *__FollowingList_Updater {
 	return d
 }
 
-func (d *__FollowingList_Updater) UserId_NotEQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) UserId_NotEq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1226,7 +1226,7 @@ func (u *__FollowingList_Updater) ListType_NotIn(ins []int) *__FollowingList_Upd
 	return u
 }
 
-func (d *__FollowingList_Updater) ListType_EQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) ListType_Eq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1237,7 +1237,7 @@ func (d *__FollowingList_Updater) ListType_EQ(val int) *__FollowingList_Updater 
 	return d
 }
 
-func (d *__FollowingList_Updater) ListType_NotEQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) ListType_NotEq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1331,7 +1331,7 @@ func (u *__FollowingList_Updater) Count_NotIn(ins []int) *__FollowingList_Update
 	return u
 }
 
-func (d *__FollowingList_Updater) Count_EQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) Count_Eq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1342,7 +1342,7 @@ func (d *__FollowingList_Updater) Count_EQ(val int) *__FollowingList_Updater {
 	return d
 }
 
-func (d *__FollowingList_Updater) Count_NotEQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) Count_NotEq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1436,7 +1436,7 @@ func (u *__FollowingList_Updater) IsAuto_NotIn(ins []int) *__FollowingList_Updat
 	return u
 }
 
-func (d *__FollowingList_Updater) IsAuto_EQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) IsAuto_Eq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1447,7 +1447,7 @@ func (d *__FollowingList_Updater) IsAuto_EQ(val int) *__FollowingList_Updater {
 	return d
 }
 
-func (d *__FollowingList_Updater) IsAuto_NotEQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) IsAuto_NotEq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1541,7 +1541,7 @@ func (u *__FollowingList_Updater) IsPimiry_NotIn(ins []int) *__FollowingList_Upd
 	return u
 }
 
-func (d *__FollowingList_Updater) IsPimiry_EQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) IsPimiry_Eq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1552,7 +1552,7 @@ func (d *__FollowingList_Updater) IsPimiry_EQ(val int) *__FollowingList_Updater 
 	return d
 }
 
-func (d *__FollowingList_Updater) IsPimiry_NotEQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) IsPimiry_NotEq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1646,7 +1646,7 @@ func (u *__FollowingList_Updater) CreatedTime_NotIn(ins []int) *__FollowingList_
 	return u
 }
 
-func (d *__FollowingList_Updater) CreatedTime_EQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) CreatedTime_Eq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1657,7 +1657,7 @@ func (d *__FollowingList_Updater) CreatedTime_EQ(val int) *__FollowingList_Updat
 	return d
 }
 
-func (d *__FollowingList_Updater) CreatedTime_NotEQ(val int) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) CreatedTime_NotEq(val int) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1757,7 +1757,7 @@ func (u *__FollowingList_Selector) Id_NotIn(ins []int) *__FollowingList_Selector
 	return u
 }
 
-func (d *__FollowingList_Selector) Id_EQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) Id_Eq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1768,7 +1768,7 @@ func (d *__FollowingList_Selector) Id_EQ(val int) *__FollowingList_Selector {
 	return d
 }
 
-func (d *__FollowingList_Selector) Id_NotEQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) Id_NotEq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1862,7 +1862,7 @@ func (u *__FollowingList_Selector) UserId_NotIn(ins []int) *__FollowingList_Sele
 	return u
 }
 
-func (d *__FollowingList_Selector) UserId_EQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) UserId_Eq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1873,7 +1873,7 @@ func (d *__FollowingList_Selector) UserId_EQ(val int) *__FollowingList_Selector 
 	return d
 }
 
-func (d *__FollowingList_Selector) UserId_NotEQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) UserId_NotEq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1967,7 +1967,7 @@ func (u *__FollowingList_Selector) ListType_NotIn(ins []int) *__FollowingList_Se
 	return u
 }
 
-func (d *__FollowingList_Selector) ListType_EQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) ListType_Eq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1978,7 +1978,7 @@ func (d *__FollowingList_Selector) ListType_EQ(val int) *__FollowingList_Selecto
 	return d
 }
 
-func (d *__FollowingList_Selector) ListType_NotEQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) ListType_NotEq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2072,7 +2072,7 @@ func (u *__FollowingList_Selector) Count_NotIn(ins []int) *__FollowingList_Selec
 	return u
 }
 
-func (d *__FollowingList_Selector) Count_EQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) Count_Eq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2083,7 +2083,7 @@ func (d *__FollowingList_Selector) Count_EQ(val int) *__FollowingList_Selector {
 	return d
 }
 
-func (d *__FollowingList_Selector) Count_NotEQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) Count_NotEq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2177,7 +2177,7 @@ func (u *__FollowingList_Selector) IsAuto_NotIn(ins []int) *__FollowingList_Sele
 	return u
 }
 
-func (d *__FollowingList_Selector) IsAuto_EQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) IsAuto_Eq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2188,7 +2188,7 @@ func (d *__FollowingList_Selector) IsAuto_EQ(val int) *__FollowingList_Selector 
 	return d
 }
 
-func (d *__FollowingList_Selector) IsAuto_NotEQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) IsAuto_NotEq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2282,7 +2282,7 @@ func (u *__FollowingList_Selector) IsPimiry_NotIn(ins []int) *__FollowingList_Se
 	return u
 }
 
-func (d *__FollowingList_Selector) IsPimiry_EQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) IsPimiry_Eq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2293,7 +2293,7 @@ func (d *__FollowingList_Selector) IsPimiry_EQ(val int) *__FollowingList_Selecto
 	return d
 }
 
-func (d *__FollowingList_Selector) IsPimiry_NotEQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) IsPimiry_NotEq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2387,7 +2387,7 @@ func (u *__FollowingList_Selector) CreatedTime_NotIn(ins []int) *__FollowingList
 	return u
 }
 
-func (d *__FollowingList_Selector) CreatedTime_EQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) CreatedTime_Eq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2398,7 +2398,7 @@ func (d *__FollowingList_Selector) CreatedTime_EQ(val int) *__FollowingList_Sele
 	return d
 }
 
-func (d *__FollowingList_Selector) CreatedTime_NotEQ(val int) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) CreatedTime_NotEq(val int) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2495,12 +2495,23 @@ func (u *__FollowingList_Deleter) Name_Like(val string) *__FollowingList_Deleter
 	return u
 }
 
-func (d *__FollowingList_Deleter) Name_EQ(val string) *__FollowingList_Deleter {
+func (d *__FollowingList_Deleter) Name_Eq(val string) *__FollowingList_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Name = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Deleter) Name_NotEq(val string) *__FollowingList_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2546,12 +2557,23 @@ func (u *__FollowingList_Updater) Name_Like(val string) *__FollowingList_Updater
 	return u
 }
 
-func (d *__FollowingList_Updater) Name_EQ(val string) *__FollowingList_Updater {
+func (d *__FollowingList_Updater) Name_Eq(val string) *__FollowingList_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Name = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Updater) Name_NotEq(val string) *__FollowingList_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2597,12 +2619,23 @@ func (u *__FollowingList_Selector) Name_Like(val string) *__FollowingList_Select
 	return u
 }
 
-func (d *__FollowingList_Selector) Name_EQ(val string) *__FollowingList_Selector {
+func (d *__FollowingList_Selector) Name_Eq(val string) *__FollowingList_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Name = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__FollowingList_Selector) Name_NotEq(val string) *__FollowingList_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d

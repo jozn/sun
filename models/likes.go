@@ -15,7 +15,7 @@ func Like_LikePost(UserId, PostId int) {
 
 	err := l.Insert(base.DB)
 	if err == nil {
-		NewPost_Updater().LikesCount_Increment(1).Id_EQ(PostId).Update(base.DB)
+		NewPost_Updater().LikesCount_Increment(1).Id_Eq(PostId).Update(base.DB)
 		MemoryStore.UserLikedPostsList_Add(UserId, PostId)
 		Notification_OnPostLiked(l)
 		Activity_OnPostLiked(l)
@@ -23,7 +23,7 @@ func Like_LikePost(UserId, PostId int) {
 }
 
 func Like_UnlikePost(UserId, PostId int) {
-	l, err := NewLike_Selector().UserId_EQ(UserId).PostId_EQ(PostId).GetRow(base.DB)
+	l, err := NewLike_Selector().UserId_Eq(UserId).PostId_Eq(PostId).GetRow(base.DB)
 	if err != nil {
 		return
 	}

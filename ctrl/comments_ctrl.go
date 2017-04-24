@@ -19,7 +19,7 @@ func GetCommentsAction(c *base.Action) base.AppErr {
 	limit := c.GetParamInt("limit", COMMENTS_LIST_PAGE_LIMIT)
 	last := c.GetParamInt("last", 0)
 
-	selector := models.NewComment_Selector().PostId_EQ(pid).OrderBy_Id_Desc().Limit(limit)
+	selector := models.NewComment_Selector().PostId_Eq(pid).OrderBy_Id_Desc().Limit(limit)
 
 	if last > 0 {
 		selector.Id_LE(last)

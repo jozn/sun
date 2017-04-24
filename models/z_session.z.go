@@ -280,7 +280,7 @@ func (u *__Session_Deleter) Id_NotIn(ins []int) *__Session_Deleter {
 	return u
 }
 
-func (d *__Session_Deleter) Id_EQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) Id_Eq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -291,7 +291,7 @@ func (d *__Session_Deleter) Id_EQ(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) Id_NotEQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) Id_NotEq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -385,7 +385,7 @@ func (u *__Session_Deleter) UserId_NotIn(ins []int) *__Session_Deleter {
 	return u
 }
 
-func (d *__Session_Deleter) UserId_EQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) UserId_Eq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -396,7 +396,7 @@ func (d *__Session_Deleter) UserId_EQ(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) UserId_NotEQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) UserId_NotEq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -490,7 +490,7 @@ func (u *__Session_Deleter) LastActivityTime_NotIn(ins []int) *__Session_Deleter
 	return u
 }
 
-func (d *__Session_Deleter) LastActivityTime_EQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) LastActivityTime_Eq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -501,7 +501,7 @@ func (d *__Session_Deleter) LastActivityTime_EQ(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) LastActivityTime_NotEQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) LastActivityTime_NotEq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -595,7 +595,7 @@ func (u *__Session_Deleter) LastNetworkTypeId_NotIn(ins []int) *__Session_Delete
 	return u
 }
 
-func (d *__Session_Deleter) LastNetworkTypeId_EQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) LastNetworkTypeId_Eq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -606,7 +606,7 @@ func (d *__Session_Deleter) LastNetworkTypeId_EQ(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) LastNetworkTypeId_NotEQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) LastNetworkTypeId_NotEq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -700,7 +700,7 @@ func (u *__Session_Deleter) AppVersion_NotIn(ins []int) *__Session_Deleter {
 	return u
 }
 
-func (d *__Session_Deleter) AppVersion_EQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) AppVersion_Eq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -711,7 +711,7 @@ func (d *__Session_Deleter) AppVersion_EQ(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) AppVersion_NotEQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) AppVersion_NotEq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -805,7 +805,7 @@ func (u *__Session_Deleter) UpdatedTime_NotIn(ins []int) *__Session_Deleter {
 	return u
 }
 
-func (d *__Session_Deleter) UpdatedTime_EQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) UpdatedTime_Eq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -816,7 +816,7 @@ func (d *__Session_Deleter) UpdatedTime_EQ(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) UpdatedTime_NotEQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) UpdatedTime_NotEq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -910,7 +910,7 @@ func (u *__Session_Deleter) CreatedTime_NotIn(ins []int) *__Session_Deleter {
 	return u
 }
 
-func (d *__Session_Deleter) CreatedTime_EQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) CreatedTime_Eq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -921,7 +921,7 @@ func (d *__Session_Deleter) CreatedTime_EQ(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) CreatedTime_NotEQ(val int) *__Session_Deleter {
+func (d *__Session_Deleter) CreatedTime_NotEq(val int) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1021,7 +1021,7 @@ func (u *__Session_Updater) Id_NotIn(ins []int) *__Session_Updater {
 	return u
 }
 
-func (d *__Session_Updater) Id_EQ(val int) *__Session_Updater {
+func (d *__Session_Updater) Id_Eq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1032,7 +1032,7 @@ func (d *__Session_Updater) Id_EQ(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) Id_NotEQ(val int) *__Session_Updater {
+func (d *__Session_Updater) Id_NotEq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1126,7 +1126,7 @@ func (u *__Session_Updater) UserId_NotIn(ins []int) *__Session_Updater {
 	return u
 }
 
-func (d *__Session_Updater) UserId_EQ(val int) *__Session_Updater {
+func (d *__Session_Updater) UserId_Eq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1137,7 +1137,7 @@ func (d *__Session_Updater) UserId_EQ(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) UserId_NotEQ(val int) *__Session_Updater {
+func (d *__Session_Updater) UserId_NotEq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1231,7 +1231,7 @@ func (u *__Session_Updater) LastActivityTime_NotIn(ins []int) *__Session_Updater
 	return u
 }
 
-func (d *__Session_Updater) LastActivityTime_EQ(val int) *__Session_Updater {
+func (d *__Session_Updater) LastActivityTime_Eq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1242,7 +1242,7 @@ func (d *__Session_Updater) LastActivityTime_EQ(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) LastActivityTime_NotEQ(val int) *__Session_Updater {
+func (d *__Session_Updater) LastActivityTime_NotEq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1336,7 +1336,7 @@ func (u *__Session_Updater) LastNetworkTypeId_NotIn(ins []int) *__Session_Update
 	return u
 }
 
-func (d *__Session_Updater) LastNetworkTypeId_EQ(val int) *__Session_Updater {
+func (d *__Session_Updater) LastNetworkTypeId_Eq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1347,7 +1347,7 @@ func (d *__Session_Updater) LastNetworkTypeId_EQ(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) LastNetworkTypeId_NotEQ(val int) *__Session_Updater {
+func (d *__Session_Updater) LastNetworkTypeId_NotEq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1441,7 +1441,7 @@ func (u *__Session_Updater) AppVersion_NotIn(ins []int) *__Session_Updater {
 	return u
 }
 
-func (d *__Session_Updater) AppVersion_EQ(val int) *__Session_Updater {
+func (d *__Session_Updater) AppVersion_Eq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1452,7 +1452,7 @@ func (d *__Session_Updater) AppVersion_EQ(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) AppVersion_NotEQ(val int) *__Session_Updater {
+func (d *__Session_Updater) AppVersion_NotEq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1546,7 +1546,7 @@ func (u *__Session_Updater) UpdatedTime_NotIn(ins []int) *__Session_Updater {
 	return u
 }
 
-func (d *__Session_Updater) UpdatedTime_EQ(val int) *__Session_Updater {
+func (d *__Session_Updater) UpdatedTime_Eq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1557,7 +1557,7 @@ func (d *__Session_Updater) UpdatedTime_EQ(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) UpdatedTime_NotEQ(val int) *__Session_Updater {
+func (d *__Session_Updater) UpdatedTime_NotEq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1651,7 +1651,7 @@ func (u *__Session_Updater) CreatedTime_NotIn(ins []int) *__Session_Updater {
 	return u
 }
 
-func (d *__Session_Updater) CreatedTime_EQ(val int) *__Session_Updater {
+func (d *__Session_Updater) CreatedTime_Eq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1662,7 +1662,7 @@ func (d *__Session_Updater) CreatedTime_EQ(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) CreatedTime_NotEQ(val int) *__Session_Updater {
+func (d *__Session_Updater) CreatedTime_NotEq(val int) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1762,7 +1762,7 @@ func (u *__Session_Selector) Id_NotIn(ins []int) *__Session_Selector {
 	return u
 }
 
-func (d *__Session_Selector) Id_EQ(val int) *__Session_Selector {
+func (d *__Session_Selector) Id_Eq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1773,7 +1773,7 @@ func (d *__Session_Selector) Id_EQ(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) Id_NotEQ(val int) *__Session_Selector {
+func (d *__Session_Selector) Id_NotEq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1867,7 +1867,7 @@ func (u *__Session_Selector) UserId_NotIn(ins []int) *__Session_Selector {
 	return u
 }
 
-func (d *__Session_Selector) UserId_EQ(val int) *__Session_Selector {
+func (d *__Session_Selector) UserId_Eq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1878,7 +1878,7 @@ func (d *__Session_Selector) UserId_EQ(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) UserId_NotEQ(val int) *__Session_Selector {
+func (d *__Session_Selector) UserId_NotEq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1972,7 +1972,7 @@ func (u *__Session_Selector) LastActivityTime_NotIn(ins []int) *__Session_Select
 	return u
 }
 
-func (d *__Session_Selector) LastActivityTime_EQ(val int) *__Session_Selector {
+func (d *__Session_Selector) LastActivityTime_Eq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1983,7 +1983,7 @@ func (d *__Session_Selector) LastActivityTime_EQ(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) LastActivityTime_NotEQ(val int) *__Session_Selector {
+func (d *__Session_Selector) LastActivityTime_NotEq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2077,7 +2077,7 @@ func (u *__Session_Selector) LastNetworkTypeId_NotIn(ins []int) *__Session_Selec
 	return u
 }
 
-func (d *__Session_Selector) LastNetworkTypeId_EQ(val int) *__Session_Selector {
+func (d *__Session_Selector) LastNetworkTypeId_Eq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2088,7 +2088,7 @@ func (d *__Session_Selector) LastNetworkTypeId_EQ(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) LastNetworkTypeId_NotEQ(val int) *__Session_Selector {
+func (d *__Session_Selector) LastNetworkTypeId_NotEq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2182,7 +2182,7 @@ func (u *__Session_Selector) AppVersion_NotIn(ins []int) *__Session_Selector {
 	return u
 }
 
-func (d *__Session_Selector) AppVersion_EQ(val int) *__Session_Selector {
+func (d *__Session_Selector) AppVersion_Eq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2193,7 +2193,7 @@ func (d *__Session_Selector) AppVersion_EQ(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) AppVersion_NotEQ(val int) *__Session_Selector {
+func (d *__Session_Selector) AppVersion_NotEq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2287,7 +2287,7 @@ func (u *__Session_Selector) UpdatedTime_NotIn(ins []int) *__Session_Selector {
 	return u
 }
 
-func (d *__Session_Selector) UpdatedTime_EQ(val int) *__Session_Selector {
+func (d *__Session_Selector) UpdatedTime_Eq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2298,7 +2298,7 @@ func (d *__Session_Selector) UpdatedTime_EQ(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) UpdatedTime_NotEQ(val int) *__Session_Selector {
+func (d *__Session_Selector) UpdatedTime_NotEq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2392,7 +2392,7 @@ func (u *__Session_Selector) CreatedTime_NotIn(ins []int) *__Session_Selector {
 	return u
 }
 
-func (d *__Session_Selector) CreatedTime_EQ(val int) *__Session_Selector {
+func (d *__Session_Selector) CreatedTime_Eq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2403,7 +2403,7 @@ func (d *__Session_Selector) CreatedTime_EQ(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) CreatedTime_NotEQ(val int) *__Session_Selector {
+func (d *__Session_Selector) CreatedTime_NotEq(val int) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2500,12 +2500,23 @@ func (u *__Session_Deleter) SessionUuid_Like(val string) *__Session_Deleter {
 	return u
 }
 
-func (d *__Session_Deleter) SessionUuid_EQ(val string) *__Session_Deleter {
+func (d *__Session_Deleter) SessionUuid_Eq(val string) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " SessionUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) SessionUuid_NotEq(val string) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " SessionUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2549,12 +2560,23 @@ func (u *__Session_Deleter) ClientUuid_Like(val string) *__Session_Deleter {
 	return u
 }
 
-func (d *__Session_Deleter) ClientUuid_EQ(val string) *__Session_Deleter {
+func (d *__Session_Deleter) ClientUuid_Eq(val string) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " ClientUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) ClientUuid_NotEq(val string) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClientUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2598,12 +2620,23 @@ func (u *__Session_Deleter) DeviceUuid_Like(val string) *__Session_Deleter {
 	return u
 }
 
-func (d *__Session_Deleter) DeviceUuid_EQ(val string) *__Session_Deleter {
+func (d *__Session_Deleter) DeviceUuid_Eq(val string) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " DeviceUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) DeviceUuid_NotEq(val string) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DeviceUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2647,12 +2680,23 @@ func (u *__Session_Deleter) LastIpAddress_Like(val string) *__Session_Deleter {
 	return u
 }
 
-func (d *__Session_Deleter) LastIpAddress_EQ(val string) *__Session_Deleter {
+func (d *__Session_Deleter) LastIpAddress_Eq(val string) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastIpAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastIpAddress_NotEq(val string) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastIpAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2696,12 +2740,23 @@ func (u *__Session_Deleter) LastWifiMacAddress_Like(val string) *__Session_Delet
 	return u
 }
 
-func (d *__Session_Deleter) LastWifiMacAddress_EQ(val string) *__Session_Deleter {
+func (d *__Session_Deleter) LastWifiMacAddress_Eq(val string) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastWifiMacAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastWifiMacAddress_NotEq(val string) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastWifiMacAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2745,12 +2800,23 @@ func (u *__Session_Deleter) LastNetworkType_Like(val string) *__Session_Deleter 
 	return u
 }
 
-func (d *__Session_Deleter) LastNetworkType_EQ(val string) *__Session_Deleter {
+func (d *__Session_Deleter) LastNetworkType_Eq(val string) *__Session_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastNetworkType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastNetworkType_NotEq(val string) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastNetworkType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2796,12 +2862,23 @@ func (u *__Session_Updater) SessionUuid_Like(val string) *__Session_Updater {
 	return u
 }
 
-func (d *__Session_Updater) SessionUuid_EQ(val string) *__Session_Updater {
+func (d *__Session_Updater) SessionUuid_Eq(val string) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " SessionUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) SessionUuid_NotEq(val string) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " SessionUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2845,12 +2922,23 @@ func (u *__Session_Updater) ClientUuid_Like(val string) *__Session_Updater {
 	return u
 }
 
-func (d *__Session_Updater) ClientUuid_EQ(val string) *__Session_Updater {
+func (d *__Session_Updater) ClientUuid_Eq(val string) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " ClientUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) ClientUuid_NotEq(val string) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClientUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2894,12 +2982,23 @@ func (u *__Session_Updater) DeviceUuid_Like(val string) *__Session_Updater {
 	return u
 }
 
-func (d *__Session_Updater) DeviceUuid_EQ(val string) *__Session_Updater {
+func (d *__Session_Updater) DeviceUuid_Eq(val string) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " DeviceUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) DeviceUuid_NotEq(val string) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DeviceUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2943,12 +3042,23 @@ func (u *__Session_Updater) LastIpAddress_Like(val string) *__Session_Updater {
 	return u
 }
 
-func (d *__Session_Updater) LastIpAddress_EQ(val string) *__Session_Updater {
+func (d *__Session_Updater) LastIpAddress_Eq(val string) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastIpAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastIpAddress_NotEq(val string) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastIpAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2992,12 +3102,23 @@ func (u *__Session_Updater) LastWifiMacAddress_Like(val string) *__Session_Updat
 	return u
 }
 
-func (d *__Session_Updater) LastWifiMacAddress_EQ(val string) *__Session_Updater {
+func (d *__Session_Updater) LastWifiMacAddress_Eq(val string) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastWifiMacAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastWifiMacAddress_NotEq(val string) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastWifiMacAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3041,12 +3162,23 @@ func (u *__Session_Updater) LastNetworkType_Like(val string) *__Session_Updater 
 	return u
 }
 
-func (d *__Session_Updater) LastNetworkType_EQ(val string) *__Session_Updater {
+func (d *__Session_Updater) LastNetworkType_Eq(val string) *__Session_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastNetworkType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastNetworkType_NotEq(val string) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastNetworkType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3092,12 +3224,23 @@ func (u *__Session_Selector) SessionUuid_Like(val string) *__Session_Selector {
 	return u
 }
 
-func (d *__Session_Selector) SessionUuid_EQ(val string) *__Session_Selector {
+func (d *__Session_Selector) SessionUuid_Eq(val string) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " SessionUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) SessionUuid_NotEq(val string) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " SessionUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3141,12 +3284,23 @@ func (u *__Session_Selector) ClientUuid_Like(val string) *__Session_Selector {
 	return u
 }
 
-func (d *__Session_Selector) ClientUuid_EQ(val string) *__Session_Selector {
+func (d *__Session_Selector) ClientUuid_Eq(val string) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " ClientUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) ClientUuid_NotEq(val string) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ClientUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3190,12 +3344,23 @@ func (u *__Session_Selector) DeviceUuid_Like(val string) *__Session_Selector {
 	return u
 }
 
-func (d *__Session_Selector) DeviceUuid_EQ(val string) *__Session_Selector {
+func (d *__Session_Selector) DeviceUuid_Eq(val string) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " DeviceUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) DeviceUuid_NotEq(val string) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DeviceUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3239,12 +3404,23 @@ func (u *__Session_Selector) LastIpAddress_Like(val string) *__Session_Selector 
 	return u
 }
 
-func (d *__Session_Selector) LastIpAddress_EQ(val string) *__Session_Selector {
+func (d *__Session_Selector) LastIpAddress_Eq(val string) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastIpAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastIpAddress_NotEq(val string) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastIpAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3288,12 +3464,23 @@ func (u *__Session_Selector) LastWifiMacAddress_Like(val string) *__Session_Sele
 	return u
 }
 
-func (d *__Session_Selector) LastWifiMacAddress_EQ(val string) *__Session_Selector {
+func (d *__Session_Selector) LastWifiMacAddress_Eq(val string) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastWifiMacAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastWifiMacAddress_NotEq(val string) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastWifiMacAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3337,12 +3524,23 @@ func (u *__Session_Selector) LastNetworkType_Like(val string) *__Session_Selecto
 	return u
 }
 
-func (d *__Session_Selector) LastNetworkType_EQ(val string) *__Session_Selector {
+func (d *__Session_Selector) LastNetworkType_Eq(val string) *__Session_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastNetworkType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastNetworkType_NotEq(val string) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastNetworkType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4124,49 +4322,6 @@ func MassReplace_Session(rows []Session, db XODB) error {
 
 //
 
-// SessionsById retrieves a row from 'ms.session' as a Session.
-//
-// Generated from index 'Id'.
-func SessionsById(db XODB, id int) ([]*Session, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime ` +
-		`FROM ms.session ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Session{}
-	for q.Next() {
-		s := Session{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.LastNetworkTypeId, &s.AppVersion, &s.UpdatedTime, &s.CreatedTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &s)
-	}
-
-	OnSession_LoadMany(res)
-
-	return res, nil
-}
-
 // SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
 //
 // Generated from index 'SessionUuid2'.
@@ -4194,49 +4349,6 @@ func SessionBySessionUuid(db XODB, sessionUuid string) (*Session, error) {
 	OnSession_LoadOne(&s)
 
 	return &s, nil
-}
-
-// SessionsByUserId retrieves a row from 'ms.session' as a Session.
-//
-// Generated from index 'UserId'.
-func SessionsByUserId(db XODB, userId int) ([]*Session, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime ` +
-		`FROM ms.session ` +
-		`WHERE UserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId)
-	q, err := db.Query(sqlstr, userId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Session{}
-	for q.Next() {
-		s := Session{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.LastNetworkTypeId, &s.AppVersion, &s.UpdatedTime, &s.CreatedTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &s)
-	}
-
-	OnSession_LoadMany(res)
-
-	return res, nil
 }
 
 // SessionById retrieves a row from 'ms.session' as a Session.

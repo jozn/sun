@@ -16,14 +16,14 @@ func TagsPostsListCtrl(c *base.Action) base.AppErr {
 	tagName := c.Req.FormValue("tag")
 	tagName = strings.Replace(tagName, "#", "", -1)
 
-	tag, err := models.NewTag_Selector().Name_EQ(tagName).GetRow(base.DB)
+	tag, err := models.NewTag_Selector().Name_Eq(tagName).GetRow(base.DB)
 
 	if err != nil {
 		c.SendJson(nil)
 		return err
 	}
 
-	selector := models.NewTagsPost_Selector().Select_PostId().TagId_EQ(tag.Id).OrderBy_Id_Desc().Limit(limit)
+	selector := models.NewTagsPost_Selector().Select_PostId().TagId_Eq(tag.Id).OrderBy_Id_Desc().Limit(limit)
 	if last > 0 {
 		selector.Id_LT(last)
 	} else {

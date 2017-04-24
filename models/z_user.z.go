@@ -299,7 +299,7 @@ func (u *__User_Deleter) Id_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) Id_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) Id_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -310,7 +310,7 @@ func (d *__User_Deleter) Id_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) Id_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) Id_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -404,7 +404,7 @@ func (u *__User_Deleter) PrivacyProfile_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) PrivacyProfile_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) PrivacyProfile_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -415,7 +415,7 @@ func (d *__User_Deleter) PrivacyProfile_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) PrivacyProfile_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) PrivacyProfile_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -509,7 +509,7 @@ func (u *__User_Deleter) IsDeleted_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) IsDeleted_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) IsDeleted_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -520,7 +520,7 @@ func (d *__User_Deleter) IsDeleted_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) IsDeleted_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) IsDeleted_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -614,7 +614,7 @@ func (u *__User_Deleter) FollowersCount_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) FollowersCount_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) FollowersCount_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -625,7 +625,7 @@ func (d *__User_Deleter) FollowersCount_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) FollowersCount_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) FollowersCount_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -719,7 +719,7 @@ func (u *__User_Deleter) FollowingCount_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) FollowingCount_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) FollowingCount_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -730,7 +730,7 @@ func (d *__User_Deleter) FollowingCount_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) FollowingCount_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) FollowingCount_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -824,7 +824,7 @@ func (u *__User_Deleter) PostsCount_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) PostsCount_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) PostsCount_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -835,7 +835,7 @@ func (d *__User_Deleter) PostsCount_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) PostsCount_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) PostsCount_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -929,7 +929,7 @@ func (u *__User_Deleter) MediaCount_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) MediaCount_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) MediaCount_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -940,7 +940,7 @@ func (d *__User_Deleter) MediaCount_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) MediaCount_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) MediaCount_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1034,7 +1034,7 @@ func (u *__User_Deleter) LikesCount_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) LikesCount_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) LikesCount_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1045,7 +1045,7 @@ func (d *__User_Deleter) LikesCount_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) LikesCount_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) LikesCount_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1139,7 +1139,7 @@ func (u *__User_Deleter) ResharedCount_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) ResharedCount_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) ResharedCount_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1150,7 +1150,7 @@ func (d *__User_Deleter) ResharedCount_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) ResharedCount_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) ResharedCount_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1244,7 +1244,7 @@ func (u *__User_Deleter) LastActionTime_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) LastActionTime_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) LastActionTime_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1255,7 +1255,7 @@ func (d *__User_Deleter) LastActionTime_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) LastActionTime_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) LastActionTime_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1349,7 +1349,7 @@ func (u *__User_Deleter) LastPostTime_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) LastPostTime_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) LastPostTime_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1360,7 +1360,7 @@ func (d *__User_Deleter) LastPostTime_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) LastPostTime_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) LastPostTime_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1454,7 +1454,7 @@ func (u *__User_Deleter) PrimaryFollowingList_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) PrimaryFollowingList_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) PrimaryFollowingList_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1465,7 +1465,7 @@ func (d *__User_Deleter) PrimaryFollowingList_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) PrimaryFollowingList_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) PrimaryFollowingList_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1559,7 +1559,7 @@ func (u *__User_Deleter) CreatedTime_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) CreatedTime_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) CreatedTime_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1570,7 +1570,7 @@ func (d *__User_Deleter) CreatedTime_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) CreatedTime_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) CreatedTime_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1664,7 +1664,7 @@ func (u *__User_Deleter) UpdatedTime_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) UpdatedTime_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) UpdatedTime_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1675,7 +1675,7 @@ func (d *__User_Deleter) UpdatedTime_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) UpdatedTime_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) UpdatedTime_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1769,7 +1769,7 @@ func (u *__User_Deleter) AppVersion_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) AppVersion_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) AppVersion_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1780,7 +1780,7 @@ func (d *__User_Deleter) AppVersion_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) AppVersion_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) AppVersion_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1874,7 +1874,7 @@ func (u *__User_Deleter) LastActivityTime_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) LastActivityTime_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) LastActivityTime_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1885,7 +1885,7 @@ func (d *__User_Deleter) LastActivityTime_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) LastActivityTime_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) LastActivityTime_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1979,7 +1979,7 @@ func (u *__User_Deleter) LastLoginTime_NotIn(ins []int) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) LastLoginTime_EQ(val int) *__User_Deleter {
+func (d *__User_Deleter) LastLoginTime_Eq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1990,7 +1990,7 @@ func (d *__User_Deleter) LastLoginTime_EQ(val int) *__User_Deleter {
 	return d
 }
 
-func (d *__User_Deleter) LastLoginTime_NotEQ(val int) *__User_Deleter {
+func (d *__User_Deleter) LastLoginTime_NotEq(val int) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2090,7 +2090,7 @@ func (u *__User_Updater) Id_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) Id_EQ(val int) *__User_Updater {
+func (d *__User_Updater) Id_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2101,7 +2101,7 @@ func (d *__User_Updater) Id_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) Id_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) Id_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2195,7 +2195,7 @@ func (u *__User_Updater) PrivacyProfile_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) PrivacyProfile_EQ(val int) *__User_Updater {
+func (d *__User_Updater) PrivacyProfile_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2206,7 +2206,7 @@ func (d *__User_Updater) PrivacyProfile_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) PrivacyProfile_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) PrivacyProfile_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2300,7 +2300,7 @@ func (u *__User_Updater) IsDeleted_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) IsDeleted_EQ(val int) *__User_Updater {
+func (d *__User_Updater) IsDeleted_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2311,7 +2311,7 @@ func (d *__User_Updater) IsDeleted_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) IsDeleted_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) IsDeleted_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2405,7 +2405,7 @@ func (u *__User_Updater) FollowersCount_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) FollowersCount_EQ(val int) *__User_Updater {
+func (d *__User_Updater) FollowersCount_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2416,7 +2416,7 @@ func (d *__User_Updater) FollowersCount_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) FollowersCount_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) FollowersCount_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2510,7 +2510,7 @@ func (u *__User_Updater) FollowingCount_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) FollowingCount_EQ(val int) *__User_Updater {
+func (d *__User_Updater) FollowingCount_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2521,7 +2521,7 @@ func (d *__User_Updater) FollowingCount_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) FollowingCount_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) FollowingCount_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2615,7 +2615,7 @@ func (u *__User_Updater) PostsCount_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) PostsCount_EQ(val int) *__User_Updater {
+func (d *__User_Updater) PostsCount_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2626,7 +2626,7 @@ func (d *__User_Updater) PostsCount_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) PostsCount_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) PostsCount_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2720,7 +2720,7 @@ func (u *__User_Updater) MediaCount_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) MediaCount_EQ(val int) *__User_Updater {
+func (d *__User_Updater) MediaCount_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2731,7 +2731,7 @@ func (d *__User_Updater) MediaCount_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) MediaCount_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) MediaCount_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2825,7 +2825,7 @@ func (u *__User_Updater) LikesCount_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) LikesCount_EQ(val int) *__User_Updater {
+func (d *__User_Updater) LikesCount_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2836,7 +2836,7 @@ func (d *__User_Updater) LikesCount_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) LikesCount_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) LikesCount_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2930,7 +2930,7 @@ func (u *__User_Updater) ResharedCount_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) ResharedCount_EQ(val int) *__User_Updater {
+func (d *__User_Updater) ResharedCount_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2941,7 +2941,7 @@ func (d *__User_Updater) ResharedCount_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) ResharedCount_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) ResharedCount_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3035,7 +3035,7 @@ func (u *__User_Updater) LastActionTime_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) LastActionTime_EQ(val int) *__User_Updater {
+func (d *__User_Updater) LastActionTime_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3046,7 +3046,7 @@ func (d *__User_Updater) LastActionTime_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) LastActionTime_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) LastActionTime_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3140,7 +3140,7 @@ func (u *__User_Updater) LastPostTime_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) LastPostTime_EQ(val int) *__User_Updater {
+func (d *__User_Updater) LastPostTime_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3151,7 +3151,7 @@ func (d *__User_Updater) LastPostTime_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) LastPostTime_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) LastPostTime_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3245,7 +3245,7 @@ func (u *__User_Updater) PrimaryFollowingList_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) PrimaryFollowingList_EQ(val int) *__User_Updater {
+func (d *__User_Updater) PrimaryFollowingList_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3256,7 +3256,7 @@ func (d *__User_Updater) PrimaryFollowingList_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) PrimaryFollowingList_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) PrimaryFollowingList_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3350,7 +3350,7 @@ func (u *__User_Updater) CreatedTime_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) CreatedTime_EQ(val int) *__User_Updater {
+func (d *__User_Updater) CreatedTime_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3361,7 +3361,7 @@ func (d *__User_Updater) CreatedTime_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) CreatedTime_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) CreatedTime_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3455,7 +3455,7 @@ func (u *__User_Updater) UpdatedTime_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) UpdatedTime_EQ(val int) *__User_Updater {
+func (d *__User_Updater) UpdatedTime_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3466,7 +3466,7 @@ func (d *__User_Updater) UpdatedTime_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) UpdatedTime_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) UpdatedTime_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3560,7 +3560,7 @@ func (u *__User_Updater) AppVersion_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) AppVersion_EQ(val int) *__User_Updater {
+func (d *__User_Updater) AppVersion_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3571,7 +3571,7 @@ func (d *__User_Updater) AppVersion_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) AppVersion_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) AppVersion_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3665,7 +3665,7 @@ func (u *__User_Updater) LastActivityTime_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) LastActivityTime_EQ(val int) *__User_Updater {
+func (d *__User_Updater) LastActivityTime_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3676,7 +3676,7 @@ func (d *__User_Updater) LastActivityTime_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) LastActivityTime_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) LastActivityTime_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3770,7 +3770,7 @@ func (u *__User_Updater) LastLoginTime_NotIn(ins []int) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) LastLoginTime_EQ(val int) *__User_Updater {
+func (d *__User_Updater) LastLoginTime_Eq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3781,7 +3781,7 @@ func (d *__User_Updater) LastLoginTime_EQ(val int) *__User_Updater {
 	return d
 }
 
-func (d *__User_Updater) LastLoginTime_NotEQ(val int) *__User_Updater {
+func (d *__User_Updater) LastLoginTime_NotEq(val int) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3881,7 +3881,7 @@ func (u *__User_Selector) Id_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) Id_EQ(val int) *__User_Selector {
+func (d *__User_Selector) Id_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3892,7 +3892,7 @@ func (d *__User_Selector) Id_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) Id_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) Id_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3986,7 +3986,7 @@ func (u *__User_Selector) PrivacyProfile_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) PrivacyProfile_EQ(val int) *__User_Selector {
+func (d *__User_Selector) PrivacyProfile_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3997,7 +3997,7 @@ func (d *__User_Selector) PrivacyProfile_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) PrivacyProfile_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) PrivacyProfile_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4091,7 +4091,7 @@ func (u *__User_Selector) IsDeleted_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) IsDeleted_EQ(val int) *__User_Selector {
+func (d *__User_Selector) IsDeleted_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4102,7 +4102,7 @@ func (d *__User_Selector) IsDeleted_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) IsDeleted_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) IsDeleted_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4196,7 +4196,7 @@ func (u *__User_Selector) FollowersCount_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) FollowersCount_EQ(val int) *__User_Selector {
+func (d *__User_Selector) FollowersCount_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4207,7 +4207,7 @@ func (d *__User_Selector) FollowersCount_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) FollowersCount_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) FollowersCount_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4301,7 +4301,7 @@ func (u *__User_Selector) FollowingCount_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) FollowingCount_EQ(val int) *__User_Selector {
+func (d *__User_Selector) FollowingCount_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4312,7 +4312,7 @@ func (d *__User_Selector) FollowingCount_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) FollowingCount_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) FollowingCount_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4406,7 +4406,7 @@ func (u *__User_Selector) PostsCount_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) PostsCount_EQ(val int) *__User_Selector {
+func (d *__User_Selector) PostsCount_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4417,7 +4417,7 @@ func (d *__User_Selector) PostsCount_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) PostsCount_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) PostsCount_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4511,7 +4511,7 @@ func (u *__User_Selector) MediaCount_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) MediaCount_EQ(val int) *__User_Selector {
+func (d *__User_Selector) MediaCount_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4522,7 +4522,7 @@ func (d *__User_Selector) MediaCount_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) MediaCount_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) MediaCount_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4616,7 +4616,7 @@ func (u *__User_Selector) LikesCount_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) LikesCount_EQ(val int) *__User_Selector {
+func (d *__User_Selector) LikesCount_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4627,7 +4627,7 @@ func (d *__User_Selector) LikesCount_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) LikesCount_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) LikesCount_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4721,7 +4721,7 @@ func (u *__User_Selector) ResharedCount_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) ResharedCount_EQ(val int) *__User_Selector {
+func (d *__User_Selector) ResharedCount_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4732,7 +4732,7 @@ func (d *__User_Selector) ResharedCount_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) ResharedCount_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) ResharedCount_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4826,7 +4826,7 @@ func (u *__User_Selector) LastActionTime_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) LastActionTime_EQ(val int) *__User_Selector {
+func (d *__User_Selector) LastActionTime_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4837,7 +4837,7 @@ func (d *__User_Selector) LastActionTime_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) LastActionTime_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) LastActionTime_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4931,7 +4931,7 @@ func (u *__User_Selector) LastPostTime_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) LastPostTime_EQ(val int) *__User_Selector {
+func (d *__User_Selector) LastPostTime_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4942,7 +4942,7 @@ func (d *__User_Selector) LastPostTime_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) LastPostTime_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) LastPostTime_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5036,7 +5036,7 @@ func (u *__User_Selector) PrimaryFollowingList_NotIn(ins []int) *__User_Selector
 	return u
 }
 
-func (d *__User_Selector) PrimaryFollowingList_EQ(val int) *__User_Selector {
+func (d *__User_Selector) PrimaryFollowingList_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5047,7 +5047,7 @@ func (d *__User_Selector) PrimaryFollowingList_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) PrimaryFollowingList_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) PrimaryFollowingList_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5141,7 +5141,7 @@ func (u *__User_Selector) CreatedTime_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) CreatedTime_EQ(val int) *__User_Selector {
+func (d *__User_Selector) CreatedTime_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5152,7 +5152,7 @@ func (d *__User_Selector) CreatedTime_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) CreatedTime_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) CreatedTime_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5246,7 +5246,7 @@ func (u *__User_Selector) UpdatedTime_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) UpdatedTime_EQ(val int) *__User_Selector {
+func (d *__User_Selector) UpdatedTime_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5257,7 +5257,7 @@ func (d *__User_Selector) UpdatedTime_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) UpdatedTime_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) UpdatedTime_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5351,7 +5351,7 @@ func (u *__User_Selector) AppVersion_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) AppVersion_EQ(val int) *__User_Selector {
+func (d *__User_Selector) AppVersion_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5362,7 +5362,7 @@ func (d *__User_Selector) AppVersion_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) AppVersion_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) AppVersion_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5456,7 +5456,7 @@ func (u *__User_Selector) LastActivityTime_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) LastActivityTime_EQ(val int) *__User_Selector {
+func (d *__User_Selector) LastActivityTime_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5467,7 +5467,7 @@ func (d *__User_Selector) LastActivityTime_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) LastActivityTime_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) LastActivityTime_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5561,7 +5561,7 @@ func (u *__User_Selector) LastLoginTime_NotIn(ins []int) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) LastLoginTime_EQ(val int) *__User_Selector {
+func (d *__User_Selector) LastLoginTime_Eq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5572,7 +5572,7 @@ func (d *__User_Selector) LastLoginTime_EQ(val int) *__User_Selector {
 	return d
 }
 
-func (d *__User_Selector) LastLoginTime_NotEQ(val int) *__User_Selector {
+func (d *__User_Selector) LastLoginTime_NotEq(val int) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5669,12 +5669,23 @@ func (u *__User_Deleter) UserName_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) UserName_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) UserName_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " UserName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) UserName_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5718,12 +5729,23 @@ func (u *__User_Deleter) FirstName_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) FirstName_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) FirstName_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FirstName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) FirstName_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FirstName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5767,12 +5789,23 @@ func (u *__User_Deleter) LastName_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) LastName_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) LastName_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) LastName_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5816,12 +5849,23 @@ func (u *__User_Deleter) About_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) About_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) About_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " About = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) About_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " About != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5865,12 +5909,23 @@ func (u *__User_Deleter) FullName_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) FullName_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) FullName_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FullName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) FullName_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FullName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5914,12 +5969,23 @@ func (u *__User_Deleter) AvatarUrl_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) AvatarUrl_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) AvatarUrl_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " AvatarUrl = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) AvatarUrl_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AvatarUrl != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5963,12 +6029,23 @@ func (u *__User_Deleter) Phone_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) Phone_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) Phone_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Phone = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) Phone_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Phone != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6012,12 +6089,23 @@ func (u *__User_Deleter) Email_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) Email_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) Email_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Email = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) Email_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Email != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6061,12 +6149,23 @@ func (u *__User_Deleter) PasswordHash_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) PasswordHash_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) PasswordHash_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " PasswordHash = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) PasswordHash_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PasswordHash != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6110,12 +6209,23 @@ func (u *__User_Deleter) PasswordSalt_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) PasswordSalt_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) PasswordSalt_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " PasswordSalt = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) PasswordSalt_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PasswordSalt != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6159,12 +6269,23 @@ func (u *__User_Deleter) SessionUuid_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) SessionUuid_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) SessionUuid_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " SessionUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) SessionUuid_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " SessionUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6208,12 +6329,23 @@ func (u *__User_Deleter) DeviceUuid_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) DeviceUuid_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) DeviceUuid_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " DeviceUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) DeviceUuid_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DeviceUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6257,12 +6389,23 @@ func (u *__User_Deleter) LastWifiMacAddress_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) LastWifiMacAddress_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) LastWifiMacAddress_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastWifiMacAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) LastWifiMacAddress_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastWifiMacAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6306,12 +6449,23 @@ func (u *__User_Deleter) LastNetworkType_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) LastNetworkType_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) LastNetworkType_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastNetworkType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) LastNetworkType_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastNetworkType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6355,12 +6509,23 @@ func (u *__User_Deleter) LastIpAddress_Like(val string) *__User_Deleter {
 	return u
 }
 
-func (d *__User_Deleter) LastIpAddress_EQ(val string) *__User_Deleter {
+func (d *__User_Deleter) LastIpAddress_Eq(val string) *__User_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastIpAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Deleter) LastIpAddress_NotEq(val string) *__User_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastIpAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6406,12 +6571,23 @@ func (u *__User_Updater) UserName_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) UserName_EQ(val string) *__User_Updater {
+func (d *__User_Updater) UserName_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " UserName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) UserName_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6455,12 +6631,23 @@ func (u *__User_Updater) FirstName_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) FirstName_EQ(val string) *__User_Updater {
+func (d *__User_Updater) FirstName_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FirstName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) FirstName_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FirstName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6504,12 +6691,23 @@ func (u *__User_Updater) LastName_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) LastName_EQ(val string) *__User_Updater {
+func (d *__User_Updater) LastName_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) LastName_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6553,12 +6751,23 @@ func (u *__User_Updater) About_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) About_EQ(val string) *__User_Updater {
+func (d *__User_Updater) About_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " About = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) About_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " About != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6602,12 +6811,23 @@ func (u *__User_Updater) FullName_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) FullName_EQ(val string) *__User_Updater {
+func (d *__User_Updater) FullName_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FullName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) FullName_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FullName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6651,12 +6871,23 @@ func (u *__User_Updater) AvatarUrl_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) AvatarUrl_EQ(val string) *__User_Updater {
+func (d *__User_Updater) AvatarUrl_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " AvatarUrl = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) AvatarUrl_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AvatarUrl != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6700,12 +6931,23 @@ func (u *__User_Updater) Phone_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) Phone_EQ(val string) *__User_Updater {
+func (d *__User_Updater) Phone_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Phone = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) Phone_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Phone != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6749,12 +6991,23 @@ func (u *__User_Updater) Email_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) Email_EQ(val string) *__User_Updater {
+func (d *__User_Updater) Email_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Email = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) Email_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Email != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6798,12 +7051,23 @@ func (u *__User_Updater) PasswordHash_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) PasswordHash_EQ(val string) *__User_Updater {
+func (d *__User_Updater) PasswordHash_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " PasswordHash = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) PasswordHash_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PasswordHash != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6847,12 +7111,23 @@ func (u *__User_Updater) PasswordSalt_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) PasswordSalt_EQ(val string) *__User_Updater {
+func (d *__User_Updater) PasswordSalt_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " PasswordSalt = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) PasswordSalt_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PasswordSalt != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6896,12 +7171,23 @@ func (u *__User_Updater) SessionUuid_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) SessionUuid_EQ(val string) *__User_Updater {
+func (d *__User_Updater) SessionUuid_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " SessionUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) SessionUuid_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " SessionUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6945,12 +7231,23 @@ func (u *__User_Updater) DeviceUuid_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) DeviceUuid_EQ(val string) *__User_Updater {
+func (d *__User_Updater) DeviceUuid_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " DeviceUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) DeviceUuid_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DeviceUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -6994,12 +7291,23 @@ func (u *__User_Updater) LastWifiMacAddress_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) LastWifiMacAddress_EQ(val string) *__User_Updater {
+func (d *__User_Updater) LastWifiMacAddress_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastWifiMacAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) LastWifiMacAddress_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastWifiMacAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7043,12 +7351,23 @@ func (u *__User_Updater) LastNetworkType_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) LastNetworkType_EQ(val string) *__User_Updater {
+func (d *__User_Updater) LastNetworkType_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastNetworkType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) LastNetworkType_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastNetworkType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7092,12 +7411,23 @@ func (u *__User_Updater) LastIpAddress_Like(val string) *__User_Updater {
 	return u
 }
 
-func (d *__User_Updater) LastIpAddress_EQ(val string) *__User_Updater {
+func (d *__User_Updater) LastIpAddress_Eq(val string) *__User_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastIpAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Updater) LastIpAddress_NotEq(val string) *__User_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastIpAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7143,12 +7473,23 @@ func (u *__User_Selector) UserName_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) UserName_EQ(val string) *__User_Selector {
+func (d *__User_Selector) UserName_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " UserName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) UserName_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UserName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7192,12 +7533,23 @@ func (u *__User_Selector) FirstName_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) FirstName_EQ(val string) *__User_Selector {
+func (d *__User_Selector) FirstName_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FirstName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) FirstName_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FirstName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7241,12 +7593,23 @@ func (u *__User_Selector) LastName_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) LastName_EQ(val string) *__User_Selector {
+func (d *__User_Selector) LastName_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) LastName_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7290,12 +7653,23 @@ func (u *__User_Selector) About_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) About_EQ(val string) *__User_Selector {
+func (d *__User_Selector) About_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " About = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) About_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " About != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7339,12 +7713,23 @@ func (u *__User_Selector) FullName_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) FullName_EQ(val string) *__User_Selector {
+func (d *__User_Selector) FullName_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FullName = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) FullName_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FullName != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7388,12 +7773,23 @@ func (u *__User_Selector) AvatarUrl_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) AvatarUrl_EQ(val string) *__User_Selector {
+func (d *__User_Selector) AvatarUrl_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " AvatarUrl = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) AvatarUrl_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " AvatarUrl != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7437,12 +7833,23 @@ func (u *__User_Selector) Phone_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) Phone_EQ(val string) *__User_Selector {
+func (d *__User_Selector) Phone_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Phone = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) Phone_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Phone != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7486,12 +7893,23 @@ func (u *__User_Selector) Email_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) Email_EQ(val string) *__User_Selector {
+func (d *__User_Selector) Email_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Email = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) Email_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Email != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7535,12 +7953,23 @@ func (u *__User_Selector) PasswordHash_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) PasswordHash_EQ(val string) *__User_Selector {
+func (d *__User_Selector) PasswordHash_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " PasswordHash = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) PasswordHash_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PasswordHash != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7584,12 +8013,23 @@ func (u *__User_Selector) PasswordSalt_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) PasswordSalt_EQ(val string) *__User_Selector {
+func (d *__User_Selector) PasswordSalt_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " PasswordSalt = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) PasswordSalt_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PasswordSalt != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7633,12 +8073,23 @@ func (u *__User_Selector) SessionUuid_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) SessionUuid_EQ(val string) *__User_Selector {
+func (d *__User_Selector) SessionUuid_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " SessionUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) SessionUuid_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " SessionUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7682,12 +8133,23 @@ func (u *__User_Selector) DeviceUuid_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) DeviceUuid_EQ(val string) *__User_Selector {
+func (d *__User_Selector) DeviceUuid_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " DeviceUuid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) DeviceUuid_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DeviceUuid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7731,12 +8193,23 @@ func (u *__User_Selector) LastWifiMacAddress_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) LastWifiMacAddress_EQ(val string) *__User_Selector {
+func (d *__User_Selector) LastWifiMacAddress_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastWifiMacAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) LastWifiMacAddress_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastWifiMacAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7780,12 +8253,23 @@ func (u *__User_Selector) LastNetworkType_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) LastNetworkType_EQ(val string) *__User_Selector {
+func (d *__User_Selector) LastNetworkType_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastNetworkType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) LastNetworkType_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastNetworkType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -7829,12 +8313,23 @@ func (u *__User_Selector) LastIpAddress_Like(val string) *__User_Selector {
 	return u
 }
 
-func (d *__User_Selector) LastIpAddress_EQ(val string) *__User_Selector {
+func (d *__User_Selector) LastIpAddress_Eq(val string) *__User_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " LastIpAddress = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__User_Selector) LastIpAddress_NotEq(val string) *__User_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastIpAddress != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d

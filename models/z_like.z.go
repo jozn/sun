@@ -272,7 +272,7 @@ func (u *__Like_Deleter) Id_NotIn(ins []int) *__Like_Deleter {
 	return u
 }
 
-func (d *__Like_Deleter) Id_EQ(val int) *__Like_Deleter {
+func (d *__Like_Deleter) Id_Eq(val int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -283,7 +283,7 @@ func (d *__Like_Deleter) Id_EQ(val int) *__Like_Deleter {
 	return d
 }
 
-func (d *__Like_Deleter) Id_NotEQ(val int) *__Like_Deleter {
+func (d *__Like_Deleter) Id_NotEq(val int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -377,7 +377,7 @@ func (u *__Like_Deleter) PostId_NotIn(ins []int) *__Like_Deleter {
 	return u
 }
 
-func (d *__Like_Deleter) PostId_EQ(val int) *__Like_Deleter {
+func (d *__Like_Deleter) PostId_Eq(val int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -388,7 +388,7 @@ func (d *__Like_Deleter) PostId_EQ(val int) *__Like_Deleter {
 	return d
 }
 
-func (d *__Like_Deleter) PostId_NotEQ(val int) *__Like_Deleter {
+func (d *__Like_Deleter) PostId_NotEq(val int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -482,7 +482,7 @@ func (u *__Like_Deleter) UserId_NotIn(ins []int) *__Like_Deleter {
 	return u
 }
 
-func (d *__Like_Deleter) UserId_EQ(val int) *__Like_Deleter {
+func (d *__Like_Deleter) UserId_Eq(val int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -493,7 +493,7 @@ func (d *__Like_Deleter) UserId_EQ(val int) *__Like_Deleter {
 	return d
 }
 
-func (d *__Like_Deleter) UserId_NotEQ(val int) *__Like_Deleter {
+func (d *__Like_Deleter) UserId_NotEq(val int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -587,7 +587,7 @@ func (u *__Like_Deleter) TypeId_NotIn(ins []int) *__Like_Deleter {
 	return u
 }
 
-func (d *__Like_Deleter) TypeId_EQ(val int) *__Like_Deleter {
+func (d *__Like_Deleter) TypeId_Eq(val int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -598,7 +598,7 @@ func (d *__Like_Deleter) TypeId_EQ(val int) *__Like_Deleter {
 	return d
 }
 
-func (d *__Like_Deleter) TypeId_NotEQ(val int) *__Like_Deleter {
+func (d *__Like_Deleter) TypeId_NotEq(val int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -692,7 +692,7 @@ func (u *__Like_Deleter) CreatedTime_NotIn(ins []int) *__Like_Deleter {
 	return u
 }
 
-func (d *__Like_Deleter) CreatedTime_EQ(val int) *__Like_Deleter {
+func (d *__Like_Deleter) CreatedTime_Eq(val int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -703,7 +703,7 @@ func (d *__Like_Deleter) CreatedTime_EQ(val int) *__Like_Deleter {
 	return d
 }
 
-func (d *__Like_Deleter) CreatedTime_NotEQ(val int) *__Like_Deleter {
+func (d *__Like_Deleter) CreatedTime_NotEq(val int) *__Like_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -803,7 +803,7 @@ func (u *__Like_Updater) Id_NotIn(ins []int) *__Like_Updater {
 	return u
 }
 
-func (d *__Like_Updater) Id_EQ(val int) *__Like_Updater {
+func (d *__Like_Updater) Id_Eq(val int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -814,7 +814,7 @@ func (d *__Like_Updater) Id_EQ(val int) *__Like_Updater {
 	return d
 }
 
-func (d *__Like_Updater) Id_NotEQ(val int) *__Like_Updater {
+func (d *__Like_Updater) Id_NotEq(val int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -908,7 +908,7 @@ func (u *__Like_Updater) PostId_NotIn(ins []int) *__Like_Updater {
 	return u
 }
 
-func (d *__Like_Updater) PostId_EQ(val int) *__Like_Updater {
+func (d *__Like_Updater) PostId_Eq(val int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -919,7 +919,7 @@ func (d *__Like_Updater) PostId_EQ(val int) *__Like_Updater {
 	return d
 }
 
-func (d *__Like_Updater) PostId_NotEQ(val int) *__Like_Updater {
+func (d *__Like_Updater) PostId_NotEq(val int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1013,7 +1013,7 @@ func (u *__Like_Updater) UserId_NotIn(ins []int) *__Like_Updater {
 	return u
 }
 
-func (d *__Like_Updater) UserId_EQ(val int) *__Like_Updater {
+func (d *__Like_Updater) UserId_Eq(val int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1024,7 +1024,7 @@ func (d *__Like_Updater) UserId_EQ(val int) *__Like_Updater {
 	return d
 }
 
-func (d *__Like_Updater) UserId_NotEQ(val int) *__Like_Updater {
+func (d *__Like_Updater) UserId_NotEq(val int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1118,7 +1118,7 @@ func (u *__Like_Updater) TypeId_NotIn(ins []int) *__Like_Updater {
 	return u
 }
 
-func (d *__Like_Updater) TypeId_EQ(val int) *__Like_Updater {
+func (d *__Like_Updater) TypeId_Eq(val int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1129,7 +1129,7 @@ func (d *__Like_Updater) TypeId_EQ(val int) *__Like_Updater {
 	return d
 }
 
-func (d *__Like_Updater) TypeId_NotEQ(val int) *__Like_Updater {
+func (d *__Like_Updater) TypeId_NotEq(val int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1223,7 +1223,7 @@ func (u *__Like_Updater) CreatedTime_NotIn(ins []int) *__Like_Updater {
 	return u
 }
 
-func (d *__Like_Updater) CreatedTime_EQ(val int) *__Like_Updater {
+func (d *__Like_Updater) CreatedTime_Eq(val int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1234,7 +1234,7 @@ func (d *__Like_Updater) CreatedTime_EQ(val int) *__Like_Updater {
 	return d
 }
 
-func (d *__Like_Updater) CreatedTime_NotEQ(val int) *__Like_Updater {
+func (d *__Like_Updater) CreatedTime_NotEq(val int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1334,7 +1334,7 @@ func (u *__Like_Selector) Id_NotIn(ins []int) *__Like_Selector {
 	return u
 }
 
-func (d *__Like_Selector) Id_EQ(val int) *__Like_Selector {
+func (d *__Like_Selector) Id_Eq(val int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1345,7 +1345,7 @@ func (d *__Like_Selector) Id_EQ(val int) *__Like_Selector {
 	return d
 }
 
-func (d *__Like_Selector) Id_NotEQ(val int) *__Like_Selector {
+func (d *__Like_Selector) Id_NotEq(val int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1439,7 +1439,7 @@ func (u *__Like_Selector) PostId_NotIn(ins []int) *__Like_Selector {
 	return u
 }
 
-func (d *__Like_Selector) PostId_EQ(val int) *__Like_Selector {
+func (d *__Like_Selector) PostId_Eq(val int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1450,7 +1450,7 @@ func (d *__Like_Selector) PostId_EQ(val int) *__Like_Selector {
 	return d
 }
 
-func (d *__Like_Selector) PostId_NotEQ(val int) *__Like_Selector {
+func (d *__Like_Selector) PostId_NotEq(val int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1544,7 +1544,7 @@ func (u *__Like_Selector) UserId_NotIn(ins []int) *__Like_Selector {
 	return u
 }
 
-func (d *__Like_Selector) UserId_EQ(val int) *__Like_Selector {
+func (d *__Like_Selector) UserId_Eq(val int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1555,7 +1555,7 @@ func (d *__Like_Selector) UserId_EQ(val int) *__Like_Selector {
 	return d
 }
 
-func (d *__Like_Selector) UserId_NotEQ(val int) *__Like_Selector {
+func (d *__Like_Selector) UserId_NotEq(val int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1649,7 +1649,7 @@ func (u *__Like_Selector) TypeId_NotIn(ins []int) *__Like_Selector {
 	return u
 }
 
-func (d *__Like_Selector) TypeId_EQ(val int) *__Like_Selector {
+func (d *__Like_Selector) TypeId_Eq(val int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1660,7 +1660,7 @@ func (d *__Like_Selector) TypeId_EQ(val int) *__Like_Selector {
 	return d
 }
 
-func (d *__Like_Selector) TypeId_NotEQ(val int) *__Like_Selector {
+func (d *__Like_Selector) TypeId_NotEq(val int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1754,7 +1754,7 @@ func (u *__Like_Selector) CreatedTime_NotIn(ins []int) *__Like_Selector {
 	return u
 }
 
-func (d *__Like_Selector) CreatedTime_EQ(val int) *__Like_Selector {
+func (d *__Like_Selector) CreatedTime_Eq(val int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1765,7 +1765,7 @@ func (d *__Like_Selector) CreatedTime_EQ(val int) *__Like_Selector {
 	return d
 }
 
-func (d *__Like_Selector) CreatedTime_NotEQ(val int) *__Like_Selector {
+func (d *__Like_Selector) CreatedTime_NotEq(val int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2361,6 +2361,49 @@ func MassReplace_Like(rows []Like, db XODB) error {
 //
 
 //
+
+// LikesById retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'Id'.
+func LikesById(db XODB, id int) ([]*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Like{}
+	for q.Next() {
+		l := Like{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &l)
+	}
+
+	OnLike_LoadMany(res)
+
+	return res, nil
+}
 
 // LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
 //

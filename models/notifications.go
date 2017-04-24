@@ -38,10 +38,10 @@ func Notification_OnPostCommentedDeleted(comment *Comment, post *Post) {
 	}
 
 	row, err := NewNotification_Selector().
-		ForUserId_EQ(post.UserId).
-		ActorUserId_EQ(comment.UserId).
-		TargetId_EQ(comment.Id).
-		ActionTypeId_EQ(ACTION_TYPE_POST_COMMENTED).
+		ForUserId_Eq(post.UserId).
+		ActorUserId_Eq(comment.UserId).
+		TargetId_Eq(comment.Id).
+		ActionTypeId_Eq(ACTION_TYPE_POST_COMMENTED).
 		GetRow(base.DB)
 
 	if err == nil {
@@ -81,9 +81,9 @@ func Notification_OnFollowed(UserId, FollowedPeerUserId int) {
 
 func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
 	row, err := NewNotification_Selector().
-		ForUserId_EQ(FollowedPeerUserId).
-		ActorUserId_EQ(UserId).
-		ActionTypeId_EQ(ACTION_TYPE_FOLLOWED_USER).
+		ForUserId_Eq(FollowedPeerUserId).
+		ActorUserId_Eq(UserId).
+		ActionTypeId_Eq(ACTION_TYPE_FOLLOWED_USER).
 		GetRow(base.DB)
 
 	if err == nil {
@@ -131,14 +131,14 @@ func Notification_OnPostUnLiked(lk *Like) {
 		return
 	}
 
-	row, ok := NewNotification_Selector().
-		ForUserId_EQ(post.UserId).
-		ActorUserId_EQ(lk.UserId).
-		TargetId_EQ(lk.PostId).
-		ActionTypeId_EQ(ACTION_TYPE_POST_LIKED).
+	row, err := NewNotification_Selector().
+		ForUserId_Eq(post.UserId).
+		ActorUserId_Eq(lk.UserId).
+		TargetId_Eq(lk.PostId).
+		ActionTypeId_Eq(ACTION_TYPE_POST_LIKED).
 		GetRow(base.DB)
 
-	if ok == nil {
+	if err == nil {
 		nr := NotificationRemoved{
 			NotificationId: row.Id,
 			ForUserId:      post.UserId,
@@ -161,9 +161,9 @@ func Notification_PushToUserPipeRemoved(id int) {
 }
 
 func Notification_ListOfRemovedAndEmptyIt(UserId int) []int {
-	res, _ := NewNotificationRemoved_Selector().Select_NotificationId().ForUserId_EQ(UserId).GetIntSlice(base.DB)
+	res, _ := NewNotificationRemoved_Selector().Select_NotificationId().ForUserId_Eq(UserId).GetIntSlice(base.DB)
 	if res != nil && len(res) > 0 {
-		NewNotificationRemoved_Deleter().ForUserId_EQ(UserId).Delete(base.DB)
+		NewNotificationRemoved_Deleter().ForUserId_Eq(UserId).Delete(base.DB)
 	}
 	return res
 }
@@ -182,7 +182,7 @@ type NotifPayload struct {
 }
 
 func Notification_GetLastsViews(UserId, last int) (res []NotificationView) {
-	selector := NewNotification_Selector().ForUserId_EQ(UserId).Limit(100).OrderBy_Id_Desc()
+	selector := NewNotification_Selector().ForUserId_Eq(UserId).Limit(100).OrderBy_Id_Desc()
 	if last > 0 {
 		selector.Id_GT(last)
 	}

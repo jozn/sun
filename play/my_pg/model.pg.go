@@ -285,7 +285,7 @@ func (u *__Bench4_Deleter) Id_NotIn(ins []int) *__Bench4_Deleter {
 	return u
 }
 
-func (d *__Bench4_Deleter) Id_EQ(val int) *__Bench4_Deleter {
+func (d *__Bench4_Deleter) Id_Eq(val int) *__Bench4_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -377,7 +377,7 @@ func (u *__Bench4_Deleter) Time_NotIn(ins []int) *__Bench4_Deleter {
 	return u
 }
 
-func (d *__Bench4_Deleter) Time_EQ(val int) *__Bench4_Deleter {
+func (d *__Bench4_Deleter) Time_Eq(val int) *__Bench4_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -469,7 +469,7 @@ func (u *__Bench4_Deleter) Indexed_NotIn(ins []int) *__Bench4_Deleter {
 	return u
 }
 
-func (d *__Bench4_Deleter) Indexed_EQ(val int) *__Bench4_Deleter {
+func (d *__Bench4_Deleter) Indexed_Eq(val int) *__Bench4_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -567,7 +567,7 @@ func (u *__Bench4_Updater) Id_NotIn(ins []int) *__Bench4_Updater {
 	return u
 }
 
-func (d *__Bench4_Updater) Id_EQ(val int) *__Bench4_Updater {
+func (d *__Bench4_Updater) Id_Eq(val int) *__Bench4_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -659,7 +659,7 @@ func (u *__Bench4_Updater) Time_NotIn(ins []int) *__Bench4_Updater {
 	return u
 }
 
-func (d *__Bench4_Updater) Time_EQ(val int) *__Bench4_Updater {
+func (d *__Bench4_Updater) Time_Eq(val int) *__Bench4_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -751,7 +751,7 @@ func (u *__Bench4_Updater) Indexed_NotIn(ins []int) *__Bench4_Updater {
 	return u
 }
 
-func (d *__Bench4_Updater) Indexed_EQ(val int) *__Bench4_Updater {
+func (d *__Bench4_Updater) Indexed_Eq(val int) *__Bench4_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -849,7 +849,7 @@ func (u *__Bench4_Selector) Id_NotIn(ins []int) *__Bench4_Selector {
 	return u
 }
 
-func (d *__Bench4_Selector) Id_EQ(val int) *__Bench4_Selector {
+func (d *__Bench4_Selector) Id_Eq(val int) *__Bench4_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -941,7 +941,7 @@ func (u *__Bench4_Selector) Time_NotIn(ins []int) *__Bench4_Selector {
 	return u
 }
 
-func (d *__Bench4_Selector) Time_EQ(val int) *__Bench4_Selector {
+func (d *__Bench4_Selector) Time_Eq(val int) *__Bench4_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1033,7 +1033,7 @@ func (u *__Bench4_Selector) Indexed_NotIn(ins []int) *__Bench4_Selector {
 	return u
 }
 
-func (d *__Bench4_Selector) Indexed_EQ(val int) *__Bench4_Selector {
+func (d *__Bench4_Selector) Indexed_Eq(val int) *__Bench4_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1141,7 +1141,7 @@ func (u *__Bench4_Deleter) Text_Like(val string) *__Bench4_Deleter {
 	return u
 }
 
-func (d *__Bench4_Deleter) Text_EQ(val string) *__Bench4_Deleter {
+func (d *__Bench4_Deleter) Text_Eq(val string) *__Bench4_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1190,7 +1190,7 @@ func (u *__Bench4_Deleter) Name_Like(val string) *__Bench4_Deleter {
 	return u
 }
 
-func (d *__Bench4_Deleter) Name_EQ(val string) *__Bench4_Deleter {
+func (d *__Bench4_Deleter) Name_Eq(val string) *__Bench4_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1241,7 +1241,7 @@ func (u *__Bench4_Updater) Text_Like(val string) *__Bench4_Updater {
 	return u
 }
 
-func (d *__Bench4_Updater) Text_EQ(val string) *__Bench4_Updater {
+func (d *__Bench4_Updater) Text_Eq(val string) *__Bench4_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1290,7 +1290,7 @@ func (u *__Bench4_Updater) Name_Like(val string) *__Bench4_Updater {
 	return u
 }
 
-func (d *__Bench4_Updater) Name_EQ(val string) *__Bench4_Updater {
+func (d *__Bench4_Updater) Name_Eq(val string) *__Bench4_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1341,7 +1341,7 @@ func (u *__Bench4_Selector) Text_Like(val string) *__Bench4_Selector {
 	return u
 }
 
-func (d *__Bench4_Selector) Text_EQ(val string) *__Bench4_Selector {
+func (d *__Bench4_Selector) Text_Eq(val string) *__Bench4_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1390,7 +1390,7 @@ func (u *__Bench4_Selector) Name_Like(val string) *__Bench4_Selector {
 	return u
 }
 
-func (d *__Bench4_Selector) Name_EQ(val string) *__Bench4_Selector {
+func (d *__Bench4_Selector) Name_Eq(val string) *__Bench4_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2135,7 +2135,7 @@ func (u *__Tag_Deleter) Id_NotIn(ins []int) *__Tag_Deleter {
 	return u
 }
 
-func (d *__Tag_Deleter) Id_EQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) Id_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2227,7 +2227,7 @@ func (u *__Tag_Deleter) Count_NotIn(ins []int) *__Tag_Deleter {
 	return u
 }
 
-func (d *__Tag_Deleter) Count_EQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) Count_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2319,7 +2319,7 @@ func (u *__Tag_Deleter) IsBlocked_NotIn(ins []int) *__Tag_Deleter {
 	return u
 }
 
-func (d *__Tag_Deleter) IsBlocked_EQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) IsBlocked_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2411,7 +2411,7 @@ func (u *__Tag_Deleter) CreatedTime_NotIn(ins []int) *__Tag_Deleter {
 	return u
 }
 
-func (d *__Tag_Deleter) CreatedTime_EQ(val int) *__Tag_Deleter {
+func (d *__Tag_Deleter) CreatedTime_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2509,7 +2509,7 @@ func (u *__Tag_Updater) Id_NotIn(ins []int) *__Tag_Updater {
 	return u
 }
 
-func (d *__Tag_Updater) Id_EQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) Id_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2601,7 +2601,7 @@ func (u *__Tag_Updater) Count_NotIn(ins []int) *__Tag_Updater {
 	return u
 }
 
-func (d *__Tag_Updater) Count_EQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) Count_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2693,7 +2693,7 @@ func (u *__Tag_Updater) IsBlocked_NotIn(ins []int) *__Tag_Updater {
 	return u
 }
 
-func (d *__Tag_Updater) IsBlocked_EQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) IsBlocked_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2785,7 +2785,7 @@ func (u *__Tag_Updater) CreatedTime_NotIn(ins []int) *__Tag_Updater {
 	return u
 }
 
-func (d *__Tag_Updater) CreatedTime_EQ(val int) *__Tag_Updater {
+func (d *__Tag_Updater) CreatedTime_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2883,7 +2883,7 @@ func (u *__Tag_Selector) Id_NotIn(ins []int) *__Tag_Selector {
 	return u
 }
 
-func (d *__Tag_Selector) Id_EQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) Id_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2975,7 +2975,7 @@ func (u *__Tag_Selector) Count_NotIn(ins []int) *__Tag_Selector {
 	return u
 }
 
-func (d *__Tag_Selector) Count_EQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) Count_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3067,7 +3067,7 @@ func (u *__Tag_Selector) IsBlocked_NotIn(ins []int) *__Tag_Selector {
 	return u
 }
 
-func (d *__Tag_Selector) IsBlocked_EQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) IsBlocked_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3159,7 +3159,7 @@ func (u *__Tag_Selector) CreatedTime_NotIn(ins []int) *__Tag_Selector {
 	return u
 }
 
-func (d *__Tag_Selector) CreatedTime_EQ(val int) *__Tag_Selector {
+func (d *__Tag_Selector) CreatedTime_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3267,7 +3267,7 @@ func (u *__Tag_Deleter) Name_Like(val string) *__Tag_Deleter {
 	return u
 }
 
-func (d *__Tag_Deleter) Name_EQ(val string) *__Tag_Deleter {
+func (d *__Tag_Deleter) Name_Eq(val string) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3318,7 +3318,7 @@ func (u *__Tag_Updater) Name_Like(val string) *__Tag_Updater {
 	return u
 }
 
-func (d *__Tag_Updater) Name_EQ(val string) *__Tag_Updater {
+func (d *__Tag_Updater) Name_Eq(val string) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3369,7 +3369,7 @@ func (u *__Tag_Selector) Name_Like(val string) *__Tag_Selector {
 	return u
 }
 
-func (d *__Tag_Selector) Name_EQ(val string) *__Tag_Selector {
+func (d *__Tag_Selector) Name_Eq(val string) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)

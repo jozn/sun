@@ -274,7 +274,7 @@ func (u *__Media_Deleter) Id_NotIn(ins []int) *__Media_Deleter {
 	return u
 }
 
-func (d *__Media_Deleter) Id_EQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) Id_Eq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -285,7 +285,7 @@ func (d *__Media_Deleter) Id_EQ(val int) *__Media_Deleter {
 	return d
 }
 
-func (d *__Media_Deleter) Id_NotEQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) Id_NotEq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -379,7 +379,7 @@ func (u *__Media_Deleter) UserId_NotIn(ins []int) *__Media_Deleter {
 	return u
 }
 
-func (d *__Media_Deleter) UserId_EQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) UserId_Eq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -390,7 +390,7 @@ func (d *__Media_Deleter) UserId_EQ(val int) *__Media_Deleter {
 	return d
 }
 
-func (d *__Media_Deleter) UserId_NotEQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) UserId_NotEq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -484,7 +484,7 @@ func (u *__Media_Deleter) PostId_NotIn(ins []int) *__Media_Deleter {
 	return u
 }
 
-func (d *__Media_Deleter) PostId_EQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) PostId_Eq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -495,7 +495,7 @@ func (d *__Media_Deleter) PostId_EQ(val int) *__Media_Deleter {
 	return d
 }
 
-func (d *__Media_Deleter) PostId_NotEQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) PostId_NotEq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -589,7 +589,7 @@ func (u *__Media_Deleter) AlbumId_NotIn(ins []int) *__Media_Deleter {
 	return u
 }
 
-func (d *__Media_Deleter) AlbumId_EQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) AlbumId_Eq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -600,7 +600,7 @@ func (d *__Media_Deleter) AlbumId_EQ(val int) *__Media_Deleter {
 	return d
 }
 
-func (d *__Media_Deleter) AlbumId_NotEQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) AlbumId_NotEq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -694,7 +694,7 @@ func (u *__Media_Deleter) TypeId_NotIn(ins []int) *__Media_Deleter {
 	return u
 }
 
-func (d *__Media_Deleter) TypeId_EQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) TypeId_Eq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -705,7 +705,7 @@ func (d *__Media_Deleter) TypeId_EQ(val int) *__Media_Deleter {
 	return d
 }
 
-func (d *__Media_Deleter) TypeId_NotEQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) TypeId_NotEq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -799,7 +799,7 @@ func (u *__Media_Deleter) CreatedTime_NotIn(ins []int) *__Media_Deleter {
 	return u
 }
 
-func (d *__Media_Deleter) CreatedTime_EQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) CreatedTime_Eq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -810,7 +810,7 @@ func (d *__Media_Deleter) CreatedTime_EQ(val int) *__Media_Deleter {
 	return d
 }
 
-func (d *__Media_Deleter) CreatedTime_NotEQ(val int) *__Media_Deleter {
+func (d *__Media_Deleter) CreatedTime_NotEq(val int) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -910,7 +910,7 @@ func (u *__Media_Updater) Id_NotIn(ins []int) *__Media_Updater {
 	return u
 }
 
-func (d *__Media_Updater) Id_EQ(val int) *__Media_Updater {
+func (d *__Media_Updater) Id_Eq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -921,7 +921,7 @@ func (d *__Media_Updater) Id_EQ(val int) *__Media_Updater {
 	return d
 }
 
-func (d *__Media_Updater) Id_NotEQ(val int) *__Media_Updater {
+func (d *__Media_Updater) Id_NotEq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1015,7 +1015,7 @@ func (u *__Media_Updater) UserId_NotIn(ins []int) *__Media_Updater {
 	return u
 }
 
-func (d *__Media_Updater) UserId_EQ(val int) *__Media_Updater {
+func (d *__Media_Updater) UserId_Eq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1026,7 +1026,7 @@ func (d *__Media_Updater) UserId_EQ(val int) *__Media_Updater {
 	return d
 }
 
-func (d *__Media_Updater) UserId_NotEQ(val int) *__Media_Updater {
+func (d *__Media_Updater) UserId_NotEq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1120,7 +1120,7 @@ func (u *__Media_Updater) PostId_NotIn(ins []int) *__Media_Updater {
 	return u
 }
 
-func (d *__Media_Updater) PostId_EQ(val int) *__Media_Updater {
+func (d *__Media_Updater) PostId_Eq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1131,7 +1131,7 @@ func (d *__Media_Updater) PostId_EQ(val int) *__Media_Updater {
 	return d
 }
 
-func (d *__Media_Updater) PostId_NotEQ(val int) *__Media_Updater {
+func (d *__Media_Updater) PostId_NotEq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1225,7 +1225,7 @@ func (u *__Media_Updater) AlbumId_NotIn(ins []int) *__Media_Updater {
 	return u
 }
 
-func (d *__Media_Updater) AlbumId_EQ(val int) *__Media_Updater {
+func (d *__Media_Updater) AlbumId_Eq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1236,7 +1236,7 @@ func (d *__Media_Updater) AlbumId_EQ(val int) *__Media_Updater {
 	return d
 }
 
-func (d *__Media_Updater) AlbumId_NotEQ(val int) *__Media_Updater {
+func (d *__Media_Updater) AlbumId_NotEq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1330,7 +1330,7 @@ func (u *__Media_Updater) TypeId_NotIn(ins []int) *__Media_Updater {
 	return u
 }
 
-func (d *__Media_Updater) TypeId_EQ(val int) *__Media_Updater {
+func (d *__Media_Updater) TypeId_Eq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1341,7 +1341,7 @@ func (d *__Media_Updater) TypeId_EQ(val int) *__Media_Updater {
 	return d
 }
 
-func (d *__Media_Updater) TypeId_NotEQ(val int) *__Media_Updater {
+func (d *__Media_Updater) TypeId_NotEq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1435,7 +1435,7 @@ func (u *__Media_Updater) CreatedTime_NotIn(ins []int) *__Media_Updater {
 	return u
 }
 
-func (d *__Media_Updater) CreatedTime_EQ(val int) *__Media_Updater {
+func (d *__Media_Updater) CreatedTime_Eq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1446,7 +1446,7 @@ func (d *__Media_Updater) CreatedTime_EQ(val int) *__Media_Updater {
 	return d
 }
 
-func (d *__Media_Updater) CreatedTime_NotEQ(val int) *__Media_Updater {
+func (d *__Media_Updater) CreatedTime_NotEq(val int) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1546,7 +1546,7 @@ func (u *__Media_Selector) Id_NotIn(ins []int) *__Media_Selector {
 	return u
 }
 
-func (d *__Media_Selector) Id_EQ(val int) *__Media_Selector {
+func (d *__Media_Selector) Id_Eq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1557,7 +1557,7 @@ func (d *__Media_Selector) Id_EQ(val int) *__Media_Selector {
 	return d
 }
 
-func (d *__Media_Selector) Id_NotEQ(val int) *__Media_Selector {
+func (d *__Media_Selector) Id_NotEq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1651,7 +1651,7 @@ func (u *__Media_Selector) UserId_NotIn(ins []int) *__Media_Selector {
 	return u
 }
 
-func (d *__Media_Selector) UserId_EQ(val int) *__Media_Selector {
+func (d *__Media_Selector) UserId_Eq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1662,7 +1662,7 @@ func (d *__Media_Selector) UserId_EQ(val int) *__Media_Selector {
 	return d
 }
 
-func (d *__Media_Selector) UserId_NotEQ(val int) *__Media_Selector {
+func (d *__Media_Selector) UserId_NotEq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1756,7 +1756,7 @@ func (u *__Media_Selector) PostId_NotIn(ins []int) *__Media_Selector {
 	return u
 }
 
-func (d *__Media_Selector) PostId_EQ(val int) *__Media_Selector {
+func (d *__Media_Selector) PostId_Eq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1767,7 +1767,7 @@ func (d *__Media_Selector) PostId_EQ(val int) *__Media_Selector {
 	return d
 }
 
-func (d *__Media_Selector) PostId_NotEQ(val int) *__Media_Selector {
+func (d *__Media_Selector) PostId_NotEq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1861,7 +1861,7 @@ func (u *__Media_Selector) AlbumId_NotIn(ins []int) *__Media_Selector {
 	return u
 }
 
-func (d *__Media_Selector) AlbumId_EQ(val int) *__Media_Selector {
+func (d *__Media_Selector) AlbumId_Eq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1872,7 +1872,7 @@ func (d *__Media_Selector) AlbumId_EQ(val int) *__Media_Selector {
 	return d
 }
 
-func (d *__Media_Selector) AlbumId_NotEQ(val int) *__Media_Selector {
+func (d *__Media_Selector) AlbumId_NotEq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1966,7 +1966,7 @@ func (u *__Media_Selector) TypeId_NotIn(ins []int) *__Media_Selector {
 	return u
 }
 
-func (d *__Media_Selector) TypeId_EQ(val int) *__Media_Selector {
+func (d *__Media_Selector) TypeId_Eq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1977,7 +1977,7 @@ func (d *__Media_Selector) TypeId_EQ(val int) *__Media_Selector {
 	return d
 }
 
-func (d *__Media_Selector) TypeId_NotEQ(val int) *__Media_Selector {
+func (d *__Media_Selector) TypeId_NotEq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2071,7 +2071,7 @@ func (u *__Media_Selector) CreatedTime_NotIn(ins []int) *__Media_Selector {
 	return u
 }
 
-func (d *__Media_Selector) CreatedTime_EQ(val int) *__Media_Selector {
+func (d *__Media_Selector) CreatedTime_Eq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2082,7 +2082,7 @@ func (d *__Media_Selector) CreatedTime_EQ(val int) *__Media_Selector {
 	return d
 }
 
-func (d *__Media_Selector) CreatedTime_NotEQ(val int) *__Media_Selector {
+func (d *__Media_Selector) CreatedTime_NotEq(val int) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2179,12 +2179,23 @@ func (u *__Media_Deleter) Src_Like(val string) *__Media_Deleter {
 	return u
 }
 
-func (d *__Media_Deleter) Src_EQ(val string) *__Media_Deleter {
+func (d *__Media_Deleter) Src_Eq(val string) *__Media_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Src = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Deleter) Src_NotEq(val string) *__Media_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Src != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2230,12 +2241,23 @@ func (u *__Media_Updater) Src_Like(val string) *__Media_Updater {
 	return u
 }
 
-func (d *__Media_Updater) Src_EQ(val string) *__Media_Updater {
+func (d *__Media_Updater) Src_Eq(val string) *__Media_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Src = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Updater) Src_NotEq(val string) *__Media_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Src != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2281,12 +2303,23 @@ func (u *__Media_Selector) Src_Like(val string) *__Media_Selector {
 	return u
 }
 
-func (d *__Media_Selector) Src_EQ(val string) *__Media_Selector {
+func (d *__Media_Selector) Src_Eq(val string) *__Media_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Src = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Media_Selector) Src_NotEq(val string) *__Media_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Src != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d

@@ -287,7 +287,7 @@ func (u *__Photo_Deleter) PhotoId_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) PhotoId_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) PhotoId_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -298,7 +298,7 @@ func (d *__Photo_Deleter) PhotoId_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) PhotoId_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) PhotoId_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -392,7 +392,7 @@ func (u *__Photo_Deleter) UserId_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) UserId_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) UserId_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -403,7 +403,7 @@ func (d *__Photo_Deleter) UserId_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) UserId_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) UserId_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -497,7 +497,7 @@ func (u *__Photo_Deleter) PostId_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) PostId_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) PostId_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -508,7 +508,7 @@ func (d *__Photo_Deleter) PostId_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) PostId_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) PostId_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -602,7 +602,7 @@ func (u *__Photo_Deleter) AlbumId_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) AlbumId_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) AlbumId_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -613,7 +613,7 @@ func (d *__Photo_Deleter) AlbumId_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) AlbumId_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) AlbumId_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -707,7 +707,7 @@ func (u *__Photo_Deleter) ImageTypeId_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) ImageTypeId_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) ImageTypeId_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -718,7 +718,7 @@ func (d *__Photo_Deleter) ImageTypeId_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) ImageTypeId_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) ImageTypeId_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -812,7 +812,7 @@ func (u *__Photo_Deleter) BucketId_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) BucketId_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) BucketId_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -823,7 +823,7 @@ func (d *__Photo_Deleter) BucketId_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) BucketId_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) BucketId_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -917,7 +917,7 @@ func (u *__Photo_Deleter) Width_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) Width_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) Width_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -928,7 +928,7 @@ func (d *__Photo_Deleter) Width_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) Width_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) Width_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1022,7 +1022,7 @@ func (u *__Photo_Deleter) Height_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) Height_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) Height_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1033,7 +1033,7 @@ func (d *__Photo_Deleter) Height_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) Height_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) Height_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1127,7 +1127,7 @@ func (u *__Photo_Deleter) CreatedTime_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) CreatedTime_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) CreatedTime_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1138,7 +1138,7 @@ func (d *__Photo_Deleter) CreatedTime_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) CreatedTime_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) CreatedTime_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1232,7 +1232,7 @@ func (u *__Photo_Deleter) W1080_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) W1080_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W1080_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1243,7 +1243,7 @@ func (d *__Photo_Deleter) W1080_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) W1080_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W1080_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1337,7 +1337,7 @@ func (u *__Photo_Deleter) W720_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) W720_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W720_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1348,7 +1348,7 @@ func (d *__Photo_Deleter) W720_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) W720_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W720_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1442,7 +1442,7 @@ func (u *__Photo_Deleter) W480_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) W480_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W480_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1453,7 +1453,7 @@ func (d *__Photo_Deleter) W480_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) W480_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W480_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1547,7 +1547,7 @@ func (u *__Photo_Deleter) W320_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) W320_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W320_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1558,7 +1558,7 @@ func (d *__Photo_Deleter) W320_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) W320_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W320_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1652,7 +1652,7 @@ func (u *__Photo_Deleter) W160_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) W160_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W160_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1663,7 +1663,7 @@ func (d *__Photo_Deleter) W160_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) W160_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W160_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1757,7 +1757,7 @@ func (u *__Photo_Deleter) W80_NotIn(ins []int) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) W80_EQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W80_Eq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1768,7 +1768,7 @@ func (d *__Photo_Deleter) W80_EQ(val int) *__Photo_Deleter {
 	return d
 }
 
-func (d *__Photo_Deleter) W80_NotEQ(val int) *__Photo_Deleter {
+func (d *__Photo_Deleter) W80_NotEq(val int) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1868,7 +1868,7 @@ func (u *__Photo_Updater) PhotoId_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) PhotoId_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) PhotoId_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1879,7 +1879,7 @@ func (d *__Photo_Updater) PhotoId_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) PhotoId_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) PhotoId_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1973,7 +1973,7 @@ func (u *__Photo_Updater) UserId_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) UserId_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) UserId_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1984,7 +1984,7 @@ func (d *__Photo_Updater) UserId_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) UserId_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) UserId_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2078,7 +2078,7 @@ func (u *__Photo_Updater) PostId_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) PostId_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) PostId_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2089,7 +2089,7 @@ func (d *__Photo_Updater) PostId_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) PostId_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) PostId_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2183,7 +2183,7 @@ func (u *__Photo_Updater) AlbumId_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) AlbumId_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) AlbumId_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2194,7 +2194,7 @@ func (d *__Photo_Updater) AlbumId_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) AlbumId_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) AlbumId_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2288,7 +2288,7 @@ func (u *__Photo_Updater) ImageTypeId_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) ImageTypeId_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) ImageTypeId_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2299,7 +2299,7 @@ func (d *__Photo_Updater) ImageTypeId_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) ImageTypeId_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) ImageTypeId_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2393,7 +2393,7 @@ func (u *__Photo_Updater) BucketId_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) BucketId_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) BucketId_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2404,7 +2404,7 @@ func (d *__Photo_Updater) BucketId_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) BucketId_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) BucketId_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2498,7 +2498,7 @@ func (u *__Photo_Updater) Width_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) Width_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) Width_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2509,7 +2509,7 @@ func (d *__Photo_Updater) Width_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) Width_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) Width_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2603,7 +2603,7 @@ func (u *__Photo_Updater) Height_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) Height_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) Height_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2614,7 +2614,7 @@ func (d *__Photo_Updater) Height_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) Height_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) Height_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2708,7 +2708,7 @@ func (u *__Photo_Updater) CreatedTime_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) CreatedTime_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) CreatedTime_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2719,7 +2719,7 @@ func (d *__Photo_Updater) CreatedTime_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) CreatedTime_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) CreatedTime_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2813,7 +2813,7 @@ func (u *__Photo_Updater) W1080_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) W1080_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W1080_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2824,7 +2824,7 @@ func (d *__Photo_Updater) W1080_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) W1080_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W1080_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2918,7 +2918,7 @@ func (u *__Photo_Updater) W720_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) W720_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W720_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2929,7 +2929,7 @@ func (d *__Photo_Updater) W720_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) W720_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W720_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3023,7 +3023,7 @@ func (u *__Photo_Updater) W480_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) W480_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W480_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3034,7 +3034,7 @@ func (d *__Photo_Updater) W480_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) W480_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W480_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3128,7 +3128,7 @@ func (u *__Photo_Updater) W320_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) W320_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W320_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3139,7 +3139,7 @@ func (d *__Photo_Updater) W320_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) W320_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W320_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3233,7 +3233,7 @@ func (u *__Photo_Updater) W160_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) W160_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W160_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3244,7 +3244,7 @@ func (d *__Photo_Updater) W160_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) W160_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W160_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3338,7 +3338,7 @@ func (u *__Photo_Updater) W80_NotIn(ins []int) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) W80_EQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W80_Eq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3349,7 +3349,7 @@ func (d *__Photo_Updater) W80_EQ(val int) *__Photo_Updater {
 	return d
 }
 
-func (d *__Photo_Updater) W80_NotEQ(val int) *__Photo_Updater {
+func (d *__Photo_Updater) W80_NotEq(val int) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3449,7 +3449,7 @@ func (u *__Photo_Selector) PhotoId_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) PhotoId_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) PhotoId_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3460,7 +3460,7 @@ func (d *__Photo_Selector) PhotoId_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) PhotoId_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) PhotoId_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3554,7 +3554,7 @@ func (u *__Photo_Selector) UserId_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) UserId_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) UserId_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3565,7 +3565,7 @@ func (d *__Photo_Selector) UserId_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) UserId_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) UserId_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3659,7 +3659,7 @@ func (u *__Photo_Selector) PostId_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) PostId_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) PostId_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3670,7 +3670,7 @@ func (d *__Photo_Selector) PostId_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) PostId_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) PostId_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3764,7 +3764,7 @@ func (u *__Photo_Selector) AlbumId_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) AlbumId_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) AlbumId_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3775,7 +3775,7 @@ func (d *__Photo_Selector) AlbumId_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) AlbumId_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) AlbumId_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3869,7 +3869,7 @@ func (u *__Photo_Selector) ImageTypeId_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) ImageTypeId_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) ImageTypeId_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3880,7 +3880,7 @@ func (d *__Photo_Selector) ImageTypeId_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) ImageTypeId_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) ImageTypeId_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3974,7 +3974,7 @@ func (u *__Photo_Selector) BucketId_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) BucketId_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) BucketId_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3985,7 +3985,7 @@ func (d *__Photo_Selector) BucketId_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) BucketId_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) BucketId_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4079,7 +4079,7 @@ func (u *__Photo_Selector) Width_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) Width_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) Width_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4090,7 +4090,7 @@ func (d *__Photo_Selector) Width_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) Width_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) Width_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4184,7 +4184,7 @@ func (u *__Photo_Selector) Height_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) Height_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) Height_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4195,7 +4195,7 @@ func (d *__Photo_Selector) Height_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) Height_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) Height_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4289,7 +4289,7 @@ func (u *__Photo_Selector) CreatedTime_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) CreatedTime_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) CreatedTime_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4300,7 +4300,7 @@ func (d *__Photo_Selector) CreatedTime_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) CreatedTime_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) CreatedTime_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4394,7 +4394,7 @@ func (u *__Photo_Selector) W1080_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) W1080_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W1080_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4405,7 +4405,7 @@ func (d *__Photo_Selector) W1080_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) W1080_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W1080_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4499,7 +4499,7 @@ func (u *__Photo_Selector) W720_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) W720_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W720_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4510,7 +4510,7 @@ func (d *__Photo_Selector) W720_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) W720_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W720_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4604,7 +4604,7 @@ func (u *__Photo_Selector) W480_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) W480_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W480_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4615,7 +4615,7 @@ func (d *__Photo_Selector) W480_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) W480_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W480_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4709,7 +4709,7 @@ func (u *__Photo_Selector) W320_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) W320_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W320_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4720,7 +4720,7 @@ func (d *__Photo_Selector) W320_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) W320_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W320_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4814,7 +4814,7 @@ func (u *__Photo_Selector) W160_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) W160_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W160_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4825,7 +4825,7 @@ func (d *__Photo_Selector) W160_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) W160_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W160_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4919,7 +4919,7 @@ func (u *__Photo_Selector) W80_NotIn(ins []int) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) W80_EQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W80_Eq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -4930,7 +4930,7 @@ func (d *__Photo_Selector) W80_EQ(val int) *__Photo_Selector {
 	return d
 }
 
-func (d *__Photo_Selector) W80_NotEQ(val int) *__Photo_Selector {
+func (d *__Photo_Selector) W80_NotEq(val int) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -5027,12 +5027,23 @@ func (u *__Photo_Deleter) Title_Like(val string) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) Title_EQ(val string) *__Photo_Deleter {
+func (d *__Photo_Deleter) Title_Eq(val string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Title = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) Title_NotEq(val string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Title != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5076,12 +5087,23 @@ func (u *__Photo_Deleter) Src_Like(val string) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) Src_EQ(val string) *__Photo_Deleter {
+func (d *__Photo_Deleter) Src_Eq(val string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Src = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) Src_NotEq(val string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Src != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5125,12 +5147,23 @@ func (u *__Photo_Deleter) PathSrc_Like(val string) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) PathSrc_EQ(val string) *__Photo_Deleter {
+func (d *__Photo_Deleter) PathSrc_Eq(val string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " PathSrc = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) PathSrc_NotEq(val string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PathSrc != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5174,12 +5207,23 @@ func (u *__Photo_Deleter) HashMd5_Like(val string) *__Photo_Deleter {
 	return u
 }
 
-func (d *__Photo_Deleter) HashMd5_EQ(val string) *__Photo_Deleter {
+func (d *__Photo_Deleter) HashMd5_Eq(val string) *__Photo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " HashMd5 = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) HashMd5_NotEq(val string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashMd5 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5225,12 +5269,23 @@ func (u *__Photo_Updater) Title_Like(val string) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) Title_EQ(val string) *__Photo_Updater {
+func (d *__Photo_Updater) Title_Eq(val string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Title = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) Title_NotEq(val string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Title != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5274,12 +5329,23 @@ func (u *__Photo_Updater) Src_Like(val string) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) Src_EQ(val string) *__Photo_Updater {
+func (d *__Photo_Updater) Src_Eq(val string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Src = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) Src_NotEq(val string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Src != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5323,12 +5389,23 @@ func (u *__Photo_Updater) PathSrc_Like(val string) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) PathSrc_EQ(val string) *__Photo_Updater {
+func (d *__Photo_Updater) PathSrc_Eq(val string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " PathSrc = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) PathSrc_NotEq(val string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PathSrc != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5372,12 +5449,23 @@ func (u *__Photo_Updater) HashMd5_Like(val string) *__Photo_Updater {
 	return u
 }
 
-func (d *__Photo_Updater) HashMd5_EQ(val string) *__Photo_Updater {
+func (d *__Photo_Updater) HashMd5_Eq(val string) *__Photo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " HashMd5 = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) HashMd5_NotEq(val string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashMd5 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5423,12 +5511,23 @@ func (u *__Photo_Selector) Title_Like(val string) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) Title_EQ(val string) *__Photo_Selector {
+func (d *__Photo_Selector) Title_Eq(val string) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Title = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) Title_NotEq(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Title != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5472,12 +5571,23 @@ func (u *__Photo_Selector) Src_Like(val string) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) Src_EQ(val string) *__Photo_Selector {
+func (d *__Photo_Selector) Src_Eq(val string) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Src = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) Src_NotEq(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Src != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5521,12 +5631,23 @@ func (u *__Photo_Selector) PathSrc_Like(val string) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) PathSrc_EQ(val string) *__Photo_Selector {
+func (d *__Photo_Selector) PathSrc_Eq(val string) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " PathSrc = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) PathSrc_NotEq(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PathSrc != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5570,12 +5691,23 @@ func (u *__Photo_Selector) HashMd5_Like(val string) *__Photo_Selector {
 	return u
 }
 
-func (d *__Photo_Selector) HashMd5_EQ(val string) *__Photo_Selector {
+func (d *__Photo_Selector) HashMd5_Eq(val string) *__Photo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " HashMd5 = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) HashMd5_NotEq(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashMd5 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d

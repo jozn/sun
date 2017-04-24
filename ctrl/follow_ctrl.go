@@ -69,7 +69,7 @@ func GetFollowersListAction(c *base.Action) base.AppErr {
 
 	selector := models.NewFollowingListMember_Selector().
 		Select_UserId().
-		FollowedUserId_EQ(peer_id).
+		FollowedUserId_Eq(peer_id).
 		OrderBy_Id_Desc().
 		Limit(limit)
 
@@ -120,7 +120,7 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
 
 	selector := models.NewFollowingListMember_Selector().
 		Select_FollowedUserId().
-		UserId_EQ(peer_id).
+		UserId_Eq(peer_id).
 		OrderBy_Id_Desc().
 		Limit(limit)
 

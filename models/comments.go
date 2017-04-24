@@ -30,7 +30,7 @@ func Comment_Add(UserId, PostId int, Text string) Comment {
 func Comment_Delete(UserId, PostId, CommentId int) bool {
 	post, _ := Store.GetPostById(PostId)
 
-	com, err := NewComment_Selector().Id_EQ(CommentId).UserId_EQ(UserId).PostId_EQ(PostId).GetRow(base.DB)
+	com, err := NewComment_Selector().Id_Eq(CommentId).UserId_Eq(UserId).PostId_Eq(PostId).GetRow(base.DB)
 	if err != nil {
 		com.Delete(base.DB)
 		Counter.IncerPostCommentsCount(PostId, -1)

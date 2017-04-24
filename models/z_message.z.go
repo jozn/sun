@@ -274,7 +274,7 @@ func (u *__Message_Deleter) Id_NotIn(ins []int) *__Message_Deleter {
 	return u
 }
 
-func (d *__Message_Deleter) Id_EQ(val int) *__Message_Deleter {
+func (d *__Message_Deleter) Id_Eq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -285,7 +285,7 @@ func (d *__Message_Deleter) Id_EQ(val int) *__Message_Deleter {
 	return d
 }
 
-func (d *__Message_Deleter) Id_NotEQ(val int) *__Message_Deleter {
+func (d *__Message_Deleter) Id_NotEq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -379,7 +379,7 @@ func (u *__Message_Deleter) ToUserId_NotIn(ins []int) *__Message_Deleter {
 	return u
 }
 
-func (d *__Message_Deleter) ToUserId_EQ(val int) *__Message_Deleter {
+func (d *__Message_Deleter) ToUserId_Eq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -390,7 +390,7 @@ func (d *__Message_Deleter) ToUserId_EQ(val int) *__Message_Deleter {
 	return d
 }
 
-func (d *__Message_Deleter) ToUserId_NotEQ(val int) *__Message_Deleter {
+func (d *__Message_Deleter) ToUserId_NotEq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -484,7 +484,7 @@ func (u *__Message_Deleter) FromUserID_NotIn(ins []int) *__Message_Deleter {
 	return u
 }
 
-func (d *__Message_Deleter) FromUserID_EQ(val int) *__Message_Deleter {
+func (d *__Message_Deleter) FromUserID_Eq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -495,7 +495,7 @@ func (d *__Message_Deleter) FromUserID_EQ(val int) *__Message_Deleter {
 	return d
 }
 
-func (d *__Message_Deleter) FromUserID_NotEQ(val int) *__Message_Deleter {
+func (d *__Message_Deleter) FromUserID_NotEq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -589,7 +589,7 @@ func (u *__Message_Deleter) TimeMs_NotIn(ins []int) *__Message_Deleter {
 	return u
 }
 
-func (d *__Message_Deleter) TimeMs_EQ(val int) *__Message_Deleter {
+func (d *__Message_Deleter) TimeMs_Eq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -600,7 +600,7 @@ func (d *__Message_Deleter) TimeMs_EQ(val int) *__Message_Deleter {
 	return d
 }
 
-func (d *__Message_Deleter) TimeMs_NotEQ(val int) *__Message_Deleter {
+func (d *__Message_Deleter) TimeMs_NotEq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -700,7 +700,7 @@ func (u *__Message_Updater) Id_NotIn(ins []int) *__Message_Updater {
 	return u
 }
 
-func (d *__Message_Updater) Id_EQ(val int) *__Message_Updater {
+func (d *__Message_Updater) Id_Eq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -711,7 +711,7 @@ func (d *__Message_Updater) Id_EQ(val int) *__Message_Updater {
 	return d
 }
 
-func (d *__Message_Updater) Id_NotEQ(val int) *__Message_Updater {
+func (d *__Message_Updater) Id_NotEq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -805,7 +805,7 @@ func (u *__Message_Updater) ToUserId_NotIn(ins []int) *__Message_Updater {
 	return u
 }
 
-func (d *__Message_Updater) ToUserId_EQ(val int) *__Message_Updater {
+func (d *__Message_Updater) ToUserId_Eq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -816,7 +816,7 @@ func (d *__Message_Updater) ToUserId_EQ(val int) *__Message_Updater {
 	return d
 }
 
-func (d *__Message_Updater) ToUserId_NotEQ(val int) *__Message_Updater {
+func (d *__Message_Updater) ToUserId_NotEq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -910,7 +910,7 @@ func (u *__Message_Updater) FromUserID_NotIn(ins []int) *__Message_Updater {
 	return u
 }
 
-func (d *__Message_Updater) FromUserID_EQ(val int) *__Message_Updater {
+func (d *__Message_Updater) FromUserID_Eq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -921,7 +921,7 @@ func (d *__Message_Updater) FromUserID_EQ(val int) *__Message_Updater {
 	return d
 }
 
-func (d *__Message_Updater) FromUserID_NotEQ(val int) *__Message_Updater {
+func (d *__Message_Updater) FromUserID_NotEq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1015,7 +1015,7 @@ func (u *__Message_Updater) TimeMs_NotIn(ins []int) *__Message_Updater {
 	return u
 }
 
-func (d *__Message_Updater) TimeMs_EQ(val int) *__Message_Updater {
+func (d *__Message_Updater) TimeMs_Eq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1026,7 +1026,7 @@ func (d *__Message_Updater) TimeMs_EQ(val int) *__Message_Updater {
 	return d
 }
 
-func (d *__Message_Updater) TimeMs_NotEQ(val int) *__Message_Updater {
+func (d *__Message_Updater) TimeMs_NotEq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1126,7 +1126,7 @@ func (u *__Message_Selector) Id_NotIn(ins []int) *__Message_Selector {
 	return u
 }
 
-func (d *__Message_Selector) Id_EQ(val int) *__Message_Selector {
+func (d *__Message_Selector) Id_Eq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1137,7 +1137,7 @@ func (d *__Message_Selector) Id_EQ(val int) *__Message_Selector {
 	return d
 }
 
-func (d *__Message_Selector) Id_NotEQ(val int) *__Message_Selector {
+func (d *__Message_Selector) Id_NotEq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1231,7 +1231,7 @@ func (u *__Message_Selector) ToUserId_NotIn(ins []int) *__Message_Selector {
 	return u
 }
 
-func (d *__Message_Selector) ToUserId_EQ(val int) *__Message_Selector {
+func (d *__Message_Selector) ToUserId_Eq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1242,7 +1242,7 @@ func (d *__Message_Selector) ToUserId_EQ(val int) *__Message_Selector {
 	return d
 }
 
-func (d *__Message_Selector) ToUserId_NotEQ(val int) *__Message_Selector {
+func (d *__Message_Selector) ToUserId_NotEq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1336,7 +1336,7 @@ func (u *__Message_Selector) FromUserID_NotIn(ins []int) *__Message_Selector {
 	return u
 }
 
-func (d *__Message_Selector) FromUserID_EQ(val int) *__Message_Selector {
+func (d *__Message_Selector) FromUserID_Eq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1347,7 +1347,7 @@ func (d *__Message_Selector) FromUserID_EQ(val int) *__Message_Selector {
 	return d
 }
 
-func (d *__Message_Selector) FromUserID_NotEQ(val int) *__Message_Selector {
+func (d *__Message_Selector) FromUserID_NotEq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1441,7 +1441,7 @@ func (u *__Message_Selector) TimeMs_NotIn(ins []int) *__Message_Selector {
 	return u
 }
 
-func (d *__Message_Selector) TimeMs_EQ(val int) *__Message_Selector {
+func (d *__Message_Selector) TimeMs_Eq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1452,7 +1452,7 @@ func (d *__Message_Selector) TimeMs_EQ(val int) *__Message_Selector {
 	return d
 }
 
-func (d *__Message_Selector) TimeMs_NotEQ(val int) *__Message_Selector {
+func (d *__Message_Selector) TimeMs_NotEq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1549,12 +1549,23 @@ func (u *__Message_Deleter) RoomKey_Like(val string) *__Message_Deleter {
 	return u
 }
 
-func (d *__Message_Deleter) RoomKey_EQ(val string) *__Message_Deleter {
+func (d *__Message_Deleter) RoomKey_Eq(val string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) RoomKey_NotEq(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1598,12 +1609,23 @@ func (u *__Message_Deleter) MessageKey_Like(val string) *__Message_Deleter {
 	return u
 }
 
-func (d *__Message_Deleter) MessageKey_EQ(val string) *__Message_Deleter {
+func (d *__Message_Deleter) MessageKey_Eq(val string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MessageKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) MessageKey_NotEq(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1647,12 +1669,23 @@ func (u *__Message_Deleter) Data_Like(val string) *__Message_Deleter {
 	return u
 }
 
-func (d *__Message_Deleter) Data_EQ(val string) *__Message_Deleter {
+func (d *__Message_Deleter) Data_Eq(val string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Data = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Data_NotEq(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1698,12 +1731,23 @@ func (u *__Message_Updater) RoomKey_Like(val string) *__Message_Updater {
 	return u
 }
 
-func (d *__Message_Updater) RoomKey_EQ(val string) *__Message_Updater {
+func (d *__Message_Updater) RoomKey_Eq(val string) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) RoomKey_NotEq(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1747,12 +1791,23 @@ func (u *__Message_Updater) MessageKey_Like(val string) *__Message_Updater {
 	return u
 }
 
-func (d *__Message_Updater) MessageKey_EQ(val string) *__Message_Updater {
+func (d *__Message_Updater) MessageKey_Eq(val string) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MessageKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) MessageKey_NotEq(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1796,12 +1851,23 @@ func (u *__Message_Updater) Data_Like(val string) *__Message_Updater {
 	return u
 }
 
-func (d *__Message_Updater) Data_EQ(val string) *__Message_Updater {
+func (d *__Message_Updater) Data_Eq(val string) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Data = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Data_NotEq(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1847,12 +1913,23 @@ func (u *__Message_Selector) RoomKey_Like(val string) *__Message_Selector {
 	return u
 }
 
-func (d *__Message_Selector) RoomKey_EQ(val string) *__Message_Selector {
+func (d *__Message_Selector) RoomKey_Eq(val string) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) RoomKey_NotEq(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1896,12 +1973,23 @@ func (u *__Message_Selector) MessageKey_Like(val string) *__Message_Selector {
 	return u
 }
 
-func (d *__Message_Selector) MessageKey_EQ(val string) *__Message_Selector {
+func (d *__Message_Selector) MessageKey_Eq(val string) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MessageKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) MessageKey_NotEq(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1945,12 +2033,23 @@ func (u *__Message_Selector) Data_Like(val string) *__Message_Selector {
 	return u
 }
 
-func (d *__Message_Selector) Data_EQ(val string) *__Message_Selector {
+func (d *__Message_Selector) Data_Eq(val string) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Data = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Data_NotEq(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2530,6 +2629,49 @@ func MassReplace_Message(rows []Message, db XODB) error {
 //
 
 //
+
+// MessagesByToUserId retrieves a row from 'ms.message' as a Message.
+//
+// Generated from index 'ToUserId'.
+func MessagesByToUserId(db XODB, toUserId int) ([]*Message, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
+		`FROM ms.message ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Message{}
+	for q.Next() {
+		m := Message{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &m)
+	}
+
+	OnMessage_LoadMany(res)
+
+	return res, nil
+}
 
 // MessagesByToUserIdTimeMs retrieves a row from 'ms.message' as a Message.
 //

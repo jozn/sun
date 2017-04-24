@@ -272,7 +272,7 @@ func (u *__Comment_Deleter) Id_NotIn(ins []int) *__Comment_Deleter {
 	return u
 }
 
-func (d *__Comment_Deleter) Id_EQ(val int) *__Comment_Deleter {
+func (d *__Comment_Deleter) Id_Eq(val int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -283,7 +283,7 @@ func (d *__Comment_Deleter) Id_EQ(val int) *__Comment_Deleter {
 	return d
 }
 
-func (d *__Comment_Deleter) Id_NotEQ(val int) *__Comment_Deleter {
+func (d *__Comment_Deleter) Id_NotEq(val int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -377,7 +377,7 @@ func (u *__Comment_Deleter) UserId_NotIn(ins []int) *__Comment_Deleter {
 	return u
 }
 
-func (d *__Comment_Deleter) UserId_EQ(val int) *__Comment_Deleter {
+func (d *__Comment_Deleter) UserId_Eq(val int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -388,7 +388,7 @@ func (d *__Comment_Deleter) UserId_EQ(val int) *__Comment_Deleter {
 	return d
 }
 
-func (d *__Comment_Deleter) UserId_NotEQ(val int) *__Comment_Deleter {
+func (d *__Comment_Deleter) UserId_NotEq(val int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -482,7 +482,7 @@ func (u *__Comment_Deleter) PostId_NotIn(ins []int) *__Comment_Deleter {
 	return u
 }
 
-func (d *__Comment_Deleter) PostId_EQ(val int) *__Comment_Deleter {
+func (d *__Comment_Deleter) PostId_Eq(val int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -493,7 +493,7 @@ func (d *__Comment_Deleter) PostId_EQ(val int) *__Comment_Deleter {
 	return d
 }
 
-func (d *__Comment_Deleter) PostId_NotEQ(val int) *__Comment_Deleter {
+func (d *__Comment_Deleter) PostId_NotEq(val int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -587,7 +587,7 @@ func (u *__Comment_Deleter) CreatedTime_NotIn(ins []int) *__Comment_Deleter {
 	return u
 }
 
-func (d *__Comment_Deleter) CreatedTime_EQ(val int) *__Comment_Deleter {
+func (d *__Comment_Deleter) CreatedTime_Eq(val int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -598,7 +598,7 @@ func (d *__Comment_Deleter) CreatedTime_EQ(val int) *__Comment_Deleter {
 	return d
 }
 
-func (d *__Comment_Deleter) CreatedTime_NotEQ(val int) *__Comment_Deleter {
+func (d *__Comment_Deleter) CreatedTime_NotEq(val int) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -698,7 +698,7 @@ func (u *__Comment_Updater) Id_NotIn(ins []int) *__Comment_Updater {
 	return u
 }
 
-func (d *__Comment_Updater) Id_EQ(val int) *__Comment_Updater {
+func (d *__Comment_Updater) Id_Eq(val int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -709,7 +709,7 @@ func (d *__Comment_Updater) Id_EQ(val int) *__Comment_Updater {
 	return d
 }
 
-func (d *__Comment_Updater) Id_NotEQ(val int) *__Comment_Updater {
+func (d *__Comment_Updater) Id_NotEq(val int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -803,7 +803,7 @@ func (u *__Comment_Updater) UserId_NotIn(ins []int) *__Comment_Updater {
 	return u
 }
 
-func (d *__Comment_Updater) UserId_EQ(val int) *__Comment_Updater {
+func (d *__Comment_Updater) UserId_Eq(val int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -814,7 +814,7 @@ func (d *__Comment_Updater) UserId_EQ(val int) *__Comment_Updater {
 	return d
 }
 
-func (d *__Comment_Updater) UserId_NotEQ(val int) *__Comment_Updater {
+func (d *__Comment_Updater) UserId_NotEq(val int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -908,7 +908,7 @@ func (u *__Comment_Updater) PostId_NotIn(ins []int) *__Comment_Updater {
 	return u
 }
 
-func (d *__Comment_Updater) PostId_EQ(val int) *__Comment_Updater {
+func (d *__Comment_Updater) PostId_Eq(val int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -919,7 +919,7 @@ func (d *__Comment_Updater) PostId_EQ(val int) *__Comment_Updater {
 	return d
 }
 
-func (d *__Comment_Updater) PostId_NotEQ(val int) *__Comment_Updater {
+func (d *__Comment_Updater) PostId_NotEq(val int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1013,7 +1013,7 @@ func (u *__Comment_Updater) CreatedTime_NotIn(ins []int) *__Comment_Updater {
 	return u
 }
 
-func (d *__Comment_Updater) CreatedTime_EQ(val int) *__Comment_Updater {
+func (d *__Comment_Updater) CreatedTime_Eq(val int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1024,7 +1024,7 @@ func (d *__Comment_Updater) CreatedTime_EQ(val int) *__Comment_Updater {
 	return d
 }
 
-func (d *__Comment_Updater) CreatedTime_NotEQ(val int) *__Comment_Updater {
+func (d *__Comment_Updater) CreatedTime_NotEq(val int) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1124,7 +1124,7 @@ func (u *__Comment_Selector) Id_NotIn(ins []int) *__Comment_Selector {
 	return u
 }
 
-func (d *__Comment_Selector) Id_EQ(val int) *__Comment_Selector {
+func (d *__Comment_Selector) Id_Eq(val int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1135,7 +1135,7 @@ func (d *__Comment_Selector) Id_EQ(val int) *__Comment_Selector {
 	return d
 }
 
-func (d *__Comment_Selector) Id_NotEQ(val int) *__Comment_Selector {
+func (d *__Comment_Selector) Id_NotEq(val int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1229,7 +1229,7 @@ func (u *__Comment_Selector) UserId_NotIn(ins []int) *__Comment_Selector {
 	return u
 }
 
-func (d *__Comment_Selector) UserId_EQ(val int) *__Comment_Selector {
+func (d *__Comment_Selector) UserId_Eq(val int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1240,7 +1240,7 @@ func (d *__Comment_Selector) UserId_EQ(val int) *__Comment_Selector {
 	return d
 }
 
-func (d *__Comment_Selector) UserId_NotEQ(val int) *__Comment_Selector {
+func (d *__Comment_Selector) UserId_NotEq(val int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1334,7 +1334,7 @@ func (u *__Comment_Selector) PostId_NotIn(ins []int) *__Comment_Selector {
 	return u
 }
 
-func (d *__Comment_Selector) PostId_EQ(val int) *__Comment_Selector {
+func (d *__Comment_Selector) PostId_Eq(val int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1345,7 +1345,7 @@ func (d *__Comment_Selector) PostId_EQ(val int) *__Comment_Selector {
 	return d
 }
 
-func (d *__Comment_Selector) PostId_NotEQ(val int) *__Comment_Selector {
+func (d *__Comment_Selector) PostId_NotEq(val int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1439,7 +1439,7 @@ func (u *__Comment_Selector) CreatedTime_NotIn(ins []int) *__Comment_Selector {
 	return u
 }
 
-func (d *__Comment_Selector) CreatedTime_EQ(val int) *__Comment_Selector {
+func (d *__Comment_Selector) CreatedTime_Eq(val int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1450,7 +1450,7 @@ func (d *__Comment_Selector) CreatedTime_EQ(val int) *__Comment_Selector {
 	return d
 }
 
-func (d *__Comment_Selector) CreatedTime_NotEQ(val int) *__Comment_Selector {
+func (d *__Comment_Selector) CreatedTime_NotEq(val int) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1547,12 +1547,23 @@ func (u *__Comment_Deleter) Text_Like(val string) *__Comment_Deleter {
 	return u
 }
 
-func (d *__Comment_Deleter) Text_EQ(val string) *__Comment_Deleter {
+func (d *__Comment_Deleter) Text_Eq(val string) *__Comment_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Text = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Comment_Deleter) Text_NotEq(val string) *__Comment_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1598,12 +1609,23 @@ func (u *__Comment_Updater) Text_Like(val string) *__Comment_Updater {
 	return u
 }
 
-func (d *__Comment_Updater) Text_EQ(val string) *__Comment_Updater {
+func (d *__Comment_Updater) Text_Eq(val string) *__Comment_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Text = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Comment_Updater) Text_NotEq(val string) *__Comment_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1649,12 +1671,23 @@ func (u *__Comment_Selector) Text_Like(val string) *__Comment_Selector {
 	return u
 }
 
-func (d *__Comment_Selector) Text_EQ(val string) *__Comment_Selector {
+func (d *__Comment_Selector) Text_Eq(val string) *__Comment_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Text = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Comment_Selector) Text_NotEq(val string) *__Comment_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Text != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d

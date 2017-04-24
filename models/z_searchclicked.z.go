@@ -273,7 +273,7 @@ func (u *__SearchClicked_Deleter) Id_NotIn(ins []int) *__SearchClicked_Deleter {
 	return u
 }
 
-func (d *__SearchClicked_Deleter) Id_EQ(val int) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) Id_Eq(val int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -284,7 +284,7 @@ func (d *__SearchClicked_Deleter) Id_EQ(val int) *__SearchClicked_Deleter {
 	return d
 }
 
-func (d *__SearchClicked_Deleter) Id_NotEQ(val int) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) Id_NotEq(val int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -378,7 +378,7 @@ func (u *__SearchClicked_Deleter) ClickType_NotIn(ins []int) *__SearchClicked_De
 	return u
 }
 
-func (d *__SearchClicked_Deleter) ClickType_EQ(val int) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) ClickType_Eq(val int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -389,7 +389,7 @@ func (d *__SearchClicked_Deleter) ClickType_EQ(val int) *__SearchClicked_Deleter
 	return d
 }
 
-func (d *__SearchClicked_Deleter) ClickType_NotEQ(val int) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) ClickType_NotEq(val int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -483,7 +483,7 @@ func (u *__SearchClicked_Deleter) TargetId_NotIn(ins []int) *__SearchClicked_Del
 	return u
 }
 
-func (d *__SearchClicked_Deleter) TargetId_EQ(val int) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) TargetId_Eq(val int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -494,7 +494,7 @@ func (d *__SearchClicked_Deleter) TargetId_EQ(val int) *__SearchClicked_Deleter 
 	return d
 }
 
-func (d *__SearchClicked_Deleter) TargetId_NotEQ(val int) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) TargetId_NotEq(val int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -588,7 +588,7 @@ func (u *__SearchClicked_Deleter) UserId_NotIn(ins []int) *__SearchClicked_Delet
 	return u
 }
 
-func (d *__SearchClicked_Deleter) UserId_EQ(val int) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) UserId_Eq(val int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -599,7 +599,7 @@ func (d *__SearchClicked_Deleter) UserId_EQ(val int) *__SearchClicked_Deleter {
 	return d
 }
 
-func (d *__SearchClicked_Deleter) UserId_NotEQ(val int) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) UserId_NotEq(val int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -693,7 +693,7 @@ func (u *__SearchClicked_Deleter) CreatedAt_NotIn(ins []int) *__SearchClicked_De
 	return u
 }
 
-func (d *__SearchClicked_Deleter) CreatedAt_EQ(val int) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) CreatedAt_Eq(val int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -704,7 +704,7 @@ func (d *__SearchClicked_Deleter) CreatedAt_EQ(val int) *__SearchClicked_Deleter
 	return d
 }
 
-func (d *__SearchClicked_Deleter) CreatedAt_NotEQ(val int) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) CreatedAt_NotEq(val int) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -804,7 +804,7 @@ func (u *__SearchClicked_Updater) Id_NotIn(ins []int) *__SearchClicked_Updater {
 	return u
 }
 
-func (d *__SearchClicked_Updater) Id_EQ(val int) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) Id_Eq(val int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -815,7 +815,7 @@ func (d *__SearchClicked_Updater) Id_EQ(val int) *__SearchClicked_Updater {
 	return d
 }
 
-func (d *__SearchClicked_Updater) Id_NotEQ(val int) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) Id_NotEq(val int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -909,7 +909,7 @@ func (u *__SearchClicked_Updater) ClickType_NotIn(ins []int) *__SearchClicked_Up
 	return u
 }
 
-func (d *__SearchClicked_Updater) ClickType_EQ(val int) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) ClickType_Eq(val int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -920,7 +920,7 @@ func (d *__SearchClicked_Updater) ClickType_EQ(val int) *__SearchClicked_Updater
 	return d
 }
 
-func (d *__SearchClicked_Updater) ClickType_NotEQ(val int) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) ClickType_NotEq(val int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1014,7 +1014,7 @@ func (u *__SearchClicked_Updater) TargetId_NotIn(ins []int) *__SearchClicked_Upd
 	return u
 }
 
-func (d *__SearchClicked_Updater) TargetId_EQ(val int) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) TargetId_Eq(val int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1025,7 +1025,7 @@ func (d *__SearchClicked_Updater) TargetId_EQ(val int) *__SearchClicked_Updater 
 	return d
 }
 
-func (d *__SearchClicked_Updater) TargetId_NotEQ(val int) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) TargetId_NotEq(val int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1119,7 +1119,7 @@ func (u *__SearchClicked_Updater) UserId_NotIn(ins []int) *__SearchClicked_Updat
 	return u
 }
 
-func (d *__SearchClicked_Updater) UserId_EQ(val int) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) UserId_Eq(val int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1130,7 +1130,7 @@ func (d *__SearchClicked_Updater) UserId_EQ(val int) *__SearchClicked_Updater {
 	return d
 }
 
-func (d *__SearchClicked_Updater) UserId_NotEQ(val int) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) UserId_NotEq(val int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1224,7 +1224,7 @@ func (u *__SearchClicked_Updater) CreatedAt_NotIn(ins []int) *__SearchClicked_Up
 	return u
 }
 
-func (d *__SearchClicked_Updater) CreatedAt_EQ(val int) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) CreatedAt_Eq(val int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1235,7 +1235,7 @@ func (d *__SearchClicked_Updater) CreatedAt_EQ(val int) *__SearchClicked_Updater
 	return d
 }
 
-func (d *__SearchClicked_Updater) CreatedAt_NotEQ(val int) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) CreatedAt_NotEq(val int) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1335,7 +1335,7 @@ func (u *__SearchClicked_Selector) Id_NotIn(ins []int) *__SearchClicked_Selector
 	return u
 }
 
-func (d *__SearchClicked_Selector) Id_EQ(val int) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) Id_Eq(val int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1346,7 +1346,7 @@ func (d *__SearchClicked_Selector) Id_EQ(val int) *__SearchClicked_Selector {
 	return d
 }
 
-func (d *__SearchClicked_Selector) Id_NotEQ(val int) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) Id_NotEq(val int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1440,7 +1440,7 @@ func (u *__SearchClicked_Selector) ClickType_NotIn(ins []int) *__SearchClicked_S
 	return u
 }
 
-func (d *__SearchClicked_Selector) ClickType_EQ(val int) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) ClickType_Eq(val int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1451,7 +1451,7 @@ func (d *__SearchClicked_Selector) ClickType_EQ(val int) *__SearchClicked_Select
 	return d
 }
 
-func (d *__SearchClicked_Selector) ClickType_NotEQ(val int) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) ClickType_NotEq(val int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1545,7 +1545,7 @@ func (u *__SearchClicked_Selector) TargetId_NotIn(ins []int) *__SearchClicked_Se
 	return u
 }
 
-func (d *__SearchClicked_Selector) TargetId_EQ(val int) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) TargetId_Eq(val int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1556,7 +1556,7 @@ func (d *__SearchClicked_Selector) TargetId_EQ(val int) *__SearchClicked_Selecto
 	return d
 }
 
-func (d *__SearchClicked_Selector) TargetId_NotEQ(val int) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) TargetId_NotEq(val int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1650,7 +1650,7 @@ func (u *__SearchClicked_Selector) UserId_NotIn(ins []int) *__SearchClicked_Sele
 	return u
 }
 
-func (d *__SearchClicked_Selector) UserId_EQ(val int) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) UserId_Eq(val int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1661,7 +1661,7 @@ func (d *__SearchClicked_Selector) UserId_EQ(val int) *__SearchClicked_Selector 
 	return d
 }
 
-func (d *__SearchClicked_Selector) UserId_NotEQ(val int) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) UserId_NotEq(val int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1755,7 +1755,7 @@ func (u *__SearchClicked_Selector) CreatedAt_NotIn(ins []int) *__SearchClicked_S
 	return u
 }
 
-func (d *__SearchClicked_Selector) CreatedAt_EQ(val int) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) CreatedAt_Eq(val int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1766,7 +1766,7 @@ func (d *__SearchClicked_Selector) CreatedAt_EQ(val int) *__SearchClicked_Select
 	return d
 }
 
-func (d *__SearchClicked_Selector) CreatedAt_NotEQ(val int) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) CreatedAt_NotEq(val int) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1863,12 +1863,23 @@ func (u *__SearchClicked_Deleter) Query_Like(val string) *__SearchClicked_Delete
 	return u
 }
 
-func (d *__SearchClicked_Deleter) Query_EQ(val string) *__SearchClicked_Deleter {
+func (d *__SearchClicked_Deleter) Query_Eq(val string) *__SearchClicked_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Query = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Deleter) Query_NotEq(val string) *__SearchClicked_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Query != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1914,12 +1925,23 @@ func (u *__SearchClicked_Updater) Query_Like(val string) *__SearchClicked_Update
 	return u
 }
 
-func (d *__SearchClicked_Updater) Query_EQ(val string) *__SearchClicked_Updater {
+func (d *__SearchClicked_Updater) Query_Eq(val string) *__SearchClicked_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Query = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Updater) Query_NotEq(val string) *__SearchClicked_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Query != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1965,12 +1987,23 @@ func (u *__SearchClicked_Selector) Query_Like(val string) *__SearchClicked_Selec
 	return u
 }
 
-func (d *__SearchClicked_Selector) Query_EQ(val string) *__SearchClicked_Selector {
+func (d *__SearchClicked_Selector) Query_Eq(val string) *__SearchClicked_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Query = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__SearchClicked_Selector) Query_NotEq(val string) *__SearchClicked_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Query != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d

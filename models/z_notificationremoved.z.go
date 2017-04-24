@@ -260,7 +260,7 @@ func (u *__NotificationRemoved_Deleter) NotificationId_NotIn(ins []int) *__Notif
 	return u
 }
 
-func (d *__NotificationRemoved_Deleter) NotificationId_EQ(val int) *__NotificationRemoved_Deleter {
+func (d *__NotificationRemoved_Deleter) NotificationId_Eq(val int) *__NotificationRemoved_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -271,7 +271,7 @@ func (d *__NotificationRemoved_Deleter) NotificationId_EQ(val int) *__Notificati
 	return d
 }
 
-func (d *__NotificationRemoved_Deleter) NotificationId_NotEQ(val int) *__NotificationRemoved_Deleter {
+func (d *__NotificationRemoved_Deleter) NotificationId_NotEq(val int) *__NotificationRemoved_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -365,7 +365,7 @@ func (u *__NotificationRemoved_Deleter) ForUserId_NotIn(ins []int) *__Notificati
 	return u
 }
 
-func (d *__NotificationRemoved_Deleter) ForUserId_EQ(val int) *__NotificationRemoved_Deleter {
+func (d *__NotificationRemoved_Deleter) ForUserId_Eq(val int) *__NotificationRemoved_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -376,7 +376,7 @@ func (d *__NotificationRemoved_Deleter) ForUserId_EQ(val int) *__NotificationRem
 	return d
 }
 
-func (d *__NotificationRemoved_Deleter) ForUserId_NotEQ(val int) *__NotificationRemoved_Deleter {
+func (d *__NotificationRemoved_Deleter) ForUserId_NotEq(val int) *__NotificationRemoved_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -476,7 +476,7 @@ func (u *__NotificationRemoved_Updater) NotificationId_NotIn(ins []int) *__Notif
 	return u
 }
 
-func (d *__NotificationRemoved_Updater) NotificationId_EQ(val int) *__NotificationRemoved_Updater {
+func (d *__NotificationRemoved_Updater) NotificationId_Eq(val int) *__NotificationRemoved_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -487,7 +487,7 @@ func (d *__NotificationRemoved_Updater) NotificationId_EQ(val int) *__Notificati
 	return d
 }
 
-func (d *__NotificationRemoved_Updater) NotificationId_NotEQ(val int) *__NotificationRemoved_Updater {
+func (d *__NotificationRemoved_Updater) NotificationId_NotEq(val int) *__NotificationRemoved_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -581,7 +581,7 @@ func (u *__NotificationRemoved_Updater) ForUserId_NotIn(ins []int) *__Notificati
 	return u
 }
 
-func (d *__NotificationRemoved_Updater) ForUserId_EQ(val int) *__NotificationRemoved_Updater {
+func (d *__NotificationRemoved_Updater) ForUserId_Eq(val int) *__NotificationRemoved_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -592,7 +592,7 @@ func (d *__NotificationRemoved_Updater) ForUserId_EQ(val int) *__NotificationRem
 	return d
 }
 
-func (d *__NotificationRemoved_Updater) ForUserId_NotEQ(val int) *__NotificationRemoved_Updater {
+func (d *__NotificationRemoved_Updater) ForUserId_NotEq(val int) *__NotificationRemoved_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -692,7 +692,7 @@ func (u *__NotificationRemoved_Selector) NotificationId_NotIn(ins []int) *__Noti
 	return u
 }
 
-func (d *__NotificationRemoved_Selector) NotificationId_EQ(val int) *__NotificationRemoved_Selector {
+func (d *__NotificationRemoved_Selector) NotificationId_Eq(val int) *__NotificationRemoved_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -703,7 +703,7 @@ func (d *__NotificationRemoved_Selector) NotificationId_EQ(val int) *__Notificat
 	return d
 }
 
-func (d *__NotificationRemoved_Selector) NotificationId_NotEQ(val int) *__NotificationRemoved_Selector {
+func (d *__NotificationRemoved_Selector) NotificationId_NotEq(val int) *__NotificationRemoved_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -797,7 +797,7 @@ func (u *__NotificationRemoved_Selector) ForUserId_NotIn(ins []int) *__Notificat
 	return u
 }
 
-func (d *__NotificationRemoved_Selector) ForUserId_EQ(val int) *__NotificationRemoved_Selector {
+func (d *__NotificationRemoved_Selector) ForUserId_Eq(val int) *__NotificationRemoved_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -808,7 +808,7 @@ func (d *__NotificationRemoved_Selector) ForUserId_EQ(val int) *__NotificationRe
 	return d
 }
 
-func (d *__NotificationRemoved_Selector) ForUserId_NotEQ(val int) *__NotificationRemoved_Selector {
+func (d *__NotificationRemoved_Selector) ForUserId_NotEq(val int) *__NotificationRemoved_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)

@@ -273,7 +273,7 @@ func (u *__FollowingListMember_Deleter) Id_NotIn(ins []int) *__FollowingListMemb
 	return u
 }
 
-func (d *__FollowingListMember_Deleter) Id_EQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) Id_Eq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -284,7 +284,7 @@ func (d *__FollowingListMember_Deleter) Id_EQ(val int) *__FollowingListMember_De
 	return d
 }
 
-func (d *__FollowingListMember_Deleter) Id_NotEQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) Id_NotEq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -378,7 +378,7 @@ func (u *__FollowingListMember_Deleter) ListId_NotIn(ins []int) *__FollowingList
 	return u
 }
 
-func (d *__FollowingListMember_Deleter) ListId_EQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) ListId_Eq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -389,7 +389,7 @@ func (d *__FollowingListMember_Deleter) ListId_EQ(val int) *__FollowingListMembe
 	return d
 }
 
-func (d *__FollowingListMember_Deleter) ListId_NotEQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) ListId_NotEq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -483,7 +483,7 @@ func (u *__FollowingListMember_Deleter) UserId_NotIn(ins []int) *__FollowingList
 	return u
 }
 
-func (d *__FollowingListMember_Deleter) UserId_EQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) UserId_Eq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -494,7 +494,7 @@ func (d *__FollowingListMember_Deleter) UserId_EQ(val int) *__FollowingListMembe
 	return d
 }
 
-func (d *__FollowingListMember_Deleter) UserId_NotEQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) UserId_NotEq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -588,7 +588,7 @@ func (u *__FollowingListMember_Deleter) FollowedUserId_NotIn(ins []int) *__Follo
 	return u
 }
 
-func (d *__FollowingListMember_Deleter) FollowedUserId_EQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) FollowedUserId_Eq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -599,7 +599,7 @@ func (d *__FollowingListMember_Deleter) FollowedUserId_EQ(val int) *__FollowingL
 	return d
 }
 
-func (d *__FollowingListMember_Deleter) FollowedUserId_NotEQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) FollowedUserId_NotEq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -693,7 +693,7 @@ func (u *__FollowingListMember_Deleter) FollowType_NotIn(ins []int) *__Following
 	return u
 }
 
-func (d *__FollowingListMember_Deleter) FollowType_EQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) FollowType_Eq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -704,7 +704,7 @@ func (d *__FollowingListMember_Deleter) FollowType_EQ(val int) *__FollowingListM
 	return d
 }
 
-func (d *__FollowingListMember_Deleter) FollowType_NotEQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) FollowType_NotEq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -798,7 +798,7 @@ func (u *__FollowingListMember_Deleter) UpdatedTimeMs_NotIn(ins []int) *__Follow
 	return u
 }
 
-func (d *__FollowingListMember_Deleter) UpdatedTimeMs_EQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) UpdatedTimeMs_Eq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -809,7 +809,7 @@ func (d *__FollowingListMember_Deleter) UpdatedTimeMs_EQ(val int) *__FollowingLi
 	return d
 }
 
-func (d *__FollowingListMember_Deleter) UpdatedTimeMs_NotEQ(val int) *__FollowingListMember_Deleter {
+func (d *__FollowingListMember_Deleter) UpdatedTimeMs_NotEq(val int) *__FollowingListMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -909,7 +909,7 @@ func (u *__FollowingListMember_Updater) Id_NotIn(ins []int) *__FollowingListMemb
 	return u
 }
 
-func (d *__FollowingListMember_Updater) Id_EQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) Id_Eq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -920,7 +920,7 @@ func (d *__FollowingListMember_Updater) Id_EQ(val int) *__FollowingListMember_Up
 	return d
 }
 
-func (d *__FollowingListMember_Updater) Id_NotEQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) Id_NotEq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1014,7 +1014,7 @@ func (u *__FollowingListMember_Updater) ListId_NotIn(ins []int) *__FollowingList
 	return u
 }
 
-func (d *__FollowingListMember_Updater) ListId_EQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) ListId_Eq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1025,7 +1025,7 @@ func (d *__FollowingListMember_Updater) ListId_EQ(val int) *__FollowingListMembe
 	return d
 }
 
-func (d *__FollowingListMember_Updater) ListId_NotEQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) ListId_NotEq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1119,7 +1119,7 @@ func (u *__FollowingListMember_Updater) UserId_NotIn(ins []int) *__FollowingList
 	return u
 }
 
-func (d *__FollowingListMember_Updater) UserId_EQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) UserId_Eq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1130,7 +1130,7 @@ func (d *__FollowingListMember_Updater) UserId_EQ(val int) *__FollowingListMembe
 	return d
 }
 
-func (d *__FollowingListMember_Updater) UserId_NotEQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) UserId_NotEq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1224,7 +1224,7 @@ func (u *__FollowingListMember_Updater) FollowedUserId_NotIn(ins []int) *__Follo
 	return u
 }
 
-func (d *__FollowingListMember_Updater) FollowedUserId_EQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) FollowedUserId_Eq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1235,7 +1235,7 @@ func (d *__FollowingListMember_Updater) FollowedUserId_EQ(val int) *__FollowingL
 	return d
 }
 
-func (d *__FollowingListMember_Updater) FollowedUserId_NotEQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) FollowedUserId_NotEq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1329,7 +1329,7 @@ func (u *__FollowingListMember_Updater) FollowType_NotIn(ins []int) *__Following
 	return u
 }
 
-func (d *__FollowingListMember_Updater) FollowType_EQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) FollowType_Eq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1340,7 +1340,7 @@ func (d *__FollowingListMember_Updater) FollowType_EQ(val int) *__FollowingListM
 	return d
 }
 
-func (d *__FollowingListMember_Updater) FollowType_NotEQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) FollowType_NotEq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1434,7 +1434,7 @@ func (u *__FollowingListMember_Updater) UpdatedTimeMs_NotIn(ins []int) *__Follow
 	return u
 }
 
-func (d *__FollowingListMember_Updater) UpdatedTimeMs_EQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) UpdatedTimeMs_Eq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1445,7 +1445,7 @@ func (d *__FollowingListMember_Updater) UpdatedTimeMs_EQ(val int) *__FollowingLi
 	return d
 }
 
-func (d *__FollowingListMember_Updater) UpdatedTimeMs_NotEQ(val int) *__FollowingListMember_Updater {
+func (d *__FollowingListMember_Updater) UpdatedTimeMs_NotEq(val int) *__FollowingListMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1545,7 +1545,7 @@ func (u *__FollowingListMember_Selector) Id_NotIn(ins []int) *__FollowingListMem
 	return u
 }
 
-func (d *__FollowingListMember_Selector) Id_EQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) Id_Eq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1556,7 +1556,7 @@ func (d *__FollowingListMember_Selector) Id_EQ(val int) *__FollowingListMember_S
 	return d
 }
 
-func (d *__FollowingListMember_Selector) Id_NotEQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) Id_NotEq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1650,7 +1650,7 @@ func (u *__FollowingListMember_Selector) ListId_NotIn(ins []int) *__FollowingLis
 	return u
 }
 
-func (d *__FollowingListMember_Selector) ListId_EQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) ListId_Eq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1661,7 +1661,7 @@ func (d *__FollowingListMember_Selector) ListId_EQ(val int) *__FollowingListMemb
 	return d
 }
 
-func (d *__FollowingListMember_Selector) ListId_NotEQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) ListId_NotEq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1755,7 +1755,7 @@ func (u *__FollowingListMember_Selector) UserId_NotIn(ins []int) *__FollowingLis
 	return u
 }
 
-func (d *__FollowingListMember_Selector) UserId_EQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) UserId_Eq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1766,7 +1766,7 @@ func (d *__FollowingListMember_Selector) UserId_EQ(val int) *__FollowingListMemb
 	return d
 }
 
-func (d *__FollowingListMember_Selector) UserId_NotEQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) UserId_NotEq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1860,7 +1860,7 @@ func (u *__FollowingListMember_Selector) FollowedUserId_NotIn(ins []int) *__Foll
 	return u
 }
 
-func (d *__FollowingListMember_Selector) FollowedUserId_EQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) FollowedUserId_Eq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1871,7 +1871,7 @@ func (d *__FollowingListMember_Selector) FollowedUserId_EQ(val int) *__Following
 	return d
 }
 
-func (d *__FollowingListMember_Selector) FollowedUserId_NotEQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) FollowedUserId_NotEq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1965,7 +1965,7 @@ func (u *__FollowingListMember_Selector) FollowType_NotIn(ins []int) *__Followin
 	return u
 }
 
-func (d *__FollowingListMember_Selector) FollowType_EQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) FollowType_Eq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1976,7 +1976,7 @@ func (d *__FollowingListMember_Selector) FollowType_EQ(val int) *__FollowingList
 	return d
 }
 
-func (d *__FollowingListMember_Selector) FollowType_NotEQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) FollowType_NotEq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2070,7 +2070,7 @@ func (u *__FollowingListMember_Selector) UpdatedTimeMs_NotIn(ins []int) *__Follo
 	return u
 }
 
-func (d *__FollowingListMember_Selector) UpdatedTimeMs_EQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) UpdatedTimeMs_Eq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2081,7 +2081,7 @@ func (d *__FollowingListMember_Selector) UpdatedTimeMs_EQ(val int) *__FollowingL
 	return d
 }
 
-func (d *__FollowingListMember_Selector) UpdatedTimeMs_NotEQ(val int) *__FollowingListMember_Selector {
+func (d *__FollowingListMember_Selector) UpdatedTimeMs_NotEq(val int) *__FollowingListMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)

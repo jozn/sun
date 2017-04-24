@@ -27,7 +27,7 @@ func GetLikesAction(c *base.Action) base.AppErr {
 	//page indexed : >= 1
 	offset := (page - 1) * limit
 
-	selector := models.NewLike_Selector().Select_UserId().PostId_EQ(post_id)
+	selector := models.NewLike_Selector().Select_UserId().PostId_Eq(post_id)
 
 	if last_id > 0 {
 		selector.Id_LT(last_id)

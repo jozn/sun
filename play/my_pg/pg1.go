@@ -46,7 +46,7 @@ func main() {
 				" UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED UPDATED ",
 				rand.Intn(i))
 
-			NewBench4_Selector().Id_EQ(rand.Intn(int(i))).GetRow(DB_PG)
+			NewBench4_Selector().Id_Eq(rand.Intn(int(i))).GetRow(DB_PG)
 
 			DB_PG.Exec(`delete  from bench4 where "Indexed" = $1 `, rand.Intn(500000000)) // 500 Mil
 			DB_PG.Exec(`delete  from bench4 where "Id" = $1 `, rand.Intn(5000000))        // 5 Mil

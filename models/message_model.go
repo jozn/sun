@@ -50,7 +50,7 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 
 	succ := func() {
 		helper.DebugPrintln("SUCESS OF SendAndStoreMessage")
-		NewMessage_Deleter().MessageKey_EQ(msg.MessageKey).ToUserId_EQ(ToUserId).Delete(base.DB)
+		NewMessage_Deleter().MessageKey_Eq(msg.MessageKey).ToUserId_Eq(ToUserId).Delete(base.DB)
 
 		MessageModel.SendAndStoreMsgsReceivedToPeer([]Message{msgRow})
 		MessageModel.SendAndStoreMsgsDeletedFromServer([]Message{msgRow})
@@ -141,7 +141,7 @@ func (e _messageModelImple) SendAndStoreMsgsReceivedToPeer(msgs []Message) {
 			for _, met := range metas {
 				msgKeys = append(msgKeys, met.MsgKey)
 			}
-			NewMsgReceivedToPeer_Deleter().ToUserId_EQ(toUser).MsgKey_In(msgKeys).Delete(base.DB)
+			NewMsgReceivedToPeer_Deleter().ToUserId_Eq(toUser).MsgKey_In(msgKeys).Delete(base.DB)
 		}
 		cal := base.NewCallWithData(CLIENT_CALL_MsgsReceivedToPeerMany, metas)
 		AllPipesMap.SendToUserWithCallBack(toUser, cal, succ)
@@ -184,7 +184,7 @@ func (e _messageModelImple) SendAndStoreMsgsDeletedFromServer(msgs []Message) {
 			for _, met := range metas {
 				msgKeys = append(msgKeys, met.MsgKey)
 			}
-			NewMsgDeletedFromServer_Deleter().ToUserId_EQ(toUser).MsgKey_In(msgKeys).Delete(base.DB)
+			NewMsgDeletedFromServer_Deleter().ToUserId_Eq(toUser).MsgKey_In(msgKeys).Delete(base.DB)
 		}
 		cal := base.NewCallWithData(CLIENT_CALL_MsgsDeletedFromServerMany, metas)
 		AllPipesMap.SendToUserWithCallBack(toUser, cal, succ)
@@ -225,7 +225,7 @@ func (e _messageModelImple) SendManyMessagesRowsToSingleUser(ToUserId int, msgRo
 		for _, m := range msgRows {
 			arrMsgs = append(arrMsgs, m.MessageKey)
 		}
-		NewMessage_Deleter().ToUserId_EQ(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
+		NewMessage_Deleter().ToUserId_Eq(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
 		MessageModel.SendAndStoreMsgsReceivedToPeer(msgRows)
 		MessageModel.SendAndStoreMsgsDeletedFromServer(msgRows)
 	}
@@ -270,7 +270,7 @@ func (e _messageModelImple) SendManyMessagesClientsToSingleUser(ToUserId int, ms
 			msgsRows = append(msgsRows, mRow)
 
 		}
-		NewMessage_Deleter().ToUserId_EQ(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
+		NewMessage_Deleter().ToUserId_Eq(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
 		MessageModel.SendAndStoreMsgsReceivedToPeer(msgsRows)
 		MessageModel.SendAndStoreMsgsDeletedFromServer(msgsRows)
 	}
@@ -293,7 +293,7 @@ func (e _messageModelImple) SendManyMessagesClientsToSingleUser(ToUserId int, ms
 func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 	helper.DebugPrintln("FlushAllStoredMessagesToUser()")
 
-	msgRows, err := NewMessage_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
+	msgRows, err := NewMessage_Selector().ToUserId_Eq(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
 	if err != nil || len(msgRows) == 0 {
 		return
 	}
@@ -326,7 +326,7 @@ func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 		for _, m := range msgRows {
 			arrMsgs = append(arrMsgs, m.MessageKey)
 		}
-		NewMessage_Deleter().ToUserId_EQ(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
+		NewMessage_Deleter().ToUserId_Eq(ToUserId).MessageKey_In(arrMsgs).Delete(base.DB)
 		MessageModel.SendAndStoreMsgsReceivedToPeer(msgRows)
 		MessageModel.SendAndStoreMsgsDeletedFromServer(msgRows)
 	}
@@ -347,7 +347,7 @@ func (e _messageModelImple) FlushAllStoredMessagesToUser(ToUserId int) {
 func (e _messageModelImple) FlushAllReceivedMsgsToPeerToUser(ToUserId int) {
 	helper.DebugPrintln("FlushAllReceivedMsgsToPeerToUser()")
 
-	metasRows, err := NewMsgReceivedToPeer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
+	metasRows, err := NewMsgReceivedToPeer_Selector().ToUserId_Eq(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
 	if err != nil || len(metasRows) == 0 {
 		return
 	}
@@ -355,7 +355,7 @@ func (e _messageModelImple) FlushAllReceivedMsgsToPeerToUser(ToUserId int) {
 	succ := func() {
 		helper.DebugPrintln("SUCESS OF FlushAllReceivedMsgsToPeerToUser(): ", ToUserId)
 
-		NewMsgReceivedToPeer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
+		NewMsgReceivedToPeer_Deleter().ToUserId_Eq(ToUserId).Id_LE(last).Delete(base.DB)
 	}
 
 	call := base.NewCallWithData(CLIENT_CALL_MsgsReceivedToPeerMany, metasRows)
@@ -366,7 +366,7 @@ func (e _messageModelImple) FlushAllReceivedMsgsToPeerToUser(ToUserId int) {
 func (e _messageModelImple) FlushAllDeletedMsgsToUser(ToUserId int) {
 	helper.DebugPrintln("FlushAllDeletedMsgsToUser() ", ToUserId)
 
-	metasRows, err := NewMsgDeletedFromServer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
+	metasRows, err := NewMsgDeletedFromServer_Selector().ToUserId_Eq(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
 	if err != nil || len(metasRows) == 0 {
 		return
 	}
@@ -374,7 +374,7 @@ func (e _messageModelImple) FlushAllDeletedMsgsToUser(ToUserId int) {
 	succ := func() {
 		helper.DebugPrintln("SUCESS OF FlushAllDeletedMsgsToUser(): ", ToUserId)
 
-		NewMsgDeletedFromServer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
+		NewMsgDeletedFromServer_Deleter().ToUserId_Eq(ToUserId).Id_LE(last).Delete(base.DB)
 	}
 
 	call := base.NewCallWithData(CLIENT_CALL_MsgsDeletedFromServerMany, metasRows)
@@ -385,7 +385,7 @@ func (e _messageModelImple) FlushAllDeletedMsgsToUser(ToUserId int) {
 func (e _messageModelImple) FlushAllSeenMsgsByPeerToUser(ToUserId int) {
 	helper.DebugPrintln("FlushAllSeenMsgsByPeerToUser() ", ToUserId)
 
-	metasRows, err := NewMsgSeenByPeer_Selector().ToUserId_EQ(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
+	metasRows, err := NewMsgSeenByPeer_Selector().ToUserId_Eq(ToUserId).OrderBy_Id_Asc().GetRows2(base.DB) // first msgs rows first in slice
 	if err != nil || len(metasRows) == 0 {
 		return
 	}
@@ -403,7 +403,7 @@ func (e _messageModelImple) SendListOfSeenMsgsByPeerToUser(ToUserId int, seenRow
 	succ := func() {
 		helper.DebugPrintln("SUCESS OF SendListOfSeenMsgsByPeerToUser(): ", ToUserId)
 
-		NewMsgSeenByPeer_Deleter().ToUserId_EQ(ToUserId).Id_LE(last).Delete(base.DB)
+		NewMsgSeenByPeer_Deleter().ToUserId_Eq(ToUserId).Id_LE(last).Delete(base.DB)
 	}
 
 	call := base.NewCallWithData(CLIENT_CALL_MsgsSeenByPeerMany, seenRows)

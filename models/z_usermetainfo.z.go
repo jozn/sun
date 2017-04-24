@@ -260,7 +260,7 @@ func (u *__UserMetaInfo_Deleter) UserId_NotIn(ins []int) *__UserMetaInfo_Deleter
 	return u
 }
 
-func (d *__UserMetaInfo_Deleter) UserId_EQ(val int) *__UserMetaInfo_Deleter {
+func (d *__UserMetaInfo_Deleter) UserId_Eq(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -271,7 +271,7 @@ func (d *__UserMetaInfo_Deleter) UserId_EQ(val int) *__UserMetaInfo_Deleter {
 	return d
 }
 
-func (d *__UserMetaInfo_Deleter) UserId_NotEQ(val int) *__UserMetaInfo_Deleter {
+func (d *__UserMetaInfo_Deleter) UserId_NotEq(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -365,7 +365,7 @@ func (u *__UserMetaInfo_Deleter) IsNotificationDirty_NotIn(ins []int) *__UserMet
 	return u
 }
 
-func (d *__UserMetaInfo_Deleter) IsNotificationDirty_EQ(val int) *__UserMetaInfo_Deleter {
+func (d *__UserMetaInfo_Deleter) IsNotificationDirty_Eq(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -376,7 +376,7 @@ func (d *__UserMetaInfo_Deleter) IsNotificationDirty_EQ(val int) *__UserMetaInfo
 	return d
 }
 
-func (d *__UserMetaInfo_Deleter) IsNotificationDirty_NotEQ(val int) *__UserMetaInfo_Deleter {
+func (d *__UserMetaInfo_Deleter) IsNotificationDirty_NotEq(val int) *__UserMetaInfo_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -476,7 +476,7 @@ func (u *__UserMetaInfo_Updater) UserId_NotIn(ins []int) *__UserMetaInfo_Updater
 	return u
 }
 
-func (d *__UserMetaInfo_Updater) UserId_EQ(val int) *__UserMetaInfo_Updater {
+func (d *__UserMetaInfo_Updater) UserId_Eq(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -487,7 +487,7 @@ func (d *__UserMetaInfo_Updater) UserId_EQ(val int) *__UserMetaInfo_Updater {
 	return d
 }
 
-func (d *__UserMetaInfo_Updater) UserId_NotEQ(val int) *__UserMetaInfo_Updater {
+func (d *__UserMetaInfo_Updater) UserId_NotEq(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -581,7 +581,7 @@ func (u *__UserMetaInfo_Updater) IsNotificationDirty_NotIn(ins []int) *__UserMet
 	return u
 }
 
-func (d *__UserMetaInfo_Updater) IsNotificationDirty_EQ(val int) *__UserMetaInfo_Updater {
+func (d *__UserMetaInfo_Updater) IsNotificationDirty_Eq(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -592,7 +592,7 @@ func (d *__UserMetaInfo_Updater) IsNotificationDirty_EQ(val int) *__UserMetaInfo
 	return d
 }
 
-func (d *__UserMetaInfo_Updater) IsNotificationDirty_NotEQ(val int) *__UserMetaInfo_Updater {
+func (d *__UserMetaInfo_Updater) IsNotificationDirty_NotEq(val int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -692,7 +692,7 @@ func (u *__UserMetaInfo_Selector) UserId_NotIn(ins []int) *__UserMetaInfo_Select
 	return u
 }
 
-func (d *__UserMetaInfo_Selector) UserId_EQ(val int) *__UserMetaInfo_Selector {
+func (d *__UserMetaInfo_Selector) UserId_Eq(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -703,7 +703,7 @@ func (d *__UserMetaInfo_Selector) UserId_EQ(val int) *__UserMetaInfo_Selector {
 	return d
 }
 
-func (d *__UserMetaInfo_Selector) UserId_NotEQ(val int) *__UserMetaInfo_Selector {
+func (d *__UserMetaInfo_Selector) UserId_NotEq(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -797,7 +797,7 @@ func (u *__UserMetaInfo_Selector) IsNotificationDirty_NotIn(ins []int) *__UserMe
 	return u
 }
 
-func (d *__UserMetaInfo_Selector) IsNotificationDirty_EQ(val int) *__UserMetaInfo_Selector {
+func (d *__UserMetaInfo_Selector) IsNotificationDirty_Eq(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -808,7 +808,7 @@ func (d *__UserMetaInfo_Selector) IsNotificationDirty_EQ(val int) *__UserMetaInf
 	return d
 }
 
-func (d *__UserMetaInfo_Selector) IsNotificationDirty_NotEQ(val int) *__UserMetaInfo_Selector {
+func (d *__UserMetaInfo_Selector) IsNotificationDirty_NotEq(val int) *__UserMetaInfo_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
