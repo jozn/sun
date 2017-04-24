@@ -28,7 +28,7 @@ func registerRoutes() *httptreemux.TreeMux {
 	v1.POST("/post/add", toV1(ctrl.AddPostAction))
 	v1.GET("/post/add", toV1(ctrl.AddPostAction))
 	v1.GET("/post/get", toV1(ctrl.GetSinglePostAction))
-	v1.GET("/post/stream", toV1(ctrl.GetPostsStraemAction))
+	v1.GET("/post/stream", toV1(ctrl.GetPostsStreamAction))
 	//v1.GET("/post/stream2", toV1(ctrl.GetPostsStraemAction_NEW))
 	v1.GET("/post/latest", toV1(ctrl.GetPostsLatestAction))
 	v1.GET("/post/delete", toV1(ctrl.PostDeleteAction))
