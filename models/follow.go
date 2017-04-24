@@ -4,11 +4,12 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 )
+
 /*
 spec: 1: following
       2: requested
       0: not following or could not
- */
+*/
 func Follow(UserId, FollowedPeerUserId int) int {
 	if UserId == FollowedPeerUserId || UserId < 1 || FollowedPeerUserId < 1 {
 		return 0

@@ -25,4 +25,3 @@ func DeletePost(UserId, PostId int) bool {
 	Counter.UpdateUserPostsCounts(post.UserId, -1)
 	return true
 }
-

@@ -139,4 +139,3 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
 	c.SendJson(usersFollow)
 	return nil
 }
-

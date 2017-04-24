@@ -107,9 +107,9 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 
 	selector := NewActivity_Selector().ActorUserId_In(uids).OrderBy_Id_Desc().Limit(Limit)
 	if Last > 0 {
-        selector.Id_LT(Last)
+		selector.Id_LT(Last)
 	} else if Page >= 1 {
-        selector.Offset((Page - 1) * Limit)
+		selector.Offset((Page - 1) * Limit)
 	}
 
 	nots, err := selector.GetRows(base.DB)

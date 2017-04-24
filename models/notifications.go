@@ -191,7 +191,7 @@ func Notification_GetLastsViews(UserId, last int) (res []NotificationView) {
 
 	if err != nil {
 		helper.DebugPrintln(err)
-        return
+		return
 	}
 
 	res = make([]NotificationView, 0, len(nots))

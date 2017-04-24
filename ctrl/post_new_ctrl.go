@@ -108,54 +108,50 @@ func AddPostAction(c *base.Action) base.AppErr {
 }
 
 func GetPostsLatestAction(c *base.Action) base.AppErr {
-    param := UpdateSessionActivityIfUser(c)
+	param := UpdateSessionActivityIfUser(c)
 
-    selector := models.NewPost_Selector().
-        OrderBy_Id_Desc().Limit(param.Limit).
-        Offset(param.GetOffset())
+	selector := models.NewPost_Selector().
+		OrderBy_Id_Desc().Limit(param.Limit).
+		Offset(param.GetOffset())
 
-    if param.Last > 0{
-        selector.Id_LT(param.Last)
-    }
+	if param.Last > 0 {
+		selector.Id_LT(param.Last)
+	}
 
-    posts,err := selector.GetRows(base.DB)
-    if err != nil {
-        return err
-    }
-    views :=models.Views.PostsViews(posts,c.UserId())
+	posts, err := selector.GetRows(base.DB)
+	if err != nil {
+		return err
+	}
+	views := models.Views.PostsViews(posts, c.UserId())
 
-    c.SendJson(views)
-    return nil
+	c.SendJson(views)
+	return nil
 }
-
 
 func GetPostsStreamAction(c *base.Action) base.AppErr {
-    p :=MustBeUserAndUpdate(c)
+	p := MustBeUserAndUpdate(c)
 
-    uid := c.UserId()
+	uid := c.UserId()
 
-    fids := models.MemoryStore.UserFollowingList_Get(uid).Values()
-    //var ins = make([]int,0, len(fids)+1)
-    ins := append(fids, c.UserId())
-    selctor := models.NewPost_Selector().UserId_In(ins).OrderBy_Id_Desc().Limit(p.Limit)
+	fids := models.MemoryStore.UserFollowingList_Get(uid).Values()
+	//var ins = make([]int,0, len(fids)+1)
+	ins := append(fids, c.UserId())
+	selctor := models.NewPost_Selector().UserId_In(ins).OrderBy_Id_Desc().Limit(p.Limit)
 
-    if p.Last > 0 {
-        selctor.Id_LT(p.Last)
-    } else if p.Page > 0 {
-        selctor.Offset(p.GetOffset())
-    }
+	if p.Last > 0 {
+		selctor.Id_LT(p.Last)
+	} else if p.Page > 0 {
+		selctor.Offset(p.GetOffset())
+	}
 
-    posts, err := selctor.GetRows(base.DB)
-    if err != nil {
-        helper.DebugPrintln(err)
-        c.SendJson(nil)
-        return err
-    }
+	posts, err := selctor.GetRows(base.DB)
+	if err != nil {
+		helper.DebugPrintln(err)
+		c.SendJson(nil)
+		return err
+	}
 
-    view := models.Views.PostsViews(posts, uid)
-    c.SendJson(view)
-    return nil
+	view := models.Views.PostsViews(posts, uid)
+	c.SendJson(view)
+	return nil
 }
-
-
-
