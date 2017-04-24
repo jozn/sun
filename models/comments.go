@@ -28,7 +28,7 @@ func Comment_Add(UserId, PostId int, Text string) Comment {
 }
 
 func Comment_Delete(UserId, PostId, CommentId int) bool {
-	post, _ := CacheModels.GetPostById(PostId)
+	post, _ := Store.GetPostById(PostId)
 
 	com, err := NewComment_Selector().Id_EQ(CommentId).UserId_EQ(UserId).PostId_EQ(PostId).GetRow(base.DB)
 	if err != nil {

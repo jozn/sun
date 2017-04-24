@@ -101,8 +101,8 @@ func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
 
 ////////////// For Likes ///////////////
 func Notification_OnPostLiked(lk *Like) {
-	post, err := CacheModels.GetPostById(lk.PostId)
-	if err != nil {
+	post, ok := Store.GetPostById(lk.PostId)
+	if !ok {
 		return
 	}
 
@@ -126,19 +126,19 @@ func Notification_OnPostLiked(lk *Like) {
 }
 
 func Notification_OnPostUnLiked(lk *Like) {
-	post, err := CacheModels.GetPostById(lk.PostId)
-	if err != nil {
+	post, ok := Store.GetPostById(lk.PostId)
+	if !ok {
 		return
 	}
 
-	row, err := NewNotification_Selector().
+	row, ok := NewNotification_Selector().
 		ForUserId_EQ(post.UserId).
 		ActorUserId_EQ(lk.UserId).
 		TargetId_EQ(lk.PostId).
 		ActionTypeId_EQ(ACTION_TYPE_POST_LIKED).
 		GetRow(base.DB)
 
-	if err == nil {
+	if ok == nil {
 		nr := NotificationRemoved{
 			NotificationId: row.Id,
 			ForUserId:      post.UserId,
@@ -220,21 +220,17 @@ func Notification_notifyToView(nf *Notification, UserId int) NotificationView {
 		case ACTION_TYPE_FOLLOWED_USER:
 
 		case ACTION_TYPE_POST_LIKED:
-			post, err := CacheModels.GetPostById(nf.TargetId)
-			if err == nil {
+			post, ok := Store.GetPostById(nf.TargetId)
+			if ok {
 				load.Post = post
-			} else {
-				helper.DebugPrintln(err)
 			}
 
 		case ACTION_TYPE_POST_COMMENTED:
-			com, err := CacheModels.GetCommentById(nf.TargetId)
-			if err == nil {
+			com, ok := Store.GetCommentById(nf.TargetId)
+			if ok {
 				load.Comment = com
-				post, _ := CacheModels.GetPostById(com.PostId)
+				post, _ := Store.GetPostById(com.PostId)
 				load.Post = post
-			} else {
-				helper.DebugPrintln(err)
 			}
 		}
 
