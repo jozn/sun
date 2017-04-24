@@ -110,7 +110,15 @@ func AddPostAction(c *base.Action) base.AppErr {
 func GetPostsLatestAction(c *base.Action) base.AppErr {
     param := UpdateSessionActivityIfUser(c)
 
-    posts,err := models.NewPost_Selector().OrderBy_Id_Desc().Limit(param.Limit).Offset(param.GetOffset()).GetRows(base.DB)
+    selector := models.NewPost_Selector().
+        OrderBy_Id_Desc().Limit(param.Limit).
+        Offset(param.GetOffset())
+
+    if param.Last > 0{
+        selector.Id_GT(param.Last)
+    }
+    
+    posts,err := selector.GetRows(base.DB)
     if err != nil {
         return err
     }

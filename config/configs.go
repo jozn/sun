@@ -16,3 +16,5 @@ const UPLOAD_DIR = "./upload/"
 const UPLOAD_DIR_POSTS = UPLOAD_DIR + ""
 
 const BUCKET_SIZE = 30
+
+const TAGS_RELOAD_TOP_INTERVAL_MINS = 500

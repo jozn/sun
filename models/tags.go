@@ -4,6 +4,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"time"
+    "ms/sun/config"
 )
 
 type TopTagsWithPostsView struct {
@@ -18,7 +19,7 @@ func Tags_RepeatedlyJobs() {
 		for {
 			ReloadTopTags()
 			ReloadTopPostsForTopTags()
-			time.Sleep(time.Minute * 15)
+			time.Sleep(time.Minute * config.TAGS_RELOAD_TOP_INTERVAL_MINS)
 		}
 	}()
 
