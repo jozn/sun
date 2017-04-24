@@ -5,19 +5,6 @@ import (
 	"ms/sun/helper"
 )
 
-/*
-type Activity struct {
-	Id           int
-	ActorUserId  int
-	ActionTypeId int
-	TargetId     int
-	RefId        int
-	CreatedAt    int
-
-	_exists, _deleted bool
-}
-*/
-
 func Activity_OnPostCommentAdd(comment *Comment, post *Post) {
 	if comment == nil || post == nil {
 		return
@@ -103,7 +90,7 @@ func Activity_OnPostUnLiked(lk *Like) {
 
 ////////////////////// Views ////////////////////////////
 type ActivityView struct {
-	Activity
+	*Activity
 	Load interface{}
 	//Actor   UserBasicAndMe
 }
@@ -116,16 +103,16 @@ type ActivityPayload struct {
 
 //page >= 1
 func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
-	uids := MemoryStore.UserFollowingList_Get(UserId).Elements
+	uids := MemoryStore.UserFollowingList_Get(UserId).Values()
 
 	selector := NewActivity_Selector().ActorUserId_In(uids).OrderBy_Id_Desc().Limit(Limit)
 	if Last > 0 {
-		selector.Id_LT(Last)
+        selector.Id_LT(Last)
 	} else if Page >= 1 {
-		selector.Offset((Page - 1) * Limit)
+        selector.Offset((Page - 1) * Limit)
 	}
 
-	nots, err := selector.GetRows2(base.DB)
+	nots, err := selector.GetRows(base.DB)
 
 	res := make([]ActivityView, 0, len(nots))
 	if err != nil {
@@ -174,7 +161,7 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 
 }
 
-func Activity_fillCaches(nots []Activity) {
+func Activity_fillCaches(nots []*Activity) {
 	//preload start
 	var pre_posts []int
 	var pre_comments []int

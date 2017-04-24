@@ -30,7 +30,7 @@ func GetLikesAction(c *base.Action) base.AppErr {
 	selector := models.NewLike_Selector().Select_UserId().PostId_EQ(post_id)
 
 	if last_id > 0 {
-		selector.Id_GT(last_id)
+		selector.Id_LT(last_id)
 	} else {
 		selector.Offset(offset)
 	}

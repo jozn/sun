@@ -1,7 +1,5 @@
 package models
 
-import "ms/sun/base"
-
 type PostView struct {
 	// *Post
 	*Post
@@ -19,7 +17,6 @@ type PostView struct {
 func (e _viewImpl) PostsViews(posts []*Post, UserId int) (viw []*PostView) {
 	// UserSlice
 	var photoIds []int
-	photoMap := make(map[int]*Photo)
 	for _, p := range posts {
 		if p.TypeId == 2 {
 			photoIds = append(photoIds, p.Id)
@@ -31,7 +28,7 @@ func (e _viewImpl) PostsViews(posts []*Post, UserId int) (viw []*PostView) {
 
 	for _, p := range posts {
 		//viw = append(viw, PostToPostAndDetailes(&p))
-		viw = append(viw, Views.PostSingleView(p, UserId, photoMap))
+		viw = append(viw, Views.PostSingleView(p, UserId))
 
 	}
 	return viw
@@ -45,7 +42,7 @@ func (e _viewImpl) PostsViewsForPostIds(postsIds []int, UserId int) (viw []*Post
 	return
 }
 
-func (e _viewImpl) PostSingleView(post *Post, UserId int, mp map[int]*Photo) *PostView {
+func (e _viewImpl) PostSingleView(post *Post, UserId int) *PostView {
 	v := &PostView{}
 	if post != nil {
 		v.Post = post
@@ -65,33 +62,6 @@ func (e _viewImpl) PostSingleView(post *Post, UserId int, mp map[int]*Photo) *Po
 		}
 	}
 	return v
-}
-
-func (e _viewImpl) PostsViews_OLD(posts []*Post, UserId int) (viw []*PostView) {
-	// UserSlice
-	var photoIds []int
-	photoMap := make(map[int]*Photo)
-	for _, p := range posts {
-		if p.TypeId == 2 {
-			photoIds = append(photoIds, p.Id)
-		}
-	}
-	if len(photoIds) > 0 {
-		phots, err := NewPhoto_Selector().PostId_In(photoIds).GetRows(base.DB)
-		if err != nil {
-			return nil
-		}
-		for _, p := range phots {
-			photoMap[p.PostId] = p
-		}
-	}
-
-	for _, p := range posts {
-		//viw = append(viw, PostToPostAndDetailes(&p))
-		viw = append(viw, Views.PostSingleView(p, UserId, photoMap))
-
-	}
-	return viw
 }
 
 func (e _viewImpl) PostSingleView_OLD(post *Post, UserId int, mp map[int]*Photo) *PostView {

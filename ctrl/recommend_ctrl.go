@@ -7,13 +7,13 @@ import (
 
 func RecommendPostsCtrl(c *base.Action) base.AppErr {
 	UpdateSessionActivityIfUser(c)
-	var posts []models.Post
+	var posts []*models.Post
 	err := base.DB.Select(&posts, "select * from post where TypeId = 2 order by Id Desc limit 50")
 	if err != nil {
 		return nil
 	}
 
-	view := models.PostsToPostsAndDetailesV1(posts, c.UserId())
+	view := models.Views.PostsViews(posts, c.UserId())
 	c.SendJson(view)
 	return nil
 }

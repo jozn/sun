@@ -36,16 +36,15 @@ func GetPostsForProfileAction(c *base.Action) base.AppErr {
 		selctor.Offset((page - 1) * limit)
 	}
 
-	posts, err := selctor.GetRows2(base.DB)
+	posts, err := selctor.GetRows(base.DB)
 	if err != nil {
 		helper.DebugPrintln(err)
 		c.SendJson(nil)
 		return err
 	}
 
-	view := models.PostsToPostsAndDetailesV1(posts, uid)
+	view := models.Views.PostsViews(posts, uid)
 	c.SendJson(view)
-	return nil
 
 	return nil
 }

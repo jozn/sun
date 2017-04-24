@@ -4,6 +4,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"sync"
+    "strings"
 )
 
 type mapMemoryStore_UserImpl struct {
@@ -73,6 +74,7 @@ func (m *mapMemoryStore_UserImpl) GetMemRow(UserId int) (*userMemRowData, bool) 
 func (m *mapMemoryStore_UserImpl) GetUserByUserName(UserName string) (User, bool) {
 	m.RLock()
 	defer m.RUnlock()
+    UserName = strings.Replace(UserName,"@","",1)
 	uid, ok := m.MapUsernameToId[UserName]
 	if ok {
 		return m.GetUser(uid)

@@ -5,30 +5,6 @@ import (
 	"ms/sun/helper"
 )
 
-/*
-// In Orma-gen
-type Notification struct {
-	Id           int
-	ForUserId    int
-	ActorUserId  int
-	ActionTypeId int //added_post ,added_comment == NotifyTypeId
-	ObjectTypeId int //post , comment
-	TargetId     int // PostId, CommentId
-	ObjectId     int //dep == TargetId * 1000 + ObjectTypeId  ---- eg: 1256*1000 + 3 = 1256003
-	SeenStatus   int
-	CreatedTime  int
-	// xo fields
-	_exists, _deleted bool
-}
-
-type NotificationRemoved struct {
-	NotificationId int
-	ForUserId      int
-
-	_exists, _deleted bool
-}
-*/
-
 //////// For Comments //////////
 func Notification_OnPostCommented(comment *Comment, post *Post) {
 	if comment == nil || post == nil {
@@ -205,7 +181,7 @@ type NotifPayload struct {
 	Comment *Comment
 }
 
-func Notification_GetLastsViews(UserId, last int) []NotificationView {
+func Notification_GetLastsViews(UserId, last int) (res []NotificationView) {
 	selector := NewNotification_Selector().ForUserId_EQ(UserId).Limit(100).OrderBy_Id_Desc()
 	if last > 0 {
 		selector.Id_GT(last)
@@ -215,47 +191,15 @@ func Notification_GetLastsViews(UserId, last int) []NotificationView {
 
 	if err != nil {
 		helper.DebugPrintln(err)
+        return
 	}
 
-	res := make([]NotificationView, 0, len(nots))
+	res = make([]NotificationView, 0, len(nots))
 
 	Notification_fillCaches(nots)
 
 	for _, nf := range nots {
-		/*nv := NotificationView{}
-		nv.Notification = nf
-
-		load := NotifPayload{}
-		nv.Load = &load
-
-		if nf.ActionTypeId > 0 { //old check not need anymore (it was for when ActionTypedId could be negative)
-			load.Actor = GetUserBasicAndMe(nf.ActorUserId, UserId)
-
-			switch nf.ActionTypeId {
-			case ACTION_TYPE_FOLLOWED_USER:
-
-			case ACTION_TYPE_POST_LIKED:
-				post, err := CacheModels.GetPostById(nf.TargetId)
-				if err == nil {
-					load.Post = post
-				} else {
-					helper.DebugPrintln(err)
-				}
-
-			case ACTION_TYPE_POST_COMMENTED:
-				com, err := CacheModels.GetCommentById(nf.TargetId)
-				if err == nil {
-					load.Comment = com
-					post, _ := CacheModels.GetPostById(com.PostId)
-					load.Post = post
-				} else {
-					helper.DebugPrintln(err)
-				}
-			}
-
-		}*/
 		res = append(res, Notification_notifyToView(nf, UserId))
-
 	}
 
 	return res
@@ -270,7 +214,7 @@ func Notification_notifyToView(nf *Notification, UserId int) NotificationView {
 	nv.Load = &load
 
 	if nf.ActionTypeId > 0 { //old check not need anymore (it was for when ActionTypedId could be negative)
-		load.Actor = GetUserBasicAndMe(nf.ActorUserId, UserId)
+		load.Actor = Views.UserBasicAndMeView(nf.ActorUserId, UserId)
 
 		switch nf.ActionTypeId {
 		case ACTION_TYPE_FOLLOWED_USER:

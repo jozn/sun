@@ -26,28 +26,3 @@ func DeletePost(UserId, PostId int) bool {
 	return true
 }
 
-func PostsToPostsAndDetailesV1(posts []Post, UserId int) []*PostAndDetailes {
-	var viw []*PostAndDetailes
-	// UserSlice
-	for _, p := range posts {
-		//viw = append(viw, PostToPostAndDetailes(&p))
-		viw = append(viw, GetPostToPostAndDetailes(&p, UserId))
-	}
-	return viw
-}
-
-func GetPostToPostAndDetailes(post *Post, UserId int) *PostAndDetailes {
-	v := PostAndDetailes{}
-	v.Post = *post
-	v.TypeName = PostTypeIdToName(post.TypeId)
-	u, err := Views.GetUserInlineView(post.UserId)
-	if err == nil {
-		v.Sender = u
-		v.Comments = nil //GetPostLastComments(post.Id)
-		v.Likes = nil    //GetPostLastLikes(post.Id)
-		//SetPostImages(&v)
-		v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
-		return &v
-	}
-	return nil
-}

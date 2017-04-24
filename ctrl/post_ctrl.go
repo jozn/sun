@@ -15,13 +15,13 @@ func GetSinglePostAction(c *base.Action) base.AppErr {
 	if id < 1 {
 		return nil
 	}
-	var post models.Post
-	err := base.DB.Get(&post, "select * from post where Id = ? ", id)
+	var post *models.Post
+	err := base.DB.Get(post, "select * from post where Id = ? ", id)
 	if err != nil {
 		return nil
 	}
 
-	view := models.GetPostToPostAndDetailes(&post, c.UserId())
+	view := models.Views.PostSingleView(post, c.UserId())
 	c.SendJson(view)
 	return nil
 }
