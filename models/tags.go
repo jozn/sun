@@ -17,6 +17,9 @@ func Tags_RepeatedlyJobs() {
 	//top tags
 	go func() {
 		for {
+            if config.DEBUG_DELAY_RUN_STARTUPS {//just don't make the log files messy for this at each startups
+                time.Sleep(time.Minute * 5)
+            }
 			ReloadTopTags()
 			ReloadTopPostsForTopTags()
 			time.Sleep(time.Minute * config.TAGS_RELOAD_TOP_INTERVAL_MINS)

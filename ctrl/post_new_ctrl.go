@@ -115,9 +115,9 @@ func GetPostsLatestAction(c *base.Action) base.AppErr {
         Offset(param.GetOffset())
 
     if param.Last > 0{
-        selector.Id_GT(param.Last)
+        selector.Id_LT(param.Last)
     }
-    
+
     posts,err := selector.GetRows(base.DB)
     if err != nil {
         return err
