@@ -107,27 +107,3 @@ func GetPostsStraemAction(c *base.Action) base.AppErr {
 	return nil
 }
 
-func GetPostsLatestAction(c *base.Action) base.AppErr {
-	UpdateSessionActivityIfUser(c)
-
-	laststr := c.Req.Form.Get("last") //last that have
-	pagestr := c.Req.Form.Get("page")
-	last := helper.StrToInt(laststr, 0)
-	page := helper.StrToInt(pagestr, 0)
-	//limit := helper.StrToInt("limit", LIMIT)
-
-	_ = last
-	_ = page
-
-	uid := c.UserId()
-
-	// dbIns(len(fids))e
-	sql := "select * from post  order by Id Desc limit 100 "
-
-	var rs []models.Post
-	base.DB.Select(&rs, sql)
-
-	view := models.PostsToPostsAndDetailesV1(rs, uid)
-	c.SendJson(view)
-	return nil
-}

@@ -54,7 +54,7 @@ func PostAddCommentAction(c *base.Action) base.AppErr {
 	if len(texts) == 0 || pid < 1 {
 		return nil
 	}
-    
+
 	// c.SendText("ok")
 	cmt := models.Comment_Add(c.UserId(), pid, texts)
 	c.SendJson(cmt)

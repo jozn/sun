@@ -106,3 +106,17 @@ func AddPostAction(c *base.Action) base.AppErr {
 		return nil
 	}
 }
+
+func GetPostsLatestAction(c *base.Action) base.AppErr {
+    param := UpdateSessionActivityIfUser(c)
+
+    posts,err := models.NewPost_Selector().OrderBy_Id_Desc().Limit(param.Limit).Offset(param.GetOffset()).GetRows(base.DB)
+    if err != nil {
+        return err
+    }
+    views :=models.Views.PostsViews(posts,c.UserId())
+
+    c.SendJson(views)
+    return nil
+}
+

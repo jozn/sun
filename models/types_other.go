@@ -8,3 +8,10 @@ type ReqParams struct {
 	Last        int
 	Limit       int
 }
+
+func (r *ReqParams)GetOffset() int  {
+    if r.Page < 1 {
+        r.Page = 1
+    }
+    return (r.Page - 1) * r.Limit
+}
