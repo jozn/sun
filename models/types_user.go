@@ -62,13 +62,6 @@ type User struct { //legacy switch to UserTable
 	_exists, _deleted bool
 }
 
-/*type UserMetaInfo struct {
-	UserId              int
-	IsNotificationDirty int
-
-	_exists, _deleted bool
-}*/
-
 type UserTable struct {
 	UserBasic
 	UserPhone
@@ -79,14 +72,6 @@ type UserTable struct {
 }
 
 /////////// for Responses //////////////////////////////////////
-
-type UserViewSync struct {
-	*UserBasicAndMe
-	AppVersion  int
-	Phone       string
-	UpdatedTime int
-}
-
 type UserViewSyncAndMe struct {
 	UserBasic
 	UserId        int
@@ -101,30 +86,9 @@ type UserBasicAndMe struct { //legacy switch to UserTable
 	UserBasic
 	UserId        int
 	UpdatedTime   int //rm ??
-	AmIFollowing  int //dep
 	FollowingType int /// 0: not_following  1: following  2: follow_requested
 	//FollowingLists int
 }
-
-//dep use UserViewSync
-type UserBasicPhoneAndMe struct {
-	UserBasicAndMe
-	UserPhone
-}
-
-func (v *UserViewSync) FromUser(CurrentUserId int, u User, withPhone bool) {
-	v.UserBasicAndMe = GetUserBasicAndMe(u.Id, CurrentUserId)
-	v.AppVersion = u.AppVersion
-	v.UpdatedTime = u.UpdatedTime
-	if withPhone {
-		v.Phone = u.Phone
-	}
-}
-
-//type UserBasicContactsAndMe struct {
-//	UserBasicAndMe
-//	PhoneContact
-//}
 
 /////////////////////////////////////////////
 /// User functions
@@ -140,30 +104,3 @@ func (ub *UserBasic) ToUserInlineView() *UserInlineView {
 	v.AvatarUrl = ub.AvatarUrl
 	return &v
 }
-
-///////////////////////////////////////////////////////////////////
-
-/////////// Deprecated //////////////////////////////
-
-/*
-type UserInfo struct { //deprecated
-	UserId             int
-	FollowersCount     int
-	FollowingCount     int
-	PostsCount         int
-	MediaCount         int
-	LikesCount         int
-	ResharedCount      int
-	LastLoginTimestamp int
-}
-*/
-
-/*
-type UserPassword struct {
-	UserId      int
-	Password    int
-	CreatedTime int
-	// xo fields
-	_exists, _deleted bool
-}
-*/

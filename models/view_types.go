@@ -20,3 +20,8 @@ type PhotoView struct {
 	UrlFormat   string
 	Sizes       []int //80,160,360
 }
+
+type CommentInlineInfoView struct {
+	Comment
+	Sender UserInlineView
+}

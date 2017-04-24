@@ -99,7 +99,6 @@ func registerRoutes() *httptreemux.TreeMux {
 		http.Handle("/i/msg", actionToFunc(ctrl.SendSampleMesgTable3_v04))
 		http.Handle("/i/redis", actionToFunc(RedisSavePlay))
 		http.Handle("/i/play", actionToFunc(PlaySomething))
-		http.Handle("/i/store1", actionToFunc(MemoryStore1))
 		http.Handle("/i/cache", actionToFunc(ShowCached))
 		http.Handle("/i/cacher", actionToFunc(ShowCacher))
 		http.Handle("/i/cache_row", actionToFunc(ShowCacheKeys))
