@@ -9,7 +9,7 @@ import (
 )
 
 var TopUsers []int
-var TopPosts []int 
+var TopPosts []int
 
 
 //////////////// Jobs /////////////////////
@@ -58,11 +58,11 @@ func Recommend_GenTopPosts(limit int) []int{
     //EXPLAIN SELECT l.*, p.TypeId,COUNT(p.Id) AS Cnt FROM likes l JOIN post p ON p.Id = l.PostId  WHERE p.CreatedTime > 1477914190 GROUP BY p.Id ORDER BY cnt DESC LIMIT 500
     var ids []int
 
-    _,err := NewPost_Selector().Select_Id().OrderBy_Id_Desc().Limit(1).GetInt(base.DB)
+    last,err := NewPost_Selector().Select_Id().OrderBy_Id_Desc().Limit(1).GetInt(base.DB)
     XOLogErr(err)
     if err == nil {
-        q := `SELECT p.Id FROM likes l JOIN post p ON p.Id = l.PostId  WHERE p.Id > 2 GROUP BY p.Id ORDER BY COUNT(p.Id) DESC LIMIT 500`
-        err = base.DB.Get(&ids, q)//, last - 20000)
+        q := `SELECT p.Id FROM likes l JOIN post p ON p.Id = l.PostId  WHERE p.Id > ? AND p.TypeId = ? GROUP BY p.Id  ORDER BY COUNT(p.Id) DESC ,p.Id DESC LIMIT 500`
+        err = base.DB.Select(&ids, q ,last - 20000 , POST_TYPE_PHOTO)
         XOLogErr(err)
     }
 

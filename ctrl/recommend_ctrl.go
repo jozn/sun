@@ -3,7 +3,6 @@ package ctrl
 import (
     "ms/sun/models"
     "ms/sun/base"
-    "fmt"
 )
 
 func RecommendPostsCtrl(c *base.Action) base.AppErr {
@@ -16,12 +15,13 @@ func RecommendPostsCtrl(c *base.Action) base.AppErr {
     }
     max:= min + p.Limit
 
+    //fmt.Println(models.TopPosts)
+
     if max > len(models.TopPosts) {
-        c.SendJson(models.Recommend_GenTopPosts(200))
+        c.SendJson(nil)
         return nil
     }
 
-    fmt.Println(models.TopPosts)
 
     view:=models.Views.PostsViewsForPostIds(models.TopPosts[min:max],c.UserId())
     //view := models.Views.PostsViews(posts, c.UserId())
