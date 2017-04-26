@@ -5,7 +5,7 @@ import (
 	"ms/sun/models"
 )
 
-func RecommendPostsCtrl(c *base.Action) base.AppErr {
+func RecommendPostsCtrl_old(c *base.Action) base.AppErr {
 	UpdateSessionActivityIfUser(c)
 	var posts []*models.Post
 	err := base.DB.Select(&posts, "select * from post where TypeId = 2 order by Id Desc limit 50")
