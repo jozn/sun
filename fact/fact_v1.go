@@ -139,15 +139,15 @@ func FactUserAvatars(c *base.Action) {
 	}
 
 	for uid := 0; uid < 100; uid++ {
-		u := models.UserMemoryStore.GetForUser(uid)
-		if u != nil {
+		_, ok := models.MemoryStore_User.GetUser(uid)
+		if ok {
 			fn := dir + "/" + imageFiles[rand.Intn(len(imageFiles))].Name()
 
 			userAvatr := shared.NewAvatarFileName(uid)
 			t1 := time.Now().UnixNano()
 			helper.ImageCropSquerThumb(fn, userAvatr.Path, userAvatr.FileName, []int{50, 100, 200, 400})
 			t := (time.Now().UnixNano() - t1) / 1e6
-			u := models.UserMemoryStore.GetForUser(uid)
+			u, _ := models.MemoryStore_User.GetUser(uid)
 			u.AvatarUrl = userAvatr.FullUrl
 			//u.UserBasic.UpdateToTable()
 			base.DbUpdateStruct(&u, "user")

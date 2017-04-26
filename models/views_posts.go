@@ -1,19 +1,5 @@
 package models
 
-type PostView struct {
-	// *Post
-	*Post
-	TypeName string //for text, photo video
-	//Comments []CommentInlineInfo
-	//Likes    []Like
-	Photo     *Photo
-	PhotoView *PhotoView
-	//Images   *ImageResHolder
-	AmIlike bool //dep
-	MyLike  int  //type of like
-	Sender  UserInlineView
-}
-
 func (e _viewImpl) PostsViews(posts []*Post, UserId int) (viw []*PostView) {
 	// UserSlice
 	var photoIds []int

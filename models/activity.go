@@ -89,17 +89,6 @@ func Activity_OnPostUnLiked(lk *Like) {
 }
 
 ////////////////////// Views ////////////////////////////
-type ActivityView struct {
-	*Activity
-	Load interface{}
-	//Actor   UserBasicAndMe
-}
-
-type ActivityPayload struct {
-	Actor   *UserBasicAndMe
-	Post    *Post
-	Comment *Comment
-}
 
 //page >= 1
 func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {

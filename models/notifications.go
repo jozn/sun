@@ -169,17 +169,6 @@ func Notification_ListOfRemovedAndEmptyIt(UserId int) []int {
 }
 
 ////////////////////// Views ////////////////////////////
-type NotificationView struct {
-	*Notification
-	Load interface{}
-	//Actor   UserBasicAndMe
-}
-
-type NotifPayload struct {
-	Actor   *UserBasicAndMe
-	Post    *Post
-	Comment *Comment
-}
 
 func Notification_GetLastsViews(UserId, last int) (res []NotificationView) {
 	selector := NewNotification_Selector().ForUserId_Eq(UserId).Limit(100).OrderBy_Id_Desc()

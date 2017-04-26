@@ -7,11 +7,6 @@ import (
 	"time"
 )
 
-type TopTagsWithPostsView struct {
-	Tag   *Tag
-	Posts []*PostView
-}
-
 func Tags_RepeatedlyJobs() {
 
 	//top tags
