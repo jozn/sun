@@ -2422,6 +2422,49 @@ func MassReplace_MsgDeletedFromServer(rows []MsgDeletedFromServer, db XODB) erro
 
 //
 
+// MsgDeletedFromServersByToUserId retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
+//
+// Generated from index 'ToUserId'.
+func MsgDeletedFromServersByToUserId(db XODB, toUserId int) ([]*MsgDeletedFromServer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, PeerUserId, RoomKey, AtTime ` +
+		`FROM ms.msg_deleted_from_server ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgDeletedFromServer{}
+	for q.Next() {
+		mdfs := MsgDeletedFromServer{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&mdfs.Id, &mdfs.ToUserId, &mdfs.MsgKey, &mdfs.PeerUserId, &mdfs.RoomKey, &mdfs.AtTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &mdfs)
+	}
+
+	OnMsgDeletedFromServer_LoadMany(res)
+
+	return res, nil
+}
+
 // MsgDeletedFromServerById retrieves a row from 'ms.msg_deleted_from_server' as a MsgDeletedFromServer.
 //
 // Generated from index 'msg_deleted_from_server_Id_pkey'.

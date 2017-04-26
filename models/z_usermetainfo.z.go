@@ -18,6 +18,7 @@ import (
 type UserMetaInfo__ struct {
 	UserId              int `json:"UserId"`              // UserId -
 	IsNotificationDirty int `json:"IsNotificationDirty"` // IsNotificationDirty -
+	LastUserRecGen      int `json:"LastUserRecGen"`      // LastUserRecGen -
 
 	// xo fields
 	_exists, _deleted bool
@@ -44,14 +45,14 @@ func (umi *UserMetaInfo) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.user_meta_info (` +
-		`UserId, IsNotificationDirty` +
+		`UserId, IsNotificationDirty, LastUserRecGen` +
 		`) VALUES (` +
-		`?, ?` +
+		`?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, umi.UserId, umi.IsNotificationDirty)
-	_, err = db.Exec(sqlstr, umi.UserId, umi.IsNotificationDirty)
+	XOLog(sqlstr, umi.UserId, umi.IsNotificationDirty, umi.LastUserRecGen)
+	_, err = db.Exec(sqlstr, umi.UserId, umi.IsNotificationDirty, umi.LastUserRecGen)
 	if err != nil {
 		return err
 	}
@@ -70,14 +71,14 @@ func (umi *UserMetaInfo) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.user_meta_info (` +
-		`IsNotificationDirty` +
+		`IsNotificationDirty, LastUserRecGen` +
 		`) VALUES (` +
-		`?` +
+		`?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, umi.IsNotificationDirty)
-	res, err := db.Exec(sqlstr, umi.IsNotificationDirty)
+	XOLog(sqlstr, umi.IsNotificationDirty, umi.LastUserRecGen)
+	res, err := db.Exec(sqlstr, umi.IsNotificationDirty, umi.LastUserRecGen)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -115,12 +116,12 @@ func (umi *UserMetaInfo) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.user_meta_info SET ` +
-		`IsNotificationDirty = ?` +
+		`IsNotificationDirty = ?, LastUserRecGen = ?` +
 		` WHERE UserId = ?`
 
 	// run query
-	XOLog(sqlstr, umi.IsNotificationDirty, umi.UserId)
-	_, err = db.Exec(sqlstr, umi.IsNotificationDirty, umi.UserId)
+	XOLog(sqlstr, umi.IsNotificationDirty, umi.LastUserRecGen, umi.UserId)
+	_, err = db.Exec(sqlstr, umi.IsNotificationDirty, umi.LastUserRecGen, umi.UserId)
 
 	XOLogErr(err)
 	OnUserMetaInfo_AfterUpdate(umi)
@@ -431,6 +432,111 @@ func (d *__UserMetaInfo_Deleter) IsNotificationDirty_GE(val int) *__UserMetaInfo
 	return d
 }
 
+func (u *__UserMetaInfo_Deleter) LastUserRecGen_In(ins []int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastUserRecGen IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Deleter) LastUserRecGen_Ins(ins ...int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastUserRecGen IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Deleter) LastUserRecGen_NotIn(ins []int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastUserRecGen NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetaInfo_Deleter) LastUserRecGen_Eq(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Deleter) LastUserRecGen_NotEq(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Deleter) LastUserRecGen_LT(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Deleter) LastUserRecGen_LE(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Deleter) LastUserRecGen_GT(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Deleter) LastUserRecGen_GE(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 func (u *__UserMetaInfo_Updater) Or() *__UserMetaInfo_Updater {
 	u.whereSep = " OR "
@@ -642,6 +748,111 @@ func (d *__UserMetaInfo_Updater) IsNotificationDirty_GE(val int) *__UserMetaInfo
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " IsNotificationDirty >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__UserMetaInfo_Updater) LastUserRecGen_In(ins []int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastUserRecGen IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Updater) LastUserRecGen_Ins(ins ...int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastUserRecGen IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Updater) LastUserRecGen_NotIn(ins []int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastUserRecGen NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetaInfo_Updater) LastUserRecGen_Eq(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Updater) LastUserRecGen_NotEq(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Updater) LastUserRecGen_LT(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Updater) LastUserRecGen_LE(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Updater) LastUserRecGen_GT(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Updater) LastUserRecGen_GE(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -863,6 +1074,111 @@ func (d *__UserMetaInfo_Selector) IsNotificationDirty_GE(val int) *__UserMetaInf
 	return d
 }
 
+func (u *__UserMetaInfo_Selector) LastUserRecGen_In(ins []int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastUserRecGen IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Selector) LastUserRecGen_Ins(ins ...int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastUserRecGen IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Selector) LastUserRecGen_NotIn(ins []int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastUserRecGen NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetaInfo_Selector) LastUserRecGen_Eq(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Selector) LastUserRecGen_NotEq(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Selector) LastUserRecGen_LT(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Selector) LastUserRecGen_LE(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Selector) LastUserRecGen_GT(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Selector) LastUserRecGen_GE(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastUserRecGen >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
 
 ////////ints
@@ -917,6 +1233,27 @@ func (u *__UserMetaInfo_Updater) IsNotificationDirty_Increment(count int) *__Use
 
 //string
 
+//ints
+
+func (u *__UserMetaInfo_Updater) LastUserRecGen(newVal int) *__UserMetaInfo_Updater {
+	u.updates[" LastUserRecGen = ? "] = newVal
+	return u
+}
+
+func (u *__UserMetaInfo_Updater) LastUserRecGen_Increment(count int) *__UserMetaInfo_Updater {
+	if count > 0 {
+		u.updates[" LastUserRecGen = LastUserRecGen+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LastUserRecGen = LastUserRecGen-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
 /////////////////////////////////////////////////////////////////////
 /////////////////////// Selector ///////////////////////////////////
 
@@ -949,6 +1286,21 @@ func (u *__UserMetaInfo_Selector) OrderBy_IsNotificationDirty_Asc() *__UserMetaI
 
 func (u *__UserMetaInfo_Selector) Select_IsNotificationDirty() *__UserMetaInfo_Selector {
 	u.selectCol = "IsNotificationDirty"
+	return u
+}
+
+func (u *__UserMetaInfo_Selector) OrderBy_LastUserRecGen_Desc() *__UserMetaInfo_Selector {
+	u.orderBy = " ORDER BY LastUserRecGen DESC "
+	return u
+}
+
+func (u *__UserMetaInfo_Selector) OrderBy_LastUserRecGen_Asc() *__UserMetaInfo_Selector {
+	u.orderBy = " ORDER BY LastUserRecGen ASC "
+	return u
+}
+
+func (u *__UserMetaInfo_Selector) Select_LastUserRecGen() *__UserMetaInfo_Selector {
+	u.selectCol = "LastUserRecGen"
 	return u
 }
 
@@ -1220,12 +1572,12 @@ func (d *__UserMetaInfo_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?)," //`(?, ?, ?, ?),`
+	s := "(?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.user_meta_info (" +
-		"IsNotificationDirty" +
+		"IsNotificationDirty, LastUserRecGen" +
 		") VALUES " + insVals
 
 	// run query
@@ -1234,6 +1586,7 @@ func MassInsert_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.IsNotificationDirty)
+		vals = append(vals, row.LastUserRecGen)
 
 	}
 
@@ -1251,12 +1604,12 @@ func MassInsert_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 func MassReplace_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?)," //`(?, ?, ?, ?),`
+	s := "(?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.user_meta_info (" +
-		"IsNotificationDirty" +
+		"IsNotificationDirty, LastUserRecGen" +
 		") VALUES " + insVals
 
 	// run query
@@ -1265,6 +1618,7 @@ func MassReplace_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.IsNotificationDirty)
+		vals = append(vals, row.LastUserRecGen)
 
 	}
 
@@ -1285,6 +1639,8 @@ func MassReplace_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 
 //
 
+//
+
 // UserMetaInfoByUserId retrieves a row from 'ms.user_meta_info' as a UserMetaInfo.
 //
 // Generated from index 'user_meta_info_UserId_pkey'.
@@ -1293,7 +1649,7 @@ func UserMetaInfoByUserId(db XODB, userId int) (*UserMetaInfo, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`UserId, IsNotificationDirty ` +
+		`UserId, IsNotificationDirty, LastUserRecGen ` +
 		`FROM ms.user_meta_info ` +
 		`WHERE UserId = ?`
 
@@ -1303,7 +1659,7 @@ func UserMetaInfoByUserId(db XODB, userId int) (*UserMetaInfo, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, userId).Scan(&umi.UserId, &umi.IsNotificationDirty)
+	err = db.QueryRow(sqlstr, userId).Scan(&umi.UserId, &umi.IsNotificationDirty, &umi.LastUserRecGen)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

@@ -565,6 +565,7 @@ type TagsPost struct {
 type UserMetaInfo struct {
 	UserId              int
 	IsNotificationDirty int
+	LastUserRecGen      int
 
 	_exists, _deleted bool
 }
@@ -573,6 +574,7 @@ type UserMetaInfo struct {
 := &UserMetaInfo {
 	UserId: 0,
 	IsNotificationDirty: 0,
+	LastUserRecGen: 0,
 */
 
 // UserPassword 'ms.user_password'.

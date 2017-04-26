@@ -11,34 +11,44 @@ import (
 var TopUsers []int
 var TopPosts []int
 
-
 //////////////// Jobs /////////////////////
 func Recommend_Jobs() {
 	go Recommend_Job_TopUsers_Infinite()
-    go Recommend_Job_TopPosts_Infinite()
+	go Recommend_Job_TopPosts_Infinite()
 
 }
 
 func Recommend_Job_TopUsers_Infinite() {
-    helper.JustRecover()
+	helper.JustRecover()
 
-    helper.SleepForDebugDelay(5)
+	helper.SleepForDebugDelay(5)
 
-    for {
-        TopUsers = Recommend_genTopUsers(50)
-        time.Sleep(time.Minute * 30)
-    }
+	for {
+		TopUsers = Recommend_genTopUsers(50)
+		time.Sleep(time.Minute * 30)
+	}
 }
 
 func Recommend_Job_TopPosts_Infinite() {
-    helper.JustRecover()
+	helper.JustRecover()
 
-    helper.SleepForDebugDelay(-1)
+	helper.SleepForDebugDelay(-1)
 
-    for {
-        TopPosts = Recommend_GenTopPosts(500)
-        time.Sleep(time.Minute * 30)
-    }
+	for {
+		TopPosts = Recommend_GenTopPosts(500)
+		time.Sleep(time.Minute * 30)
+	}
+}
+
+//////////////// User //////////////////
+func Recommend_Scheduler_GenUserRecomendations(ForUserId int) {
+	m, ok := Store.GetUserMetaInfoByUserId(ForUserId)
+	if ok {
+		if m.LastUserRecGen+4*3600 < helper.TimeNow() {
+			Recommend_GenPostsForUser_BG(ForUserId)
+		}
+	}
+
 }
 
 //////////////// Posts ///////////////////
@@ -54,28 +64,28 @@ func Recommend_ReGenPostsForUser(ForUserId int) {
 
 }
 
-func Recommend_GenTopPosts(limit int) []int{
-    //EXPLAIN SELECT l.*, p.TypeId,COUNT(p.Id) AS Cnt FROM likes l JOIN post p ON p.Id = l.PostId  WHERE p.CreatedTime > 1477914190 GROUP BY p.Id ORDER BY cnt DESC LIMIT 500
-    var ids []int
+func Recommend_GenTopPosts(limit int) []int {
+	//EXPLAIN SELECT l.*, p.TypeId,COUNT(p.Id) AS Cnt FROM likes l JOIN post p ON p.Id = l.PostId  WHERE p.CreatedTime > 1477914190 GROUP BY p.Id ORDER BY cnt DESC LIMIT 500
+	var ids []int
 
-    last,err := NewPost_Selector().Select_Id().OrderBy_Id_Desc().Limit(1).GetInt(base.DB)
-    XOLogErr(err)
-    if err == nil {
-        q := `SELECT p.Id FROM likes l JOIN post p ON p.Id = l.PostId  WHERE p.Id > ? AND p.TypeId = ? GROUP BY p.Id  ORDER BY COUNT(p.Id) DESC ,p.Id DESC LIMIT 500`
-        err = base.DB.Select(&ids, q ,last - 20000 , POST_TYPE_PHOTO)
-        XOLogErr(err)
-    }
+	last, err := NewPost_Selector().Select_Id().OrderBy_Id_Desc().Limit(1).GetInt(base.DB)
+	XOLogErr(err)
+	if err == nil {
+		q := `SELECT p.Id FROM likes l JOIN post p ON p.Id = l.PostId  WHERE p.Id > ? AND p.TypeId = ? GROUP BY p.Id  ORDER BY COUNT(p.Id) DESC ,p.Id DESC LIMIT 500`
+		err = base.DB.Select(&ids, q, last-20000, POST_TYPE_PHOTO)
+		XOLogErr(err)
+	}
 
-    return ids
+	return ids
 }
 
 ////////////////// Recom Users //////////////////
 
 func Recommend_GenUsersForUser_BG(ForUserId int) {
-    go func() {
-        defer helper.JustRecover()
-        Recommend_ReGenUsersForUser(ForUserId)
-    }()
+	go func() {
+		defer helper.JustRecover()
+		Recommend_ReGenUsersForUser(ForUserId)
+	}()
 }
 
 func Recommend_ReGenUsersForUser(ForUserId int) {
@@ -94,7 +104,7 @@ func Recommend_ReGenUsersForUser(ForUserId int) {
 		Select_UserId().
 		FollowedUserId_Eq(ForUserId).
 		UserId_NotIn(notUserIds).
-        Limit(200).
+		Limit(200).
 		GetIntSlice(base.DB)
 
 	if err != nil {
@@ -162,32 +172,30 @@ func Recommend_genTopUsers(cnt int) []int {
 
 }
 
+func Recommend_GenTopPosts__LEGACY(limit int) []int {
+	rowsId, err := NewLike_Selector().Select_PostId().Limit(100000).OrderBy_Id_Desc().GetIntSlice(base.DB)
+	if err != nil {
+		return []int{}
+	}
 
-func Recommend_GenTopPosts__LEGACY(limit int) []int{
-    rowsId, err := NewLike_Selector().Select_PostId().Limit(100000).OrderBy_Id_Desc().GetIntSlice(base.DB)
-    if err != nil {
-        return []int{}
-    }
+	rowsId, err = NewPost_Selector().Select_Id().Id_In(rowsId).TypeId_Eq(POST_TYPE_PHOTO).GetIntSlice(base.DB)
+	if err != nil {
+		return []int{}
+	}
 
-    rowsId, err = NewPost_Selector().Select_Id().Id_In(rowsId).TypeId_Eq(POST_TYPE_PHOTO).GetIntSlice(base.DB)
-    if err != nil {
-        return []int{}
-    }
+	mp := make(map[int]int, 100000) // map[FollowedUserId] = count
+	for _, r := range rowsId {
+		mp[r] += 1
+	}
 
-    mp := make(map[int]int, 100000) // map[FollowedUserId] = count
-    for _, r := range rowsId {
-        mp[r] += 1
-    }
+	coll := ds.New()
+	for user, _ := range mp {
+		coll.Add(user)
+	}
+	coll.SortDesc()
 
+	min := math.Min(float64(coll.Size()), float64(limit))
+	_ = min
 
-    coll := ds.New()
-    for user, _ := range mp {
-        coll.Add(user)
-    }
-    coll.SortDesc()
-
-    min := math.Min(float64(coll.Size()), float64(limit))
-    _ = min
-
-    return coll.Values()
+	return coll.Values()
 }

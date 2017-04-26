@@ -274,6 +274,7 @@ public class J {
 	public static class UserMetaInfo {
 		public Integer UserId;
 		public Integer IsNotificationDirty;
+		public Integer LastUserRecGen;
 	}
 
 	public static class UserPassword {
