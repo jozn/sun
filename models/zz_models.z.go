@@ -557,6 +557,7 @@ type TagsPost struct {
 
 // UserMetaInfo 'ms.user_meta_info'.
 type UserMetaInfo struct {
+	Id                  int
 	UserId              int
 	IsNotificationDirty int
 	LastUserRecGen      int
@@ -566,6 +567,7 @@ type UserMetaInfo struct {
 
 /*
 := &UserMetaInfo {
+	Id: 0,
 	UserId: 0,
 	IsNotificationDirty: 0,
 	LastUserRecGen: 0,

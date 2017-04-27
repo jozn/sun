@@ -42,12 +42,19 @@ func Recommend_Job_TopPosts_Infinite() {
 
 //////////////// User //////////////////
 func Recommend_Scheduler_GenUserRecomendations(ForUserId int) {
-	m, ok := Store.GetUserMetaInfoByUserId(ForUserId)
+	m, ok := Store.UserMetaInfo_ByUserId(ForUserId)
 	if ok {
 		if m.LastUserRecGen+4*3600 < helper.TimeNow() {
 			Recommend_GenPostsForUser_BG(ForUserId)
 		}
-	}
+	}else {
+        m = &UserMetaInfo{
+            UserId: ForUserId,
+        }
+        m.LastUserRecGen = 0
+        m.Save(base.DB)
+        Recommend_GenPostsForUser_BG(ForUserId)
+    }
 
 }
 
@@ -55,12 +62,13 @@ func Recommend_Scheduler_GenUserRecomendations(ForUserId int) {
 func Recommend_GenPostsForUser_BG(ForUserId int) {
 	go func() {
 		defer helper.JustRecover()
-		Recommend_ReGenPostsForUser(ForUserId)
+        Recommend_ReGenUsersForUser(ForUserId)
+        m, ok := Store.UserMetaInfo_ByUserId(ForUserId)
+        if ok {
+            m.LastUserRecGen = helper.TimeNow()
+            m.Save(base.DB)
+        }
 	}()
-
-}
-
-func Recommend_ReGenPostsForUser(ForUserId int) {
 
 }
 
@@ -81,12 +89,6 @@ func Recommend_GenTopPosts(limit int) []int {
 
 ////////////////// Recom Users //////////////////
 
-func Recommend_GenUsersForUser_BG(ForUserId int) {
-	go func() {
-		defer helper.JustRecover()
-		Recommend_ReGenUsersForUser(ForUserId)
-	}()
-}
 
 func Recommend_ReGenUsersForUser(ForUserId int) {
 	contacts_coll := Contacts_GetChachesContactsUserIdsForUserId(ForUserId, 0) //contacts UserIds list

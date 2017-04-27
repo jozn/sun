@@ -16,6 +16,7 @@ import (
 
 // Manualy copy this to project
 type UserMetaInfo__ struct {
+	Id                  int `json:"Id"`                  // Id -
 	UserId              int `json:"UserId"`              // UserId -
 	IsNotificationDirty int `json:"IsNotificationDirty"` // IsNotificationDirty -
 	LastUserRecGen      int `json:"LastUserRecGen"`      // LastUserRecGen -
@@ -43,7 +44,7 @@ func (umi *UserMetaInfo) Insert(db XODB) error {
 		return errors.New("insert failed: already exists")
 	}
 
-	// sql insert query, primary key must be provided
+	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.user_meta_info (` +
 		`UserId, IsNotificationDirty, LastUserRecGen` +
 		`) VALUES (` +
@@ -52,33 +53,7 @@ func (umi *UserMetaInfo) Insert(db XODB) error {
 
 	// run query
 	XOLog(sqlstr, umi.UserId, umi.IsNotificationDirty, umi.LastUserRecGen)
-	_, err = db.Exec(sqlstr, umi.UserId, umi.IsNotificationDirty, umi.LastUserRecGen)
-	if err != nil {
-		return err
-	}
-
-	// set existence
-	umi._exists = true
-
-	OnUserMetaInfo_AfterInsert(umi)
-
-	return nil
-}
-
-// Insert inserts the UserMetaInfo to the database.
-func (umi *UserMetaInfo) Replace(db XODB) error {
-	var err error
-
-	// sql query
-	const sqlstr = `REPLACE INTO ms.user_meta_info (` +
-		`IsNotificationDirty, LastUserRecGen` +
-		`) VALUES (` +
-		`?, ?` +
-		`)`
-
-	// run query
-	XOLog(sqlstr, umi.IsNotificationDirty, umi.LastUserRecGen)
-	res, err := db.Exec(sqlstr, umi.IsNotificationDirty, umi.LastUserRecGen)
+	res, err := db.Exec(sqlstr, umi.UserId, umi.IsNotificationDirty, umi.LastUserRecGen)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -92,7 +67,42 @@ func (umi *UserMetaInfo) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	umi.UserId = int(id)
+	umi.Id = int(id)
+	umi._exists = true
+
+	OnUserMetaInfo_AfterInsert(umi)
+
+	return nil
+}
+
+// Insert inserts the UserMetaInfo to the database.
+func (umi *UserMetaInfo) Replace(db XODB) error {
+	var err error
+
+	// sql query
+	const sqlstr = `REPLACE INTO ms.user_meta_info (` +
+		`UserId, IsNotificationDirty, LastUserRecGen` +
+		`) VALUES (` +
+		`?, ?, ?` +
+		`)`
+
+	// run query
+	XOLog(sqlstr, umi.UserId, umi.IsNotificationDirty, umi.LastUserRecGen)
+	res, err := db.Exec(sqlstr, umi.UserId, umi.IsNotificationDirty, umi.LastUserRecGen)
+	if err != nil {
+		XOLogErr(err)
+		return err
+	}
+
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		XOLogErr(err)
+		return err
+	}
+
+	// set primary key and existence
+	umi.Id = int(id)
 	umi._exists = true
 
 	OnUserMetaInfo_AfterInsert(umi)
@@ -116,12 +126,12 @@ func (umi *UserMetaInfo) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.user_meta_info SET ` +
-		`IsNotificationDirty = ?, LastUserRecGen = ?` +
-		` WHERE UserId = ?`
+		`UserId = ?, IsNotificationDirty = ?, LastUserRecGen = ?` +
+		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, umi.IsNotificationDirty, umi.LastUserRecGen, umi.UserId)
-	_, err = db.Exec(sqlstr, umi.IsNotificationDirty, umi.LastUserRecGen, umi.UserId)
+	XOLog(sqlstr, umi.UserId, umi.IsNotificationDirty, umi.LastUserRecGen, umi.Id)
+	_, err = db.Exec(sqlstr, umi.UserId, umi.IsNotificationDirty, umi.LastUserRecGen, umi.Id)
 
 	XOLogErr(err)
 	OnUserMetaInfo_AfterUpdate(umi)
@@ -153,11 +163,11 @@ func (umi *UserMetaInfo) Delete(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.user_meta_info WHERE UserId = ?`
+	const sqlstr = `DELETE FROM ms.user_meta_info WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, umi.UserId)
-	_, err = db.Exec(sqlstr, umi.UserId)
+	XOLog(sqlstr, umi.Id)
+	_, err = db.Exec(sqlstr, umi.Id)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -220,6 +230,111 @@ func NewUserMetaInfo_Selector() *__UserMetaInfo_Selector {
 func (u *__UserMetaInfo_Deleter) Or() *__UserMetaInfo_Deleter {
 	u.whereSep = " OR "
 	return u
+}
+
+func (u *__UserMetaInfo_Deleter) Id_In(ins []int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Deleter) Id_Ins(ins ...int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Deleter) Id_NotIn(ins []int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetaInfo_Deleter) Id_Eq(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Deleter) Id_NotEq(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Deleter) Id_LT(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Deleter) Id_LE(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Deleter) Id_GT(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Deleter) Id_GE(val int) *__UserMetaInfo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
 }
 
 func (u *__UserMetaInfo_Deleter) UserId_In(ins []int) *__UserMetaInfo_Deleter {
@@ -543,6 +658,111 @@ func (u *__UserMetaInfo_Updater) Or() *__UserMetaInfo_Updater {
 	return u
 }
 
+func (u *__UserMetaInfo_Updater) Id_In(ins []int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Updater) Id_Ins(ins ...int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Updater) Id_NotIn(ins []int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetaInfo_Updater) Id_Eq(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Updater) Id_NotEq(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Updater) Id_LT(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Updater) Id_LE(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Updater) Id_GT(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Updater) Id_GE(val int) *__UserMetaInfo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__UserMetaInfo_Updater) UserId_In(ins []int) *__UserMetaInfo_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -862,6 +1082,111 @@ func (d *__UserMetaInfo_Updater) LastUserRecGen_GE(val int) *__UserMetaInfo_Upda
 func (u *__UserMetaInfo_Selector) Or() *__UserMetaInfo_Selector {
 	u.whereSep = " OR "
 	return u
+}
+
+func (u *__UserMetaInfo_Selector) Id_In(ins []int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Selector) Id_Ins(ins ...int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__UserMetaInfo_Selector) Id_NotIn(ins []int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__UserMetaInfo_Selector) Id_Eq(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Selector) Id_NotEq(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Selector) Id_LT(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Selector) Id_LE(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Selector) Id_GT(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__UserMetaInfo_Selector) Id_GE(val int) *__UserMetaInfo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
 }
 
 func (u *__UserMetaInfo_Selector) UserId_In(ins []int) *__UserMetaInfo_Selector {
@@ -1193,6 +1518,27 @@ func (d *__UserMetaInfo_Selector) LastUserRecGen_GE(val int) *__UserMetaInfo_Sel
 
 //ints
 
+func (u *__UserMetaInfo_Updater) Id(newVal int) *__UserMetaInfo_Updater {
+	u.updates[" Id = ? "] = newVal
+	return u
+}
+
+func (u *__UserMetaInfo_Updater) Id_Increment(count int) *__UserMetaInfo_Updater {
+	if count > 0 {
+		u.updates[" Id = Id+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Id = Id-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
 func (u *__UserMetaInfo_Updater) UserId(newVal int) *__UserMetaInfo_Updater {
 	u.updates[" UserId = ? "] = newVal
 	return u
@@ -1258,6 +1604,21 @@ func (u *__UserMetaInfo_Updater) LastUserRecGen_Increment(count int) *__UserMeta
 /////////////////////// Selector ///////////////////////////////////
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
+
+func (u *__UserMetaInfo_Selector) OrderBy_Id_Desc() *__UserMetaInfo_Selector {
+	u.orderBy = " ORDER BY Id DESC "
+	return u
+}
+
+func (u *__UserMetaInfo_Selector) OrderBy_Id_Asc() *__UserMetaInfo_Selector {
+	u.orderBy = " ORDER BY Id ASC "
+	return u
+}
+
+func (u *__UserMetaInfo_Selector) Select_Id() *__UserMetaInfo_Selector {
+	u.selectCol = "Id"
+	return u
+}
 
 func (u *__UserMetaInfo_Selector) OrderBy_UserId_Desc() *__UserMetaInfo_Selector {
 	u.orderBy = " ORDER BY UserId DESC "
@@ -1572,12 +1933,12 @@ func (d *__UserMetaInfo_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.user_meta_info (" +
-		"IsNotificationDirty, LastUserRecGen" +
+		"UserId, IsNotificationDirty, LastUserRecGen" +
 		") VALUES " + insVals
 
 	// run query
@@ -1585,6 +1946,7 @@ func MassInsert_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserId)
 		vals = append(vals, row.IsNotificationDirty)
 		vals = append(vals, row.LastUserRecGen)
 
@@ -1604,12 +1966,12 @@ func MassInsert_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 func MassReplace_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.user_meta_info (" +
-		"IsNotificationDirty, LastUserRecGen" +
+		"UserId, IsNotificationDirty, LastUserRecGen" +
 		") VALUES " + insVals
 
 	// run query
@@ -1617,6 +1979,7 @@ func MassReplace_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.UserId)
 		vals = append(vals, row.IsNotificationDirty)
 		vals = append(vals, row.LastUserRecGen)
 
@@ -1641,15 +2004,17 @@ func MassReplace_UserMetaInfo(rows []UserMetaInfo, db XODB) error {
 
 //
 
+//
+
 // UserMetaInfoByUserId retrieves a row from 'ms.user_meta_info' as a UserMetaInfo.
 //
-// Generated from index 'user_meta_info_UserId_pkey'.
+// Generated from index 'UserId2'.
 func UserMetaInfoByUserId(db XODB, userId int) (*UserMetaInfo, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`UserId, IsNotificationDirty, LastUserRecGen ` +
+		`Id, UserId, IsNotificationDirty, LastUserRecGen ` +
 		`FROM ms.user_meta_info ` +
 		`WHERE UserId = ?`
 
@@ -1659,7 +2024,36 @@ func UserMetaInfoByUserId(db XODB, userId int) (*UserMetaInfo, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, userId).Scan(&umi.UserId, &umi.IsNotificationDirty, &umi.LastUserRecGen)
+	err = db.QueryRow(sqlstr, userId).Scan(&umi.Id, &umi.UserId, &umi.IsNotificationDirty, &umi.LastUserRecGen)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+
+	OnUserMetaInfo_LoadOne(&umi)
+
+	return &umi, nil
+}
+
+// UserMetaInfoById retrieves a row from 'ms.user_meta_info' as a UserMetaInfo.
+//
+// Generated from index 'user_meta_info_Id_pkey'.
+func UserMetaInfoById(db XODB, id int) (*UserMetaInfo, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, IsNotificationDirty, LastUserRecGen ` +
+		`FROM ms.user_meta_info ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	umi := UserMetaInfo{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, id).Scan(&umi.Id, &umi.UserId, &umi.IsNotificationDirty, &umi.LastUserRecGen)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
