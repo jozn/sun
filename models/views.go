@@ -6,13 +6,13 @@ type _viewImpl int
 
 var Views _viewImpl
 
-func (e _viewImpl) UserViewSync(CurrentUserId, UserId int) *UserViewSyncAndMe {
+func (e _viewImpl) UserViewSync(CurrentUserId, UserId int) *UserSyncAndMeView {
 	u, ok := MemoryStore_User.GetUser(UserId)
 	if !ok {
-		return &UserViewSyncAndMe{}
+		return &UserSyncAndMeView{}
 	}
 
-	v := &UserViewSyncAndMe{
+	v := &UserSyncAndMeView{
 		UserId:        u.Id,
 		FollowingType: MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, UserId),
 		AppVersion:    u.AppVersion,

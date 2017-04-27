@@ -62,6 +62,7 @@ public class J {
 	public static class Like {
 		public Integer Id;
 		public Integer PostId;
+		public Integer PostTypeId;
 		public Integer UserId;
 		public Integer TypeId;
 		public Integer CreatedTime;
@@ -173,11 +174,7 @@ public class J {
 		public Integer TypeId;
 		public String Text;
 		public String FormatedText;
-		public String MediaUrl;
 		public Integer MediaCount;
-		public Integer MediaServerId;
-		public Integer Width;
-		public Integer Height;
 		public Integer SharedTo;
 		public Integer DisableComment;
 		public Integer HasTag;

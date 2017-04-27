@@ -147,6 +147,7 @@ type FollowingListMemberHistory struct {
 type Like struct {
 	Id          int
 	PostId      int
+	PostTypeId  int
 	UserId      int
 	TypeId      int
 	CreatedTime int
@@ -158,6 +159,7 @@ type Like struct {
 := &Like {
 	Id: 0,
 	PostId: 0,
+	PostTypeId: 0,
 	UserId: 0,
 	TypeId: 0,
 	CreatedTime: 0,
@@ -406,11 +408,7 @@ type Post struct {
 	TypeId         int
 	Text           string
 	FormatedText   string
-	MediaUrl       string
 	MediaCount     int
-	MediaServerId  int
-	Width          int
-	Height         int
 	SharedTo       int
 	DisableComment int
 	HasTag         int
@@ -429,11 +427,7 @@ type Post struct {
 	TypeId: 0,
 	Text: "",
 	FormatedText: "",
-	MediaUrl: "",
 	MediaCount: 0,
-	MediaServerId: 0,
-	Width: 0,
-	Height: 0,
 	SharedTo: 0,
 	DisableComment: 0,
 	HasTag: 0,

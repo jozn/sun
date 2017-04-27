@@ -21,8 +21,29 @@ func DBStructsTojava(a *base.Action) base.AppErr {
 }
 
 func DBStructsTojava2(w http.ResponseWriter, r *http.Request) {
+    a := []interface{}{
+        models.ActivityView{},
+        models.ActivityPayload{},
+        models.NotificationView{},
+        models.NotifPayload{},
+        models.NotifPayload{},
+        models.TopTagsWithPostsView{},
+        models.UserInlineView{},
+        models.PhotoView{},
+        models.PostView{},
+        models.CommentInlineInfoView{},
+        models.UserBasic{},
+        models.UserBasicAndMe{},
+        models.UserSyncAndMeView{},
+        models.UserSession{},
+        models.UserExtra{},
+
+    }
+
 	str := ""
-	str += helper.DbStructToJava(models.UserInlineView{})
+    for _, t := range a {
+        str += helper.StructToJavaStatic(t)
+    }
 	//str += helper.DbStructToJava(models.CommentInlineInfo{})
 	//str += helper.DbStructToJava(models.PostAndDetailes{})
 

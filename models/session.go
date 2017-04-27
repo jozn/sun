@@ -25,8 +25,12 @@ func Session_ProcessHttpReq(h *http.Request) *ReqParams {
 
 	isUser := Session_CheckAndSetUserSession(req)
 	if !isUser {
-		req.UserId = 0
-		req.SessionUuid = ""
+        if h.Form.Get("magic") == "true" {//todo add IS_DEBUG befor production
+
+        }else {
+            req.UserId = 0
+            req.SessionUuid = ""
+        }
 	}
 
 	return req

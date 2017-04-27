@@ -21,11 +21,7 @@ type Post__ struct {
 	TypeId         int    `json:"TypeId"`         // TypeId -
 	Text           string `json:"Text"`           // Text -
 	FormatedText   string `json:"FormatedText"`   // FormatedText -
-	MediaUrl       string `json:"MediaUrl"`       // MediaUrl -
 	MediaCount     int    `json:"MediaCount"`     // MediaCount -
-	MediaServerId  int    `json:"MediaServerId"`  // MediaServerId -
-	Width          int    `json:"Width"`          // Width -
-	Height         int    `json:"Height"`         // Height -
 	SharedTo       int    `json:"SharedTo"`       // SharedTo -
 	DisableComment int    `json:"DisableComment"` // DisableComment -
 	HasTag         int    `json:"HasTag"`         // HasTag -
@@ -59,14 +55,14 @@ func (p *Post) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.post (` +
-		`UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime` +
+		`UserId, TypeId, Text, FormatedText, MediaCount, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
-	res, err := db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
+	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaCount, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
+	res, err := db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaCount, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -94,14 +90,14 @@ func (p *Post) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.post (` +
-		`UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime` +
+		`UserId, TypeId, Text, FormatedText, MediaCount, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
-	res, err := db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
+	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaCount, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
+	res, err := db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaCount, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -139,12 +135,12 @@ func (p *Post) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.post SET ` +
-		`UserId = ?, TypeId = ?, Text = ?, FormatedText = ?, MediaUrl = ?, MediaCount = ?, MediaServerId = ?, Width = ?, Height = ?, SharedTo = ?, DisableComment = ?, HasTag = ?, LikesCount = ?, CommentsCount = ?, EditedTime = ?, CreatedTime = ?` +
+		`UserId = ?, TypeId = ?, Text = ?, FormatedText = ?, MediaCount = ?, SharedTo = ?, DisableComment = ?, HasTag = ?, LikesCount = ?, CommentsCount = ?, EditedTime = ?, CreatedTime = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime, p.Id)
-	_, err = db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaUrl, p.MediaCount, p.MediaServerId, p.Width, p.Height, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime, p.Id)
+	XOLog(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaCount, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime, p.Id)
+	_, err = db.Exec(sqlstr, p.UserId, p.TypeId, p.Text, p.FormatedText, p.MediaCount, p.SharedTo, p.DisableComment, p.HasTag, p.LikesCount, p.CommentsCount, p.EditedTime, p.CreatedTime, p.Id)
 
 	XOLogErr(err)
 	OnPost_AfterUpdate(p)
@@ -660,321 +656,6 @@ func (d *__Post_Deleter) MediaCount_GE(val int) *__Post_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MediaCount >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Post_Deleter) MediaServerId_In(ins []int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Deleter) MediaServerId_Ins(ins ...int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Deleter) MediaServerId_NotIn(ins []int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Deleter) MediaServerId_Eq(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) MediaServerId_NotEq(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) MediaServerId_LT(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) MediaServerId_LE(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) MediaServerId_GT(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) MediaServerId_GE(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Post_Deleter) Width_In(ins []int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Deleter) Width_Ins(ins ...int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Deleter) Width_NotIn(ins []int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Width NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Deleter) Width_Eq(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) Width_NotEq(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) Width_LT(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) Width_LE(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) Width_GT(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) Width_GE(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Post_Deleter) Height_In(ins []int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Deleter) Height_Ins(ins ...int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Deleter) Height_NotIn(ins []int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Height NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Deleter) Height_Eq(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) Height_NotEq(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) Height_LT(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) Height_LE(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) Height_GT(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) Height_GE(val int) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2141,321 +1822,6 @@ func (d *__Post_Updater) MediaCount_GE(val int) *__Post_Updater {
 	return d
 }
 
-func (u *__Post_Updater) MediaServerId_In(ins []int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Updater) MediaServerId_Ins(ins ...int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Updater) MediaServerId_NotIn(ins []int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Updater) MediaServerId_Eq(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) MediaServerId_NotEq(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) MediaServerId_LT(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) MediaServerId_LE(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) MediaServerId_GT(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) MediaServerId_GE(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Post_Updater) Width_In(ins []int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Updater) Width_Ins(ins ...int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Updater) Width_NotIn(ins []int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Width NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Updater) Width_Eq(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) Width_NotEq(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) Width_LT(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) Width_LE(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) Width_GT(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) Width_GE(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Post_Updater) Height_In(ins []int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Updater) Height_Ins(ins ...int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Updater) Height_NotIn(ins []int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Height NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Updater) Height_Eq(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) Height_NotEq(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) Height_LT(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) Height_LE(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) Height_GT(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) Height_GE(val int) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__Post_Updater) SharedTo_In(ins []int) *__Post_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3617,321 +2983,6 @@ func (d *__Post_Selector) MediaCount_GE(val int) *__Post_Selector {
 	return d
 }
 
-func (u *__Post_Selector) MediaServerId_In(ins []int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Selector) MediaServerId_Ins(ins ...int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Selector) MediaServerId_NotIn(ins []int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Selector) MediaServerId_Eq(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) MediaServerId_NotEq(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) MediaServerId_LT(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) MediaServerId_LE(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) MediaServerId_GT(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) MediaServerId_GE(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaServerId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Post_Selector) Width_In(ins []int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Selector) Width_Ins(ins ...int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Selector) Width_NotIn(ins []int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Width NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Selector) Width_Eq(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) Width_NotEq(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) Width_LT(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) Width_LE(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) Width_GT(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) Width_GE(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Width >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Post_Selector) Height_In(ins []int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Selector) Height_Ins(ins ...int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Selector) Height_NotIn(ins []int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Height NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Selector) Height_Eq(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) Height_NotEq(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) Height_LT(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) Height_LE(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) Height_GT(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) Height_GE(val int) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Height >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__Post_Selector) SharedTo_In(ins []int) *__Post_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4791,66 +3842,6 @@ func (d *__Post_Deleter) FormatedText_NotEq(val string) *__Post_Deleter {
 	return d
 }
 
-func (u *__Post_Deleter) MediaUrl_In(ins []string) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaUrl IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Deleter) MediaUrl_NotIn(ins []string) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaUrl NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Post_Deleter) MediaUrl_Like(val string) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Deleter) MediaUrl_Eq(val string) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Deleter) MediaUrl_NotEq(val string) *__Post_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 ////////ints
 
 func (u *__Post_Updater) Text_In(ins []string) *__Post_Updater {
@@ -4968,66 +3959,6 @@ func (d *__Post_Updater) FormatedText_NotEq(val string) *__Post_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " FormatedText != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Post_Updater) MediaUrl_In(ins []string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaUrl IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Updater) MediaUrl_NotIn(ins []string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaUrl NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Post_Updater) MediaUrl_Like(val string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Updater) MediaUrl_Eq(val string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Updater) MediaUrl_NotEq(val string) *__Post_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5155,66 +4086,6 @@ func (d *__Post_Selector) FormatedText_NotEq(val string) *__Post_Selector {
 	return d
 }
 
-func (u *__Post_Selector) MediaUrl_In(ins []string) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaUrl IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Post_Selector) MediaUrl_NotIn(ins []string) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MediaUrl NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Post_Selector) MediaUrl_Like(val string) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Post_Selector) MediaUrl_Eq(val string) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Post_Selector) MediaUrl_NotEq(val string) *__Post_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MediaUrl != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 /// End of wheres for selectors , updators, deletor
 
 /////////////////////////////// Updater /////////////////////////////
@@ -5300,14 +4171,6 @@ func (u *__Post_Updater) FormatedText(newVal string) *__Post_Updater {
 
 //ints
 
-//string
-func (u *__Post_Updater) MediaUrl(newVal string) *__Post_Updater {
-	u.updates[" MediaUrl = ? "] = newVal
-	return u
-}
-
-//ints
-
 func (u *__Post_Updater) MediaCount(newVal int) *__Post_Updater {
 	u.updates[" MediaCount = ? "] = newVal
 	return u
@@ -5320,69 +4183,6 @@ func (u *__Post_Updater) MediaCount_Increment(count int) *__Post_Updater {
 
 	if count < 0 {
 		u.updates[" MediaCount = MediaCount-? "] = -(count) //make it positive
-	}
-
-	return u
-}
-
-//string
-
-//ints
-
-func (u *__Post_Updater) MediaServerId(newVal int) *__Post_Updater {
-	u.updates[" MediaServerId = ? "] = newVal
-	return u
-}
-
-func (u *__Post_Updater) MediaServerId_Increment(count int) *__Post_Updater {
-	if count > 0 {
-		u.updates[" MediaServerId = MediaServerId+? "] = count
-	}
-
-	if count < 0 {
-		u.updates[" MediaServerId = MediaServerId-? "] = -(count) //make it positive
-	}
-
-	return u
-}
-
-//string
-
-//ints
-
-func (u *__Post_Updater) Width(newVal int) *__Post_Updater {
-	u.updates[" Width = ? "] = newVal
-	return u
-}
-
-func (u *__Post_Updater) Width_Increment(count int) *__Post_Updater {
-	if count > 0 {
-		u.updates[" Width = Width+? "] = count
-	}
-
-	if count < 0 {
-		u.updates[" Width = Width-? "] = -(count) //make it positive
-	}
-
-	return u
-}
-
-//string
-
-//ints
-
-func (u *__Post_Updater) Height(newVal int) *__Post_Updater {
-	u.updates[" Height = ? "] = newVal
-	return u
-}
-
-func (u *__Post_Updater) Height_Increment(count int) *__Post_Updater {
-	if count > 0 {
-		u.updates[" Height = Height+? "] = count
-	}
-
-	if count < 0 {
-		u.updates[" Height = Height-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -5617,21 +4417,6 @@ func (u *__Post_Selector) Select_FormatedText() *__Post_Selector {
 	return u
 }
 
-func (u *__Post_Selector) OrderBy_MediaUrl_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY MediaUrl DESC "
-	return u
-}
-
-func (u *__Post_Selector) OrderBy_MediaUrl_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY MediaUrl ASC "
-	return u
-}
-
-func (u *__Post_Selector) Select_MediaUrl() *__Post_Selector {
-	u.selectCol = "MediaUrl"
-	return u
-}
-
 func (u *__Post_Selector) OrderBy_MediaCount_Desc() *__Post_Selector {
 	u.orderBy = " ORDER BY MediaCount DESC "
 	return u
@@ -5644,51 +4429,6 @@ func (u *__Post_Selector) OrderBy_MediaCount_Asc() *__Post_Selector {
 
 func (u *__Post_Selector) Select_MediaCount() *__Post_Selector {
 	u.selectCol = "MediaCount"
-	return u
-}
-
-func (u *__Post_Selector) OrderBy_MediaServerId_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY MediaServerId DESC "
-	return u
-}
-
-func (u *__Post_Selector) OrderBy_MediaServerId_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY MediaServerId ASC "
-	return u
-}
-
-func (u *__Post_Selector) Select_MediaServerId() *__Post_Selector {
-	u.selectCol = "MediaServerId"
-	return u
-}
-
-func (u *__Post_Selector) OrderBy_Width_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY Width DESC "
-	return u
-}
-
-func (u *__Post_Selector) OrderBy_Width_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY Width ASC "
-	return u
-}
-
-func (u *__Post_Selector) Select_Width() *__Post_Selector {
-	u.selectCol = "Width"
-	return u
-}
-
-func (u *__Post_Selector) OrderBy_Height_Desc() *__Post_Selector {
-	u.orderBy = " ORDER BY Height DESC "
-	return u
-}
-
-func (u *__Post_Selector) OrderBy_Height_Asc() *__Post_Selector {
-	u.orderBy = " ORDER BY Height ASC "
-	return u
-}
-
-func (u *__Post_Selector) Select_Height() *__Post_Selector {
-	u.selectCol = "Height"
 	return u
 }
 
@@ -6065,12 +4805,12 @@ func (d *__Post_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_Post(rows []Post, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.post (" +
-		"UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime" +
+		"UserId, TypeId, Text, FormatedText, MediaCount, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -6082,11 +4822,7 @@ func MassInsert_Post(rows []Post, db XODB) error {
 		vals = append(vals, row.TypeId)
 		vals = append(vals, row.Text)
 		vals = append(vals, row.FormatedText)
-		vals = append(vals, row.MediaUrl)
 		vals = append(vals, row.MediaCount)
-		vals = append(vals, row.MediaServerId)
-		vals = append(vals, row.Width)
-		vals = append(vals, row.Height)
 		vals = append(vals, row.SharedTo)
 		vals = append(vals, row.DisableComment)
 		vals = append(vals, row.HasTag)
@@ -6111,12 +4847,12 @@ func MassInsert_Post(rows []Post, db XODB) error {
 func MassReplace_Post(rows []Post, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.post (" +
-		"UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime" +
+		"UserId, TypeId, Text, FormatedText, MediaCount, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -6128,11 +4864,7 @@ func MassReplace_Post(rows []Post, db XODB) error {
 		vals = append(vals, row.TypeId)
 		vals = append(vals, row.Text)
 		vals = append(vals, row.FormatedText)
-		vals = append(vals, row.MediaUrl)
 		vals = append(vals, row.MediaCount)
-		vals = append(vals, row.MediaServerId)
-		vals = append(vals, row.Width)
-		vals = append(vals, row.Height)
 		vals = append(vals, row.SharedTo)
 		vals = append(vals, row.DisableComment)
 		vals = append(vals, row.HasTag)
@@ -6182,13 +4914,48 @@ func MassReplace_Post(rows []Post, db XODB) error {
 
 //
 
+// PostsByUserId retrieves a row from 'ms.post' as a Post.
 //
+// Generated from index 'UserId'.
+func PostsByUserId(db XODB, userId int) ([]*Post, error) {
+	var err error
 
-//
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, TypeId, Text, FormatedText, MediaCount, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime ` +
+		`FROM ms.post ` +
+		`WHERE UserId = ?`
 
-//
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
 
-//
+	// load results
+	res := []*Post{}
+	for q.Next() {
+		p := Post{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaCount, &p.SharedTo, &p.DisableComment, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.EditedTime, &p.CreatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &p)
+	}
+
+	OnPost_LoadMany(res)
+
+	return res, nil
+}
 
 // PostById retrieves a row from 'ms.post' as a Post.
 //
@@ -6198,7 +4965,7 @@ func PostById(db XODB, id int) (*Post, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserId, TypeId, Text, FormatedText, MediaUrl, MediaCount, MediaServerId, Width, Height, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime ` +
+		`Id, UserId, TypeId, Text, FormatedText, MediaCount, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime ` +
 		`FROM ms.post ` +
 		`WHERE Id = ?`
 
@@ -6208,7 +4975,7 @@ func PostById(db XODB, id int) (*Post, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaUrl, &p.MediaCount, &p.MediaServerId, &p.Width, &p.Height, &p.SharedTo, &p.DisableComment, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.EditedTime, &p.CreatedTime)
+	err = db.QueryRow(sqlstr, id).Scan(&p.Id, &p.UserId, &p.TypeId, &p.Text, &p.FormatedText, &p.MediaCount, &p.SharedTo, &p.DisableComment, &p.HasTag, &p.LikesCount, &p.CommentsCount, &p.EditedTime, &p.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

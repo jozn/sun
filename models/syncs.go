@@ -8,7 +8,7 @@ import (
 )
 
 //TODO: must add update users as well
-func SyncGetAllChangedUser(CurrentUserId, LastTime int) (res []*UserViewSyncAndMe) {
+func SyncGetAllChangedUser(CurrentUserId, LastTime int) (res []*UserSyncAndMeView) {
 	var contactsUsers []int
 	var followedUsers []int
 

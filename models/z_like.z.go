@@ -18,6 +18,7 @@ import (
 type Like__ struct {
 	Id          int `json:"Id"`          // Id -
 	PostId      int `json:"PostId"`      // PostId -
+	PostTypeId  int `json:"PostTypeId"`  // PostTypeId -
 	UserId      int `json:"UserId"`      // UserId -
 	TypeId      int `json:"TypeId"`      // TypeId -
 	CreatedTime int `json:"CreatedTime"` // CreatedTime -
@@ -47,14 +48,14 @@ func (l *Like) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.likes (` +
-		`PostId, UserId, TypeId, CreatedTime` +
+		`PostId, PostTypeId, UserId, TypeId, CreatedTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?` +
+		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
-	res, err := db.Exec(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
+	XOLog(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime)
+	res, err := db.Exec(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -82,14 +83,14 @@ func (l *Like) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.likes (` +
-		`PostId, UserId, TypeId, CreatedTime` +
+		`PostId, PostTypeId, UserId, TypeId, CreatedTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?` +
+		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
-	res, err := db.Exec(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime)
+	XOLog(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime)
+	res, err := db.Exec(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -127,12 +128,12 @@ func (l *Like) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.likes SET ` +
-		`PostId = ?, UserId = ?, TypeId = ?, CreatedTime = ?` +
+		`PostId = ?, PostTypeId = ?, UserId = ?, TypeId = ?, CreatedTime = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
-	_, err = db.Exec(sqlstr, l.PostId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
+	XOLog(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
+	_, err = db.Exec(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
 
 	XOLogErr(err)
 	OnLike_AfterUpdate(l)
@@ -438,6 +439,111 @@ func (d *__Like_Deleter) PostId_GE(val int) *__Like_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " PostId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Like_Deleter) PostTypeId_In(ins []int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Deleter) PostTypeId_Ins(ins ...int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Deleter) PostTypeId_NotIn(ins []int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Like_Deleter) PostTypeId_Eq(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Deleter) PostTypeId_NotEq(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Deleter) PostTypeId_LT(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Deleter) PostTypeId_LE(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Deleter) PostTypeId_GT(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Deleter) PostTypeId_GE(val int) *__Like_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -974,6 +1080,111 @@ func (d *__Like_Updater) PostId_GE(val int) *__Like_Updater {
 	return d
 }
 
+func (u *__Like_Updater) PostTypeId_In(ins []int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Updater) PostTypeId_Ins(ins ...int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Updater) PostTypeId_NotIn(ins []int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Like_Updater) PostTypeId_Eq(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Updater) PostTypeId_NotEq(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Updater) PostTypeId_LT(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Updater) PostTypeId_LE(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Updater) PostTypeId_GT(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Updater) PostTypeId_GE(val int) *__Like_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Like_Updater) UserId_In(ins []int) *__Like_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1505,6 +1716,111 @@ func (d *__Like_Selector) PostId_GE(val int) *__Like_Selector {
 	return d
 }
 
+func (u *__Like_Selector) PostTypeId_In(ins []int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Selector) PostTypeId_Ins(ins ...int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Like_Selector) PostTypeId_NotIn(ins []int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " PostTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Like_Selector) PostTypeId_Eq(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Selector) PostTypeId_NotEq(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Selector) PostTypeId_LT(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Selector) PostTypeId_LE(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Selector) PostTypeId_GT(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Like_Selector) PostTypeId_GE(val int) *__Like_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " PostTypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Like_Selector) UserId_In(ins []int) *__Like_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1876,6 +2192,27 @@ func (u *__Like_Updater) PostId_Increment(count int) *__Like_Updater {
 
 //ints
 
+func (u *__Like_Updater) PostTypeId(newVal int) *__Like_Updater {
+	u.updates[" PostTypeId = ? "] = newVal
+	return u
+}
+
+func (u *__Like_Updater) PostTypeId_Increment(count int) *__Like_Updater {
+	if count > 0 {
+		u.updates[" PostTypeId = PostTypeId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" PostTypeId = PostTypeId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
 func (u *__Like_Updater) UserId(newVal int) *__Like_Updater {
 	u.updates[" UserId = ? "] = newVal
 	return u
@@ -1969,6 +2306,21 @@ func (u *__Like_Selector) OrderBy_PostId_Asc() *__Like_Selector {
 
 func (u *__Like_Selector) Select_PostId() *__Like_Selector {
 	u.selectCol = "PostId"
+	return u
+}
+
+func (u *__Like_Selector) OrderBy_PostTypeId_Desc() *__Like_Selector {
+	u.orderBy = " ORDER BY PostTypeId DESC "
+	return u
+}
+
+func (u *__Like_Selector) OrderBy_PostTypeId_Asc() *__Like_Selector {
+	u.orderBy = " ORDER BY PostTypeId ASC "
+	return u
+}
+
+func (u *__Like_Selector) Select_PostTypeId() *__Like_Selector {
+	u.selectCol = "PostTypeId"
 	return u
 }
 
@@ -2285,12 +2637,12 @@ func (d *__Like_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_Like(rows []Like, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.likes (" +
-		"PostId, UserId, TypeId, CreatedTime" +
+		"PostId, PostTypeId, UserId, TypeId, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -2299,6 +2651,7 @@ func MassInsert_Like(rows []Like, db XODB) error {
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.PostId)
+		vals = append(vals, row.PostTypeId)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.TypeId)
 		vals = append(vals, row.CreatedTime)
@@ -2319,12 +2672,12 @@ func MassInsert_Like(rows []Like, db XODB) error {
 func MassReplace_Like(rows []Like, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.likes (" +
-		"PostId, UserId, TypeId, CreatedTime" +
+		"PostId, PostTypeId, UserId, TypeId, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -2333,6 +2686,7 @@ func MassReplace_Like(rows []Like, db XODB) error {
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.PostId)
+		vals = append(vals, row.PostTypeId)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.TypeId)
 		vals = append(vals, row.CreatedTime)
@@ -2362,6 +2716,80 @@ func MassReplace_Like(rows []Like, db XODB) error {
 
 //
 
+//
+
+// LikesById retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'Id'.
+func LikesById(db XODB, id int) ([]*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, PostTypeId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Like{}
+	for q.Next() {
+		l := Like{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&l.Id, &l.PostId, &l.PostTypeId, &l.UserId, &l.TypeId, &l.CreatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &l)
+	}
+
+	OnLike_LoadMany(res)
+
+	return res, nil
+}
+
+// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'PostId'.
+func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, PostTypeId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE PostId = ? AND UserId = ?`
+
+	// run query
+	XOLog(sqlstr, postId, userId)
+	l := Like{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.PostTypeId, &l.UserId, &l.TypeId, &l.CreatedTime)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+
+	OnLike_LoadOne(&l)
+
+	return &l, nil
+}
+
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId_2'.
@@ -2370,7 +2798,7 @@ func LikesByPostId(db XODB, postId int) ([]*Like, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`Id, PostId, PostTypeId, UserId, TypeId, CreatedTime ` +
 		`FROM ms.likes ` +
 		`WHERE PostId = ?`
 
@@ -2391,7 +2819,7 @@ func LikesByPostId(db XODB, postId int) ([]*Like, error) {
 		}
 
 		// scan
-		err = q.Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+		err = q.Scan(&l.Id, &l.PostId, &l.PostTypeId, &l.UserId, &l.TypeId, &l.CreatedTime)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -2413,7 +2841,7 @@ func LikeById(db XODB, id int) (*Like, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, PostId, UserId, TypeId, CreatedTime ` +
+		`Id, PostId, PostTypeId, UserId, TypeId, CreatedTime ` +
 		`FROM ms.likes ` +
 		`WHERE Id = ?`
 
@@ -2423,7 +2851,7 @@ func LikeById(db XODB, id int) (*Like, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&l.Id, &l.PostId, &l.UserId, &l.TypeId, &l.CreatedTime)
+	err = db.QueryRow(sqlstr, id).Scan(&l.Id, &l.PostId, &l.PostTypeId, &l.UserId, &l.TypeId, &l.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

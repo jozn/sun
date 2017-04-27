@@ -72,7 +72,7 @@ type UserTable struct {
 }
 
 /////////// for Responses //////////////////////////////////////
-type UserViewSyncAndMe struct {
+type UserSyncAndMeView struct {
 	UserBasic
 	UserId        int
 	FollowingType int

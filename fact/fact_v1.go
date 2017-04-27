@@ -20,34 +20,34 @@ import (
 
 const NUM_OF_USERS = 80
 
-func FactPost(c *base.Action) {
-	FactPosts()
-}
-func FactPosts() {
+func FactPostText() {
 	p := models.Post{}
 	p.TypeId = 1
 	p.UserId = rand.Intn(80) + 1
 	p.Text = helper.FactRandStrEmoji(200, true)
 
-	if rand.Intn(3) == 1 {
+	/*if rand.Intn(10) < 7 {
 		img, W, H := randImage()
-		p.MediaServerId = 1
-		p.MediaUrl = img
-		p.Width = W
-		p.Height = H
 		p.TypeId = 2
-	}
+	}*/
 
 	models.Post_AddNewPostToDbAndItsTagsAndCounters(&p)
 	//base.DbInsertStruct(&p,"post")
 
 }
 
-func FactPosts2(c *base.Action) {
-	target_url := "http://localhost:5000/v1/post/add"
-	f, _, _ := randImage()
+func FactPosts(c *base.Action) {
+	target_url := "http://localhost:5000/v1/post/add?magic=true&user_id=%d"
+    target_url = fmt.Sprintf(target_url,  rand.Intn(80) + 1)
+
+    if rand.Intn(10) < 7 {
+        f, _, _ := randImage()
+        postFile(f, target_url, helper.FactRandStrEmoji(200, true))
+    }else {
+        FactPostText()
+    }
 	//filename := "./astaxie.pdf"
-	postFile(f, target_url, helper.FactRandStrEmoji(200, true))
+
 }
 
 func postFile(filename string, targetUrl string, text string) error {

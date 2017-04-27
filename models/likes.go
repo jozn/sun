@@ -6,10 +6,15 @@ import (
 )
 
 func Like_LikePost(UserId, PostId int) {
+	p, ok := Store.GetPostById(PostId)
+	if !ok {
+		return
+	}
 	l := &Like{
 		UserId:      UserId,
+		PostTypeId:  p.TypeId,
 		PostId:      PostId,
-		TypeId:      0,
+		TypeId:      0, //emotions
 		CreatedTime: helper.TimeNow(),
 	}
 

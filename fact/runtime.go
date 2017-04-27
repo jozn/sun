@@ -5,12 +5,6 @@ import (
 	"ms/sun/helper"
 )
 
-func Run1(c *base.Action) {
-	updateUsersAbout()
-}
-func Run2(c *base.Action) {
-	FactPosts()
-}
 
 func updateUsersAbout() {
 	for i := 0; i < _factLastUserId(); i++ {

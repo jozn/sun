@@ -30,7 +30,7 @@ func (e _messageModelImple) SendAndStoreMessage(ToUserId int, msg MessagesTableF
 
 	data := struct {
 		Message MessagesTableFromClient
-		User    *UserViewSyncAndMe
+		User    *UserSyncAndMeView
 	}{}
 	data.Message = msg
 	data.User = Views.UserViewSync(ToUserId, msg.UserId)
@@ -205,7 +205,7 @@ func (e _messageModelImple) SendManyMessagesRowsToSingleUser(ToUserId int, msgRo
 	}
 
 	//arr := make([]int,0,len(mp))
-	users := make([]*UserViewSyncAndMe, 0, len(mapOfSenders))
+	users := make([]*UserSyncAndMeView, 0, len(mapOfSenders))
 	for id, _ := range mapOfSenders {
 		//arr = append(arr,id)
 		users = append(users, Views.UserViewSync(ToUserId, id))
@@ -232,7 +232,7 @@ func (e _messageModelImple) SendManyMessagesRowsToSingleUser(ToUserId int, msgRo
 
 	dataSend := struct {
 		Messages []*MessagesTableFromClient
-		Users    []*UserViewSyncAndMe
+		Users    []*UserSyncAndMeView
 	}{
 		msgsRes, users,
 	}
@@ -254,7 +254,7 @@ func (e _messageModelImple) SendManyMessagesClientsToSingleUser(ToUserId int, ms
 		mapOfSenders[m.UserId] = true
 	}
 
-	users := make([]*UserViewSyncAndMe, 0, len(mapOfSenders))
+	users := make([]*UserSyncAndMeView, 0, len(mapOfSenders))
 	for id, _ := range mapOfSenders {
 		users = append(users, Views.UserViewSync(ToUserId, id))
 	}
@@ -277,7 +277,7 @@ func (e _messageModelImple) SendManyMessagesClientsToSingleUser(ToUserId int, ms
 
 	dataSend := struct {
 		Messages []MessagesTableFromClient
-		Users    []*UserViewSyncAndMe
+		Users    []*UserSyncAndMeView
 	}{
 		msgClients, users,
 	}

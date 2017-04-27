@@ -63,7 +63,7 @@ func GetProfileInfoAction(c *base.Action) base.AppErr {
 
 	type info struct {
 		models.UserCounts
-		models.UserViewSyncAndMe
+		models.UserSyncAndMeView
 	}
 
 	res := info{
