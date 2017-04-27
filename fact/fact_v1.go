@@ -38,14 +38,14 @@ func FactPostText() {
 
 func FactPosts(c *base.Action) {
 	target_url := "http://localhost:5000/v1/post/add?magic=true&user_id=%d"
-    target_url = fmt.Sprintf(target_url,  rand.Intn(80) + 1)
+	target_url = fmt.Sprintf(target_url, rand.Intn(80)+1)
 
-    if rand.Intn(10) < 7 {
-        f, _, _ := randImage()
-        postFile(f, target_url, helper.FactRandStrEmoji(200, true))
-    }else {
-        FactPostText()
-    }
+	if rand.Intn(10) < 7 {
+		f, _, _ := randImage()
+		postFile(f, target_url, helper.FactRandStrEmoji(200, true))
+	} else {
+		FactPostText()
+	}
 	//filename := "./astaxie.pdf"
 
 }

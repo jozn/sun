@@ -96,6 +96,14 @@ func (e _memoryStoreImpl) UserLikedPostsList_IsLiked(UserId int, PostId int) boo
 	return e.UserLikedPostsList_Get(UserId).Contains(PostId)
 }
 
+func (e _memoryStoreImpl) UserLikedPostsList_MyLiked(UserId int, PostId int) bool {
+	b := 0
+	if e.UserLikedPostsList_Get(UserId).Contains(PostId) {
+		b = 1
+	}
+	return b
+}
+
 func (e _memoryStoreImpl) UserLikedPostsList_Invalidate(UserId int) {
 	key := fmt.Sprintf("UserLikePosts:%d", UserId)
 	Cacher.Delete(key)

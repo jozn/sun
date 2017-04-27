@@ -34,39 +34,16 @@ func (e _viewImpl) PostSingleView(post *Post, UserId int) *PostView {
 		v.Post = post
 		v.TypeName = PostTypeIdToName(post.TypeId)
 		if UserId > 0 {
-			v.MyLike = 0
-			v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
+			v.MyLike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id)
+			//v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
 		}
 		if post.TypeId == 2 {
 			ph, _ := Store.Photo_ByPostId(post.Id)
-			v.Photo = ph
 			v.PhotoView = Convert_PhotoToNewPhotoView(ph)
 		}
 		u, err := Views.GetUserInlineView(post.UserId)
 		if err == nil {
 			v.Sender = u
-		}
-	}
-	return v
-}
-
-func (e _viewImpl) PostSingleView_OLD(post *Post, UserId int, mp map[int]*Photo) *PostView {
-	v := &PostView{}
-	if post != nil {
-		v.Post = post
-		v.TypeName = PostTypeIdToName(post.TypeId)
-		u, err := Views.GetUserInlineView(post.UserId)
-		if err == nil {
-			v.Sender = u
-			//v.Comments = nil //GetPostLastComments(post.Id)
-			//v.Likes = nil    //GetPostLastLikes(post.Id)
-			//SetPostImages(&v)
-			v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
-			if post.TypeId == 2 {
-				v.Photo = mp[post.Id]
-				v.PhotoView = Convert_PhotoToNewPhotoView(mp[post.Id])
-			}
-			return v
 		}
 	}
 	return v

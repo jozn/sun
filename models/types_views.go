@@ -59,7 +59,6 @@ type PostView struct {
 	TypeName string //for text, photo video
 	//Comments []CommentInlineInfo
 	//Likes    []Like
-	Photo     *Photo
 	PhotoView *PhotoView
 	//Images   *ImageResHolder
 	AmIlike bool //dep

@@ -5,7 +5,6 @@ import (
 	"ms/sun/helper"
 )
 
-
 func updateUsersAbout() {
 	for i := 0; i < _factLastUserId(); i++ {
 		s := helper.FactRandStrEmoji(120, true)
