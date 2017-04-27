@@ -3,6 +3,8 @@ package ctrl
 import (
 	"ms/sun/base"
 	"ms/sun/models"
+    "ms/sun/helper"
+    "fmt"
 )
 
 func RecommendPostsCtrl(c *base.Action) base.AppErr {
@@ -44,14 +46,42 @@ func RecommendUsersCtrl(c *base.Action) base.AppErr {
 }
 
 func RecommendTagsCtrl(c *base.Action) base.AppErr {
-	c.SendJson(models.TopTags)
+    p := UpdateSessionActivityIfUser(c)
+    /*min := (p.Page - 1 ) * p.Limit
+    if min < 0{
+        min = 0
+    }
+    max := min + p.Limit
+    if len(models.TopTags) < max {
+        if len(models.TopTags) >= min{//err
+            c.SendJson(nil)
+            return nil
+        }
+        max = len(models.TopTags)
+    }*/
+
+    r,ok := helper.MaxPageLimit(len(models.TopPosts),p.Page,p.Limit)
+
+    if !ok {
+        c.SendJson(nil)
+        return nil
+    }
+
+	c.SendJson(models.TopTags[r.Start:r.End])
 	return nil
 }
 
 func RecommendTagsWithPostsCtrl(c *base.Action) base.AppErr {
+    p := UpdateSessionActivityIfUser(c)
 
-	rs := models.TopTagsWithPostsResult
+    r,ok := helper.MaxPageLimit(len(models.TopTagsWithPostsResult),p.Page,p.Limit)
+    fmt.Println(r,ok)
 
-	c.SendJson(rs)
-	return nil
+    if !ok {
+        c.SendJson(nil)
+        return nil
+    }
+
+    c.SendJson(models.TopTagsWithPostsResult[r.Start:r.End])
+    return nil
 }
