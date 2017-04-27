@@ -61,7 +61,7 @@ type PostView struct {
 	//Likes    []Like
 	PhotoView *PhotoView
 	//Images   *ImageResHolder
-	AmIlike bool //dep
+	//AmIlike bool //dep
 	MyLike  int  //type of like
 	Sender  UserInlineView
 }

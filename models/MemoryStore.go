@@ -96,7 +96,7 @@ func (e _memoryStoreImpl) UserLikedPostsList_IsLiked(UserId int, PostId int) boo
 	return e.UserLikedPostsList_Get(UserId).Contains(PostId)
 }
 
-func (e _memoryStoreImpl) UserLikedPostsList_MyLiked(UserId int, PostId int) bool {
+func (e _memoryStoreImpl) UserLikedPostsList_MyLiked(UserId int, PostId int) int {
 	b := 0
 	if e.UserLikedPostsList_Get(UserId).Contains(PostId) {
 		b = 1

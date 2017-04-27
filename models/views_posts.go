@@ -34,7 +34,7 @@ func (e _viewImpl) PostSingleView(post *Post, UserId int) *PostView {
 		v.Post = post
 		v.TypeName = PostTypeIdToName(post.TypeId)
 		if UserId > 0 {
-			v.MyLike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id)
+			v.MyLike = MemoryStore.UserLikedPostsList_MyLiked(UserId, post.Id)
 			//v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
 		}
 		if post.TypeId == 2 {
