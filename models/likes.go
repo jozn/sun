@@ -36,6 +36,7 @@ func Like_UnlikePost(UserId, PostId int) {
 	err = l.Delete(base.DB)
 	if err == nil {
 		MemoryStore.UserLikedPostsList_Remove(UserId, PostId)
+        NewPost_Updater().LikesCount_Increment(-1).Id_Eq(PostId).Update(base.DB)
 		Notification_OnPostUnLiked(l)
 		Activity_OnPostUnLiked(l)
 	}
