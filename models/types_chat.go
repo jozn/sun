@@ -1,6 +1,9 @@
 package models
 
-import "ms/sun/helper"
+import (
+	"ms/sun/helper"
+	"ms/sun/models/x"
+)
 
 /*
 type Message struct {
@@ -16,8 +19,9 @@ type Message struct {
 	_exists, _deleted bool
 }
 */
+/*
 
-func (m *Message) FromClientMessage(toUser int, msg MessagesTableFromClient) {
+func (m *x.Message) FromClientMessage(toUser int, msg MessagesTableFromClient) {
 	m.FromUserID = msg.UserId
 	m.ToUserId = toUser
 	m.MessageKey = msg.MessageKey
@@ -26,7 +30,26 @@ func (m *Message) FromClientMessage(toUser int, msg MessagesTableFromClient) {
 	m.TimeMs = msg.CreatedMs
 }
 
-func (m *Message) FromClientMessageOptimized(toUser int, msg MessagesTableFromClient) {
+func (m *x.Message) FromClientMessageOptimized(toUser int, msg MessagesTableFromClient) {
+	m.FromUserID = msg.UserId
+	m.ToUserId = toUser
+	m.MessageKey = msg.MessageKey
+	m.RoomKey = msg.RoomKey
+	//m.Data=       helper.ToJson(msg)
+	m.TimeMs = msg.CreatedMs
+}
+*/
+
+func Message_FromClientMessage(m *x.Message, toUser int, msg MessagesTableFromClient) {
+	m.FromUserID = msg.UserId
+	m.ToUserId = toUser
+	m.MessageKey = msg.MessageKey
+	m.RoomKey = msg.RoomKey
+	m.Data = helper.ToJson(msg)
+	m.TimeMs = msg.CreatedMs
+}
+
+func Message_FromClientMessageOptimized(m *x.Message, toUser int, msg MessagesTableFromClient) {
 	m.FromUserID = msg.UserId
 	m.ToUserId = toUser
 	m.MessageKey = msg.MessageKey

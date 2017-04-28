@@ -12,6 +12,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
+	"ms/sun/models/x"
 	"ms/sun/shared"
 	"net/http"
 	"os"
@@ -21,7 +22,7 @@ import (
 const NUM_OF_USERS = 80
 
 func FactPostText() {
-	p := models.Post{}
+	p := x.Post{}
 	p.TypeId = 1
 	p.UserId = rand.Intn(80) + 1
 	p.Text = helper.FactRandStrEmoji(200, true)
@@ -228,7 +229,7 @@ func FactDelayMix(c *base.Action) {
 }
 
 func _factLastPostId() int {
-	var ps []models.Post
+	var ps []x.Post
 	base.DB.Select(&ps, "select * from post order by Id DESC limit 2 ")
 	p := ps[0]
 
@@ -237,7 +238,7 @@ func _factLastPostId() int {
 }
 
 func _factLastUserId() int {
-	var ps []models.User
+	var ps []x.User
 	base.DB.Select(&ps, "select * from user order by Id DESC limit 2 ")
 	p := ps[0]
 
@@ -248,7 +249,7 @@ func _factLastUserId() int {
 func FactLike2(c *base.Action) {
 	print("factoring likes post\n")
 	//COUNT = 50
-	l := models.Like{}
+	l := x.Like{}
 	l.PostId = rand.Intn(500) + 1
 	l.UserId = rand.Intn(80) + 1
 	l.CreatedTime = now()

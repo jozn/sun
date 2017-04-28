@@ -5,6 +5,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/ds"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 	"time"
 )
 
@@ -42,19 +43,19 @@ func Recommend_Job_TopPosts_Infinite() {
 
 //////////////// User //////////////////
 func Recommend_Scheduler_GenUserRecomendations(ForUserId int) {
-	m, ok := Store.UserMetaInfo_ByUserId(ForUserId)
+	m, ok := x.Store.UserMetaInfo_ByUserId(ForUserId)
 	if ok {
 		if m.LastUserRecGen+4*3600 < helper.TimeNow() {
 			Recommend_GenPostsForUser_BG(ForUserId)
 		}
-	}else {
-        m = &UserMetaInfo{
-            UserId: ForUserId,
-        }
-        m.LastUserRecGen = 0
-        m.Save(base.DB)
-        Recommend_GenPostsForUser_BG(ForUserId)
-    }
+	} else {
+		m = &x.UserMetaInfo{
+			UserId: ForUserId,
+		}
+		m.LastUserRecGen = 0
+		m.Save(base.DB)
+		Recommend_GenPostsForUser_BG(ForUserId)
+	}
 
 }
 
@@ -62,12 +63,12 @@ func Recommend_Scheduler_GenUserRecomendations(ForUserId int) {
 func Recommend_GenPostsForUser_BG(ForUserId int) {
 	go func() {
 		defer helper.JustRecover()
-        Recommend_ReGenUsersForUser(ForUserId)
-        m, ok := Store.UserMetaInfo_ByUserId(ForUserId)
-        if ok {
-            m.LastUserRecGen = helper.TimeNow()
-            m.Save(base.DB)
-        }
+		Recommend_ReGenUsersForUser(ForUserId)
+		m, ok := x.Store.UserMetaInfo_ByUserId(ForUserId)
+		if ok {
+			m.LastUserRecGen = helper.TimeNow()
+			m.Save(base.DB)
+		}
 	}()
 
 }
@@ -76,19 +77,18 @@ func Recommend_GenTopPosts(limit int) []int {
 	//EXPLAIN SELECT l.*, p.TypeId,COUNT(p.Id) AS Cnt FROM likes l JOIN post p ON p.Id = l.PostId  WHERE p.CreatedTime > 1477914190 GROUP BY p.Id ORDER BY cnt DESC LIMIT 500
 	var ids []int
 
-	last, err := NewPost_Selector().Select_Id().OrderBy_Id_Desc().Limit(1).GetInt(base.DB)
-	XOLogErr(err)
+	last, err := x.NewPost_Selector().Select_Id().OrderBy_Id_Desc().Limit(1).GetInt(base.DB)
+	x.XOLogErr(err)
 	if err == nil {
 		q := `SELECT p.Id FROM likes l JOIN post p ON p.Id = l.PostId  WHERE p.Id > ? AND p.TypeId = ? GROUP BY p.Id  ORDER BY COUNT(p.Id) DESC ,p.Id DESC LIMIT 500`
 		err = base.DB.Select(&ids, q, last-20000, POST_TYPE_PHOTO)
-		XOLogErr(err)
+		x.XOLogErr(err)
 	}
 
 	return ids
 }
 
 ////////////////// Recom Users //////////////////
-
 
 func Recommend_ReGenUsersForUser(ForUserId int) {
 	contacts_coll := Contacts_GetChachesContactsUserIdsForUserId(ForUserId, 0) //contacts UserIds list
@@ -102,7 +102,7 @@ func Recommend_ReGenUsersForUser(ForUserId int) {
 	}
 
 	//select those that they follows me but i don'f follow them
-	toFollowRows, err := NewFollowingListMember_Selector().
+	toFollowRows, err := x.NewFollowingListMember_Selector().
 		Select_UserId().
 		FollowedUserId_Eq(ForUserId).
 		UserId_NotIn(notUserIds).
@@ -123,9 +123,9 @@ func Recommend_ReGenUsersForUser(ForUserId int) {
 	}
 	toFollow.SortDesc()
 
-	var rows []RecommendUser
+	var rows []x.RecommendUser
 	for _, id := range toFollow.Values() {
-		rows = append(rows, RecommendUser{
+		rows = append(rows, x.RecommendUser{
 			UserId:      ForUserId,
 			TargetId:    id,
 			Weight:      0.5,
@@ -134,7 +134,7 @@ func Recommend_ReGenUsersForUser(ForUserId int) {
 	}
 
 	for _, id := range TopUsers {
-		rows = append(rows, RecommendUser{
+		rows = append(rows, x.RecommendUser{
 			UserId:      ForUserId,
 			TargetId:    id,
 			Weight:      0.2,
@@ -142,7 +142,7 @@ func Recommend_ReGenUsersForUser(ForUserId int) {
 		})
 	}
 
-	MassInsert_RecommendUser(rows, base.DB)
+	x.MassInsert_RecommendUser(rows, base.DB)
 
 }
 
@@ -152,7 +152,7 @@ func Recommend_GetTopPosts(ForUserId int) {
 
 func Recommend_genTopUsers(cnt int) []int {
 	//"select FollowedUserId as UserId, Count(*) AS Cnt form following_list_member where UpdatedTimeMs < ? group by FollowedUserId order by Cnt desc  limit 50  "
-	rows, err := NewFollowingListMember_Selector().Limit(20000).OrderBy_Id_Desc().GetRows(base.DB)
+	rows, err := x.NewFollowingListMember_Selector().Limit(20000).OrderBy_Id_Desc().GetRows(base.DB)
 	if err != nil {
 		return []int{}
 	}
@@ -175,12 +175,12 @@ func Recommend_genTopUsers(cnt int) []int {
 }
 
 func Recommend_GenTopPosts__LEGACY(limit int) []int {
-	rowsId, err := NewLike_Selector().Select_PostId().Limit(100000).OrderBy_Id_Desc().GetIntSlice(base.DB)
+	rowsId, err := x.NewLike_Selector().Select_PostId().Limit(100000).OrderBy_Id_Desc().GetIntSlice(base.DB)
 	if err != nil {
 		return []int{}
 	}
 
-	rowsId, err = NewPost_Selector().Select_Id().Id_In(rowsId).TypeId_Eq(POST_TYPE_PHOTO).GetIntSlice(base.DB)
+	rowsId, err = x.NewPost_Selector().Select_Id().Id_In(rowsId).TypeId_Eq(POST_TYPE_PHOTO).GetIntSlice(base.DB)
 	if err != nil {
 		return []int{}
 	}

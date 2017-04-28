@@ -4,6 +4,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/config"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 	"time"
 )
 
@@ -23,11 +24,11 @@ func Tags_RepeatedlyJobs() {
 
 }
 
-var TopTags = make([]*Tag, 0, 50)
+var TopTags = make([]*x.Tag, 0, 50)
 var TopTagsWithPostsResult = make([]*TopTagsWithPostsView, 0, 50)
 
 func ReloadTopTags() {
-	tags, err := NewTag_Selector().OrderBy_Count_Desc().Limit(50).GetRows(base.DB)
+	tags, err := x.NewTag_Selector().OrderBy_Count_Desc().Limit(50).GetRows(base.DB)
 	if err == nil {
 		TopTags = tags
 	}
@@ -38,7 +39,7 @@ func ReloadTopPostsForTopTags() {
 	var newTopTagsWithPosts = make([]*TopTagsWithPostsView, 0, 50)
 
 	for _, t := range tags {
-		postsIds, err := NewTagsPost_Selector().Select_PostId().TagId_Eq(t.Id).TypeId_Eq(POST_TYPE_PHOTO).Limit(4).OrderBy_Id_Desc().GetIntSlice(base.DB)
+		postsIds, err := x.NewTagsPost_Selector().Select_PostId().TagId_Eq(t.Id).TypeId_Eq(POST_TYPE_PHOTO).Limit(4).OrderBy_Id_Desc().GetIntSlice(base.DB)
 		if err != nil {
 			continue
 		}
@@ -54,7 +55,7 @@ func ReloadTopPostsForTopTags() {
 	TopTagsWithPostsResult = newTopTagsWithPosts
 }
 
-func Tags_AddTagsInPost(post *Post) {
+func Tags_AddTagsInPost(post *x.Post) {
 	parser := TextParser{}
 	parser.Parse(post.Text)
 
@@ -62,21 +63,21 @@ func Tags_AddTagsInPost(post *Post) {
 		return
 	}
 
-	Store.PreLoadTag_ByNames(parser.Tags)
+	x.Store.PreLoadTag_ByNames(parser.Tags)
 
-	tags := []*Tag{}
-	tagPosts := []TagsPost{}
+	tags := []*x.Tag{}
+	tagPosts := []x.TagsPost{}
 	tagsIds := []int{}
 	for _, tagName := range parser.Tags {
-		tg, ok := Store.Tag_ByName(tagName)
+		tg, ok := x.Store.Tag_ByName(tagName)
 		if !ok {
-			tg = &Tag{
+			tg = &x.Tag{
 				Name:        tagName,
 				CreatedTime: helper.TimeNow(),
 			}
 			tg.Save(base.DB)
 		}
-		tgp := TagsPost{
+		tgp := x.TagsPost{
 			TagId:       tg.Id,
 			PostId:      post.Id,
 			TypeId:      post.TypeId,
@@ -88,10 +89,10 @@ func Tags_AddTagsInPost(post *Post) {
 		tagsIds = append(tagsIds, tg.Id)
 	}
 
-	MassInsert_TagsPost(tagPosts, base.DB)
-	NewTag_Updater().Count_Increment(1).Id_In(tagsIds).Update(base.DB)
+	x.MassInsert_TagsPost(tagPosts, base.DB)
+	x.NewTag_Updater().Count_Increment(1).Id_In(tagsIds).Update(base.DB)
 }
 
-func Mentioned_AddUserMentionedInPost(post *Post) {
+func Mentioned_AddUserMentionedInPost(post *x.Post) {
 
 }

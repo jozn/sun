@@ -4,6 +4,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
+	"ms/sun/models/x"
 )
 
 func GetPostsForProfileAction(c *base.Action) base.AppErr {
@@ -28,7 +29,7 @@ func GetPostsForProfileAction(c *base.Action) base.AppErr {
 
 	profileId = u.Id
 
-	selctor := models.NewPost_Selector().UserId_Eq(profileId).OrderBy_Id_Desc().Limit(limit)
+	selctor := x.NewPost_Selector().UserId_Eq(profileId).OrderBy_Id_Desc().Limit(limit)
 
 	if last > 0 {
 		selctor.Id_LT(last)
@@ -62,7 +63,7 @@ func GetProfileInfoAction(c *base.Action) base.AppErr {
 	}
 
 	type info struct {
-		models.UserCounts
+		x.UserCounts
 		models.UserSyncAndMeView
 	}
 

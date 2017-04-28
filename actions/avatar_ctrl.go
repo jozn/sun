@@ -6,7 +6,6 @@ import (
 	"io"
 	"math/rand"
 	. "ms/sun/base"
-	. "ms/sun/models"
 	"net/url"
 	"os"
 
@@ -14,6 +13,7 @@ import (
 	// "strconv"
 	// "strings"
 	"log"
+	"ms/sun/models/x"
 	"path/filepath"
 	"strconv"
 	"time"
@@ -24,7 +24,7 @@ func UploadAvatarAction(c *Action) {
 	file, handler, err := c.Req.FormFile("file")
 	// noErr(err)
 	if err != nil {
-		fmt.Println("errr in Req.FormFile", err)
+		fmt.Println("errr in Req.FormFile -------------------------+", err)
 		return
 	}
 	defer file.Close()
@@ -68,7 +68,7 @@ func UploadAvatarAction(c *Action) {
 	}
 
 	//user := GetUserById(c.UserId())
-	user, _ := UserById(DB, c.UserId())
+	user, _ := x.UserById(DB, c.UserId())
 	user.AvatarUrl = avatrBuilderPath(userIdS, ext, "%s")
 	DbUpdateStruct(&user, "user")
 

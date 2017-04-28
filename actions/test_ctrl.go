@@ -8,10 +8,10 @@ import (
 	"fmt"
 	. "ms/sun/base"
 	"ms/sun/helper"
-	. "ms/sun/models"
 	"os"
 	//	"time"
 	"io"
+	"ms/sun/models/x"
 	"net/http"
 	"strconv"
 	"strings"
@@ -24,8 +24,8 @@ func TestJson1(c *Action) AppErr {
 	sint, _ := strconv.ParseInt(s, 10, 0)
 	print(s)
 	print(c.Req.URL.RawQuery)
-	u := User{}
-	u22 := &User{}
+	u := x.User{}
+	u22 := &x.User{}
 	print(sint)
 	u.CreatedTime = int(sint)
 	u.Id = int(sint)

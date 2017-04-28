@@ -4,15 +4,15 @@ import (
 	"math/rand"
 	"ms/sun/base"
 	"ms/sun/helper"
-	"ms/sun/models"
+	"ms/sun/models/x"
 )
 
 func InsertActivity(c *base.Action) base.AppErr {
 
 	for i := 0; i < 10000; i++ {
-		arr := make([]models.Activity, 0, 1000)
+		arr := make([]x.Activity, 0, 1000)
 		for i := 0; i < 1000; i++ {
-			arr = append(arr, models.Activity{
+			arr = append(arr, x.Activity{
 				ActorUserId:  25,
 				ActionTypeId: 592,
 				TargetId:     rand.Intn(10000000),
@@ -20,7 +20,7 @@ func InsertActivity(c *base.Action) base.AppErr {
 				CreatedAt:    helper.TimeNow(),
 			})
 		}
-		models.MassInsert_Activity(arr, base.DB)
+		x.MassInsert_Activity(arr, base.DB)
 	}
 
 	return nil

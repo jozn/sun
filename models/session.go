@@ -3,6 +3,7 @@ package models
 import (
 	"ms/sun/base"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 	"net/http"
 	"time"
 )
@@ -41,7 +42,7 @@ func Session_CheckAndSetUserSession(req *ReqParams) bool {
 		return false
 	}
 
-	session, ok := Store.Session_BySessionUuid(req.SessionUuid)
+	session, ok := x.Store.Session_BySessionUuid(req.SessionUuid)
 
 	if !ok {
 		return false
@@ -53,7 +54,7 @@ func Session_CheckAndSetUserSession(req *ReqParams) bool {
 
 var session_lastUsersActiveChan = make(chan string, 10000)
 
-func Session_UpdatesForLastActions(ses *Session) bool {
+func Session_UpdatesForLastActions(ses *x.Session) bool {
 	if ses != nil && ses.UserId > 0 {
 		session_lastUsersActiveChan <- ses.SessionUuid
 	}
@@ -75,7 +76,7 @@ func Session_periodicllyUpdateDB() {
 				cp := toUpDateUuids
 				toUpDateUuids = []string{} //empty it
 
-				NewSession_Updater().
+				x.NewSession_Updater().
 					LastActivityTime(helper.TimeNow()).
 					SessionUuid_In(cp).
 					Update(base.DB)

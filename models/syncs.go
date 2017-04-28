@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"ms/sun/base"
 	"ms/sun/ds"
+	"ms/sun/models/x"
 	"time"
 )
 
@@ -12,7 +13,7 @@ func SyncGetAllChangedUser(CurrentUserId, LastTime int) (res []*UserSyncAndMeVie
 	var contactsUsers []int
 	var followedUsers []int
 
-	sel := NewPhoneContact_Selector().Select_PhoneNormalizedNumber().
+	sel := x.NewPhoneContact_Selector().Select_PhoneNormalizedNumber().
 		UserId_Eq(CurrentUserId).
 		PhoneNormalizedNumber_NotEq("")
 
@@ -26,7 +27,7 @@ func SyncGetAllChangedUser(CurrentUserId, LastTime int) (res []*UserSyncAndMeVie
 	}
 
 	if len(phones) > 0 {
-		contactsUsers, err = NewUser_Selector().Select_Id().Phone_In(phones).OrderBy_Id_Desc().GetIntSlice(base.DB)
+		contactsUsers, err = x.NewUser_Selector().Select_Id().Phone_In(phones).OrderBy_Id_Desc().GetIntSlice(base.DB)
 		if err != nil {
 			return
 		}
@@ -36,7 +37,7 @@ func SyncGetAllChangedUser(CurrentUserId, LastTime int) (res []*UserSyncAndMeVie
 		Cacher.Set(fmt.Sprintf("UserContacts:%d", CurrentUserId), collection, time.Hour*4)
 	}
 
-	sel2 := NewFollowingListMember_Selector().Select_FollowedUserId().
+	sel2 := x.NewFollowingListMember_Selector().Select_FollowedUserId().
 		UserId_Eq(CurrentUserId)
 
 	if LastTime > 0 {

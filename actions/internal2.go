@@ -5,11 +5,12 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
+	"ms/sun/models/x"
 	"net/http"
 )
 
 func DBStruct(a *base.Action) base.AppErr {
-	s := base.DbStructToTable2New(&models.UserTable{}, "user")
+	s := base.DbStructToTable2New(&x.UserTable{}, "user")
 	a.SendJson(s)
 	return nil
 }
@@ -32,11 +33,11 @@ func DBStructsTojava2(w http.ResponseWriter, r *http.Request) {
 		models.PhotoView{},
 		models.PostView{},
 		models.CommentInlineInfoView{},
-		models.UserBasic{},
+		x.UserBasic{},
 		models.UserBasicAndMe{},
 		models.UserSyncAndMeView{},
-		models.UserSession{},
-		models.UserExtra{},
+		x.UserSession{},
+		x.UserExtra{},
 	}
 
 	str := ""
@@ -51,7 +52,7 @@ func DBStructsTojava2(w http.ResponseWriter, r *http.Request) {
 
 func DBStructsToTable(a *base.Action) base.AppErr {
 	str := ""
-	str += base.DbStructToTable(&models.Notification{}, "notification")
+	str += base.DbStructToTable(&x.Notification{}, "notification")
 
 	a.SendJson(str)
 	return nil

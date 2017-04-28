@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"ms/sun/base"
 	"ms/sun/helper"
-	"ms/sun/models"
+	"ms/sun/models/x"
 )
 
 func GrabAllUserContactsCtrl(a *base.Action) base.AppErr {
@@ -12,7 +12,7 @@ func GrabAllUserContactsCtrl(a *base.Action) base.AppErr {
 	a.Req.ParseForm()
 	contactsForm := a.Req.Form.Get("contacts")
 	//DeviceUuidId := a.Req.Form.Get("uuid")
-	var conts []models.PhoneContact
+	var conts []x.PhoneContact
 	err := json.Unmarshal([]byte(contactsForm), &conts)
 	if err != nil {
 		return nil
@@ -49,7 +49,7 @@ func GrabAllUserContactsCtrl(a *base.Action) base.AppErr {
 		}
 	}
 
-	var users []models.UserTable
+	var users []x.UserTable
 	//var users []models.UserBasicAndMe
 	q := "select * from user where Phone in (" + base.DbSliceStringToSafeIns(allNumbers) + ")"
 	helper.DebugPrintln(q)

@@ -6,6 +6,8 @@ import (
 	"ms/sun/ds"
 	"time"
 
+	"ms/sun/models/x"
+
 	c "github.com/patrickmn/go-cache"
 )
 
@@ -26,14 +28,14 @@ func (e _memoryStoreImpl) GetPhoneForUserIfIsContact(CurrentUserId, UserId int) 
 
 	val, ok := Cacher.Get(key)
 	if !ok {
-		phones, err := NewPhoneContact_Selector().Select_PhoneNormalizedNumber().UserId_Eq(CurrentUserId).GetStringSlice(base.DB)
+		phones, err := x.NewPhoneContact_Selector().Select_PhoneNormalizedNumber().UserId_Eq(CurrentUserId).GetStringSlice(base.DB)
 		if err != nil {
 			return ""
 		}
 
 		collection = ds.New()
 		if len(phones) > 0 {
-			users, err := NewUser_Selector().Select_Id().Phone_In(phones).OrderBy_Id_Desc().GetIntSlice(base.DB)
+			users, err := x.NewUser_Selector().Select_Id().Phone_In(phones).OrderBy_Id_Desc().GetIntSlice(base.DB)
 			if err != nil {
 				return ""
 			}
@@ -65,7 +67,7 @@ func (e _memoryStoreImpl) UserLikedPostsList_Get(UserId int) *ds.IntList {
 	if !ok {
 		collection = ds.New()
 
-		postsLiked, err := NewLike_Selector().Select_PostId().UserId_Eq(UserId).GetIntSlice(base.DB)
+		postsLiked, err := x.NewLike_Selector().Select_PostId().UserId_Eq(UserId).GetIntSlice(base.DB)
 		if err != nil {
 			return collection
 		}
@@ -118,7 +120,7 @@ func (e _memoryStoreImpl) UserFollowingList_Get(UserId int) *ds.IntList {
 	if !ok {
 		collection = ds.New()
 
-		followed, err := NewFollowingListMember_Selector().Select_FollowedUserId().UserId_Eq(UserId).OrderBy_FollowedUserId_Desc().GetIntSlice(base.DB)
+		followed, err := x.NewFollowingListMember_Selector().Select_FollowedUserId().UserId_Eq(UserId).OrderBy_FollowedUserId_Desc().GetIntSlice(base.DB)
 		if err != nil {
 			return collection
 		}

@@ -2,12 +2,13 @@ package models
 
 import (
 	"ms/sun/base"
+	"ms/sun/models/x"
 )
 
 /////////// From version 0.4 /////////////
 
 func DeletePost(UserId, PostId int) bool {
-	var post Post
+	var post x.Post
 	err := base.DB.Get(&post, "select * from post where Id = ? ", PostId)
 	if err != nil {
 		return false

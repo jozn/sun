@@ -3,6 +3,7 @@ package models
 import (
 	"ms/sun/base"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 )
 
 /*
@@ -15,7 +16,7 @@ func Follow(UserId, FollowedPeerUserId int) int {
 		return 0
 	}
 
-	flm := FollowingListMember{
+	flm := x.FollowingListMember{
 		ListId:         UserId,
 		UserId:         UserId,
 		FollowedUserId: FollowedPeerUserId,
@@ -43,7 +44,7 @@ func UnFollow(UserId, FollowedPeerUserId int) {
 	}
 
 	MemoryStore.UserFollowingList_Remove(UserId, FollowedPeerUserId)
-	flm, err := NewFollowingListMember_Selector().UserId_Eq(UserId).FollowedUserId_Eq(FollowedPeerUserId).GetRow(base.DB)
+	flm, err := x.NewFollowingListMember_Selector().UserId_Eq(UserId).FollowedUserId_Eq(FollowedPeerUserId).GetRow(base.DB)
 	if err != nil {
 		return
 	}

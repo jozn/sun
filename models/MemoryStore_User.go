@@ -3,6 +3,7 @@ package models
 import (
 	"ms/sun/base"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 	"strings"
 	"sync"
 )
@@ -22,7 +23,7 @@ func init() {
 }
 
 type userMemRowData struct {
-	Row User
+	Row x.User
 }
 
 func (m *mapMemoryStore_UserImpl) ReloadAll() {
@@ -30,7 +31,7 @@ func (m *mapMemoryStore_UserImpl) ReloadAll() {
 	m.MapUsernameToId = make(map[string]int, 10000)
 	m.MapSessionToId = make(map[string]int, 10000)
 
-	users, err := NewUser_Selector().GetRows2(base.DB)
+	users, err := x.NewUser_Selector().GetRows2(base.DB)
 	if err != nil {
 		helper.DebugPrintln(err)
 	}
@@ -51,14 +52,14 @@ func (m *mapMemoryStore_UserImpl) ReloadAll() {
 	helper.DebugPrintln("Loaded User to models.MemoryStore_User counts: ", len(m.MapUserToData))
 }
 
-func (m mapMemoryStore_UserImpl) GetUser(UserId int) (User, bool) {
+func (m mapMemoryStore_UserImpl) GetUser(UserId int) (x.User, bool) {
 	m.RLock()
 	defer m.RUnlock()
 	md, ok := m.MapUserToData[UserId]
 	if ok {
 		return md.Row, true
 	}
-	return User{}, false
+	return x.User{}, false
 }
 
 func (m *mapMemoryStore_UserImpl) GetMemRow(UserId int) (*userMemRowData, bool) {
@@ -71,7 +72,7 @@ func (m *mapMemoryStore_UserImpl) GetMemRow(UserId int) (*userMemRowData, bool) 
 	return nil, false
 }
 
-func (m *mapMemoryStore_UserImpl) GetUserByUserName(UserName string) (User, bool) {
+func (m *mapMemoryStore_UserImpl) GetUserByUserName(UserName string) (x.User, bool) {
 	m.RLock()
 	defer m.RUnlock()
 	UserName = strings.Replace(UserName, "@", "", 1)
@@ -79,15 +80,15 @@ func (m *mapMemoryStore_UserImpl) GetUserByUserName(UserName string) (User, bool
 	if ok {
 		return m.GetUser(uid)
 	}
-	return User{}, false
+	return x.User{}, false
 }
 
-func (m *mapMemoryStore_UserImpl) GetUserBySession(Session string) (User, bool) {
+func (m *mapMemoryStore_UserImpl) GetUserBySession(Session string) (x.User, bool) {
 	m.RLock()
 	defer m.RUnlock()
 	uid, ok := m.MapSessionToId[Session]
 	if ok {
 		return m.GetUser(uid)
 	}
-	return User{}, false
+	return x.User{}, false
 }

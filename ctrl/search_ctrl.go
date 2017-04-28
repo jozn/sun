@@ -4,6 +4,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
+	"ms/sun/models/x"
 	"strings"
 )
 
@@ -14,7 +15,7 @@ func SearchTagsCtrl(c *base.Action) base.AppErr {
 
 	q = q + "%"
 
-	var tags []models.Tag
+	var tags []x.Tag
 
 	if strings.TrimSpace(q) != "" {
 		base.DB.Select(&tags, "select * from tags where `Name` like ? limit 30 ", q)
@@ -33,7 +34,7 @@ func SearchUsersCtrl(c *base.Action) base.AppErr {
 	qs := strings.Split(q, " ")
 
 	if len(qs) > 0 {
-		selector := models.NewUser_Selector().Select_Id().Or()
+		selector := x.NewUser_Selector().Select_Id().Or()
 
 		for _, q0 := range qs {
 			if q0 == "" {
@@ -78,7 +79,7 @@ func SearchClickedCtrl(c *base.Action) base.AppErr {
 		click_type_id = 3
 	}
 
-	row := models.SearchClicked{
+	row := x.SearchClicked{
 		Query:     q,
 		TargetId:  target_id,
 		ClickType: click_type_id,

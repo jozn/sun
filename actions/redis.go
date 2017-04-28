@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"ms/sun/base"
 	"ms/sun/helper"
-	"ms/sun/models"
+	"ms/sun/models/x"
 	"ms/sun/store"
 )
 
 func RedisSavePlay(c *base.Action) base.AppErr {
 	p := store.GetRedisPool()
-	U := models.UserTable{}
+	U := x.UserTable{}
 	key := "User:" + helper.RandString(1)
 	con, _ := p.Get()
 	con.Cmd("set", key, helper.ToJson(U))
@@ -22,10 +22,10 @@ func RedisSavePlay(c *base.Action) base.AppErr {
 	b, err := res.Str()
 	b2, err := res.Bytes()
 	fmt.Println("redis result ", key, " : ", res.Err, err, b)
-	u2 := models.UserTable{}
+	u2 := x.UserTable{}
 	_ = b2
 	_ = u2
-	us := make([]models.UserTable, 10)
+	us := make([]x.UserTable, 10)
 	//json.Unmarshal(b2,&u2)
 	c.SendJson(us)
 

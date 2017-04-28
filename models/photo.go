@@ -1,8 +1,11 @@
 package models
 
-import "ms/sun/config"
+import (
+	"ms/sun/config"
+	"ms/sun/models/x"
+)
 
-func Convert_PhotoToNewPhotoView(p *Photo) *PhotoView {
+func Convert_PhotoToNewPhotoView(p *x.Photo) *PhotoView {
 	if p != nil {
 		v := &PhotoView{
 			PhotoId:     p.PhotoId,

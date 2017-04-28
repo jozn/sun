@@ -4,6 +4,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
+	"ms/sun/models/x"
 )
 
 //psost types: 1:text 2: media/photo
@@ -15,7 +16,7 @@ func GetSinglePostAction(c *base.Action) base.AppErr {
 	if id < 1 {
 		return nil
 	}
-	var post *models.Post
+	var post *x.Post
 	err := base.DB.Get(post, "select * from post where Id = ? ", id)
 	if err != nil {
 		return nil
@@ -49,7 +50,7 @@ func PostUpdateAction(c *base.Action) base.AppErr {
 		return nil
 	}
 
-	var post models.Post
+	var post x.Post
 	err := base.DB.Get(&post, "select * from post where Id = ? ", id)
 	if err != nil {
 		return nil

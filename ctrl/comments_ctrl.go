@@ -6,6 +6,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
+	"ms/sun/models/x"
 	"strings"
 )
 
@@ -19,7 +20,7 @@ func GetCommentsAction(c *base.Action) base.AppErr {
 	limit := c.GetParamInt("limit", COMMENTS_LIST_PAGE_LIMIT)
 	last := c.GetParamInt("last", 0)
 
-	selector := models.NewComment_Selector().PostId_Eq(pid).OrderBy_Id_Desc().Limit(limit)
+	selector := x.NewComment_Selector().PostId_Eq(pid).OrderBy_Id_Desc().Limit(limit)
 
 	if last > 0 {
 		selector.Id_LE(last)

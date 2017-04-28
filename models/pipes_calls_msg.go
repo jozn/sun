@@ -6,6 +6,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/constants"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 )
 
 func CallReceive_MsgsAddOne(c base.Call) {
@@ -99,11 +100,11 @@ func CallRecive_MsgReceivedToPeer(c base.Call) {
 func CallRecive_MsgSeenByPeer(c base.Call) {
 	fmt.Println("called MsgSeenByPeer :", c)
 
-	seensRows := []MsgSeenByPeer{}
+	seensRows := []x.MsgSeenByPeer{}
 
 	json.Unmarshal([]byte(c.Data), &seensRows)
 
-	mpGroupByuser := make(map[int][]MsgSeenByPeer)
+	mpGroupByuser := make(map[int][]x.MsgSeenByPeer)
 	for _, seen := range seensRows {
 		mpGroupByuser[seen.ToUserId] = append(mpGroupByuser[seen.ToUserId], seen)
 	}
@@ -114,7 +115,7 @@ func CallRecive_MsgSeenByPeer(c base.Call) {
 
 	if len(mpGroupByuser) == 1 {
 		var touser int
-		var seens []MsgSeenByPeer
+		var seens []x.MsgSeenByPeer
 
 		for touser, seens = range mpGroupByuser {
 		}
@@ -122,7 +123,7 @@ func CallRecive_MsgSeenByPeer(c base.Call) {
 		err := func() {
 			//fmt.Println("**********************\n*********************\n********************",touser)
 
-			MassInsert_MsgSeenByPeer(seens, base.DB)
+			x.MassInsert_MsgSeenByPeer(seens, base.DB)
 		}
 
 		call := base.NewCallWithData(CLIENT_CALL_MsgsSeenByPeerMany, seens)
@@ -131,7 +132,7 @@ func CallRecive_MsgSeenByPeer(c base.Call) {
 		return
 	}
 
-	MassInsert_MsgSeenByPeer(seensRows, base.DB)
+	x.MassInsert_MsgSeenByPeer(seensRows, base.DB)
 	for toUserId, seens := range mpGroupByuser {
 		MessageModel.SendListOfSeenMsgsByPeerToUser(toUserId, seens)
 	}

@@ -1,9 +1,11 @@
 package models
 
+import "ms/sun/models/x"
+
 type ReqParams struct {
 	UserId      int
 	SessionUuid string
-	Session     *Session
+	Session     *x.Session
 	Page        int
 	Last        int
 	Limit       int

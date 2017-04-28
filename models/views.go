@@ -81,7 +81,13 @@ func (e _viewImpl) GetListOfUserForFollowType(userIds []int, CurrentUserId int) 
 func (e _viewImpl) GetUserInlineView(uid int) (UserInlineView, error) {
 	u, ok := MemoryStore_User.GetUser(uid)
 	if ok {
-		return *u.ToUserInlineView(), nil
+		//return *u.ToUserInlineView(), nil
+		v := UserInlineView{}
+		v.FullName = u.GetFullName()
+		v.UserId = u.Id
+		v.UserName = u.UserName
+		v.AvatarUrl = u.AvatarUrl
+		return v, nil
 	}
 	return UserInlineView{}, errors.New("User NOT Fund")
 }

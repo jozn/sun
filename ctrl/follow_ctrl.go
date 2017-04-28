@@ -6,6 +6,7 @@ import (
 
 	"ms/sun/helper"
 	//"ms/sun/docs/del"
+	"ms/sun/models/x"
 )
 
 func FollowAction(c *base.Action) base.AppErr {
@@ -52,7 +53,7 @@ func GetFollowersListAction(c *base.Action) base.AppErr {
 	peer_id := c.GetParamInt("peer_id", 0)
 
 	_ = last
-	var user models.User
+	var user x.User
 	var ok bool
 	if peer_id < 1 {
 		user, ok = models.MemoryStore_User.GetUserByUserName(username)
@@ -67,7 +68,7 @@ func GetFollowersListAction(c *base.Action) base.AppErr {
 		return nil
 	}
 
-	selector := models.NewFollowingListMember_Selector().
+	selector := x.NewFollowingListMember_Selector().
 		Select_UserId().
 		FollowedUserId_Eq(peer_id).
 		OrderBy_Id_Desc().
@@ -102,7 +103,7 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
 	peer_id := c.GetParamInt("peer_id", 0)
 
 	_ = last
-	var user models.User
+	var user x.User
 	var ok bool
 	if peer_id < 1 {
 		//user, err = models.GetUserByUsername2(username)
@@ -118,7 +119,7 @@ func GetFollowingsListAction(c *base.Action) base.AppErr {
 		return nil
 	}
 
-	selector := models.NewFollowingListMember_Selector().
+	selector := x.NewFollowingListMember_Selector().
 		Select_FollowedUserId().
 		UserId_Eq(peer_id).
 		OrderBy_Id_Desc().

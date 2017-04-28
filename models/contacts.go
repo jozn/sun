@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"ms/sun/base"
 	"ms/sun/ds"
+	"ms/sun/models/x"
 	"time"
 )
 
@@ -21,7 +22,7 @@ func Contacts_GetChachesContactsUserIdsForUserId(UserId, LastTime int) *ds.IntLi
 	var contactsUsers []int
 	collection := ds.New()
 
-	sel := NewPhoneContact_Selector().Select_PhoneNormalizedNumber().
+	sel := x.NewPhoneContact_Selector().Select_PhoneNormalizedNumber().
 		UserId_Eq(UserId).
 		PhoneNormalizedNumber_NotEq("")
 
@@ -35,7 +36,7 @@ func Contacts_GetChachesContactsUserIdsForUserId(UserId, LastTime int) *ds.IntLi
 	}
 
 	if len(phones) > 0 {
-		contactsUsers, err = NewUser_Selector().Select_Id().Phone_In(phones).OrderBy_Id_Desc().GetIntSlice(base.DB)
+		contactsUsers, err = x.NewUser_Selector().Select_Id().Phone_In(phones).OrderBy_Id_Desc().GetIntSlice(base.DB)
 		if err != nil {
 			return collection
 		}

@@ -1,34 +1,36 @@
 package models
 
+import "ms/sun/models/x"
+
 /////////////// Activity ///////////////
 type ActivityView struct {
-	*Activity
+	*x.Activity
 	Load interface{}
 	//Actor   UserBasicAndMe
 }
 
 type ActivityPayload struct {
 	Actor   *UserBasicAndMe
-	Post    *Post
-	Comment *Comment
+	Post    *x.Post
+	Comment *x.Comment
 }
 
 //////////// Notifications ////////////
 type NotificationView struct {
-	*Notification
+	*x.Notification
 	Load interface{}
 	//Actor   UserBasicAndMe
 }
 
 type NotifPayload struct {
 	Actor   *UserBasicAndMe
-	Post    *Post
-	Comment *Comment
+	Post    *x.Post
+	Comment *x.Comment
 }
 
 //////////// Tags /////////////
 type TopTagsWithPostsView struct {
-	Tag   *Tag
+	Tag   *x.Tag
 	Posts []*PostView
 }
 
@@ -55,18 +57,40 @@ type PhotoView struct {
 }
 
 type PostView struct {
-	*Post
+	*x.Post
 	TypeName string //for text, photo video
 	//Comments []CommentInlineInfo
 	//Likes    []Like
 	PhotoView *PhotoView
 	//Images   *ImageResHolder
 	//AmIlike bool //dep
-	MyLike  int  //type of like
-	Sender  UserInlineView
+	MyLike int //type of like
+	Sender UserInlineView
 }
 
 type CommentInlineInfoView struct {
-	Comment
+	x.Comment
 	Sender UserInlineView
 }
+
+////////////// USer ////////////
+/////////// for Responses //////////////////////////////////////
+type UserSyncAndMeView struct {
+	x.UserBasic
+	UserId        int
+	FollowingType int
+	AppVersion    int
+	Phone         string
+	UpdatedTime   int
+}
+
+//todo clean this 2 struct
+type UserBasicAndMe struct { //legacy switch to UserTable
+	x.UserBasic
+	UserId        int
+	UpdatedTime   int //rm ??
+	FollowingType int /// 0: not_following  1: following  2: follow_requested
+	//FollowingLists int
+}
+
+/////////////////////////////////////////////

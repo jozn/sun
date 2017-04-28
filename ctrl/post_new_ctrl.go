@@ -11,6 +11,8 @@ import (
 	"path/filepath"
 	"time"
 
+	"ms/sun/models/x"
+
 	"github.com/nfnt/resize"
 )
 
@@ -36,7 +38,7 @@ func AddPostAction(c *base.Action) base.AppErr {
 		}
 
 		h := math.Ceil(float64((imageOrginal.Bounds().Dy() * 1080) / imageOrginal.Bounds().Dx()))
-		photo := &models.Photo{
+		photo := &x.Photo{
 			UserId:      c.UserId(),
 			Title:       fd.Filename,
 			BucketId:    buket.BucketId,
@@ -65,7 +67,7 @@ func AddPostAction(c *base.Action) base.AppErr {
 
 		//////////////// end of file functionality ////////////////
 
-		post := models.Post{
+		post := x.Post{
 			Id:           0,
 			UserId:       c.UserId(),
 			TypeId:       models.POST_TYPE_PHOTO,
@@ -92,7 +94,7 @@ func AddPostAction(c *base.Action) base.AppErr {
 		c.SendJson(post)
 		return nil
 	} else { ///just text
-		post := models.Post{}
+		post := x.Post{}
 		//TODO security: clean html of text
 		post.Text = txt
 		post.UserId = c.UserId()
@@ -110,7 +112,7 @@ func AddPostAction(c *base.Action) base.AppErr {
 func GetPostsLatestAction(c *base.Action) base.AppErr {
 	param := UpdateSessionActivityIfUser(c)
 
-	selector := models.NewPost_Selector().
+	selector := x.NewPost_Selector().
 		OrderBy_Id_Desc().Limit(param.Limit).
 		Offset(param.GetOffset())
 
@@ -136,7 +138,7 @@ func GetPostsStreamAction(c *base.Action) base.AppErr {
 	fids := models.MemoryStore.UserFollowingList_Get(uid).Values()
 	//var ins = make([]int,0, len(fids)+1)
 	ins := append(fids, c.UserId())
-	selctor := models.NewPost_Selector().UserId_In(ins).OrderBy_Id_Desc().Limit(p.Limit)
+	selctor := x.NewPost_Selector().UserId_In(ins).OrderBy_Id_Desc().Limit(p.Limit)
 
 	if p.Last > 0 {
 		selctor.Id_LT(p.Last)

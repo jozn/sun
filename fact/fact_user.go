@@ -8,7 +8,7 @@ import (
 	"math/rand"
 	. "ms/sun/base"
 	"ms/sun/helper"
-	. "ms/sun/models"
+	"ms/sun/models/x"
 	"time"
 )
 
@@ -18,7 +18,7 @@ func FactUser1(c *Action) {
 	_userLastNameSamples := []string{"کریمی", "کمانگیر", "بزگ", "فدیایش", "رستگار", "میلانی", "مستانی", "فروهی", "مصداق", "هدایت", "fish", "Nosrat", "Fadaghi"}
 	_userUserNameSamples := []string{"fish", "Nosrat", "Fadaghi", "atash", "Jigar", "DooSTi"}
 
-	u := User{}
+	u := x.User{}
 	// u.Id int
 	// u.UserId
 	u.UserName = randSilceString(_userUserNameSamples) + intToStr(rand.Intn(10000))
@@ -38,7 +38,7 @@ func FactUser1(c *Action) {
 	//DbInsertStruct(&ui, "user_info")
 
 	//folowing list
-	fl := FollowingList{}
+	fl := x.FollowingList{}
 	fl.UserId = int(id)
 	fl.Name = "دنبال میکنم"
 	// fl.IsPimiry = true
@@ -53,7 +53,7 @@ func FactUser1(c *Action) {
 }
 
 func FactUpdateAboutMe(c *Action) {
-	user, _ := NewUser_Selector().OrderBy_Id_Asc().GetRows2(DB)
+	user, _ := x.NewUser_Selector().OrderBy_Id_Asc().GetRows2(DB)
 
 	for _, u := range user {
 		s := helper.FactRandStrEmoji(80, true)
@@ -74,7 +74,7 @@ func FactUpdateAboutMe(c *Action) {
 func FactRealUser(c *Action) {
 	//q :=User{}
 
-	us := []User{
+	us := []x.User{
 	//User{
 	//	UserName: "AliAsgh",
 	//	FirstName: "علی اصضر",

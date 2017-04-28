@@ -3,15 +3,16 @@ package models
 import (
 	"ms/sun/base"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 )
 
-func Activity_OnPostCommentAdd(comment *Comment, post *Post) {
+func Activity_OnPostCommentAdd(comment *x.Comment, post *x.Post) {
 	if comment == nil || post == nil {
 		return
 	}
 
 	refId := comment.Id*1000 + ACTION_TYPE_POST_COMMENTED
-	not := Activity{
+	not := x.Activity{
 		Id:           0,
 		ActorUserId:  comment.UserId,
 		ActionTypeId: ACTION_TYPE_POST_COMMENTED,
@@ -22,13 +23,13 @@ func Activity_OnPostCommentAdd(comment *Comment, post *Post) {
 	not.Save(base.DB)
 }
 
-func Activity_OnPostCommentDeleted(comment *Comment, post *Post) {
+func Activity_OnPostCommentDeleted(comment *x.Comment, post *x.Post) {
 	if comment == nil || post == nil {
 		return
 	}
 
 	refId := comment.Id*1000 + ACTION_TYPE_POST_COMMENTED
-	NewActivity_Deleter().
+	x.NewActivity_Deleter().
 		ActorUserId_Eq(comment.UserId).
 		RefId_Eq(refId).
 		Delete(base.DB)
@@ -39,7 +40,7 @@ func Activity_OnPostCommentDeleted(comment *Comment, post *Post) {
 func Activity_OnFollowed(UserId, FollowedPeerUserId, FLId int) {
 
 	refId := FLId*1000 + ACTION_TYPE_FOLLOWED_USER
-	not := Activity{
+	not := x.Activity{
 		ActorUserId:  UserId,
 		ActionTypeId: ACTION_TYPE_FOLLOWED_USER,
 		TargetId:     FollowedPeerUserId,
@@ -53,19 +54,19 @@ func Activity_OnFollowed(UserId, FollowedPeerUserId, FLId int) {
 func Activity_OnUnFollowed(UserId, FollowedPeerUserId, FLId int) {
 	refId := FLId*1000 + ACTION_TYPE_FOLLOWED_USER
 
-	NewActivity_Deleter().
+	x.NewActivity_Deleter().
 		ActorUserId_Eq(UserId).
 		RefId_Eq(refId).
 		Delete(base.DB)
 }
 
 ////////////// For Likes ///////////////
-func Activity_OnPostLiked(lk *Like) {
+func Activity_OnPostLiked(lk *x.Like) {
 	if lk == nil {
 		return
 	}
 	refId := lk.Id*1000 + ACTION_TYPE_POST_LIKED
-	not := Activity{
+	not := x.Activity{
 		ActorUserId:  lk.UserId,
 		ActionTypeId: ACTION_TYPE_POST_LIKED,
 		TargetId:     lk.PostId,
@@ -76,13 +77,13 @@ func Activity_OnPostLiked(lk *Like) {
 	not.Save(base.DB)
 }
 
-func Activity_OnPostUnLiked(lk *Like) {
+func Activity_OnPostUnLiked(lk *x.Like) {
 	if lk == nil {
 		return
 	}
 	refId := lk.Id*1000 + ACTION_TYPE_POST_LIKED
 
-	NewActivity_Deleter().
+	x.NewActivity_Deleter().
 		ActorUserId_Eq(lk.UserId).
 		RefId_Eq(refId).
 		Delete(base.DB)
@@ -94,7 +95,7 @@ func Activity_OnPostUnLiked(lk *Like) {
 func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 	uids := MemoryStore.UserFollowingList_Get(UserId).Values()
 
-	selector := NewActivity_Selector().ActorUserId_In(uids).OrderBy_Id_Desc().Limit(Limit)
+	selector := x.NewActivity_Selector().ActorUserId_In(uids).OrderBy_Id_Desc().Limit(Limit)
 	if Last > 0 {
 		selector.Id_LT(Last)
 	} else if Page >= 1 {
@@ -124,7 +125,7 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 			//no load data
 
 		case ACTION_TYPE_POST_LIKED:
-			post, ok := Store.GetPostById(act.TargetId)
+			post, ok := x.Store.GetPostById(act.TargetId)
 			if ok {
 				load.Post = post
 			} else {
@@ -132,10 +133,10 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 			}
 
 		case ACTION_TYPE_POST_COMMENTED:
-			com, ok := Store.GetCommentById(act.TargetId)
+			com, ok := x.Store.GetCommentById(act.TargetId)
 			if ok {
 				load.Comment = com
-				post, _ := Store.GetPostById(com.PostId)
+				post, _ := x.Store.GetPostById(com.PostId)
 				load.Post = post
 			} else {
 				helper.DebugPrintln(err)
@@ -150,7 +151,7 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 
 }
 
-func Activity_fillCaches(nots []*Activity) {
+func Activity_fillCaches(nots []*x.Activity) {
 	//preload start
 	var pre_posts []int
 	var pre_comments []int
@@ -168,16 +169,16 @@ func Activity_fillCaches(nots []*Activity) {
 		}
 	}
 
-	Store.PreLoadCommentByIds(pre_comments)
+	x.Store.PreLoadCommentByIds(pre_comments)
 
 	for _, commentId := range pre_comments {
-		com, ok := Store.GetCommentById(commentId)
+		com, ok := x.Store.GetCommentById(commentId)
 		if ok {
 			pre_posts = append(pre_posts, com.PostId)
 		}
 	}
 
-	Store.PreLoadPostByIds(pre_posts)
+	x.Store.PreLoadPostByIds(pre_posts)
 
 	/*if len(pre_posts) >0 {
 	    NewPost_Selector().Id_In(pre_posts).GetRows(base.DB)

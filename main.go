@@ -13,8 +13,9 @@ import (
 
 	_ "github.com/garyburd/redigo/redis"
 	//_ "net/http/pprof"
-	"github.com/mediocregopher/radix.v2/pool"
 	_ "net/http/pprof"
+
+	"github.com/mediocregopher/radix.v2/pool"
 )
 
 var redisPool *pool.Pool

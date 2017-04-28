@@ -1,6 +1,8 @@
 package models
 
-func (e _viewImpl) PostsViews(posts []*Post, UserId int) (viw []*PostView) {
+import "ms/sun/models/x"
+
+func (e _viewImpl) PostsViews(posts []*x.Post, UserId int) (viw []*PostView) {
 	// UserSlice
 	var photoIds []int
 	for _, p := range posts {
@@ -9,7 +11,7 @@ func (e _viewImpl) PostsViews(posts []*Post, UserId int) (viw []*PostView) {
 		}
 	}
 	if len(photoIds) > 0 {
-		Store.PreLoadPhoto_ByPostIds(photoIds)
+		x.Store.PreLoadPhoto_ByPostIds(photoIds)
 	}
 
 	for _, p := range posts {
@@ -28,7 +30,7 @@ func (e _viewImpl) PostsViewsForPostIds(postsIds []int, UserId int) (viw []*Post
 	return
 }
 
-func (e _viewImpl) PostSingleView(post *Post, UserId int) *PostView {
+func (e _viewImpl) PostSingleView(post *x.Post, UserId int) *PostView {
 	v := &PostView{}
 	if post != nil {
 		v.Post = post
@@ -38,7 +40,7 @@ func (e _viewImpl) PostSingleView(post *Post, UserId int) *PostView {
 			//v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
 		}
 		if post.TypeId == 2 {
-			ph, _ := Store.Photo_ByPostId(post.Id)
+			ph, _ := x.Store.Photo_ByPostId(post.Id)
 			v.PhotoView = Convert_PhotoToNewPhotoView(ph)
 		}
 		u, err := Views.GetUserInlineView(post.UserId)

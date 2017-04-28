@@ -7,6 +7,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/config"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 	"os"
 	"strconv"
 	"strings"
@@ -15,8 +16,8 @@ import (
 
 const BUCKET_TYPE_POST_PHOTO = 1
 
-func Buket_GetNextForPostPhoto() *Bucket {
-	buket, err := NewBucket_Selector().
+func Buket_GetNextForPostPhoto() *x.Bucket {
+	buket, err := x.NewBucket_Selector().
 		ContentObjectTypeId_Eq(BUCKET_TYPE_POST_PHOTO).
 		OrderBy_BucketId_Desc().
 		GetRow(base.DB)
@@ -30,8 +31,8 @@ func Buket_GetNextForPostPhoto() *Bucket {
 	return buket
 }
 
-func bucket_creatNextBucket() *Bucket {
-	buket := &Bucket{
+func bucket_creatNextBucket() *x.Bucket {
+	buket := &x.Bucket{
 		BucketName:          helper.RandString(15),
 		Server1Id:           1,
 		ContentObjectTypeId: BUCKET_TYPE_POST_PHOTO,
@@ -48,7 +49,7 @@ func bucket_nextName(i int) string {
 	return fmt.Sprintf("posts/%d_%02d_%02d/b%d", t.Year(), t.Month(), t.Day(), i)
 }
 
-func Bucket_savePhotoToBucket(photo *Photo, buket *Bucket, img image.Image, size int) {
+func Bucket_savePhotoToBucket(photo *x.Photo, buket *x.Bucket, img image.Image, size int) {
 	//for now just save to local disk
 	dirName := config.UPLOAD_DIR_POSTS + buket.BucketName
 	fileName := config.UPLOAD_DIR_POSTS + strings.Replace(photo.PathSrc, "%s", strconv.Itoa(size), -1)

@@ -3,6 +3,7 @@ package models
 import (
 	"ms/sun/base"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 	"strings"
 )
 
@@ -50,12 +51,12 @@ func GenrateRecommendUser(ForUserId int) {
 	base.DB.Select(&UserContactsIds, q)
 
 	/////////////////////////////////////
-	var RecomUsers []RecommendUser
+	var RecomUsers []x.RecommendUser
 
 	//1:: contacts
 	for _, uid := range UserContactsIds {
 		if MemoryStore.UserFollowingList_GetFollowingTypeForUsers(ForUserId, uid) == 0 {
-			r := RecommendUser{}
+			r := x.RecommendUser{}
 			r.UserId = ForUserId
 			r.TargetId = uid
 			r.Weight = 1
@@ -79,7 +80,7 @@ func GenrateRecommendUser(ForUserId int) {
 		if len(TopUserIds) > i {
 			uid := TopUserIds[i]
 			if MemoryStore.UserFollowingList_GetFollowingTypeForUsers(ForUserId, uid) == 0 {
-				r := RecommendUser{}
+				r := x.RecommendUser{}
 				r.UserId = ForUserId
 				r.TargetId = uid
 				r.Weight = 1

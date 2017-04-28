@@ -2,7 +2,7 @@ package ctrl
 
 import (
 	"ms/sun/base"
-	"ms/sun/models"
+	"ms/sun/models/x"
 )
 
 func FixAllCountsCounts(a *base.Action) base.AppErr {
@@ -30,10 +30,10 @@ func _fixPostCounts() {
 		return
 	}
 
-	models.NewUser_Updater().PostsCount(0).Update(base.DB)
+	x.NewUser_Updater().PostsCount(0).Update(base.DB)
 
 	for _, row := range res {
-		models.NewUser_Updater().PostsCount(row.Cnt).Id_Eq(row.UserId).Update(base.DB)
+		x.NewUser_Updater().PostsCount(row.Cnt).Id_Eq(row.UserId).Update(base.DB)
 	}
 }
 
@@ -53,10 +53,10 @@ func _fixFolloingCounts() {
 		return
 	}
 
-	models.NewUser_Updater().FollowingCount(0).Update(base.DB)
+	x.NewUser_Updater().FollowingCount(0).Update(base.DB)
 
 	for _, row := range res {
-		models.NewUser_Updater().FollowingCount(row.Cnt).Id_Eq(row.UserId).Update(base.DB)
+		x.NewUser_Updater().FollowingCount(row.Cnt).Id_Eq(row.UserId).Update(base.DB)
 	}
 }
 
@@ -75,9 +75,9 @@ func _fixFollowedCounts() {
 		return
 	}
 	//reset
-	models.NewUser_Updater().FollowersCount(0).Update(base.DB)
+	x.NewUser_Updater().FollowersCount(0).Update(base.DB)
 
 	for _, row := range res {
-		models.NewUser_Updater().FollowersCount(row.Cnt).Id_Eq(row.UserId).Update(base.DB)
+		x.NewUser_Updater().FollowersCount(row.Cnt).Id_Eq(row.UserId).Update(base.DB)
 	}
 }
