@@ -42,5 +42,5 @@ func Convert_PhotoToNewPhotoView(p *x.Photo) *PhotoView {
 		}
 		return v
 	}
-	return &PhotoView{}
+	return nil //&PhotoView{}
 }

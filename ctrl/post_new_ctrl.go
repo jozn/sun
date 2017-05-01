@@ -87,9 +87,14 @@ func AddPostAction(c *base.Action) base.AppErr {
 			CreatedTime:    helper.TimeNow(),
 		}
 
-		models.Post_AddNewPostToDbAndItsTagsAndCounters(&post)
+        err = photo.Save(base.DB)
+        if err != nil {
+            return nil
+        }
+
+        models.Post_AddNewPostToDbAndItsTagsAndCounters(&post)
 		photo.PostId = post.Id
-		photo.Save(base.DB)
+        photo.Save(base.DB)
 
 		c.SendJson(post)
 		return nil
