@@ -31,22 +31,24 @@ func (e _viewImpl) PostsViewsForPostIds(postsIds []int, UserId int) (viw []*Post
 }
 
 func (e _viewImpl) PostSingleView(post *x.Post, UserId int) *PostView {
+	if post == nil {
+		return nil
+	}
 	v := &PostView{}
-	if post != nil {
-		v.Post = post
-		v.TypeName = PostTypeIdToName(post.TypeId)
-		if UserId > 0 {
-			v.MyLike = MemoryStore.UserLikedPostsList_MyLiked(UserId, post.Id)
-			//v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
-		}
-		if post.TypeId == 2 {
-			ph, _ := x.Store.Photo_ByPostId(post.Id)
-			v.PhotoView = Convert_PhotoToNewPhotoView(ph)
-		}
-		u, err := Views.GetUserInlineView(post.UserId)
-		if err == nil {
-			v.Sender = u
-		}
+
+	v.Post = post
+	v.TypeName = PostTypeIdToName(post.TypeId)
+	if UserId > 0 {
+		v.MyLike = MemoryStore.UserLikedPostsList_MyLiked(UserId, post.Id)
+		//v.AmIlike = MemoryStore.UserLikedPostsList_IsLiked(UserId, post.Id) //UserMemoryStore.AmILikePost(UserId, post.Id)
+	}
+	if post.TypeId == 2 {
+		ph, _ := x.Store.Photo_ByPostId(post.Id)
+		v.PhotoView = Convert_PhotoToNewPhotoView(ph)
+	}
+	u, err := Views.GetUserInlineView(post.UserId)
+	if err == nil {
+		v.Sender = u
 	}
 	return v
 }

@@ -9,9 +9,15 @@ type ActivityView struct {
 	//Actor   UserBasicAndMe
 }
 
-type ActivityPayload struct {
+type ActivityPayload_DEP struct {
 	Actor   *UserBasicAndMe
 	Post    *x.Post
+	Comment *x.Comment
+}
+
+type ActivityPayload struct {
+	Actor   *UserInlineWithMeView
+	Post    *PostView
 	Comment *x.Comment
 }
 
@@ -41,6 +47,11 @@ type UserInlineView struct {
 	UserName  string
 	FullName  string
 	AvatarUrl string
+}
+
+type UserInlineWithMeView struct {
+	UserInlineView
+	FollowingType int
 }
 
 type PhotoView struct {

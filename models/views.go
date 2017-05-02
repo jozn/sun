@@ -91,3 +91,13 @@ func (e _viewImpl) GetUserInlineView(uid int) (UserInlineView, error) {
 	}
 	return UserInlineView{}, errors.New("User NOT Fund")
 }
+
+func (e _viewImpl) GetUserInlineWithMeView(meUId, OtherUId int) (*UserInlineWithMeView, error) {
+	uv, err := e.GetUserInlineView(OtherUId)
+	if err == nil {
+		v := &UserInlineWithMeView{UserInlineView: uv}
+		v.FollowingType = MemoryStore.UserFollowingList_GetFollowingTypeForUsers(meUId, OtherUId)
+		return v, nil
+	}
+	return nil, err
+}

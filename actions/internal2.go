@@ -24,12 +24,13 @@ func DBStructsTojava(a *base.Action) base.AppErr {
 func DBStructsTojava2(w http.ResponseWriter, r *http.Request) {
 	a := []interface{}{
 		models.ActivityView{},
-		models.ActivityPayload{},
+		models.ActivityPayload_DEP{},
 		models.NotificationView{},
 		models.NotifPayload{},
 		models.NotifPayload{},
 		models.TopTagsWithPostsView{},
 		models.UserInlineView{},
+		models.UserInlineWithMeView{},
 		models.PhotoView{},
 		models.PostView{},
 		models.CommentInlineInfoView{},

@@ -119,7 +119,7 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 		load := ActivityPayload{}
 		av.Load = &load
 
-		load.Actor = Views.UserBasicAndMeView(UserId, act.ActorUserId)
+		load.Actor, _ = Views.GetUserInlineWithMeView(UserId, act.ActorUserId)
 		switch act.ActionTypeId {
 		case ACTION_TYPE_FOLLOWED_USER:
 			//no load data
@@ -127,7 +127,7 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 		case ACTION_TYPE_POST_LIKED:
 			post, ok := x.Store.GetPostById(act.TargetId)
 			if ok {
-				load.Post = post
+				load.Post = Views.PostSingleView(post, UserId)
 			} else {
 				helper.DebugPrintln(err)
 			}
@@ -136,8 +136,11 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 			com, ok := x.Store.GetCommentById(act.TargetId)
 			if ok {
 				load.Comment = com
-				post, _ := x.Store.GetPostById(com.PostId)
-				load.Post = post
+
+				post, ok := x.Store.GetPostById(act.TargetId)
+				if ok {
+					load.Post = Views.PostSingleView(post, UserId)
+				}
 			} else {
 				helper.DebugPrintln(err)
 			}

@@ -148,10 +148,10 @@ func (e _memoryStoreImpl) UserFollowingList_Remove(UserId int, FollowedUserId in
 	e.UserFollowingList_Get(UserId).RemoveAndSort(FollowedUserId)
 }
 
-func (e _memoryStoreImpl) UserFollowingList_GetFollowingTypeForUsers(UserId int, PostId int) int {
+func (e _memoryStoreImpl) UserFollowingList_GetFollowingTypeForUsers(UserId int, FollowedUserId int) int {
 	l := e.UserFollowingList_Get(UserId)
 	ftype := 0
-	if l.BinaryContains(PostId) {
+	if l.BinaryContains(FollowedUserId) {
 		//if s.Followings.Contains(ReqFollowedUserId){
 		ftype = 1
 	}

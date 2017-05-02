@@ -14,6 +14,7 @@ import (
 	"ms/sun/models/x"
 
 	"github.com/nfnt/resize"
+	"github.com/syncthing/syncthing/lib/rand"
 )
 
 func AddPostAction(c *base.Action) base.AppErr {
@@ -28,12 +29,14 @@ func AddPostAction(c *base.Action) base.AppErr {
 		buket := models.Buket_GetNextForPostPhoto()
 		t := time.Now()
 		ext := filepath.Ext(fd.Filename) //.jpg
-		photName := fmt.Sprintf("%d_%d_%v_%d_%v_%v_", t.Unix(), c.UserId(), t.Year(), t.Month(), t.Day(), t.Hour())
+		//photName := fmt.Sprintf("%d_%d_%v_%d_%v_%v_", t.Unix(), c.UserId(), t.Year(), t.Month(), t.Day(), t.Hour())
+		photName := fmt.Sprintf("%d_%d_%d_", t.Unix(), c.UserId(), (rand.Intn(899) + 100))
 
 		photName = photName + "%s" + ext
 		PathSrcPath := buket.BucketName + "/" + photName
 		imageOrginal, err := jpeg.Decode(upladedFile)
 		if err != nil {
+			helper.DebugErr(err)
 			return err
 		}
 
@@ -87,16 +90,17 @@ func AddPostAction(c *base.Action) base.AppErr {
 			CreatedTime:    helper.TimeNow(),
 		}
 
-        err = photo.Save(base.DB)
-        if err != nil {
-            return nil
-        }
+		err = photo.Save(base.DB)
+		if err != nil {
+			helper.DebugErr(err)
+			return nil
+		}
 
-        models.Post_AddNewPostToDbAndItsTagsAndCounters(&post)
+		models.Post_AddNewPostToDbAndItsTagsAndCounters(&post)
 		photo.PostId = post.Id
-        photo.Save(base.DB)
+		photo.Save(base.DB)
 
-		c.SendJson(post)
+		c.SendJson(models.Views.PostSingleView(post, c.UserId()))
 		return nil
 	} else { ///just text
 		post := x.Post{}

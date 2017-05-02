@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"ms/sun/base"
+	"ms/sun/helper"
 	"ms/sun/models/x"
 )
 
@@ -16,6 +17,8 @@ func Post_AddNewPostToDbAndItsTagsAndCounters(post *x.Post) {
 		Counter.UpdateUserPostsCounts(post.UserId, 1)
 		Tags_AddTagsInPost(post)
 		Mentioned_AddUserMentionedInPost(post)
+	} else {
+		helper.DebugErr(err)
 	}
 }
 
