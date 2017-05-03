@@ -70,7 +70,7 @@ func AddPostAction(c *base.Action) base.AppErr {
 
 		//////////////// end of file functionality ////////////////
 
-		post := x.Post{
+		post := &x.Post{
 			Id:           0,
 			UserId:       c.UserId(),
 			TypeId:       models.POST_TYPE_PHOTO,
@@ -96,7 +96,7 @@ func AddPostAction(c *base.Action) base.AppErr {
 			return nil
 		}
 
-		models.Post_AddNewPostToDbAndItsTagsAndCounters(&post)
+		models.Post_AddNewPostToDbAndItsTagsAndCounters(post)
 		photo.PostId = post.Id
 		photo.Save(base.DB)
 

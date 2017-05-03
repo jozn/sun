@@ -11,12 +11,13 @@ func Activity_OnPostCommentAdd(comment *x.Comment, post *x.Post) {
 		return
 	}
 
-	refId := comment.Id*1000 + ACTION_TYPE_POST_COMMENTED
+	refId := Ref_CommentAdd(comment.Id) //comment.Id*1000 + ACTION_TYPE_POST_COMMENTED
 	not := x.Activity{
 		Id:           0,
 		ActorUserId:  comment.UserId,
 		ActionTypeId: ACTION_TYPE_POST_COMMENTED,
-		TargetId:     comment.Id,
+		RowId:        comment.Id,
+		RootId:       post.Id,
 		RefId:        refId,
 		CreatedAt:    helper.TimeNow(),
 	}
@@ -28,7 +29,7 @@ func Activity_OnPostCommentDeleted(comment *x.Comment, post *x.Post) {
 		return
 	}
 
-	refId := comment.Id*1000 + ACTION_TYPE_POST_COMMENTED
+	refId := Ref_CommentAdd(comment.Id) //comment.Id*1000 + ACTION_TYPE_POST_COMMENTED
 	x.NewActivity_Deleter().
 		ActorUserId_Eq(comment.UserId).
 		RefId_Eq(refId).
@@ -39,11 +40,12 @@ func Activity_OnPostCommentDeleted(comment *x.Comment, post *x.Post) {
 ////////// For Follows ///////////
 func Activity_OnFollowed(UserId, FollowedPeerUserId, FLId int) {
 
-	refId := FLId*1000 + ACTION_TYPE_FOLLOWED_USER
+	refId := Ref_FollowAdd(FLId) //FLId*1000 + ACTION_TYPE_FOLLOWED_USER
 	not := x.Activity{
 		ActorUserId:  UserId,
 		ActionTypeId: ACTION_TYPE_FOLLOWED_USER,
-		TargetId:     FollowedPeerUserId,
+		RowId:        FLId,
+		RootId:       FollowedPeerUserId,
 		RefId:        refId,
 		CreatedAt:    helper.TimeNow(),
 	}
@@ -52,7 +54,7 @@ func Activity_OnFollowed(UserId, FollowedPeerUserId, FLId int) {
 }
 
 func Activity_OnUnFollowed(UserId, FollowedPeerUserId, FLId int) {
-	refId := FLId*1000 + ACTION_TYPE_FOLLOWED_USER
+	refId := Ref_FollowAdd(FLId) //FLId*1000 + ACTION_TYPE_FOLLOWED_USER
 
 	x.NewActivity_Deleter().
 		ActorUserId_Eq(UserId).
@@ -65,11 +67,12 @@ func Activity_OnPostLiked(lk *x.Like) {
 	if lk == nil {
 		return
 	}
-	refId := lk.Id*1000 + ACTION_TYPE_POST_LIKED
+	refId := Ref_LikeAdd(lk.Id) //lk.Id*1000 + ACTION_TYPE_POST_LIKED
 	not := x.Activity{
 		ActorUserId:  lk.UserId,
 		ActionTypeId: ACTION_TYPE_POST_LIKED,
-		TargetId:     lk.PostId,
+		RowId:        lk.Id,
+		RootId:       lk.PostId,
 		RefId:        refId,
 		CreatedAt:    helper.TimeNow(),
 	}
@@ -81,7 +84,7 @@ func Activity_OnPostUnLiked(lk *x.Like) {
 	if lk == nil {
 		return
 	}
-	refId := lk.Id*1000 + ACTION_TYPE_POST_LIKED
+	refId := Ref_LikeAdd(lk.Id) //lk.Id*1000 + ACTION_TYPE_POST_LIKED
 
 	x.NewActivity_Deleter().
 		ActorUserId_Eq(lk.UserId).
@@ -125,7 +128,7 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 			//no load data
 
 		case ACTION_TYPE_POST_LIKED:
-			post, ok := x.Store.GetPostById(act.TargetId)
+			post, ok := x.Store.GetPostById(act.RootId)
 			if ok {
 				load.Post = Views.PostSingleView(post, UserId)
 			} else {
@@ -133,11 +136,11 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 			}
 
 		case ACTION_TYPE_POST_COMMENTED:
-			com, ok := x.Store.GetCommentById(act.TargetId)
+			com, ok := x.Store.GetCommentById(act.RowId)
 			if ok {
 				load.Comment = com
 
-				post, ok := x.Store.GetPostById(act.TargetId)
+				post, ok := x.Store.GetPostById(com.PostId)
 				if ok {
 					load.Post = Views.PostSingleView(post, UserId)
 				}
@@ -147,7 +150,6 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 		}
 
 		res = append(res, av)
-
 	}
 
 	return res
@@ -164,22 +166,23 @@ func Activity_fillCaches(nots []*x.Activity) {
 		case ACTION_TYPE_FOLLOWED_USER:
 
 		case ACTION_TYPE_POST_LIKED:
-			pre_posts = append(pre_posts, nf.TargetId)
+			pre_posts = append(pre_posts, nf.RootId)
 
 		case ACTION_TYPE_POST_COMMENTED:
-			//pre_posts = append(pre_posts, nf.TargetId)
-			pre_comments = append(pre_comments, nf.TargetId)
+			pre_comments = append(pre_comments, nf.RowId)
+			pre_posts = append(pre_posts, nf.RootId)
 		}
 	}
 
 	x.Store.PreLoadCommentByIds(pre_comments)
 
-	for _, commentId := range pre_comments {
+	//This is now unneccsssory we can use RootId
+	/*for _, commentId := range pre_comments {
 		com, ok := x.Store.GetCommentById(commentId)
 		if ok {
 			pre_posts = append(pre_posts, com.PostId)
 		}
-	}
+	}*/
 
 	x.Store.PreLoadPostByIds(pre_posts)
 

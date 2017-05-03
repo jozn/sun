@@ -4351,6 +4351,49 @@ func SessionBySessionUuid(db XODB, sessionUuid string) (*Session, error) {
 	return &s, nil
 }
 
+// SessionsByUserId retrieves a row from 'ms.session' as a Session.
+//
+// Generated from index 'UserId'.
+func SessionsByUserId(db XODB, userId int) ([]*Session, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime ` +
+		`FROM ms.session ` +
+		`WHERE UserId = ?`
+
+	// run query
+	XOLog(sqlstr, userId)
+	q, err := db.Query(sqlstr, userId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Session{}
+	for q.Next() {
+		s := Session{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.LastNetworkTypeId, &s.AppVersion, &s.UpdatedTime, &s.CreatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &s)
+	}
+
+	OnSession_LoadMany(res)
+
+	return res, nil
+}
+
 // SessionById retrieves a row from 'ms.session' as a Session.
 //
 // Generated from index 'session_Id_pkey'.

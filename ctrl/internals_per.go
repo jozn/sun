@@ -15,7 +15,7 @@ func InsertActivity(c *base.Action) base.AppErr {
 			arr = append(arr, x.Activity{
 				ActorUserId:  25,
 				ActionTypeId: 592,
-				TargetId:     rand.Intn(10000000),
+				RowId:        rand.Intn(10000000),
 				RefId:        rand.Intn(10000000),
 				CreatedAt:    helper.TimeNow(),
 			})
