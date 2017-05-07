@@ -246,21 +246,23 @@ func Notification_fillCaches(nots []*x.Notification) {
 		case ACTION_TYPE_FOLLOWED_USER:
 
 		case ACTION_TYPE_POST_LIKED:
-			pre_posts = append(pre_posts, nf.RowId)
+			pre_posts = append(pre_posts, nf.RootId)
 
 		case ACTION_TYPE_POST_COMMENTED:
 			pre_comments = append(pre_comments, nf.RowId)
-		}
+            pre_posts = append(pre_posts, nf.RootId)
+
+        }
 	}
 
 	x.Store.PreLoadCommentByIds(pre_comments)
 
-	for _, commentId := range pre_comments {
+	/*for _, commentId := range pre_comments {
 		com, ok := x.Store.GetCommentById(commentId)
 		if ok {
 			pre_posts = append(pre_posts, com.PostId)
 		}
-	}
+	}*/
 
 	x.Store.PreLoadPostByIds(pre_posts)
 }
