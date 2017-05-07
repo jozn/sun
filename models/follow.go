@@ -31,7 +31,7 @@ func Follow(UserId, FollowedPeerUserId int) int {
 		Counter.UpdateUserFollowingCounts(UserId, 1)
 		Counter.UpdateUserFollowersCounts(FollowedPeerUserId, 1)
 
-		Notification_OnFollowed(UserId, FollowedPeerUserId)
+		Notification_OnFollowed(UserId, FollowedPeerUserId, flm.Id)
 		Activity_OnFollowed(UserId, FollowedPeerUserId, flm.Id)
 		return 1
 	}

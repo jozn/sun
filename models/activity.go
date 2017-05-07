@@ -125,7 +125,7 @@ func Activity_GetLastsViews(UserId, Page, Limit, Last int) []ActivityView {
 		load.Actor, _ = Views.GetUserInlineWithMeView(UserId, act.ActorUserId)
 		switch act.ActionTypeId {
 		case ACTION_TYPE_FOLLOWED_USER:
-			//no load data
+			load.Followed, _ = Views.GetUserInlineWithMeView(UserId, act.RootId)
 
 		case ACTION_TYPE_POST_LIKED:
 			post, ok := x.Store.GetPostById(act.RootId)

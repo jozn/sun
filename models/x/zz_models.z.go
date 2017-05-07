@@ -288,8 +288,9 @@ type Notification struct {
 	ActorUserId  int
 	ActionTypeId int
 	ObjectTypeId int
-	TargetId     int
-	ObjectId     int
+	RowId        int
+	RootId       int
+	RefId        int
 	SeenStatus   int
 	CreatedTime  int
 
@@ -303,8 +304,9 @@ type Notification struct {
 	ActorUserId: 0,
 	ActionTypeId: 0,
 	ObjectTypeId: 0,
-	TargetId: 0,
-	ObjectId: 0,
+	RowId: 0,
+	RootId: 0,
+	RefId: 0,
 	SeenStatus: 0,
 	CreatedTime: 0,
 */

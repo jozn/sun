@@ -21,8 +21,9 @@ type Notification__ struct {
 	ActorUserId  int `json:"ActorUserId"`  // ActorUserId -
 	ActionTypeId int `json:"ActionTypeId"` // ActionTypeId -
 	ObjectTypeId int `json:"ObjectTypeId"` // ObjectTypeId -
-	TargetId     int `json:"TargetId"`     // TargetId -
-	ObjectId     int `json:"ObjectId"`     // ObjectId -
+	RowId        int `json:"RowId"`        // RowId -
+	RootId       int `json:"RootId"`       // RootId -
+	RefId        int `json:"RefId"`        // RefId -
 	SeenStatus   int `json:"SeenStatus"`   // SeenStatus -
 	CreatedTime  int `json:"CreatedTime"`  // CreatedTime -
 
@@ -51,14 +52,14 @@ func (n *Notification) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.notification (` +
-		`ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, TargetId, ObjectId, SeenStatus, CreatedTime` +
+		`ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, RowId, RootId, RefId, SeenStatus, CreatedTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime)
-	res, err := db.Exec(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime)
+	XOLog(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.RowId, n.RootId, n.RefId, n.SeenStatus, n.CreatedTime)
+	res, err := db.Exec(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.RowId, n.RootId, n.RefId, n.SeenStatus, n.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -86,14 +87,14 @@ func (n *Notification) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.notification (` +
-		`ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, TargetId, ObjectId, SeenStatus, CreatedTime` +
+		`ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, RowId, RootId, RefId, SeenStatus, CreatedTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime)
-	res, err := db.Exec(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime)
+	XOLog(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.RowId, n.RootId, n.RefId, n.SeenStatus, n.CreatedTime)
+	res, err := db.Exec(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.RowId, n.RootId, n.RefId, n.SeenStatus, n.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -131,12 +132,12 @@ func (n *Notification) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.notification SET ` +
-		`ForUserId = ?, ActorUserId = ?, ActionTypeId = ?, ObjectTypeId = ?, TargetId = ?, ObjectId = ?, SeenStatus = ?, CreatedTime = ?` +
+		`ForUserId = ?, ActorUserId = ?, ActionTypeId = ?, ObjectTypeId = ?, RowId = ?, RootId = ?, RefId = ?, SeenStatus = ?, CreatedTime = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime, n.Id)
-	_, err = db.Exec(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.TargetId, n.ObjectId, n.SeenStatus, n.CreatedTime, n.Id)
+	XOLog(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.RowId, n.RootId, n.RefId, n.SeenStatus, n.CreatedTime, n.Id)
+	_, err = db.Exec(sqlstr, n.ForUserId, n.ActorUserId, n.ActionTypeId, n.ObjectTypeId, n.RowId, n.RootId, n.RefId, n.SeenStatus, n.CreatedTime, n.Id)
 
 	XOLogErr(err)
 	OnNotification_AfterUpdate(n)
@@ -762,211 +763,316 @@ func (d *__Notification_Deleter) ObjectTypeId_GE(val int) *__Notification_Delete
 	return d
 }
 
-func (u *__Notification_Deleter) TargetId_In(ins []int) *__Notification_Deleter {
+func (u *__Notification_Deleter) RowId_In(ins []int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RowId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Deleter) TargetId_Ins(ins ...int) *__Notification_Deleter {
+func (u *__Notification_Deleter) RowId_Ins(ins ...int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RowId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Deleter) TargetId_NotIn(ins []int) *__Notification_Deleter {
+func (u *__Notification_Deleter) RowId_NotIn(ins []int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RowId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Notification_Deleter) TargetId_Eq(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RowId_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId = ? "
+	w.condition = " RowId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Deleter) TargetId_NotEq(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RowId_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId != ? "
+	w.condition = " RowId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Deleter) TargetId_LT(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RowId_LT(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId < ? "
+	w.condition = " RowId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Deleter) TargetId_LE(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RowId_LE(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId <= ? "
+	w.condition = " RowId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Deleter) TargetId_GT(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RowId_GT(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId > ? "
+	w.condition = " RowId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Deleter) TargetId_GE(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RowId_GE(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId >= ? "
+	w.condition = " RowId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Notification_Deleter) ObjectId_In(ins []int) *__Notification_Deleter {
+func (u *__Notification_Deleter) RootId_In(ins []int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ObjectId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RootId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Deleter) ObjectId_Ins(ins ...int) *__Notification_Deleter {
+func (u *__Notification_Deleter) RootId_Ins(ins ...int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ObjectId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RootId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Deleter) ObjectId_NotIn(ins []int) *__Notification_Deleter {
+func (u *__Notification_Deleter) RootId_NotIn(ins []int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ObjectId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RootId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Notification_Deleter) ObjectId_Eq(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RootId_Eq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId = ? "
+	w.condition = " RootId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Deleter) ObjectId_NotEq(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RootId_NotEq(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId != ? "
+	w.condition = " RootId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Deleter) ObjectId_LT(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RootId_LT(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId < ? "
+	w.condition = " RootId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Deleter) ObjectId_LE(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RootId_LE(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId <= ? "
+	w.condition = " RootId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Deleter) ObjectId_GT(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RootId_GT(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId > ? "
+	w.condition = " RootId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Deleter) ObjectId_GE(val int) *__Notification_Deleter {
+func (d *__Notification_Deleter) RootId_GE(val int) *__Notification_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId >= ? "
+	w.condition = " RootId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Notification_Deleter) RefId_In(ins []int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Deleter) RefId_Ins(ins ...int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Deleter) RefId_NotIn(ins []int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Notification_Deleter) RefId_Eq(val int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Deleter) RefId_NotEq(val int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Deleter) RefId_LT(val int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Deleter) RefId_LE(val int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Deleter) RefId_GT(val int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Deleter) RefId_GE(val int) *__Notification_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1713,211 +1819,316 @@ func (d *__Notification_Updater) ObjectTypeId_GE(val int) *__Notification_Update
 	return d
 }
 
-func (u *__Notification_Updater) TargetId_In(ins []int) *__Notification_Updater {
+func (u *__Notification_Updater) RowId_In(ins []int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RowId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Updater) TargetId_Ins(ins ...int) *__Notification_Updater {
+func (u *__Notification_Updater) RowId_Ins(ins ...int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RowId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Updater) TargetId_NotIn(ins []int) *__Notification_Updater {
+func (u *__Notification_Updater) RowId_NotIn(ins []int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RowId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Notification_Updater) TargetId_Eq(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RowId_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId = ? "
+	w.condition = " RowId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Updater) TargetId_NotEq(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RowId_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId != ? "
+	w.condition = " RowId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Updater) TargetId_LT(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RowId_LT(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId < ? "
+	w.condition = " RowId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Updater) TargetId_LE(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RowId_LE(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId <= ? "
+	w.condition = " RowId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Updater) TargetId_GT(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RowId_GT(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId > ? "
+	w.condition = " RowId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Updater) TargetId_GE(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RowId_GE(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId >= ? "
+	w.condition = " RowId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Notification_Updater) ObjectId_In(ins []int) *__Notification_Updater {
+func (u *__Notification_Updater) RootId_In(ins []int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ObjectId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RootId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Updater) ObjectId_Ins(ins ...int) *__Notification_Updater {
+func (u *__Notification_Updater) RootId_Ins(ins ...int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ObjectId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RootId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Updater) ObjectId_NotIn(ins []int) *__Notification_Updater {
+func (u *__Notification_Updater) RootId_NotIn(ins []int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ObjectId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RootId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Notification_Updater) ObjectId_Eq(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RootId_Eq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId = ? "
+	w.condition = " RootId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Updater) ObjectId_NotEq(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RootId_NotEq(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId != ? "
+	w.condition = " RootId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Updater) ObjectId_LT(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RootId_LT(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId < ? "
+	w.condition = " RootId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Updater) ObjectId_LE(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RootId_LE(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId <= ? "
+	w.condition = " RootId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Updater) ObjectId_GT(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RootId_GT(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId > ? "
+	w.condition = " RootId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Updater) ObjectId_GE(val int) *__Notification_Updater {
+func (d *__Notification_Updater) RootId_GE(val int) *__Notification_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId >= ? "
+	w.condition = " RootId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Notification_Updater) RefId_In(ins []int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Updater) RefId_Ins(ins ...int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Updater) RefId_NotIn(ins []int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Notification_Updater) RefId_Eq(val int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Updater) RefId_NotEq(val int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Updater) RefId_LT(val int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Updater) RefId_LE(val int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Updater) RefId_GT(val int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Updater) RefId_GE(val int) *__Notification_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2664,211 +2875,316 @@ func (d *__Notification_Selector) ObjectTypeId_GE(val int) *__Notification_Selec
 	return d
 }
 
-func (u *__Notification_Selector) TargetId_In(ins []int) *__Notification_Selector {
+func (u *__Notification_Selector) RowId_In(ins []int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RowId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Selector) TargetId_Ins(ins ...int) *__Notification_Selector {
+func (u *__Notification_Selector) RowId_Ins(ins ...int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RowId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Selector) TargetId_NotIn(ins []int) *__Notification_Selector {
+func (u *__Notification_Selector) RowId_NotIn(ins []int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RowId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Notification_Selector) TargetId_Eq(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RowId_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId = ? "
+	w.condition = " RowId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Selector) TargetId_NotEq(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RowId_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId != ? "
+	w.condition = " RowId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Selector) TargetId_LT(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RowId_LT(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId < ? "
+	w.condition = " RowId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Selector) TargetId_LE(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RowId_LE(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId <= ? "
+	w.condition = " RowId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Selector) TargetId_GT(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RowId_GT(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId > ? "
+	w.condition = " RowId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Selector) TargetId_GE(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RowId_GE(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TargetId >= ? "
+	w.condition = " RowId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Notification_Selector) ObjectId_In(ins []int) *__Notification_Selector {
+func (u *__Notification_Selector) RootId_In(ins []int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ObjectId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RootId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Selector) ObjectId_Ins(ins ...int) *__Notification_Selector {
+func (u *__Notification_Selector) RootId_Ins(ins ...int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ObjectId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RootId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Notification_Selector) ObjectId_NotIn(ins []int) *__Notification_Selector {
+func (u *__Notification_Selector) RootId_NotIn(ins []int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ObjectId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RootId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Notification_Selector) ObjectId_Eq(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RootId_Eq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId = ? "
+	w.condition = " RootId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Selector) ObjectId_NotEq(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RootId_NotEq(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId != ? "
+	w.condition = " RootId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Selector) ObjectId_LT(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RootId_LT(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId < ? "
+	w.condition = " RootId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Selector) ObjectId_LE(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RootId_LE(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId <= ? "
+	w.condition = " RootId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Selector) ObjectId_GT(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RootId_GT(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId > ? "
+	w.condition = " RootId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Notification_Selector) ObjectId_GE(val int) *__Notification_Selector {
+func (d *__Notification_Selector) RootId_GE(val int) *__Notification_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ObjectId >= ? "
+	w.condition = " RootId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Notification_Selector) RefId_In(ins []int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Selector) RefId_Ins(ins ...int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Notification_Selector) RefId_NotIn(ins []int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RefId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Notification_Selector) RefId_Eq(val int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Selector) RefId_NotEq(val int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Selector) RefId_LT(val int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Selector) RefId_LE(val int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Selector) RefId_GT(val int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Notification_Selector) RefId_GE(val int) *__Notification_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RefId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3203,18 +3519,18 @@ func (u *__Notification_Updater) ObjectTypeId_Increment(count int) *__Notificati
 
 //ints
 
-func (u *__Notification_Updater) TargetId(newVal int) *__Notification_Updater {
-	u.updates[" TargetId = ? "] = newVal
+func (u *__Notification_Updater) RowId(newVal int) *__Notification_Updater {
+	u.updates[" RowId = ? "] = newVal
 	return u
 }
 
-func (u *__Notification_Updater) TargetId_Increment(count int) *__Notification_Updater {
+func (u *__Notification_Updater) RowId_Increment(count int) *__Notification_Updater {
 	if count > 0 {
-		u.updates[" TargetId = TargetId+? "] = count
+		u.updates[" RowId = RowId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" TargetId = TargetId-? "] = -(count) //make it positive
+		u.updates[" RowId = RowId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3224,18 +3540,39 @@ func (u *__Notification_Updater) TargetId_Increment(count int) *__Notification_U
 
 //ints
 
-func (u *__Notification_Updater) ObjectId(newVal int) *__Notification_Updater {
-	u.updates[" ObjectId = ? "] = newVal
+func (u *__Notification_Updater) RootId(newVal int) *__Notification_Updater {
+	u.updates[" RootId = ? "] = newVal
 	return u
 }
 
-func (u *__Notification_Updater) ObjectId_Increment(count int) *__Notification_Updater {
+func (u *__Notification_Updater) RootId_Increment(count int) *__Notification_Updater {
 	if count > 0 {
-		u.updates[" ObjectId = ObjectId+? "] = count
+		u.updates[" RootId = RootId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" ObjectId = ObjectId-? "] = -(count) //make it positive
+		u.updates[" RootId = RootId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__Notification_Updater) RefId(newVal int) *__Notification_Updater {
+	u.updates[" RefId = ? "] = newVal
+	return u
+}
+
+func (u *__Notification_Updater) RefId_Increment(count int) *__Notification_Updater {
+	if count > 0 {
+		u.updates[" RefId = RefId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" RefId = RefId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3365,33 +3702,48 @@ func (u *__Notification_Selector) Select_ObjectTypeId() *__Notification_Selector
 	return u
 }
 
-func (u *__Notification_Selector) OrderBy_TargetId_Desc() *__Notification_Selector {
-	u.orderBy = " ORDER BY TargetId DESC "
+func (u *__Notification_Selector) OrderBy_RowId_Desc() *__Notification_Selector {
+	u.orderBy = " ORDER BY RowId DESC "
 	return u
 }
 
-func (u *__Notification_Selector) OrderBy_TargetId_Asc() *__Notification_Selector {
-	u.orderBy = " ORDER BY TargetId ASC "
+func (u *__Notification_Selector) OrderBy_RowId_Asc() *__Notification_Selector {
+	u.orderBy = " ORDER BY RowId ASC "
 	return u
 }
 
-func (u *__Notification_Selector) Select_TargetId() *__Notification_Selector {
-	u.selectCol = "TargetId"
+func (u *__Notification_Selector) Select_RowId() *__Notification_Selector {
+	u.selectCol = "RowId"
 	return u
 }
 
-func (u *__Notification_Selector) OrderBy_ObjectId_Desc() *__Notification_Selector {
-	u.orderBy = " ORDER BY ObjectId DESC "
+func (u *__Notification_Selector) OrderBy_RootId_Desc() *__Notification_Selector {
+	u.orderBy = " ORDER BY RootId DESC "
 	return u
 }
 
-func (u *__Notification_Selector) OrderBy_ObjectId_Asc() *__Notification_Selector {
-	u.orderBy = " ORDER BY ObjectId ASC "
+func (u *__Notification_Selector) OrderBy_RootId_Asc() *__Notification_Selector {
+	u.orderBy = " ORDER BY RootId ASC "
 	return u
 }
 
-func (u *__Notification_Selector) Select_ObjectId() *__Notification_Selector {
-	u.selectCol = "ObjectId"
+func (u *__Notification_Selector) Select_RootId() *__Notification_Selector {
+	u.selectCol = "RootId"
+	return u
+}
+
+func (u *__Notification_Selector) OrderBy_RefId_Desc() *__Notification_Selector {
+	u.orderBy = " ORDER BY RefId DESC "
+	return u
+}
+
+func (u *__Notification_Selector) OrderBy_RefId_Asc() *__Notification_Selector {
+	u.orderBy = " ORDER BY RefId ASC "
+	return u
+}
+
+func (u *__Notification_Selector) Select_RefId() *__Notification_Selector {
+	u.selectCol = "RefId"
 	return u
 }
 
@@ -3693,12 +4045,12 @@ func (d *__Notification_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_Notification(rows []Notification, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.notification (" +
-		"ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, TargetId, ObjectId, SeenStatus, CreatedTime" +
+		"ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, RowId, RootId, RefId, SeenStatus, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -3710,8 +4062,9 @@ func MassInsert_Notification(rows []Notification, db XODB) error {
 		vals = append(vals, row.ActorUserId)
 		vals = append(vals, row.ActionTypeId)
 		vals = append(vals, row.ObjectTypeId)
-		vals = append(vals, row.TargetId)
-		vals = append(vals, row.ObjectId)
+		vals = append(vals, row.RowId)
+		vals = append(vals, row.RootId)
+		vals = append(vals, row.RefId)
 		vals = append(vals, row.SeenStatus)
 		vals = append(vals, row.CreatedTime)
 
@@ -3731,12 +4084,12 @@ func MassInsert_Notification(rows []Notification, db XODB) error {
 func MassReplace_Notification(rows []Notification, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.notification (" +
-		"ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, TargetId, ObjectId, SeenStatus, CreatedTime" +
+		"ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, RowId, RootId, RefId, SeenStatus, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -3748,8 +4101,9 @@ func MassReplace_Notification(rows []Notification, db XODB) error {
 		vals = append(vals, row.ActorUserId)
 		vals = append(vals, row.ActionTypeId)
 		vals = append(vals, row.ObjectTypeId)
-		vals = append(vals, row.TargetId)
-		vals = append(vals, row.ObjectId)
+		vals = append(vals, row.RowId)
+		vals = append(vals, row.RootId)
+		vals = append(vals, row.RefId)
 		vals = append(vals, row.SeenStatus)
 		vals = append(vals, row.CreatedTime)
 
@@ -3786,6 +4140,8 @@ func MassReplace_Notification(rows []Notification, db XODB) error {
 
 //
 
+//
+
 // NotificationByForUserIdId retrieves a row from 'ms.notification' as a Notification.
 //
 // Generated from index 'ForUserId'.
@@ -3794,7 +4150,7 @@ func NotificationByForUserIdId(db XODB, forUserId int, id int) (*Notification, e
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, TargetId, ObjectId, SeenStatus, CreatedTime ` +
+		`Id, ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, RowId, RootId, RefId, SeenStatus, CreatedTime ` +
 		`FROM ms.notification ` +
 		`WHERE ForUserId = ? AND Id = ?`
 
@@ -3804,7 +4160,7 @@ func NotificationByForUserIdId(db XODB, forUserId int, id int) (*Notification, e
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, forUserId, id).Scan(&n.Id, &n.ForUserId, &n.ActorUserId, &n.ActionTypeId, &n.ObjectTypeId, &n.TargetId, &n.ObjectId, &n.SeenStatus, &n.CreatedTime)
+	err = db.QueryRow(sqlstr, forUserId, id).Scan(&n.Id, &n.ForUserId, &n.ActorUserId, &n.ActionTypeId, &n.ObjectTypeId, &n.RowId, &n.RootId, &n.RefId, &n.SeenStatus, &n.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
@@ -3815,21 +4171,21 @@ func NotificationByForUserIdId(db XODB, forUserId int, id int) (*Notification, e
 	return &n, nil
 }
 
-// NotificationsByTargetId retrieves a row from 'ms.notification' as a Notification.
+// NotificationsByRowId retrieves a row from 'ms.notification' as a Notification.
 //
 // Generated from index 'TargetId'.
-func NotificationsByTargetId(db XODB, targetId int) ([]*Notification, error) {
+func NotificationsByRowId(db XODB, rowId int) ([]*Notification, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, TargetId, ObjectId, SeenStatus, CreatedTime ` +
+		`Id, ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, RowId, RootId, RefId, SeenStatus, CreatedTime ` +
 		`FROM ms.notification ` +
-		`WHERE TargetId = ?`
+		`WHERE RowId = ?`
 
 	// run query
-	XOLog(sqlstr, targetId)
-	q, err := db.Query(sqlstr, targetId)
+	XOLog(sqlstr, rowId)
+	q, err := db.Query(sqlstr, rowId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
@@ -3844,7 +4200,7 @@ func NotificationsByTargetId(db XODB, targetId int) ([]*Notification, error) {
 		}
 
 		// scan
-		err = q.Scan(&n.Id, &n.ForUserId, &n.ActorUserId, &n.ActionTypeId, &n.ObjectTypeId, &n.TargetId, &n.ObjectId, &n.SeenStatus, &n.CreatedTime)
+		err = q.Scan(&n.Id, &n.ForUserId, &n.ActorUserId, &n.ActionTypeId, &n.ObjectTypeId, &n.RowId, &n.RootId, &n.RefId, &n.SeenStatus, &n.CreatedTime)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -3866,7 +4222,7 @@ func NotificationById(db XODB, id int) (*Notification, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, TargetId, ObjectId, SeenStatus, CreatedTime ` +
+		`Id, ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, RowId, RootId, RefId, SeenStatus, CreatedTime ` +
 		`FROM ms.notification ` +
 		`WHERE Id = ?`
 
@@ -3876,7 +4232,7 @@ func NotificationById(db XODB, id int) (*Notification, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&n.Id, &n.ForUserId, &n.ActorUserId, &n.ActionTypeId, &n.ObjectTypeId, &n.TargetId, &n.ObjectId, &n.SeenStatus, &n.CreatedTime)
+	err = db.QueryRow(sqlstr, id).Scan(&n.Id, &n.ForUserId, &n.ActorUserId, &n.ActionTypeId, &n.ObjectTypeId, &n.RowId, &n.RootId, &n.RefId, &n.SeenStatus, &n.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

@@ -30,6 +30,21 @@ func (e _viewImpl) PostsViewsForPostIds(postsIds []int, UserId int) (viw []*Post
 	return
 }
 
+func (e _viewImpl) PostSingleViewForPostId(postsId int, UserId int) (viw *PostView, ok bool) {
+	p, ok := x.Store.GetPostById(postsId)
+	if !ok {
+		return
+	}
+
+	viw = Views.PostSingleView(p, UserId)
+	if viw != nil {
+		ok = true
+		return
+	}
+	ok = false
+	return
+}
+
 func (e _viewImpl) PostSingleView(post *x.Post, UserId int) *PostView {
 	if post == nil {
 		return nil

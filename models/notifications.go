@@ -16,15 +16,16 @@ func Notification_OnPostCommented(comment *x.Comment, post *x.Post) {
 		return
 	}
 
-	objId := post.Id*1000 + ACTION_TYPE_POST_COMMENTED
+	refId := Ref_CommentAdd(comment.Id) //post.Id*1000 + ACTION_TYPE_POST_COMMENTED
 	not := x.Notification{
 		Id:           0,
 		ForUserId:    post.UserId,
 		ActorUserId:  comment.UserId,
 		ActionTypeId: ACTION_TYPE_POST_COMMENTED,
 		ObjectTypeId: OBJECT_COMMENT,
-		TargetId:     comment.Id,
-		ObjectId:     objId,
+		RowId:        comment.Id,
+		RootId:       comment.PostId,
+		RefId:        refId,
 		SeenStatus:   0,
 		CreatedTime:  helper.TimeNow(),
 	}
@@ -41,7 +42,7 @@ func Notification_OnPostCommentedDeleted(comment *x.Comment, post *x.Post) {
 	row, err := x.NewNotification_Selector().
 		ForUserId_Eq(post.UserId).
 		ActorUserId_Eq(comment.UserId).
-		TargetId_Eq(comment.Id).
+		RowId_Eq(comment.Id).
 		ActionTypeId_Eq(ACTION_TYPE_POST_COMMENTED).
 		GetRow(base.DB)
 
@@ -59,18 +60,21 @@ func Notification_OnPostCommentedDeleted(comment *x.Comment, post *x.Post) {
 }
 
 ////////// For Follows ///////////
-func Notification_OnFollowed(UserId, FollowedPeerUserId int) {
+func Notification_OnFollowed(UserId, FollowedPeerUserId, FLId int) {
 	if UserId == FollowedPeerUserId { //must never reach here at all
 		return
 	}
+
+	ref := Ref_FollowAdd(FLId)
 	nf := x.Notification{
 		Id:           0,
 		ForUserId:    FollowedPeerUserId,
 		ActorUserId:  UserId,
 		ActionTypeId: ACTION_TYPE_FOLLOWED_USER,
 		ObjectTypeId: OBJECT_FOLLOWING,
-		TargetId:     UserId,
-		ObjectId:     0,
+		RowId:        FLId,
+		RootId:       FollowedPeerUserId,
+		RefId:        ref,
 		SeenStatus:   0,
 		CreatedTime:  helper.TimeNow(),
 	}
@@ -111,14 +115,16 @@ func Notification_OnPostLiked(lk *x.Like) {
 		return
 	}
 
+	refId := Ref_LikeAdd(lk.Id)
 	nf := x.Notification{
 		Id:           0,
 		ForUserId:    post.UserId,
 		ActorUserId:  lk.UserId,
 		ActionTypeId: ACTION_TYPE_POST_LIKED,
 		ObjectTypeId: OBJECT_LIKE,
-		TargetId:     post.Id,
-		ObjectId:     0,
+		RowId:        post.Id,
+		RootId:       lk.PostId,
+		RefId:        refId,
 		SeenStatus:   0,
 		CreatedTime:  helper.TimeNow(),
 	}
@@ -135,7 +141,7 @@ func Notification_OnPostUnLiked(lk *x.Like) {
 	row, err := x.NewNotification_Selector().
 		ForUserId_Eq(post.UserId).
 		ActorUserId_Eq(lk.UserId).
-		TargetId_Eq(lk.PostId).
+		RootId_Eq(lk.PostId).
 		ActionTypeId_Eq(ACTION_TYPE_POST_LIKED).
 		GetRow(base.DB)
 
@@ -193,7 +199,6 @@ func Notification_GetLastsViews(UserId, last int) (res []NotificationView) {
 	}
 
 	return res
-
 }
 
 func Notification_notifyToView(nf *x.Notification, UserId int) NotificationView {
@@ -204,22 +209,24 @@ func Notification_notifyToView(nf *x.Notification, UserId int) NotificationView 
 	nv.Load = &load
 
 	if nf.ActionTypeId > 0 { //old check not need anymore (it was for when ActionTypedId could be negative)
-		load.Actor = Views.UserBasicAndMeView(nf.ActorUserId, UserId)
+		load.Actor, _ = Views.GetUserInlineWithMeView(nf.ActorUserId, UserId)
 
 		switch nf.ActionTypeId {
-		case ACTION_TYPE_FOLLOWED_USER:
 
+		case ACTION_TYPE_FOLLOWED_USER:
+			load.Followed, _ = Views.GetUserInlineWithMeView(UserId, nf.RootId)
 		case ACTION_TYPE_POST_LIKED:
-			post, ok := x.Store.GetPostById(nf.TargetId)
+			//post, ok := x.Store.GetPostById(nf.RowId)
+			post, ok := Views.PostSingleViewForPostId(nf.RootId, UserId)
 			if ok {
 				load.Post = post
 			}
 
 		case ACTION_TYPE_POST_COMMENTED:
-			com, ok := x.Store.GetCommentById(nf.TargetId)
+			com, ok := x.Store.GetCommentById(nf.RowId)
 			if ok {
 				load.Comment = com
-				post, _ := x.Store.GetPostById(com.PostId)
+				post, _ := Views.PostSingleViewForPostId(com.PostId, UserId) //x.Store.GetPostById(com.PostId)
 				load.Post = post
 			}
 		}
@@ -239,10 +246,10 @@ func Notification_fillCaches(nots []*x.Notification) {
 		case ACTION_TYPE_FOLLOWED_USER:
 
 		case ACTION_TYPE_POST_LIKED:
-			pre_posts = append(pre_posts, nf.TargetId)
+			pre_posts = append(pre_posts, nf.RowId)
 
 		case ACTION_TYPE_POST_COMMENTED:
-			pre_comments = append(pre_comments, nf.TargetId)
+			pre_comments = append(pre_comments, nf.RowId)
 		}
 	}
 

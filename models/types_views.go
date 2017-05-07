@@ -16,9 +16,10 @@ type ActivityPayload_DEP struct {
 }
 
 type ActivityPayload struct {
-	Actor   *UserInlineWithMeView
-	Post    *PostView
-	Comment *x.Comment
+	Actor    *UserInlineWithMeView
+	Post     *PostView
+	Comment  *x.Comment
+	Followed *UserInlineWithMeView
 }
 
 //////////// Notifications ////////////
@@ -29,6 +30,13 @@ type NotificationView struct {
 }
 
 type NotifPayload struct {
+	Actor    *UserInlineWithMeView
+	Post     *PostView
+	Comment  *x.Comment
+	Followed *UserInlineWithMeView
+}
+
+type NotifPayload_DEP struct {
 	Actor   *UserBasicAndMe
 	Post    *x.Post
 	Comment *x.Comment

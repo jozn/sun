@@ -3117,10 +3117,10 @@ func ActivitiesByActorUserIdId(db XODB, actorUserId int, id int) ([]*Activity, e
 	return res, nil
 }
 
-// ActivitiesByRefId retrieves a row from 'ms.activity' as a Activity.
+// ActivityByRefId retrieves a row from 'ms.activity' as a Activity.
 //
 // Generated from index 'RefId'.
-func ActivitiesByRefId(db XODB, refId int) ([]*Activity, error) {
+func ActivityByRefId(db XODB, refId int) (*Activity, error) {
 	var err error
 
 	// sql query
@@ -3131,33 +3131,19 @@ func ActivitiesByRefId(db XODB, refId int) ([]*Activity, error) {
 
 	// run query
 	XOLog(sqlstr, refId)
-	q, err := db.Query(sqlstr, refId)
+	a := Activity{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, refId).Scan(&a.Id, &a.ActorUserId, &a.ActionTypeId, &a.RowId, &a.RootId, &a.RefId, &a.CreatedAt)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
 	}
-	defer q.Close()
 
-	// load results
-	res := []*Activity{}
-	for q.Next() {
-		a := Activity{
-			_exists: true,
-		}
+	OnActivity_LoadOne(&a)
 
-		// scan
-		err = q.Scan(&a.Id, &a.ActorUserId, &a.ActionTypeId, &a.RowId, &a.RootId, &a.RefId, &a.CreatedAt)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &a)
-	}
-
-	OnActivity_LoadMany(res)
-
-	return res, nil
+	return &a, nil
 }
 
 // ActivityById retrieves a row from 'ms.activity' as a Activity.
