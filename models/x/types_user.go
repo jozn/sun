@@ -35,7 +35,7 @@ type UserCounts struct {
 }
 
 type UserExtra struct {
-    UserNameLower string `json:"-"`
+	UserNameLower        string `json:"-"`
 	Email                string `json:"-"`
 	PrimaryFollowingList int
 	CreatedTime          int `json:"-"`

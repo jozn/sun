@@ -22,6 +22,15 @@ var redisPool *pool.Pool
 
 func main() {
 	startApp()
+
+	go func() {
+		models.SERVER_GRPC()
+	}()
+
+	go func() {
+		models.Client_GRPC()
+	}()
+
 	http.ListenAndServe(":5000", nil)
 	//runtime.MemProfileRecord{}.
 }

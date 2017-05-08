@@ -3,11 +3,11 @@ package actions
 import (
 	"fmt"
 	"ms/sun/base"
+	"ms/sun/ctrl"
 	"ms/sun/helper"
 	"ms/sun/models"
 	"ms/sun/models/x"
 	"net/http"
-    "ms/sun/ctrl"
 )
 
 func DBStruct(a *base.Action) base.AppErr {
@@ -29,7 +29,7 @@ func DBStructsTojava2(w http.ResponseWriter, r *http.Request) {
 		models.ActivityPayload_DEP{},
 		models.NotificationView{},
 		models.NotifPayload{},
-        ctrl.NotifyAddRemoveView{},
+		ctrl.NotifyAddRemoveView{},
 		models.TopTagsWithPostsView{},
 		models.UserInlineView{},
 		models.UserInlineWithMeView{},

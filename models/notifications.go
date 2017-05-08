@@ -209,7 +209,7 @@ func Notification_notifyToView(nf *x.Notification, UserId int) NotificationView 
 	nv.Load = &load
 
 	if nf.ActionTypeId > 0 { //old check not need anymore (it was for when ActionTypedId could be negative)
-		load.Actor, _ = Views.GetUserInlineWithMeView(UserId,nf.ActorUserId)
+		load.Actor, _ = Views.GetUserInlineWithMeView(UserId, nf.ActorUserId)
 
 		switch nf.ActionTypeId {
 
@@ -250,9 +250,9 @@ func Notification_fillCaches(nots []*x.Notification) {
 
 		case ACTION_TYPE_POST_COMMENTED:
 			pre_comments = append(pre_comments, nf.RowId)
-            pre_posts = append(pre_posts, nf.RootId)
+			pre_posts = append(pre_posts, nf.RootId)
 
-        }
+		}
 	}
 
 	x.Store.PreLoadCommentByIds(pre_comments)

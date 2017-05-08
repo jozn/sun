@@ -22,14 +22,14 @@ func GetPostsForProfileAction(c *base.Action) base.AppErr {
 	userName := c.Req.Form.Get("user_name")
 
 	var u x.User
-    var ok bool
+	var ok bool
 
-    if profileId> 0{
-        u, ok = models.MemoryStore_User.GetUser(profileId)
+	if profileId > 0 {
+		u, ok = models.MemoryStore_User.GetUser(profileId)
 
-    }else if len(userName)>0 {
-        u, ok = models.MemoryStore_User.GetUserByUserName(userName)
-    }
+	} else if len(userName) > 0 {
+		u, ok = models.MemoryStore_User.GetUserByUserName(userName)
+	}
 
 	if !ok {
 		c.Protocol.Error = "NOT FOUND"
@@ -64,19 +64,19 @@ func GetProfileInfoAction(c *base.Action) base.AppErr {
 	UpdateSessionActivityIfUser(c)
 
 	profileId := c.GetParamInt("profile_id", 0)
-    userName := c.Req.Form.Get("user_name")
+	userName := c.Req.Form.Get("user_name")
 
-    var u x.User
-    var ok bool
+	var u x.User
+	var ok bool
 
-    if profileId> 0{
-        u, ok = models.MemoryStore_User.GetUser(profileId)
+	if profileId > 0 {
+		u, ok = models.MemoryStore_User.GetUser(profileId)
 
-    }else if len(userName)>0 {
-        u, ok = models.MemoryStore_User.GetUserByUserName(userName)
-    }
+	} else if len(userName) > 0 {
+		u, ok = models.MemoryStore_User.GetUserByUserName(userName)
+	}
 
-    if !ok {
+	if !ok {
 		c.Protocol.Error = "NOT FOUND"
 		c.Protocol.Status = "ERROR"
 		return nil
