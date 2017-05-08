@@ -209,7 +209,7 @@ func Notification_notifyToView(nf *x.Notification, UserId int) NotificationView 
 	nv.Load = &load
 
 	if nf.ActionTypeId > 0 { //old check not need anymore (it was for when ActionTypedId could be negative)
-		load.Actor, _ = Views.GetUserInlineWithMeView(nf.ActorUserId, UserId)
+		load.Actor, _ = Views.GetUserInlineWithMeView(UserId,nf.ActorUserId)
 
 		switch nf.ActionTypeId {
 

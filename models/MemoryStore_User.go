@@ -42,7 +42,7 @@ func (m *mapMemoryStore_UserImpl) ReloadAll() {
 		memData := &userMemRowData{u}
 		m.MapUserToData[u.Id] = memData
 		if u.UserName != "" {
-			m.MapUsernameToId[u.UserName] = u.Id
+			m.MapUsernameToId[strings.ToLower(u.UserName)] = u.Id
 		}
 
 		if u.SessionUuid != "" {
@@ -76,7 +76,7 @@ func (m *mapMemoryStore_UserImpl) GetUserByUserName(UserName string) (x.User, bo
 	m.RLock()
 	defer m.RUnlock()
 	UserName = strings.Replace(UserName, "@", "", 1)
-	uid, ok := m.MapUsernameToId[UserName]
+	uid, ok := m.MapUsernameToId[strings.ToLower(UserName)]
 	if ok {
 		return m.GetUser(uid)
 	}

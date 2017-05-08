@@ -238,6 +238,7 @@ public class J {
 	public static class User {
 		public Integer Id;
 		public String UserName;
+		public String UserNameLower;
 		public String FirstName;
 		public String LastName;
 		public String About;
