@@ -21,6 +21,9 @@ const (
 // server is used to implement helloworld.GreeterServer.
 type server struct{}
 
+var cert = "server.crt"
+
+
 // SayHello implements helloworld.GreeterServer
 func (s *server) GetUsers(context.Context, *rpc.UserReq) (*rpc.UserRes, error) {
 	return &rpc.UserRes{Users: []*rpc.User{
@@ -55,13 +58,22 @@ func (s *server) GetUsers(context.Context, *rpc.UserReq) (*rpc.UserRes, error) {
 }
 
 func SERVER_GRPC() {
+    _ = cert
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
 
-	rpc.RegisterUserServiceServer(s, &server{})
+    // Create the TLS credentials
+    //creds, err := credentials.NewServerTLSFromFile(cert, "server.key")
+    //if err != nil {
+    //    return fmt.Errorf("could not load TLS keys: %s", err)
+    //}
+
+    //s := grpc.NewServer(grpc.Creds(creds))
+
+    rpc.RegisterUserServiceServer(s, &server{})
 	//pb.RegisterGreeterServer(s, &server{})
 	// Register reflection service on gRPC server.
 	reflection.Register(s)
