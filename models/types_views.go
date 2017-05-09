@@ -95,12 +95,13 @@ type CommentInlineInfoView struct {
 ////////////// USer ////////////
 /////////// for Responses //////////////////////////////////////
 type UserSyncAndMeView struct {
-	x.UserBasic
-	UserId        int
-	FollowingType int
+	//x.UserBasic
+	//UserId        int
+	//FollowingType int
+    UserBasicAndMe
 	AppVersion    int
 	Phone         string
-	UpdatedTime   int
+	//UpdatedTime   int
 }
 
 //todo clean this 2 struct
@@ -111,5 +112,17 @@ type UserBasicAndMe struct { //legacy switch to UserTable
 	FollowingType int /// 0: not_following  1: following  2: follow_requested
 	//FollowingLists int
 }
+
+type ProfileInfo struct {
+    x.UserCounts
+    UserSyncAndMeView
+}
+
+/*type UserAndMe struct{
+    UserSyncAndMeView
+    x.UserCounts
+} */
+
+
 
 /////////////////////////////////////////////

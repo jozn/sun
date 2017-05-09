@@ -70,7 +70,7 @@ func GetProfileInfoAction(c *base.Action) base.AppErr {
 	var ok bool
 
 	if profileId > 0 {
-		u, ok = models.MemoryStore_User.GetUser(profileId)
+		u, ok = x.Store.GetUserById(profileId)
 
 	} else if len(userName) > 0 {
 		u, ok = models.MemoryStore_User.GetUserByUserName(userName)
@@ -82,12 +82,7 @@ func GetProfileInfoAction(c *base.Action) base.AppErr {
 		return nil
 	}
 
-	type info struct {
-		x.UserCounts
-		models.UserSyncAndMeView
-	}
-
-	res := info{
+	res := models.ProfileInfo{
 		u.UserCounts,
 		*models.Views.UserViewSync(c.UserId(), u.Id),
 	}

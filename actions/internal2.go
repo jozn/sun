@@ -41,6 +41,8 @@ func DBStructsTojava2(w http.ResponseWriter, r *http.Request) {
 		models.UserSyncAndMeView{},
 		x.UserSession{},
 		x.UserExtra{},
+		models.ProfileInfo{},
+		x.UserCounts{},
 	}
 
 	str := ""

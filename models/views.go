@@ -13,13 +13,16 @@ func (e _viewImpl) UserViewSync(CurrentUserId, UserId int) *UserSyncAndMeView {
 	}
 
 	v := &UserSyncAndMeView{
-		UserId:        u.Id,
-		FollowingType: MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, UserId),
+		//UserId:        u.Id,
+		//FollowingType: MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, UserId),
 		AppVersion:    u.AppVersion,
 		Phone:         MemoryStore.GetPhoneForUserIfIsContact(CurrentUserId, UserId),
-		UpdatedTime:   u.UpdatedTime,
+		//UpdatedTime:   u.UpdatedTime,
 	}
-	v.UserBasic = u.UserBasic
+    v.UserBasic = u.UserBasic
+    v.UserId =  u.Id
+    v.FollowingType = MemoryStore.UserFollowingList_GetFollowingTypeForUsers(CurrentUserId, UserId)
+    v.UpdatedTime = u.UpdatedTime
 	return v
 }
 
