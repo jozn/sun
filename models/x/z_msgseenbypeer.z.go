@@ -2422,6 +2422,49 @@ func MassReplace_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
 
 //
 
+// MsgSeenByPeersByToUserId retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
+//
+// Generated from index 'ToUserId'.
+func MsgSeenByPeersByToUserId(db XODB, toUserId int) ([]*MsgSeenByPeer, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
+		`FROM ms.msg_seen_by_peer ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgSeenByPeer{}
+	for q.Next() {
+		msbp := MsgSeenByPeer{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &msbp)
+	}
+
+	OnMsgSeenByPeer_LoadMany(res)
+
+	return res, nil
+}
+
 // MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
 //
 // Generated from index 'msg_seen_by_peer_Id_pkey'.
