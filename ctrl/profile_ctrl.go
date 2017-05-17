@@ -66,14 +66,16 @@ func GetProfileInfoAction(c *base.Action) base.AppErr {
 	profileId := c.GetParamInt("profile_id", 0)
 	userName := c.Req.Form.Get("user_name")
 
-	var u x.User
+	var u *x.User
+	var u2 x.User
 	var ok bool
 
 	if profileId > 0 {
 		u, ok = x.Store.GetUserById(profileId)
 
 	} else if len(userName) > 0 {
-		u, ok = models.MemoryStore_User.GetUserByUserName(userName)
+		u2, ok = models.MemoryStore_User.GetUserByUserName(userName)
+		u = &u2
 	}
 
 	if !ok {

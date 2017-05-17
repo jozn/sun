@@ -98,9 +98,9 @@ type UserSyncAndMeView struct {
 	//x.UserBasic
 	//UserId        int
 	//FollowingType int
-    UserBasicAndMe
-	AppVersion    int
-	Phone         string
+	UserBasicAndMe
+	AppVersion int
+	Phone      string
 	//UpdatedTime   int
 }
 
@@ -114,15 +114,13 @@ type UserBasicAndMe struct { //legacy switch to UserTable
 }
 
 type ProfileInfo struct {
-    x.UserCounts
-    UserSyncAndMeView
+	x.UserCounts
+	UserSyncAndMeView
 }
 
 /*type UserAndMe struct{
     UserSyncAndMeView
     x.UserCounts
 } */
-
-
 
 /////////////////////////////////////////////

@@ -16,7 +16,7 @@ import (
 	_ "net/http/pprof"
 
 	"github.com/mediocregopher/radix.v2/pool"
-    "ms/sun/helper"
+	"ms/sun/helper"
 )
 
 var redisPool *pool.Pool
@@ -32,12 +32,12 @@ func main() {
 		models.Client_GRPC()
 	}()*/
 
-    go func() {
-        helper.JustRecover()
-        http.ListenAndServe(":5000", nil)
-    }()
+	go func() {
+		helper.JustRecover()
+		http.ListenAndServe(":5000", nil)
+	}()
 
-	http.ListenAndServeTLS(":443","server.crt","server.key", nil)
+	http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
 	//runtime.MemProfileRecord{}.
 }
 

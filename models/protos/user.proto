@@ -1,0 +1,58 @@
+syntax = "proto3";
+package tutorial;
+// [END declaration]
+
+// [START java_declaration]
+option java_package = "tutorial";
+option java_outer_classname = "com.maromsara.bp";
+
+option optimize_for = CODE_SIZE;
+
+
+
+message User {
+  string name = 1;
+  int32 id = 2;  // Unique ID number for this User.
+  string email = 3;
+
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+
+  message Phone {
+    string number = 1;
+    PhoneType type = 2;
+  }
+
+  repeated Phone phones = 4;
+}
+
+// Our address book file is just one of these.
+message AddressBook {
+  repeated User people = 1;
+}
+
+message Post {
+    int64 Id = 1;
+    int64 UserId = 2;
+    int32 Seq = 3;
+    string Text = 4;
+
+}
+
+service UserService {
+  rpc getUsers(UserReq) returns (UserRes){}
+}
+
+message UserReq{
+    int32 Limit = 1;
+    int32 Page = 3;
+
+}
+
+message UserRes {
+    repeated User Users = 1;
+}
+// [END messages]
