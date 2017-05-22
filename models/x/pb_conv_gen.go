@@ -3,7 +3,7 @@ package x
 
 
 /*
-func PBConv_Activity_PB_To_Activity( o *Activity_PB) *Activity {
+func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
      n := &Activity{
       Id: int ( o.Id ),
       ActorUserId: int ( o.ActorUserId ),
@@ -16,8 +16,8 @@ func PBConv_Activity_PB_To_Activity( o *Activity_PB) *Activity {
     return n
 }
 
-func PBConv_Activity_To_Activity_PB ( o *Activity) *Activity_PB {
-     n := &Activity_PB{
+func PBConvPB_Activity_To_Activity ( o *Activity) *PB_Activity {
+     n := &PB_Activity{
       Id: int64 ( o.Id ),
       ActorUserId: int32 ( o.ActorUserId ),
       ActionTypeId: int32 ( o.ActionTypeId ),
@@ -30,7 +30,7 @@ func PBConv_Activity_To_Activity_PB ( o *Activity) *Activity_PB {
 }
 */
 /*
-func PBConv_Bucket_PB_To_Bucket( o *Bucket_PB) *Bucket {
+func PBConvPB__Bucket_To_Bucket( o *PB_Bucket) *Bucket {
      n := &Bucket{
       BucketId: int ( o.BucketId ),
       BucketName: string ( o.BucketName ),
@@ -44,8 +44,8 @@ func PBConv_Bucket_PB_To_Bucket( o *Bucket_PB) *Bucket {
     return n
 }
 
-func PBConv_Bucket_To_Bucket_PB ( o *Bucket) *Bucket_PB {
-     n := &Bucket_PB{
+func PBConvPB_Bucket_To_Bucket ( o *Bucket) *PB_Bucket {
+     n := &PB_Bucket{
       BucketId: int32 ( o.BucketId ),
       BucketName: string ( o.BucketName ),
       Server1Id: int32 ( o.Server1Id ),
@@ -59,7 +59,7 @@ func PBConv_Bucket_To_Bucket_PB ( o *Bucket) *Bucket_PB {
 }
 */
 /*
-func PBConv_Comment_PB_To_Comment( o *Comment_PB) *Comment {
+func PBConvPB__Comment_To_Comment( o *PB_Comment) *Comment {
      n := &Comment{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
@@ -70,8 +70,8 @@ func PBConv_Comment_PB_To_Comment( o *Comment_PB) *Comment {
     return n
 }
 
-func PBConv_Comment_To_Comment_PB ( o *Comment) *Comment_PB {
-     n := &Comment_PB{
+func PBConvPB_Comment_To_Comment ( o *Comment) *PB_Comment {
+     n := &PB_Comment{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       PostId: int32 ( o.PostId ),
@@ -82,7 +82,7 @@ func PBConv_Comment_To_Comment_PB ( o *Comment) *Comment_PB {
 }
 */
 /*
-func PBConv_FollowingList_PB_To_FollowingList( o *FollowingList_PB) *FollowingList {
+func PBConvPB__FollowingList_To_FollowingList( o *PB_FollowingList) *FollowingList {
      n := &FollowingList{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
@@ -96,8 +96,8 @@ func PBConv_FollowingList_PB_To_FollowingList( o *FollowingList_PB) *FollowingLi
     return n
 }
 
-func PBConv_FollowingList_To_FollowingList_PB ( o *FollowingList) *FollowingList_PB {
-     n := &FollowingList_PB{
+func PBConvPB_FollowingList_To_FollowingList ( o *FollowingList) *PB_FollowingList {
+     n := &PB_FollowingList{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       ListType: int32 ( o.ListType ),
@@ -111,7 +111,7 @@ func PBConv_FollowingList_To_FollowingList_PB ( o *FollowingList) *FollowingList
 }
 */
 /*
-func PBConv_FollowingListMember_PB_To_FollowingListMember( o *FollowingListMember_PB) *FollowingListMember {
+func PBConvPB__FollowingListMember_To_FollowingListMember( o *PB_FollowingListMember) *FollowingListMember {
      n := &FollowingListMember{
       Id: int ( o.Id ),
       ListId: int ( o.ListId ),
@@ -123,8 +123,8 @@ func PBConv_FollowingListMember_PB_To_FollowingListMember( o *FollowingListMembe
     return n
 }
 
-func PBConv_FollowingListMember_To_FollowingListMember_PB ( o *FollowingListMember) *FollowingListMember_PB {
-     n := &FollowingListMember_PB{
+func PBConvPB_FollowingListMember_To_FollowingListMember ( o *FollowingListMember) *PB_FollowingListMember {
+     n := &PB_FollowingListMember{
       Id: int64 ( o.Id ),
       ListId: int32 ( o.ListId ),
       UserId: int32 ( o.UserId ),
@@ -136,7 +136,7 @@ func PBConv_FollowingListMember_To_FollowingListMember_PB ( o *FollowingListMemb
 }
 */
 /*
-func PBConv_FollowingListMemberHistory_PB_To_FollowingListMemberHistory( o *FollowingListMemberHistory_PB) *FollowingListMemberHistory {
+func PBConvPB__FollowingListMemberHistory_To_FollowingListMemberHistory( o *PB_FollowingListMemberHistory) *FollowingListMemberHistory {
      n := &FollowingListMemberHistory{
       Id: int ( o.Id ),
       ListId: int ( o.ListId ),
@@ -149,8 +149,8 @@ func PBConv_FollowingListMemberHistory_PB_To_FollowingListMemberHistory( o *Foll
     return n
 }
 
-func PBConv_FollowingListMemberHistory_To_FollowingListMemberHistory_PB ( o *FollowingListMemberHistory) *FollowingListMemberHistory_PB {
-     n := &FollowingListMemberHistory_PB{
+func PBConvPB_FollowingListMemberHistory_To_FollowingListMemberHistory ( o *FollowingListMemberHistory) *PB_FollowingListMemberHistory {
+     n := &PB_FollowingListMemberHistory{
       Id: int64 ( o.Id ),
       ListId: int32 ( o.ListId ),
       UserId: int32 ( o.UserId ),
@@ -163,7 +163,7 @@ func PBConv_FollowingListMemberHistory_To_FollowingListMemberHistory_PB ( o *Fol
 }
 */
 /*
-func PBConv_Like_PB_To_Like( o *Like_PB) *Like {
+func PBConvPB__Like_To_Like( o *PB_Like) *Like {
      n := &Like{
       Id: int ( o.Id ),
       PostId: int ( o.PostId ),
@@ -175,8 +175,8 @@ func PBConv_Like_PB_To_Like( o *Like_PB) *Like {
     return n
 }
 
-func PBConv_Like_To_Like_PB ( o *Like) *Like_PB {
-     n := &Like_PB{
+func PBConvPB_Like_To_Like ( o *Like) *PB_Like {
+     n := &PB_Like{
       Id: int32 ( o.Id ),
       PostId: int32 ( o.PostId ),
       PostTypeId: int32 ( o.PostTypeId ),
@@ -188,7 +188,7 @@ func PBConv_Like_To_Like_PB ( o *Like) *Like_PB {
 }
 */
 /*
-func PBConv_Media_PB_To_Media( o *Media_PB) *Media {
+func PBConvPB__Media_To_Media( o *PB_Media) *Media {
      n := &Media{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
@@ -201,8 +201,8 @@ func PBConv_Media_PB_To_Media( o *Media_PB) *Media {
     return n
 }
 
-func PBConv_Media_To_Media_PB ( o *Media) *Media_PB {
-     n := &Media_PB{
+func PBConvPB_Media_To_Media ( o *Media) *PB_Media {
+     n := &PB_Media{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       PostId: int32 ( o.PostId ),
@@ -215,7 +215,7 @@ func PBConv_Media_To_Media_PB ( o *Media) *Media_PB {
 }
 */
 /*
-func PBConv_Message_PB_To_Message( o *Message_PB) *Message {
+func PBConvPB__Message_To_Message( o *PB_Message) *Message {
      n := &Message{
       Id: int ( o.Id ),
       ToUserId: int ( o.ToUserId ),
@@ -228,8 +228,8 @@ func PBConv_Message_PB_To_Message( o *Message_PB) *Message {
     return n
 }
 
-func PBConv_Message_To_Message_PB ( o *Message) *Message_PB {
-     n := &Message_PB{
+func PBConvPB_Message_To_Message ( o *Message) *PB_Message {
+     n := &PB_Message{
       Id: int64 ( o.Id ),
       ToUserId: int32 ( o.ToUserId ),
       RoomKey: string ( o.RoomKey ),
@@ -242,7 +242,7 @@ func PBConv_Message_To_Message_PB ( o *Message) *Message_PB {
 }
 */
 /*
-func PBConv_MsgDeletedFromServer_PB_To_MsgDeletedFromServer( o *MsgDeletedFromServer_PB) *MsgDeletedFromServer {
+func PBConvPB__MsgDeletedFromServer_To_MsgDeletedFromServer( o *PB_MsgDeletedFromServer) *MsgDeletedFromServer {
      n := &MsgDeletedFromServer{
       Id: int ( o.Id ),
       ToUserId: int ( o.ToUserId ),
@@ -254,8 +254,8 @@ func PBConv_MsgDeletedFromServer_PB_To_MsgDeletedFromServer( o *MsgDeletedFromSe
     return n
 }
 
-func PBConv_MsgDeletedFromServer_To_MsgDeletedFromServer_PB ( o *MsgDeletedFromServer) *MsgDeletedFromServer_PB {
-     n := &MsgDeletedFromServer_PB{
+func PBConvPB_MsgDeletedFromServer_To_MsgDeletedFromServer ( o *MsgDeletedFromServer) *PB_MsgDeletedFromServer {
+     n := &PB_MsgDeletedFromServer{
       Id: int64 ( o.Id ),
       ToUserId: int32 ( o.ToUserId ),
       MsgKey: string ( o.MsgKey ),
@@ -267,7 +267,7 @@ func PBConv_MsgDeletedFromServer_To_MsgDeletedFromServer_PB ( o *MsgDeletedFromS
 }
 */
 /*
-func PBConv_MsgReceivedToPeer_PB_To_MsgReceivedToPeer( o *MsgReceivedToPeer_PB) *MsgReceivedToPeer {
+func PBConvPB__MsgReceivedToPeer_To_MsgReceivedToPeer( o *PB_MsgReceivedToPeer) *MsgReceivedToPeer {
      n := &MsgReceivedToPeer{
       Id: int ( o.Id ),
       ToUserId: int ( o.ToUserId ),
@@ -279,8 +279,8 @@ func PBConv_MsgReceivedToPeer_PB_To_MsgReceivedToPeer( o *MsgReceivedToPeer_PB) 
     return n
 }
 
-func PBConv_MsgReceivedToPeer_To_MsgReceivedToPeer_PB ( o *MsgReceivedToPeer) *MsgReceivedToPeer_PB {
-     n := &MsgReceivedToPeer_PB{
+func PBConvPB_MsgReceivedToPeer_To_MsgReceivedToPeer ( o *MsgReceivedToPeer) *PB_MsgReceivedToPeer {
+     n := &PB_MsgReceivedToPeer{
       Id: int64 ( o.Id ),
       ToUserId: int32 ( o.ToUserId ),
       MsgKey: string ( o.MsgKey ),
@@ -292,7 +292,7 @@ func PBConv_MsgReceivedToPeer_To_MsgReceivedToPeer_PB ( o *MsgReceivedToPeer) *M
 }
 */
 /*
-func PBConv_MsgSeenByPeer_PB_To_MsgSeenByPeer( o *MsgSeenByPeer_PB) *MsgSeenByPeer {
+func PBConvPB__MsgSeenByPeer_To_MsgSeenByPeer( o *PB_MsgSeenByPeer) *MsgSeenByPeer {
      n := &MsgSeenByPeer{
       Id: int ( o.Id ),
       ToUserId: int ( o.ToUserId ),
@@ -304,8 +304,8 @@ func PBConv_MsgSeenByPeer_PB_To_MsgSeenByPeer( o *MsgSeenByPeer_PB) *MsgSeenByPe
     return n
 }
 
-func PBConv_MsgSeenByPeer_To_MsgSeenByPeer_PB ( o *MsgSeenByPeer) *MsgSeenByPeer_PB {
-     n := &MsgSeenByPeer_PB{
+func PBConvPB_MsgSeenByPeer_To_MsgSeenByPeer ( o *MsgSeenByPeer) *PB_MsgSeenByPeer {
+     n := &PB_MsgSeenByPeer{
       Id: int64 ( o.Id ),
       ToUserId: int32 ( o.ToUserId ),
       MsgKey: string ( o.MsgKey ),
@@ -317,7 +317,7 @@ func PBConv_MsgSeenByPeer_To_MsgSeenByPeer_PB ( o *MsgSeenByPeer) *MsgSeenByPeer
 }
 */
 /*
-func PBConv_Notification_PB_To_Notification( o *Notification_PB) *Notification {
+func PBConvPB__Notification_To_Notification( o *PB_Notification) *Notification {
      n := &Notification{
       Id: int ( o.Id ),
       ForUserId: int ( o.ForUserId ),
@@ -333,8 +333,8 @@ func PBConv_Notification_PB_To_Notification( o *Notification_PB) *Notification {
     return n
 }
 
-func PBConv_Notification_To_Notification_PB ( o *Notification) *Notification_PB {
-     n := &Notification_PB{
+func PBConvPB_Notification_To_Notification ( o *Notification) *PB_Notification {
+     n := &PB_Notification{
       Id: int64 ( o.Id ),
       ForUserId: int32 ( o.ForUserId ),
       ActorUserId: int32 ( o.ActorUserId ),
@@ -350,7 +350,7 @@ func PBConv_Notification_To_Notification_PB ( o *Notification) *Notification_PB 
 }
 */
 /*
-func PBConv_NotificationRemoved_PB_To_NotificationRemoved( o *NotificationRemoved_PB) *NotificationRemoved {
+func PBConvPB__NotificationRemoved_To_NotificationRemoved( o *PB_NotificationRemoved) *NotificationRemoved {
      n := &NotificationRemoved{
       NotificationId: int ( o.NotificationId ),
       ForUserId: int ( o.ForUserId ),
@@ -358,8 +358,8 @@ func PBConv_NotificationRemoved_PB_To_NotificationRemoved( o *NotificationRemove
     return n
 }
 
-func PBConv_NotificationRemoved_To_NotificationRemoved_PB ( o *NotificationRemoved) *NotificationRemoved_PB {
-     n := &NotificationRemoved_PB{
+func PBConvPB_NotificationRemoved_To_NotificationRemoved ( o *NotificationRemoved) *PB_NotificationRemoved {
+     n := &PB_NotificationRemoved{
       NotificationId: int32 ( o.NotificationId ),
       ForUserId: int32 ( o.ForUserId ),
     }
@@ -367,7 +367,7 @@ func PBConv_NotificationRemoved_To_NotificationRemoved_PB ( o *NotificationRemov
 }
 */
 /*
-func PBConv_PhoneContact_PB_To_PhoneContact( o *PhoneContact_PB) *PhoneContact {
+func PBConvPB__PhoneContact_To_PhoneContact( o *PB_PhoneContact) *PhoneContact {
      n := &PhoneContact{
       Id: int ( o.Id ),
       PhoneDisplayName: string ( o.PhoneDisplayName ),
@@ -383,8 +383,8 @@ func PBConv_PhoneContact_PB_To_PhoneContact( o *PhoneContact_PB) *PhoneContact {
     return n
 }
 
-func PBConv_PhoneContact_To_PhoneContact_PB ( o *PhoneContact) *PhoneContact_PB {
-     n := &PhoneContact_PB{
+func PBConvPB_PhoneContact_To_PhoneContact ( o *PhoneContact) *PB_PhoneContact {
+     n := &PB_PhoneContact{
       Id: int32 ( o.Id ),
       PhoneDisplayName: string ( o.PhoneDisplayName ),
       PhoneFamilyName: string ( o.PhoneFamilyName ),
@@ -400,7 +400,7 @@ func PBConv_PhoneContact_To_PhoneContact_PB ( o *PhoneContact) *PhoneContact_PB 
 }
 */
 /*
-func PBConv_Photo_PB_To_Photo( o *Photo_PB) *Photo {
+func PBConvPB__Photo_To_Photo( o *PB_Photo) *Photo {
      n := &Photo{
       PhotoId: int ( o.PhotoId ),
       UserId: int ( o.UserId ),
@@ -426,8 +426,8 @@ func PBConv_Photo_PB_To_Photo( o *Photo_PB) *Photo {
     return n
 }
 
-func PBConv_Photo_To_Photo_PB ( o *Photo) *Photo_PB {
-     n := &Photo_PB{
+func PBConvPB_Photo_To_Photo ( o *Photo) *PB_Photo {
+     n := &PB_Photo{
       PhotoId: int32 ( o.PhotoId ),
       UserId: int32 ( o.UserId ),
       PostId: int32 ( o.PostId ),
@@ -453,7 +453,7 @@ func PBConv_Photo_To_Photo_PB ( o *Photo) *Photo_PB {
 }
 */
 /*
-func PBConv_Post_PB_To_Post( o *Post_PB) *Post {
+func PBConvPB__Post_To_Post( o *PB_Post) *Post {
      n := &Post{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
@@ -472,8 +472,8 @@ func PBConv_Post_PB_To_Post( o *Post_PB) *Post {
     return n
 }
 
-func PBConv_Post_To_Post_PB ( o *Post) *Post_PB {
-     n := &Post_PB{
+func PBConvPB_Post_To_Post ( o *Post) *PB_Post {
+     n := &PB_Post{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       TypeId: int32 ( o.TypeId ),
@@ -492,7 +492,7 @@ func PBConv_Post_To_Post_PB ( o *Post) *Post_PB {
 }
 */
 /*
-func PBConv_RecommendUser_PB_To_RecommendUser( o *RecommendUser_PB) *RecommendUser {
+func PBConvPB__RecommendUser_To_RecommendUser( o *PB_RecommendUser) *RecommendUser {
      n := &RecommendUser{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
@@ -503,8 +503,8 @@ func PBConv_RecommendUser_PB_To_RecommendUser( o *RecommendUser_PB) *RecommendUs
     return n
 }
 
-func PBConv_RecommendUser_To_RecommendUser_PB ( o *RecommendUser) *RecommendUser_PB {
-     n := &RecommendUser_PB{
+func PBConvPB_RecommendUser_To_RecommendUser ( o *RecommendUser) *PB_RecommendUser {
+     n := &PB_RecommendUser{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       TargetId: int32 ( o.TargetId ),
@@ -515,7 +515,7 @@ func PBConv_RecommendUser_To_RecommendUser_PB ( o *RecommendUser) *RecommendUser
 }
 */
 /*
-func PBConv_SearchClicked_PB_To_SearchClicked( o *SearchClicked_PB) *SearchClicked {
+func PBConvPB__SearchClicked_To_SearchClicked( o *PB_SearchClicked) *SearchClicked {
      n := &SearchClicked{
       Id: int ( o.Id ),
       Query: string ( o.Query ),
@@ -527,8 +527,8 @@ func PBConv_SearchClicked_PB_To_SearchClicked( o *SearchClicked_PB) *SearchClick
     return n
 }
 
-func PBConv_SearchClicked_To_SearchClicked_PB ( o *SearchClicked) *SearchClicked_PB {
-     n := &SearchClicked_PB{
+func PBConvPB_SearchClicked_To_SearchClicked ( o *SearchClicked) *PB_SearchClicked {
+     n := &PB_SearchClicked{
       Id: int64 ( o.Id ),
       Query: string ( o.Query ),
       ClickType: int32 ( o.ClickType ),
@@ -540,7 +540,7 @@ func PBConv_SearchClicked_To_SearchClicked_PB ( o *SearchClicked) *SearchClicked
 }
 */
 /*
-func PBConv_Session_PB_To_Session( o *Session_PB) *Session {
+func PBConvPB__Session_To_Session( o *PB_Session) *Session {
      n := &Session{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
@@ -559,8 +559,8 @@ func PBConv_Session_PB_To_Session( o *Session_PB) *Session {
     return n
 }
 
-func PBConv_Session_To_Session_PB ( o *Session) *Session_PB {
-     n := &Session_PB{
+func PBConvPB_Session_To_Session ( o *Session) *PB_Session {
+     n := &PB_Session{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       SessionUuid: string ( o.SessionUuid ),
@@ -579,7 +579,7 @@ func PBConv_Session_To_Session_PB ( o *Session) *Session_PB {
 }
 */
 /*
-func PBConv_Tag_PB_To_Tag( o *Tag_PB) *Tag {
+func PBConvPB__Tag_To_Tag( o *PB_Tag) *Tag {
      n := &Tag{
       Id: int ( o.Id ),
       Name: string ( o.Name ),
@@ -590,8 +590,8 @@ func PBConv_Tag_PB_To_Tag( o *Tag_PB) *Tag {
     return n
 }
 
-func PBConv_Tag_To_Tag_PB ( o *Tag) *Tag_PB {
-     n := &Tag_PB{
+func PBConvPB_Tag_To_Tag ( o *Tag) *PB_Tag {
+     n := &PB_Tag{
       Id: int32 ( o.Id ),
       Name: string ( o.Name ),
       Count: int32 ( o.Count ),
@@ -602,7 +602,7 @@ func PBConv_Tag_To_Tag_PB ( o *Tag) *Tag_PB {
 }
 */
 /*
-func PBConv_TagsPost_PB_To_TagsPost( o *TagsPost_PB) *TagsPost {
+func PBConvPB__TagsPost_To_TagsPost( o *PB_TagsPost) *TagsPost {
      n := &TagsPost{
       Id: int ( o.Id ),
       TagId: int ( o.TagId ),
@@ -613,8 +613,8 @@ func PBConv_TagsPost_PB_To_TagsPost( o *TagsPost_PB) *TagsPost {
     return n
 }
 
-func PBConv_TagsPost_To_TagsPost_PB ( o *TagsPost) *TagsPost_PB {
-     n := &TagsPost_PB{
+func PBConvPB_TagsPost_To_TagsPost ( o *TagsPost) *PB_TagsPost {
+     n := &PB_TagsPost{
       Id: int32 ( o.Id ),
       TagId: int32 ( o.TagId ),
       PostId: int32 ( o.PostId ),
@@ -625,7 +625,7 @@ func PBConv_TagsPost_To_TagsPost_PB ( o *TagsPost) *TagsPost_PB {
 }
 */
 /*
-func PBConv_User_PB_To_User( o *User_PB) *User {n := &User{}
+func PBConvPB__User_To_User( o *PB_User) *User {n := &User{}
    n.Id = int ( o.Id )
    n.UserName = string ( o.UserName )
    n.UserNameLower = string ( o.UserNameLower )
@@ -662,7 +662,7 @@ func PBConv_User_PB_To_User( o *User_PB) *User {n := &User{}
     return n
 }
 
-func PBConv_User_To_User_PB ( o *User) *User_PB {n := &User_PB{}
+func PBConvPB_User_To_User ( o *User) *PB_User {n := &PB_User{}
    n.Id = int32 ( o.Id )
    n.UserName = string ( o.UserName )
    n.UserNameLower = string ( o.UserNameLower )
@@ -700,7 +700,7 @@ func PBConv_User_To_User_PB ( o *User) *User_PB {n := &User_PB{}
 }
 */
 /*
-func PBConv_UserMetaInfo_PB_To_UserMetaInfo( o *UserMetaInfo_PB) *UserMetaInfo {
+func PBConvPB__UserMetaInfo_To_UserMetaInfo( o *PB_UserMetaInfo) *UserMetaInfo {
      n := &UserMetaInfo{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
@@ -710,8 +710,8 @@ func PBConv_UserMetaInfo_PB_To_UserMetaInfo( o *UserMetaInfo_PB) *UserMetaInfo {
     return n
 }
 
-func PBConv_UserMetaInfo_To_UserMetaInfo_PB ( o *UserMetaInfo) *UserMetaInfo_PB {
-     n := &UserMetaInfo_PB{
+func PBConvPB_UserMetaInfo_To_UserMetaInfo ( o *UserMetaInfo) *PB_UserMetaInfo {
+     n := &PB_UserMetaInfo{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       IsNotificationDirty: int32 ( o.IsNotificationDirty ),
@@ -721,7 +721,7 @@ func PBConv_UserMetaInfo_To_UserMetaInfo_PB ( o *UserMetaInfo) *UserMetaInfo_PB 
 }
 */
 /*
-func PBConv_UserPassword_PB_To_UserPassword( o *UserPassword_PB) *UserPassword {
+func PBConvPB__UserPassword_To_UserPassword( o *PB_UserPassword) *UserPassword {
      n := &UserPassword{
       UserId: int ( o.UserId ),
       Password: string ( o.Password ),
@@ -730,8 +730,8 @@ func PBConv_UserPassword_PB_To_UserPassword( o *UserPassword_PB) *UserPassword {
     return n
 }
 
-func PBConv_UserPassword_To_UserPassword_PB ( o *UserPassword) *UserPassword_PB {
-     n := &UserPassword_PB{
+func PBConvPB_UserPassword_To_UserPassword ( o *UserPassword) *PB_UserPassword {
+     n := &PB_UserPassword{
       UserId: int32 ( o.UserId ),
       Password: string ( o.Password ),
       CreatedTime: int32 ( o.CreatedTime ),

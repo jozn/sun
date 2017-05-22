@@ -2,7 +2,7 @@
 syntax = "proto3";
 
 
-message Activity_PB {
+message PB_Activity {
     int64 Id = 1;
     int32 ActorUserId = 3;
     int32 ActionTypeId = 5;
@@ -11,7 +11,7 @@ message Activity_PB {
     int64 RefId = 11;
     int32 CreatedAt = 13;
 }
-message Bucket_PB {
+message PB_Bucket {
     int32 BucketId = 1;
     string BucketName = 3;
     int32 Server1Id = 5;
@@ -21,14 +21,14 @@ message Bucket_PB {
     int32 ContentObjectCount = 13;
     int32 CreatedTime = 15;
 }
-message Comment_PB {
+message PB_Comment {
     int32 Id = 1;
     int32 UserId = 3;
     int32 PostId = 5;
     string Text = 7;
     int32 CreatedTime = 9;
 }
-message FollowingList_PB {
+message PB_FollowingList {
     int32 Id = 1;
     int32 UserId = 3;
     int32 ListType = 5;
@@ -38,7 +38,7 @@ message FollowingList_PB {
     int32 IsPimiry = 13;
     int32 CreatedTime = 15;
 }
-message FollowingListMember_PB {
+message PB_FollowingListMember {
     int64 Id = 1;
     int32 ListId = 3;
     int32 UserId = 5;
@@ -46,7 +46,7 @@ message FollowingListMember_PB {
     int32 FollowType = 9;
     int64 UpdatedTimeMs = 11;
 }
-message FollowingListMemberHistory_PB {
+message PB_FollowingListMemberHistory {
     int64 Id = 1;
     int32 ListId = 3;
     int32 UserId = 5;
@@ -55,7 +55,7 @@ message FollowingListMemberHistory_PB {
     int64 UpdatedTimeMs = 11;
     int32 FollowId = 13;
 }
-message Like_PB {
+message PB_Like {
     int32 Id = 1;
     int32 PostId = 3;
     int32 PostTypeId = 5;
@@ -63,7 +63,7 @@ message Like_PB {
     int32 TypeId = 9;
     int32 CreatedTime = 11;
 }
-message Media_PB {
+message PB_Media {
     int32 Id = 1;
     int32 UserId = 3;
     int32 PostId = 5;
@@ -72,7 +72,7 @@ message Media_PB {
     int32 CreatedTime = 11;
     string Src = 13;
 }
-message Message_PB {
+message PB_Message {
     int64 Id = 1;
     int32 ToUserId = 3;
     string RoomKey = 5;
@@ -81,7 +81,7 @@ message Message_PB {
     string Data = 11;
     int64 TimeMs = 13;
 }
-message MsgDeletedFromServer_PB {
+message PB_MsgDeletedFromServer {
     int64 Id = 1;
     int32 ToUserId = 3;
     string MsgKey = 5;
@@ -89,7 +89,7 @@ message MsgDeletedFromServer_PB {
     string RoomKey = 9;
     int32 AtTime = 11;
 }
-message MsgReceivedToPeer_PB {
+message PB_MsgReceivedToPeer {
     int64 Id = 1;
     int32 ToUserId = 3;
     string MsgKey = 5;
@@ -97,7 +97,7 @@ message MsgReceivedToPeer_PB {
     int32 PeerUserId = 9;
     int32 AtTime = 11;
 }
-message MsgSeenByPeer_PB {
+message PB_MsgSeenByPeer {
     int64 Id = 1;
     int32 ToUserId = 3;
     string MsgKey = 5;
@@ -105,7 +105,7 @@ message MsgSeenByPeer_PB {
     int32 PeerUserId = 9;
     int32 AtTime = 11;
 }
-message Notification_PB {
+message PB_Notification {
     int64 Id = 1;
     int32 ForUserId = 3;
     int32 ActorUserId = 5;
@@ -117,11 +117,11 @@ message Notification_PB {
     int32 SeenStatus = 17;
     int32 CreatedTime = 19;
 }
-message NotificationRemoved_PB {
+message PB_NotificationRemoved {
     int32 NotificationId = 1;
     int32 ForUserId = 3;
 }
-message PhoneContact_PB {
+message PB_PhoneContact {
     int32 Id = 1;
     string PhoneDisplayName = 3;
     string PhoneFamilyName = 5;
@@ -133,7 +133,7 @@ message PhoneContact_PB {
     int32 CreatedTime = 17;
     int32 UpdatedTime = 19;
 }
-message Photo_PB {
+message PB_Photo {
     int32 PhotoId = 1;
     int32 UserId = 3;
     int32 PostId = 5;
@@ -155,7 +155,7 @@ message Photo_PB {
     int32 W160 = 37;
     int32 W80 = 39;
 }
-message Post_PB {
+message PB_Post {
     int32 Id = 1;
     int32 UserId = 3;
     int32 TypeId = 5;
@@ -170,14 +170,14 @@ message Post_PB {
     int32 EditedTime = 23;
     int32 CreatedTime = 25;
 }
-message RecommendUser_PB {
+message PB_RecommendUser {
     int32 Id = 1;
     int32 UserId = 3;
     int32 TargetId = 5;
     float Weight = 7;
     int32 CreatedTime = 9;
 }
-message SearchClicked_PB {
+message PB_SearchClicked {
     int64 Id = 1;
     string Query = 3;
     int32 ClickType = 5;
@@ -185,7 +185,7 @@ message SearchClicked_PB {
     int32 UserId = 9;
     int32 CreatedAt = 11;
 }
-message Session_PB {
+message PB_Session {
     int32 Id = 1;
     int32 UserId = 3;
     string SessionUuid = 5;
@@ -200,21 +200,21 @@ message Session_PB {
     int32 UpdatedTime = 23;
     int32 CreatedTime = 25;
 }
-message Tag_PB {
+message PB_Tag {
     int32 Id = 1;
     string Name = 3;
     int32 Count = 5;
     int32 IsBlocked = 7;
     int32 CreatedTime = 9;
 }
-message TagsPost_PB {
+message PB_TagsPost {
     int32 Id = 1;
     int32 TagId = 3;
     int32 PostId = 5;
     int32 TypeId = 7;
     int32 CreatedTime = 9;
 }
-message User_PB {
+message PB_User {
     int32 Id = 1;
     string UserName = 3;
     string UserNameLower = 5;
@@ -249,13 +249,13 @@ message User_PB {
     int32 LastLoginTime = 63;
     string LastIpAddress = 65;
 }
-message UserMetaInfo_PB {
+message PB_UserMetaInfo {
     int32 Id = 1;
     int32 UserId = 3;
     int32 IsNotificationDirty = 5;
     int32 LastUserRecGen = 7;
 }
-message UserPassword_PB {
+message PB_UserPassword {
     int32 UserId = 1;
     string Password = 3;
     int32 CreatedTime = 5;
