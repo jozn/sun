@@ -30,5 +30,5 @@ xox mysql://root:123456@localhost:3307/ms -o "models/x" --package x --template-p
 
 
 ///////////// Protocol Buffer /////////////////
-protoc --go_out=plugins=grpc:../ -I ./ *.proto
+protoc --go_out=plugins=grpc:"../x" -I ./ *.proto
 protoc --java_out="D:\dev_working2\MS_Native\app\src\main\java" --grpc-java_out="D:\dev_working2\MS_Native\app\src\main\java" *.proto
