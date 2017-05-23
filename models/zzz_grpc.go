@@ -2,7 +2,7 @@ package models
 
 import (
 	"google.golang.org/grpc/reflection"
-	rpc "ms/sun/models/x/rpc/mesg"
+	rpc "ms/sun/play/rpc/mesg"
 	"net"
 
 	"fmt"

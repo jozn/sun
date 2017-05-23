@@ -8,9 +8,21 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 
 option go_package = "x";
 
-service Greeter {
-  // Sends a greeting
-  rpc SayHello (PB_Message) returns (PB_UserWithMe) {}
+//service Greeter {
+//  // Sends a greeting
+//  rpc SayHello (PB_Message) returns (PB_UserWithMe) {}
+//}*/
+
+message PB_CommandToServer {
+	int32 CallId = 1;
+	string Command = 2;
+	bytes Data = 3;
+}
+
+message PB_CommandToClient {
+	int32 CallId = 1;
+	string Command = 2;
+	bytes Data = 3;
 }
 
 message PB_UserWithMe {
@@ -57,10 +69,6 @@ message PB_Request {
 	int32 Status = 1;
 }
 
-/*message PB_MsgAddMany {
-	repeated PB_Message Messages = 1;
-	repeated PB_UserWithMe Users = 2;
-}*/
 
 message PB_RequestMsgAddMany {
 	repeated PB_Message Messages = 1;
