@@ -14,13 +14,13 @@ option go_package = "x";
 //}*/
 
 message PB_CommandToServer {
-	int32 CallId = 1;
+	int64 CallId = 1;
 	string Command = 2;
 	bytes Data = 3;
 }
 
 message PB_CommandToClient {
-	int32 CallId = 1;
+	int64 CallId = 1;
 	string Command = 2;
 	bytes Data = 3;
 }
@@ -37,6 +37,8 @@ message PB_UserWithMe {
     string Phone = 9;
     int32 UpdatedTime = 10;
     int32 AppVersion = 11;
+
+    int32 FollowingType = 14;
 }
 
 message PB_Message {
@@ -61,7 +63,7 @@ message PB_Message {
     int32 MsgFile_Status = 19;
 }
 
-message PB_Respons {
+message PB_Response {
 	int32 Status = 1;
 }
 
@@ -69,26 +71,28 @@ message PB_Request {
 	int32 Status = 1;
 }
 
-
+////
 message PB_RequestMsgAddMany {
-	repeated PB_Message Messages = 1;
-	repeated PB_UserWithMe Users = 2;
+	PB_Request Request = 1;
+	repeated PB_Message Messages = 2;
+	// repeated PB_UserWithMe Users = 2;
 }
 
-message PB_ResponsMsgAddMany {
-	PB_Respons Respons = 1;
+message PB_ResponseMsgAddMany {
+	PB_Response Response = 1;
 }
+///
 
 ///////////////////////////
 
-
+//DEP
 message PB_RequestMsgAddOne {
 	PB_Message Message = 1;
 	PB_UserWithMe User = 2;
 }
 
-message PB_ResponsMsgAddOne {
-	PB_Respons Respons = 1;
+message PB_ResponseMsgAddOne {
+	PB_Response Response = 1;
 }
 ///////////////////////////
 
@@ -101,7 +105,7 @@ message PB_PushMsgAddMany {
 }
 
 message PB_ResultMsgAddMany {
-	PB_Respons Respons = 1;
+	PB_Response Response = 1;
 }
 
 
