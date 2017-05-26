@@ -1,7 +1,6 @@
 package models
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/golang/protobuf/proto"
 	"ms/sun/base"
@@ -16,53 +15,48 @@ func CallReceive_MsgsAddMany(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	err := proto.Unmarshal(c.GetData(), req)
 	if err != nil {
 		helper.DebugPrintln("Error :", err)
+        return
 	}
 
-	MessageModel.SendAndStoreManyMessages(c.UserId, myMsgs)
+    for _, msgPb := range req.Messages {
+        msgRow := PBConv_PB_Message_toNew_Message(msgPb)
+        msgRow.Save(base.DB)
+        toUid,err := RoomKeyToPeerUserId(msgPb.RoomKey,pipe.UserId)
+        if err == nil{
+            PushProxy_PushMsgsReceivedToPeer(toUid,msgRow, msgPb)
+        }
+    }
 }
 
 //Todo : add security layer
 func CallRecive_MsgSeenByPeer(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	fmt.Println("called MsgSeenByPeer :", c)
 
-	seensRows := []x.MsgSeenByPeer{}
+    req := &x.PB_RequestMsgsSeen{}
+    err := proto.Unmarshal(c.GetData(), req)
+    if err != nil {
+        helper.DebugPrintln("Error :", err)
+        return
+    }
 
-	json.Unmarshal([]byte(c.Data), &seensRows)
+    var events []x.MsgPushEvent
+    for _, seenPb := range req.Seen {
+        evetRow := PBConv_PB_MsgSeen_toNew_MsgPushEvent(seenPb)
+        evetRow.PeerUserId = pipe.UserId
+        evetRow.ToUserId , _ = RoomKeyToPeerUserId(seenPb.RoomKey,pipe.UserId)
+        events = append(events, evetRow)
+    }
 
-	mpGroupByuser := make(map[int][]x.MsgSeenByPeer)
-	for _, seen := range seensRows {
-		mpGroupByuser[seen.ToUserId] = append(mpGroupByuser[seen.ToUserId], seen)
-	}
+    x.MassInsert_MsgPushEvent(events,base.DB)
 
-	if len(mpGroupByuser) == 0 {
-		return
-	}
+    mpGroupByuser := make(map[int][]x.MsgPushEvent)
+    for _, seen := range events {
+        mpGroupByuser[seen.ToUserId] = append(mpGroupByuser[seen.ToUserId], seen)
+    }
 
-	if len(mpGroupByuser) == 1 {
-		var touser int
-		var seens []x.MsgSeenByPeer
-
-		for touser, seens = range mpGroupByuser {
-		}
-
-		err := func() {
-			//fmt.Println("**********************\n*********************\n********************",touser)
-
-			x.MassInsert_MsgSeenByPeer(seens, base.DB)
-		}
-
-		call := base.NewCallWithData(CLIENT_CALL_MsgsSeenByPeerMany, seens)
-
-		AllPipesMap.SendToUserWithCallBacks(touser, call, nil, err)
-		return
-	}
-
-	x.MassInsert_MsgSeenByPeer(seensRows, base.DB)
-	for toUserId, seens := range mpGroupByuser {
-		MessageModel.SendListOfSeenMsgsByPeerToUser(toUserId, seens)
-	}
-
+    PushProxy_PushMsgsEvents(events)
 }
+
 
 func EchoCmd(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	//b, _ := json.Marshal(c)

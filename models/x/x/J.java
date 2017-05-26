@@ -96,7 +96,7 @@ public class J {
 		public String RoomKey;
 		public Integer MessageType;
 		public Integer RoomType;
-		public String DataPB;
+		public UNKNOWN DataPB;
 		public String DataJson;
 		public Integer CreatedTimeMs;
 	}

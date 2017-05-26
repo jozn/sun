@@ -1,4 +1,6 @@
+
 package x
+
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -248,7 +250,7 @@ func PBConvPB__Message_To_Message( o *PB_Message) *Message {
       RoomKey: string ( o.RoomKey ),
       MessageType: int ( o.MessageType ),
       RoomType: int ( o.RoomType ),
-      DataPB: string ( o.DataPB ),
+      DataPB: []byte ( o.DataPB ),
       DataJson: string ( o.DataJson ),
       CreatedTimeMs: int ( o.CreatedTimeMs ),
     }
@@ -263,7 +265,7 @@ func PBConvPB_Message_To_Message ( o *Message) *PB_Message {
       RoomKey: string ( o.RoomKey ),
       MessageType: int32 ( o.MessageType ),
       RoomType: int32 ( o.RoomType ),
-      DataPB: string ( o.DataPB ),
+      DataPB: []byte ( o.DataPB ),
       DataJson: string ( o.DataJson ),
       CreatedTimeMs: int64 ( o.CreatedTimeMs ),
     }

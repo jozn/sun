@@ -2630,49 +2630,6 @@ func MassReplace_MessageOld(rows []MessageOld, db XODB) error {
 
 //
 
-// MessageOldsByToUserId retrieves a row from 'ms.message_old' as a MessageOld.
-//
-// Generated from index 'ToUserId'.
-func MessageOldsByToUserId(db XODB, toUserId int) ([]*MessageOld, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
-		`FROM ms.message_old ` +
-		`WHERE ToUserId = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId)
-	q, err := db.Query(sqlstr, toUserId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MessageOld{}
-	for q.Next() {
-		mo := MessageOld{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&mo.Id, &mo.ToUserId, &mo.RoomKey, &mo.MessageKey, &mo.FromUserID, &mo.Data, &mo.TimeMs)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &mo)
-	}
-
-	OnMessageOld_LoadMany(res)
-
-	return res, nil
-}
-
 // MessageOldsByToUserIdTimeMs retrieves a row from 'ms.message_old' as a MessageOld.
 //
 // Generated from index 'ToUserId_2'.

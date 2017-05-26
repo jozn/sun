@@ -22,7 +22,7 @@ type Message__ struct {
 	RoomKey       string `json:"RoomKey"`       // RoomKey -
 	MessageType   int    `json:"MessageType"`   // MessageType -
 	RoomType      int    `json:"RoomType"`      // RoomType -
-	DataPB        string `json:"DataPB"`        // DataPB -
+	DataPB        []byte `json:"DataPB"`        // DataPB -
 	DataJson      string `json:"DataJson"`      // DataJson -
 	CreatedTimeMs int    `json:"CreatedTimeMs"` // CreatedTimeMs -
 
@@ -1948,66 +1948,6 @@ func (d *__Message_Deleter) RoomKey_NotEq(val string) *__Message_Deleter {
 	return d
 }
 
-func (u *__Message_Deleter) DataPB_In(ins []string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " DataPB IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Message_Deleter) DataPB_NotIn(ins []string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " DataPB NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Message_Deleter) DataPB_Like(val string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " DataPB LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Message_Deleter) DataPB_Eq(val string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " DataPB = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Message_Deleter) DataPB_NotEq(val string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " DataPB != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__Message_Deleter) DataJson_In(ins []string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2185,66 +2125,6 @@ func (d *__Message_Updater) RoomKey_NotEq(val string) *__Message_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " RoomKey != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Message_Updater) DataPB_In(ins []string) *__Message_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " DataPB IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Message_Updater) DataPB_NotIn(ins []string) *__Message_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " DataPB NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Message_Updater) DataPB_Like(val string) *__Message_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " DataPB LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Message_Updater) DataPB_Eq(val string) *__Message_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " DataPB = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Message_Updater) DataPB_NotEq(val string) *__Message_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " DataPB != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2432,66 +2312,6 @@ func (d *__Message_Selector) RoomKey_NotEq(val string) *__Message_Selector {
 	return d
 }
 
-func (u *__Message_Selector) DataPB_In(ins []string) *__Message_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " DataPB IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Message_Selector) DataPB_NotIn(ins []string) *__Message_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " DataPB NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Message_Selector) DataPB_Like(val string) *__Message_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " DataPB LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Message_Selector) DataPB_Eq(val string) *__Message_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " DataPB = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Message_Selector) DataPB_NotEq(val string) *__Message_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " DataPB != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__Message_Selector) DataJson_In(ins []string) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2659,10 +2479,6 @@ func (u *__Message_Updater) RoomType_Increment(count int) *__Message_Updater {
 //ints
 
 //string
-func (u *__Message_Updater) DataPB(newVal string) *__Message_Updater {
-	u.updates[" DataPB = ? "] = newVal
-	return u
-}
 
 //ints
 

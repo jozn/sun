@@ -88,7 +88,7 @@ message PB_Message {
     string RoomKey = 7;
     int32 MessageType = 9;
     int32 RoomType = 11;
-    string DataPB = 13;
+    ???? DataPB = 13;
     string DataJson = 15;
     int64 CreatedTimeMs = 17;
 }

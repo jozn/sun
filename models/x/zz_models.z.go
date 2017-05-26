@@ -223,7 +223,7 @@ type Message struct {
 	RoomKey       string
 	MessageType   int
 	RoomType      int
-	DataPB        string
+	DataPB        []byte
 	DataJson      string
 	CreatedTimeMs int
 
@@ -238,7 +238,7 @@ type Message struct {
 	RoomKey: "",
 	MessageType: 0,
 	RoomType: 0,
-	DataPB: "",
+	DataPB: UNKNOWN,
 	DataJson: "",
 	CreatedTimeMs: 0,
 */
