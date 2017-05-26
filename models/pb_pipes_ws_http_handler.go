@@ -13,7 +13,7 @@ import (
     "encoding/base64"
 )
 
-func ServeHttpWsPB(w http.ResponseWriter, r *http.Request) {
+func ServeHttpWsPB1(w http.ResponseWriter, r *http.Request) {
 	//defer recover()
 	err := r.ParseForm()
 	//noErr(err)
@@ -135,7 +135,8 @@ func ServeHttpWsPB(w http.ResponseWriter, r *http.Request) {
                     wsDebugLog("ERR", err)
                 }
 
-                msg:= &x.PB_Message{}
+                //msg:= &x.PB_Message{}
+                msg := &x.PB_RequestMsgAddMany{}
                 err = proto.Unmarshal(cmd.GetData(),msg)
 
                 if err !=nil{
@@ -146,6 +147,12 @@ func ServeHttpWsPB(w http.ResponseWriter, r *http.Request) {
                 _ = b64
                 //wsPbDebugLog("D: ", b64)
                 wsPbDebugLog("CMD: "+ cmd.GetCommand() ," ", cmd.GetCallId(), " Data: ", helper.ToJson(msg))
+                wsPbDebugLog("MSG: "+msg.String() )
+
+                if len(msg.GetMessages()) > 0 {
+                    m := msg.GetMessages()[0]
+                    wsPbDebugLog("MSG 2: "+m.GetText() ,  " ", m.IsByMe, " ",m.MessageKey, " " ,m.GetRoomKey() )
+                }
 
             }
 

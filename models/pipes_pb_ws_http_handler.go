@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-func ServeHttpWs(w http.ResponseWriter, r *http.Request) {
+func ServeHttpWsPB(w http.ResponseWriter, r *http.Request) {
 	//defer recover()
 	err := r.ParseForm()
 	//noErr(err)

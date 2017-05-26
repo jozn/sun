@@ -1,3 +1,9 @@
 go-callvis -focus models -group pkg,type ms/sun  | dot -Tpng -o models.png
 go-callvis -focus models -group pkg -limit ms/sun/models ms/sun  | dot -Tpng -o models.png
 go-callvis -focus base -group type ms/sun  | dot -Tpng -o base-type.png
+
+=================
+go-callvis -focus models -ignore x -group pkg,type ms/sun -  | dot -Tpng -o models.png
+
+go-callvis -focus base -ignore x -group type ms/sun  | dot -Tpng -o base-type.png
+go-callvis -focus models -nostd -ignore x -group type ms/sun  | dot -Tpng -o models.png

@@ -71,7 +71,7 @@ func registerRoutes() *httptreemux.TreeMux {
 
 	v1.GET("/sync_users", toV1(ctrl.SyncUsersCtrl))
 
-	http.HandleFunc("/ws_call", models.ServeHttpWs)
+	//http.HandleFunc("/ws_call", models.ServeHttpWs)
 	http.HandleFunc("/ws_pb_call", models.ServeHttpWsPB)
 	///// v0.4 Msgs
 	http.HandleFunc("/msgs/v1/add_one", ctrl.MsgUploadV1)

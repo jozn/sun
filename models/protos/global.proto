@@ -98,14 +98,24 @@ message PB_ResponseMsgAddOne {
 
 
 //////////// Pushes ////////////
+message PB_Push {
+	int32 Status = 1;
+}
 
+message PB_Result {
+	int32 Status = 1;
+}
+
+///
 message PB_PushMsgAddMany {
-	repeated PB_Message Messages = 1;
-	repeated PB_UserWithMe Users = 2;
+	PB_Push Push = 1;
+	repeated PB_Message Messages = 2;
+	repeated PB_UserWithMe Users = 3;
 }
 
 message PB_ResultMsgAddMany {
-	PB_Response Response = 1;
+	PB_Result Result = 1;
 }
+///
 
 
