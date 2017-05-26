@@ -40,7 +40,7 @@ func (m *x.Message) FromClientMessageOptimized(toUser int, msg MessagesTableFrom
 }
 */
 
-func Message_FromClientMessage(m *x.Message, toUser int, msg MessagesTableFromClient) {
+func Message_FromClientMessage(m *x.MessageOld, toUser int, msg MessagesTableFromClient) {
 	m.FromUserID = msg.UserId
 	m.ToUserId = toUser
 	m.MessageKey = msg.MessageKey
@@ -49,7 +49,7 @@ func Message_FromClientMessage(m *x.Message, toUser int, msg MessagesTableFromCl
 	m.TimeMs = msg.CreatedMs
 }
 
-func Message_FromClientMessageOptimized(m *x.Message, toUser int, msg MessagesTableFromClient) {
+func Message_FromClientMessageOptimized(m *x.MessageOld, toUser int, msg MessagesTableFromClient) {
 	m.FromUserID = msg.UserId
 	m.ToUserId = toUser
 	m.MessageKey = msg.MessageKey

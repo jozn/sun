@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"math/rand"
 	"runtime"
+	"runtime/debug"
 	"strconv"
 	"sync"
 	"time"
-    "runtime/debug"
 )
 
 type User struct {
@@ -25,7 +25,7 @@ var uuu *User
 var str string
 
 func main() {
-    debug.SetGCPercent(500)
+	debug.SetGCPercent(500)
 
 	mm := MM{}
 	mm.m = make(map[int]User)
@@ -34,7 +34,6 @@ func main() {
 	deUser := User{}
 	deUser2 := &User{}
 	deUser.u = deUser2
-
 
 	lenMM := func() int {
 		mm.Lock()

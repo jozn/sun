@@ -213,8 +213,8 @@ func PBConvPB_Media_To_Media ( o *Media) *PB_Media {
 }
 */
 /*
-func PBConvPB__Message_To_Message( o *PB_Message) *Message {
-     n := &Message{
+func PBConvPB__MessageOld_To_MessageOld( o *PB_MessageOld) *MessageOld {
+     n := &MessageOld{
       Id: int ( o.Id ),
       ToUserId: int ( o.ToUserId ),
       RoomKey: string ( o.RoomKey ),
@@ -226,8 +226,8 @@ func PBConvPB__Message_To_Message( o *PB_Message) *Message {
     return n
 }
 
-func PBConvPB_Message_To_Message ( o *Message) *PB_Message {
-     n := &PB_Message{
+func PBConvPB_MessageOld_To_MessageOld ( o *MessageOld) *PB_MessageOld {
+     n := &PB_MessageOld{
       Id: int64 ( o.Id ),
       ToUserId: int32 ( o.ToUserId ),
       RoomKey: string ( o.RoomKey ),
@@ -235,6 +235,37 @@ func PBConvPB_Message_To_Message ( o *Message) *PB_Message {
       FromUserID: int32 ( o.FromUserID ),
       Data: string ( o.Data ),
       TimeMs: int64 ( o.TimeMs ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__Message_To_Message( o *PB_Message) *Message {
+     n := &Message{
+      Id: int ( o.Id ),
+      UserId: int ( o.UserId ),
+      MessageKey: string ( o.MessageKey ),
+      RoomKey: string ( o.RoomKey ),
+      MessageType: int ( o.MessageType ),
+      RoomType: int ( o.RoomType ),
+      DataPB: string ( o.DataPB ),
+      DataJson: string ( o.DataJson ),
+      CreatedTimeMs: int ( o.CreatedTimeMs ),
+    }
+    return n
+}
+
+func PBConvPB_Message_To_Message ( o *Message) *PB_Message {
+     n := &PB_Message{
+      Id: int64 ( o.Id ),
+      UserId: int64 ( o.UserId ),
+      MessageKey: string ( o.MessageKey ),
+      RoomKey: string ( o.RoomKey ),
+      MessageType: int32 ( o.MessageType ),
+      RoomType: int32 ( o.RoomType ),
+      DataPB: string ( o.DataPB ),
+      DataJson: string ( o.DataJson ),
+      CreatedTimeMs: int64 ( o.CreatedTimeMs ),
     }
     return n
 }
@@ -259,6 +290,54 @@ func PBConvPB_MsgDeletedFromServer_To_MsgDeletedFromServer ( o *MsgDeletedFromSe
       MsgKey: string ( o.MsgKey ),
       PeerUserId: int32 ( o.PeerUserId ),
       RoomKey: string ( o.RoomKey ),
+      AtTime: int32 ( o.AtTime ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__MsgPush_To_MsgPush( o *PB_MsgPush) *MsgPush {
+     n := &MsgPush{
+      Id: int ( o.Id ),
+      ToUser: int ( o.ToUser ),
+      MessageId: int ( o.MessageId ),
+      CreatedTimeMs: int ( o.CreatedTimeMs ),
+    }
+    return n
+}
+
+func PBConvPB_MsgPush_To_MsgPush ( o *MsgPush) *PB_MsgPush {
+     n := &PB_MsgPush{
+      Id: int64 ( o.Id ),
+      ToUser: int64 ( o.ToUser ),
+      MessageId: int64 ( o.MessageId ),
+      CreatedTimeMs: int64 ( o.CreatedTimeMs ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__MsgPushEvent_To_MsgPushEvent( o *PB_MsgPushEvent) *MsgPushEvent {
+     n := &MsgPushEvent{
+      Id: int ( o.Id ),
+      ToUserId: int ( o.ToUserId ),
+      MsgKey: string ( o.MsgKey ),
+      RoomKey: string ( o.RoomKey ),
+      PeerUserId: int ( o.PeerUserId ),
+      EventType: int ( o.EventType ),
+      AtTime: int ( o.AtTime ),
+    }
+    return n
+}
+
+func PBConvPB_MsgPushEvent_To_MsgPushEvent ( o *MsgPushEvent) *PB_MsgPushEvent {
+     n := &PB_MsgPushEvent{
+      Id: int64 ( o.Id ),
+      ToUserId: int32 ( o.ToUserId ),
+      MsgKey: string ( o.MsgKey ),
+      RoomKey: string ( o.RoomKey ),
+      PeerUserId: int32 ( o.PeerUserId ),
+      EventType: int32 ( o.EventType ),
       AtTime: int32 ( o.AtTime ),
     }
     return n

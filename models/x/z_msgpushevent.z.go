@@ -12,50 +12,51 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// MsgSeenByPeer represents a row from 'ms.msg_seen_by_peer'.
+// MsgPushEvent represents a row from 'ms.msg_push_event'.
 
 // Manualy copy this to project
-type MsgSeenByPeer__ struct {
+type MsgPushEvent__ struct {
 	Id         int    `json:"Id"`         // Id -
 	ToUserId   int    `json:"ToUserId"`   // ToUserId -
 	MsgKey     string `json:"MsgKey"`     // MsgKey -
 	RoomKey    string `json:"RoomKey"`    // RoomKey -
 	PeerUserId int    `json:"PeerUserId"` // PeerUserId -
+	EventType  int    `json:"EventType"`  // EventType -
 	AtTime     int    `json:"AtTime"`     // AtTime -
 
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists determines if the MsgSeenByPeer exists in the database.
-func (msbp *MsgSeenByPeer) Exists() bool {
-	return msbp._exists
+// Exists determines if the MsgPushEvent exists in the database.
+func (mpe *MsgPushEvent) Exists() bool {
+	return mpe._exists
 }
 
-// Deleted provides information if the MsgSeenByPeer has been deleted from the database.
-func (msbp *MsgSeenByPeer) Deleted() bool {
-	return msbp._deleted
+// Deleted provides information if the MsgPushEvent has been deleted from the database.
+func (mpe *MsgPushEvent) Deleted() bool {
+	return mpe._deleted
 }
 
-// Insert inserts the MsgSeenByPeer to the database.
-func (msbp *MsgSeenByPeer) Insert(db XODB) error {
+// Insert inserts the MsgPushEvent to the database.
+func (mpe *MsgPushEvent) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
-	if msbp._exists {
+	if mpe._exists {
 		return errors.New("insert failed: already exists")
 	}
 
 	// sql insert query, primary key provided by autoincrement
-	const sqlstr = `INSERT INTO ms.msg_seen_by_peer (` +
-		`ToUserId, MsgKey, RoomKey, PeerUserId, AtTime` +
+	const sqlstr = `INSERT INTO ms.msg_push_event (` +
+		`ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
-	res, err := db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
+	XOLog(sqlstr, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
+	res, err := db.Exec(sqlstr, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -69,28 +70,28 @@ func (msbp *MsgSeenByPeer) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	msbp.Id = int(id)
-	msbp._exists = true
+	mpe.Id = int(id)
+	mpe._exists = true
 
-	OnMsgSeenByPeer_AfterInsert(msbp)
+	OnMsgPushEvent_AfterInsert(mpe)
 
 	return nil
 }
 
-// Insert inserts the MsgSeenByPeer to the database.
-func (msbp *MsgSeenByPeer) Replace(db XODB) error {
+// Insert inserts the MsgPushEvent to the database.
+func (mpe *MsgPushEvent) Replace(db XODB) error {
 	var err error
 
 	// sql query
-	const sqlstr = `REPLACE INTO ms.msg_seen_by_peer (` +
-		`ToUserId, MsgKey, RoomKey, PeerUserId, AtTime` +
+	const sqlstr = `REPLACE INTO ms.msg_push_event (` +
+		`ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
-	res, err := db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime)
+	XOLog(sqlstr, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
+	res, err := db.Exec(sqlstr, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -104,81 +105,81 @@ func (msbp *MsgSeenByPeer) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	msbp.Id = int(id)
-	msbp._exists = true
+	mpe.Id = int(id)
+	mpe._exists = true
 
-	OnMsgSeenByPeer_AfterInsert(msbp)
+	OnMsgPushEvent_AfterInsert(mpe)
 
 	return nil
 }
 
-// Update updates the MsgSeenByPeer in the database.
-func (msbp *MsgSeenByPeer) Update(db XODB) error {
+// Update updates the MsgPushEvent in the database.
+func (mpe *MsgPushEvent) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !msbp._exists {
+	if !mpe._exists {
 		return errors.New("update failed: does not exist")
 	}
 
 	// if deleted, bail
-	if msbp._deleted {
+	if mpe._deleted {
 		return errors.New("update failed: marked for deletion")
 	}
 
 	// sql query
-	const sqlstr = `UPDATE ms.msg_seen_by_peer SET ` +
-		`ToUserId = ?, MsgKey = ?, RoomKey = ?, PeerUserId = ?, AtTime = ?` +
+	const sqlstr = `UPDATE ms.msg_push_event SET ` +
+		`ToUserId = ?, MsgKey = ?, RoomKey = ?, PeerUserId = ?, EventType = ?, AtTime = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime, msbp.Id)
-	_, err = db.Exec(sqlstr, msbp.ToUserId, msbp.MsgKey, msbp.RoomKey, msbp.PeerUserId, msbp.AtTime, msbp.Id)
+	XOLog(sqlstr, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime, mpe.Id)
+	_, err = db.Exec(sqlstr, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime, mpe.Id)
 
 	XOLogErr(err)
-	OnMsgSeenByPeer_AfterUpdate(msbp)
+	OnMsgPushEvent_AfterUpdate(mpe)
 
 	return err
 }
 
-// Save saves the MsgSeenByPeer to the database.
-func (msbp *MsgSeenByPeer) Save(db XODB) error {
-	if msbp.Exists() {
-		return msbp.Update(db)
+// Save saves the MsgPushEvent to the database.
+func (mpe *MsgPushEvent) Save(db XODB) error {
+	if mpe.Exists() {
+		return mpe.Update(db)
 	}
 
-	return msbp.Replace(db)
+	return mpe.Replace(db)
 }
 
-// Delete deletes the MsgSeenByPeer from the database.
-func (msbp *MsgSeenByPeer) Delete(db XODB) error {
+// Delete deletes the MsgPushEvent from the database.
+func (mpe *MsgPushEvent) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !msbp._exists {
+	if !mpe._exists {
 		return nil
 	}
 
 	// if deleted, bail
-	if msbp._deleted {
+	if mpe._deleted {
 		return nil
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.msg_seen_by_peer WHERE Id = ?`
+	const sqlstr = `DELETE FROM ms.msg_push_event WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, msbp.Id)
-	_, err = db.Exec(sqlstr, msbp.Id)
+	XOLog(sqlstr, mpe.Id)
+	_, err = db.Exec(sqlstr, mpe.Id)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
 	// set deleted
-	msbp._deleted = true
+	mpe._deleted = true
 
-	OnMsgSeenByPeer_AfterDelete(msbp)
+	OnMsgPushEvent_AfterDelete(mpe)
 
 	return nil
 }
@@ -189,18 +190,18 @@ func (msbp *MsgSeenByPeer) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __MsgSeenByPeer_Deleter struct {
+type __MsgPushEvent_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __MsgSeenByPeer_Updater struct {
+type __MsgPushEvent_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __MsgSeenByPeer_Selector struct {
+type __MsgPushEvent_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -209,19 +210,19 @@ type __MsgSeenByPeer_Selector struct {
 	offset    int
 }
 
-func NewMsgSeenByPeer_Deleter() *__MsgSeenByPeer_Deleter {
-	d := __MsgSeenByPeer_Deleter{whereSep: " AND "}
+func NewMsgPushEvent_Deleter() *__MsgPushEvent_Deleter {
+	d := __MsgPushEvent_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewMsgSeenByPeer_Updater() *__MsgSeenByPeer_Updater {
-	u := __MsgSeenByPeer_Updater{whereSep: " AND "}
+func NewMsgPushEvent_Updater() *__MsgPushEvent_Updater {
+	u := __MsgPushEvent_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewMsgSeenByPeer_Selector() *__MsgSeenByPeer_Selector {
-	u := __MsgSeenByPeer_Selector{whereSep: " AND ", selectCol: "*"}
+func NewMsgPushEvent_Selector() *__MsgPushEvent_Selector {
+	u := __MsgPushEvent_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -229,12 +230,12 @@ func NewMsgSeenByPeer_Selector() *__MsgSeenByPeer_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__MsgSeenByPeer_Deleter) Or() *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) Or() *__MsgPushEvent_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) Id_In(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) Id_In(ins []int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -247,7 +248,7 @@ func (u *__MsgSeenByPeer_Deleter) Id_In(ins []int) *__MsgSeenByPeer_Deleter {
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) Id_Ins(ins ...int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) Id_Ins(ins ...int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -260,7 +261,7 @@ func (u *__MsgSeenByPeer_Deleter) Id_Ins(ins ...int) *__MsgSeenByPeer_Deleter {
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) Id_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) Id_NotIn(ins []int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -273,7 +274,7 @@ func (u *__MsgSeenByPeer_Deleter) Id_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) Id_Eq(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) Id_Eq(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -284,7 +285,7 @@ func (d *__MsgSeenByPeer_Deleter) Id_Eq(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Id_NotEq(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) Id_NotEq(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -295,7 +296,7 @@ func (d *__MsgSeenByPeer_Deleter) Id_NotEq(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Id_LT(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) Id_LT(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -306,7 +307,7 @@ func (d *__MsgSeenByPeer_Deleter) Id_LT(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Id_LE(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) Id_LE(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -317,7 +318,7 @@ func (d *__MsgSeenByPeer_Deleter) Id_LE(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Id_GT(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) Id_GT(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -328,7 +329,7 @@ func (d *__MsgSeenByPeer_Deleter) Id_GT(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) Id_GE(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) Id_GE(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -339,7 +340,7 @@ func (d *__MsgSeenByPeer_Deleter) Id_GE(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (u *__MsgSeenByPeer_Deleter) ToUserId_In(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) ToUserId_In(ins []int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -352,7 +353,7 @@ func (u *__MsgSeenByPeer_Deleter) ToUserId_In(ins []int) *__MsgSeenByPeer_Delete
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) ToUserId_Ins(ins ...int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) ToUserId_Ins(ins ...int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -365,7 +366,7 @@ func (u *__MsgSeenByPeer_Deleter) ToUserId_Ins(ins ...int) *__MsgSeenByPeer_Dele
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) ToUserId_NotIn(ins []int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -378,7 +379,7 @@ func (u *__MsgSeenByPeer_Deleter) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Del
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) ToUserId_Eq(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) ToUserId_Eq(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -389,7 +390,7 @@ func (d *__MsgSeenByPeer_Deleter) ToUserId_Eq(val int) *__MsgSeenByPeer_Deleter 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) ToUserId_NotEq(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) ToUserId_NotEq(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -400,7 +401,7 @@ func (d *__MsgSeenByPeer_Deleter) ToUserId_NotEq(val int) *__MsgSeenByPeer_Delet
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) ToUserId_LT(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) ToUserId_LT(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -411,7 +412,7 @@ func (d *__MsgSeenByPeer_Deleter) ToUserId_LT(val int) *__MsgSeenByPeer_Deleter 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) ToUserId_LE(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) ToUserId_LE(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -422,7 +423,7 @@ func (d *__MsgSeenByPeer_Deleter) ToUserId_LE(val int) *__MsgSeenByPeer_Deleter 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) ToUserId_GT(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) ToUserId_GT(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -433,7 +434,7 @@ func (d *__MsgSeenByPeer_Deleter) ToUserId_GT(val int) *__MsgSeenByPeer_Deleter 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) ToUserId_GE(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) ToUserId_GE(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -444,7 +445,7 @@ func (d *__MsgSeenByPeer_Deleter) ToUserId_GE(val int) *__MsgSeenByPeer_Deleter 
 	return d
 }
 
-func (u *__MsgSeenByPeer_Deleter) PeerUserId_In(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) PeerUserId_In(ins []int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -457,7 +458,7 @@ func (u *__MsgSeenByPeer_Deleter) PeerUserId_In(ins []int) *__MsgSeenByPeer_Dele
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) PeerUserId_Ins(ins ...int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) PeerUserId_Ins(ins ...int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -470,7 +471,7 @@ func (u *__MsgSeenByPeer_Deleter) PeerUserId_Ins(ins ...int) *__MsgSeenByPeer_De
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) PeerUserId_NotIn(ins []int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -483,7 +484,7 @@ func (u *__MsgSeenByPeer_Deleter) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_D
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) PeerUserId_Eq(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) PeerUserId_Eq(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -494,7 +495,7 @@ func (d *__MsgSeenByPeer_Deleter) PeerUserId_Eq(val int) *__MsgSeenByPeer_Delete
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) PeerUserId_NotEq(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) PeerUserId_NotEq(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -505,7 +506,7 @@ func (d *__MsgSeenByPeer_Deleter) PeerUserId_NotEq(val int) *__MsgSeenByPeer_Del
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) PeerUserId_LT(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) PeerUserId_LT(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -516,7 +517,7 @@ func (d *__MsgSeenByPeer_Deleter) PeerUserId_LT(val int) *__MsgSeenByPeer_Delete
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) PeerUserId_LE(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) PeerUserId_LE(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -527,7 +528,7 @@ func (d *__MsgSeenByPeer_Deleter) PeerUserId_LE(val int) *__MsgSeenByPeer_Delete
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) PeerUserId_GT(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) PeerUserId_GT(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -538,7 +539,7 @@ func (d *__MsgSeenByPeer_Deleter) PeerUserId_GT(val int) *__MsgSeenByPeer_Delete
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) PeerUserId_GE(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) PeerUserId_GE(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -549,7 +550,112 @@ func (d *__MsgSeenByPeer_Deleter) PeerUserId_GE(val int) *__MsgSeenByPeer_Delete
 	return d
 }
 
-func (u *__MsgSeenByPeer_Deleter) AtTime_In(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) EventType_In(ins []int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EventType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Deleter) EventType_Ins(ins ...int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EventType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Deleter) EventType_NotIn(ins []int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EventType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgPushEvent_Deleter) EventType_Eq(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Deleter) EventType_NotEq(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Deleter) EventType_LT(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Deleter) EventType_LE(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Deleter) EventType_GT(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Deleter) EventType_GE(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgPushEvent_Deleter) AtTime_In(ins []int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -562,7 +668,7 @@ func (u *__MsgSeenByPeer_Deleter) AtTime_In(ins []int) *__MsgSeenByPeer_Deleter 
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) AtTime_Ins(ins ...int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) AtTime_Ins(ins ...int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -575,7 +681,7 @@ func (u *__MsgSeenByPeer_Deleter) AtTime_Ins(ins ...int) *__MsgSeenByPeer_Delete
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) AtTime_NotIn(ins []int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -588,7 +694,7 @@ func (u *__MsgSeenByPeer_Deleter) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Delet
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) AtTime_Eq(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) AtTime_Eq(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -599,7 +705,7 @@ func (d *__MsgSeenByPeer_Deleter) AtTime_Eq(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) AtTime_NotEq(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) AtTime_NotEq(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -610,7 +716,7 @@ func (d *__MsgSeenByPeer_Deleter) AtTime_NotEq(val int) *__MsgSeenByPeer_Deleter
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) AtTime_LT(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) AtTime_LT(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -621,7 +727,7 @@ func (d *__MsgSeenByPeer_Deleter) AtTime_LT(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) AtTime_LE(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) AtTime_LE(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -632,7 +738,7 @@ func (d *__MsgSeenByPeer_Deleter) AtTime_LE(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) AtTime_GT(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) AtTime_GT(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -643,7 +749,7 @@ func (d *__MsgSeenByPeer_Deleter) AtTime_GT(val int) *__MsgSeenByPeer_Deleter {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) AtTime_GE(val int) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) AtTime_GE(val int) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -655,12 +761,12 @@ func (d *__MsgSeenByPeer_Deleter) AtTime_GE(val int) *__MsgSeenByPeer_Deleter {
 }
 
 ////////ints
-func (u *__MsgSeenByPeer_Updater) Or() *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) Or() *__MsgPushEvent_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) Id_In(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) Id_In(ins []int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -673,7 +779,7 @@ func (u *__MsgSeenByPeer_Updater) Id_In(ins []int) *__MsgSeenByPeer_Updater {
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) Id_Ins(ins ...int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) Id_Ins(ins ...int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -686,7 +792,7 @@ func (u *__MsgSeenByPeer_Updater) Id_Ins(ins ...int) *__MsgSeenByPeer_Updater {
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) Id_NotIn(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) Id_NotIn(ins []int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -699,7 +805,7 @@ func (u *__MsgSeenByPeer_Updater) Id_NotIn(ins []int) *__MsgSeenByPeer_Updater {
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) Id_Eq(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) Id_Eq(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -710,7 +816,7 @@ func (d *__MsgSeenByPeer_Updater) Id_Eq(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Id_NotEq(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) Id_NotEq(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -721,7 +827,7 @@ func (d *__MsgSeenByPeer_Updater) Id_NotEq(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Id_LT(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) Id_LT(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -732,7 +838,7 @@ func (d *__MsgSeenByPeer_Updater) Id_LT(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Id_LE(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) Id_LE(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -743,7 +849,7 @@ func (d *__MsgSeenByPeer_Updater) Id_LE(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Id_GT(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) Id_GT(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -754,7 +860,7 @@ func (d *__MsgSeenByPeer_Updater) Id_GT(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) Id_GE(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) Id_GE(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -765,7 +871,7 @@ func (d *__MsgSeenByPeer_Updater) Id_GE(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (u *__MsgSeenByPeer_Updater) ToUserId_In(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) ToUserId_In(ins []int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -778,7 +884,7 @@ func (u *__MsgSeenByPeer_Updater) ToUserId_In(ins []int) *__MsgSeenByPeer_Update
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) ToUserId_Ins(ins ...int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) ToUserId_Ins(ins ...int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -791,7 +897,7 @@ func (u *__MsgSeenByPeer_Updater) ToUserId_Ins(ins ...int) *__MsgSeenByPeer_Upda
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) ToUserId_NotIn(ins []int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -804,7 +910,7 @@ func (u *__MsgSeenByPeer_Updater) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Upd
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) ToUserId_Eq(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) ToUserId_Eq(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -815,7 +921,7 @@ func (d *__MsgSeenByPeer_Updater) ToUserId_Eq(val int) *__MsgSeenByPeer_Updater 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) ToUserId_NotEq(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) ToUserId_NotEq(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -826,7 +932,7 @@ func (d *__MsgSeenByPeer_Updater) ToUserId_NotEq(val int) *__MsgSeenByPeer_Updat
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) ToUserId_LT(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) ToUserId_LT(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -837,7 +943,7 @@ func (d *__MsgSeenByPeer_Updater) ToUserId_LT(val int) *__MsgSeenByPeer_Updater 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) ToUserId_LE(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) ToUserId_LE(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -848,7 +954,7 @@ func (d *__MsgSeenByPeer_Updater) ToUserId_LE(val int) *__MsgSeenByPeer_Updater 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) ToUserId_GT(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) ToUserId_GT(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -859,7 +965,7 @@ func (d *__MsgSeenByPeer_Updater) ToUserId_GT(val int) *__MsgSeenByPeer_Updater 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) ToUserId_GE(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) ToUserId_GE(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -870,7 +976,7 @@ func (d *__MsgSeenByPeer_Updater) ToUserId_GE(val int) *__MsgSeenByPeer_Updater 
 	return d
 }
 
-func (u *__MsgSeenByPeer_Updater) PeerUserId_In(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) PeerUserId_In(ins []int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -883,7 +989,7 @@ func (u *__MsgSeenByPeer_Updater) PeerUserId_In(ins []int) *__MsgSeenByPeer_Upda
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) PeerUserId_Ins(ins ...int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) PeerUserId_Ins(ins ...int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -896,7 +1002,7 @@ func (u *__MsgSeenByPeer_Updater) PeerUserId_Ins(ins ...int) *__MsgSeenByPeer_Up
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) PeerUserId_NotIn(ins []int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -909,7 +1015,7 @@ func (u *__MsgSeenByPeer_Updater) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_U
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) PeerUserId_Eq(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) PeerUserId_Eq(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -920,7 +1026,7 @@ func (d *__MsgSeenByPeer_Updater) PeerUserId_Eq(val int) *__MsgSeenByPeer_Update
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) PeerUserId_NotEq(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) PeerUserId_NotEq(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -931,7 +1037,7 @@ func (d *__MsgSeenByPeer_Updater) PeerUserId_NotEq(val int) *__MsgSeenByPeer_Upd
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) PeerUserId_LT(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) PeerUserId_LT(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -942,7 +1048,7 @@ func (d *__MsgSeenByPeer_Updater) PeerUserId_LT(val int) *__MsgSeenByPeer_Update
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) PeerUserId_LE(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) PeerUserId_LE(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -953,7 +1059,7 @@ func (d *__MsgSeenByPeer_Updater) PeerUserId_LE(val int) *__MsgSeenByPeer_Update
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) PeerUserId_GT(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) PeerUserId_GT(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -964,7 +1070,7 @@ func (d *__MsgSeenByPeer_Updater) PeerUserId_GT(val int) *__MsgSeenByPeer_Update
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) PeerUserId_GE(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) PeerUserId_GE(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -975,7 +1081,112 @@ func (d *__MsgSeenByPeer_Updater) PeerUserId_GE(val int) *__MsgSeenByPeer_Update
 	return d
 }
 
-func (u *__MsgSeenByPeer_Updater) AtTime_In(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) EventType_In(ins []int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EventType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Updater) EventType_Ins(ins ...int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EventType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Updater) EventType_NotIn(ins []int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EventType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgPushEvent_Updater) EventType_Eq(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Updater) EventType_NotEq(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Updater) EventType_LT(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Updater) EventType_LE(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Updater) EventType_GT(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Updater) EventType_GE(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgPushEvent_Updater) AtTime_In(ins []int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -988,7 +1199,7 @@ func (u *__MsgSeenByPeer_Updater) AtTime_In(ins []int) *__MsgSeenByPeer_Updater 
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) AtTime_Ins(ins ...int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) AtTime_Ins(ins ...int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1001,7 +1212,7 @@ func (u *__MsgSeenByPeer_Updater) AtTime_Ins(ins ...int) *__MsgSeenByPeer_Update
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) AtTime_NotIn(ins []int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1014,7 +1225,7 @@ func (u *__MsgSeenByPeer_Updater) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Updat
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) AtTime_Eq(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) AtTime_Eq(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1025,7 +1236,7 @@ func (d *__MsgSeenByPeer_Updater) AtTime_Eq(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) AtTime_NotEq(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) AtTime_NotEq(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1036,7 +1247,7 @@ func (d *__MsgSeenByPeer_Updater) AtTime_NotEq(val int) *__MsgSeenByPeer_Updater
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) AtTime_LT(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) AtTime_LT(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1047,7 +1258,7 @@ func (d *__MsgSeenByPeer_Updater) AtTime_LT(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) AtTime_LE(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) AtTime_LE(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1058,7 +1269,7 @@ func (d *__MsgSeenByPeer_Updater) AtTime_LE(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) AtTime_GT(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) AtTime_GT(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1069,7 +1280,7 @@ func (d *__MsgSeenByPeer_Updater) AtTime_GT(val int) *__MsgSeenByPeer_Updater {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) AtTime_GE(val int) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) AtTime_GE(val int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1081,12 +1292,12 @@ func (d *__MsgSeenByPeer_Updater) AtTime_GE(val int) *__MsgSeenByPeer_Updater {
 }
 
 ////////ints
-func (u *__MsgSeenByPeer_Selector) Or() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Or() *__MsgPushEvent_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Id_In(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Id_In(ins []int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1099,7 +1310,7 @@ func (u *__MsgSeenByPeer_Selector) Id_In(ins []int) *__MsgSeenByPeer_Selector {
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Id_Ins(ins ...int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Id_Ins(ins ...int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1112,7 +1323,7 @@ func (u *__MsgSeenByPeer_Selector) Id_Ins(ins ...int) *__MsgSeenByPeer_Selector 
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Id_NotIn(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Id_NotIn(ins []int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1125,7 +1336,7 @@ func (u *__MsgSeenByPeer_Selector) Id_NotIn(ins []int) *__MsgSeenByPeer_Selector
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) Id_Eq(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) Id_Eq(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1136,7 +1347,7 @@ func (d *__MsgSeenByPeer_Selector) Id_Eq(val int) *__MsgSeenByPeer_Selector {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Id_NotEq(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) Id_NotEq(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1147,7 +1358,7 @@ func (d *__MsgSeenByPeer_Selector) Id_NotEq(val int) *__MsgSeenByPeer_Selector {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Id_LT(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) Id_LT(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1158,7 +1369,7 @@ func (d *__MsgSeenByPeer_Selector) Id_LT(val int) *__MsgSeenByPeer_Selector {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Id_LE(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) Id_LE(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1169,7 +1380,7 @@ func (d *__MsgSeenByPeer_Selector) Id_LE(val int) *__MsgSeenByPeer_Selector {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Id_GT(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) Id_GT(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1180,7 +1391,7 @@ func (d *__MsgSeenByPeer_Selector) Id_GT(val int) *__MsgSeenByPeer_Selector {
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) Id_GE(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) Id_GE(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1191,7 +1402,7 @@ func (d *__MsgSeenByPeer_Selector) Id_GE(val int) *__MsgSeenByPeer_Selector {
 	return d
 }
 
-func (u *__MsgSeenByPeer_Selector) ToUserId_In(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) ToUserId_In(ins []int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1204,7 +1415,7 @@ func (u *__MsgSeenByPeer_Selector) ToUserId_In(ins []int) *__MsgSeenByPeer_Selec
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) ToUserId_Ins(ins ...int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) ToUserId_Ins(ins ...int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1217,7 +1428,7 @@ func (u *__MsgSeenByPeer_Selector) ToUserId_Ins(ins ...int) *__MsgSeenByPeer_Sel
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) ToUserId_NotIn(ins []int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1230,7 +1441,7 @@ func (u *__MsgSeenByPeer_Selector) ToUserId_NotIn(ins []int) *__MsgSeenByPeer_Se
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) ToUserId_Eq(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) ToUserId_Eq(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1241,7 +1452,7 @@ func (d *__MsgSeenByPeer_Selector) ToUserId_Eq(val int) *__MsgSeenByPeer_Selecto
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) ToUserId_NotEq(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) ToUserId_NotEq(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1252,7 +1463,7 @@ func (d *__MsgSeenByPeer_Selector) ToUserId_NotEq(val int) *__MsgSeenByPeer_Sele
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) ToUserId_LT(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) ToUserId_LT(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1263,7 +1474,7 @@ func (d *__MsgSeenByPeer_Selector) ToUserId_LT(val int) *__MsgSeenByPeer_Selecto
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) ToUserId_LE(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) ToUserId_LE(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1274,7 +1485,7 @@ func (d *__MsgSeenByPeer_Selector) ToUserId_LE(val int) *__MsgSeenByPeer_Selecto
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) ToUserId_GT(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) ToUserId_GT(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1285,7 +1496,7 @@ func (d *__MsgSeenByPeer_Selector) ToUserId_GT(val int) *__MsgSeenByPeer_Selecto
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) ToUserId_GE(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) ToUserId_GE(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1296,7 +1507,7 @@ func (d *__MsgSeenByPeer_Selector) ToUserId_GE(val int) *__MsgSeenByPeer_Selecto
 	return d
 }
 
-func (u *__MsgSeenByPeer_Selector) PeerUserId_In(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) PeerUserId_In(ins []int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1309,7 +1520,7 @@ func (u *__MsgSeenByPeer_Selector) PeerUserId_In(ins []int) *__MsgSeenByPeer_Sel
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) PeerUserId_Ins(ins ...int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) PeerUserId_Ins(ins ...int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1322,7 +1533,7 @@ func (u *__MsgSeenByPeer_Selector) PeerUserId_Ins(ins ...int) *__MsgSeenByPeer_S
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) PeerUserId_NotIn(ins []int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1335,7 +1546,7 @@ func (u *__MsgSeenByPeer_Selector) PeerUserId_NotIn(ins []int) *__MsgSeenByPeer_
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) PeerUserId_Eq(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) PeerUserId_Eq(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1346,7 +1557,7 @@ func (d *__MsgSeenByPeer_Selector) PeerUserId_Eq(val int) *__MsgSeenByPeer_Selec
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) PeerUserId_NotEq(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) PeerUserId_NotEq(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1357,7 +1568,7 @@ func (d *__MsgSeenByPeer_Selector) PeerUserId_NotEq(val int) *__MsgSeenByPeer_Se
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) PeerUserId_LT(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) PeerUserId_LT(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1368,7 +1579,7 @@ func (d *__MsgSeenByPeer_Selector) PeerUserId_LT(val int) *__MsgSeenByPeer_Selec
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) PeerUserId_LE(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) PeerUserId_LE(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1379,7 +1590,7 @@ func (d *__MsgSeenByPeer_Selector) PeerUserId_LE(val int) *__MsgSeenByPeer_Selec
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) PeerUserId_GT(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) PeerUserId_GT(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1390,7 +1601,7 @@ func (d *__MsgSeenByPeer_Selector) PeerUserId_GT(val int) *__MsgSeenByPeer_Selec
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) PeerUserId_GE(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) PeerUserId_GE(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1401,7 +1612,112 @@ func (d *__MsgSeenByPeer_Selector) PeerUserId_GE(val int) *__MsgSeenByPeer_Selec
 	return d
 }
 
-func (u *__MsgSeenByPeer_Selector) AtTime_In(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) EventType_In(ins []int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EventType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Selector) EventType_Ins(ins ...int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EventType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Selector) EventType_NotIn(ins []int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " EventType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgPushEvent_Selector) EventType_Eq(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Selector) EventType_NotEq(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Selector) EventType_LT(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Selector) EventType_LE(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Selector) EventType_GT(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Selector) EventType_GE(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " EventType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgPushEvent_Selector) AtTime_In(ins []int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1414,7 +1730,7 @@ func (u *__MsgSeenByPeer_Selector) AtTime_In(ins []int) *__MsgSeenByPeer_Selecto
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) AtTime_Ins(ins ...int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) AtTime_Ins(ins ...int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1427,7 +1743,7 @@ func (u *__MsgSeenByPeer_Selector) AtTime_Ins(ins ...int) *__MsgSeenByPeer_Selec
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) AtTime_NotIn(ins []int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1440,7 +1756,7 @@ func (u *__MsgSeenByPeer_Selector) AtTime_NotIn(ins []int) *__MsgSeenByPeer_Sele
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) AtTime_Eq(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) AtTime_Eq(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1451,7 +1767,7 @@ func (d *__MsgSeenByPeer_Selector) AtTime_Eq(val int) *__MsgSeenByPeer_Selector 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) AtTime_NotEq(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) AtTime_NotEq(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1462,7 +1778,7 @@ func (d *__MsgSeenByPeer_Selector) AtTime_NotEq(val int) *__MsgSeenByPeer_Select
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) AtTime_LT(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) AtTime_LT(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1473,7 +1789,7 @@ func (d *__MsgSeenByPeer_Selector) AtTime_LT(val int) *__MsgSeenByPeer_Selector 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) AtTime_LE(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) AtTime_LE(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1484,7 +1800,7 @@ func (d *__MsgSeenByPeer_Selector) AtTime_LE(val int) *__MsgSeenByPeer_Selector 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) AtTime_GT(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) AtTime_GT(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1495,7 +1811,7 @@ func (d *__MsgSeenByPeer_Selector) AtTime_GT(val int) *__MsgSeenByPeer_Selector 
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) AtTime_GE(val int) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) AtTime_GE(val int) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1510,7 +1826,7 @@ func (d *__MsgSeenByPeer_Selector) AtTime_GE(val int) *__MsgSeenByPeer_Selector 
 
 ////////ints
 
-func (u *__MsgSeenByPeer_Deleter) MsgKey_In(ins []string) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) MsgKey_In(ins []string) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1523,7 +1839,7 @@ func (u *__MsgSeenByPeer_Deleter) MsgKey_In(ins []string) *__MsgSeenByPeer_Delet
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) MsgKey_NotIn(ins []string) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) MsgKey_NotIn(ins []string) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1537,7 +1853,7 @@ func (u *__MsgSeenByPeer_Deleter) MsgKey_NotIn(ins []string) *__MsgSeenByPeer_De
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__MsgSeenByPeer_Deleter) MsgKey_Like(val string) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) MsgKey_Like(val string) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1548,7 +1864,7 @@ func (u *__MsgSeenByPeer_Deleter) MsgKey_Like(val string) *__MsgSeenByPeer_Delet
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) MsgKey_Eq(val string) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) MsgKey_Eq(val string) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1559,7 +1875,7 @@ func (d *__MsgSeenByPeer_Deleter) MsgKey_Eq(val string) *__MsgSeenByPeer_Deleter
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) MsgKey_NotEq(val string) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) MsgKey_NotEq(val string) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1570,7 +1886,7 @@ func (d *__MsgSeenByPeer_Deleter) MsgKey_NotEq(val string) *__MsgSeenByPeer_Dele
 	return d
 }
 
-func (u *__MsgSeenByPeer_Deleter) RoomKey_In(ins []string) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) RoomKey_In(ins []string) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1583,7 +1899,7 @@ func (u *__MsgSeenByPeer_Deleter) RoomKey_In(ins []string) *__MsgSeenByPeer_Dele
 	return u
 }
 
-func (u *__MsgSeenByPeer_Deleter) RoomKey_NotIn(ins []string) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) RoomKey_NotIn(ins []string) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1597,7 +1913,7 @@ func (u *__MsgSeenByPeer_Deleter) RoomKey_NotIn(ins []string) *__MsgSeenByPeer_D
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__MsgSeenByPeer_Deleter) RoomKey_Like(val string) *__MsgSeenByPeer_Deleter {
+func (u *__MsgPushEvent_Deleter) RoomKey_Like(val string) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1608,7 +1924,7 @@ func (u *__MsgSeenByPeer_Deleter) RoomKey_Like(val string) *__MsgSeenByPeer_Dele
 	return u
 }
 
-func (d *__MsgSeenByPeer_Deleter) RoomKey_Eq(val string) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) RoomKey_Eq(val string) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1619,7 +1935,7 @@ func (d *__MsgSeenByPeer_Deleter) RoomKey_Eq(val string) *__MsgSeenByPeer_Delete
 	return d
 }
 
-func (d *__MsgSeenByPeer_Deleter) RoomKey_NotEq(val string) *__MsgSeenByPeer_Deleter {
+func (d *__MsgPushEvent_Deleter) RoomKey_NotEq(val string) *__MsgPushEvent_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1632,7 +1948,7 @@ func (d *__MsgSeenByPeer_Deleter) RoomKey_NotEq(val string) *__MsgSeenByPeer_Del
 
 ////////ints
 
-func (u *__MsgSeenByPeer_Updater) MsgKey_In(ins []string) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) MsgKey_In(ins []string) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1645,7 +1961,7 @@ func (u *__MsgSeenByPeer_Updater) MsgKey_In(ins []string) *__MsgSeenByPeer_Updat
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) MsgKey_NotIn(ins []string) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) MsgKey_NotIn(ins []string) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1659,7 +1975,7 @@ func (u *__MsgSeenByPeer_Updater) MsgKey_NotIn(ins []string) *__MsgSeenByPeer_Up
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__MsgSeenByPeer_Updater) MsgKey_Like(val string) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) MsgKey_Like(val string) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1670,7 +1986,7 @@ func (u *__MsgSeenByPeer_Updater) MsgKey_Like(val string) *__MsgSeenByPeer_Updat
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) MsgKey_Eq(val string) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) MsgKey_Eq(val string) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1681,7 +1997,7 @@ func (d *__MsgSeenByPeer_Updater) MsgKey_Eq(val string) *__MsgSeenByPeer_Updater
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) MsgKey_NotEq(val string) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) MsgKey_NotEq(val string) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1692,7 +2008,7 @@ func (d *__MsgSeenByPeer_Updater) MsgKey_NotEq(val string) *__MsgSeenByPeer_Upda
 	return d
 }
 
-func (u *__MsgSeenByPeer_Updater) RoomKey_In(ins []string) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) RoomKey_In(ins []string) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1705,7 +2021,7 @@ func (u *__MsgSeenByPeer_Updater) RoomKey_In(ins []string) *__MsgSeenByPeer_Upda
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) RoomKey_NotIn(ins []string) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) RoomKey_NotIn(ins []string) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1719,7 +2035,7 @@ func (u *__MsgSeenByPeer_Updater) RoomKey_NotIn(ins []string) *__MsgSeenByPeer_U
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__MsgSeenByPeer_Updater) RoomKey_Like(val string) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) RoomKey_Like(val string) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1730,7 +2046,7 @@ func (u *__MsgSeenByPeer_Updater) RoomKey_Like(val string) *__MsgSeenByPeer_Upda
 	return u
 }
 
-func (d *__MsgSeenByPeer_Updater) RoomKey_Eq(val string) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) RoomKey_Eq(val string) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1741,7 +2057,7 @@ func (d *__MsgSeenByPeer_Updater) RoomKey_Eq(val string) *__MsgSeenByPeer_Update
 	return d
 }
 
-func (d *__MsgSeenByPeer_Updater) RoomKey_NotEq(val string) *__MsgSeenByPeer_Updater {
+func (d *__MsgPushEvent_Updater) RoomKey_NotEq(val string) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1754,7 +2070,7 @@ func (d *__MsgSeenByPeer_Updater) RoomKey_NotEq(val string) *__MsgSeenByPeer_Upd
 
 ////////ints
 
-func (u *__MsgSeenByPeer_Selector) MsgKey_In(ins []string) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) MsgKey_In(ins []string) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1767,7 +2083,7 @@ func (u *__MsgSeenByPeer_Selector) MsgKey_In(ins []string) *__MsgSeenByPeer_Sele
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) MsgKey_NotIn(ins []string) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) MsgKey_NotIn(ins []string) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1781,7 +2097,7 @@ func (u *__MsgSeenByPeer_Selector) MsgKey_NotIn(ins []string) *__MsgSeenByPeer_S
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__MsgSeenByPeer_Selector) MsgKey_Like(val string) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) MsgKey_Like(val string) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1792,7 +2108,7 @@ func (u *__MsgSeenByPeer_Selector) MsgKey_Like(val string) *__MsgSeenByPeer_Sele
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) MsgKey_Eq(val string) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) MsgKey_Eq(val string) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1803,7 +2119,7 @@ func (d *__MsgSeenByPeer_Selector) MsgKey_Eq(val string) *__MsgSeenByPeer_Select
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) MsgKey_NotEq(val string) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) MsgKey_NotEq(val string) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1814,7 +2130,7 @@ func (d *__MsgSeenByPeer_Selector) MsgKey_NotEq(val string) *__MsgSeenByPeer_Sel
 	return d
 }
 
-func (u *__MsgSeenByPeer_Selector) RoomKey_In(ins []string) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) RoomKey_In(ins []string) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1827,7 +2143,7 @@ func (u *__MsgSeenByPeer_Selector) RoomKey_In(ins []string) *__MsgSeenByPeer_Sel
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) RoomKey_NotIn(ins []string) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) RoomKey_NotIn(ins []string) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1841,7 +2157,7 @@ func (u *__MsgSeenByPeer_Selector) RoomKey_NotIn(ins []string) *__MsgSeenByPeer_
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__MsgSeenByPeer_Selector) RoomKey_Like(val string) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) RoomKey_Like(val string) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1852,7 +2168,7 @@ func (u *__MsgSeenByPeer_Selector) RoomKey_Like(val string) *__MsgSeenByPeer_Sel
 	return u
 }
 
-func (d *__MsgSeenByPeer_Selector) RoomKey_Eq(val string) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) RoomKey_Eq(val string) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1863,7 +2179,7 @@ func (d *__MsgSeenByPeer_Selector) RoomKey_Eq(val string) *__MsgSeenByPeer_Selec
 	return d
 }
 
-func (d *__MsgSeenByPeer_Selector) RoomKey_NotEq(val string) *__MsgSeenByPeer_Selector {
+func (d *__MsgPushEvent_Selector) RoomKey_NotEq(val string) *__MsgPushEvent_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1880,12 +2196,12 @@ func (d *__MsgSeenByPeer_Selector) RoomKey_NotEq(val string) *__MsgSeenByPeer_Se
 
 //ints
 
-func (u *__MsgSeenByPeer_Updater) Id(newVal int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) Id(newVal int) *__MsgPushEvent_Updater {
 	u.updates[" Id = ? "] = newVal
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) Id_Increment(count int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) Id_Increment(count int) *__MsgPushEvent_Updater {
 	if count > 0 {
 		u.updates[" Id = Id+? "] = count
 	}
@@ -1901,12 +2217,12 @@ func (u *__MsgSeenByPeer_Updater) Id_Increment(count int) *__MsgSeenByPeer_Updat
 
 //ints
 
-func (u *__MsgSeenByPeer_Updater) ToUserId(newVal int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) ToUserId(newVal int) *__MsgPushEvent_Updater {
 	u.updates[" ToUserId = ? "] = newVal
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) ToUserId_Increment(count int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) ToUserId_Increment(count int) *__MsgPushEvent_Updater {
 	if count > 0 {
 		u.updates[" ToUserId = ToUserId+? "] = count
 	}
@@ -1923,7 +2239,7 @@ func (u *__MsgSeenByPeer_Updater) ToUserId_Increment(count int) *__MsgSeenByPeer
 //ints
 
 //string
-func (u *__MsgSeenByPeer_Updater) MsgKey(newVal string) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) MsgKey(newVal string) *__MsgPushEvent_Updater {
 	u.updates[" MsgKey = ? "] = newVal
 	return u
 }
@@ -1931,19 +2247,19 @@ func (u *__MsgSeenByPeer_Updater) MsgKey(newVal string) *__MsgSeenByPeer_Updater
 //ints
 
 //string
-func (u *__MsgSeenByPeer_Updater) RoomKey(newVal string) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) RoomKey(newVal string) *__MsgPushEvent_Updater {
 	u.updates[" RoomKey = ? "] = newVal
 	return u
 }
 
 //ints
 
-func (u *__MsgSeenByPeer_Updater) PeerUserId(newVal int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) PeerUserId(newVal int) *__MsgPushEvent_Updater {
 	u.updates[" PeerUserId = ? "] = newVal
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) PeerUserId_Increment(count int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) PeerUserId_Increment(count int) *__MsgPushEvent_Updater {
 	if count > 0 {
 		u.updates[" PeerUserId = PeerUserId+? "] = count
 	}
@@ -1959,12 +2275,33 @@ func (u *__MsgSeenByPeer_Updater) PeerUserId_Increment(count int) *__MsgSeenByPe
 
 //ints
 
-func (u *__MsgSeenByPeer_Updater) AtTime(newVal int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) EventType(newVal int) *__MsgPushEvent_Updater {
+	u.updates[" EventType = ? "] = newVal
+	return u
+}
+
+func (u *__MsgPushEvent_Updater) EventType_Increment(count int) *__MsgPushEvent_Updater {
+	if count > 0 {
+		u.updates[" EventType = EventType+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" EventType = EventType-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__MsgPushEvent_Updater) AtTime(newVal int) *__MsgPushEvent_Updater {
 	u.updates[" AtTime = ? "] = newVal
 	return u
 }
 
-func (u *__MsgSeenByPeer_Updater) AtTime_Increment(count int) *__MsgSeenByPeer_Updater {
+func (u *__MsgPushEvent_Updater) AtTime_Increment(count int) *__MsgPushEvent_Updater {
 	if count > 0 {
 		u.updates[" AtTime = AtTime+? "] = count
 	}
@@ -1983,111 +2320,126 @@ func (u *__MsgSeenByPeer_Updater) AtTime_Increment(count int) *__MsgSeenByPeer_U
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_Id_Desc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_Id_Desc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY Id DESC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_Id_Asc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_Id_Asc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY Id ASC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Select_Id() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Select_Id() *__MsgPushEvent_Selector {
 	u.selectCol = "Id"
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_ToUserId_Desc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_ToUserId_Desc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY ToUserId DESC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_ToUserId_Asc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_ToUserId_Asc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY ToUserId ASC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Select_ToUserId() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Select_ToUserId() *__MsgPushEvent_Selector {
 	u.selectCol = "ToUserId"
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_MsgKey_Desc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_MsgKey_Desc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY MsgKey DESC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_MsgKey_Asc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_MsgKey_Asc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY MsgKey ASC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Select_MsgKey() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Select_MsgKey() *__MsgPushEvent_Selector {
 	u.selectCol = "MsgKey"
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_RoomKey_Desc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_RoomKey_Desc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY RoomKey DESC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_RoomKey_Asc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_RoomKey_Asc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY RoomKey ASC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Select_RoomKey() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Select_RoomKey() *__MsgPushEvent_Selector {
 	u.selectCol = "RoomKey"
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_PeerUserId_Desc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_PeerUserId_Desc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY PeerUserId DESC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_PeerUserId_Asc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_PeerUserId_Asc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY PeerUserId ASC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Select_PeerUserId() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Select_PeerUserId() *__MsgPushEvent_Selector {
 	u.selectCol = "PeerUserId"
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_AtTime_Desc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_EventType_Desc() *__MsgPushEvent_Selector {
+	u.orderBy = " ORDER BY EventType DESC "
+	return u
+}
+
+func (u *__MsgPushEvent_Selector) OrderBy_EventType_Asc() *__MsgPushEvent_Selector {
+	u.orderBy = " ORDER BY EventType ASC "
+	return u
+}
+
+func (u *__MsgPushEvent_Selector) Select_EventType() *__MsgPushEvent_Selector {
+	u.selectCol = "EventType"
+	return u
+}
+
+func (u *__MsgPushEvent_Selector) OrderBy_AtTime_Desc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY AtTime DESC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) OrderBy_AtTime_Asc() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) OrderBy_AtTime_Asc() *__MsgPushEvent_Selector {
 	u.orderBy = " ORDER BY AtTime ASC "
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Select_AtTime() *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Select_AtTime() *__MsgPushEvent_Selector {
 	u.selectCol = "AtTime"
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Limit(num int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Limit(num int) *__MsgPushEvent_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__MsgSeenByPeer_Selector) Offset(num int) *__MsgSeenByPeer_Selector {
+func (u *__MsgPushEvent_Selector) Offset(num int) *__MsgPushEvent_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__MsgSeenByPeer_Selector) _stoSql() (string, []interface{}) {
+func (u *__MsgPushEvent_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
-	sqlstr := "SELECT " + u.selectCol + " FROM ms.msg_seen_by_peer"
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.msg_push_event"
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -2107,14 +2459,14 @@ func (u *__MsgSeenByPeer_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__MsgSeenByPeer_Selector) GetRow(db *sqlx.DB) (*MsgSeenByPeer, error) {
+func (u *__MsgPushEvent_Selector) GetRow(db *sqlx.DB) (*MsgPushEvent, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &MsgSeenByPeer{}
+	row := &MsgPushEvent{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -2124,19 +2476,19 @@ func (u *__MsgSeenByPeer_Selector) GetRow(db *sqlx.DB) (*MsgSeenByPeer, error) {
 
 	row._exists = true
 
-	OnMsgSeenByPeer_LoadOne(row)
+	OnMsgPushEvent_LoadOne(row)
 
 	return row, nil
 }
 
-func (u *__MsgSeenByPeer_Selector) GetRows(db *sqlx.DB) ([]*MsgSeenByPeer, error) {
+func (u *__MsgPushEvent_Selector) GetRows(db *sqlx.DB) ([]*MsgPushEvent, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*MsgSeenByPeer
+	var rows []*MsgPushEvent
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -2152,20 +2504,20 @@ func (u *__MsgSeenByPeer_Selector) GetRows(db *sqlx.DB) ([]*MsgSeenByPeer, error
 		rows[i]._exists = true
 	}
 
-	OnMsgSeenByPeer_LoadMany(rows)
+	OnMsgPushEvent_LoadMany(rows)
 
 	return rows, nil
 }
 
 //dep use GetRows()
-func (u *__MsgSeenByPeer_Selector) GetRows2(db *sqlx.DB) ([]MsgSeenByPeer, error) {
+func (u *__MsgPushEvent_Selector) GetRows2(db *sqlx.DB) ([]MsgPushEvent, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*MsgSeenByPeer
+	var rows []*MsgPushEvent
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -2181,9 +2533,9 @@ func (u *__MsgSeenByPeer_Selector) GetRows2(db *sqlx.DB) ([]MsgSeenByPeer, error
 		rows[i]._exists = true
 	}
 
-	OnMsgSeenByPeer_LoadMany(rows)
+	OnMsgPushEvent_LoadMany(rows)
 
-	rows2 := make([]MsgSeenByPeer, len(rows))
+	rows2 := make([]MsgPushEvent, len(rows))
 	for i := 0; i < len(rows); i++ {
 		cp := *rows[i]
 		rows2[i] = cp
@@ -2192,7 +2544,7 @@ func (u *__MsgSeenByPeer_Selector) GetRows2(db *sqlx.DB) ([]MsgSeenByPeer, error
 	return rows2, nil
 }
 
-func (u *__MsgSeenByPeer_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__MsgPushEvent_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2210,7 +2562,7 @@ func (u *__MsgSeenByPeer_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__MsgSeenByPeer_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__MsgPushEvent_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2228,7 +2580,7 @@ func (u *__MsgSeenByPeer_Selector) GetStringSlice(db *sqlx.DB) ([]string, error)
 	return rows, nil
 }
 
-func (u *__MsgSeenByPeer_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__MsgPushEvent_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2246,7 +2598,7 @@ func (u *__MsgSeenByPeer_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__MsgSeenByPeer_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__MsgPushEvent_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2265,7 +2617,7 @@ func (u *__MsgSeenByPeer_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__MsgSeenByPeer_Updater) Update(db XODB) (int, error) {
+func (u *__MsgPushEvent_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -2282,7 +2634,7 @@ func (u *__MsgSeenByPeer_Updater) Update(db XODB) (int, error) {
 	allArgs = append(allArgs, updateArgs...)
 	allArgs = append(allArgs, whereArgs...)
 
-	sqlstr := `UPDATE ms.msg_seen_by_peer SET ` + sqlUpdate
+	sqlstr := `UPDATE ms.msg_push_event SET ` + sqlUpdate
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -2304,7 +2656,7 @@ func (u *__MsgSeenByPeer_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__MsgSeenByPeer_Deleter) Delete(db XODB) (int, error) {
+func (d *__MsgPushEvent_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -2317,7 +2669,7 @@ func (d *__MsgSeenByPeer_Deleter) Delete(db XODB) (int, error) {
 		args = append(args, w.args...)
 	}
 
-	sqlstr := "DELETE FROM ms.msg_seen_by_peer WHERE " + wheresStr
+	sqlstr := "DELETE FROM ms.msg_push_event WHERE " + wheresStr
 
 	// run query
 	XOLog(sqlstr, args)
@@ -2337,16 +2689,16 @@ func (d *__MsgSeenByPeer_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  MsgSeenByPeer ////////////////
-func MassInsert_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
+///////////////////////// Mass insert - replace for  MsgPushEvent ////////////////
+func MassInsert_MsgPushEvent(rows []MsgPushEvent, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "INSERT INTO ms.msg_seen_by_peer (" +
-		"ToUserId, MsgKey, RoomKey, PeerUserId, AtTime" +
+	sqlstr := "INSERT INTO ms.msg_push_event (" +
+		"ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -2358,6 +2710,7 @@ func MassInsert_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
 		vals = append(vals, row.MsgKey)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.PeerUserId)
+		vals = append(vals, row.EventType)
 		vals = append(vals, row.AtTime)
 
 	}
@@ -2373,15 +2726,15 @@ func MassInsert_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
 	return nil
 }
 
-func MassReplace_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
+func MassReplace_MsgPushEvent(rows []MsgPushEvent, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "REPLACE INTO ms.msg_seen_by_peer (" +
-		"ToUserId, MsgKey, RoomKey, PeerUserId, AtTime" +
+	sqlstr := "REPLACE INTO ms.msg_push_event (" +
+		"ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -2393,6 +2746,7 @@ func MassReplace_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
 		vals = append(vals, row.MsgKey)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.PeerUserId)
+		vals = append(vals, row.EventType)
 		vals = append(vals, row.AtTime)
 
 	}
@@ -2422,31 +2776,33 @@ func MassReplace_MsgSeenByPeer(rows []MsgSeenByPeer, db XODB) error {
 
 //
 
-// MsgSeenByPeerById retrieves a row from 'ms.msg_seen_by_peer' as a MsgSeenByPeer.
 //
-// Generated from index 'msg_seen_by_peer_Id_pkey'.
-func MsgSeenByPeerById(db XODB, id int) (*MsgSeenByPeer, error) {
+
+// MsgPushEventById retrieves a row from 'ms.msg_push_event' as a MsgPushEvent.
+//
+// Generated from index 'msg_push_event_Id_pkey'.
+func MsgPushEventById(db XODB, id int) (*MsgPushEvent, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, AtTime ` +
-		`FROM ms.msg_seen_by_peer ` +
+		`Id, ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime ` +
+		`FROM ms.msg_push_event ` +
 		`WHERE Id = ?`
 
 	// run query
 	XOLog(sqlstr, id)
-	msbp := MsgSeenByPeer{
+	mpe := MsgPushEvent{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&msbp.Id, &msbp.ToUserId, &msbp.MsgKey, &msbp.RoomKey, &msbp.PeerUserId, &msbp.AtTime)
+	err = db.QueryRow(sqlstr, id).Scan(&mpe.Id, &mpe.ToUserId, &mpe.MsgKey, &mpe.RoomKey, &mpe.PeerUserId, &mpe.EventType, &mpe.AtTime)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
 	}
 
-	OnMsgSeenByPeer_LoadOne(&msbp)
+	OnMsgPushEvent_LoadOne(&mpe)
 
-	return &msbp, nil
+	return &mpe, nil
 }

@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/gorilla/websocket"
+	"ms/sun/models/x"
 )
 
 //todo change UserDevicePipe => *UserDevicePipe
@@ -90,12 +91,12 @@ func (m pipesMap) ShutDownUser(UserId int) {
 func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 	pipe := &UserDevicePipe{
 		UserId:       UserId,
-		ToDeviceChan: make(chan base.Call, 10),
+		ToDeviceChan: make(chan x.PB_CommandToClient, 10),
 		IsOpen:       true,
 		Ws:           ws,
 	}
 
-	helper.Debug("serving user ws for user: ", UserId)
+	helper.DebugPrintln("serving user ws for user: ", UserId)
 
 	pipe.ServeIncomingCalls()
 	pipe.ServeSendToUserDevice()
@@ -111,13 +112,13 @@ func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 }
 
 func (m pipesMap) AddUserPipe(UserId int, pipe *UserDevicePipe) {
-	m.m.RLock()
+	m.m.Lock()
 	m.mp[UserId] = pipe
-	m.m.RUnlock()
+	m.m.Unlock()
 }
 
 func (m pipesMap) DeleteUserPipe(UserId int) {
-	m.m.RLock()
+	m.m.Lock()
 	delete(m.mp, UserId)
-	m.m.RUnlock()
+	m.m.Unlock()
 }

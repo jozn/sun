@@ -12,17 +12,19 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// Message represents a row from 'ms.message'.
+// Message represents a row from 'ms.messages'.
 
 // Manualy copy this to project
 type Message__ struct {
-	Id         int    `json:"Id"`         // Id -
-	ToUserId   int    `json:"ToUserId"`   // ToUserId -
-	RoomKey    string `json:"RoomKey"`    // RoomKey -
-	MessageKey string `json:"MessageKey"` // MessageKey -
-	FromUserID int    `json:"FromUserID"` // FromUserID -
-	Data       string `json:"Data"`       // Data -
-	TimeMs     int    `json:"TimeMs"`     // TimeMs -
+	Id            int    `json:"Id"`            // Id -
+	UserId        int    `json:"UserId"`        // UserId -
+	MessageKey    string `json:"MessageKey"`    // MessageKey -
+	RoomKey       string `json:"RoomKey"`       // RoomKey -
+	MessageType   int    `json:"MessageType"`   // MessageType -
+	RoomType      int    `json:"RoomType"`      // RoomType -
+	DataPB        string `json:"DataPB"`        // DataPB -
+	DataJson      string `json:"DataJson"`      // DataJson -
+	CreatedTimeMs int    `json:"CreatedTimeMs"` // CreatedTimeMs -
 
 	// xo fields
 	_exists, _deleted bool
@@ -48,15 +50,15 @@ func (m *Message) Insert(db XODB) error {
 	}
 
 	// sql insert query, primary key provided by autoincrement
-	const sqlstr = `INSERT INTO ms.message (` +
-		`ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs` +
+	const sqlstr = `INSERT INTO ms.messages (` +
+		`UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
-	res, err := db.Exec(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
+	XOLog(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
+	res, err := db.Exec(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -83,15 +85,15 @@ func (m *Message) Replace(db XODB) error {
 	var err error
 
 	// sql query
-	const sqlstr = `REPLACE INTO ms.message (` +
-		`ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs` +
+	const sqlstr = `REPLACE INTO ms.messages (` +
+		`UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
-	res, err := db.Exec(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs)
+	XOLog(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
+	res, err := db.Exec(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -128,13 +130,13 @@ func (m *Message) Update(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `UPDATE ms.message SET ` +
-		`ToUserId = ?, RoomKey = ?, MessageKey = ?, FromUserID = ?, Data = ?, TimeMs = ?` +
+	const sqlstr = `UPDATE ms.messages SET ` +
+		`UserId = ?, MessageKey = ?, RoomKey = ?, MessageType = ?, RoomType = ?, DataPB = ?, DataJson = ?, CreatedTimeMs = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs, m.Id)
-	_, err = db.Exec(sqlstr, m.ToUserId, m.RoomKey, m.MessageKey, m.FromUserID, m.Data, m.TimeMs, m.Id)
+	XOLog(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs, m.Id)
+	_, err = db.Exec(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs, m.Id)
 
 	XOLogErr(err)
 	OnMessage_AfterUpdate(m)
@@ -166,7 +168,7 @@ func (m *Message) Delete(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.message WHERE Id = ?`
+	const sqlstr = `DELETE FROM ms.messages WHERE Id = ?`
 
 	// run query
 	XOLog(sqlstr, m.Id)
@@ -340,316 +342,421 @@ func (d *__Message_Deleter) Id_GE(val int) *__Message_Deleter {
 	return d
 }
 
-func (u *__Message_Deleter) ToUserId_In(ins []int) *__Message_Deleter {
+func (u *__Message_Deleter) UserId_In(ins []int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Deleter) ToUserId_Ins(ins ...int) *__Message_Deleter {
+func (u *__Message_Deleter) UserId_Ins(ins ...int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Deleter) ToUserId_NotIn(ins []int) *__Message_Deleter {
+func (u *__Message_Deleter) UserId_NotIn(ins []int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Message_Deleter) ToUserId_Eq(val int) *__Message_Deleter {
+func (d *__Message_Deleter) UserId_Eq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId = ? "
+	w.condition = " UserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) ToUserId_NotEq(val int) *__Message_Deleter {
+func (d *__Message_Deleter) UserId_NotEq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId != ? "
+	w.condition = " UserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) ToUserId_LT(val int) *__Message_Deleter {
+func (d *__Message_Deleter) UserId_LT(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId < ? "
+	w.condition = " UserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) ToUserId_LE(val int) *__Message_Deleter {
+func (d *__Message_Deleter) UserId_LE(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId <= ? "
+	w.condition = " UserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) ToUserId_GT(val int) *__Message_Deleter {
+func (d *__Message_Deleter) UserId_GT(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId > ? "
+	w.condition = " UserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) ToUserId_GE(val int) *__Message_Deleter {
+func (d *__Message_Deleter) UserId_GE(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId >= ? "
+	w.condition = " UserId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Message_Deleter) FromUserID_In(ins []int) *__Message_Deleter {
+func (u *__Message_Deleter) MessageType_In(ins []int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Deleter) FromUserID_Ins(ins ...int) *__Message_Deleter {
+func (u *__Message_Deleter) MessageType_Ins(ins ...int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Deleter) FromUserID_NotIn(ins []int) *__Message_Deleter {
+func (u *__Message_Deleter) MessageType_NotIn(ins []int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FromUserID NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Message_Deleter) FromUserID_Eq(val int) *__Message_Deleter {
+func (d *__Message_Deleter) MessageType_Eq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID = ? "
+	w.condition = " MessageType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) FromUserID_NotEq(val int) *__Message_Deleter {
+func (d *__Message_Deleter) MessageType_NotEq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID != ? "
+	w.condition = " MessageType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) FromUserID_LT(val int) *__Message_Deleter {
+func (d *__Message_Deleter) MessageType_LT(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID < ? "
+	w.condition = " MessageType < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) FromUserID_LE(val int) *__Message_Deleter {
+func (d *__Message_Deleter) MessageType_LE(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID <= ? "
+	w.condition = " MessageType <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) FromUserID_GT(val int) *__Message_Deleter {
+func (d *__Message_Deleter) MessageType_GT(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID > ? "
+	w.condition = " MessageType > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) FromUserID_GE(val int) *__Message_Deleter {
+func (d *__Message_Deleter) MessageType_GE(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID >= ? "
+	w.condition = " MessageType >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Message_Deleter) TimeMs_In(ins []int) *__Message_Deleter {
+func (u *__Message_Deleter) RoomType_In(ins []int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Deleter) TimeMs_Ins(ins ...int) *__Message_Deleter {
+func (u *__Message_Deleter) RoomType_Ins(ins ...int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Deleter) TimeMs_NotIn(ins []int) *__Message_Deleter {
+func (u *__Message_Deleter) RoomType_NotIn(ins []int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TimeMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Message_Deleter) TimeMs_Eq(val int) *__Message_Deleter {
+func (d *__Message_Deleter) RoomType_Eq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs = ? "
+	w.condition = " RoomType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) TimeMs_NotEq(val int) *__Message_Deleter {
+func (d *__Message_Deleter) RoomType_NotEq(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs != ? "
+	w.condition = " RoomType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) TimeMs_LT(val int) *__Message_Deleter {
+func (d *__Message_Deleter) RoomType_LT(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs < ? "
+	w.condition = " RoomType < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) TimeMs_LE(val int) *__Message_Deleter {
+func (d *__Message_Deleter) RoomType_LE(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs <= ? "
+	w.condition = " RoomType <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) TimeMs_GT(val int) *__Message_Deleter {
+func (d *__Message_Deleter) RoomType_GT(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs > ? "
+	w.condition = " RoomType > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Deleter) TimeMs_GE(val int) *__Message_Deleter {
+func (d *__Message_Deleter) RoomType_GE(val int) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs >= ? "
+	w.condition = " RoomType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Deleter) CreatedTimeMs_In(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) CreatedTimeMs_Ins(ins ...int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) CreatedTimeMs_NotIn(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTimeMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) CreatedTimeMs_Eq(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) CreatedTimeMs_NotEq(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) CreatedTimeMs_LT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) CreatedTimeMs_LE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) CreatedTimeMs_GT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) CreatedTimeMs_GE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -766,316 +873,421 @@ func (d *__Message_Updater) Id_GE(val int) *__Message_Updater {
 	return d
 }
 
-func (u *__Message_Updater) ToUserId_In(ins []int) *__Message_Updater {
+func (u *__Message_Updater) UserId_In(ins []int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Updater) ToUserId_Ins(ins ...int) *__Message_Updater {
+func (u *__Message_Updater) UserId_Ins(ins ...int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Updater) ToUserId_NotIn(ins []int) *__Message_Updater {
+func (u *__Message_Updater) UserId_NotIn(ins []int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Message_Updater) ToUserId_Eq(val int) *__Message_Updater {
+func (d *__Message_Updater) UserId_Eq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId = ? "
+	w.condition = " UserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) ToUserId_NotEq(val int) *__Message_Updater {
+func (d *__Message_Updater) UserId_NotEq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId != ? "
+	w.condition = " UserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) ToUserId_LT(val int) *__Message_Updater {
+func (d *__Message_Updater) UserId_LT(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId < ? "
+	w.condition = " UserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) ToUserId_LE(val int) *__Message_Updater {
+func (d *__Message_Updater) UserId_LE(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId <= ? "
+	w.condition = " UserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) ToUserId_GT(val int) *__Message_Updater {
+func (d *__Message_Updater) UserId_GT(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId > ? "
+	w.condition = " UserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) ToUserId_GE(val int) *__Message_Updater {
+func (d *__Message_Updater) UserId_GE(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId >= ? "
+	w.condition = " UserId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Message_Updater) FromUserID_In(ins []int) *__Message_Updater {
+func (u *__Message_Updater) MessageType_In(ins []int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Updater) FromUserID_Ins(ins ...int) *__Message_Updater {
+func (u *__Message_Updater) MessageType_Ins(ins ...int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Updater) FromUserID_NotIn(ins []int) *__Message_Updater {
+func (u *__Message_Updater) MessageType_NotIn(ins []int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FromUserID NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Message_Updater) FromUserID_Eq(val int) *__Message_Updater {
+func (d *__Message_Updater) MessageType_Eq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID = ? "
+	w.condition = " MessageType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) FromUserID_NotEq(val int) *__Message_Updater {
+func (d *__Message_Updater) MessageType_NotEq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID != ? "
+	w.condition = " MessageType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) FromUserID_LT(val int) *__Message_Updater {
+func (d *__Message_Updater) MessageType_LT(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID < ? "
+	w.condition = " MessageType < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) FromUserID_LE(val int) *__Message_Updater {
+func (d *__Message_Updater) MessageType_LE(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID <= ? "
+	w.condition = " MessageType <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) FromUserID_GT(val int) *__Message_Updater {
+func (d *__Message_Updater) MessageType_GT(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID > ? "
+	w.condition = " MessageType > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) FromUserID_GE(val int) *__Message_Updater {
+func (d *__Message_Updater) MessageType_GE(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID >= ? "
+	w.condition = " MessageType >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Message_Updater) TimeMs_In(ins []int) *__Message_Updater {
+func (u *__Message_Updater) RoomType_In(ins []int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Updater) TimeMs_Ins(ins ...int) *__Message_Updater {
+func (u *__Message_Updater) RoomType_Ins(ins ...int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Updater) TimeMs_NotIn(ins []int) *__Message_Updater {
+func (u *__Message_Updater) RoomType_NotIn(ins []int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TimeMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Message_Updater) TimeMs_Eq(val int) *__Message_Updater {
+func (d *__Message_Updater) RoomType_Eq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs = ? "
+	w.condition = " RoomType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) TimeMs_NotEq(val int) *__Message_Updater {
+func (d *__Message_Updater) RoomType_NotEq(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs != ? "
+	w.condition = " RoomType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) TimeMs_LT(val int) *__Message_Updater {
+func (d *__Message_Updater) RoomType_LT(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs < ? "
+	w.condition = " RoomType < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) TimeMs_LE(val int) *__Message_Updater {
+func (d *__Message_Updater) RoomType_LE(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs <= ? "
+	w.condition = " RoomType <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) TimeMs_GT(val int) *__Message_Updater {
+func (d *__Message_Updater) RoomType_GT(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs > ? "
+	w.condition = " RoomType > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Updater) TimeMs_GE(val int) *__Message_Updater {
+func (d *__Message_Updater) RoomType_GE(val int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs >= ? "
+	w.condition = " RoomType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Updater) CreatedTimeMs_In(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) CreatedTimeMs_Ins(ins ...int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) CreatedTimeMs_NotIn(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTimeMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) CreatedTimeMs_Eq(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) CreatedTimeMs_NotEq(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) CreatedTimeMs_LT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) CreatedTimeMs_LE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) CreatedTimeMs_GT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) CreatedTimeMs_GE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1192,316 +1404,421 @@ func (d *__Message_Selector) Id_GE(val int) *__Message_Selector {
 	return d
 }
 
-func (u *__Message_Selector) ToUserId_In(ins []int) *__Message_Selector {
+func (u *__Message_Selector) UserId_In(ins []int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Selector) ToUserId_Ins(ins ...int) *__Message_Selector {
+func (u *__Message_Selector) UserId_Ins(ins ...int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Selector) ToUserId_NotIn(ins []int) *__Message_Selector {
+func (u *__Message_Selector) UserId_NotIn(ins []int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Message_Selector) ToUserId_Eq(val int) *__Message_Selector {
+func (d *__Message_Selector) UserId_Eq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId = ? "
+	w.condition = " UserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) ToUserId_NotEq(val int) *__Message_Selector {
+func (d *__Message_Selector) UserId_NotEq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId != ? "
+	w.condition = " UserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) ToUserId_LT(val int) *__Message_Selector {
+func (d *__Message_Selector) UserId_LT(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId < ? "
+	w.condition = " UserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) ToUserId_LE(val int) *__Message_Selector {
+func (d *__Message_Selector) UserId_LE(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId <= ? "
+	w.condition = " UserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) ToUserId_GT(val int) *__Message_Selector {
+func (d *__Message_Selector) UserId_GT(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId > ? "
+	w.condition = " UserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) ToUserId_GE(val int) *__Message_Selector {
+func (d *__Message_Selector) UserId_GE(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ToUserId >= ? "
+	w.condition = " UserId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Message_Selector) FromUserID_In(ins []int) *__Message_Selector {
+func (u *__Message_Selector) MessageType_In(ins []int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Selector) FromUserID_Ins(ins ...int) *__Message_Selector {
+func (u *__Message_Selector) MessageType_Ins(ins ...int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FromUserID IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Selector) FromUserID_NotIn(ins []int) *__Message_Selector {
+func (u *__Message_Selector) MessageType_NotIn(ins []int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FromUserID NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Message_Selector) FromUserID_Eq(val int) *__Message_Selector {
+func (d *__Message_Selector) MessageType_Eq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID = ? "
+	w.condition = " MessageType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) FromUserID_NotEq(val int) *__Message_Selector {
+func (d *__Message_Selector) MessageType_NotEq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID != ? "
+	w.condition = " MessageType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) FromUserID_LT(val int) *__Message_Selector {
+func (d *__Message_Selector) MessageType_LT(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID < ? "
+	w.condition = " MessageType < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) FromUserID_LE(val int) *__Message_Selector {
+func (d *__Message_Selector) MessageType_LE(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID <= ? "
+	w.condition = " MessageType <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) FromUserID_GT(val int) *__Message_Selector {
+func (d *__Message_Selector) MessageType_GT(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID > ? "
+	w.condition = " MessageType > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) FromUserID_GE(val int) *__Message_Selector {
+func (d *__Message_Selector) MessageType_GE(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FromUserID >= ? "
+	w.condition = " MessageType >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Message_Selector) TimeMs_In(ins []int) *__Message_Selector {
+func (u *__Message_Selector) RoomType_In(ins []int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Selector) TimeMs_Ins(ins ...int) *__Message_Selector {
+func (u *__Message_Selector) RoomType_Ins(ins ...int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Selector) TimeMs_NotIn(ins []int) *__Message_Selector {
+func (u *__Message_Selector) RoomType_NotIn(ins []int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TimeMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Message_Selector) TimeMs_Eq(val int) *__Message_Selector {
+func (d *__Message_Selector) RoomType_Eq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs = ? "
+	w.condition = " RoomType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) TimeMs_NotEq(val int) *__Message_Selector {
+func (d *__Message_Selector) RoomType_NotEq(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs != ? "
+	w.condition = " RoomType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) TimeMs_LT(val int) *__Message_Selector {
+func (d *__Message_Selector) RoomType_LT(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs < ? "
+	w.condition = " RoomType < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) TimeMs_LE(val int) *__Message_Selector {
+func (d *__Message_Selector) RoomType_LE(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs <= ? "
+	w.condition = " RoomType <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) TimeMs_GT(val int) *__Message_Selector {
+func (d *__Message_Selector) RoomType_GT(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs > ? "
+	w.condition = " RoomType > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) TimeMs_GE(val int) *__Message_Selector {
+func (d *__Message_Selector) RoomType_GE(val int) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TimeMs >= ? "
+	w.condition = " RoomType >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Selector) CreatedTimeMs_In(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) CreatedTimeMs_Ins(ins ...int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTimeMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) CreatedTimeMs_NotIn(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTimeMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) CreatedTimeMs_Eq(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) CreatedTimeMs_NotEq(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) CreatedTimeMs_LT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) CreatedTimeMs_LE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) CreatedTimeMs_GT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) CreatedTimeMs_GE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedTimeMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1510,66 +1827,6 @@ func (d *__Message_Selector) TimeMs_GE(val int) *__Message_Selector {
 ///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
 
 ////////ints
-
-func (u *__Message_Deleter) RoomKey_In(ins []string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Message_Deleter) RoomKey_NotIn(ins []string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Message_Deleter) RoomKey_Like(val string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " RoomKey LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Message_Deleter) RoomKey_Eq(val string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " RoomKey = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Message_Deleter) RoomKey_NotEq(val string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " RoomKey != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
 
 func (u *__Message_Deleter) MessageKey_In(ins []string) *__Message_Deleter {
 	w := whereClause{}
@@ -1631,69 +1888,7 @@ func (d *__Message_Deleter) MessageKey_NotEq(val string) *__Message_Deleter {
 	return d
 }
 
-func (u *__Message_Deleter) Data_In(ins []string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Data IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Message_Deleter) Data_NotIn(ins []string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Data NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Message_Deleter) Data_Like(val string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Data LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Message_Deleter) Data_Eq(val string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Data = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Message_Deleter) Data_NotEq(val string) *__Message_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Data != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-////////ints
-
-func (u *__Message_Updater) RoomKey_In(ins []string) *__Message_Updater {
+func (u *__Message_Deleter) RoomKey_In(ins []string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1706,7 +1901,7 @@ func (u *__Message_Updater) RoomKey_In(ins []string) *__Message_Updater {
 	return u
 }
 
-func (u *__Message_Updater) RoomKey_NotIn(ins []string) *__Message_Updater {
+func (u *__Message_Deleter) RoomKey_NotIn(ins []string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1720,7 +1915,7 @@ func (u *__Message_Updater) RoomKey_NotIn(ins []string) *__Message_Updater {
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Message_Updater) RoomKey_Like(val string) *__Message_Updater {
+func (u *__Message_Deleter) RoomKey_Like(val string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1731,7 +1926,7 @@ func (u *__Message_Updater) RoomKey_Like(val string) *__Message_Updater {
 	return u
 }
 
-func (d *__Message_Updater) RoomKey_Eq(val string) *__Message_Updater {
+func (d *__Message_Deleter) RoomKey_Eq(val string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1742,7 +1937,7 @@ func (d *__Message_Updater) RoomKey_Eq(val string) *__Message_Updater {
 	return d
 }
 
-func (d *__Message_Updater) RoomKey_NotEq(val string) *__Message_Updater {
+func (d *__Message_Deleter) RoomKey_NotEq(val string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1752,6 +1947,128 @@ func (d *__Message_Updater) RoomKey_NotEq(val string) *__Message_Updater {
 
 	return d
 }
+
+func (u *__Message_Deleter) DataPB_In(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataPB IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) DataPB_NotIn(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataPB NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Deleter) DataPB_Like(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataPB LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) DataPB_Eq(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataPB = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) DataPB_NotEq(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataPB != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Deleter) DataJson_In(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataJson IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) DataJson_NotIn(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataJson NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Deleter) DataJson_Like(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataJson LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) DataJson_Eq(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataJson = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) DataJson_NotEq(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataJson != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
 
 func (u *__Message_Updater) MessageKey_In(ins []string) *__Message_Updater {
 	w := whereClause{}
@@ -1813,69 +2130,7 @@ func (d *__Message_Updater) MessageKey_NotEq(val string) *__Message_Updater {
 	return d
 }
 
-func (u *__Message_Updater) Data_In(ins []string) *__Message_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Data IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Message_Updater) Data_NotIn(ins []string) *__Message_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Data NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__Message_Updater) Data_Like(val string) *__Message_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Data LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Message_Updater) Data_Eq(val string) *__Message_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Data = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Message_Updater) Data_NotEq(val string) *__Message_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Data != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-////////ints
-
-func (u *__Message_Selector) RoomKey_In(ins []string) *__Message_Selector {
+func (u *__Message_Updater) RoomKey_In(ins []string) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1888,7 +2143,7 @@ func (u *__Message_Selector) RoomKey_In(ins []string) *__Message_Selector {
 	return u
 }
 
-func (u *__Message_Selector) RoomKey_NotIn(ins []string) *__Message_Selector {
+func (u *__Message_Updater) RoomKey_NotIn(ins []string) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1902,7 +2157,7 @@ func (u *__Message_Selector) RoomKey_NotIn(ins []string) *__Message_Selector {
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Message_Selector) RoomKey_Like(val string) *__Message_Selector {
+func (u *__Message_Updater) RoomKey_Like(val string) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1913,7 +2168,7 @@ func (u *__Message_Selector) RoomKey_Like(val string) *__Message_Selector {
 	return u
 }
 
-func (d *__Message_Selector) RoomKey_Eq(val string) *__Message_Selector {
+func (d *__Message_Updater) RoomKey_Eq(val string) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1924,7 +2179,7 @@ func (d *__Message_Selector) RoomKey_Eq(val string) *__Message_Selector {
 	return d
 }
 
-func (d *__Message_Selector) RoomKey_NotEq(val string) *__Message_Selector {
+func (d *__Message_Updater) RoomKey_NotEq(val string) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1934,6 +2189,128 @@ func (d *__Message_Selector) RoomKey_NotEq(val string) *__Message_Selector {
 
 	return d
 }
+
+func (u *__Message_Updater) DataPB_In(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataPB IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) DataPB_NotIn(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataPB NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Updater) DataPB_Like(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataPB LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) DataPB_Eq(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataPB = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) DataPB_NotEq(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataPB != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Updater) DataJson_In(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataJson IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) DataJson_NotIn(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataJson NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Updater) DataJson_Like(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataJson LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) DataJson_Eq(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataJson = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) DataJson_NotEq(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataJson != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
 
 func (u *__Message_Selector) MessageKey_In(ins []string) *__Message_Selector {
 	w := whereClause{}
@@ -1995,61 +2372,181 @@ func (d *__Message_Selector) MessageKey_NotEq(val string) *__Message_Selector {
 	return d
 }
 
-func (u *__Message_Selector) Data_In(ins []string) *__Message_Selector {
+func (u *__Message_Selector) RoomKey_In(ins []string) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Data IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Message_Selector) Data_NotIn(ins []string) *__Message_Selector {
+func (u *__Message_Selector) RoomKey_NotIn(ins []string) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Data NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Message_Selector) Data_Like(val string) *__Message_Selector {
+func (u *__Message_Selector) RoomKey_Like(val string) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Data LIKE ? "
+	w.condition = " RoomKey LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Message_Selector) Data_Eq(val string) *__Message_Selector {
+func (d *__Message_Selector) RoomKey_Eq(val string) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Data = ? "
+	w.condition = " RoomKey = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Message_Selector) Data_NotEq(val string) *__Message_Selector {
+func (d *__Message_Selector) RoomKey_NotEq(val string) *__Message_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Data != ? "
+	w.condition = " RoomKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Selector) DataPB_In(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataPB IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) DataPB_NotIn(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataPB NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Selector) DataPB_Like(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataPB LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) DataPB_Eq(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataPB = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) DataPB_NotEq(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataPB != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Selector) DataJson_In(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataJson IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) DataJson_NotIn(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " DataJson NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Selector) DataJson_Like(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataJson LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) DataJson_Eq(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataJson = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) DataJson_NotEq(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " DataJson != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2082,32 +2579,24 @@ func (u *__Message_Updater) Id_Increment(count int) *__Message_Updater {
 
 //ints
 
-func (u *__Message_Updater) ToUserId(newVal int) *__Message_Updater {
-	u.updates[" ToUserId = ? "] = newVal
+func (u *__Message_Updater) UserId(newVal int) *__Message_Updater {
+	u.updates[" UserId = ? "] = newVal
 	return u
 }
 
-func (u *__Message_Updater) ToUserId_Increment(count int) *__Message_Updater {
+func (u *__Message_Updater) UserId_Increment(count int) *__Message_Updater {
 	if count > 0 {
-		u.updates[" ToUserId = ToUserId+? "] = count
+		u.updates[" UserId = UserId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it positive
+		u.updates[" UserId = UserId-? "] = -(count) //make it positive
 	}
 
 	return u
 }
 
 //string
-
-//ints
-
-//string
-func (u *__Message_Updater) RoomKey(newVal string) *__Message_Updater {
-	u.updates[" RoomKey = ? "] = newVal
-	return u
-}
 
 //ints
 
@@ -2119,18 +2608,47 @@ func (u *__Message_Updater) MessageKey(newVal string) *__Message_Updater {
 
 //ints
 
-func (u *__Message_Updater) FromUserID(newVal int) *__Message_Updater {
-	u.updates[" FromUserID = ? "] = newVal
+//string
+func (u *__Message_Updater) RoomKey(newVal string) *__Message_Updater {
+	u.updates[" RoomKey = ? "] = newVal
 	return u
 }
 
-func (u *__Message_Updater) FromUserID_Increment(count int) *__Message_Updater {
+//ints
+
+func (u *__Message_Updater) MessageType(newVal int) *__Message_Updater {
+	u.updates[" MessageType = ? "] = newVal
+	return u
+}
+
+func (u *__Message_Updater) MessageType_Increment(count int) *__Message_Updater {
 	if count > 0 {
-		u.updates[" FromUserID = FromUserID+? "] = count
+		u.updates[" MessageType = MessageType+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" FromUserID = FromUserID-? "] = -(count) //make it positive
+		u.updates[" MessageType = MessageType-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__Message_Updater) RoomType(newVal int) *__Message_Updater {
+	u.updates[" RoomType = ? "] = newVal
+	return u
+}
+
+func (u *__Message_Updater) RoomType_Increment(count int) *__Message_Updater {
+	if count > 0 {
+		u.updates[" RoomType = RoomType+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" RoomType = RoomType-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -2141,25 +2659,33 @@ func (u *__Message_Updater) FromUserID_Increment(count int) *__Message_Updater {
 //ints
 
 //string
-func (u *__Message_Updater) Data(newVal string) *__Message_Updater {
-	u.updates[" Data = ? "] = newVal
+func (u *__Message_Updater) DataPB(newVal string) *__Message_Updater {
+	u.updates[" DataPB = ? "] = newVal
 	return u
 }
 
 //ints
 
-func (u *__Message_Updater) TimeMs(newVal int) *__Message_Updater {
-	u.updates[" TimeMs = ? "] = newVal
+//string
+func (u *__Message_Updater) DataJson(newVal string) *__Message_Updater {
+	u.updates[" DataJson = ? "] = newVal
 	return u
 }
 
-func (u *__Message_Updater) TimeMs_Increment(count int) *__Message_Updater {
+//ints
+
+func (u *__Message_Updater) CreatedTimeMs(newVal int) *__Message_Updater {
+	u.updates[" CreatedTimeMs = ? "] = newVal
+	return u
+}
+
+func (u *__Message_Updater) CreatedTimeMs_Increment(count int) *__Message_Updater {
 	if count > 0 {
-		u.updates[" TimeMs = TimeMs+? "] = count
+		u.updates[" CreatedTimeMs = CreatedTimeMs+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" TimeMs = TimeMs-? "] = -(count) //make it positive
+		u.updates[" CreatedTimeMs = CreatedTimeMs-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -2187,33 +2713,18 @@ func (u *__Message_Selector) Select_Id() *__Message_Selector {
 	return u
 }
 
-func (u *__Message_Selector) OrderBy_ToUserId_Desc() *__Message_Selector {
-	u.orderBy = " ORDER BY ToUserId DESC "
+func (u *__Message_Selector) OrderBy_UserId_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY UserId DESC "
 	return u
 }
 
-func (u *__Message_Selector) OrderBy_ToUserId_Asc() *__Message_Selector {
-	u.orderBy = " ORDER BY ToUserId ASC "
+func (u *__Message_Selector) OrderBy_UserId_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY UserId ASC "
 	return u
 }
 
-func (u *__Message_Selector) Select_ToUserId() *__Message_Selector {
-	u.selectCol = "ToUserId"
-	return u
-}
-
-func (u *__Message_Selector) OrderBy_RoomKey_Desc() *__Message_Selector {
-	u.orderBy = " ORDER BY RoomKey DESC "
-	return u
-}
-
-func (u *__Message_Selector) OrderBy_RoomKey_Asc() *__Message_Selector {
-	u.orderBy = " ORDER BY RoomKey ASC "
-	return u
-}
-
-func (u *__Message_Selector) Select_RoomKey() *__Message_Selector {
-	u.selectCol = "RoomKey"
+func (u *__Message_Selector) Select_UserId() *__Message_Selector {
+	u.selectCol = "UserId"
 	return u
 }
 
@@ -2232,48 +2743,93 @@ func (u *__Message_Selector) Select_MessageKey() *__Message_Selector {
 	return u
 }
 
-func (u *__Message_Selector) OrderBy_FromUserID_Desc() *__Message_Selector {
-	u.orderBy = " ORDER BY FromUserID DESC "
+func (u *__Message_Selector) OrderBy_RoomKey_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY RoomKey DESC "
 	return u
 }
 
-func (u *__Message_Selector) OrderBy_FromUserID_Asc() *__Message_Selector {
-	u.orderBy = " ORDER BY FromUserID ASC "
+func (u *__Message_Selector) OrderBy_RoomKey_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY RoomKey ASC "
 	return u
 }
 
-func (u *__Message_Selector) Select_FromUserID() *__Message_Selector {
-	u.selectCol = "FromUserID"
+func (u *__Message_Selector) Select_RoomKey() *__Message_Selector {
+	u.selectCol = "RoomKey"
 	return u
 }
 
-func (u *__Message_Selector) OrderBy_Data_Desc() *__Message_Selector {
-	u.orderBy = " ORDER BY Data DESC "
+func (u *__Message_Selector) OrderBy_MessageType_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY MessageType DESC "
 	return u
 }
 
-func (u *__Message_Selector) OrderBy_Data_Asc() *__Message_Selector {
-	u.orderBy = " ORDER BY Data ASC "
+func (u *__Message_Selector) OrderBy_MessageType_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY MessageType ASC "
 	return u
 }
 
-func (u *__Message_Selector) Select_Data() *__Message_Selector {
-	u.selectCol = "Data"
+func (u *__Message_Selector) Select_MessageType() *__Message_Selector {
+	u.selectCol = "MessageType"
 	return u
 }
 
-func (u *__Message_Selector) OrderBy_TimeMs_Desc() *__Message_Selector {
-	u.orderBy = " ORDER BY TimeMs DESC "
+func (u *__Message_Selector) OrderBy_RoomType_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY RoomType DESC "
 	return u
 }
 
-func (u *__Message_Selector) OrderBy_TimeMs_Asc() *__Message_Selector {
-	u.orderBy = " ORDER BY TimeMs ASC "
+func (u *__Message_Selector) OrderBy_RoomType_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY RoomType ASC "
 	return u
 }
 
-func (u *__Message_Selector) Select_TimeMs() *__Message_Selector {
-	u.selectCol = "TimeMs"
+func (u *__Message_Selector) Select_RoomType() *__Message_Selector {
+	u.selectCol = "RoomType"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_DataPB_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY DataPB DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_DataPB_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY DataPB ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_DataPB() *__Message_Selector {
+	u.selectCol = "DataPB"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_DataJson_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY DataJson DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_DataJson_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY DataJson ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_DataJson() *__Message_Selector {
+	u.selectCol = "DataJson"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_CreatedTimeMs_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY CreatedTimeMs DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_CreatedTimeMs_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY CreatedTimeMs ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_CreatedTimeMs() *__Message_Selector {
+	u.selectCol = "CreatedTimeMs"
 	return u
 }
 
@@ -2291,7 +2847,7 @@ func (u *__Message_Selector) Offset(num int) *__Message_Selector {
 func (u *__Message_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
-	sqlstr := "SELECT " + u.selectCol + " FROM ms.message"
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.messages"
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -2486,7 +3042,7 @@ func (u *__Message_Updater) Update(db XODB) (int, error) {
 	allArgs = append(allArgs, updateArgs...)
 	allArgs = append(allArgs, whereArgs...)
 
-	sqlstr := `UPDATE ms.message SET ` + sqlUpdate
+	sqlstr := `UPDATE ms.messages SET ` + sqlUpdate
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -2521,7 +3077,7 @@ func (d *__Message_Deleter) Delete(db XODB) (int, error) {
 		args = append(args, w.args...)
 	}
 
-	sqlstr := "DELETE FROM ms.message WHERE " + wheresStr
+	sqlstr := "DELETE FROM ms.messages WHERE " + wheresStr
 
 	// run query
 	XOLog(sqlstr, args)
@@ -2545,12 +3101,12 @@ func (d *__Message_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_Message(rows []Message, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "INSERT INTO ms.message (" +
-		"ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs" +
+	sqlstr := "INSERT INTO ms.messages (" +
+		"UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2558,12 +3114,14 @@ func MassInsert_Message(rows []Message, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.ToUserId)
-		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.UserId)
 		vals = append(vals, row.MessageKey)
-		vals = append(vals, row.FromUserID)
-		vals = append(vals, row.Data)
-		vals = append(vals, row.TimeMs)
+		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.MessageType)
+		vals = append(vals, row.RoomType)
+		vals = append(vals, row.DataPB)
+		vals = append(vals, row.DataJson)
+		vals = append(vals, row.CreatedTimeMs)
 
 	}
 
@@ -2581,12 +3139,12 @@ func MassInsert_Message(rows []Message, db XODB) error {
 func MassReplace_Message(rows []Message, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "REPLACE INTO ms.message (" +
-		"ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs" +
+	sqlstr := "REPLACE INTO ms.messages (" +
+		"UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2594,12 +3152,14 @@ func MassReplace_Message(rows []Message, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.ToUserId)
-		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.UserId)
 		vals = append(vals, row.MessageKey)
-		vals = append(vals, row.FromUserID)
-		vals = append(vals, row.Data)
-		vals = append(vals, row.TimeMs)
+		vals = append(vals, row.RoomKey)
+		vals = append(vals, row.MessageType)
+		vals = append(vals, row.RoomType)
+		vals = append(vals, row.DataPB)
+		vals = append(vals, row.DataJson)
+		vals = append(vals, row.CreatedTimeMs)
 
 	}
 
@@ -2630,59 +3190,20 @@ func MassReplace_Message(rows []Message, db XODB) error {
 
 //
 
-// MessagesByToUserIdTimeMs retrieves a row from 'ms.message' as a Message.
 //
-// Generated from index 'ToUserId_2'.
-func MessagesByToUserIdTimeMs(db XODB, toUserId int, timeMs int) ([]*Message, error) {
-	var err error
 
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
-		`FROM ms.message ` +
-		`WHERE ToUserId = ? AND TimeMs = ?`
-
-	// run query
-	XOLog(sqlstr, toUserId, timeMs)
-	q, err := db.Query(sqlstr, toUserId, timeMs)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Message{}
-	for q.Next() {
-		m := Message{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &m)
-	}
-
-	OnMessage_LoadMany(res)
-
-	return res, nil
-}
-
-// MessageById retrieves a row from 'ms.message' as a Message.
 //
-// Generated from index 'message_Id_pkey'.
+
+// MessageById retrieves a row from 'ms.messages' as a Message.
+//
+// Generated from index 'messages_Id_pkey'.
 func MessageById(db XODB, id int) (*Message, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, RoomKey, MessageKey, FromUserID, Data, TimeMs ` +
-		`FROM ms.message ` +
+		`Id, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs ` +
+		`FROM ms.messages ` +
 		`WHERE Id = ?`
 
 	// run query
@@ -2691,7 +3212,7 @@ func MessageById(db XODB, id int) (*Message, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.ToUserId, &m.RoomKey, &m.MessageKey, &m.FromUserID, &m.Data, &m.TimeMs)
+	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.DataPB, &m.DataJson, &m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

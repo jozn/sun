@@ -45,6 +45,7 @@ func (self *Call) MakeDataReady() {
 	//self.Data = helper.ToJson(data)
 }
 
+//dep
 var CallMapRouter = make(map[string]func(Call))
 
 /*

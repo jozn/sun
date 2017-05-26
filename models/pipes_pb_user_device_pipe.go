@@ -5,11 +5,12 @@ import (
 
 	"github.com/gorilla/websocket"
 	//"time"
-	"encoding/json"
 	"fmt"
+	"github.com/golang/protobuf/proto"
 	"ms/sun/base"
 	"ms/sun/config"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 	"os"
 )
 
@@ -17,8 +18,8 @@ type UserDevicePipe struct {
 	UserId         int
 	IsOpen         bool
 	Ws             *websocket.Conn
-	ToDeviceChan   chan base.Call
-	FromDeviceChan chan base.Call // NOT NEEDED?
+	ToDeviceChan   chan x.PB_CommandToClient
+	FromDeviceChan chan x.PB_CommandToServer // NOT NEEDED?
 	m              sync.RWMutex
 	hasShutDown    bool
 }
@@ -33,7 +34,7 @@ func (pipe *UserDevicePipe) ServeIncomingCalls() {
 		}()
 
 		for {
-			var call base.Call
+			//var call base.Call
 			messageType, bytes, err := pipe.Ws.ReadMessage() //blocking
 
 			helper.Debug("messageType: ", " ::", messageType, string(bytes))
@@ -44,23 +45,18 @@ func (pipe *UserDevicePipe) ServeIncomingCalls() {
 			}
 
 			if messageType == websocket.TextMessage {
-				err = json.Unmarshal(bytes, &call)
-				if err == nil {
-					serverWSReqCalls(call, pipe)
-				}
-				if config.IS_DEBUG {
-					wsDebugLog("-> from device:", pipe.UserId, string(bytes))
-				}
+
 			}
 
 			if messageType == websocket.BinaryMessage {
-				pipe.ShutDownCompletely()
-				return
-				/*f, _ := os.Create("./upload/ws_" + helper.RandString(8))
-				wd, _ := os.Getwd()
-				fmt.Println("ws: "+" wd:"+wd+"binary:  ", bytes)
-				f.Write(bytes)
-				f.Close()*/
+				pb := &x.PB_CommandToServer{}
+				err := proto.Unmarshal(bytes, pb)
+				if err == nil {
+					if config.IS_DEBUG {
+						wsDebugLog("-> from device:", pb.Command, helper.ToJson(pb))
+					}
+					serverWSReqCalls(pb, pipe)
+				}
 			}
 		}
 	}()
@@ -114,30 +110,29 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 
 /////////////// Commands handler /////////////////
 
-func serverWSReqCalls(reqCall base.Call, pipe *UserDevicePipe) {
+func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 
-	if reqCall.Name == "CallReceivedToClient" {
-		CallRespndMap.runSucceded(reqCall.ServerCallId)
+	if reqCall.Command == "CallReceivedToClient" {
+		CallRespndMap.runSucceded(reqCall.CallId)
 		return
 	}
 
-	if reqCall.ClientCallId != 0 {
-		callReceived := base.Call{
-			Name:         "CallReceivedToServer",
-			ClientCallId: reqCall.ClientCallId,
-			ServerCallId: 0,
+	if reqCall.CallId != 0 {
+		callReceived := &x.PB_CommandToServer{
+			Command: "CallReceivedToServer",
+			CallId:  reqCall.CallId,
 		}
 
 		AllPipesMap.SendToUser(pipe.UserId, callReceived)
 	}
 
-	reqCall.UserId = pipe.UserId
-	fnCall := base.CallMapRouter[reqCall.Name]
-	helper.Debug("serving Cmd: ", reqCall.Name, " Userid: ", pipe.UserId)
+	//reqCall.UserId = pipe.UserId
+	fnCall := CallMapRouter[reqCall.Command]
+	helper.DebugPrintln("serving Cmd: ", reqCall.Command, " Userid: ", pipe.UserId)
 	if fnCall != nil {
-		fnCall(reqCall)
+		fnCall(reqCall, pipe)
 	} else { //send call func not found -- in debug
-
+		helper.DebugPrintln("ERROR command nor registerd in CallMapRouter : ", reqCall.Command)
 	}
 
 }

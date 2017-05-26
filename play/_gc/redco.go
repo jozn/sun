@@ -6,7 +6,7 @@ import (
 	"sync"
 
 	"github.com/tidwall/redcon"
-    "runtime"
+	"runtime"
 )
 
 var addr = ":6380"
@@ -15,7 +15,7 @@ func main() {
 	var mu sync.RWMutex
 	var items = make(map[string][]byte)
 	go log.Printf("started server at %s", addr)
-    runtime.GOMAXPROCS(1)
+	runtime.GOMAXPROCS(1)
 	err := redcon.ListenAndServe(addr,
 		func(conn redcon.Conn, cmd redcon.Command) {
 			switch strings.ToLower(string(cmd.Args[0])) {

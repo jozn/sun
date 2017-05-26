@@ -72,7 +72,7 @@ message PB_Media {
     int32 CreatedTime = 11;
     string Src = 13;
 }
-message PB_Message {
+message PB_MessageOld {
     int64 Id = 1;
     int32 ToUserId = 3;
     string RoomKey = 5;
@@ -81,6 +81,17 @@ message PB_Message {
     string Data = 11;
     int64 TimeMs = 13;
 }
+message PB_Message {
+    int64 Id = 1;
+    int64 UserId = 3;
+    string MessageKey = 5;
+    string RoomKey = 7;
+    int32 MessageType = 9;
+    int32 RoomType = 11;
+    string DataPB = 13;
+    string DataJson = 15;
+    int64 CreatedTimeMs = 17;
+}
 message PB_MsgDeletedFromServer {
     int64 Id = 1;
     int32 ToUserId = 3;
@@ -88,6 +99,21 @@ message PB_MsgDeletedFromServer {
     int32 PeerUserId = 7;
     string RoomKey = 9;
     int32 AtTime = 11;
+}
+message PB_MsgPush {
+    int64 Id = 1;
+    int64 ToUser = 3;
+    int64 MessageId = 5;
+    int64 CreatedTimeMs = 7;
+}
+message PB_MsgPushEvent {
+    int64 Id = 1;
+    int32 ToUserId = 3;
+    string MsgKey = 5;
+    string RoomKey = 7;
+    int32 PeerUserId = 9;
+    int32 EventType = 11;
+    int32 AtTime = 13;
 }
 message PB_MsgReceivedToPeer {
     int64 Id = 1;

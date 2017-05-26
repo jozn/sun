@@ -191,8 +191,8 @@ type Media struct {
 	Src: "",
 */
 
-// Message 'ms.message'.
-type Message struct {
+// MessageOld 'ms.message_old'.
+type MessageOld struct {
 	Id         int
 	ToUserId   int
 	RoomKey    string
@@ -205,7 +205,7 @@ type Message struct {
 }
 
 /*
-:= &Message {
+:= &MessageOld {
 	Id: 0,
 	ToUserId: 0,
 	RoomKey: "",
@@ -213,6 +213,34 @@ type Message struct {
 	FromUserID: 0,
 	Data: "",
 	TimeMs: 0,
+*/
+
+// Message 'ms.messages'.
+type Message struct {
+	Id            int
+	UserId        int
+	MessageKey    string
+	RoomKey       string
+	MessageType   int
+	RoomType      int
+	DataPB        string
+	DataJson      string
+	CreatedTimeMs int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &Message {
+	Id: 0,
+	UserId: 0,
+	MessageKey: "",
+	RoomKey: "",
+	MessageType: 0,
+	RoomType: 0,
+	DataPB: "",
+	DataJson: "",
+	CreatedTimeMs: 0,
 */
 
 // MsgDeletedFromServer 'ms.msg_deleted_from_server'.
@@ -234,6 +262,48 @@ type MsgDeletedFromServer struct {
 	MsgKey: "",
 	PeerUserId: 0,
 	RoomKey: "",
+	AtTime: 0,
+*/
+
+// MsgPush 'ms.msg_push'.
+type MsgPush struct {
+	Id            int
+	ToUser        int
+	MessageId     int
+	CreatedTimeMs int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &MsgPush {
+	Id: 0,
+	ToUser: 0,
+	MessageId: 0,
+	CreatedTimeMs: 0,
+*/
+
+// MsgPushEvent 'ms.msg_push_event'.
+type MsgPushEvent struct {
+	Id         int
+	ToUserId   int
+	MsgKey     string
+	RoomKey    string
+	PeerUserId int
+	EventType  int
+	AtTime     int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &MsgPushEvent {
+	Id: 0,
+	ToUserId: 0,
+	MsgKey: "",
+	RoomKey: "",
+	PeerUserId: 0,
+	EventType: 0,
 	AtTime: 0,
 */
 
