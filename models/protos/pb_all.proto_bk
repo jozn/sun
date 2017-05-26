@@ -1,0 +1,9 @@
+syntax = "proto3";
+import "global.proto";
+
+static import "pb_msg_delete.proto";
+
+option java_package = "ir.ms.pb";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME; //CODE_SIZE;
+option go_package = "x";

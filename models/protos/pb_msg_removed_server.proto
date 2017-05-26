@@ -1,0 +1,21 @@
+syntax = "proto3";
+import "global.proto";
+
+option java_package = "ir.ms.pb";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME; //CODE_SIZE;
+option go_package = "x";
+
+message PB_MsgRemovedFromServer {
+	string MessageKey = 1 ;
+	string RoomKey = 2 ;
+}
+
+message PB_PushMsgsRemovedFromServer {
+	PB_Push Push = 1;
+	repeated PB_MsgRemovedFromServer Removes = 2;
+}
+
+message PB_ResultMsgsRemovedFromServer {
+	PB_Result Result = 1;
+}
