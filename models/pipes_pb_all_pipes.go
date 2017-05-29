@@ -22,6 +22,14 @@ func init() {
 
 var AllPipesMap *pipesMap
 
+func (m pipesMap) IsPipeOpen(UserId int) bool {
+	pipe, ok := m.GetUserPipe(UserId)
+	if ok && pipe.IsOpen {
+		return true
+	}
+	return false
+}
+
 func (m pipesMap) SendToUser(UserId int, cmd x.PB_CommandToClient) {
 	pipe, ok := m.GetUserPipe(UserId)
 	helper.Debugf("sending to user:%d %v %v ", UserId, ok, cmd.Command)

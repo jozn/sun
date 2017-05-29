@@ -268,6 +268,7 @@ type MsgDeletedFromServer struct {
 // MsgPush 'ms.msg_push'.
 type MsgPush struct {
 	Id            int
+	Uid           int
 	ToUser        int
 	MessageId     int
 	CreatedTimeMs int
@@ -278,6 +279,7 @@ type MsgPush struct {
 /*
 := &MsgPush {
 	Id: 0,
+	Uid: 0,
 	ToUser: 0,
 	MessageId: 0,
 	CreatedTimeMs: 0,
@@ -286,6 +288,7 @@ type MsgPush struct {
 // MsgPushEvent 'ms.msg_push_event'.
 type MsgPushEvent struct {
 	Id         int
+	Uid        int
 	ToUserId   int
 	MsgKey     string
 	RoomKey    string
@@ -299,6 +302,7 @@ type MsgPushEvent struct {
 /*
 := &MsgPushEvent {
 	Id: 0,
+	Uid: 0,
 	ToUserId: 0,
 	MsgKey: "",
 	RoomKey: "",

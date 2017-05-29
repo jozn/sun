@@ -102,18 +102,20 @@ message PB_MsgDeletedFromServer {
 }
 message PB_MsgPush {
     int64 Id = 1;
-    int64 ToUser = 3;
-    int64 MessageId = 5;
-    int64 CreatedTimeMs = 7;
+    int64 Uid = 3;
+    int64 ToUser = 5;
+    int64 MessageId = 7;
+    int64 CreatedTimeMs = 9;
 }
 message PB_MsgPushEvent {
     int64 Id = 1;
-    int32 ToUserId = 3;
-    string MsgKey = 5;
-    string RoomKey = 7;
-    int32 PeerUserId = 9;
-    int32 EventType = 11;
-    int32 AtTime = 13;
+    int64 Uid = 3;
+    int32 ToUserId = 5;
+    string MsgKey = 7;
+    string RoomKey = 9;
+    int32 PeerUserId = 11;
+    int32 EventType = 13;
+    int32 AtTime = 15;
 }
 message PB_MsgReceivedToPeer {
     int64 Id = 1;

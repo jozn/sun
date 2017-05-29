@@ -299,6 +299,7 @@ func PBConvPB_MsgDeletedFromServer_To_MsgDeletedFromServer ( o *MsgDeletedFromSe
 func PBConvPB__MsgPush_To_MsgPush( o *PB_MsgPush) *MsgPush {
      n := &MsgPush{
       Id: int ( o.Id ),
+      Uid: int ( o.Uid ),
       ToUser: int ( o.ToUser ),
       MessageId: int ( o.MessageId ),
       CreatedTimeMs: int ( o.CreatedTimeMs ),
@@ -309,6 +310,7 @@ func PBConvPB__MsgPush_To_MsgPush( o *PB_MsgPush) *MsgPush {
 func PBConvPB_MsgPush_To_MsgPush ( o *MsgPush) *PB_MsgPush {
      n := &PB_MsgPush{
       Id: int64 ( o.Id ),
+      Uid: int64 ( o.Uid ),
       ToUser: int64 ( o.ToUser ),
       MessageId: int64 ( o.MessageId ),
       CreatedTimeMs: int64 ( o.CreatedTimeMs ),
@@ -320,6 +322,7 @@ func PBConvPB_MsgPush_To_MsgPush ( o *MsgPush) *PB_MsgPush {
 func PBConvPB__MsgPushEvent_To_MsgPushEvent( o *PB_MsgPushEvent) *MsgPushEvent {
      n := &MsgPushEvent{
       Id: int ( o.Id ),
+      Uid: int ( o.Uid ),
       ToUserId: int ( o.ToUserId ),
       MsgKey: string ( o.MsgKey ),
       RoomKey: string ( o.RoomKey ),
@@ -333,6 +336,7 @@ func PBConvPB__MsgPushEvent_To_MsgPushEvent( o *PB_MsgPushEvent) *MsgPushEvent {
 func PBConvPB_MsgPushEvent_To_MsgPushEvent ( o *MsgPushEvent) *PB_MsgPushEvent {
      n := &PB_MsgPushEvent{
       Id: int64 ( o.Id ),
+      Uid: int64 ( o.Uid ),
       ToUserId: int32 ( o.ToUserId ),
       MsgKey: string ( o.MsgKey ),
       RoomKey: string ( o.RoomKey ),

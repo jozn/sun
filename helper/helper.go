@@ -16,6 +16,11 @@ func TimeNow() int {
 func TimeNowNano() int64 {
 	return time.Now().UnixNano()
 }
+
+func RandomUid() int {
+	return int(time.Now().UnixNano())
+}
+
 func TimeNowMs() int {
 	return int(time.Now().UnixNano() / 1000000)
 }

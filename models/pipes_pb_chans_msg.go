@@ -9,6 +9,7 @@ import (
 )
 
 var chanNewChatMsgsBuffer = make(chan newChatMsgBuffer, 10000)
+var chanNewMsgPushEventsBuffer = make(chan *x.MsgPushEvent, 20000)
 
 type newChatMsgBuffer struct {
 	msgPB      *x.PB_Message
@@ -89,6 +90,63 @@ func processNewChatMsgBuffer(msgsBuff []newChatMsgBuffer) {
 
 }
 
-func MessageModel_PushToPipeMsgsToUser(i int, messages []*x.Message) {
+func MessageModel_PushToPipeMsgsToUser(UserId int, messages []*x.Message) {
+	if AllPipesMap.IsPipeOpen(UserId) {
+		//cmd := NewPB_CommandToClient("AddManyMsgs")
 
+		pbMsgs := []*x.PB_Message{}
+		userIds := make(map[int]bool)
+		pbUsers := []*x.PB_UserWithMe{}
+
+		for _, m := range messages {
+			pbMsg := &x.PB_Message{}
+			err := proto.Unmarshal(m.DataPB, pbMsg)
+			if err == nil {
+				pbMsgs = append(pbMsgs, pbMsg)
+			}
+			userIds[m.UserId]
+		}
+
+		for uid, _ := range userIds {
+			pbUsers = append(pbUsers, &PBNew_PB_UserWithMe(uid, UserId))
+		}
+
+		pushReq := &x.PB_PushMsgAddMany{
+			Push:     nil,
+			Messages: pbMsgs,
+			Users:    pbUsers,
+		}
+
+		cmd := NewPB_CommandToClient_WithData("AddManyMsgs", pushReq)
+		callback := func() {
+			messageModel_msgsRecicedToUserAddEvents(UserId, messages)
+		}
+
+		AllPipesMap.SendToUserWithCallBack(UserId, cmd, callback)
+	}
+}
+
+/*//TODO imple this
+func messageModel_msgsRecicedToUserAddEvents(UserId int, messages []*x.Message) {
+
+}*/
+
+//////////////////////////////////////////////////////////////
+func NewPB_CommandToClient(cmd string) x.PB_CommandToClient {
+	p := x.PB_CommandToClient{
+		CallId:  int(time.Now().UnixNano()),
+		Command: cmd,
+	}
+	return p
+}
+
+func NewPB_CommandToClient_WithData(cmd string, protoMsg proto.Message) x.PB_CommandToClient {
+	m := NewPB_CommandToClient(cmd)
+	bytes, err := proto.Marshal(protoMsg)
+	if err == nil {
+		m.Data = bytes
+	} else {
+		helper.DebugPrintln("ERROR : proto.Marshal NewPB_CommandToClient_WithData, ", err)
+	}
+	return m
 }

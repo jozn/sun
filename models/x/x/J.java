@@ -112,6 +112,7 @@ public class J {
 
 	public static class MsgPush {
 		public Integer Id;
+		public Integer Uid;
 		public Integer ToUser;
 		public Integer MessageId;
 		public Integer CreatedTimeMs;
@@ -119,6 +120,7 @@ public class J {
 
 	public static class MsgPushEvent {
 		public Integer Id;
+		public Integer Uid;
 		public Integer ToUserId;
 		public String MsgKey;
 		public String RoomKey;
