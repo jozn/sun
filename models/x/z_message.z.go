@@ -3010,6 +3010,49 @@ func MassReplace_Message(rows []Message, db XODB) error {
 
 //
 
+// MessagesByMessageKey retrieves a row from 'ms.messages' as a Message.
+//
+// Generated from index 'MessageKey'.
+func MessagesByMessageKey(db XODB, messageKey string) ([]*Message, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs ` +
+		`FROM ms.messages ` +
+		`WHERE MessageKey = ?`
+
+	// run query
+	XOLog(sqlstr, messageKey)
+	q, err := db.Query(sqlstr, messageKey)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Message{}
+	for q.Next() {
+		m := Message{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&m.Id, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.DataPB, &m.DataJson, &m.CreatedTimeMs)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &m)
+	}
+
+	OnMessage_LoadMany(res)
+
+	return res, nil
+}
+
 // MessageById retrieves a row from 'ms.messages' as a Message.
 //
 // Generated from index 'messages_Id_pkey'.

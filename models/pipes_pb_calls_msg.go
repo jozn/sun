@@ -18,15 +18,44 @@ func CallReceive_MsgsAddMany(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 		return
 	}
 
+	for _, msgPb := range req.Messages {
+		toUid, err := RoomKeyToPeerUserId(msgPb.RoomKey, pipe.UserId)
+		if err == nil && toUid > 0 {
+			msgBuf := newChatMsgBuffer{
+				msgPB:      msgPb,
+				fromUserId: pipe.UserId,
+				toUserId:   toUid,
+				roomKey:    msgPb.RoomKey,
+				hashId:     1,
+			}
+			chanNewChatMsgsBuffer <- msgBuf
+		}
+	}
+
+}
+
+/*
+func CallReceive_MsgsAddMany_OLD(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
+	helper.DebugPrintln("called CallReceive_MsgsAddMany() :")
+
+	req := &x.PB_RequestMsgAddMany{}
+	err := proto.Unmarshal(c.GetData(), req)
+	if err != nil {
+		helper.DebugPrintln("Error :", err)
+		return
+	}
+
 	var msgsRows []x.Message
 	var msgsToPush []x.MsgPush
 	for _, msgPb := range req.Messages {
 		msgRow := PBConv_PB_Message_toNew_Message(msgPb)
 		msgRow.Save(base.DB)
 		toUid, err := RoomKeyToPeerUserId(msgPb.RoomKey, pipe.UserId)
-		/*if err == nil{
-		    PushProxy_PushMsgsAddMsg(toUid,msgRow, msgPb)
-		}*/
+*/
+/*if err == nil{
+    PushProxy_PushMsgsAddMsg(toUid,msgRow, msgPb)
+}*/ /*
+
 		toPush := x.MsgPush{
 			Id:            0,
 			ToUser:        toUid,
@@ -38,6 +67,7 @@ func CallReceive_MsgsAddMany(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 
 	x.MassInsert_MsgPushEvent(msgsToPush, base.DB)
 }
+*/
 
 //Todo : add security layer
 func CallRecive_MsgSeenByPeer(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
@@ -72,7 +102,7 @@ func EchoCmd(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	//b, _ := json.Marshal(c)
 	//r := base.WSRes{Status: "BB", ReqKey: string(b)}
 	call := base.NewCallWithData("echo", "sad")
-	AllPipesMap.SendToUser(c.UserId, call)
+	AllPipesMap.SendToUser(pipe.UserId, call)
 	//AllPipesMap.SendToUser_DEP(c.UserId, r)
 }
 

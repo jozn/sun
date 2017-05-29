@@ -2006,6 +2006,49 @@ func MassReplace_MsgPush(rows []MsgPush, db XODB) error {
 
 //
 
+// MsgPushesById retrieves a row from 'ms.msg_push' as a MsgPush.
+//
+// Generated from index 'Id'.
+func MsgPushesById(db XODB, id int) ([]*MsgPush, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUser, MessageId, CreatedTimeMs ` +
+		`FROM ms.msg_push ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgPush{}
+	for q.Next() {
+		mp := MsgPush{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&mp.Id, &mp.ToUser, &mp.MessageId, &mp.CreatedTimeMs)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &mp)
+	}
+
+	OnMsgPush_LoadMany(res)
+
+	return res, nil
+}
+
 // MsgPushesByToUserCreatedTimeMs retrieves a row from 'ms.msg_push' as a MsgPush.
 //
 // Generated from index 'ToUser'.
