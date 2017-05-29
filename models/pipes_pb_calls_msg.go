@@ -15,59 +15,58 @@ func CallReceive_MsgsAddMany(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	err := proto.Unmarshal(c.GetData(), req)
 	if err != nil {
 		helper.DebugPrintln("Error :", err)
-        return
+		return
 	}
 
-    var msgsRows []x.Message
-    var msgsToPush []x.MsgPush
-    for _, msgPb := range req.Messages {
-        msgRow := PBConv_PB_Message_toNew_Message(msgPb)
-        msgRow.Save(base.DB)
-        toUid,err := RoomKeyToPeerUserId(msgPb.RoomKey,pipe.UserId)
-        /*if err == nil{
-            PushProxy_PushMsgsAddMsg(toUid,msgRow, msgPb)
-        }*/
-        toPush := x.MsgPush{
-            Id: 0,
-            ToUser: toUid,
-            MessageId: msgRow.Id,
-            CreatedTimeMs: helper.TimeNowMs(),
-        }
-        msgsToPush = append(msgsToPush, toPush)
-    }
+	var msgsRows []x.Message
+	var msgsToPush []x.MsgPush
+	for _, msgPb := range req.Messages {
+		msgRow := PBConv_PB_Message_toNew_Message(msgPb)
+		msgRow.Save(base.DB)
+		toUid, err := RoomKeyToPeerUserId(msgPb.RoomKey, pipe.UserId)
+		/*if err == nil{
+		    PushProxy_PushMsgsAddMsg(toUid,msgRow, msgPb)
+		}*/
+		toPush := x.MsgPush{
+			Id:            0,
+			ToUser:        toUid,
+			MessageId:     msgRow.Id,
+			CreatedTimeMs: helper.TimeNowMs(),
+		}
+		msgsToPush = append(msgsToPush, toPush)
+	}
 
-    x.MassInsert_MsgPushEvent(msgsToPush,base.DB)
+	x.MassInsert_MsgPushEvent(msgsToPush, base.DB)
 }
 
 //Todo : add security layer
 func CallRecive_MsgSeenByPeer(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	fmt.Println("called MsgSeenByPeer :", c)
 
-    req := &x.PB_RequestMsgsSeen{}
-    err := proto.Unmarshal(c.GetData(), req)
-    if err != nil {
-        helper.DebugPrintln("Error :", err)
-        return
-    }
+	req := &x.PB_RequestMsgsSeen{}
+	err := proto.Unmarshal(c.GetData(), req)
+	if err != nil {
+		helper.DebugPrintln("Error :", err)
+		return
+	}
 
-    var events []x.MsgPushEvent
-    for _, seenPb := range req.Seen {
-        evetRow := PBConv_PB_MsgSeen_toNew_MsgPushEvent(seenPb)
-        evetRow.PeerUserId = pipe.UserId
-        evetRow.ToUserId , _ = RoomKeyToPeerUserId(seenPb.RoomKey,pipe.UserId)
-        events = append(events, evetRow)
-    }
+	var events []x.MsgPushEvent
+	for _, seenPb := range req.Seen {
+		evetRow := PBConv_PB_MsgSeen_toNew_MsgPushEvent(seenPb)
+		evetRow.PeerUserId = pipe.UserId
+		evetRow.ToUserId, _ = RoomKeyToPeerUserId(seenPb.RoomKey, pipe.UserId)
+		events = append(events, evetRow)
+	}
 
-    x.MassInsert_MsgPushEvent(events,base.DB)
+	x.MassInsert_MsgPushEvent(events, base.DB)
 
-    mpGroupByuser := make(map[int][]x.MsgPushEvent)
-    for _, seen := range events {
-        mpGroupByuser[seen.ToUserId] = append(mpGroupByuser[seen.ToUserId], seen)
-    }
+	mpGroupByuser := make(map[int][]x.MsgPushEvent)
+	for _, seen := range events {
+		mpGroupByuser[seen.ToUserId] = append(mpGroupByuser[seen.ToUserId], seen)
+	}
 
-    PushProxy_PushMsgsEvents(events)
+	PushProxy_PushMsgsEvents(events)
 }
-
 
 func EchoCmd(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	//b, _ := json.Marshal(c)

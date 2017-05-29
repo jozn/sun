@@ -16,7 +16,7 @@ func registerCmdRouters() {
 	mp["echo"] = EchoCmd
 	mp["Echo"] = EchoCmd
 
-	mp["MsgsAddOne"] = CallReceive_MsgsAddOne
+	//mp["MsgsAddOne"] = CallReceive_MsgsAddOne
 	mp["MsgsAddMany"] = CallReceive_MsgsAddMany
 	mp["MsgsSeenMany"] = CallRecive_MsgSeenByPeer
 
