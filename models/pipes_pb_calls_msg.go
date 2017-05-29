@@ -18,14 +18,25 @@ func CallReceive_MsgsAddMany(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
         return
 	}
 
+    var msgsRows []x.Message
+    var msgsToPush []x.MsgPush
     for _, msgPb := range req.Messages {
         msgRow := PBConv_PB_Message_toNew_Message(msgPb)
         msgRow.Save(base.DB)
         toUid,err := RoomKeyToPeerUserId(msgPb.RoomKey,pipe.UserId)
-        if err == nil{
-            PushProxy_PushMsgsReceivedToPeer(toUid,msgRow, msgPb)
+        /*if err == nil{
+            PushProxy_PushMsgsAddMsg(toUid,msgRow, msgPb)
+        }*/
+        toPush := x.MsgPush{
+            Id: 0,
+            ToUser: toUid,
+            MessageId: msgRow.Id,
+            CreatedTimeMs: helper.TimeNowMs(),
         }
+        msgsToPush = append(msgsToPush, toPush)
     }
+
+    x.MassInsert_MsgPushEvent(msgsToPush,base.DB)
 }
 
 //Todo : add security layer

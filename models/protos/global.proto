@@ -45,6 +45,7 @@ message PB_Message {
     string MessageKey = 1 ;
     string RoomKey = 2 ;
     int64 UserId = 3;
+    int64 PeerId = 20;
     int32 RoomTypeId = 4;
     int32 MessageTypeId = 5;
     string Text = 6;
@@ -81,21 +82,8 @@ message PB_RequestMsgAddMany {
 message PB_ResponseMsgAddMany {
 	PB_Response Response = 1;
 }
-///
 
-///////////////////////////
-
-//DEP
-message PB_RequestMsgAddOne {
-	PB_Message Message = 1;
-	PB_UserWithMe User = 2;
-}
-
-message PB_ResponseMsgAddOne {
-	PB_Response Response = 1;
-}
-///////////////////////////
-
+//////////////////////
 
 //////////// Pushes ////////////
 message PB_Push {
@@ -118,4 +106,20 @@ message PB_ResultMsgAddMany {
 }
 ///
 
+message PB_MsgEvent {
+	string MessageKey = 1 ;
+	string RoomKey = 2 ;
+    int64 PeerUserId = 3;
+    int32 EventType = 4;
+    int64 AtTime = 10;
+}
+
+message PB_PushMsgEvents {
+	PB_Push Push = 1;
+	repeated PB_MsgEvent Events = 2;
+}
+
+message PB_ResultMsgEvents {
+	PB_Result Result = 1;
+}
 

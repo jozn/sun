@@ -1,7 +1,6 @@
 package models
 
 import (
-	"ms/sun/base"
 	"ms/sun/helper"
 	"sync"
 
@@ -23,9 +22,9 @@ func init() {
 
 var AllPipesMap *pipesMap
 
-func (m pipesMap) SendToUser(UserId int, call base.Call) {
+func (m pipesMap) SendToUser(UserId int, cmd x.PB_CommandToClient) {
 	pipe, ok := m.GetUserPipe(UserId)
-	helper.Debugf("sending to user:%d %v %v ", UserId, ok, call.Name)
+	helper.Debugf("sending to user:%d %v %v ", UserId, ok, cmd.Command)
 	if ok && pipe.IsOpen {
 		defer func() {
 			if r := recover(); r != nil {
@@ -34,18 +33,18 @@ func (m pipesMap) SendToUser(UserId int, call base.Call) {
 				helper.Debug("Recovered in SendToUser: ", r)
 			}
 		}()
-		pipe.SendToUser(call)
+		pipe.SendToUser(cmd)
 		//pipe.ToDeviceChan <- res
 	}
 }
 
-func (m pipesMap) SendToUserWithCallBack(UserId int, call base.Call, callback func()) {
+func (m pipesMap) SendToUserWithCallBack(UserId int, call x.PB_CommandToClient, callback func()) {
 	m.SendToUserWithCallBacks(UserId, call, callback, nil)
 }
 
-func (m pipesMap) SendToUserWithCallBacks(UserId int, call base.Call, callback func(), errback func()) {
+func (m pipesMap) SendToUserWithCallBacks(UserId int, call x.PB_CommandToClient, callback func(), errback func()) {
 	pipe, ok := m.GetUserPipe(UserId)
-	helper.Debugf("sending to user:%d  - pipe is: %v --- %s ", UserId, ok, call.Name)
+	helper.Debugf("sending to user:%d  - pipe is: %v --- %s ", UserId, ok, call.Command)
 	if ok && pipe.IsOpen {
 		defer func() {
 			if r := recover(); r != nil {
@@ -56,7 +55,7 @@ func (m pipesMap) SendToUserWithCallBacks(UserId int, call base.Call, callback f
 		}()
 
 		resCallback := callRespondCallback{
-			serverCallId: call.ServerCallId,
+			serverCallId: call.CallId,
 			success:      callback,
 			error:        errback,
 			timeoutAtMs:  helper.TimeNowMs() + 5000,

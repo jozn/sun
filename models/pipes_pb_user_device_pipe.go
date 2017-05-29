@@ -85,7 +85,7 @@ func (pipe *UserDevicePipe) ServeSendToUserDevice() {
 	}()
 }
 
-func (pipe *UserDevicePipe) SendToUser(resCall base.Call) {
+func (pipe *UserDevicePipe) SendToUser(resCall x.PB_CommandToClient) {
 	if pipe.IsOpen {
 		pipe.ToDeviceChan <- resCall
 	}
