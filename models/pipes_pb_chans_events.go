@@ -94,7 +94,7 @@ func MessageModel_PushToPipeMsgEventsToUser(UserId int, eventsRows []x.MsgPushEv
 
 }
 
-func messageModel_msgsRecicedToUserAddEvents(UserId int, messages []*x.Message) {
+func messageModel_msgsRecicedToPeerAddEvents(UserId int, messages []*x.Message) {
 	for _, msg := range messages {
 		me := &x.MsgPushEvent{
 			Id:         0,

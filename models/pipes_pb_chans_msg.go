@@ -134,11 +134,21 @@ func MessageModel_PushToPipeMsgsToUser(UserId int, messages []*x.Message) {
 
 		cmd := NewPB_CommandToClient_WithData("AddManyMsgs", pushReq)
 		callback := func() {
-			messageModel_msgsRecicedToUserAddEvents(UserId, messages)
+			messageModel_onAfterMsgsHasPushedToUser(UserId, messages)
+			//messageModel_msgsRecicedToUserAddEvents(UserId, messages)
 		}
 
 		AllPipesMap.SendToUserWithCallBack(UserId, cmd, callback)
 	}
+}
+
+func messageModel_onAfterMsgsHasPushedToUser(UserId int, messages []*x.Message) {
+	messageModel_msgsRecicedToPeerAddEvents(UserId, messages)
+	messageModel_msgsDeleteFromServer(UserId, messages)
+}
+
+func messageModel_msgsDeleteFromServer(i int, messages []*x.Message) {
+
 }
 
 /*//TODO imple this
