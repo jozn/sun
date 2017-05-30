@@ -12,14 +12,17 @@ func main() {
 		for {
 			ch <- i
 			i++
-			time.Sleep(time.Microsecond * 1)
+			time.Sleep(time.Millisecond * 10)
 		}
 
 	}()
 
 	for o := range ch {
-		if o%1000 == 0 {
+		if o%10 != 0 {
 			fmt.Println(o)
+			//fmt.Println("+")
+		} else {
+			fmt.Println("-")
 		}
 	}
 

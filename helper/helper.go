@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"strconv"
 	"strings"
+	"sync/atomic"
 	"time"
 )
 
@@ -17,8 +18,21 @@ func TimeNowNano() int64 {
 	return time.Now().UnixNano()
 }
 
+var uid int64 = time.Now().UnixNano()
+
 func RandomUid() int {
-	return int(time.Now().UnixNano())
+	if time.Now().UnixNano()-uid > 1e8 { //100 miliscond diff
+		uid = time.Now().UnixNano()
+	}
+	return int(atomic.AddInt64(&uid, 1))
+	/*t := (int(time.Now().UnixNano())%1e+15)
+	  return (t*(rand.Intn(899)+100))*/
+}
+
+func RandomUid64() int64 {
+	return (atomic.AddInt64(&uid, 1))
+	/*t := (int(time.Now().UnixNano())%1e+15)
+	  return (t*(rand.Intn(899)+100))*/
 }
 
 func TimeNowMs() int {
