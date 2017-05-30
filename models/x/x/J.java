@@ -91,6 +91,7 @@ public class J {
 
 	public static class Message {
 		public Integer Id;
+		public Integer Uid;
 		public Integer UserId;
 		public String MessageKey;
 		public String RoomKey;
@@ -114,7 +115,7 @@ public class J {
 		public Integer Id;
 		public Integer Uid;
 		public Integer ToUser;
-		public Integer MessageId;
+		public Integer MsgUid;
 		public Integer CreatedTimeMs;
 	}
 
@@ -122,6 +123,7 @@ public class J {
 		public Integer Id;
 		public Integer Uid;
 		public Integer ToUserId;
+		public Integer MsgUid;
 		public String MsgKey;
 		public String RoomKey;
 		public Integer PeerUserId;

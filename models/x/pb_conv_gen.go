@@ -243,6 +243,7 @@ func PBConvPB_MessageOld_To_MessageOld ( o *MessageOld) *PB_MessageOld {
 func PBConvPB__Message_To_Message( o *PB_Message) *Message {
      n := &Message{
       Id: int ( o.Id ),
+      Uid: int ( o.Uid ),
       UserId: int ( o.UserId ),
       MessageKey: string ( o.MessageKey ),
       RoomKey: string ( o.RoomKey ),
@@ -258,6 +259,7 @@ func PBConvPB__Message_To_Message( o *PB_Message) *Message {
 func PBConvPB_Message_To_Message ( o *Message) *PB_Message {
      n := &PB_Message{
       Id: int64 ( o.Id ),
+      Uid: int64 ( o.Uid ),
       UserId: int64 ( o.UserId ),
       MessageKey: string ( o.MessageKey ),
       RoomKey: string ( o.RoomKey ),
@@ -301,7 +303,7 @@ func PBConvPB__MsgPush_To_MsgPush( o *PB_MsgPush) *MsgPush {
       Id: int ( o.Id ),
       Uid: int ( o.Uid ),
       ToUser: int ( o.ToUser ),
-      MessageId: int ( o.MessageId ),
+      MsgUid: int ( o.MsgUid ),
       CreatedTimeMs: int ( o.CreatedTimeMs ),
     }
     return n
@@ -312,7 +314,7 @@ func PBConvPB_MsgPush_To_MsgPush ( o *MsgPush) *PB_MsgPush {
       Id: int64 ( o.Id ),
       Uid: int64 ( o.Uid ),
       ToUser: int64 ( o.ToUser ),
-      MessageId: int64 ( o.MessageId ),
+      MsgUid: int64 ( o.MsgUid ),
       CreatedTimeMs: int64 ( o.CreatedTimeMs ),
     }
     return n
@@ -324,6 +326,7 @@ func PBConvPB__MsgPushEvent_To_MsgPushEvent( o *PB_MsgPushEvent) *MsgPushEvent {
       Id: int ( o.Id ),
       Uid: int ( o.Uid ),
       ToUserId: int ( o.ToUserId ),
+      MsgUid: int ( o.MsgUid ),
       MsgKey: string ( o.MsgKey ),
       RoomKey: string ( o.RoomKey ),
       PeerUserId: int ( o.PeerUserId ),
@@ -338,6 +341,7 @@ func PBConvPB_MsgPushEvent_To_MsgPushEvent ( o *MsgPushEvent) *PB_MsgPushEvent {
       Id: int64 ( o.Id ),
       Uid: int64 ( o.Uid ),
       ToUserId: int32 ( o.ToUserId ),
+      MsgUid: int64 ( o.MsgUid ),
       MsgKey: string ( o.MsgKey ),
       RoomKey: string ( o.RoomKey ),
       PeerUserId: int32 ( o.PeerUserId ),

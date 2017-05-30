@@ -17,6 +17,7 @@ type newChatMsgBuffer struct {
 	toUserId   int
 	roomKey    string
 	hashId     int
+	uid        int
 }
 
 func batcheNewMsgsBufferProceess() {
@@ -53,6 +54,7 @@ func processNewChatMsgBuffer(msgsBuff []newChatMsgBuffer) {
 		json := helper.ToJson(b)
 		mRow := x.Message{
 			Id:            0,
+			Uid:           bm.uid,
 			UserId:        b.RoomKey,
 			MessageKey:    b.MessageKey,
 			RoomKey:       b.RoomKey,
@@ -67,7 +69,20 @@ func processNewChatMsgBuffer(msgsBuff []newChatMsgBuffer) {
 		allMsgsKeys = append(allMsgsKeys, b.MessageKey)
 	}
 
+	toPushMsgsArr := make([]x.MsgPush, 0, len(msgsBuff))
+	for _, bm := range msgsBuff {
+		p := x.MsgPush{
+			Id:            0,
+			Uid:           helper.RandomUid(),
+			ToUser:        bm.toUserId,
+			MsgUid:        bm.uid,
+			CreatedTimeMs: 0,
+		}
+		toPushMsgsArr = append(toPushMsgsArr, p)
+	}
+
 	x.MassInsert_Message(allMsgsRows, base.DB)
+	x.MassInsert_MsgPush(toPushMsgsArr, base.DB)
 	//cache it
 	_, err := x.NewMessage_Selector().MessageKey_In(allMsgsKeys).GetRows(base.DB)
 	if err != nil {

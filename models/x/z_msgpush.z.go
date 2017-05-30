@@ -19,7 +19,7 @@ type MsgPush__ struct {
 	Id            int `json:"Id"`            // Id -
 	Uid           int `json:"Uid"`           // Uid -
 	ToUser        int `json:"ToUser"`        // ToUser -
-	MessageId     int `json:"MessageId"`     // MessageId -
+	MsgUid        int `json:"MsgUid"`        // MsgUid -
 	CreatedTimeMs int `json:"CreatedTimeMs"` // CreatedTimeMs -
 
 	// xo fields
@@ -47,14 +47,14 @@ func (mp *MsgPush) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.msg_push (` +
-		`Uid, ToUser, MessageId, CreatedTimeMs` +
+		`Uid, ToUser, MsgUid, CreatedTimeMs` +
 		`) VALUES (` +
 		`?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mp.Uid, mp.ToUser, mp.MessageId, mp.CreatedTimeMs)
-	res, err := db.Exec(sqlstr, mp.Uid, mp.ToUser, mp.MessageId, mp.CreatedTimeMs)
+	XOLog(sqlstr, mp.Uid, mp.ToUser, mp.MsgUid, mp.CreatedTimeMs)
+	res, err := db.Exec(sqlstr, mp.Uid, mp.ToUser, mp.MsgUid, mp.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -82,14 +82,14 @@ func (mp *MsgPush) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.msg_push (` +
-		`Uid, ToUser, MessageId, CreatedTimeMs` +
+		`Uid, ToUser, MsgUid, CreatedTimeMs` +
 		`) VALUES (` +
 		`?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mp.Uid, mp.ToUser, mp.MessageId, mp.CreatedTimeMs)
-	res, err := db.Exec(sqlstr, mp.Uid, mp.ToUser, mp.MessageId, mp.CreatedTimeMs)
+	XOLog(sqlstr, mp.Uid, mp.ToUser, mp.MsgUid, mp.CreatedTimeMs)
+	res, err := db.Exec(sqlstr, mp.Uid, mp.ToUser, mp.MsgUid, mp.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -127,12 +127,12 @@ func (mp *MsgPush) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.msg_push SET ` +
-		`Uid = ?, ToUser = ?, MessageId = ?, CreatedTimeMs = ?` +
+		`Uid = ?, ToUser = ?, MsgUid = ?, CreatedTimeMs = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, mp.Uid, mp.ToUser, mp.MessageId, mp.CreatedTimeMs, mp.Id)
-	_, err = db.Exec(sqlstr, mp.Uid, mp.ToUser, mp.MessageId, mp.CreatedTimeMs, mp.Id)
+	XOLog(sqlstr, mp.Uid, mp.ToUser, mp.MsgUid, mp.CreatedTimeMs, mp.Id)
+	_, err = db.Exec(sqlstr, mp.Uid, mp.ToUser, mp.MsgUid, mp.CreatedTimeMs, mp.Id)
 
 	XOLogErr(err)
 	OnMsgPush_AfterUpdate(mp)
@@ -548,106 +548,106 @@ func (d *__MsgPush_Deleter) ToUser_GE(val int) *__MsgPush_Deleter {
 	return d
 }
 
-func (u *__MsgPush_Deleter) MessageId_In(ins []int) *__MsgPush_Deleter {
+func (u *__MsgPush_Deleter) MsgUid_In(ins []int) *__MsgPush_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgPush_Deleter) MessageId_Ins(ins ...int) *__MsgPush_Deleter {
+func (u *__MsgPush_Deleter) MsgUid_Ins(ins ...int) *__MsgPush_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgPush_Deleter) MessageId_NotIn(ins []int) *__MsgPush_Deleter {
+func (u *__MsgPush_Deleter) MsgUid_NotIn(ins []int) *__MsgPush_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MsgUid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgPush_Deleter) MessageId_Eq(val int) *__MsgPush_Deleter {
+func (d *__MsgPush_Deleter) MsgUid_Eq(val int) *__MsgPush_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId = ? "
+	w.condition = " MsgUid = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Deleter) MessageId_NotEq(val int) *__MsgPush_Deleter {
+func (d *__MsgPush_Deleter) MsgUid_NotEq(val int) *__MsgPush_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId != ? "
+	w.condition = " MsgUid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Deleter) MessageId_LT(val int) *__MsgPush_Deleter {
+func (d *__MsgPush_Deleter) MsgUid_LT(val int) *__MsgPush_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId < ? "
+	w.condition = " MsgUid < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Deleter) MessageId_LE(val int) *__MsgPush_Deleter {
+func (d *__MsgPush_Deleter) MsgUid_LE(val int) *__MsgPush_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId <= ? "
+	w.condition = " MsgUid <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Deleter) MessageId_GT(val int) *__MsgPush_Deleter {
+func (d *__MsgPush_Deleter) MsgUid_GT(val int) *__MsgPush_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId > ? "
+	w.condition = " MsgUid > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Deleter) MessageId_GE(val int) *__MsgPush_Deleter {
+func (d *__MsgPush_Deleter) MsgUid_GE(val int) *__MsgPush_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId >= ? "
+	w.condition = " MsgUid >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1079,106 +1079,106 @@ func (d *__MsgPush_Updater) ToUser_GE(val int) *__MsgPush_Updater {
 	return d
 }
 
-func (u *__MsgPush_Updater) MessageId_In(ins []int) *__MsgPush_Updater {
+func (u *__MsgPush_Updater) MsgUid_In(ins []int) *__MsgPush_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgPush_Updater) MessageId_Ins(ins ...int) *__MsgPush_Updater {
+func (u *__MsgPush_Updater) MsgUid_Ins(ins ...int) *__MsgPush_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgPush_Updater) MessageId_NotIn(ins []int) *__MsgPush_Updater {
+func (u *__MsgPush_Updater) MsgUid_NotIn(ins []int) *__MsgPush_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MsgUid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgPush_Updater) MessageId_Eq(val int) *__MsgPush_Updater {
+func (d *__MsgPush_Updater) MsgUid_Eq(val int) *__MsgPush_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId = ? "
+	w.condition = " MsgUid = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Updater) MessageId_NotEq(val int) *__MsgPush_Updater {
+func (d *__MsgPush_Updater) MsgUid_NotEq(val int) *__MsgPush_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId != ? "
+	w.condition = " MsgUid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Updater) MessageId_LT(val int) *__MsgPush_Updater {
+func (d *__MsgPush_Updater) MsgUid_LT(val int) *__MsgPush_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId < ? "
+	w.condition = " MsgUid < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Updater) MessageId_LE(val int) *__MsgPush_Updater {
+func (d *__MsgPush_Updater) MsgUid_LE(val int) *__MsgPush_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId <= ? "
+	w.condition = " MsgUid <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Updater) MessageId_GT(val int) *__MsgPush_Updater {
+func (d *__MsgPush_Updater) MsgUid_GT(val int) *__MsgPush_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId > ? "
+	w.condition = " MsgUid > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Updater) MessageId_GE(val int) *__MsgPush_Updater {
+func (d *__MsgPush_Updater) MsgUid_GE(val int) *__MsgPush_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId >= ? "
+	w.condition = " MsgUid >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1610,106 +1610,106 @@ func (d *__MsgPush_Selector) ToUser_GE(val int) *__MsgPush_Selector {
 	return d
 }
 
-func (u *__MsgPush_Selector) MessageId_In(ins []int) *__MsgPush_Selector {
+func (u *__MsgPush_Selector) MsgUid_In(ins []int) *__MsgPush_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgPush_Selector) MessageId_Ins(ins ...int) *__MsgPush_Selector {
+func (u *__MsgPush_Selector) MsgUid_Ins(ins ...int) *__MsgPush_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MsgPush_Selector) MessageId_NotIn(ins []int) *__MsgPush_Selector {
+func (u *__MsgPush_Selector) MsgUid_NotIn(ins []int) *__MsgPush_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MsgUid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MsgPush_Selector) MessageId_Eq(val int) *__MsgPush_Selector {
+func (d *__MsgPush_Selector) MsgUid_Eq(val int) *__MsgPush_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId = ? "
+	w.condition = " MsgUid = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Selector) MessageId_NotEq(val int) *__MsgPush_Selector {
+func (d *__MsgPush_Selector) MsgUid_NotEq(val int) *__MsgPush_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId != ? "
+	w.condition = " MsgUid != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Selector) MessageId_LT(val int) *__MsgPush_Selector {
+func (d *__MsgPush_Selector) MsgUid_LT(val int) *__MsgPush_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId < ? "
+	w.condition = " MsgUid < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Selector) MessageId_LE(val int) *__MsgPush_Selector {
+func (d *__MsgPush_Selector) MsgUid_LE(val int) *__MsgPush_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId <= ? "
+	w.condition = " MsgUid <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Selector) MessageId_GT(val int) *__MsgPush_Selector {
+func (d *__MsgPush_Selector) MsgUid_GT(val int) *__MsgPush_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId > ? "
+	w.condition = " MsgUid > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MsgPush_Selector) MessageId_GE(val int) *__MsgPush_Selector {
+func (d *__MsgPush_Selector) MsgUid_GE(val int) *__MsgPush_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId >= ? "
+	w.condition = " MsgUid >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1897,18 +1897,18 @@ func (u *__MsgPush_Updater) ToUser_Increment(count int) *__MsgPush_Updater {
 
 //ints
 
-func (u *__MsgPush_Updater) MessageId(newVal int) *__MsgPush_Updater {
-	u.updates[" MessageId = ? "] = newVal
+func (u *__MsgPush_Updater) MsgUid(newVal int) *__MsgPush_Updater {
+	u.updates[" MsgUid = ? "] = newVal
 	return u
 }
 
-func (u *__MsgPush_Updater) MessageId_Increment(count int) *__MsgPush_Updater {
+func (u *__MsgPush_Updater) MsgUid_Increment(count int) *__MsgPush_Updater {
 	if count > 0 {
-		u.updates[" MessageId = MessageId+? "] = count
+		u.updates[" MsgUid = MsgUid+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" MessageId = MessageId-? "] = -(count) //make it positive
+		u.updates[" MsgUid = MsgUid-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1987,18 +1987,18 @@ func (u *__MsgPush_Selector) Select_ToUser() *__MsgPush_Selector {
 	return u
 }
 
-func (u *__MsgPush_Selector) OrderBy_MessageId_Desc() *__MsgPush_Selector {
-	u.orderBy = " ORDER BY MessageId DESC "
+func (u *__MsgPush_Selector) OrderBy_MsgUid_Desc() *__MsgPush_Selector {
+	u.orderBy = " ORDER BY MsgUid DESC "
 	return u
 }
 
-func (u *__MsgPush_Selector) OrderBy_MessageId_Asc() *__MsgPush_Selector {
-	u.orderBy = " ORDER BY MessageId ASC "
+func (u *__MsgPush_Selector) OrderBy_MsgUid_Asc() *__MsgPush_Selector {
+	u.orderBy = " ORDER BY MsgUid ASC "
 	return u
 }
 
-func (u *__MsgPush_Selector) Select_MessageId() *__MsgPush_Selector {
-	u.selectCol = "MessageId"
+func (u *__MsgPush_Selector) Select_MsgUid() *__MsgPush_Selector {
+	u.selectCol = "MsgUid"
 	return u
 }
 
@@ -2290,7 +2290,7 @@ func MassInsert_MsgPush(rows []MsgPush, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.msg_push (" +
-		"Uid, ToUser, MessageId, CreatedTimeMs" +
+		"Uid, ToUser, MsgUid, CreatedTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2300,7 +2300,7 @@ func MassInsert_MsgPush(rows []MsgPush, db XODB) error {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.Uid)
 		vals = append(vals, row.ToUser)
-		vals = append(vals, row.MessageId)
+		vals = append(vals, row.MsgUid)
 		vals = append(vals, row.CreatedTimeMs)
 
 	}
@@ -2324,7 +2324,7 @@ func MassReplace_MsgPush(rows []MsgPush, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.msg_push (" +
-		"Uid, ToUser, MessageId, CreatedTimeMs" +
+		"Uid, ToUser, MsgUid, CreatedTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2334,7 +2334,7 @@ func MassReplace_MsgPush(rows []MsgPush, db XODB) error {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.Uid)
 		vals = append(vals, row.ToUser)
-		vals = append(vals, row.MessageId)
+		vals = append(vals, row.MsgUid)
 		vals = append(vals, row.CreatedTimeMs)
 
 	}
@@ -2370,7 +2370,7 @@ func MsgPushesByToUserCreatedTimeMs(db XODB, toUser int, createdTimeMs int) ([]*
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, Uid, ToUser, MessageId, CreatedTimeMs ` +
+		`Id, Uid, ToUser, MsgUid, CreatedTimeMs ` +
 		`FROM ms.msg_push ` +
 		`WHERE ToUser = ? AND CreatedTimeMs = ?`
 
@@ -2391,7 +2391,50 @@ func MsgPushesByToUserCreatedTimeMs(db XODB, toUser int, createdTimeMs int) ([]*
 		}
 
 		// scan
-		err = q.Scan(&mp.Id, &mp.Uid, &mp.ToUser, &mp.MessageId, &mp.CreatedTimeMs)
+		err = q.Scan(&mp.Id, &mp.Uid, &mp.ToUser, &mp.MsgUid, &mp.CreatedTimeMs)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &mp)
+	}
+
+	OnMsgPush_LoadMany(res)
+
+	return res, nil
+}
+
+// MsgPushesByUid retrieves a row from 'ms.msg_push' as a MsgPush.
+//
+// Generated from index 'Uid'.
+func MsgPushesByUid(db XODB, uid int) ([]*MsgPush, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, Uid, ToUser, MsgUid, CreatedTimeMs ` +
+		`FROM ms.msg_push ` +
+		`WHERE Uid = ?`
+
+	// run query
+	XOLog(sqlstr, uid)
+	q, err := db.Query(sqlstr, uid)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgPush{}
+	for q.Next() {
+		mp := MsgPush{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&mp.Id, &mp.Uid, &mp.ToUser, &mp.MsgUid, &mp.CreatedTimeMs)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -2413,7 +2456,7 @@ func MsgPushById(db XODB, id int) (*MsgPush, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, Uid, ToUser, MessageId, CreatedTimeMs ` +
+		`Id, Uid, ToUser, MsgUid, CreatedTimeMs ` +
 		`FROM ms.msg_push ` +
 		`WHERE Id = ?`
 
@@ -2423,7 +2466,7 @@ func MsgPushById(db XODB, id int) (*MsgPush, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&mp.Id, &mp.Uid, &mp.ToUser, &mp.MessageId, &mp.CreatedTimeMs)
+	err = db.QueryRow(sqlstr, id).Scan(&mp.Id, &mp.Uid, &mp.ToUser, &mp.MsgUid, &mp.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

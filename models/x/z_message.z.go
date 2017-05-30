@@ -17,6 +17,7 @@ import (
 // Manualy copy this to project
 type Message__ struct {
 	Id            int    `json:"Id"`            // Id -
+	Uid           int    `json:"Uid"`           // Uid -
 	UserId        int    `json:"UserId"`        // UserId -
 	MessageKey    string `json:"MessageKey"`    // MessageKey -
 	RoomKey       string `json:"RoomKey"`       // RoomKey -
@@ -51,14 +52,14 @@ func (m *Message) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.messages (` +
-		`UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs` +
+		`Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
-	res, err := db.Exec(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
+	XOLog(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
+	res, err := db.Exec(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -86,14 +87,14 @@ func (m *Message) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.messages (` +
-		`UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs` +
+		`Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
-	res, err := db.Exec(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
+	XOLog(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
+	res, err := db.Exec(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -131,12 +132,12 @@ func (m *Message) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.messages SET ` +
-		`UserId = ?, MessageKey = ?, RoomKey = ?, MessageType = ?, RoomType = ?, DataPB = ?, DataJson = ?, CreatedTimeMs = ?` +
+		`Uid = ?, UserId = ?, MessageKey = ?, RoomKey = ?, MessageType = ?, RoomType = ?, DataPB = ?, DataJson = ?, CreatedTimeMs = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs, m.Id)
-	_, err = db.Exec(sqlstr, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs, m.Id)
+	XOLog(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs, m.Id)
+	_, err = db.Exec(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs, m.Id)
 
 	XOLogErr(err)
 	OnMessage_AfterUpdate(m)
@@ -337,6 +338,111 @@ func (d *__Message_Deleter) Id_GE(val int) *__Message_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Deleter) Uid_In(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) Uid_Ins(ins ...int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) Uid_NotIn(ins []int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) Uid_Eq(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Uid_NotEq(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Uid_LT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Uid_LE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Uid_GT(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Uid_GE(val int) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -873,6 +979,111 @@ func (d *__Message_Updater) Id_GE(val int) *__Message_Updater {
 	return d
 }
 
+func (u *__Message_Updater) Uid_In(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) Uid_Ins(ins ...int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) Uid_NotIn(ins []int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) Uid_Eq(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Uid_NotEq(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Uid_LT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Uid_LE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Uid_GT(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Uid_GE(val int) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Message_Updater) UserId_In(ins []int) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1399,6 +1610,111 @@ func (d *__Message_Selector) Id_GE(val int) *__Message_Selector {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Selector) Uid_In(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) Uid_Ins(ins ...int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) Uid_NotIn(ins []int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) Uid_Eq(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Uid_NotEq(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Uid_LT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Uid_LE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Uid_GT(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Uid_GE(val int) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2399,6 +2715,27 @@ func (u *__Message_Updater) Id_Increment(count int) *__Message_Updater {
 
 //ints
 
+func (u *__Message_Updater) Uid(newVal int) *__Message_Updater {
+	u.updates[" Uid = ? "] = newVal
+	return u
+}
+
+func (u *__Message_Updater) Uid_Increment(count int) *__Message_Updater {
+	if count > 0 {
+		u.updates[" Uid = Uid+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Uid = Uid-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
 func (u *__Message_Updater) UserId(newVal int) *__Message_Updater {
 	u.updates[" UserId = ? "] = newVal
 	return u
@@ -2526,6 +2863,21 @@ func (u *__Message_Selector) OrderBy_Id_Asc() *__Message_Selector {
 
 func (u *__Message_Selector) Select_Id() *__Message_Selector {
 	u.selectCol = "Id"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_Uid_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY Uid DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_Uid_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY Uid ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_Uid() *__Message_Selector {
+	u.selectCol = "Uid"
 	return u
 }
 
@@ -2917,12 +3269,12 @@ func (d *__Message_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_Message(rows []Message, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.messages (" +
-		"UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs" +
+		"Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2930,6 +3282,7 @@ func MassInsert_Message(rows []Message, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Uid)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.MessageKey)
 		vals = append(vals, row.RoomKey)
@@ -2955,12 +3308,12 @@ func MassInsert_Message(rows []Message, db XODB) error {
 func MassReplace_Message(rows []Message, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.messages (" +
-		"UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs" +
+		"Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2968,6 +3321,7 @@ func MassReplace_Message(rows []Message, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Uid)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.MessageKey)
 		vals = append(vals, row.RoomKey)
@@ -3010,47 +3364,35 @@ func MassReplace_Message(rows []Message, db XODB) error {
 
 //
 
-// MessagesByMessageKey retrieves a row from 'ms.messages' as a Message.
+//
+
+// MessageByMessageKey retrieves a row from 'ms.messages' as a Message.
 //
 // Generated from index 'MessageKey'.
-func MessagesByMessageKey(db XODB, messageKey string) ([]*Message, error) {
+func MessageByMessageKey(db XODB, messageKey string) (*Message, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs ` +
+		`Id, Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs ` +
 		`FROM ms.messages ` +
 		`WHERE MessageKey = ?`
 
 	// run query
 	XOLog(sqlstr, messageKey)
-	q, err := db.Query(sqlstr, messageKey)
+	m := Message{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, messageKey).Scan(&m.Id, &m.Uid, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.DataPB, &m.DataJson, &m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
 	}
-	defer q.Close()
 
-	// load results
-	res := []*Message{}
-	for q.Next() {
-		m := Message{
-			_exists: true,
-		}
+	OnMessage_LoadOne(&m)
 
-		// scan
-		err = q.Scan(&m.Id, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.DataPB, &m.DataJson, &m.CreatedTimeMs)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &m)
-	}
-
-	OnMessage_LoadMany(res)
-
-	return res, nil
+	return &m, nil
 }
 
 // MessageById retrieves a row from 'ms.messages' as a Message.
@@ -3061,7 +3403,7 @@ func MessageById(db XODB, id int) (*Message, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs ` +
+		`Id, Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs ` +
 		`FROM ms.messages ` +
 		`WHERE Id = ?`
 
@@ -3071,7 +3413,7 @@ func MessageById(db XODB, id int) (*Message, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.DataPB, &m.DataJson, &m.CreatedTimeMs)
+	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.Uid, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.DataPB, &m.DataJson, &m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

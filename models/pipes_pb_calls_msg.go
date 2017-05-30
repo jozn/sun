@@ -27,6 +27,7 @@ func CallReceive_MsgsAddMany(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 				toUserId:   toUid,
 				roomKey:    msgPb.RoomKey,
 				hashId:     1,
+				uid:        helper.RandomUid(),
 			}
 			chanNewChatMsgsBuffer <- msgBuf
 		}

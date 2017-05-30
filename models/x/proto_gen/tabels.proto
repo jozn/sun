@@ -83,14 +83,15 @@ message PB_MessageOld {
 }
 message PB_Message {
     int64 Id = 1;
-    int64 UserId = 3;
-    string MessageKey = 5;
-    string RoomKey = 7;
-    int32 MessageType = 9;
-    int32 RoomType = 11;
-    ???? DataPB = 13;
-    string DataJson = 15;
-    int64 CreatedTimeMs = 17;
+    int64 Uid = 3;
+    int64 UserId = 5;
+    string MessageKey = 7;
+    string RoomKey = 9;
+    int32 MessageType = 11;
+    int32 RoomType = 13;
+    ???? DataPB = 15;
+    string DataJson = 17;
+    int64 CreatedTimeMs = 19;
 }
 message PB_MsgDeletedFromServer {
     int64 Id = 1;
@@ -104,18 +105,19 @@ message PB_MsgPush {
     int64 Id = 1;
     int64 Uid = 3;
     int64 ToUser = 5;
-    int64 MessageId = 7;
+    int64 MsgUid = 7;
     int64 CreatedTimeMs = 9;
 }
 message PB_MsgPushEvent {
     int64 Id = 1;
     int64 Uid = 3;
     int32 ToUserId = 5;
-    string MsgKey = 7;
-    string RoomKey = 9;
-    int32 PeerUserId = 11;
-    int32 EventType = 13;
-    int32 AtTime = 15;
+    int64 MsgUid = 7;
+    string MsgKey = 9;
+    string RoomKey = 11;
+    int32 PeerUserId = 13;
+    int32 EventType = 15;
+    int32 AtTime = 17;
 }
 message PB_MsgReceivedToPeer {
     int64 Id = 1;

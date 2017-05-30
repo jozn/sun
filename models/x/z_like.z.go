@@ -2718,6 +2718,49 @@ func MassReplace_Like(rows []Like, db XODB) error {
 
 //
 
+// LikesById retrieves a row from 'ms.likes' as a Like.
+//
+// Generated from index 'Id'.
+func LikesById(db XODB, id int) ([]*Like, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, PostId, PostTypeId, UserId, TypeId, CreatedTime ` +
+		`FROM ms.likes ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	q, err := db.Query(sqlstr, id)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*Like{}
+	for q.Next() {
+		l := Like{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&l.Id, &l.PostId, &l.PostTypeId, &l.UserId, &l.TypeId, &l.CreatedTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &l)
+	}
+
+	OnLike_LoadMany(res)
+
+	return res, nil
+}
+
 // LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId'.

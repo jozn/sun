@@ -218,6 +218,7 @@ type MessageOld struct {
 // Message 'ms.messages'.
 type Message struct {
 	Id            int
+	Uid           int
 	UserId        int
 	MessageKey    string
 	RoomKey       string
@@ -233,6 +234,7 @@ type Message struct {
 /*
 := &Message {
 	Id: 0,
+	Uid: 0,
 	UserId: 0,
 	MessageKey: "",
 	RoomKey: "",
@@ -270,7 +272,7 @@ type MsgPush struct {
 	Id            int
 	Uid           int
 	ToUser        int
-	MessageId     int
+	MsgUid        int
 	CreatedTimeMs int
 
 	_exists, _deleted bool
@@ -281,7 +283,7 @@ type MsgPush struct {
 	Id: 0,
 	Uid: 0,
 	ToUser: 0,
-	MessageId: 0,
+	MsgUid: 0,
 	CreatedTimeMs: 0,
 */
 
@@ -290,6 +292,7 @@ type MsgPushEvent struct {
 	Id         int
 	Uid        int
 	ToUserId   int
+	MsgUid     int
 	MsgKey     string
 	RoomKey    string
 	PeerUserId int
@@ -304,6 +307,7 @@ type MsgPushEvent struct {
 	Id: 0,
 	Uid: 0,
 	ToUserId: 0,
+	MsgUid: 0,
 	MsgKey: "",
 	RoomKey: "",
 	PeerUserId: 0,

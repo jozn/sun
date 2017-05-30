@@ -19,6 +19,7 @@ type MsgPushEvent__ struct {
 	Id         int    `json:"Id"`         // Id -
 	Uid        int    `json:"Uid"`        // Uid -
 	ToUserId   int    `json:"ToUserId"`   // ToUserId -
+	MsgUid     int    `json:"MsgUid"`     // MsgUid -
 	MsgKey     string `json:"MsgKey"`     // MsgKey -
 	RoomKey    string `json:"RoomKey"`    // RoomKey -
 	PeerUserId int    `json:"PeerUserId"` // PeerUserId -
@@ -50,14 +51,14 @@ func (mpe *MsgPushEvent) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.msg_push_event (` +
-		`Uid, ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime` +
+		`Uid, ToUserId, MsgUid, MsgKey, RoomKey, PeerUserId, EventType, AtTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
-	res, err := db.Exec(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
+	XOLog(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgUid, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
+	res, err := db.Exec(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgUid, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -85,14 +86,14 @@ func (mpe *MsgPushEvent) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.msg_push_event (` +
-		`Uid, ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime` +
+		`Uid, ToUserId, MsgUid, MsgKey, RoomKey, PeerUserId, EventType, AtTime` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
-	res, err := db.Exec(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
+	XOLog(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgUid, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
+	res, err := db.Exec(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgUid, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -130,12 +131,12 @@ func (mpe *MsgPushEvent) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.msg_push_event SET ` +
-		`Uid = ?, ToUserId = ?, MsgKey = ?, RoomKey = ?, PeerUserId = ?, EventType = ?, AtTime = ?` +
+		`Uid = ?, ToUserId = ?, MsgUid = ?, MsgKey = ?, RoomKey = ?, PeerUserId = ?, EventType = ?, AtTime = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime, mpe.Id)
-	_, err = db.Exec(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime, mpe.Id)
+	XOLog(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgUid, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime, mpe.Id)
+	_, err = db.Exec(sqlstr, mpe.Uid, mpe.ToUserId, mpe.MsgUid, mpe.MsgKey, mpe.RoomKey, mpe.PeerUserId, mpe.EventType, mpe.AtTime, mpe.Id)
 
 	XOLogErr(err)
 	OnMsgPushEvent_AfterUpdate(mpe)
@@ -546,6 +547,111 @@ func (d *__MsgPushEvent_Deleter) ToUserId_GE(val int) *__MsgPushEvent_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgPushEvent_Deleter) MsgUid_In(ins []int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Deleter) MsgUid_Ins(ins ...int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Deleter) MsgUid_NotIn(ins []int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgUid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgPushEvent_Deleter) MsgUid_Eq(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Deleter) MsgUid_NotEq(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Deleter) MsgUid_LT(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Deleter) MsgUid_LE(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Deleter) MsgUid_GT(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Deleter) MsgUid_GE(val int) *__MsgPushEvent_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1187,6 +1293,111 @@ func (d *__MsgPushEvent_Updater) ToUserId_GE(val int) *__MsgPushEvent_Updater {
 	return d
 }
 
+func (u *__MsgPushEvent_Updater) MsgUid_In(ins []int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Updater) MsgUid_Ins(ins ...int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Updater) MsgUid_NotIn(ins []int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgUid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgPushEvent_Updater) MsgUid_Eq(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Updater) MsgUid_NotEq(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Updater) MsgUid_LT(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Updater) MsgUid_LE(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Updater) MsgUid_GT(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Updater) MsgUid_GE(val int) *__MsgPushEvent_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__MsgPushEvent_Updater) PeerUserId_In(ins []int) *__MsgPushEvent_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1818,6 +2029,111 @@ func (d *__MsgPushEvent_Selector) ToUserId_GE(val int) *__MsgPushEvent_Selector 
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgPushEvent_Selector) MsgUid_In(ins []int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Selector) MsgUid_Ins(ins ...int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgUid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgPushEvent_Selector) MsgUid_NotIn(ins []int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MsgUid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgPushEvent_Selector) MsgUid_Eq(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Selector) MsgUid_NotEq(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Selector) MsgUid_LT(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Selector) MsgUid_LE(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Selector) MsgUid_GT(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgPushEvent_Selector) MsgUid_GE(val int) *__MsgPushEvent_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MsgUid >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2575,6 +2891,27 @@ func (u *__MsgPushEvent_Updater) ToUserId_Increment(count int) *__MsgPushEvent_U
 
 //ints
 
+func (u *__MsgPushEvent_Updater) MsgUid(newVal int) *__MsgPushEvent_Updater {
+	u.updates[" MsgUid = ? "] = newVal
+	return u
+}
+
+func (u *__MsgPushEvent_Updater) MsgUid_Increment(count int) *__MsgPushEvent_Updater {
+	if count > 0 {
+		u.updates[" MsgUid = MsgUid+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" MsgUid = MsgUid-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
 //string
 func (u *__MsgPushEvent_Updater) MsgKey(newVal string) *__MsgPushEvent_Updater {
 	u.updates[" MsgKey = ? "] = newVal
@@ -2699,6 +3036,21 @@ func (u *__MsgPushEvent_Selector) OrderBy_ToUserId_Asc() *__MsgPushEvent_Selecto
 
 func (u *__MsgPushEvent_Selector) Select_ToUserId() *__MsgPushEvent_Selector {
 	u.selectCol = "ToUserId"
+	return u
+}
+
+func (u *__MsgPushEvent_Selector) OrderBy_MsgUid_Desc() *__MsgPushEvent_Selector {
+	u.orderBy = " ORDER BY MsgUid DESC "
+	return u
+}
+
+func (u *__MsgPushEvent_Selector) OrderBy_MsgUid_Asc() *__MsgPushEvent_Selector {
+	u.orderBy = " ORDER BY MsgUid ASC "
+	return u
+}
+
+func (u *__MsgPushEvent_Selector) Select_MsgUid() *__MsgPushEvent_Selector {
+	u.selectCol = "MsgUid"
 	return u
 }
 
@@ -3045,12 +3397,12 @@ func (d *__MsgPushEvent_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_MsgPushEvent(rows []MsgPushEvent, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.msg_push_event (" +
-		"Uid, ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime" +
+		"Uid, ToUserId, MsgUid, MsgKey, RoomKey, PeerUserId, EventType, AtTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -3060,6 +3412,7 @@ func MassInsert_MsgPushEvent(rows []MsgPushEvent, db XODB) error {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.Uid)
 		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.MsgUid)
 		vals = append(vals, row.MsgKey)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.PeerUserId)
@@ -3082,12 +3435,12 @@ func MassInsert_MsgPushEvent(rows []MsgPushEvent, db XODB) error {
 func MassReplace_MsgPushEvent(rows []MsgPushEvent, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.msg_push_event (" +
-		"Uid, ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime" +
+		"Uid, ToUserId, MsgUid, MsgKey, RoomKey, PeerUserId, EventType, AtTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -3097,6 +3450,7 @@ func MassReplace_MsgPushEvent(rows []MsgPushEvent, db XODB) error {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.Uid)
 		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.MsgUid)
 		vals = append(vals, row.MsgKey)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.PeerUserId)
@@ -3134,48 +3488,7 @@ func MassReplace_MsgPushEvent(rows []MsgPushEvent, db XODB) error {
 
 //
 
-// MsgPushEventsByUid retrieves a row from 'ms.msg_push_event' as a MsgPushEvent.
 //
-// Generated from index 'Uid'.
-func MsgPushEventsByUid(db XODB, uid int) ([]*MsgPushEvent, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, Uid, ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime ` +
-		`FROM ms.msg_push_event ` +
-		`WHERE Uid = ?`
-
-	// run query
-	XOLog(sqlstr, uid)
-	q, err := db.Query(sqlstr, uid)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgPushEvent{}
-	for q.Next() {
-		mpe := MsgPushEvent{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&mpe.Id, &mpe.Uid, &mpe.ToUserId, &mpe.MsgKey, &mpe.RoomKey, &mpe.PeerUserId, &mpe.EventType, &mpe.AtTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &mpe)
-	}
-
-	OnMsgPushEvent_LoadMany(res)
-
-	return res, nil
-}
 
 // MsgPushEventById retrieves a row from 'ms.msg_push_event' as a MsgPushEvent.
 //
@@ -3185,7 +3498,7 @@ func MsgPushEventById(db XODB, id int) (*MsgPushEvent, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, Uid, ToUserId, MsgKey, RoomKey, PeerUserId, EventType, AtTime ` +
+		`Id, Uid, ToUserId, MsgUid, MsgKey, RoomKey, PeerUserId, EventType, AtTime ` +
 		`FROM ms.msg_push_event ` +
 		`WHERE Id = ?`
 
@@ -3195,7 +3508,7 @@ func MsgPushEventById(db XODB, id int) (*MsgPushEvent, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&mpe.Id, &mpe.Uid, &mpe.ToUserId, &mpe.MsgKey, &mpe.RoomKey, &mpe.PeerUserId, &mpe.EventType, &mpe.AtTime)
+	err = db.QueryRow(sqlstr, id).Scan(&mpe.Id, &mpe.Uid, &mpe.ToUserId, &mpe.MsgUid, &mpe.MsgKey, &mpe.RoomKey, &mpe.PeerUserId, &mpe.EventType, &mpe.AtTime)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
