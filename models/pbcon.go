@@ -88,7 +88,7 @@ func PBNew_PB_UserWithMe(UserId, meId int) *x.PB_UserWithMe {
 
 	p, ok := MemoryStore_User.GetUser(UserId)
 	if ok {
-		nn:= PBConv_User_toNew_PB_UserWithMe(&p, meId)
+		nn := PBConv_User_toNew_PB_UserWithMe(&p, meId)
 		return &nn
 	}
 

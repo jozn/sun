@@ -28,7 +28,7 @@ func (p *sMsgPusher) pushToUser() {
 		if err == nil {
 			pbMsgs = append(pbMsgs, pbMsg)
 		}
-		userIds[m.UserId] =true
+		userIds[m.UserId] = true
 	}
 
 	for uid, _ := range userIds {

@@ -9,6 +9,7 @@ import (
 )
 
 var chanNewChatMsgsBuffer = make(chan newChatMsgBuffer, 10000)
+
 //var chanNewMsgPushEventsBuffer = make(chan *x.MsgPushEvent, 20000)
 
 type newChatMsgBuffer struct {

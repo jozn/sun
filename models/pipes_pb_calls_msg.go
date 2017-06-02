@@ -103,7 +103,7 @@ func EchoCmd(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	//b, _ := json.Marshal(c)
 	//r := base.WSRes{Status: "BB", ReqKey: string(b)}
 	//call := base.NewCallWithData("echo", "sad")
-    call := NewPB_CommandToClient("echo")
+	call := NewPB_CommandToClient("echo")
 	AllPipesMap.SendToUser(pipe.UserId, call)
 	//AllPipesMap.SendToUser_DEP(c.UserId, r)
 }
