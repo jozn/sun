@@ -66,15 +66,16 @@ func MessageModel_PushToPipeMsgEventsToUser(UserId int, eventsRows []x.MsgPushEv
 	pbEvents := []*x.PB_MsgEvent{}
 
 	for _, m := range eventsRows {
-		pbEv := &x.PB_MsgEvent{
+		/*pbEv := &x.PB_MsgEvent{
 			MessageKey: m.MsgKey,
 			RoomKey:    m.RoomKey,
 			PeerUserId: m.PeerUserId,
 			EventType:  m.EventType,
 			AtTime:     m.AtTime,
-		}
+		}*/
+		pbEv := PBConv_MsgPushEvent_toNew_PB_MsgEvent(&m)
 
-		pbEvents = append(pbEvents, pbEv)
+		pbEvents = append(pbEvents, &pbEv)
 	}
 
 	pushReq := &x.PB_PushMsgEvents{
@@ -96,7 +97,7 @@ func MessageModel_PushToPipeMsgEventsToUser(UserId int, eventsRows []x.MsgPushEv
 
 func messageModel_msgsRecicedToPeerAddEvents(UserId int, messages []*x.Message) {
 	for _, msg := range messages {
-		me := &x.MsgPushEvent{
+		me := x.MsgPushEvent{
 			Id:         0,
 			Uid:        helper.RandomUid(),
 			ToUserId:   msg.UserId,

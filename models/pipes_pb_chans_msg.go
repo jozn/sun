@@ -9,7 +9,7 @@ import (
 )
 
 var chanNewChatMsgsBuffer = make(chan newChatMsgBuffer, 10000)
-var chanNewMsgPushEventsBuffer = make(chan *x.MsgPushEvent, 20000)
+//var chanNewMsgPushEventsBuffer = make(chan *x.MsgPushEvent, 20000)
 
 type newChatMsgBuffer struct {
 	msgPB      *x.PB_Message
@@ -50,20 +50,22 @@ func processNewChatMsgBuffer(msgsBuff []newChatMsgBuffer) {
 	allMsgsKeys := make([]string, 0, len(msgsBuff))
 	for _, bm := range msgsBuff {
 		b := bm.msgPB
-		bytes, _ := proto.Marshal(b)
-		json := helper.ToJson(b)
-		mRow := x.Message{
-			Id:            0,
-			Uid:           bm.uid,
-			UserId:        b.RoomKey,
-			MessageKey:    b.MessageKey,
-			RoomKey:       b.RoomKey,
-			MessageType:   b.RoomTypeId,
-			RoomType:      b.RoomTypeId,
-			DataPB:        bytes,
-			DataJson:      json,
-			CreatedTimeMs: b.CreatedMs,
-		}
+		/*bytes, _ := proto.Marshal(b)
+		  json := helper.ToJson(b)
+		  mRow := x.Message{
+		      Id:            0,
+		      Uid:           bm.uid,
+		      UserId:        b.RoomKey,
+		      MessageKey:    b.MessageKey,
+		      RoomKey:       b.RoomKey,
+		      MessageType:   b.RoomTypeId,
+		      RoomType:      b.RoomTypeId,
+		      DataPB:        bytes,
+		      DataJson:      json,
+		      CreatedTimeMs: b.CreatedMs,
+		  }*/
+
+		mRow := PBConv_PB_Message_toNew_Message(b)
 
 		allMsgsRows = append(allMsgsRows, mRow)
 		allMsgsKeys = append(allMsgsKeys, b.MessageKey)
@@ -92,8 +94,8 @@ func processNewChatMsgBuffer(msgsBuff []newChatMsgBuffer) {
 	for uid, msgsPB := range mp { //each user
 		for _, msgPB := range msgsPB {
 			var msgs []*x.Message
-			m, err := x.Store.Message_ByMessageKey(msgPB.msgPB.MessageKey)
-			if err != nil {
+			m, ok := x.Store.Message_ByMessageKey(msgPB.msgPB.MessageKey)
+			if !ok {
 				continue
 			}
 			msgs = append(msgs, m)
@@ -119,11 +121,11 @@ func MessageModel_PushToPipeMsgsToUser(UserId int, messages []*x.Message) {
 			if err == nil {
 				pbMsgs = append(pbMsgs, pbMsg)
 			}
-			userIds[m.UserId]
+			userIds[m.UserId] = true
 		}
 
 		for uid, _ := range userIds {
-			pbUsers = append(pbUsers, &PBNew_PB_UserWithMe(uid, UserId))
+			pbUsers = append(pbUsers, (PBNew_PB_UserWithMe(uid, UserId)))
 		}
 
 		pushReq := &x.PB_PushMsgAddMany{
@@ -159,7 +161,7 @@ func messageModel_msgsRecicedToUserAddEvents(UserId int, messages []*x.Message) 
 //////////////////////////////////////////////////////////////
 func NewPB_CommandToClient(cmd string) x.PB_CommandToClient {
 	p := x.PB_CommandToClient{
-		CallId:  int(time.Now().UnixNano()),
+		CallId:  int64(time.Now().UnixNano()),
 		Command: cmd,
 	}
 	return p

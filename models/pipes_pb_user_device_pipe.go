@@ -117,7 +117,7 @@ func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	}
 
 	if reqCall.CallId != 0 {
-		callReceived := &x.PB_CommandToServer{
+		callReceived := x.PB_CommandToClient{
 			Command: "CallReceivedToServer",
 			CallId:  reqCall.CallId,
 		}

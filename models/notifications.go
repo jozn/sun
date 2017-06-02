@@ -157,9 +157,12 @@ func Notification_OnPostUnLiked(lk *x.Like) {
 }
 
 //fix: must be NotificationView
+//TODO add x.PB_PushNotification to proto
 func Notification_PushToUserPipe(nf x.Notification) {
 	nv := Notification_notifyToView(&nf, nf.ForUserId)
-	call := base.NewCallWithData("NotifyAddOne", nv)
+    _ = nv
+	//call := base.NewCallWithData("NotifyAddOne", nv)
+	call :=NewPB_CommandToClient_WithData("NotifyAddOne", nil)
 	AllPipesMap.SendToUser(nf.ForUserId, call)
 }
 

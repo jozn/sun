@@ -9,15 +9,18 @@ import (
 //just return the by value
 
 func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {
+	bytes, _ := proto.Marshal(pb)
+	json := helper.ToJson(pb)
 	msg := x.Message{
 		Id:            0,
+		Uid:           helper.RandomUid(),
 		UserId:        int(pb.UserId),
 		MessageKey:    pb.MessageKey,
 		RoomKey:       pb.RoomKey,
 		MessageType:   int(pb.MessageTypeId),
 		RoomType:      int(pb.RoomTypeId),
-		DataPB:        nil,
-		DataJson:      helper.ToJson(pb),
+		DataPB:        bytes,
+		DataJson:      json,
 		CreatedTimeMs: int(helper.TimeNowMs()),
 	}
 	bs, err := proto.Marshal(pb)
@@ -81,16 +84,29 @@ func PBConv_User_toNew_PB_UserWithMe(p *x.User, meId int) x.PB_UserWithMe {
 	return u
 }
 
-func PBNew_PB_UserWithMe(UserId, meId int) x.PB_UserWithMe {
+func PBNew_PB_UserWithMe(UserId, meId int) *x.PB_UserWithMe {
 
 	p, ok := MemoryStore_User.GetUser(UserId)
 	if ok {
-		return PBConv_User_toNew_PB_UserWithMe(&p, meId)
+		nn:= PBConv_User_toNew_PB_UserWithMe(&p, meId)
+		return &nn
 	}
 
-	msg := x.PB_UserWithMe{
+	msg := &x.PB_UserWithMe{
 		UserId: int32(UserId),
 	}
 
 	return msg
+}
+
+func PBConv_MsgPushEvent_toNew_PB_MsgEvent(m *x.MsgPushEvent) x.PB_MsgEvent {
+	pbEv := x.PB_MsgEvent{
+		MessageKey: m.MsgKey,
+		RoomKey:    m.RoomKey,
+		PeerUserId: int64(m.PeerUserId),
+		EventType:  int32(m.EventType),
+		AtTime:     int64(m.AtTime),
+	}
+
+	return pbEv
 }

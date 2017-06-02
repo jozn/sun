@@ -28,11 +28,11 @@ func (p *sMsgPusher) pushToUser() {
 		if err == nil {
 			pbMsgs = append(pbMsgs, pbMsg)
 		}
-		userIds[m.UserId]
+		userIds[m.UserId] =true
 	}
 
 	for uid, _ := range userIds {
-		pbUsers = append(pbUsers, &PBNew_PB_UserWithMe(uid, p.toUserId))
+		pbUsers = append(pbUsers, PBNew_PB_UserWithMe(uid, p.toUserId))
 	}
 
 	pushReq := &x.PB_PushMsgAddMany{
@@ -86,7 +86,7 @@ func (p *sMsgPusher) addEventDeletedFromServer() {
 
 func (p *sMsgPusher) addEventToMsgAuther(EVENT_TYPE int) {
 	for _, msg := range p.messages {
-		me := &x.MsgPushEvent{
+		me := x.MsgPushEvent{
 			Id:         0,
 			Uid:        helper.RandomUid(),
 			ToUserId:   msg.UserId,
