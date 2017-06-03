@@ -46,3 +46,14 @@ const MESSAGE_PUSH_EVENT_SEEN_BY_PEER = 3
 
 const PB_CommandReceivedToServer = "PB_CommandReceivedToServer"
 const PB_CommandReceivedToClient = "PB_CommandReceivedToClient"
+
+const PB_RequestMsgAddMany = "PB_RequestMsgAddMany"
+const PB_RequestMsgsSeen = "PB_RequestMsgsSeen"
+
+const PB_PushMsgAddMany = "PB_PushMsgAddMany"
+const PB_PushMsgEvents = "PB_PushMsgEvents"
+//const PB_PushMsgsRemovedFromServer = "PB_PushMsgsRemovedFromServer"
+
+
+
+

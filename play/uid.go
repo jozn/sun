@@ -9,7 +9,7 @@ func main() {
 	mp := make(map[int]bool)
 
 	for i := 0; ; i++ {
-		uid := helper.RandomUid()
+		uid := helper.RandomSeqUid()
 		if _, ok := mp[uid]; ok {
 			fmt.Printf("=========== %2d\n", uid)
 		}

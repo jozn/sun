@@ -20,7 +20,7 @@ func TimeNowNano() int64 {
 
 var uid int64 = time.Now().UnixNano()
 
-func RandomUid() int {
+func RandomSeqUid() int {
 	if time.Now().UnixNano()-uid > 1e8 { //100 miliscond diff
 		uid = time.Now().UnixNano()
 	}

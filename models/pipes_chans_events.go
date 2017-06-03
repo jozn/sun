@@ -99,7 +99,7 @@ func messageModel_msgsRecicedToPeerAddEvents(UserId int, messages []*x.Message) 
 	for _, msg := range messages {
 		me := x.MsgPushEvent{
 			Id:         0,
-			Uid:        helper.RandomUid(),
+			Uid:        helper.RandomSeqUid(),
 			ToUserId:   msg.UserId,
 			MsgUid:     msg.Uid,
 			MsgKey:     msg.MessageKey,

@@ -21,54 +21,19 @@ func CallReceive_MsgsAddMany(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	for _, msgPb := range req.Messages {
 		toUid, err := RoomKeyToPeerUserId(msgPb.RoomKey, pipe.UserId)
 		if err == nil && toUid > 0 {
-			msgBuf := newChatMsgBuffer{
+			msgBuf := newChatMsgDelayer{
 				msgPB:      msgPb,
 				fromUserId: pipe.UserId,
 				toUserId:   toUid,
 				roomKey:    msgPb.RoomKey,
 				hashId:     1,
-				uid:        helper.RandomUid(),
+				uid:        helper.RandomSeqUid(),
 			}
 			chanNewChatMsgsBuffer <- msgBuf
 		}
 	}
 
 }
-
-/*
-func CallReceive_MsgsAddMany_OLD(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
-	helper.DebugPrintln("called CallReceive_MsgsAddMany() :")
-
-	req := &x.PB_RequestMsgAddMany{}
-	err := proto.Unmarshal(c.GetData(), req)
-	if err != nil {
-		helper.DebugPrintln("Error :", err)
-		return
-	}
-
-	var msgsRows []x.Message
-	var msgsToPush []x.MsgPush
-	for _, msgPb := range req.Messages {
-		msgRow := PBConv_PB_Message_toNew_Message(msgPb)
-		msgRow.Save(base.DB)
-		toUid, err := RoomKeyToPeerUserId(msgPb.RoomKey, pipe.UserId)
-*/
-/*if err == nil{
-    PushProxy_PushMsgsAddMsg(toUid,msgRow, msgPb)
-}*/ /*
-
-		toPush := x.MsgPush{
-			Id:            0,
-			ToUser:        toUid,
-			MessageId:     msgRow.Id,
-			CreatedTimeMs: helper.TimeNowMs(),
-		}
-		msgsToPush = append(msgsToPush, toPush)
-	}
-
-	x.MassInsert_MsgPushEvent(msgsToPush, base.DB)
-}
-*/
 
 //Todo : add security layer
 func CallRecive_MsgSeenByPeer(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
@@ -107,66 +72,3 @@ func EchoCmd(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	AllPipesMap.SendToUser(pipe.UserId, call)
 	//AllPipesMap.SendToUser_DEP(c.UserId, r)
 }
-
-/*
-func CallRecive_MsgReceivedToPeer(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
-	fmt.Printf("\ncalled MsgReceivedToPeer %v :\n", c)
-
-	metas := []MessageSyncMeta{}
-
-	json.Unmarshal([]byte(c.Data), &metas)
-
-	for _, met := range metas {
-		toUid, err := RoomKeyToPeerUserId(met.RoomKey, c.UserId)
-		if err != nil {
-			continue
-		}
-		metRes := MessageSyncMeta{
-			MessageKey: met.MessageKey,
-			RoomKey:    met.RoomKey,
-			ByUserId:   c.UserId,
-			AtTimeMs:   met.AtTimeMs, // this is client time
-			ExtraData:  met.ExtraData,
-		}
-
-		data := []interface{}{metRes}
-
-		//m := MsgReceivedToPeer{}
-
-		recivedCall := base.NewCallWithData(constants.MsgsReceivedToPeer, data)
-		AllPipesMap.SendToUser(toUid, recivedCall)
-
-		//send MsgDeletedFromServer to that user
-		delCmd := base.NewCallWithData(constants.MsgsDeletedFromServer, data)
-		AllPipesMap.SendToUser(toUid, delCmd)
-	}
-
-}
-
-
-*/
-
-/*
-//dep
-func CallReceive_MsgsAddOne(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
-	helper.DebugPrintln("called CallReceive_MsgsAddOne() :")
-
-	msg := &x.PB_Message{}
-	err := proto.Unmarshal(c.GetData(), msg)
-	if err != nil {
-		helper.DebugPrintln("Error :", err)
-	}
-
-	myMsg := MessagesTableFromClient{}
-	json.Unmarshal([]byte(c.Data), &myMsg)
-
-	//toUid := helper.StrToInt(myMsg.RoomKey[1:], -1)
-	toUid, err := RoomKeyToPeerUserId(myMsg.RoomKey, c.UserId)
-	if err != nil {
-		helper.DebugPrintln(err)
-		return
-	}
-
-	MessageModel.SendAndStoreMessage(toUid, myMsg)
-}
-*/

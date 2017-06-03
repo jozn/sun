@@ -8,11 +8,11 @@ import (
 	"time"
 )
 
-var chanNewChatMsgsBuffer = make(chan newChatMsgBuffer, 10000)
+var chanNewChatMsgsBuffer = make(chan newChatMsgDelayer, 10000)
 
 //var chanNewMsgPushEventsBuffer = make(chan *x.MsgPushEvent, 20000)
 
-type newChatMsgBuffer struct {
+type newChatMsgDelayer struct {
 	msgPB      *x.PB_Message
 	fromUserId int
 	toUserId   int
@@ -21,9 +21,13 @@ type newChatMsgBuffer struct {
 	uid        int
 }
 
+func init() {
+	go batcheNewMsgsBufferProceess()
+}
+
 func batcheNewMsgsBufferProceess() {
 	const siz = 1000
-	arr := make([]newChatMsgBuffer, 0, siz)
+	arr := make([]newChatMsgDelayer, 0, siz)
 	go func() {
 		for m := range chanNewChatMsgsBuffer {
 			arr = append(arr, m)
@@ -34,52 +38,39 @@ func batcheNewMsgsBufferProceess() {
 		time.Sleep(time.Millisecond * 5)
 		if len(arr) > 0 {
 			pre := arr
-			arr = make([]newChatMsgBuffer, 0, siz)
+			arr = make([]newChatMsgDelayer, 0, siz)
 			processNewChatMsgBuffer(pre)
 		}
 	}
 }
 
-func processNewChatMsgBuffer(msgsBuff []newChatMsgBuffer) {
-	mp := make(map[int][]newChatMsgBuffer)
+func processNewChatMsgBuffer(msgsDelays []newChatMsgDelayer) {
+	mp := make(map[int][]newChatMsgDelayer)
 
-	for _, mb := range msgsBuff {
+	for _, mb := range msgsDelays {
 		mp[mb.toUserId] = append(mp[mb.toUserId], mb)
 	}
 
-	allMsgsRows := make([]x.Message, 0, len(msgsBuff))
-	allMsgsKeys := make([]string, 0, len(msgsBuff))
-	for _, bm := range msgsBuff {
-		b := bm.msgPB
-		/*bytes, _ := proto.Marshal(b)
-		  json := helper.ToJson(b)
-		  mRow := x.Message{
-		      Id:            0,
-		      Uid:           bm.uid,
-		      UserId:        b.RoomKey,
-		      MessageKey:    b.MessageKey,
-		      RoomKey:       b.RoomKey,
-		      MessageType:   b.RoomTypeId,
-		      RoomType:      b.RoomTypeId,
-		      DataPB:        bytes,
-		      DataJson:      json,
-		      CreatedTimeMs: b.CreatedMs,
-		  }*/
+	allMsgsRows := make([]x.Message, 0, len(msgsDelays))
+	allMsgsKeys := make([]string, 0, len(msgsDelays))
+	for _, md := range msgsDelays {
+		b := md.msgPB
 
 		mRow := PBConv_PB_Message_toNew_Message(b)
+		mRow.Uid = md.uid
 
 		allMsgsRows = append(allMsgsRows, mRow)
 		allMsgsKeys = append(allMsgsKeys, b.MessageKey)
 	}
 
-	toPushMsgsArr := make([]x.MsgPush, 0, len(msgsBuff))
-	for _, bm := range msgsBuff {
+	toPushMsgsArr := make([]x.MsgPush, 0, len(msgsDelays))
+	for _, md := range msgsDelays {
 		p := x.MsgPush{
 			Id:            0,
-			Uid:           helper.RandomUid(),
-			ToUser:        bm.toUserId,
-			MsgUid:        bm.uid,
-			CreatedTimeMs: 0,
+			Uid:           helper.RandomSeqUid(),
+			ToUser:        md.toUserId,
+			MsgUid:        md.uid,
+			CreatedTimeMs: helper.TimeNowMs(),
 		}
 		toPushMsgsArr = append(toPushMsgsArr, p)
 	}
@@ -93,59 +84,55 @@ func processNewChatMsgBuffer(msgsBuff []newChatMsgBuffer) {
 	}
 
 	for uid, msgsPB := range mp { //each user
+		var msgs []*x.Message
 		for _, msgPB := range msgsPB {
-			var msgs []*x.Message
 			m, ok := x.Store.Message_ByMessageKey(msgPB.msgPB.MessageKey)
 			if !ok {
 				continue
 			}
 			msgs = append(msgs, m)
-
-			MessageModel_PushToPipeMsgsToUser(uid, msgs)
 		}
+		MessageModel_PushToPipeMsgsToUser(uid, msgs)
 
 	}
 
 }
 
 func MessageModel_PushToPipeMsgsToUser(UserId int, messages []*x.Message) {
-	if len(messages) == 0 {
+	if len(messages) == 0 || !AllPipesMap.IsPipeOpen(UserId) {
 		return
 	}
-	if AllPipesMap.IsPipeOpen(UserId) {
-		//cmd := NewPB_CommandToClient("AddManyMsgs")
 
-		pbMsgs := []*x.PB_Message{}
-		userIds := make(map[int]bool)
-		pbUsers := []*x.PB_UserWithMe{}
+	pbMsgs := []*x.PB_Message{}
+	userIds := make(map[int]bool)
+	pbUsers := []*x.PB_UserWithMe{}
 
-		for _, m := range messages {
-			pbMsg := &x.PB_Message{}
-			err := proto.Unmarshal(m.DataPB, pbMsg)
-			if err == nil {
-				pbMsgs = append(pbMsgs, pbMsg)
-			}
-			userIds[m.UserId] = true
+	for _, m := range messages {
+		pbMsg := &x.PB_Message{}
+		err := proto.Unmarshal(m.DataPB, pbMsg)
+		if err == nil {
+			pbMsgs = append(pbMsgs, pbMsg)
 		}
-
-		for uid, _ := range userIds {
-			pbUsers = append(pbUsers, (PBNew_PB_UserWithMe(uid, UserId)))
-		}
-
-		pushReq := &x.PB_PushMsgAddMany{
-			Push:     nil,
-			Messages: pbMsgs,
-			Users:    pbUsers,
-		}
-
-		cmd := NewPB_CommandToClient_WithData("AddManyMsgs", pushReq)
-		callback := func() {
-			messageModel_onAfterMsgsHasPushedToUser(UserId, messages)
-			//messageModel_msgsRecicedToUserAddEvents(UserId, messages)
-		}
-
-		AllPipesMap.SendToUserWithCallBack(UserId, cmd, callback)
+		userIds[m.UserId] = true
 	}
+
+	for uid, _ := range userIds {
+		pbUsers = append(pbUsers, (PBNew_PB_UserWithMe(uid, UserId)))
+	}
+
+	pushReq := &x.PB_PushMsgAddMany{
+		Push:     nil,
+		Messages: pbMsgs,
+		Users:    pbUsers,
+	}
+
+	cmd := NewPB_CommandToClient_WithData("AddManyMsgs", pushReq)
+	callback := func() {
+		messageModel_onAfterMsgsHasPushedToUser(UserId, messages)
+		//messageModel_msgsRecicedToUserAddEvents(UserId, messages)
+	}
+
+	AllPipesMap.SendToUserWithCallBack(UserId, cmd, callback)
 }
 
 func messageModel_onAfterMsgsHasPushedToUser(UserId int, messages []*x.Message) {

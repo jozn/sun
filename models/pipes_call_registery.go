@@ -34,7 +34,7 @@ func init() {
 func (m _registerMap) register(callback callRespondCallback) {
 	if callback.serverCallId == 0 {
 		helper.DebugErr(errors.New("ERROr: In callRespondCallback, callback.serverCallId must not be 0"))
-		callback.serverCallId = int64(helper.RandomUid())
+		callback.serverCallId = int64(helper.RandomSeqUid())
 	}
 	callback.timeoutAtMs = helper.TimeNowMs() + 5000
 	m.Lock()
@@ -157,6 +157,6 @@ func intervalRunCallsTimeOutChecker() {
 //utils
 func getNextCallId() int64 {
 	//return time.Now().UnixNano()
-	return int64(helper.RandomUid())
+	return int64(helper.RandomSeqUid())
 }
 */

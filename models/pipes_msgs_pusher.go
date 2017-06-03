@@ -88,7 +88,7 @@ func (p *sMsgPusher) addEventToMsgAuther(EVENT_TYPE int) {
 	for _, msg := range p.messages {
 		me := x.MsgPushEvent{
 			Id:         0,
-			Uid:        helper.RandomUid(),
+			Uid:        helper.RandomSeqUid(),
 			ToUserId:   msg.UserId,
 			MsgUid:     msg.Uid,
 			MsgKey:     msg.MessageKey,

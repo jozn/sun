@@ -13,7 +13,7 @@ func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {
 	json := helper.ToJson(pb)
 	msg := x.Message{
 		Id:            0,
-		Uid:           helper.RandomUid(),
+		Uid:           helper.RandomSeqUid(),
 		UserId:        int(pb.UserId),
 		MessageKey:    pb.MessageKey,
 		RoomKey:       pb.RoomKey,
