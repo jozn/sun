@@ -97,25 +97,3 @@ func MessageModel_PushToPipeMsgEventsToUser(UserId int, eventsRows []x.MsgPushEv
 	AllPipesMap.SendToUserWithCallBack(UserId, cmd, callback)
 
 }
-
-/*
-
-func messageModel_msgsRecicedToPeerAddEvents(UserId int, messages []*x.Message) {
-	for _, msg := range messages {
-		me := x.MsgPushEvent{
-			Id:         0,
-			Uid:        helper.RandomSeqUid(),
-			ToUserId:   msg.UserId,
-			MsgUid:     msg.Uid,
-			MsgKey:     msg.MessageKey,
-			RoomKey:    msg.RoomKey,
-			PeerUserId: UserId,
-			EventType:  MESSAGE_PUSH_EVENT_RECEIVED_TO_PEER,
-			AtTime:     helper.TimeNow(),
-		}
-
-		chanNewMsgPushEventsBuffer <- me
-	}
-
-}
-*/

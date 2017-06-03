@@ -108,44 +108,4 @@ func MessageModel_PushToPipeMsgsToUser(UserId int, messages []*x.Message) {
 	}
 	msgPusher.pushToUser()
 
-	/*pbMsgs := []*x.PB_Message{}
-	userIds := make(map[int]bool)
-	pbUsers := []*x.PB_UserWithMe{}
-
-	for _, m := range messages {
-		pbMsg := &x.PB_Message{}
-		err := proto.Unmarshal(m.DataPB, pbMsg)
-		if err == nil {
-			pbMsgs = append(pbMsgs, pbMsg)
-		}
-		userIds[m.UserId] = true
-	}
-
-	for uid, _ := range userIds {
-		pbUsers = append(pbUsers, (PBNew_PB_UserWithMe(uid, UserId)))
-	}
-
-	pushReq := &x.PB_PushMsgAddMany{
-		Push:     nil,
-		Messages: pbMsgs,
-		Users:    pbUsers,
-	}
-
-	cmd := NewPB_CommandToClient_WithData("AddManyMsgs", pushReq)
-	callback := func() {
-		messageModel_onAfterMsgsHasPushedToUser(UserId, messages)
-		//messageModel_msgsRecicedToUserAddEvents(UserId, messages)
-	}
-
-	AllPipesMap.SendToUserWithCallBack(UserId, cmd, callback)*/
 }
-
-/*
-func messageModel_onAfterMsgsHasPushedToUser(UserId int, messages []*x.Message) {
-	messageModel_msgsRecicedToPeerAddEvents(UserId, messages)
-	messageModel_msgsDeleteFromServer(UserId, messages)
-}
-
-func messageModel_msgsDeleteFromServer(i int, messages []*x.Message) {
-
-}*/
