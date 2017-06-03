@@ -122,7 +122,7 @@ func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 
 func (m pipesMap) AddUserPipe(UserId int, pipe *UserDevicePipe) {
 	m.m.Lock()
-    defer m.m.Unlock()
+	defer m.m.Unlock()
 	m.mp[UserId] = pipe
 }
 

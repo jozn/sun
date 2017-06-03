@@ -43,3 +43,6 @@ const OBJECT_NOTIFICATION_POST_LIKED = 23
 const MESSAGE_PUSH_EVENT_RECEIVED_TO_PEER = 1
 const MESSAGE_PUSH_EVENT_DELETED_FROM_SERVER = 2
 const MESSAGE_PUSH_EVENT_SEEN_BY_PEER = 3
+
+const PB_CommandReceivedToServer = "PB_CommandReceivedToServer"
+const PB_CommandReceivedToClient = "PB_CommandReceivedToClient"

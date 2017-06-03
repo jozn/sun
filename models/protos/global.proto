@@ -25,6 +25,18 @@ message PB_CommandToClient {
 	bytes Data = 3;
 }
 
+
+message PB_CommandReceivedToServer {
+	int64 ClientCallId = 1;
+}
+
+message PB_CommandReceivedToClient {
+	int64 ServerCallId = 1;
+}
+
+
+/////////////////////////////////
+
 message PB_UserWithMe {
 	int32 UserId = 1;
     string UserName = 2;

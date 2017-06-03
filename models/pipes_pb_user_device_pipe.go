@@ -74,15 +74,15 @@ func (pipe *UserDevicePipe) ServeSendToUserDevice() {
 			if config.IS_DEBUG {
 				wsDebugLog("<- to device:", pipe.UserId, helper.ToJson(r))
 			}
-            bts, err := proto.Marshal(r)
-            if err == nil{
-                pipe.Ws.WriteMessage(websocket.BinaryMessage , bts)
-            }
+			bts, err := proto.Marshal(&r)
+			if err == nil {
+				pipe.Ws.WriteMessage(websocket.BinaryMessage, bts)
+			}
 			//pipe.Ws.WriteJSON(r)
 		}
 		//after closing chanel
 		//fixme :not neccossroy waht about .ShutDownCompletely()?
-        pipe.ShutDownCompletely()
+		pipe.ShutDownCompletely()
 		//helper.Debug("closed: ", err)
 	}()
 }
@@ -114,18 +114,22 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 
 func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 
-	if reqCall.Command == "CallReceivedToClient" {
-		CallRespndMap.runSucceded(reqCall.ClientCallId)
+	if reqCall.Command == PB_CommandReceivedToClient {
+		pb_rec := &x.PB_CommandReceivedToClient{}
+		err := proto.Unmarshal(reqCall.Data, pb_rec)
+		if err == nil {
+			CallRespndMap.runSucceded(pb_rec.ServerCallId)
+		}
 		return
 	}
 
 	if reqCall.ClientCallId != 0 {
-		callReceived := x.PB_CommandToClient{
-			Command:      "CallReceivedToServer",
-			ServerCallId: reqCall.ClientCallId,
+		callReceived := &x.PB_CommandReceivedToServer{
+			ClientCallId: reqCall.ClientCallId,
 		}
+		cmdRec := NewPB_CommandToClient_WithData(PB_CommandReceivedToServer, callReceived)
 
-		AllPipesMap.SendToUser(pipe.UserId, callReceived)
+		AllPipesMap.SendToUser(pipe.UserId, cmdRec)
 	}
 
 	//reqCall.UserId = pipe.UserId
