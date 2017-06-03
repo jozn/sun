@@ -23,12 +23,12 @@ func main() {
 	t2 := time.Now().UnixNano()
 
 	for i := 0; i < 1000; i++ {
-		//data, err := db.Get([]byte("key-"+strconv.Itoa(i)),nil)
+		//data, err := db.get([]byte("key-"+strconv.Itoa(i)),nil)
 		//fmt.Println(string(data),err)
 	}
 
 	//	for i := 2000; i < 3002; i++ {
-	//		data, err := db.Get([]byte("key-"+strconv.Itoa(i)),nil)
+	//		data, err := db.get([]byte("key-"+strconv.Itoa(i)),nil)
 	//		fmt.Println(string(data),err)
 	//	}
 

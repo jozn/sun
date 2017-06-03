@@ -26,7 +26,7 @@ func main() {
 	for i := 0; i < 100000; i++ {
 		// db.Put([]byte("key-"+strconv.Itoa(rand.Intn(300000))), []byte("val-"+strconv.Itoa(i)), nil)
 		db.Put([]byte("key-"+strconv.Itoa(rand.Intn(3))), []byte("val-"+strconv.Itoa(i)), nil)
-		//		data, err := db.Get([]byte("bar"), nil)
+		//		data, err := db.get([]byte("bar"), nil)
 		//		fmt.Println(data,err)
 	}
 

@@ -42,7 +42,7 @@ func __sorted_redis() {
 	//U := models.UserTable{}
 	//U.Id = rand.Intn(1000)
 	//key := "User:6"
-	//con,_ := p.Get()
+	//con,_ := p.get()
 	//r := con.Cmd("zadd",key , U.Id ,helper.ToJson(U))
 	//fmt.Println("__sorted_redis  ",r.Err,U)
 

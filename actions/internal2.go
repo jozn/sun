@@ -101,7 +101,7 @@ func ShowCacheIndex(a *base.Action) base.AppErr {
 	    }
 
 	    for i:=0;i<100000;i++ {
-	        models.RowCacheIndex.Get("kjslkjlkjlkjlkjljlj:"+strconv.Itoa(i))
+	        models.RowCacheIndex.get("kjslkjlkjlkjlkjljlj:"+strconv.Itoa(i))
 	    }
 		a.SendJson(len(models.RowCacheIndex.Items()))*/
 	a.SendJson(models.RowCacheIndex.Items())

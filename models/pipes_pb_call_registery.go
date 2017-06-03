@@ -31,7 +31,7 @@ func init() {
 
 }
 
-func (m _registerMap) Register(callback callRespondCallback) {
+func (m _registerMap) register(callback callRespondCallback) {
 	if callback.serverCallId == 0 {
 		helper.DebugErr(errors.New("ERROr: In callRespondCallback, callback.serverCallId must not be 0"))
 		callback.serverCallId = int64(helper.RandomUid())
@@ -42,7 +42,7 @@ func (m _registerMap) Register(callback callRespondCallback) {
 	m.Unlock()
 }
 
-func (m _registerMap) Get(serverCallId int64) (*callRespondCallback, error) {
+func (m _registerMap) get(serverCallId int64) (*callRespondCallback, error) {
 	if serverCallId == 0 {
 		return nil, errors.New(" serverCallId could not be 0")
 	}
@@ -55,7 +55,7 @@ func (m _registerMap) Get(serverCallId int64) (*callRespondCallback, error) {
 	return &callback, nil
 }
 
-func (m _registerMap) GetAndRemove(serverCallId int64) (*callRespondCallback, error) {
+func (m _registerMap) getAndRemove(serverCallId int64) (*callRespondCallback, error) {
 	if serverCallId == 0 {
 		return nil, errors.New(" serverCallId could not be 0")
 	}
@@ -69,7 +69,7 @@ func (m _registerMap) GetAndRemove(serverCallId int64) (*callRespondCallback, er
 	return &callback, nil
 }
 
-func (m _registerMap) Remove(serverCallId int64) {
+func (m _registerMap) remove(serverCallId int64) {
 	m.Lock()
 	delete(m.mp, serverCallId)
 	m.Unlock()
@@ -77,7 +77,7 @@ func (m _registerMap) Remove(serverCallId int64) {
 
 func (m _registerMap) runSucceded(serverCallId int64) {
 	helper.Debugf("runSucceded() %d", serverCallId)
-	callback, err := m.GetAndRemove(serverCallId)
+	callback, err := m.getAndRemove(serverCallId)
 	if err != nil {
 		return
 	}
@@ -88,7 +88,7 @@ func (m _registerMap) runSucceded(serverCallId int64) {
 
 func (m _registerMap) runError(serverCallId int64) {
 	helper.Debugf("runSucceded() %d", serverCallId)
-	callback, err := m.GetAndRemove(serverCallId)
+	callback, err := m.getAndRemove(serverCallId)
 	if err != nil {
 		return
 	}

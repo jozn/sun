@@ -11,7 +11,7 @@ func GrabAllUserContactsCtrl(a *base.Action) base.AppErr {
 	MustBeUserAndUpdate(a)
 	a.Req.ParseForm()
 	contactsForm := a.Req.Form.Get("contacts")
-	//DeviceUuidId := a.Req.Form.Get("uuid")
+	//DeviceUuidId := a.Req.Form.get("uuid")
 	var conts []x.PhoneContact
 	err := json.Unmarshal([]byte(contactsForm), &conts)
 	if err != nil {

@@ -74,7 +74,7 @@ func (list *IntList) RemoveAndSort(value int) {
 	}
 }
 
-// Get returns the element at index.
+// get returns the element at index.
 // Second return parameter is true if index is within bounds of the array and array is not empty, otherwise false.
 func (list *IntList) Get(index int) (int, bool) {
 

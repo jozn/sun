@@ -51,8 +51,8 @@ func main() {
 	//
 	//	// The snapshot won't see modifications against the original Store.
 	//	c.Delete([]byte("mercedes"))
-	//	mercedesIsNil, err := c.Get([]byte("mercedes"))
-	//	mercedesPriceFromSnapshot, err := snapCars.Get([]byte("mercedes"))
+	//	mercedesIsNil, err := c.get([]byte("mercedes"))
+	//	mercedesPriceFromSnapshot, err := snapCars.get([]byte("mercedes"))
 	//
 	//	// Persist all the changes to disk.
 	//	s.Flush()
@@ -64,6 +64,6 @@ func main() {
 	//	s2, err := gkvlite.NewStore(f2)
 	//	c2 := s.GetCollection("cars")
 	//
-	//	bmwPrice, err := c2.Get([]byte("bmw"))
+	//	bmwPrice, err := c2.get([]byte("bmw"))
 
 }
