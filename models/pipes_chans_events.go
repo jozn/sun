@@ -49,33 +49,18 @@ func processchanNewMsgPushEventsBuffer(msgEvents []x.MsgPushEvent) {
 
 	for uid, userEvents := range mp { //each user
 		MessageModel_PushToPipeMsgEventsToUser(uid, userEvents)
-		/*for _, e := range userEvents {
-		    var msgs []*x.MsgPushEvent
-		    msgs = append(msgs, m)
-
-		    MessageModel_PushToPipeMsgsToUser(uid, msgs)
-		}*/
-
 	}
 
 }
 
 func MessageModel_PushToPipeMsgEventsToUser(UserId int, eventsRows []x.MsgPushEvent) {
-	if !AllPipesMap.IsPipeOpen(UserId) {
+	if len(eventsRows) == 0 || !AllPipesMap.IsPipeOpen(UserId) {
 		return
 	}
-	//cmd := NewPB_CommandToClient("AddManyMsgs")
 
 	pbEvents := []*x.PB_MsgEvent{}
 
 	for _, m := range eventsRows {
-		/*pbEv := &x.PB_MsgEvent{
-			MessageKey: m.MsgKey,
-			RoomKey:    m.RoomKey,
-			PeerUserId: m.PeerUserId,
-			EventType:  m.EventType,
-			AtTime:     m.AtTime,
-		}*/
 		pbEv := PBConv_MsgPushEvent_toNew_PB_MsgEvent(&m)
 
 		pbEvents = append(pbEvents, &pbEv)
@@ -86,7 +71,7 @@ func MessageModel_PushToPipeMsgEventsToUser(UserId int, eventsRows []x.MsgPushEv
 		Events: pbEvents,
 	}
 
-	cmd := NewPB_CommandToClient_WithData("AddManyMsgsEvents", pushReq)
+	cmd := NewPB_CommandToClient_WithData(PB_PushMsgEvents, pushReq)
 	callback := func() {
 		uids := make([]int, 0, len(eventsRows))
 		for _, m := range eventsRows {

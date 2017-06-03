@@ -13,10 +13,9 @@ type sMsgPusher struct {
 }
 
 func (p *sMsgPusher) pushToUser() {
-	if !AllPipesMap.IsPipeOpen(p.toUserId) {
+	if len(p.messages) == 0 || !AllPipesMap.IsPipeOpen(p.toUserId) {
 		return
 	}
-	//cmd := NewPB_CommandToClient("AddManyMsgs")
 
 	pbMsgs := []*x.PB_Message{}
 	userIds := make(map[int]bool)
@@ -41,11 +40,9 @@ func (p *sMsgPusher) pushToUser() {
 		Users:    pbUsers,
 	}
 
-	cmd := NewPB_CommandToClient_WithData("AddManyMsgs", pushReq)
+	cmd := NewPB_CommandToClient_WithData(PB_PushMsgAddMany, pushReq)
 	callback := func() {
 		p.onPushedToUser()
-		//messageModel_onAfterMsgsHasPushedToUser(p.UserId, p.messages)
-		//messageModel_msgsRecicedToUserAddEvents(UserId, messages)
 	}
 
 	AllPipesMap.SendToUserWithCallBack(p.toUserId, cmd, callback)
@@ -64,7 +61,7 @@ func (p *sMsgPusher) removeFromMsgPush() {
 	for _, msg := range p.messages {
 		uids = append(uids, msg.Uid)
 	}
-	x.NewMsgPush_Deleter().Uid_In(uids).Delete(base.DB)
+	x.NewMsgPush_Deleter().ToUser_Eq(p.toUserId).Uid_In(uids).Delete(base.DB)
 }
 
 func (p *sMsgPusher) addEventReceivedToPeer() {
@@ -76,7 +73,7 @@ func (p *sMsgPusher) deletedMessageFromServer() {
 	for _, msg := range p.messages {
 		uids = append(uids, msg.Uid)
 	}
-	x.NewMsgPush_Deleter().Uid_In(uids).Delete(base.DB)
+	x.NewMessage_Deleter().Uid_In(uids).Delete(base.DB)
 	p.addEventDeletedFromServer()
 }
 
