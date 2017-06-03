@@ -21,10 +21,10 @@ type _registerMap struct {
 	isRunningTimeout bool
 }
 
-var CallRespndMap _registerMap
+var callRespondMap _registerMap
 
 func init() {
-	CallRespndMap = _registerMap{
+	callRespondMap = _registerMap{
 		mp: make(map[int64]callRespondCallback, 100),
 	}
 	intervalRunCallsTimeOutChecker()
@@ -33,7 +33,8 @@ func init() {
 
 func (m _registerMap) Register(callback callRespondCallback) {
 	if callback.serverCallId == 0 {
-		callback.serverCallId = getNextCallId()
+		helper.DebugErr(errors.New("ERROr: In callRespondCallback, callback.serverCallId must not be 0"))
+		callback.serverCallId = int64(helper.RandomUid())
 	}
 	callback.timeoutAtMs = helper.TimeNowMs() + 5000
 	m.Lock()
@@ -133,6 +134,7 @@ func (m _registerMap) runErrorOfTimeouts() {
 	}
 }
 
+//TODO: infuter make this run in parralll
 func intervalRunCallsTimeOutChecker() {
 	go func() {
 		defer func() {
@@ -146,12 +148,15 @@ func intervalRunCallsTimeOutChecker() {
 
 		for {
 			time.Sleep(time.Second * 1)
-			CallRespndMap.runErrorOfTimeouts()
+			callRespondMap.runErrorOfTimeouts()
 		}
 	}()
 }
 
+/*
 //utils
 func getNextCallId() int64 {
-	return time.Now().UnixNano()
+	//return time.Now().UnixNano()
+	return int64(helper.RandomUid())
 }
+*/

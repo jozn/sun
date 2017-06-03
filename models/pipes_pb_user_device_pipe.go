@@ -118,7 +118,7 @@ func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 		pb_rec := &x.PB_CommandReceivedToClient{}
 		err := proto.Unmarshal(reqCall.Data, pb_rec)
 		if err == nil {
-			CallRespndMap.runSucceded(pb_rec.ServerCallId)
+			callRespondMap.runSucceded(pb_rec.ServerCallId)
 		}
 		return
 	}

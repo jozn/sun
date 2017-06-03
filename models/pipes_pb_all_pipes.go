@@ -69,7 +69,7 @@ func (m pipesMap) SendToUserWithCallBacks(UserId int, call x.PB_CommandToClient,
 			timeoutAtMs:  helper.TimeNowMs() + 5000,
 		}
 
-		CallRespndMap.Register(resCallback)
+		callRespondMap.Register(resCallback)
 
 		pipe.SendToUser(call)
 	} else if errback != nil {
