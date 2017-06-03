@@ -2,8 +2,11 @@ package models
 
 import (
 	"errors"
+	"github.com/golang/protobuf/proto"
 	"ms/sun/helper"
+	"ms/sun/models/x"
 	"strings"
+	"time"
 )
 
 // room key format "p142_1569"
@@ -28,4 +31,24 @@ func RoomKeyToPeerUserId(RoomKey string, CurrentUserId int) (int, error) {
 		return highId, nil
 	}
 	return lowId, nil
+}
+
+//////////////////////////////////////////////////////////////
+func NewPB_CommandToClient(cmd string) x.PB_CommandToClient {
+	p := x.PB_CommandToClient{
+		ServerCallId: int64(time.Now().UnixNano()),
+		Command:      cmd,
+	}
+	return p
+}
+
+func NewPB_CommandToClient_WithData(cmd string, protoMsg proto.Message) x.PB_CommandToClient {
+	m := NewPB_CommandToClient(cmd)
+	bytes, err := proto.Marshal(protoMsg)
+	if err == nil {
+		m.Data = bytes
+	} else {
+		helper.DebugPrintln("ERROR : proto.Marshal NewPB_CommandToClient_WithData, ", err)
+	}
+	return m
 }

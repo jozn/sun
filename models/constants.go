@@ -52,8 +52,5 @@ const PB_RequestMsgsSeen = "PB_RequestMsgsSeen"
 
 const PB_PushMsgAddMany = "PB_PushMsgAddMany"
 const PB_PushMsgEvents = "PB_PushMsgEvents"
+
 //const PB_PushMsgsRemovedFromServer = "PB_PushMsgsRemovedFromServer"
-
-
-
-

@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/golang/protobuf/proto"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
@@ -103,7 +102,13 @@ func MessageModel_PushToPipeMsgsToUser(UserId int, messages []*x.Message) {
 		return
 	}
 
-	pbMsgs := []*x.PB_Message{}
+	msgPusher := sMsgPusher{
+		messages: messages,
+		toUserId: UserId,
+	}
+	msgPusher.pushToUser()
+
+	/*pbMsgs := []*x.PB_Message{}
 	userIds := make(map[int]bool)
 	pbUsers := []*x.PB_UserWithMe{}
 
@@ -132,9 +137,10 @@ func MessageModel_PushToPipeMsgsToUser(UserId int, messages []*x.Message) {
 		//messageModel_msgsRecicedToUserAddEvents(UserId, messages)
 	}
 
-	AllPipesMap.SendToUserWithCallBack(UserId, cmd, callback)
+	AllPipesMap.SendToUserWithCallBack(UserId, cmd, callback)*/
 }
 
+/*
 func messageModel_onAfterMsgsHasPushedToUser(UserId int, messages []*x.Message) {
 	messageModel_msgsRecicedToPeerAddEvents(UserId, messages)
 	messageModel_msgsDeleteFromServer(UserId, messages)
@@ -142,29 +148,4 @@ func messageModel_onAfterMsgsHasPushedToUser(UserId int, messages []*x.Message) 
 
 func messageModel_msgsDeleteFromServer(i int, messages []*x.Message) {
 
-}
-
-/*//TODO imple this
-func messageModel_msgsRecicedToUserAddEvents(UserId int, messages []*x.Message) {
-
 }*/
-
-//////////////////////////////////////////////////////////////
-func NewPB_CommandToClient(cmd string) x.PB_CommandToClient {
-	p := x.PB_CommandToClient{
-		ServerCallId: int64(time.Now().UnixNano()),
-		Command:      cmd,
-	}
-	return p
-}
-
-func NewPB_CommandToClient_WithData(cmd string, protoMsg proto.Message) x.PB_CommandToClient {
-	m := NewPB_CommandToClient(cmd)
-	bytes, err := proto.Marshal(protoMsg)
-	if err == nil {
-		m.Data = bytes
-	} else {
-		helper.DebugPrintln("ERROR : proto.Marshal NewPB_CommandToClient_WithData, ", err)
-	}
-	return m
-}

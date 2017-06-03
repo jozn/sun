@@ -2,12 +2,15 @@ package models
 
 import (
 	"ms/sun/base"
-	"ms/sun/helper"
 	"ms/sun/models/x"
 	"time"
 )
 
 var chanNewMsgPushEventsBuffer = make(chan x.MsgPushEvent, 20000)
+
+func init() {
+	batchechanNewMsgPushEventsBuffer()
+}
 
 func batchechanNewMsgPushEventsBuffer() {
 	const siz = 10000
@@ -95,6 +98,8 @@ func MessageModel_PushToPipeMsgEventsToUser(UserId int, eventsRows []x.MsgPushEv
 
 }
 
+/*
+
 func messageModel_msgsRecicedToPeerAddEvents(UserId int, messages []*x.Message) {
 	for _, msg := range messages {
 		me := x.MsgPushEvent{
@@ -113,3 +118,4 @@ func messageModel_msgsRecicedToPeerAddEvents(UserId int, messages []*x.Message) 
 	}
 
 }
+*/
