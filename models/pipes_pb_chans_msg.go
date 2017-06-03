@@ -109,6 +109,9 @@ func processNewChatMsgBuffer(msgsBuff []newChatMsgBuffer) {
 }
 
 func MessageModel_PushToPipeMsgsToUser(UserId int, messages []*x.Message) {
+	if len(messages) == 0 {
+		return
+	}
 	if AllPipesMap.IsPipeOpen(UserId) {
 		//cmd := NewPB_CommandToClient("AddManyMsgs")
 

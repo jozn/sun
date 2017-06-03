@@ -67,6 +67,7 @@ func PBConv_PB_MsgSeen_toNew_MsgPushEvent(pb *x.PB_MsgSeen) x.MsgPushEvent {
 
 func PBConv_User_toNew_PB_UserWithMe(p *x.User, meId int) x.PB_UserWithMe {
 	u := x.PB_UserWithMe{
+		//UserId:         int32(p.Id),
 		UserId:         int32(p.Id),
 		UserName:       p.UserName, //must set
 		FirstName:      p.FirstName,
