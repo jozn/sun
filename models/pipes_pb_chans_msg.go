@@ -165,8 +165,8 @@ func messageModel_msgsRecicedToUserAddEvents(UserId int, messages []*x.Message) 
 //////////////////////////////////////////////////////////////
 func NewPB_CommandToClient(cmd string) x.PB_CommandToClient {
 	p := x.PB_CommandToClient{
-		CallId:  int64(time.Now().UnixNano()),
-		Command: cmd,
+		ServerCallId: int64(time.Now().UnixNano()),
+		Command:      cmd,
 	}
 	return p
 }

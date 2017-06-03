@@ -14,13 +14,13 @@ option go_package = "x";
 //}*/
 
 message PB_CommandToServer {
-	int64 CallId = 1;
+	int64 ClientCallId = 1;
 	string Command = 2;
 	bytes Data = 3;
 }
 
 message PB_CommandToClient {
-	int64 CallId = 1;
+	int64 ServerCallId = 1;
 	string Command = 2;
 	bytes Data = 3;
 }

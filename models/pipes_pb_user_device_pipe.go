@@ -74,13 +74,16 @@ func (pipe *UserDevicePipe) ServeSendToUserDevice() {
 			if config.IS_DEBUG {
 				wsDebugLog("<- to device:", pipe.UserId, helper.ToJson(r))
 			}
-			pipe.Ws.WriteJSON(r)
+            bts, err := proto.Marshal(r)
+            if err == nil{
+                pipe.Ws.WriteMessage(websocket.BinaryMessage , bts)
+            }
+			//pipe.Ws.WriteJSON(r)
 		}
 		//after closing chanel
 		//fixme :not neccossroy waht about .ShutDownCompletely()?
-		err := pipe.Ws.Close()
-		pipe.IsOpen = false
-		helper.Debug("closed: ", err)
+        pipe.ShutDownCompletely()
+		//helper.Debug("closed: ", err)
 	}()
 }
 
@@ -112,14 +115,14 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 
 	if reqCall.Command == "CallReceivedToClient" {
-		CallRespndMap.runSucceded(reqCall.CallId)
+		CallRespndMap.runSucceded(reqCall.ClientCallId)
 		return
 	}
 
-	if reqCall.CallId != 0 {
+	if reqCall.ClientCallId != 0 {
 		callReceived := x.PB_CommandToClient{
-			Command: "CallReceivedToServer",
-			CallId:  reqCall.CallId,
+			Command:      "CallReceivedToServer",
+			ServerCallId: reqCall.ClientCallId,
 		}
 
 		AllPipesMap.SendToUser(pipe.UserId, callReceived)

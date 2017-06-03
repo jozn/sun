@@ -20,7 +20,6 @@ func flusher_flushPushMsgs(uid int) {
 }
 
 func flusher_flushPushEvents(uid int) {
-
 	eventsRows, err := x.NewMsgPushEvent_Selector().
 		Select_Uid().
 		ToUserId_Eq(uid).

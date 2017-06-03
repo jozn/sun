@@ -63,7 +63,7 @@ func (m pipesMap) SendToUserWithCallBacks(UserId int, call x.PB_CommandToClient,
 		}()
 
 		resCallback := callRespondCallback{
-			serverCallId: call.CallId,
+			serverCallId: call.ServerCallId,
 			success:      callback,
 			error:        errback,
 			timeoutAtMs:  helper.TimeNowMs() + 5000,
@@ -88,9 +88,7 @@ func (m pipesMap) ShutDownUser(UserId int) {
 	pipe, ok := m.GetUserPipe(UserId)
 	if ok {
 		pipe.ShutDown()
-		m.m.RLock()
-		delete(m.mp, UserId)
-		m.m.RUnlock()
+		m.DeleteUserPipe(UserId)
 	}
 }
 
@@ -124,12 +122,12 @@ func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 
 func (m pipesMap) AddUserPipe(UserId int, pipe *UserDevicePipe) {
 	m.m.Lock()
+    defer m.m.Unlock()
 	m.mp[UserId] = pipe
-	m.m.Unlock()
 }
 
 func (m pipesMap) DeleteUserPipe(UserId int) {
 	m.m.Lock()
+	defer m.m.Unlock()
 	delete(m.mp, UserId)
-	m.m.Unlock()
 }
