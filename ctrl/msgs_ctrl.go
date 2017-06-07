@@ -73,8 +73,11 @@ func MsgUploadV1(w http.ResponseWriter, r *http.Request) {
 	//msgToSend.MediaServerSrc = "http://localhost:5000/" + fileName[2:] //remove: "./"
 	//msgToSend.msgFile = "http://localhost:5000/" + fileName[2:] //remove: "./"
 
-	models.MessageModel.SendAndStoreMessage(toUid, msgToSend)
+	//TODO fixME
+	//models.MessageModel.SendAndStoreMessage(toUid, msgToSend)
+	//models.SampleSendMessage(toUid, msgToSend)
 
+	_ = toUid
 	/*meta := models.CreateMsgRecivedToServerMetaResponse(&msgRecived)
 
 	  recivedCmd := commands.NewMsgsReceivedToServer(meta)

@@ -27,7 +27,7 @@ func init() {
 	callRespondMap = _registerMap{
 		mp: make(map[int64]callRespondCallback, 100),
 	}
-	intervalRunCallsTimeOutChecker()
+	go intervalRunCallsTimeOutChecker()
 
 }
 

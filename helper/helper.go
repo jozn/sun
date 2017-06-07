@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"math/rand"
@@ -33,6 +34,14 @@ func RandomUid64() int64 {
 	return (atomic.AddInt64(&uid, 1))
 	/*t := (int(time.Now().UnixNano())%1e+15)
 	  return (t*(rand.Intn(899)+100))*/
+}
+
+func ToBase64Bin(bytes []byte) string {
+	return base64.StdEncoding.EncodeToString(bytes)
+}
+
+func FromBase64ToBin(str string) ([]byte, error) {
+	return base64.StdEncoding.DecodeString(str)
 }
 
 func TimeNowMs() int {

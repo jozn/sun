@@ -250,6 +250,7 @@ func PBConvPB__Message_To_Message( o *PB_Message) *Message {
       MessageType: int ( o.MessageType ),
       RoomType: int ( o.RoomType ),
       DataPB: []byte ( o.DataPB ),
+      Data64: string ( o.Data64 ),
       DataJson: string ( o.DataJson ),
       CreatedTimeMs: int ( o.CreatedTimeMs ),
     }
@@ -266,6 +267,7 @@ func PBConvPB_Message_To_Message ( o *Message) *PB_Message {
       MessageType: int32 ( o.MessageType ),
       RoomType: int32 ( o.RoomType ),
       DataPB: []byte ( o.DataPB ),
+      Data64: string ( o.Data64 ),
       DataJson: string ( o.DataJson ),
       CreatedTimeMs: int64 ( o.CreatedTimeMs ),
     }

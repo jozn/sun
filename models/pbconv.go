@@ -19,14 +19,15 @@ func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {
 		RoomKey:       pb.RoomKey,
 		MessageType:   int(pb.MessageTypeId),
 		RoomType:      int(pb.RoomTypeId),
-		DataPB:        bytes,
+		DataPB:        []byte(""),                //bytes,
+		Data64:        helper.ToBase64Bin(bytes), //bytes,
 		DataJson:      json,
 		CreatedTimeMs: int(helper.TimeNowMs()),
 	}
-	bs, err := proto.Marshal(pb)
+	/*bs, err := proto.Marshal(pb)
 	if err == nil {
 		msg.DataPB = bs
-	}
+	}*/
 
 	return msg
 }

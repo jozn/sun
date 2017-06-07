@@ -22,6 +22,7 @@ import (
 var redisPool *pool.Pool
 
 func main() {
+	print("Try To Start The App")
 	startApp()
 
 	/*go func() {
@@ -32,12 +33,14 @@ func main() {
 		models.Client_GRPC()
 	}()*/
 
-	go func() {
+	/*go func() {
 		helper.JustRecover()
-		http.ListenAndServe(":5000", nil)
-	}()
+		//http.ListenAndServe(":5000", nil)
+	}()*/
 
-	http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
+	http.ListenAndServe(":5000", nil)
+
+	//http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
 	//runtime.MemProfileRecord{}.
 }
 
@@ -56,7 +59,7 @@ func startApp() {
 	//base.RegisterGlobTypes()
 
 	//// Inits ///////////////
-	registerCmdRouters()
+	//registerCmdRouters()
 
 	http.HandleFunc("/public/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, r.URL.Path[1:])
@@ -69,6 +72,12 @@ func startApp() {
 	models.OnAppStart_Models()
 
 	_ = v1Tree
+
+	go func() {
+		helper.JustRecover()
+		//http.ListenAndServe(":6000", v1Tree)
+	}()
+
 }
 
 func redisInit() {

@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"github.com/golang/protobuf/proto"
 	"ms/sun/helper"
 	"ms/sun/models/x"
@@ -31,6 +32,14 @@ func RoomKeyToPeerUserId(RoomKey string, CurrentUserId int) (int, error) {
 		return highId, nil
 	}
 	return lowId, nil
+}
+
+//format "p142_1569"
+func UserIdsToRoomKey(UserId1, UserId2 int) string {
+	if UserId2 < UserId1 {
+		UserId1, UserId2 = UserId2, UserId1
+	}
+	return fmt.Sprintf("p%d_%d", UserId1, UserId2)
 }
 
 //////////////////////////////////////////////////////////////

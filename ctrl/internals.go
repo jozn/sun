@@ -6,6 +6,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
+	"ms/sun/models/x"
 	"time"
 )
 
@@ -51,14 +52,23 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 
 			fromUserId := helper.StrToInt(strFrom, rand.Intn(80)+1)
 			//msg := chat.MessagesTable{}
-			msg := models.MessagesTableFromClient{}
+			//msg := models.MessagesTableFromClient{}
+			msg := &x.PB_Message{}
 			msg.RoomKey = models.UserIdsToRoomKey(toUserId, fromUserId) //"u" + helper.IntToStr(uid)
-			msg.UserId = fromUserId
+			msg.UserId = int64(fromUserId)
 			msg.MessageKey = helper.IntToStr(fromUserId) + "@:" + helper.RandString(10)
-			msg.CreatedMs = helper.TimeNowMs()
+			msg.CreatedMs = int64(helper.TimeNowMs())
 			msg.MessageTypeId = 10
 			msg.Text = txt
 
+			/*msg := &x.PB_Message{
+			    UserId:        pb.UserId,
+			    MessageKey:    pb.MessageKey,
+			    RoomKey:       pb.RoomKey,
+			    MessageTypeId:   pb.MessageTypeId,
+			    RoomTypeId:      pb.RoomTypeId,
+			    CreatedTimeMs: helper.TimeNowMs(),
+			}*/
 			/*if is_image {
 				msg.MessageTypeId = 40
 				msg.MediaName = helper.RandString(10) + ".jpg"
@@ -70,6 +80,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 			}*/
 
 			if is_image {
+				//f := &models.MsgFile{
 				f := &models.MsgFile{
 					LocalSrc:  "",
 					Hash:      helper.IntToStr(rand.Intn(21) + 1),
@@ -87,7 +98,8 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 					CreatedMs: 15254542,
 				}
 				msg.MessageTypeId = 40
-				msg.MsgFile = f
+				_ = f
+				//msg.MsgFile = f
 			}
 
 			/*cmd := base.NewCommand(constants.MsgsAddNew)
@@ -98,7 +110,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 			//res.Commands = []*base.Command{&cmd}
 			//sync.AllPipesMap.SendToUser(6,res)
 			//pipesold.AllPipesMap.SendAndStoreCmdToUser(userId, cmd)
-			models.MessageModel.SendAndStoreMessage(toUserId, msg)
+			models.SampleSendMessage(toUserId, msg)
 			time.Sleep(time.Millisecond * time.Duration(dInt))
 		}
 		//return

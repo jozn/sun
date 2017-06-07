@@ -24,6 +24,7 @@ type Message__ struct {
 	MessageType   int    `json:"MessageType"`   // MessageType -
 	RoomType      int    `json:"RoomType"`      // RoomType -
 	DataPB        []byte `json:"DataPB"`        // DataPB -
+	Data64        string `json:"Data64"`        // Data64 -
 	DataJson      string `json:"DataJson"`      // DataJson -
 	CreatedTimeMs int    `json:"CreatedTimeMs"` // CreatedTimeMs -
 
@@ -52,14 +53,14 @@ func (m *Message) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.messages (` +
-		`Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs` +
+		`Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, Data64, DataJson, CreatedTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
-	res, err := db.Exec(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
+	XOLog(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.Data64, m.DataJson, m.CreatedTimeMs)
+	res, err := db.Exec(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.Data64, m.DataJson, m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -87,14 +88,14 @@ func (m *Message) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.messages (` +
-		`Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs` +
+		`Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, Data64, DataJson, CreatedTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
-	res, err := db.Exec(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs)
+	XOLog(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.Data64, m.DataJson, m.CreatedTimeMs)
+	res, err := db.Exec(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.Data64, m.DataJson, m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -132,12 +133,12 @@ func (m *Message) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.messages SET ` +
-		`Uid = ?, UserId = ?, MessageKey = ?, RoomKey = ?, MessageType = ?, RoomType = ?, DataPB = ?, DataJson = ?, CreatedTimeMs = ?` +
+		`Uid = ?, UserId = ?, MessageKey = ?, RoomKey = ?, MessageType = ?, RoomType = ?, DataPB = ?, Data64 = ?, DataJson = ?, CreatedTimeMs = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs, m.Id)
-	_, err = db.Exec(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.DataJson, m.CreatedTimeMs, m.Id)
+	XOLog(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.Data64, m.DataJson, m.CreatedTimeMs, m.Id)
+	_, err = db.Exec(sqlstr, m.Uid, m.UserId, m.MessageKey, m.RoomKey, m.MessageType, m.RoomType, m.DataPB, m.Data64, m.DataJson, m.CreatedTimeMs, m.Id)
 
 	XOLogErr(err)
 	OnMessage_AfterUpdate(m)
@@ -2264,6 +2265,66 @@ func (d *__Message_Deleter) RoomKey_NotEq(val string) *__Message_Deleter {
 	return d
 }
 
+func (u *__Message_Deleter) Data64_In(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Data64 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Deleter) Data64_NotIn(ins []string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Data64 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Deleter) Data64_Like(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data64 LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Deleter) Data64_Eq(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data64 = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Deleter) Data64_NotEq(val string) *__Message_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data64 != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Message_Deleter) DataJson_In(ins []string) *__Message_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2446,6 +2507,66 @@ func (d *__Message_Updater) RoomKey_NotEq(val string) *__Message_Updater {
 	return d
 }
 
+func (u *__Message_Updater) Data64_In(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Data64 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Updater) Data64_NotIn(ins []string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Data64 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Updater) Data64_Like(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data64 LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Updater) Data64_Eq(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data64 = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Updater) Data64_NotEq(val string) *__Message_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data64 != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__Message_Updater) DataJson_In(ins []string) *__Message_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2623,6 +2744,66 @@ func (d *__Message_Selector) RoomKey_NotEq(val string) *__Message_Selector {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " RoomKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Message_Selector) Data64_In(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Data64 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Message_Selector) Data64_NotIn(ins []string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Data64 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Message_Selector) Data64_Like(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data64 LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Message_Selector) Data64_Eq(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data64 = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Message_Selector) Data64_NotEq(val string) *__Message_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Data64 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2820,6 +3001,14 @@ func (u *__Message_Updater) RoomType_Increment(count int) *__Message_Updater {
 //ints
 
 //string
+func (u *__Message_Updater) Data64(newVal string) *__Message_Updater {
+	u.updates[" Data64 = ? "] = newVal
+	return u
+}
+
+//ints
+
+//string
 func (u *__Message_Updater) DataJson(newVal string) *__Message_Updater {
 	u.updates[" DataJson = ? "] = newVal
 	return u
@@ -2968,6 +3157,21 @@ func (u *__Message_Selector) OrderBy_DataPB_Asc() *__Message_Selector {
 
 func (u *__Message_Selector) Select_DataPB() *__Message_Selector {
 	u.selectCol = "DataPB"
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_Data64_Desc() *__Message_Selector {
+	u.orderBy = " ORDER BY Data64 DESC "
+	return u
+}
+
+func (u *__Message_Selector) OrderBy_Data64_Asc() *__Message_Selector {
+	u.orderBy = " ORDER BY Data64 ASC "
+	return u
+}
+
+func (u *__Message_Selector) Select_Data64() *__Message_Selector {
+	u.selectCol = "Data64"
 	return u
 }
 
@@ -3269,12 +3473,12 @@ func (d *__Message_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_Message(rows []Message, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.messages (" +
-		"Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs" +
+		"Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, Data64, DataJson, CreatedTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -3289,6 +3493,7 @@ func MassInsert_Message(rows []Message, db XODB) error {
 		vals = append(vals, row.MessageType)
 		vals = append(vals, row.RoomType)
 		vals = append(vals, row.DataPB)
+		vals = append(vals, row.Data64)
 		vals = append(vals, row.DataJson)
 		vals = append(vals, row.CreatedTimeMs)
 
@@ -3308,12 +3513,12 @@ func MassInsert_Message(rows []Message, db XODB) error {
 func MassReplace_Message(rows []Message, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.messages (" +
-		"Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs" +
+		"Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, Data64, DataJson, CreatedTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -3328,6 +3533,7 @@ func MassReplace_Message(rows []Message, db XODB) error {
 		vals = append(vals, row.MessageType)
 		vals = append(vals, row.RoomType)
 		vals = append(vals, row.DataPB)
+		vals = append(vals, row.Data64)
 		vals = append(vals, row.DataJson)
 		vals = append(vals, row.CreatedTimeMs)
 
@@ -3366,6 +3572,8 @@ func MassReplace_Message(rows []Message, db XODB) error {
 
 //
 
+//
+
 // MessageByMessageKey retrieves a row from 'ms.messages' as a Message.
 //
 // Generated from index 'MessageKey'.
@@ -3374,7 +3582,7 @@ func MessageByMessageKey(db XODB, messageKey string) (*Message, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs ` +
+		`Id, Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, Data64, DataJson, CreatedTimeMs ` +
 		`FROM ms.messages ` +
 		`WHERE MessageKey = ?`
 
@@ -3384,7 +3592,7 @@ func MessageByMessageKey(db XODB, messageKey string) (*Message, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, messageKey).Scan(&m.Id, &m.Uid, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.DataPB, &m.DataJson, &m.CreatedTimeMs)
+	err = db.QueryRow(sqlstr, messageKey).Scan(&m.Id, &m.Uid, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.DataPB, &m.Data64, &m.DataJson, &m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
@@ -3403,7 +3611,7 @@ func MessageById(db XODB, id int) (*Message, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, DataJson, CreatedTimeMs ` +
+		`Id, Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, DataPB, Data64, DataJson, CreatedTimeMs ` +
 		`FROM ms.messages ` +
 		`WHERE Id = ?`
 
@@ -3413,7 +3621,7 @@ func MessageById(db XODB, id int) (*Message, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.Uid, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.DataPB, &m.DataJson, &m.CreatedTimeMs)
+	err = db.QueryRow(sqlstr, id).Scan(&m.Id, &m.Uid, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.DataPB, &m.Data64, &m.DataJson, &m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

@@ -9,7 +9,7 @@ import (
 var chanNewMsgPushEventsBuffer = make(chan x.MsgPushEvent, 20000)
 
 func init() {
-	batchechanNewMsgPushEventsBuffer()
+	go batchechanNewMsgPushEventsBuffer()
 }
 
 func batchechanNewMsgPushEventsBuffer() {

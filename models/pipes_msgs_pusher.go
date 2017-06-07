@@ -23,10 +23,15 @@ func (p *sMsgPusher) pushToUser() {
 
 	for _, m := range p.messages {
 		pbMsg := &x.PB_Message{}
-		err := proto.Unmarshal(m.DataPB, pbMsg)
+		//err := proto.Unmarshal(m.DataPB, pbMsg)
+		bts, err := helper.FromBase64ToBin(m.Data64)
 		if err == nil {
-			pbMsgs = append(pbMsgs, pbMsg)
+			err := proto.Unmarshal(bts, pbMsg)
+			if err == nil {
+				pbMsgs = append(pbMsgs, pbMsg)
+			}
 		}
+
 		userIds[m.UserId] = true
 	}
 

@@ -2761,35 +2761,6 @@ func LikesById(db XODB, id int) ([]*Like, error) {
 	return res, nil
 }
 
-// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'PostId'.
-func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, PostTypeId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE PostId = ? AND UserId = ?`
-
-	// run query
-	XOLog(sqlstr, postId, userId)
-	l := Like{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.PostTypeId, &l.UserId, &l.TypeId, &l.CreatedTime)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnLike_LoadOne(&l)
-
-	return &l, nil
-}
-
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.
 //
 // Generated from index 'PostId_2'.

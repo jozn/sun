@@ -90,8 +90,9 @@ message PB_Message {
     int32 MessageType = 11;
     int32 RoomType = 13;
     ???? DataPB = 15;
-    string DataJson = 17;
-    int64 CreatedTimeMs = 19;
+    string Data64 = 17;
+    string DataJson = 19;
+    int64 CreatedTimeMs = 21;
 }
 message PB_MsgDeletedFromServer {
     int64 Id = 1;

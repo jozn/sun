@@ -98,6 +98,7 @@ public class J {
 		public Integer MessageType;
 		public Integer RoomType;
 		public UNKNOWN DataPB;
+		public String Data64;
 		public String DataJson;
 		public Integer CreatedTimeMs;
 	}
