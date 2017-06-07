@@ -3490,6 +3490,49 @@ func MassReplace_MsgPushEvent(rows []MsgPushEvent, db XODB) error {
 
 //
 
+// MsgPushEventsByToUserId retrieves a row from 'ms.msg_push_event' as a MsgPushEvent.
+//
+// Generated from index 'ToUserId'.
+func MsgPushEventsByToUserId(db XODB, toUserId int) ([]*MsgPushEvent, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, Uid, ToUserId, MsgUid, MsgKey, RoomKey, PeerUserId, EventType, AtTime ` +
+		`FROM ms.msg_push_event ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*MsgPushEvent{}
+	for q.Next() {
+		mpe := MsgPushEvent{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&mpe.Id, &mpe.Uid, &mpe.ToUserId, &mpe.MsgUid, &mpe.MsgKey, &mpe.RoomKey, &mpe.PeerUserId, &mpe.EventType, &mpe.AtTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &mpe)
+	}
+
+	OnMsgPushEvent_LoadMany(res)
+
+	return res, nil
+}
+
 // MsgPushEventById retrieves a row from 'ms.msg_push_event' as a MsgPushEvent.
 //
 // Generated from index 'msg_push_event_Id_pkey'.

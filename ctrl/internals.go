@@ -60,6 +60,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 			msg.CreatedMs = int64(helper.TimeNowMs())
 			msg.MessageTypeId = 10
 			msg.Text = txt
+			msg.RoomTypeId = 1
 
 			/*msg := &x.PB_Message{
 			    UserId:        pb.UserId,
@@ -110,6 +111,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 			//res.Commands = []*base.Command{&cmd}
 			//sync.AllPipesMap.SendToUser(6,res)
 			//pipesold.AllPipesMap.SendAndStoreCmdToUser(userId, cmd)
+            fmt.Println("sending Sample msg toUser", toUserId, " msgKey: ", msg.MessageKey, " Room: ", msg.RoomKey)
 			models.SampleSendMessage(toUserId, msg)
 			time.Sleep(time.Millisecond * time.Duration(dInt))
 		}

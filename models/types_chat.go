@@ -1,10 +1,5 @@
 package models
 
-import (
-	"ms/sun/helper"
-	"ms/sun/models/x"
-)
-
 /*
 type Message struct {
 	Id         int    `json:"Id"`         // Id -
@@ -39,6 +34,7 @@ func (m *x.Message) FromClientMessageOptimized(toUser int, msg MessagesTableFrom
 	m.TimeMs = msg.CreatedMs
 }
 */
+/*
 
 func Message_FromClientMessage(m *x.MessageOld, toUser int, msg MessagesTableFromClient) {
 	m.FromUserID = msg.UserId
@@ -57,6 +53,7 @@ func Message_FromClientMessageOptimized(m *x.MessageOld, toUser int, msg Message
 	//m.Data=       helper.ToJson(msg)
 	m.TimeMs = msg.CreatedMs
 }
+*/
 
 /*
 type MsgDeletedFromServer struct {

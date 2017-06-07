@@ -213,33 +213,6 @@ func PBConvPB_Media_To_Media ( o *Media) *PB_Media {
 }
 */
 /*
-func PBConvPB__MessageOld_To_MessageOld( o *PB_MessageOld) *MessageOld {
-     n := &MessageOld{
-      Id: int ( o.Id ),
-      ToUserId: int ( o.ToUserId ),
-      RoomKey: string ( o.RoomKey ),
-      MessageKey: string ( o.MessageKey ),
-      FromUserID: int ( o.FromUserID ),
-      Data: string ( o.Data ),
-      TimeMs: int ( o.TimeMs ),
-    }
-    return n
-}
-
-func PBConvPB_MessageOld_To_MessageOld ( o *MessageOld) *PB_MessageOld {
-     n := &PB_MessageOld{
-      Id: int64 ( o.Id ),
-      ToUserId: int32 ( o.ToUserId ),
-      RoomKey: string ( o.RoomKey ),
-      MessageKey: string ( o.MessageKey ),
-      FromUserID: int32 ( o.FromUserID ),
-      Data: string ( o.Data ),
-      TimeMs: int64 ( o.TimeMs ),
-    }
-    return n
-}
-*/
-/*
 func PBConvPB__Message_To_Message( o *PB_Message) *Message {
      n := &Message{
       Id: int ( o.Id ),
@@ -270,31 +243,6 @@ func PBConvPB_Message_To_Message ( o *Message) *PB_Message {
       Data64: string ( o.Data64 ),
       DataJson: string ( o.DataJson ),
       CreatedTimeMs: int64 ( o.CreatedTimeMs ),
-    }
-    return n
-}
-*/
-/*
-func PBConvPB__MsgDeletedFromServer_To_MsgDeletedFromServer( o *PB_MsgDeletedFromServer) *MsgDeletedFromServer {
-     n := &MsgDeletedFromServer{
-      Id: int ( o.Id ),
-      ToUserId: int ( o.ToUserId ),
-      MsgKey: string ( o.MsgKey ),
-      PeerUserId: int ( o.PeerUserId ),
-      RoomKey: string ( o.RoomKey ),
-      AtTime: int ( o.AtTime ),
-    }
-    return n
-}
-
-func PBConvPB_MsgDeletedFromServer_To_MsgDeletedFromServer ( o *MsgDeletedFromServer) *PB_MsgDeletedFromServer {
-     n := &PB_MsgDeletedFromServer{
-      Id: int64 ( o.Id ),
-      ToUserId: int32 ( o.ToUserId ),
-      MsgKey: string ( o.MsgKey ),
-      PeerUserId: int32 ( o.PeerUserId ),
-      RoomKey: string ( o.RoomKey ),
-      AtTime: int32 ( o.AtTime ),
     }
     return n
 }
@@ -348,56 +296,6 @@ func PBConvPB_MsgPushEvent_To_MsgPushEvent ( o *MsgPushEvent) *PB_MsgPushEvent {
       RoomKey: string ( o.RoomKey ),
       PeerUserId: int32 ( o.PeerUserId ),
       EventType: int32 ( o.EventType ),
-      AtTime: int32 ( o.AtTime ),
-    }
-    return n
-}
-*/
-/*
-func PBConvPB__MsgReceivedToPeer_To_MsgReceivedToPeer( o *PB_MsgReceivedToPeer) *MsgReceivedToPeer {
-     n := &MsgReceivedToPeer{
-      Id: int ( o.Id ),
-      ToUserId: int ( o.ToUserId ),
-      MsgKey: string ( o.MsgKey ),
-      RoomKey: string ( o.RoomKey ),
-      PeerUserId: int ( o.PeerUserId ),
-      AtTime: int ( o.AtTime ),
-    }
-    return n
-}
-
-func PBConvPB_MsgReceivedToPeer_To_MsgReceivedToPeer ( o *MsgReceivedToPeer) *PB_MsgReceivedToPeer {
-     n := &PB_MsgReceivedToPeer{
-      Id: int64 ( o.Id ),
-      ToUserId: int32 ( o.ToUserId ),
-      MsgKey: string ( o.MsgKey ),
-      RoomKey: string ( o.RoomKey ),
-      PeerUserId: int32 ( o.PeerUserId ),
-      AtTime: int32 ( o.AtTime ),
-    }
-    return n
-}
-*/
-/*
-func PBConvPB__MsgSeenByPeer_To_MsgSeenByPeer( o *PB_MsgSeenByPeer) *MsgSeenByPeer {
-     n := &MsgSeenByPeer{
-      Id: int ( o.Id ),
-      ToUserId: int ( o.ToUserId ),
-      MsgKey: string ( o.MsgKey ),
-      RoomKey: string ( o.RoomKey ),
-      PeerUserId: int ( o.PeerUserId ),
-      AtTime: int ( o.AtTime ),
-    }
-    return n
-}
-
-func PBConvPB_MsgSeenByPeer_To_MsgSeenByPeer ( o *MsgSeenByPeer) *PB_MsgSeenByPeer {
-     n := &PB_MsgSeenByPeer{
-      Id: int64 ( o.Id ),
-      ToUserId: int32 ( o.ToUserId ),
-      MsgKey: string ( o.MsgKey ),
-      RoomKey: string ( o.RoomKey ),
-      PeerUserId: int32 ( o.PeerUserId ),
       AtTime: int32 ( o.AtTime ),
     }
     return n

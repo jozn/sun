@@ -79,16 +79,6 @@ public class J {
 		public String Src;
 	}
 
-	public static class MessageOld {
-		public Integer Id;
-		public Integer ToUserId;
-		public String RoomKey;
-		public String MessageKey;
-		public Integer FromUserID;
-		public String Data;
-		public Integer TimeMs;
-	}
-
 	public static class Message {
 		public Integer Id;
 		public Integer Uid;
@@ -101,15 +91,6 @@ public class J {
 		public String Data64;
 		public String DataJson;
 		public Integer CreatedTimeMs;
-	}
-
-	public static class MsgDeletedFromServer {
-		public Integer Id;
-		public Integer ToUserId;
-		public String MsgKey;
-		public Integer PeerUserId;
-		public String RoomKey;
-		public Integer AtTime;
 	}
 
 	public static class MsgPush {
@@ -129,24 +110,6 @@ public class J {
 		public String RoomKey;
 		public Integer PeerUserId;
 		public Integer EventType;
-		public Integer AtTime;
-	}
-
-	public static class MsgReceivedToPeer {
-		public Integer Id;
-		public Integer ToUserId;
-		public String MsgKey;
-		public String RoomKey;
-		public Integer PeerUserId;
-		public Integer AtTime;
-	}
-
-	public static class MsgSeenByPeer {
-		public Integer Id;
-		public Integer ToUserId;
-		public String MsgKey;
-		public String RoomKey;
-		public Integer PeerUserId;
 		public Integer AtTime;
 	}
 

@@ -1,0 +1,1 @@
+http://localhost:5000/i/msg?to=6&from=2&limit=1&img1=1&delay=10

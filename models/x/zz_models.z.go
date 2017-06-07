@@ -191,30 +191,6 @@ type Media struct {
 	Src: "",
 */
 
-// MessageOld 'ms.message_old'.
-type MessageOld struct {
-	Id         int
-	ToUserId   int
-	RoomKey    string
-	MessageKey string
-	FromUserID int
-	Data       string
-	TimeMs     int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &MessageOld {
-	Id: 0,
-	ToUserId: 0,
-	RoomKey: "",
-	MessageKey: "",
-	FromUserID: 0,
-	Data: "",
-	TimeMs: 0,
-*/
-
 // Message 'ms.messages'.
 type Message struct {
 	Id            int
@@ -245,28 +221,6 @@ type Message struct {
 	Data64: "",
 	DataJson: "",
 	CreatedTimeMs: 0,
-*/
-
-// MsgDeletedFromServer 'ms.msg_deleted_from_server'.
-type MsgDeletedFromServer struct {
-	Id         int
-	ToUserId   int
-	MsgKey     string
-	PeerUserId int
-	RoomKey    string
-	AtTime     int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &MsgDeletedFromServer {
-	Id: 0,
-	ToUserId: 0,
-	MsgKey: "",
-	PeerUserId: 0,
-	RoomKey: "",
-	AtTime: 0,
 */
 
 // MsgPush 'ms.msg_push'.
@@ -314,50 +268,6 @@ type MsgPushEvent struct {
 	RoomKey: "",
 	PeerUserId: 0,
 	EventType: 0,
-	AtTime: 0,
-*/
-
-// MsgReceivedToPeer 'ms.msg_received_to_peer'.
-type MsgReceivedToPeer struct {
-	Id         int
-	ToUserId   int
-	MsgKey     string
-	RoomKey    string
-	PeerUserId int
-	AtTime     int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &MsgReceivedToPeer {
-	Id: 0,
-	ToUserId: 0,
-	MsgKey: "",
-	RoomKey: "",
-	PeerUserId: 0,
-	AtTime: 0,
-*/
-
-// MsgSeenByPeer 'ms.msg_seen_by_peer'.
-type MsgSeenByPeer struct {
-	Id         int
-	ToUserId   int
-	MsgKey     string
-	RoomKey    string
-	PeerUserId int
-	AtTime     int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &MsgSeenByPeer {
-	Id: 0,
-	ToUserId: 0,
-	MsgKey: "",
-	RoomKey: "",
-	PeerUserId: 0,
 	AtTime: 0,
 */
 
