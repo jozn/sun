@@ -127,6 +127,7 @@ type MsgFile struct {
 }
 
 /////// Communication ///////
+/*
 
 type MessageSyncMeta struct {
 	MessageKey string
@@ -135,6 +136,7 @@ type MessageSyncMeta struct {
 	AtTimeMs   int // this is client time
 	ExtraData  interface{}
 }
+*/
 
 /////////////////////////
 // Orma
