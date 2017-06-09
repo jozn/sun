@@ -36,6 +36,9 @@ func (m _registerMap) register(callback callRespondCallback) {
 		helper.DebugErr(errors.New("ERROr: In callRespondCallback, callback.serverCallId must not be 0"))
 		callback.serverCallId = int64(helper.RandomSeqUid())
 	}
+
+	logPipes.Println("_registerMap register() of: ", callback.serverCallId)
+
 	callback.timeoutAtMs = helper.TimeNowMs() + 5000
 	m.Lock()
 	m.mp[callback.serverCallId] = callback
@@ -77,6 +80,8 @@ func (m _registerMap) remove(serverCallId int64) {
 
 func (m _registerMap) runSucceded(serverCallId int64) {
 	helper.Debugf("runSucceded() %d", serverCallId)
+
+	logPipes.Println("_registerMap runSucceded() of: ", serverCallId)
 	callback, err := m.getAndRemove(serverCallId)
 	if err != nil {
 		return
@@ -88,6 +93,8 @@ func (m _registerMap) runSucceded(serverCallId int64) {
 
 func (m _registerMap) runError(serverCallId int64) {
 	helper.Debugf("runSucceded() %d", serverCallId)
+
+	logPipes.Println("_registerMap runError() of: ", serverCallId)
 	callback, err := m.getAndRemove(serverCallId)
 	if err != nil {
 		return
@@ -104,6 +111,7 @@ func (m _registerMap) setIsRunningTimeout(is bool) {
 }
 
 func (m _registerMap) runErrorOfTimeouts() {
+	//logPipes.Println("_registerMap runErrorOfTimeouts()")
 	if m.isRunningTimeout {
 		return
 	}
@@ -128,6 +136,7 @@ func (m _registerMap) runErrorOfTimeouts() {
 	m.Unlock()
 
 	for _, v := range arr {
+		logPipes.Printf("_registerMap clean errorBack of: %d - has errorBack: %v", v.serverCallId, v.error != nil)
 		if v.error != nil {
 			v.error()
 		}

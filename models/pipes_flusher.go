@@ -6,6 +6,7 @@ import (
 )
 
 func flusher_flushPushMsgs(uid int) {
+    logPipes.Println("flusher_flushPushMsgs() uid: ",uid)
 	uids, err := x.NewMsgPush_Selector().
 		Select_Uid().
 		ToUser_Eq(uid).
@@ -20,6 +21,7 @@ func flusher_flushPushMsgs(uid int) {
 }
 
 func flusher_flushPushEvents(uid int) {
+    logPipes.Println("flusher_flushPushEvents() uid: ",uid)
 	eventsRows, err := x.NewMsgPushEvent_Selector().
 		Select_Uid().
 		ToUserId_Eq(uid).
@@ -33,5 +35,7 @@ func flusher_flushPushEvents(uid int) {
 }
 
 func flusher_flushPushNotifications(uid int) {
+    logPipes.Println("flusher_flushPushNotifications() uid: ",uid)
+
 
 }

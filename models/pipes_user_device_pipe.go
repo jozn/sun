@@ -138,6 +138,7 @@ func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	if fnCall != nil {
 		fnCall(reqCall, pipe)
 	} else { //send call func not found -- in debug
+        logPipes.Println("ERROR command nor registerd in CallMapRouter : ", reqCall.Command)
 		helper.DebugPrintln("ERROR command nor registerd in CallMapRouter : ", reqCall.Command)
 	}
 

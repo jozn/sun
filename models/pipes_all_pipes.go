@@ -33,8 +33,8 @@ func (m pipesMap) IsPipeOpen(UserId int) bool {
 func (m pipesMap) SendToUser(UserId int, cmd x.PB_CommandToClient) {
 	pipe, ok := m.GetUserPipe(UserId)
 
-	helper.Debugf("sending to user:%d %v %v ", UserId, ok, cmd.Command)
-	logPipes.Infof("pipesMap sending to user:%d %v %v ", UserId, ok, cmd.Command)
+	helper.Debugf("pipesMap.SendToUser() to user:%d %v %v ", UserId, ok, cmd.Command)
+	logPipes.Infof("pipesMap.SendToUser() no callback to user:%d %v %v ", UserId, ok, cmd.Command)
 
 	if ok && pipe.IsOpen {
 		defer func() {
