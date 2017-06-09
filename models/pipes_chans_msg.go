@@ -34,7 +34,7 @@ func batcheNewMsgsBufferProceess() {
 	}()
 
 	for {
-		time.Sleep(time.Millisecond * 5)
+		time.Sleep(time.Millisecond * 10)
 		if len(arr) > 0 {
 			pre := arr
 			arr = make([]newChatMsgDelayer, 0, siz)

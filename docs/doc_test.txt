@@ -1,0 +1,3 @@
+go test "ms/sun/models" -v
+go test "ms/sun/models" -v bench .
+go test "ms/sun/models" -v bench . -benchmem

@@ -113,13 +113,13 @@ func (m _registerMap) runErrorOfTimeouts() {
 	//helper.DebugPrintln("runErrorOfTimeouts()")
 	var arr []callRespondCallback
 
-	m.RLock()
+	m.Lock()
 	for _, v := range m.mp {
 		if v.timeoutAtMs < helper.TimeNowMs() {
 			arr = append(arr, v)
 		}
 	}
-	m.RUnlock()
+	m.Unlock()
 
 	m.Lock()
 	for _, v := range arr {

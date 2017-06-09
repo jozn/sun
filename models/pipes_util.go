@@ -6,6 +6,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	"ms/sun/helper"
 	"ms/sun/models/x"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -21,17 +22,22 @@ func RoomKeyToPeerUserId(RoomKey string, CurrentUserId int) (int, error) {
 		return 0, errors.New("RoomKey wrong")
 	}
 
-	lowId := helper.StrToInt(arr[0], 0)
-	highId := helper.StrToInt(arr[1], 0)
+	/*lowId := helper.StrToInt(arr[0], 0)
+	highId := helper.StrToInt(arr[1], 0)*/
 
-	if lowId == 0 || highId == 0 || lowId >= highId || lowId < 1 || highId < 1 {
+	lowId, e1 := strconv.ParseInt(arr[0], 10, 64)
+	highId, e2 := strconv.ParseInt(arr[1], 10, 64)
+
+	if lowId == 0 || highId == 0 || lowId >= highId || lowId < 1 || highId < 1 || e1 != nil || e2 != nil {
 		return 0, errors.New("RoomKey wrong")
 	}
 
-	if lowId == CurrentUserId {
-		return highId, nil
+	lowId2 := int(lowId)
+	highId2 := int(highId)
+	if lowId2 == CurrentUserId {
+		return highId2, nil
 	}
-	return lowId, nil
+	return lowId2, nil
 }
 
 //format "p142_1569"

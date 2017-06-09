@@ -12,7 +12,7 @@ import (
 
 func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 	ds := a.Req.Form.Get("delay")
-	strToUserId := a.Req.Form.Get("user")
+	strToUserId := a.Req.Form.Get("to")
 	strFrom := a.Req.Form.Get("from")
 	l := a.Req.Form.Get("limit")
 	text := a.Req.Form.Get("text")
@@ -111,7 +111,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 			//res.Commands = []*base.Command{&cmd}
 			//sync.AllPipesMap.SendToUser(6,res)
 			//pipesold.AllPipesMap.SendAndStoreCmdToUser(userId, cmd)
-            fmt.Println("sending Sample msg toUser", toUserId, " msgKey: ", msg.MessageKey, " Room: ", msg.RoomKey)
+			fmt.Println("sending Sample msg toUser", toUserId, " msgKey: ", msg.MessageKey, " Room: ", msg.RoomKey)
 			models.SampleSendMessage(toUserId, msg)
 			time.Sleep(time.Millisecond * time.Duration(dInt))
 		}
