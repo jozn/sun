@@ -1,19 +1,6 @@
 package main
 
-import (
-	. "ms/sun/actions"
-	"ms/sun/ctrl"
-	"ms/sun/fact"
-	"ms/sun/models"
-	"net/http"
-	//"ms/sun/routes"
-	"fmt"
-	"ms/sun/base"
-	"ms/sun/config"
-
-	"github.com/dimfeld/httptreemux"
-)
-
+/*
 func registerRoutes() *httptreemux.TreeMux {
 	v1Tree := httptreemux.New()
 	v1Tree.PanicHandler = func(w http.ResponseWriter, r *http.Request, p interface{}) {
@@ -141,3 +128,4 @@ func toV1(fn func(*base.Action) base.AppErr) func(http.ResponseWriter, *http.Req
 		(base.Action{Fn2: fn, Ver: 2}).ServeHTTP(rw, r)
 	}
 }
+*/

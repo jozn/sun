@@ -17,6 +17,8 @@ func (p *sMsgPusher) pushToUser() {
 		return
 	}
 
+	logPipes.Printf("sMsgPusher.pushToUser() uid:%d , msgs len:%d \n", p.toUserId, len(p.messages))
+
 	pbMsgs := []*x.PB_Message{}
 	userIds := make(map[int]bool)
 	pbUsers := []*x.PB_UserWithMe{}
@@ -55,6 +57,8 @@ func (p *sMsgPusher) pushToUser() {
 }
 
 func (p *sMsgPusher) onPushedToUser() {
+	logPipes.Printf("sMsgPusher.onPushedToUser() uid:%d , msgs len:%d \n", p.toUserId, len(p.messages))
+
 	p.addEventReceivedToPeer()
 	p.removeFromMsgPush()
 	p.deletedMessageFromServer()
@@ -66,7 +70,7 @@ func (p *sMsgPusher) removeFromMsgPush() {
 	for _, msg := range p.messages {
 		uids = append(uids, msg.Uid)
 	}
-	x.NewMsgPush_Deleter().ToUser_Eq(p.toUserId).Uid_In(uids).Delete(base.DB)
+	x.NewMsgPush_Deleter().ToUser_Eq(p.toUserId).MsgUid_In(uids).Delete(base.DB)
 }
 
 func (p *sMsgPusher) addEventReceivedToPeer() {

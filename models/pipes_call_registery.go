@@ -111,7 +111,7 @@ func (m _registerMap) setIsRunningTimeout(is bool) {
 }
 
 func (m _registerMap) runErrorOfTimeouts() {
-	//logPipes.Println("_registerMap runErrorOfTimeouts()")
+	//logPipes2.Println("_registerMap runErrorOfTimeouts()")
 	if m.isRunningTimeout {
 		return
 	}

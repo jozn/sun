@@ -33,7 +33,7 @@ func (m pipesMap) IsPipeOpen(UserId int) bool {
 func (m pipesMap) SendToUser(UserId int, cmd x.PB_CommandToClient) {
 	pipe, ok := m.GetUserPipe(UserId)
 
-	helper.Debugf("pipesMap.SendToUser() to user:%d %v %v ", UserId, ok, cmd.Command)
+	//helper.Debugf("pipesMap.SendToUser() to user:%d %v %v ", UserId, ok, cmd.Command)
 	logPipes.Infof("pipesMap.SendToUser() no callback to user:%d %v %v ", UserId, ok, cmd.Command)
 
 	if ok && pipe.IsOpen {
@@ -55,7 +55,7 @@ func (m pipesMap) SendToUserWithCallBack(UserId int, call x.PB_CommandToClient, 
 
 func (m pipesMap) SendToUserWithCallBacks(UserId int, call x.PB_CommandToClient, callback func(), errback func()) {
 	pipe, ok := m.GetUserPipe(UserId)
-	helper.Debugf("sending to user:%d  - pipe is: %v --- %s ", UserId, ok, call.Command)
+	//helper.Debugf("sending to user:%d  - pipe is: %v --- %s ", UserId, ok, call.Command)
 	logPipes.Infof("pipesMap sending to user withCallbacks:%d %v %v ", UserId, ok, call.Command)
 
 	if ok && pipe.IsOpen {
@@ -64,7 +64,7 @@ func (m pipesMap) SendToUserWithCallBacks(UserId int, call x.PB_CommandToClient,
 				//pipe.IsOpen = false
 				pipe.ShutDownCompletely()
 				helper.Debug("Recovered in SendToUser: ", r)
-				logPipes.Infoln("Recovered in SendToUser: ", r)
+				logPipes.Info("Recovered in SendToUser: ", r)
 			}
 		}()
 
@@ -79,7 +79,7 @@ func (m pipesMap) SendToUserWithCallBacks(UserId int, call x.PB_CommandToClient,
 
 		pipe.SendToUser(call)
 	} else {
-		logPipes.Infoln(" pipesMap SendToUserWithCallBacks: user is not connected (just run errorback if providd) ")
+		logPipes.Info(" pipesMap SendToUserWithCallBacks: user is not connected (just run errorback if providd) ")
 		if errback != nil {
 			errback()
 		}
@@ -94,7 +94,7 @@ func (m pipesMap) GetUserPipe(UserId int) (*UserDevicePipe, bool) {
 }
 
 func (m pipesMap) ShutDownUser(UserId int) {
-	logPipes.Infoln("pipesMap ShutDownUser ", UserId)
+	logPipes.Info("pipesMap ShutDownUser ", UserId)
 
 	pipe, ok := m.GetUserPipe(UserId)
 	if ok {
@@ -113,7 +113,7 @@ func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 	}
 
 	helper.DebugPrintln("serving user ws for user: ", UserId)
-	logPipes.Debugln("serving user ws for user: ", UserId)
+	logPipes.Debug("serving user ws for user: ", UserId)
 
 	pipe.ServeIncomingCalls()
 	pipe.ServeSendToUserDevice()
@@ -133,14 +133,14 @@ func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 }
 
 func (m pipesMap) AddUserPipe(UserId int, pipe *UserDevicePipe) {
-	logPipes.Infoln("pipesMap AddUserPipe UserId ", UserId)
+	logPipes.Info("pipesMap AddUserPipe UserId ", UserId)
 	m.m.Lock()
 	defer m.m.Unlock()
 	m.mp[UserId] = pipe
 }
 
 func (m pipesMap) DeleteUserPipe(UserId int) {
-	logPipes.Infoln("pipesMap DeleteUserPipe UserId ", UserId)
+	logPipes.Info("pipesMap DeleteUserPipe UserId ", UserId)
 	m.m.Lock()
 	defer m.m.Unlock()
 	delete(m.mp, UserId)

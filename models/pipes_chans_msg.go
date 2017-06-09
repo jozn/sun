@@ -98,9 +98,9 @@ func processNewChatMsgBuffer(msgsDelays []newChatMsgDelayer) {
 }
 
 func MessageModel_PushToPipeMsgsToUser(UserId int, messages []*x.Message) {
-	if len(messages) == 0 || !AllPipesMap.IsPipeOpen(UserId) {
+	/*if len(messages) == 0 || !AllPipesMap.IsPipeOpen(UserId) {
 		return
-	}
+	}*/
 
 	msgPusher := sMsgPusher{
 		messages: messages,

@@ -6,9 +6,9 @@ import (
 )
 
 func flusher_flushPushMsgs(uid int) {
-    logPipes.Println("flusher_flushPushMsgs() uid: ",uid)
+	logPipes.Println("flusher_flushPushMsgs() uid: ", uid)
 	uids, err := x.NewMsgPush_Selector().
-		Select_Uid().
+		Select_MsgUid().
 		ToUser_Eq(uid).
 		OrderBy_Id_Desc().
 		GetIntSlice(base.DB)
@@ -17,11 +17,14 @@ func flusher_flushPushMsgs(uid int) {
 	}
 
 	msgs := Message_GetMsgsByUids(uids)
+
+	logPipes.Println("flusher_flushPushMsgs() len: ", len(msgs) , " ", len(uids))
+
 	MessageModel_PushToPipeMsgsToUser(uid, msgs)
 }
 
 func flusher_flushPushEvents(uid int) {
-    logPipes.Println("flusher_flushPushEvents() uid: ",uid)
+	logPipes.Println("flusher_flushPushEvents() uid: ", uid)
 	eventsRows, err := x.NewMsgPushEvent_Selector().
 		Select_Uid().
 		ToUserId_Eq(uid).
@@ -35,7 +38,6 @@ func flusher_flushPushEvents(uid int) {
 }
 
 func flusher_flushPushNotifications(uid int) {
-    logPipes.Println("flusher_flushPushNotifications() uid: ",uid)
-
+	logPipes.Println("flusher_flushPushNotifications() uid: ", uid)
 
 }
