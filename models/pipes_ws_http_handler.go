@@ -15,7 +15,7 @@ func ServeHttpWsPB(w http.ResponseWriter, r *http.Request) {
 	_ = session
 
 	uid := 6
-	uid = helper.StrToInt(r.Form.Get("UserId"), 6)
+	uid = helper.StrToInt(r.Form.Get("user_id"), 6)
 	//TODO add session check functiality
 	if false {
 		//e(session)

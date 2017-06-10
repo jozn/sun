@@ -97,9 +97,9 @@ func (pipe *UserDevicePipe) ShutDown() {
 	if pipe.hasShutDown == true {
 		return
 	}
+    pipe.m.Lock()
 	pipe.Ws.Close()
 	close(pipe.ToDeviceChan)
-	pipe.m.Lock()
 	pipe.hasShutDown = true
 	pipe.m.Unlock()
 }
@@ -146,7 +146,6 @@ func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 
 var _wsLogFile *os.File
 var wsDebugLog = func(strings ...interface{}) {
-	logWs.Debug(strings...)
 	if config.IS_DEBUG {
 		if _wsLogFile == nil {
 			_wsLogFile, _ = os.OpenFile("./logs/ws_"+helper.IntToStr(helper.TimeNow())+".json", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)

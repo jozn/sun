@@ -55,6 +55,7 @@ func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {
 func PBConv_PB_MsgSeen_toNew_MsgPushEvent(pb *x.PB_MsgSeen) x.MsgPushEvent {
 	msg := x.MsgPushEvent{
 		Id:         0,
+		Uid:        helper.RandomSeqUid(),
 		ToUserId:   -1, //must set
 		MsgKey:     pb.MessageKey,
 		RoomKey:    pb.RoomKey,

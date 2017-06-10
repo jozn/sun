@@ -7,8 +7,20 @@ import (
 	"ms/sun/helper"
 	"ms/sun/models"
 	"ms/sun/models/x"
+	"sync/atomic"
 	"time"
 )
+
+var Cnt = int64(0)
+
+func init() {
+	go func() {
+		for {
+			time.Sleep(8 * time.Second)
+			fmt.Println(Cnt)
+		}
+	}()
+}
 
 func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 	ds := a.Req.Form.Get("delay")
@@ -20,7 +32,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 	e := a.Req.Form.Get("emoji")
 
 	dInt := helper.StrToInt(ds, 2000)
-	toUserId := helper.StrToInt(strToUserId, 6)
+
 	limit := helper.StrToInt(l, 10)
 
 	emoji := true
@@ -35,6 +47,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 
 	go func() {
 		for i := 0; i < limit; i++ {
+			toUserId := helper.StrToInt(strToUserId, rand.Intn(82)+1)
 			txt := helper.FactRandStr(15)
 			rnd := rand.Intn(10)
 			if rnd == 5 { //big text 10%
@@ -47,10 +60,14 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 			if text != "" {
 				txt = text
 			} else {
-				txt = fmt.Sprintf("id: %d ", i) + txt
+				txt = fmt.Sprintf("id: %d ", Cnt) + txt
 			}
 
 			fromUserId := helper.StrToInt(strFrom, rand.Intn(80)+1)
+			if toUserId == fromUserId {
+				continue
+			}
+
 			//msg := chat.MessagesTable{}
 			//msg := models.MessagesTableFromClient{}
 			msg := &x.PB_Message{}
@@ -103,15 +120,9 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 				//msg.MsgFile = f
 			}
 
-			/*cmd := base.NewCommand(constants.MsgsAddNew)
-			cmd.AddSliceData(msg)
-			cmd.MakeDataReady()*/
-			//res :=base.WSRes{
-			//}
-			//res.Commands = []*base.Command{&cmd}
-			//sync.AllPipesMap.SendToUser(6,res)
-			//pipesold.AllPipesMap.SendAndStoreCmdToUser(userId, cmd)
-			fmt.Println("sending Sample msg toUser", toUserId, " msgKey: ", msg.MessageKey, " Room: ", msg.RoomKey)
+			atomic.AddInt64(&Cnt, 1)
+
+			//fmt.Println( Cnt ," sending Sample msg toUser", toUserId, " msgKey: ", msg.MessageKey, " Room: ", msg.RoomKey)
 			models.SampleSendMessage(toUserId, msg)
 			time.Sleep(time.Millisecond * time.Duration(dInt))
 		}

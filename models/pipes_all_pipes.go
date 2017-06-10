@@ -142,6 +142,6 @@ func (m pipesMap) AddUserPipe(UserId int, pipe *UserDevicePipe) {
 func (m pipesMap) DeleteUserPipe(UserId int) {
 	logPipes.Info("pipesMap DeleteUserPipe UserId ", UserId)
 	m.m.Lock()
-	defer m.m.Unlock()
 	delete(m.mp, UserId)
+    m.m.Unlock()
 }

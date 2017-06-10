@@ -1,13 +1,14 @@
 package models
 
 import (
+	"fmt"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 	"time"
 )
 
-var chanNewChatMsgsBuffer = make(chan newChatMsgDelayer, 10000)
+var chanNewChatMsgsBuffer = make(chan newChatMsgDelayer, 100000)
 
 //var chanNewMsgPushEventsBuffer = make(chan *x.MsgPushEvent, 20000)
 
@@ -25,9 +26,29 @@ func init() {
 }
 
 func batcheNewMsgsBufferProceess() {
-	const siz = 1000
+	const siz = 50000
 	arr := make([]newChatMsgDelayer, 0, siz)
-	go func() {
+    cnt := 0
+
+    ticker := time.NewTicker(10 * time.Millisecond)
+	for {
+		select {
+
+		case m := <-chanNewChatMsgsBuffer:
+			arr = append(arr, m)
+
+		case <-ticker.C:
+			if len(arr) > 0 {
+                cnt++
+                fmt.Printf("batch of chanNewChatMsgsBuffer - cnt:%d - len:%d \n",cnt,len(arr))
+				pre := arr
+				arr = make([]newChatMsgDelayer, 0, siz)
+				go processNewChatMsgBuffer(pre)
+			}
+		}
+	}
+
+	/*go func() {
 		for m := range chanNewChatMsgsBuffer {
 			arr = append(arr, m)
 		}
@@ -40,10 +61,12 @@ func batcheNewMsgsBufferProceess() {
 			arr = make([]newChatMsgDelayer, 0, siz)
 			processNewChatMsgBuffer(pre)
 		}
-	}
+	}*/
 }
 
 func processNewChatMsgBuffer(msgsDelays []newChatMsgDelayer) {
+	helper.JustRecover()
+
 	mp := make(map[int][]newChatMsgDelayer)
 
 	for _, mb := range msgsDelays {
@@ -79,6 +102,7 @@ func processNewChatMsgBuffer(msgsDelays []newChatMsgDelayer) {
 	//cache it
 	_, err := x.NewMessage_Selector().MessageKey_In(allMsgsKeys).GetRows(base.DB)
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 

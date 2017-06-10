@@ -3,7 +3,6 @@ package models
 import (
 	"fmt"
 	"github.com/golang/protobuf/proto"
-	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 )
@@ -46,22 +45,23 @@ func CallRecive_MsgSeenByPeer(c *x.PB_CommandToServer, pipe *UserDevicePipe) {
 		return
 	}
 
-	var events []x.MsgPushEvent
+	//var events []x.MsgPushEvent
 	for _, seenPb := range req.Seen {
-		evetRow := PBConv_PB_MsgSeen_toNew_MsgPushEvent(seenPb)
-		evetRow.PeerUserId = pipe.UserId
-		evetRow.ToUserId, _ = RoomKeyToPeerUserId(seenPb.RoomKey, pipe.UserId)
-		events = append(events, evetRow)
+		eventRow := PBConv_PB_MsgSeen_toNew_MsgPushEvent(seenPb)
+		eventRow.PeerUserId = pipe.UserId
+		eventRow.ToUserId, _ = RoomKeyToPeerUserId(seenPb.RoomKey, pipe.UserId)
+		chanNewMsgPushEventsBuffer <- eventRow
+		//events = append(events, eventRow)
 	}
 
-	x.MassInsert_MsgPushEvent(events, base.DB)
+	//x.MassInsert_MsgPushEvent(events, base.DB)
 
-	mpGroupByuser := make(map[int][]x.MsgPushEvent)
+	/*mpGroupByuser := make(map[int][]x.MsgPushEvent)
 	for _, seen := range events {
 		mpGroupByuser[seen.ToUserId] = append(mpGroupByuser[seen.ToUserId], seen)
-	}
+	}*/
 
-	PushProxy_PushMsgsEvents(events)
+	//PushProxy_PushMsgsEvents(events)
 }
 
 func EchoCmd(c *x.PB_CommandToServer, pipe *UserDevicePipe) {

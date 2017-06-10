@@ -6,14 +6,14 @@ import (
 	"time"
 )
 
-var chanNewMsgPushEventsBuffer = make(chan x.MsgPushEvent, 20000)
+var chanNewMsgPushEventsBuffer = make(chan x.MsgPushEvent, 100000)
 
 func init() {
 	go batchechanNewMsgPushEventsBuffer()
 }
 
 func batchechanNewMsgPushEventsBuffer() {
-	const siz = 10000
+	const siz = 50000
 	arr := make([]x.MsgPushEvent, 0, siz)
 	go func() {
 		for m := range chanNewMsgPushEventsBuffer {
@@ -24,6 +24,7 @@ func batchechanNewMsgPushEventsBuffer() {
 	for {
 		time.Sleep(time.Millisecond * 10)
 		if len(arr) > 0 {
+            //todo this has data racing problem + do it too for msg buffer
 			pre := arr
 			arr = make([]x.MsgPushEvent, 0, siz)
 			processchanNewMsgPushEventsBuffer(pre)
