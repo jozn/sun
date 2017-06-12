@@ -3,7 +3,9 @@ package models
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
+	"google.golang.org/grpc/metadata"
 	"io"
 	"ms/sun/base"
 	"ms/sun/config"
@@ -19,12 +21,16 @@ type _msgGrpc struct {
 
 func (g _msgGrpc) UploadNewMsg(ctx context.Context, msgPb *x.PB_Message) (res *x.PB_ResRpcAddMsg, err error) {
 	//TODO session handling in here
+	userId, ok := seesionCheckGrpc(ctx)
+	if !ok {
+		return res, errors.New("session failed")
+	}
 
 	filePb := msgPb.File
 
 	msgBuf := newChatMsgDelayer{
 		msgPB:        msgPb,
-		fromUserId:   6,                 //FIXME
+		fromUserId:   userId,            //FIXME
 		toUserId:     int(msgPb.PeerId), //FIXME
 		roomKey:      msgPb.RoomKey,
 		hashId:       1,
@@ -109,4 +115,17 @@ func isMsgOfMediaType(typMsg int32) bool {
 
 	return r
 
+}
+
+//FIXME add real session uuid cchecker
+func seesionCheckGrpc(ctx context.Context) (int, bool) {
+	uid := 0
+	md, ok := metadata.FromContext(ctx)
+	if ok && len(md["user_id"]) > 0 {
+		uid = helper.StrToInt(md["user_id"][0], -1)
+		if uid > 0 {
+			return uid, true
+		}
+	}
+	return 0, false
 }
