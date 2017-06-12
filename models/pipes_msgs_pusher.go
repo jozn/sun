@@ -1,10 +1,11 @@
 package models
 
 import (
-	"github.com/golang/protobuf/proto"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
+
+	"github.com/golang/protobuf/proto"
 )
 
 type sMsgPusher struct {
@@ -28,6 +29,13 @@ func (p *sMsgPusher) pushToUser() {
 		//err := proto.Unmarshal(m.DataPB, pbMsg)
 		bts, err := helper.FromBase64ToBin(m.Data64)
 		if err == nil {
+			if m.MsgFileId > 0 && pbMsg.File != nil {
+				fRow, ok := x.Store.GetMsgFileById(m.MsgFileId)
+				if ok {
+					filePb := PBConv_MsgFile_toNew_PB_MsgFile(fRow)
+					pbMsg.File = &filePb
+				}
+			}
 			err := proto.Unmarshal(bts, pbMsg)
 			if err == nil {
 				pbMsgs = append(pbMsgs, pbMsg)
@@ -79,10 +87,15 @@ func (p *sMsgPusher) addEventReceivedToPeer() {
 
 func (p *sMsgPusher) deletedMessageFromServer() {
 	uids := make([]int, 0, len(p.messages))
+	idsFiles := make([]int, 0, len(p.messages))
 	for _, msg := range p.messages {
 		uids = append(uids, msg.Uid)
+		if msg.MsgFileId > 0 {
+			idsFiles = append(idsFiles, msg.MsgFileId)
+		}
 	}
 	x.NewMessage_Deleter().Uid_In(uids).Delete(base.DB)
+	x.NewMsgFile_Updater().Id_In(idsFiles).CanDel(helper.TimeNow()).Update(base.DB)
 	p.addEventDeletedFromServer()
 }
 

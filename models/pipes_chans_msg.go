@@ -76,14 +76,22 @@ func processNewChatMsgBuffer(msgsDelays []newChatMsgDelayer) {
 
 	allMsgsRows := make([]x.Message, 0, len(msgsDelays))
 	allMsgsKeys := make([]string, 0, len(msgsDelays))
+	allMsgsFilesIds := make([]int, 0, len(msgsDelays))
 	for _, md := range msgsDelays {
 		b := md.msgPB
 
 		mRow := PBConv_PB_Message_toNew_Message(b)
 		mRow.Uid = md.uid
 
+		if md.msgFileRowId > 0 {
+			mRow.MsgFileId = md.msgFileRowId
+			allMsgsFilesIds = append(allMsgsFilesIds, md.msgFileRowId)
+
+		}
+
 		allMsgsRows = append(allMsgsRows, mRow)
 		allMsgsKeys = append(allMsgsKeys, b.MessageKey)
+
 	}
 
 	toPushMsgsArr := make([]x.MsgPush, 0, len(msgsDelays))
@@ -100,10 +108,12 @@ func processNewChatMsgBuffer(msgsDelays []newChatMsgDelayer) {
 
 	x.MassInsert_Message(allMsgsRows, base.DB)
 	x.MassInsert_MsgPush(toPushMsgsArr, base.DB)
-	//cache it
-	_, err := x.NewMessage_Selector().MessageKey_In(allMsgsKeys).GetRows(base.DB)
-	if err != nil {
-		fmt.Println(err)
+
+	//cache it (msgs)
+	_, err1 := x.NewMessage_Selector().MessageKey_In(allMsgsKeys).GetRows(base.DB)
+	_, err2 := x.NewMsgFile_Selector().Id_In(allMsgsFilesIds).GetRows(base.DB)
+	if err1 != nil || err2 != nil {
+		fmt.Println(err1, err2)
 		return
 	}
 
@@ -117,7 +127,6 @@ func processNewChatMsgBuffer(msgsDelays []newChatMsgDelayer) {
 			msgs = append(msgs, m)
 		}
 		MessageModel_PushToPipeMsgsToUser(uid, msgs)
-
 	}
 
 }

@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/dustin/go-humanize"
 	"math/rand"
 	"time"
+
+	"github.com/dustin/go-humanize"
 )
 
 func main() {

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"ms/sun/base"
+	"ms/sun/config"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 	"os"
@@ -37,16 +38,16 @@ func (g _msgGrpc) UploadNewMsg(ctx context.Context, msgPb *x.PB_Message) (res *x
 		dirName := fmt.Sprintf("./upload/msgs/%v/%d/%v/%v/", t.Year(), t.Month(), t.Day(), t.Hour())
 		//up_filename := strings.Replace(filePb.Name, ":", "-", -1)       //remove 17:24:56 file format -- just for windowse
 		up_filename := helper.RandString(10)
-		fileName := dirName + msgPb.MessageKey + "_" + up_filename //msg.MediaName + "." + msg.MediaExtension
+		fullFileName := dirName + msgPb.MessageKey + "_" + up_filename //msg.MediaName + "." + msg.MediaExtension
 
-		fileName = strings.Replace(fileName, ":", "-", -1) //Windows dosn't accept ':'
+		fullFileName = strings.Replace(fullFileName, ":", "-", -1) //Windows dosn't accept ':'
 
 		err = os.MkdirAll(dirName, 0666)
-		newFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
+		newFile, err1 := os.OpenFile(fullFileName, os.O_WRONLY|os.O_CREATE, 0666)
 
-		if err != nil {
+		if err1 != nil {
 			print(2, err.Error())
-			return
+			return res, err
 		}
 
 		defer newFile.Close()
@@ -58,6 +59,11 @@ func (g _msgGrpc) UploadNewMsg(ctx context.Context, msgPb *x.PB_Message) (res *x
 		}
 
 		rowFile := PBConv_PB_MsgFile_toNew_MsgFile(filePb)
+		//set servers
+		rowFile.ServerId = 1
+		rowFile.ServerPath = fullFileName[1:]
+		rowFile.ServerSrc = config.CDN_CHAT_MSG_UPLOAD_URL + fullFileName[1:]
+
 		rowFile.Insert(base.DB)
 
 		res.ServerSrc = rowFile.ServerSrc
@@ -67,6 +73,8 @@ func (g _msgGrpc) UploadNewMsg(ctx context.Context, msgPb *x.PB_Message) (res *x
 	} else {
 		//text types , we should never land in here use ws for texts
 	}
+
+	msgBuf.msgPB.File = nil
 
 	chanNewChatMsgsBuffer <- msgBuf
 

@@ -35,14 +35,14 @@ func RandomSeqUid() int {
 	uidHolder.RUnlock()
 
 	if time.Now().UnixNano()-_uid > 1e8 { //100 miliscond diff
-        uidHolder.Lock()
-        uidHolder.uid = time.Now().UnixNano()
+		uidHolder.Lock()
+		uidHolder.uid = time.Now().UnixNano()
 		uidHolder.Unlock()
 	}
 
-    uidHolder.Lock()
-    next := atomic.AddInt64(&uidHolder.uid, 1)
-    uidHolder.Unlock()
+	uidHolder.Lock()
+	next := atomic.AddInt64(&uidHolder.uid, 1)
+	uidHolder.Unlock()
 
 	return int(next)
 	/*t := (int(time.Now().UnixNano())%1e+15)

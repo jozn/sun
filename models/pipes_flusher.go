@@ -18,7 +18,7 @@ func flusher_flushPushMsgs(uid int) {
 
 	msgs := Message_GetMsgsByUids(uids)
 
-	logPipes.Println("flusher_flushPushMsgs() len: ", len(msgs) , " ", len(uids))
+	logPipes.Println("flusher_flushPushMsgs() len: ", len(msgs), " ", len(uids))
 
 	MessageModel_PushToPipeMsgsToUser(uid, msgs)
 }

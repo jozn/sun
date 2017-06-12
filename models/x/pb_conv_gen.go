@@ -224,6 +224,7 @@ func PBConvPB__Message_To_Message( o *PB_Message) *Message {
       RoomKey: string ( o.RoomKey ),
       MessageType: int ( o.MessageType ),
       RoomType: int ( o.RoomType ),
+      MsgFileId: int ( o.MsgFileId ),
       DataPB: []byte ( o.DataPB ),
       Data64: string ( o.Data64 ),
       DataJson: string ( o.DataJson ),
@@ -241,6 +242,7 @@ func PBConvPB_Message_To_Message ( o *Message) *PB_Message {
       RoomKey: string ( o.RoomKey ),
       MessageType: int32 ( o.MessageType ),
       RoomType: int32 ( o.RoomType ),
+      MsgFileId: int64 ( o.MsgFileId ),
       DataPB: []byte ( o.DataPB ),
       Data64: string ( o.Data64 ),
       DataJson: string ( o.DataJson ),
@@ -266,6 +268,7 @@ func PBConvPB__MsgFile_To_MsgFile( o *PB_MsgFile) *MsgFile {
       ServerSrc: string ( o.ServerSrc ),
       ServerPath: string ( o.ServerPath ),
       ServerId: int ( o.ServerId ),
+      CanDel: int ( o.CanDel ),
     }
     return n
 }
@@ -286,6 +289,7 @@ func PBConvPB_MsgFile_To_MsgFile ( o *MsgFile) *PB_MsgFile {
       ServerSrc: string ( o.ServerSrc ),
       ServerPath: string ( o.ServerPath ),
       ServerId: int32 ( o.ServerId ),
+      CanDel: int32 ( o.CanDel ),
     }
     return n
 }

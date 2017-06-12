@@ -15,13 +15,14 @@ import (
 	//_ "net/http/pprof"
 	_ "net/http/pprof"
 
-	"github.com/dimfeld/httptreemux"
-	"github.com/mediocregopher/radix.v2/pool"
 	. "ms/sun/actions"
 	"ms/sun/config"
 	"ms/sun/ctrl"
 	"ms/sun/fact"
 	"ms/sun/helper"
+
+	"github.com/dimfeld/httptreemux"
+	"github.com/mediocregopher/radix.v2/pool"
 )
 
 var redisPool *pool.Pool

@@ -24,7 +24,7 @@ func batchechanNewMsgPushEventsBuffer() {
 	for {
 		time.Sleep(time.Millisecond * 10)
 		if len(arr) > 0 {
-            //todo this has data racing problem + do it too for msg buffer
+			//todo this has data racing problem + do it too for msg buffer
 			pre := arr
 			arr = make([]x.MsgPushEvent, 0, siz)
 			processchanNewMsgPushEventsBuffer(pre)

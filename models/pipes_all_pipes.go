@@ -4,8 +4,9 @@ import (
 	"ms/sun/helper"
 	"sync"
 
-	"github.com/gorilla/websocket"
 	"ms/sun/models/x"
+
+	"github.com/gorilla/websocket"
 )
 
 //todo change UserDevicePipe => *UserDevicePipe
@@ -143,5 +144,5 @@ func (m pipesMap) DeleteUserPipe(UserId int) {
 	logPipes.Info("pipesMap DeleteUserPipe UserId ", UserId)
 	m.m.Lock()
 	delete(m.mp, UserId)
-    m.m.Unlock()
+	m.m.Unlock()
 }

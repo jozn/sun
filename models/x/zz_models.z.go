@@ -200,6 +200,7 @@ type Message struct {
 	RoomKey       string
 	MessageType   int
 	RoomType      int
+	MsgFileId     int
 	DataPB        []byte
 	Data64        string
 	DataJson      string
@@ -217,6 +218,7 @@ type Message struct {
 	RoomKey: "",
 	MessageType: 0,
 	RoomType: 0,
+	MsgFileId: 0,
 	DataPB: UNKNOWN,
 	Data64: "",
 	DataJson: "",
@@ -239,6 +241,7 @@ type MsgFile struct {
 	ServerSrc   string
 	ServerPath  string
 	ServerId    int
+	CanDel      int
 
 	_exists, _deleted bool
 }
@@ -259,6 +262,7 @@ type MsgFile struct {
 	ServerSrc: "",
 	ServerPath: "",
 	ServerId: 0,
+	CanDel: 0,
 */
 
 // MsgPush 'ms.msg_push'.

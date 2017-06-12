@@ -6,8 +6,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/minio/minio-go" // Import Minio library.
 	"log"
+
+	"github.com/minio/minio-go" // Import Minio library.
 )
 
 func main() {

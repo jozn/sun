@@ -6,11 +6,12 @@ import (
 	"github.com/gorilla/websocket"
 	//"time"
 	"fmt"
-	"github.com/golang/protobuf/proto"
 	"ms/sun/config"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 	"os"
+
+	"github.com/golang/protobuf/proto"
 )
 
 type UserDevicePipe struct {
@@ -97,7 +98,7 @@ func (pipe *UserDevicePipe) ShutDown() {
 	if pipe.hasShutDown == true {
 		return
 	}
-    pipe.m.Lock()
+	pipe.m.Lock()
 	pipe.Ws.Close()
 	close(pipe.ToDeviceChan)
 	pipe.hasShutDown = true
@@ -138,7 +139,7 @@ func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	if fnCall != nil {
 		fnCall(reqCall, pipe)
 	} else { //send call func not found -- in debug
-        logPipes.Println("ERROR command nor registerd in CallMapRouter : ", reqCall.Command)
+		logPipes.Println("ERROR command nor registerd in CallMapRouter : ", reqCall.Command)
 		helper.DebugPrintln("ERROR command nor registerd in CallMapRouter : ", reqCall.Command)
 	}
 

@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/syncthing/syncthing/lib/sync"
 	"ms/sun/helper"
 	"runtime"
 	"time"
+
+	"github.com/syncthing/syncthing/lib/sync"
 )
 
 func main() {

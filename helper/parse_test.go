@@ -1,22 +1,22 @@
 package helper
 
 import (
-    "ms/sun_bk/helper"
-    "fmt"
+	"fmt"
+	"ms/sun_bk/helper"
 )
 
 func ExampleStrToInt() {
-    s := helper.IntToStr(5)
-    fmt.Println(s)
+	s := helper.IntToStr(5)
+	fmt.Println(s)
 
-    // Output:
-    // 5
+	// Output:
+	// 5
 }
 
 func ExampleHelperIntToStr() {
-    s := helper.IntToStr(5)
-    fmt.Println(s)
+	s := helper.IntToStr(5)
+	fmt.Println(s)
 
-    // Output:
-    // 5
+	// Output:
+	// 5
 }

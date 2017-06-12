@@ -87,6 +87,7 @@ public class J {
 		public String RoomKey;
 		public Integer MessageType;
 		public Integer RoomType;
+		public Integer MsgFileId;
 		public UNKNOWN DataPB;
 		public String Data64;
 		public String DataJson;
@@ -108,6 +109,7 @@ public class J {
 		public String ServerSrc;
 		public String ServerPath;
 		public Integer ServerId;
+		public Integer CanDel;
 	}
 
 	public static class MsgPush {

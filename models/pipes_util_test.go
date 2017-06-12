@@ -1,11 +1,11 @@
 package models
 
 import (
+	"fmt"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 	"testing"
-    "fmt"
 )
 
 func TestRoomKeyToPeerUserId(t *testing.T) {
@@ -73,9 +73,9 @@ func BenchmarkMapInt(b *testing.B) {
 }
 
 func ExampleHelperIntToStr() {
-    s := helper.IntToStr(5)
-    fmt.Println(s)
+	s := helper.IntToStr(5)
+	fmt.Println(s)
 
-    // Output:
-    // 5
+	// Output:
+	// 5
 }

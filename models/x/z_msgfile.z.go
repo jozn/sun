@@ -30,6 +30,7 @@ type MsgFile__ struct {
 	ServerSrc   string `json:"ServerSrc"`   // ServerSrc -
 	ServerPath  string `json:"ServerPath"`  // ServerPath -
 	ServerId    int    `json:"ServerId"`    // ServerId -
+	CanDel      int    `json:"CanDel"`      // CanDel -
 
 	// xo fields
 	_exists, _deleted bool
@@ -56,14 +57,14 @@ func (mf *MsgFile) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.msg_file (` +
-		`Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId` +
+		`Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId, CanDel` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId)
-	res, err := db.Exec(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId)
+	XOLog(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId, mf.CanDel)
+	res, err := db.Exec(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId, mf.CanDel)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -91,14 +92,14 @@ func (mf *MsgFile) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.msg_file (` +
-		`Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId` +
+		`Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId, CanDel` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId)
-	res, err := db.Exec(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId)
+	XOLog(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId, mf.CanDel)
+	res, err := db.Exec(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId, mf.CanDel)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -136,12 +137,12 @@ func (mf *MsgFile) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.msg_file SET ` +
-		`Name = ?, Size = ?, FileType = ?, MimeType = ?, Width = ?, Height = ?, Duration = ?, Extension = ?, ThumbData = ?, ThumbData64 = ?, ServerSrc = ?, ServerPath = ?, ServerId = ?` +
+		`Name = ?, Size = ?, FileType = ?, MimeType = ?, Width = ?, Height = ?, Duration = ?, Extension = ?, ThumbData = ?, ThumbData64 = ?, ServerSrc = ?, ServerPath = ?, ServerId = ?, CanDel = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId, mf.Id)
-	_, err = db.Exec(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId, mf.Id)
+	XOLog(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId, mf.CanDel, mf.Id)
+	_, err = db.Exec(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId, mf.CanDel, mf.Id)
 
 	XOLogErr(err)
 	OnMsgFile_AfterUpdate(mf)
@@ -977,6 +978,111 @@ func (d *__MsgFile_Deleter) ServerId_GE(val int) *__MsgFile_Deleter {
 	return d
 }
 
+func (u *__MsgFile_Deleter) CanDel_In(ins []int) *__MsgFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CanDel IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgFile_Deleter) CanDel_Ins(ins ...int) *__MsgFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CanDel IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgFile_Deleter) CanDel_NotIn(ins []int) *__MsgFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CanDel NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgFile_Deleter) CanDel_Eq(val int) *__MsgFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Deleter) CanDel_NotEq(val int) *__MsgFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Deleter) CanDel_LT(val int) *__MsgFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Deleter) CanDel_LE(val int) *__MsgFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Deleter) CanDel_GT(val int) *__MsgFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Deleter) CanDel_GE(val int) *__MsgFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 func (u *__MsgFile_Updater) Or() *__MsgFile_Updater {
 	u.whereSep = " OR "
@@ -1718,6 +1824,111 @@ func (d *__MsgFile_Updater) ServerId_GE(val int) *__MsgFile_Updater {
 	return d
 }
 
+func (u *__MsgFile_Updater) CanDel_In(ins []int) *__MsgFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CanDel IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgFile_Updater) CanDel_Ins(ins ...int) *__MsgFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CanDel IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgFile_Updater) CanDel_NotIn(ins []int) *__MsgFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CanDel NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgFile_Updater) CanDel_Eq(val int) *__MsgFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Updater) CanDel_NotEq(val int) *__MsgFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Updater) CanDel_LT(val int) *__MsgFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Updater) CanDel_LE(val int) *__MsgFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Updater) CanDel_GT(val int) *__MsgFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Updater) CanDel_GE(val int) *__MsgFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 func (u *__MsgFile_Selector) Or() *__MsgFile_Selector {
 	u.whereSep = " OR "
@@ -2454,6 +2665,111 @@ func (d *__MsgFile_Selector) ServerId_GE(val int) *__MsgFile_Selector {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " ServerId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MsgFile_Selector) CanDel_In(ins []int) *__MsgFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CanDel IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgFile_Selector) CanDel_Ins(ins ...int) *__MsgFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CanDel IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MsgFile_Selector) CanDel_NotIn(ins []int) *__MsgFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CanDel NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MsgFile_Selector) CanDel_Eq(val int) *__MsgFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Selector) CanDel_NotEq(val int) *__MsgFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Selector) CanDel_LT(val int) *__MsgFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Selector) CanDel_LE(val int) *__MsgFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Selector) CanDel_GT(val int) *__MsgFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MsgFile_Selector) CanDel_GE(val int) *__MsgFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CanDel >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3750,6 +4066,27 @@ func (u *__MsgFile_Updater) ServerId_Increment(count int) *__MsgFile_Updater {
 
 //string
 
+//ints
+
+func (u *__MsgFile_Updater) CanDel(newVal int) *__MsgFile_Updater {
+	u.updates[" CanDel = ? "] = newVal
+	return u
+}
+
+func (u *__MsgFile_Updater) CanDel_Increment(count int) *__MsgFile_Updater {
+	if count > 0 {
+		u.updates[" CanDel = CanDel+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CanDel = CanDel-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
 /////////////////////////////////////////////////////////////////////
 /////////////////////// Selector ///////////////////////////////////
 
@@ -3962,6 +4299,21 @@ func (u *__MsgFile_Selector) OrderBy_ServerId_Asc() *__MsgFile_Selector {
 
 func (u *__MsgFile_Selector) Select_ServerId() *__MsgFile_Selector {
 	u.selectCol = "ServerId"
+	return u
+}
+
+func (u *__MsgFile_Selector) OrderBy_CanDel_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY CanDel DESC "
+	return u
+}
+
+func (u *__MsgFile_Selector) OrderBy_CanDel_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY CanDel ASC "
+	return u
+}
+
+func (u *__MsgFile_Selector) Select_CanDel() *__MsgFile_Selector {
+	u.selectCol = "CanDel"
 	return u
 }
 
@@ -4233,12 +4585,12 @@ func (d *__MsgFile_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_MsgFile(rows []MsgFile, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.msg_file (" +
-		"Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId" +
+		"Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId, CanDel" +
 		") VALUES " + insVals
 
 	// run query
@@ -4259,6 +4611,7 @@ func MassInsert_MsgFile(rows []MsgFile, db XODB) error {
 		vals = append(vals, row.ServerSrc)
 		vals = append(vals, row.ServerPath)
 		vals = append(vals, row.ServerId)
+		vals = append(vals, row.CanDel)
 
 	}
 
@@ -4276,12 +4629,12 @@ func MassInsert_MsgFile(rows []MsgFile, db XODB) error {
 func MassReplace_MsgFile(rows []MsgFile, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.msg_file (" +
-		"Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId" +
+		"Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId, CanDel" +
 		") VALUES " + insVals
 
 	// run query
@@ -4302,6 +4655,7 @@ func MassReplace_MsgFile(rows []MsgFile, db XODB) error {
 		vals = append(vals, row.ServerSrc)
 		vals = append(vals, row.ServerPath)
 		vals = append(vals, row.ServerId)
+		vals = append(vals, row.CanDel)
 
 	}
 
@@ -4346,6 +4700,8 @@ func MassReplace_MsgFile(rows []MsgFile, db XODB) error {
 
 //
 
+//
+
 // MsgFileById retrieves a row from 'ms.msg_file' as a MsgFile.
 //
 // Generated from index 'msg_file_Id_pkey'.
@@ -4354,7 +4710,7 @@ func MsgFileById(db XODB, id int) (*MsgFile, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId ` +
+		`Id, Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId, CanDel ` +
 		`FROM ms.msg_file ` +
 		`WHERE Id = ?`
 
@@ -4364,7 +4720,7 @@ func MsgFileById(db XODB, id int) (*MsgFile, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&mf.Id, &mf.Name, &mf.Size, &mf.FileType, &mf.MimeType, &mf.Width, &mf.Height, &mf.Duration, &mf.Extension, &mf.ThumbData, &mf.ThumbData64, &mf.ServerSrc, &mf.ServerPath, &mf.ServerId)
+	err = db.QueryRow(sqlstr, id).Scan(&mf.Id, &mf.Name, &mf.Size, &mf.FileType, &mf.MimeType, &mf.Width, &mf.Height, &mf.Duration, &mf.Extension, &mf.ThumbData, &mf.ThumbData64, &mf.ServerSrc, &mf.ServerPath, &mf.ServerId, &mf.CanDel)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
