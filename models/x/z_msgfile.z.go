@@ -12,57 +12,58 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// Session represents a row from 'ms.session'.
+// MsgFile represents a row from 'ms.msg_file'.
 
 // Manualy copy this to project
-type Session__ struct {
-	Id                 int    `json:"Id"`                 // Id -
-	UserId             int    `json:"UserId"`             // UserId -
-	SessionUuid        string `json:"SessionUuid"`        // SessionUuid -
-	ClientUuid         string `json:"ClientUuid"`         // ClientUuid -
-	DeviceUuid         string `json:"DeviceUuid"`         // DeviceUuid -
-	LastActivityTime   int    `json:"LastActivityTime"`   // LastActivityTime -
-	LastIpAddress      string `json:"LastIpAddress"`      // LastIpAddress -
-	LastWifiMacAddress string `json:"LastWifiMacAddress"` // LastWifiMacAddress -
-	LastNetworkType    string `json:"LastNetworkType"`    // LastNetworkType -
-	LastNetworkTypeId  int    `json:"LastNetworkTypeId"`  // LastNetworkTypeId -
-	AppVersion         int    `json:"AppVersion"`         // AppVersion -
-	UpdatedTime        int    `json:"UpdatedTime"`        // UpdatedTime -
-	CreatedTime        int    `json:"CreatedTime"`        // CreatedTime -
+type MsgFile__ struct {
+	Id          int    `json:"Id"`          // Id -
+	Name        string `json:"Name"`        // Name -
+	Size        int    `json:"Size"`        // Size -
+	FileType    int    `json:"FileType"`    // FileType -
+	MimeType    string `json:"MimeType"`    // MimeType -
+	Width       int    `json:"Width"`       // Width -
+	Height      int    `json:"Height"`      // Height -
+	Duration    int    `json:"Duration"`    // Duration -
+	Extension   string `json:"Extension"`   // Extension -
+	ThumbData   []byte `json:"ThumbData"`   // ThumbData -
+	ThumbData64 string `json:"ThumbData64"` // ThumbData64 -
+	ServerSrc   string `json:"ServerSrc"`   // ServerSrc -
+	ServerPath  string `json:"ServerPath"`  // ServerPath -
+	ServerId    int    `json:"ServerId"`    // ServerId -
 
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists determines if the Session exists in the database.
-func (s *Session) Exists() bool {
-	return s._exists
+// Exists determines if the MsgFile exists in the database.
+func (mf *MsgFile) Exists() bool {
+	return mf._exists
 }
 
-// Deleted provides information if the Session has been deleted from the database.
-func (s *Session) Deleted() bool {
-	return s._deleted
+// Deleted provides information if the MsgFile has been deleted from the database.
+func (mf *MsgFile) Deleted() bool {
+	return mf._deleted
 }
 
-// Insert inserts the Session to the database.
-func (s *Session) Insert(db XODB) error {
+// Insert inserts the MsgFile to the database.
+func (mf *MsgFile) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
-	if s._exists {
+	if mf._exists {
 		return errors.New("insert failed: already exists")
 	}
 
 	// sql insert query, primary key provided by autoincrement
-	const sqlstr = `INSERT INTO ms.session (` +
-		`UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime` +
+	const sqlstr = `INSERT INTO ms.msg_file (` +
+		`Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime)
-	res, err := db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime)
+	XOLog(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId)
+	res, err := db.Exec(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -76,28 +77,28 @@ func (s *Session) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	s.Id = int(id)
-	s._exists = true
+	mf.Id = int(id)
+	mf._exists = true
 
-	OnSession_AfterInsert(s)
+	OnMsgFile_AfterInsert(mf)
 
 	return nil
 }
 
-// Insert inserts the Session to the database.
-func (s *Session) Replace(db XODB) error {
+// Insert inserts the MsgFile to the database.
+func (mf *MsgFile) Replace(db XODB) error {
 	var err error
 
 	// sql query
-	const sqlstr = `REPLACE INTO ms.session (` +
-		`UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime` +
+	const sqlstr = `REPLACE INTO ms.msg_file (` +
+		`Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime)
-	res, err := db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime)
+	XOLog(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId)
+	res, err := db.Exec(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -111,81 +112,81 @@ func (s *Session) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	s.Id = int(id)
-	s._exists = true
+	mf.Id = int(id)
+	mf._exists = true
 
-	OnSession_AfterInsert(s)
+	OnMsgFile_AfterInsert(mf)
 
 	return nil
 }
 
-// Update updates the Session in the database.
-func (s *Session) Update(db XODB) error {
+// Update updates the MsgFile in the database.
+func (mf *MsgFile) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !s._exists {
+	if !mf._exists {
 		return errors.New("update failed: does not exist")
 	}
 
 	// if deleted, bail
-	if s._deleted {
+	if mf._deleted {
 		return errors.New("update failed: marked for deletion")
 	}
 
 	// sql query
-	const sqlstr = `UPDATE ms.session SET ` +
-		`UserId = ?, SessionUuid = ?, ClientUuid = ?, DeviceUuid = ?, LastActivityTime = ?, LastIpAddress = ?, LastWifiMacAddress = ?, LastNetworkType = ?, LastNetworkTypeId = ?, AppVersion = ?, UpdatedTime = ?, CreatedTime = ?` +
+	const sqlstr = `UPDATE ms.msg_file SET ` +
+		`Name = ?, Size = ?, FileType = ?, MimeType = ?, Width = ?, Height = ?, Duration = ?, Extension = ?, ThumbData = ?, ThumbData64 = ?, ServerSrc = ?, ServerPath = ?, ServerId = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime, s.Id)
-	_, err = db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime, s.Id)
+	XOLog(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId, mf.Id)
+	_, err = db.Exec(sqlstr, mf.Name, mf.Size, mf.FileType, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerId, mf.Id)
 
 	XOLogErr(err)
-	OnSession_AfterUpdate(s)
+	OnMsgFile_AfterUpdate(mf)
 
 	return err
 }
 
-// Save saves the Session to the database.
-func (s *Session) Save(db XODB) error {
-	if s.Exists() {
-		return s.Update(db)
+// Save saves the MsgFile to the database.
+func (mf *MsgFile) Save(db XODB) error {
+	if mf.Exists() {
+		return mf.Update(db)
 	}
 
-	return s.Replace(db)
+	return mf.Replace(db)
 }
 
-// Delete deletes the Session from the database.
-func (s *Session) Delete(db XODB) error {
+// Delete deletes the MsgFile from the database.
+func (mf *MsgFile) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !s._exists {
+	if !mf._exists {
 		return nil
 	}
 
 	// if deleted, bail
-	if s._deleted {
+	if mf._deleted {
 		return nil
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.session WHERE Id = ?`
+	const sqlstr = `DELETE FROM ms.msg_file WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, s.Id)
-	_, err = db.Exec(sqlstr, s.Id)
+	XOLog(sqlstr, mf.Id)
+	_, err = db.Exec(sqlstr, mf.Id)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
 	// set deleted
-	s._deleted = true
+	mf._deleted = true
 
-	OnSession_AfterDelete(s)
+	OnMsgFile_AfterDelete(mf)
 
 	return nil
 }
@@ -196,18 +197,18 @@ func (s *Session) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __Session_Deleter struct {
+type __MsgFile_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __Session_Updater struct {
+type __MsgFile_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __Session_Selector struct {
+type __MsgFile_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -216,19 +217,19 @@ type __Session_Selector struct {
 	offset    int
 }
 
-func NewSession_Deleter() *__Session_Deleter {
-	d := __Session_Deleter{whereSep: " AND "}
+func NewMsgFile_Deleter() *__MsgFile_Deleter {
+	d := __MsgFile_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewSession_Updater() *__Session_Updater {
-	u := __Session_Updater{whereSep: " AND "}
+func NewMsgFile_Updater() *__MsgFile_Updater {
+	u := __MsgFile_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewSession_Selector() *__Session_Selector {
-	u := __Session_Selector{whereSep: " AND ", selectCol: "*"}
+func NewMsgFile_Selector() *__MsgFile_Selector {
+	u := __MsgFile_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -236,12 +237,12 @@ func NewSession_Selector() *__Session_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Session_Deleter) Or() *__Session_Deleter {
+func (u *__MsgFile_Deleter) Or() *__MsgFile_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Session_Deleter) Id_In(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Id_In(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -254,7 +255,7 @@ func (u *__Session_Deleter) Id_In(ins []int) *__Session_Deleter {
 	return u
 }
 
-func (u *__Session_Deleter) Id_Ins(ins ...int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Id_Ins(ins ...int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -267,7 +268,7 @@ func (u *__Session_Deleter) Id_Ins(ins ...int) *__Session_Deleter {
 	return u
 }
 
-func (u *__Session_Deleter) Id_NotIn(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Id_NotIn(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -280,7 +281,7 @@ func (u *__Session_Deleter) Id_NotIn(ins []int) *__Session_Deleter {
 	return u
 }
 
-func (d *__Session_Deleter) Id_Eq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Id_Eq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -291,7 +292,7 @@ func (d *__Session_Deleter) Id_Eq(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) Id_NotEq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Id_NotEq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -302,7 +303,7 @@ func (d *__Session_Deleter) Id_NotEq(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) Id_LT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Id_LT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -313,7 +314,7 @@ func (d *__Session_Deleter) Id_LT(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) Id_LE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Id_LE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -324,7 +325,7 @@ func (d *__Session_Deleter) Id_LE(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) Id_GT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Id_GT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -335,7 +336,7 @@ func (d *__Session_Deleter) Id_GT(val int) *__Session_Deleter {
 	return d
 }
 
-func (d *__Session_Deleter) Id_GE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Id_GE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -346,643 +347,643 @@ func (d *__Session_Deleter) Id_GE(val int) *__Session_Deleter {
 	return d
 }
 
-func (u *__Session_Deleter) UserId_In(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Size_In(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Size IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) UserId_Ins(ins ...int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Size_Ins(ins ...int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Size IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) UserId_NotIn(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Size_NotIn(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Size NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) UserId_Eq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Size_Eq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId = ? "
+	w.condition = " Size = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) UserId_NotEq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Size_NotEq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId != ? "
+	w.condition = " Size != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) UserId_LT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Size_LT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId < ? "
+	w.condition = " Size < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) UserId_LE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Size_LE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId <= ? "
+	w.condition = " Size <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) UserId_GT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Size_GT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId > ? "
+	w.condition = " Size > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) UserId_GE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Size_GE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId >= ? "
+	w.condition = " Size >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Deleter) LastActivityTime_In(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) FileType_In(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) LastActivityTime_Ins(ins ...int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) FileType_Ins(ins ...int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) LastActivityTime_NotIn(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) FileType_NotIn(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastActivityTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) LastActivityTime_Eq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) FileType_Eq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime = ? "
+	w.condition = " FileType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastActivityTime_NotEq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) FileType_NotEq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime != ? "
+	w.condition = " FileType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastActivityTime_LT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) FileType_LT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime < ? "
+	w.condition = " FileType < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastActivityTime_LE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) FileType_LE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime <= ? "
+	w.condition = " FileType <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastActivityTime_GT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) FileType_GT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime > ? "
+	w.condition = " FileType > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastActivityTime_GE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) FileType_GE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime >= ? "
+	w.condition = " FileType >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Deleter) LastNetworkTypeId_In(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Width_In(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) LastNetworkTypeId_Ins(ins ...int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Width_Ins(ins ...int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) LastNetworkTypeId_NotIn(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Width_NotIn(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Width NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) LastNetworkTypeId_Eq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Width_Eq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId = ? "
+	w.condition = " Width = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastNetworkTypeId_NotEq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Width_NotEq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId != ? "
+	w.condition = " Width != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastNetworkTypeId_LT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Width_LT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId < ? "
+	w.condition = " Width < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastNetworkTypeId_LE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Width_LE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId <= ? "
+	w.condition = " Width <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastNetworkTypeId_GT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Width_GT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId > ? "
+	w.condition = " Width > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastNetworkTypeId_GE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Width_GE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId >= ? "
+	w.condition = " Width >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Deleter) AppVersion_In(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Height_In(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " AppVersion IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) AppVersion_Ins(ins ...int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Height_Ins(ins ...int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " AppVersion IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) AppVersion_NotIn(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Height_NotIn(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " AppVersion NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Height NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) AppVersion_Eq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Height_Eq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion = ? "
+	w.condition = " Height = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) AppVersion_NotEq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Height_NotEq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion != ? "
+	w.condition = " Height != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) AppVersion_LT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Height_LT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion < ? "
+	w.condition = " Height < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) AppVersion_LE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Height_LE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion <= ? "
+	w.condition = " Height <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) AppVersion_GT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Height_GT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion > ? "
+	w.condition = " Height > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) AppVersion_GE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Height_GE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion >= ? "
+	w.condition = " Height >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Deleter) UpdatedTime_In(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Duration_In(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Duration IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) UpdatedTime_Ins(ins ...int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Duration_Ins(ins ...int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Duration IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) UpdatedTime_NotIn(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Duration_NotIn(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UpdatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Duration NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) UpdatedTime_Eq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Duration_Eq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime = ? "
+	w.condition = " Duration = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) UpdatedTime_NotEq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Duration_NotEq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime != ? "
+	w.condition = " Duration != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) UpdatedTime_LT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Duration_LT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime < ? "
+	w.condition = " Duration < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) UpdatedTime_LE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Duration_LE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime <= ? "
+	w.condition = " Duration <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) UpdatedTime_GT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Duration_GT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime > ? "
+	w.condition = " Duration > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) UpdatedTime_GE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Duration_GE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime >= ? "
+	w.condition = " Duration >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Deleter) CreatedTime_In(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ServerId_In(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) CreatedTime_Ins(ins ...int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ServerId_Ins(ins ...int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) CreatedTime_NotIn(ins []int) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ServerId_NotIn(ins []int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) CreatedTime_Eq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ServerId_Eq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime = ? "
+	w.condition = " ServerId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) CreatedTime_NotEq(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ServerId_NotEq(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime != ? "
+	w.condition = " ServerId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) CreatedTime_LT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ServerId_LT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime < ? "
+	w.condition = " ServerId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) CreatedTime_LE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ServerId_LE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
+	w.condition = " ServerId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) CreatedTime_GT(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ServerId_GT(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime > ? "
+	w.condition = " ServerId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) CreatedTime_GE(val int) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ServerId_GE(val int) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
+	w.condition = " ServerId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
 ////////ints
-func (u *__Session_Updater) Or() *__Session_Updater {
+func (u *__MsgFile_Updater) Or() *__MsgFile_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Session_Updater) Id_In(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) Id_In(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -995,7 +996,7 @@ func (u *__Session_Updater) Id_In(ins []int) *__Session_Updater {
 	return u
 }
 
-func (u *__Session_Updater) Id_Ins(ins ...int) *__Session_Updater {
+func (u *__MsgFile_Updater) Id_Ins(ins ...int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1008,7 +1009,7 @@ func (u *__Session_Updater) Id_Ins(ins ...int) *__Session_Updater {
 	return u
 }
 
-func (u *__Session_Updater) Id_NotIn(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) Id_NotIn(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1021,7 +1022,7 @@ func (u *__Session_Updater) Id_NotIn(ins []int) *__Session_Updater {
 	return u
 }
 
-func (d *__Session_Updater) Id_Eq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Id_Eq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1032,7 +1033,7 @@ func (d *__Session_Updater) Id_Eq(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) Id_NotEq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Id_NotEq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1043,7 +1044,7 @@ func (d *__Session_Updater) Id_NotEq(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) Id_LT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Id_LT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1054,7 +1055,7 @@ func (d *__Session_Updater) Id_LT(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) Id_LE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Id_LE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1065,7 +1066,7 @@ func (d *__Session_Updater) Id_LE(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) Id_GT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Id_GT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1076,7 +1077,7 @@ func (d *__Session_Updater) Id_GT(val int) *__Session_Updater {
 	return d
 }
 
-func (d *__Session_Updater) Id_GE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Id_GE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1087,643 +1088,643 @@ func (d *__Session_Updater) Id_GE(val int) *__Session_Updater {
 	return d
 }
 
-func (u *__Session_Updater) UserId_In(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) Size_In(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Size IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) UserId_Ins(ins ...int) *__Session_Updater {
+func (u *__MsgFile_Updater) Size_Ins(ins ...int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Size IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) UserId_NotIn(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) Size_NotIn(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Size NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) UserId_Eq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Size_Eq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId = ? "
+	w.condition = " Size = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) UserId_NotEq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Size_NotEq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId != ? "
+	w.condition = " Size != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) UserId_LT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Size_LT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId < ? "
+	w.condition = " Size < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) UserId_LE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Size_LE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId <= ? "
+	w.condition = " Size <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) UserId_GT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Size_GT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId > ? "
+	w.condition = " Size > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) UserId_GE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Size_GE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId >= ? "
+	w.condition = " Size >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Updater) LastActivityTime_In(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) FileType_In(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) LastActivityTime_Ins(ins ...int) *__Session_Updater {
+func (u *__MsgFile_Updater) FileType_Ins(ins ...int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) LastActivityTime_NotIn(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) FileType_NotIn(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastActivityTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) LastActivityTime_Eq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) FileType_Eq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime = ? "
+	w.condition = " FileType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastActivityTime_NotEq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) FileType_NotEq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime != ? "
+	w.condition = " FileType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastActivityTime_LT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) FileType_LT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime < ? "
+	w.condition = " FileType < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastActivityTime_LE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) FileType_LE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime <= ? "
+	w.condition = " FileType <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastActivityTime_GT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) FileType_GT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime > ? "
+	w.condition = " FileType > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastActivityTime_GE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) FileType_GE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime >= ? "
+	w.condition = " FileType >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Updater) LastNetworkTypeId_In(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) Width_In(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) LastNetworkTypeId_Ins(ins ...int) *__Session_Updater {
+func (u *__MsgFile_Updater) Width_Ins(ins ...int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) LastNetworkTypeId_NotIn(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) Width_NotIn(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Width NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) LastNetworkTypeId_Eq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Width_Eq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId = ? "
+	w.condition = " Width = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastNetworkTypeId_NotEq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Width_NotEq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId != ? "
+	w.condition = " Width != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastNetworkTypeId_LT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Width_LT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId < ? "
+	w.condition = " Width < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastNetworkTypeId_LE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Width_LE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId <= ? "
+	w.condition = " Width <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastNetworkTypeId_GT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Width_GT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId > ? "
+	w.condition = " Width > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastNetworkTypeId_GE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Width_GE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId >= ? "
+	w.condition = " Width >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Updater) AppVersion_In(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) Height_In(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " AppVersion IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) AppVersion_Ins(ins ...int) *__Session_Updater {
+func (u *__MsgFile_Updater) Height_Ins(ins ...int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " AppVersion IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) AppVersion_NotIn(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) Height_NotIn(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " AppVersion NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Height NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) AppVersion_Eq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Height_Eq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion = ? "
+	w.condition = " Height = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) AppVersion_NotEq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Height_NotEq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion != ? "
+	w.condition = " Height != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) AppVersion_LT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Height_LT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion < ? "
+	w.condition = " Height < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) AppVersion_LE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Height_LE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion <= ? "
+	w.condition = " Height <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) AppVersion_GT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Height_GT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion > ? "
+	w.condition = " Height > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) AppVersion_GE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Height_GE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion >= ? "
+	w.condition = " Height >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Updater) UpdatedTime_In(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) Duration_In(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Duration IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) UpdatedTime_Ins(ins ...int) *__Session_Updater {
+func (u *__MsgFile_Updater) Duration_Ins(ins ...int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Duration IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) UpdatedTime_NotIn(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) Duration_NotIn(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UpdatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Duration NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) UpdatedTime_Eq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Duration_Eq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime = ? "
+	w.condition = " Duration = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) UpdatedTime_NotEq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Duration_NotEq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime != ? "
+	w.condition = " Duration != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) UpdatedTime_LT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Duration_LT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime < ? "
+	w.condition = " Duration < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) UpdatedTime_LE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Duration_LE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime <= ? "
+	w.condition = " Duration <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) UpdatedTime_GT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Duration_GT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime > ? "
+	w.condition = " Duration > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) UpdatedTime_GE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) Duration_GE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime >= ? "
+	w.condition = " Duration >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Updater) CreatedTime_In(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) ServerId_In(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) CreatedTime_Ins(ins ...int) *__Session_Updater {
+func (u *__MsgFile_Updater) ServerId_Ins(ins ...int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) CreatedTime_NotIn(ins []int) *__Session_Updater {
+func (u *__MsgFile_Updater) ServerId_NotIn(ins []int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) CreatedTime_Eq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) ServerId_Eq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime = ? "
+	w.condition = " ServerId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) CreatedTime_NotEq(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) ServerId_NotEq(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime != ? "
+	w.condition = " ServerId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) CreatedTime_LT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) ServerId_LT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime < ? "
+	w.condition = " ServerId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) CreatedTime_LE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) ServerId_LE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
+	w.condition = " ServerId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) CreatedTime_GT(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) ServerId_GT(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime > ? "
+	w.condition = " ServerId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) CreatedTime_GE(val int) *__Session_Updater {
+func (d *__MsgFile_Updater) ServerId_GE(val int) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
+	w.condition = " ServerId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
 ////////ints
-func (u *__Session_Selector) Or() *__Session_Selector {
+func (u *__MsgFile_Selector) Or() *__MsgFile_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Session_Selector) Id_In(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) Id_In(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1736,7 +1737,7 @@ func (u *__Session_Selector) Id_In(ins []int) *__Session_Selector {
 	return u
 }
 
-func (u *__Session_Selector) Id_Ins(ins ...int) *__Session_Selector {
+func (u *__MsgFile_Selector) Id_Ins(ins ...int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1749,7 +1750,7 @@ func (u *__Session_Selector) Id_Ins(ins ...int) *__Session_Selector {
 	return u
 }
 
-func (u *__Session_Selector) Id_NotIn(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) Id_NotIn(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1762,7 +1763,7 @@ func (u *__Session_Selector) Id_NotIn(ins []int) *__Session_Selector {
 	return u
 }
 
-func (d *__Session_Selector) Id_Eq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Id_Eq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1773,7 +1774,7 @@ func (d *__Session_Selector) Id_Eq(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) Id_NotEq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Id_NotEq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1784,7 +1785,7 @@ func (d *__Session_Selector) Id_NotEq(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) Id_LT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Id_LT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1795,7 +1796,7 @@ func (d *__Session_Selector) Id_LT(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) Id_LE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Id_LE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1806,7 +1807,7 @@ func (d *__Session_Selector) Id_LE(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) Id_GT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Id_GT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1817,7 +1818,7 @@ func (d *__Session_Selector) Id_GT(val int) *__Session_Selector {
 	return d
 }
 
-func (d *__Session_Selector) Id_GE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Id_GE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1828,631 +1829,631 @@ func (d *__Session_Selector) Id_GE(val int) *__Session_Selector {
 	return d
 }
 
-func (u *__Session_Selector) UserId_In(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) Size_In(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Size IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) UserId_Ins(ins ...int) *__Session_Selector {
+func (u *__MsgFile_Selector) Size_Ins(ins ...int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Size IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) UserId_NotIn(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) Size_NotIn(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Size NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) UserId_Eq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Size_Eq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId = ? "
+	w.condition = " Size = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) UserId_NotEq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Size_NotEq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId != ? "
+	w.condition = " Size != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) UserId_LT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Size_LT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId < ? "
+	w.condition = " Size < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) UserId_LE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Size_LE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId <= ? "
+	w.condition = " Size <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) UserId_GT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Size_GT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId > ? "
+	w.condition = " Size > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) UserId_GE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Size_GE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId >= ? "
+	w.condition = " Size >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Selector) LastActivityTime_In(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) FileType_In(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) LastActivityTime_Ins(ins ...int) *__Session_Selector {
+func (u *__MsgFile_Selector) FileType_Ins(ins ...int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastActivityTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) LastActivityTime_NotIn(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) FileType_NotIn(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastActivityTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) LastActivityTime_Eq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) FileType_Eq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime = ? "
+	w.condition = " FileType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastActivityTime_NotEq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) FileType_NotEq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime != ? "
+	w.condition = " FileType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastActivityTime_LT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) FileType_LT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime < ? "
+	w.condition = " FileType < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastActivityTime_LE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) FileType_LE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime <= ? "
+	w.condition = " FileType <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastActivityTime_GT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) FileType_GT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime > ? "
+	w.condition = " FileType > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastActivityTime_GE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) FileType_GE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastActivityTime >= ? "
+	w.condition = " FileType >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Selector) LastNetworkTypeId_In(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) Width_In(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) LastNetworkTypeId_Ins(ins ...int) *__Session_Selector {
+func (u *__MsgFile_Selector) Width_Ins(ins ...int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Width IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) LastNetworkTypeId_NotIn(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) Width_NotIn(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Width NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) LastNetworkTypeId_Eq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Width_Eq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId = ? "
+	w.condition = " Width = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastNetworkTypeId_NotEq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Width_NotEq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId != ? "
+	w.condition = " Width != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastNetworkTypeId_LT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Width_LT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId < ? "
+	w.condition = " Width < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastNetworkTypeId_LE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Width_LE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId <= ? "
+	w.condition = " Width <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastNetworkTypeId_GT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Width_GT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId > ? "
+	w.condition = " Width > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastNetworkTypeId_GE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Width_GE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkTypeId >= ? "
+	w.condition = " Width >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Selector) AppVersion_In(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) Height_In(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " AppVersion IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) AppVersion_Ins(ins ...int) *__Session_Selector {
+func (u *__MsgFile_Selector) Height_Ins(ins ...int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " AppVersion IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Height IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) AppVersion_NotIn(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) Height_NotIn(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " AppVersion NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Height NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) AppVersion_Eq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Height_Eq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion = ? "
+	w.condition = " Height = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) AppVersion_NotEq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Height_NotEq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion != ? "
+	w.condition = " Height != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) AppVersion_LT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Height_LT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion < ? "
+	w.condition = " Height < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) AppVersion_LE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Height_LE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion <= ? "
+	w.condition = " Height <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) AppVersion_GT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Height_GT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion > ? "
+	w.condition = " Height > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) AppVersion_GE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Height_GE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " AppVersion >= ? "
+	w.condition = " Height >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Selector) UpdatedTime_In(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) Duration_In(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Duration IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) UpdatedTime_Ins(ins ...int) *__Session_Selector {
+func (u *__MsgFile_Selector) Duration_Ins(ins ...int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UpdatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Duration IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) UpdatedTime_NotIn(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) Duration_NotIn(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UpdatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Duration NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) UpdatedTime_Eq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Duration_Eq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime = ? "
+	w.condition = " Duration = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) UpdatedTime_NotEq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Duration_NotEq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime != ? "
+	w.condition = " Duration != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) UpdatedTime_LT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Duration_LT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime < ? "
+	w.condition = " Duration < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) UpdatedTime_LE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Duration_LE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime <= ? "
+	w.condition = " Duration <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) UpdatedTime_GT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Duration_GT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime > ? "
+	w.condition = " Duration > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) UpdatedTime_GE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) Duration_GE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UpdatedTime >= ? "
+	w.condition = " Duration >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Selector) CreatedTime_In(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) ServerId_In(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) CreatedTime_Ins(ins ...int) *__Session_Selector {
+func (u *__MsgFile_Selector) ServerId_Ins(ins ...int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) CreatedTime_NotIn(ins []int) *__Session_Selector {
+func (u *__MsgFile_Selector) ServerId_NotIn(ins []int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) CreatedTime_Eq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) ServerId_Eq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime = ? "
+	w.condition = " ServerId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) CreatedTime_NotEq(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) ServerId_NotEq(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime != ? "
+	w.condition = " ServerId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) CreatedTime_LT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) ServerId_LT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime < ? "
+	w.condition = " ServerId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) CreatedTime_LE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) ServerId_LE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
+	w.condition = " ServerId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) CreatedTime_GT(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) ServerId_GT(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime > ? "
+	w.condition = " ServerId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) CreatedTime_GE(val int) *__Session_Selector {
+func (d *__MsgFile_Selector) ServerId_GE(val int) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
+	w.condition = " ServerId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2462,361 +2463,361 @@ func (d *__Session_Selector) CreatedTime_GE(val int) *__Session_Selector {
 
 ////////ints
 
-func (u *__Session_Deleter) SessionUuid_In(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Name_In(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SessionUuid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) SessionUuid_NotIn(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Name_NotIn(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SessionUuid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Deleter) SessionUuid_Like(val string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Name_Like(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SessionUuid LIKE ? "
+	w.condition = " Name LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) SessionUuid_Eq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Name_Eq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SessionUuid = ? "
+	w.condition = " Name = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) SessionUuid_NotEq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Name_NotEq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SessionUuid != ? "
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Deleter) ClientUuid_In(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) MimeType_In(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ClientUuid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MimeType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) ClientUuid_NotIn(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) MimeType_NotIn(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ClientUuid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MimeType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Deleter) ClientUuid_Like(val string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) MimeType_Like(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ClientUuid LIKE ? "
+	w.condition = " MimeType LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) ClientUuid_Eq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) MimeType_Eq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ClientUuid = ? "
+	w.condition = " MimeType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) ClientUuid_NotEq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) MimeType_NotEq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ClientUuid != ? "
+	w.condition = " MimeType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Deleter) DeviceUuid_In(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Extension_In(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeviceUuid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Extension IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) DeviceUuid_NotIn(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Extension_NotIn(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeviceUuid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Extension NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Deleter) DeviceUuid_Like(val string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) Extension_Like(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeviceUuid LIKE ? "
+	w.condition = " Extension LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) DeviceUuid_Eq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Extension_Eq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeviceUuid = ? "
+	w.condition = " Extension = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) DeviceUuid_NotEq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) Extension_NotEq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeviceUuid != ? "
+	w.condition = " Extension != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Deleter) LastIpAddress_In(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ThumbData64_In(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastIpAddress IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ThumbData64 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) LastIpAddress_NotIn(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ThumbData64_NotIn(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastIpAddress NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ThumbData64 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Deleter) LastIpAddress_Like(val string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ThumbData64_Like(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastIpAddress LIKE ? "
+	w.condition = " ThumbData64 LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) LastIpAddress_Eq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ThumbData64_Eq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastIpAddress = ? "
+	w.condition = " ThumbData64 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastIpAddress_NotEq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ThumbData64_NotEq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastIpAddress != ? "
+	w.condition = " ThumbData64 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Deleter) LastWifiMacAddress_In(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ServerSrc_In(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerSrc IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) LastWifiMacAddress_NotIn(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ServerSrc_NotIn(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerSrc NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Deleter) LastWifiMacAddress_Like(val string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ServerSrc_Like(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress LIKE ? "
+	w.condition = " ServerSrc LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) LastWifiMacAddress_Eq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ServerSrc_Eq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress = ? "
+	w.condition = " ServerSrc = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastWifiMacAddress_NotEq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ServerSrc_NotEq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress != ? "
+	w.condition = " ServerSrc != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Deleter) LastNetworkType_In(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ServerPath_In(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerPath IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Deleter) LastNetworkType_NotIn(ins []string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ServerPath_NotIn(ins []string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerPath NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Deleter) LastNetworkType_Like(val string) *__Session_Deleter {
+func (u *__MsgFile_Deleter) ServerPath_Like(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkType LIKE ? "
+	w.condition = " ServerPath LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Deleter) LastNetworkType_Eq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ServerPath_Eq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkType = ? "
+	w.condition = " ServerPath = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Deleter) LastNetworkType_NotEq(val string) *__Session_Deleter {
+func (d *__MsgFile_Deleter) ServerPath_NotEq(val string) *__MsgFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkType != ? "
+	w.condition = " ServerPath != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2824,361 +2825,361 @@ func (d *__Session_Deleter) LastNetworkType_NotEq(val string) *__Session_Deleter
 
 ////////ints
 
-func (u *__Session_Updater) SessionUuid_In(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) Name_In(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SessionUuid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) SessionUuid_NotIn(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) Name_NotIn(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SessionUuid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Updater) SessionUuid_Like(val string) *__Session_Updater {
+func (u *__MsgFile_Updater) Name_Like(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SessionUuid LIKE ? "
+	w.condition = " Name LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) SessionUuid_Eq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) Name_Eq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SessionUuid = ? "
+	w.condition = " Name = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) SessionUuid_NotEq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) Name_NotEq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SessionUuid != ? "
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Updater) ClientUuid_In(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) MimeType_In(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ClientUuid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MimeType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) ClientUuid_NotIn(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) MimeType_NotIn(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ClientUuid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MimeType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Updater) ClientUuid_Like(val string) *__Session_Updater {
+func (u *__MsgFile_Updater) MimeType_Like(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ClientUuid LIKE ? "
+	w.condition = " MimeType LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) ClientUuid_Eq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) MimeType_Eq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ClientUuid = ? "
+	w.condition = " MimeType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) ClientUuid_NotEq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) MimeType_NotEq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ClientUuid != ? "
+	w.condition = " MimeType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Updater) DeviceUuid_In(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) Extension_In(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeviceUuid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Extension IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) DeviceUuid_NotIn(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) Extension_NotIn(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeviceUuid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Extension NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Updater) DeviceUuid_Like(val string) *__Session_Updater {
+func (u *__MsgFile_Updater) Extension_Like(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeviceUuid LIKE ? "
+	w.condition = " Extension LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) DeviceUuid_Eq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) Extension_Eq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeviceUuid = ? "
+	w.condition = " Extension = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) DeviceUuid_NotEq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) Extension_NotEq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeviceUuid != ? "
+	w.condition = " Extension != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Updater) LastIpAddress_In(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) ThumbData64_In(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastIpAddress IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ThumbData64 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) LastIpAddress_NotIn(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) ThumbData64_NotIn(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastIpAddress NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ThumbData64 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Updater) LastIpAddress_Like(val string) *__Session_Updater {
+func (u *__MsgFile_Updater) ThumbData64_Like(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastIpAddress LIKE ? "
+	w.condition = " ThumbData64 LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) LastIpAddress_Eq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) ThumbData64_Eq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastIpAddress = ? "
+	w.condition = " ThumbData64 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastIpAddress_NotEq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) ThumbData64_NotEq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastIpAddress != ? "
+	w.condition = " ThumbData64 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Updater) LastWifiMacAddress_In(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) ServerSrc_In(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerSrc IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) LastWifiMacAddress_NotIn(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) ServerSrc_NotIn(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerSrc NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Updater) LastWifiMacAddress_Like(val string) *__Session_Updater {
+func (u *__MsgFile_Updater) ServerSrc_Like(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress LIKE ? "
+	w.condition = " ServerSrc LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) LastWifiMacAddress_Eq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) ServerSrc_Eq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress = ? "
+	w.condition = " ServerSrc = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastWifiMacAddress_NotEq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) ServerSrc_NotEq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress != ? "
+	w.condition = " ServerSrc != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Updater) LastNetworkType_In(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) ServerPath_In(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerPath IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Updater) LastNetworkType_NotIn(ins []string) *__Session_Updater {
+func (u *__MsgFile_Updater) ServerPath_NotIn(ins []string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerPath NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Updater) LastNetworkType_Like(val string) *__Session_Updater {
+func (u *__MsgFile_Updater) ServerPath_Like(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkType LIKE ? "
+	w.condition = " ServerPath LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Updater) LastNetworkType_Eq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) ServerPath_Eq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkType = ? "
+	w.condition = " ServerPath = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Updater) LastNetworkType_NotEq(val string) *__Session_Updater {
+func (d *__MsgFile_Updater) ServerPath_NotEq(val string) *__MsgFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkType != ? "
+	w.condition = " ServerPath != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3186,361 +3187,361 @@ func (d *__Session_Updater) LastNetworkType_NotEq(val string) *__Session_Updater
 
 ////////ints
 
-func (u *__Session_Selector) SessionUuid_In(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) Name_In(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SessionUuid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) SessionUuid_NotIn(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) Name_NotIn(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SessionUuid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Selector) SessionUuid_Like(val string) *__Session_Selector {
+func (u *__MsgFile_Selector) Name_Like(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SessionUuid LIKE ? "
+	w.condition = " Name LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) SessionUuid_Eq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) Name_Eq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SessionUuid = ? "
+	w.condition = " Name = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) SessionUuid_NotEq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) Name_NotEq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SessionUuid != ? "
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Selector) ClientUuid_In(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) MimeType_In(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ClientUuid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MimeType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) ClientUuid_NotIn(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) MimeType_NotIn(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ClientUuid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MimeType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Selector) ClientUuid_Like(val string) *__Session_Selector {
+func (u *__MsgFile_Selector) MimeType_Like(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ClientUuid LIKE ? "
+	w.condition = " MimeType LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) ClientUuid_Eq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) MimeType_Eq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ClientUuid = ? "
+	w.condition = " MimeType = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) ClientUuid_NotEq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) MimeType_NotEq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ClientUuid != ? "
+	w.condition = " MimeType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Selector) DeviceUuid_In(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) Extension_In(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeviceUuid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Extension IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) DeviceUuid_NotIn(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) Extension_NotIn(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeviceUuid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Extension NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Selector) DeviceUuid_Like(val string) *__Session_Selector {
+func (u *__MsgFile_Selector) Extension_Like(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeviceUuid LIKE ? "
+	w.condition = " Extension LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) DeviceUuid_Eq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) Extension_Eq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeviceUuid = ? "
+	w.condition = " Extension = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) DeviceUuid_NotEq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) Extension_NotEq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeviceUuid != ? "
+	w.condition = " Extension != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Selector) LastIpAddress_In(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) ThumbData64_In(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastIpAddress IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ThumbData64 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) LastIpAddress_NotIn(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) ThumbData64_NotIn(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastIpAddress NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ThumbData64 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Selector) LastIpAddress_Like(val string) *__Session_Selector {
+func (u *__MsgFile_Selector) ThumbData64_Like(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastIpAddress LIKE ? "
+	w.condition = " ThumbData64 LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) LastIpAddress_Eq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) ThumbData64_Eq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastIpAddress = ? "
+	w.condition = " ThumbData64 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastIpAddress_NotEq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) ThumbData64_NotEq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastIpAddress != ? "
+	w.condition = " ThumbData64 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Selector) LastWifiMacAddress_In(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) ServerSrc_In(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerSrc IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) LastWifiMacAddress_NotIn(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) ServerSrc_NotIn(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerSrc NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Selector) LastWifiMacAddress_Like(val string) *__Session_Selector {
+func (u *__MsgFile_Selector) ServerSrc_Like(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress LIKE ? "
+	w.condition = " ServerSrc LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) LastWifiMacAddress_Eq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) ServerSrc_Eq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress = ? "
+	w.condition = " ServerSrc = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastWifiMacAddress_NotEq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) ServerSrc_NotEq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastWifiMacAddress != ? "
+	w.condition = " ServerSrc != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Session_Selector) LastNetworkType_In(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) ServerPath_In(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerPath IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Session_Selector) LastNetworkType_NotIn(ins []string) *__Session_Selector {
+func (u *__MsgFile_Selector) ServerPath_NotIn(ins []string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LastNetworkType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ServerPath NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Session_Selector) LastNetworkType_Like(val string) *__Session_Selector {
+func (u *__MsgFile_Selector) ServerPath_Like(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkType LIKE ? "
+	w.condition = " ServerPath LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Session_Selector) LastNetworkType_Eq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) ServerPath_Eq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkType = ? "
+	w.condition = " ServerPath = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Session_Selector) LastNetworkType_NotEq(val string) *__Session_Selector {
+func (d *__MsgFile_Selector) ServerPath_NotEq(val string) *__MsgFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LastNetworkType != ? "
+	w.condition = " ServerPath != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3552,12 +3553,12 @@ func (d *__Session_Selector) LastNetworkType_NotEq(val string) *__Session_Select
 
 //ints
 
-func (u *__Session_Updater) Id(newVal int) *__Session_Updater {
+func (u *__MsgFile_Updater) Id(newVal int) *__MsgFile_Updater {
 	u.updates[" Id = ? "] = newVal
 	return u
 }
 
-func (u *__Session_Updater) Id_Increment(count int) *__Session_Updater {
+func (u *__MsgFile_Updater) Id_Increment(count int) *__MsgFile_Updater {
 	if count > 0 {
 		u.updates[" Id = Id+? "] = count
 	}
@@ -3573,18 +3574,26 @@ func (u *__Session_Updater) Id_Increment(count int) *__Session_Updater {
 
 //ints
 
-func (u *__Session_Updater) UserId(newVal int) *__Session_Updater {
-	u.updates[" UserId = ? "] = newVal
+//string
+func (u *__MsgFile_Updater) Name(newVal string) *__MsgFile_Updater {
+	u.updates[" Name = ? "] = newVal
 	return u
 }
 
-func (u *__Session_Updater) UserId_Increment(count int) *__Session_Updater {
+//ints
+
+func (u *__MsgFile_Updater) Size(newVal int) *__MsgFile_Updater {
+	u.updates[" Size = ? "] = newVal
+	return u
+}
+
+func (u *__MsgFile_Updater) Size_Increment(count int) *__MsgFile_Updater {
 	if count > 0 {
-		u.updates[" UserId = UserId+? "] = count
+		u.updates[" Size = Size+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it positive
+		u.updates[" Size = Size-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3594,42 +3603,18 @@ func (u *__Session_Updater) UserId_Increment(count int) *__Session_Updater {
 
 //ints
 
-//string
-func (u *__Session_Updater) SessionUuid(newVal string) *__Session_Updater {
-	u.updates[" SessionUuid = ? "] = newVal
+func (u *__MsgFile_Updater) FileType(newVal int) *__MsgFile_Updater {
+	u.updates[" FileType = ? "] = newVal
 	return u
 }
 
-//ints
-
-//string
-func (u *__Session_Updater) ClientUuid(newVal string) *__Session_Updater {
-	u.updates[" ClientUuid = ? "] = newVal
-	return u
-}
-
-//ints
-
-//string
-func (u *__Session_Updater) DeviceUuid(newVal string) *__Session_Updater {
-	u.updates[" DeviceUuid = ? "] = newVal
-	return u
-}
-
-//ints
-
-func (u *__Session_Updater) LastActivityTime(newVal int) *__Session_Updater {
-	u.updates[" LastActivityTime = ? "] = newVal
-	return u
-}
-
-func (u *__Session_Updater) LastActivityTime_Increment(count int) *__Session_Updater {
+func (u *__MsgFile_Updater) FileType_Increment(count int) *__MsgFile_Updater {
 	if count > 0 {
-		u.updates[" LastActivityTime = LastActivityTime+? "] = count
+		u.updates[" FileType = FileType+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" LastActivityTime = LastActivityTime-? "] = -(count) //make it positive
+		u.updates[" FileType = FileType-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3640,41 +3625,25 @@ func (u *__Session_Updater) LastActivityTime_Increment(count int) *__Session_Upd
 //ints
 
 //string
-func (u *__Session_Updater) LastIpAddress(newVal string) *__Session_Updater {
-	u.updates[" LastIpAddress = ? "] = newVal
+func (u *__MsgFile_Updater) MimeType(newVal string) *__MsgFile_Updater {
+	u.updates[" MimeType = ? "] = newVal
 	return u
 }
 
 //ints
 
-//string
-func (u *__Session_Updater) LastWifiMacAddress(newVal string) *__Session_Updater {
-	u.updates[" LastWifiMacAddress = ? "] = newVal
+func (u *__MsgFile_Updater) Width(newVal int) *__MsgFile_Updater {
+	u.updates[" Width = ? "] = newVal
 	return u
 }
 
-//ints
-
-//string
-func (u *__Session_Updater) LastNetworkType(newVal string) *__Session_Updater {
-	u.updates[" LastNetworkType = ? "] = newVal
-	return u
-}
-
-//ints
-
-func (u *__Session_Updater) LastNetworkTypeId(newVal int) *__Session_Updater {
-	u.updates[" LastNetworkTypeId = ? "] = newVal
-	return u
-}
-
-func (u *__Session_Updater) LastNetworkTypeId_Increment(count int) *__Session_Updater {
+func (u *__MsgFile_Updater) Width_Increment(count int) *__MsgFile_Updater {
 	if count > 0 {
-		u.updates[" LastNetworkTypeId = LastNetworkTypeId+? "] = count
+		u.updates[" Width = Width+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" LastNetworkTypeId = LastNetworkTypeId-? "] = -(count) //make it positive
+		u.updates[" Width = Width-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3684,18 +3653,18 @@ func (u *__Session_Updater) LastNetworkTypeId_Increment(count int) *__Session_Up
 
 //ints
 
-func (u *__Session_Updater) AppVersion(newVal int) *__Session_Updater {
-	u.updates[" AppVersion = ? "] = newVal
+func (u *__MsgFile_Updater) Height(newVal int) *__MsgFile_Updater {
+	u.updates[" Height = ? "] = newVal
 	return u
 }
 
-func (u *__Session_Updater) AppVersion_Increment(count int) *__Session_Updater {
+func (u *__MsgFile_Updater) Height_Increment(count int) *__MsgFile_Updater {
 	if count > 0 {
-		u.updates[" AppVersion = AppVersion+? "] = count
+		u.updates[" Height = Height+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" AppVersion = AppVersion-? "] = -(count) //make it positive
+		u.updates[" Height = Height-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3705,18 +3674,18 @@ func (u *__Session_Updater) AppVersion_Increment(count int) *__Session_Updater {
 
 //ints
 
-func (u *__Session_Updater) UpdatedTime(newVal int) *__Session_Updater {
-	u.updates[" UpdatedTime = ? "] = newVal
+func (u *__MsgFile_Updater) Duration(newVal int) *__MsgFile_Updater {
+	u.updates[" Duration = ? "] = newVal
 	return u
 }
 
-func (u *__Session_Updater) UpdatedTime_Increment(count int) *__Session_Updater {
+func (u *__MsgFile_Updater) Duration_Increment(count int) *__MsgFile_Updater {
 	if count > 0 {
-		u.updates[" UpdatedTime = UpdatedTime+? "] = count
+		u.updates[" Duration = Duration+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" UpdatedTime = UpdatedTime-? "] = -(count) //make it positive
+		u.updates[" Duration = Duration-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3726,18 +3695,54 @@ func (u *__Session_Updater) UpdatedTime_Increment(count int) *__Session_Updater 
 
 //ints
 
-func (u *__Session_Updater) CreatedTime(newVal int) *__Session_Updater {
-	u.updates[" CreatedTime = ? "] = newVal
+//string
+func (u *__MsgFile_Updater) Extension(newVal string) *__MsgFile_Updater {
+	u.updates[" Extension = ? "] = newVal
 	return u
 }
 
-func (u *__Session_Updater) CreatedTime_Increment(count int) *__Session_Updater {
+//ints
+
+//string
+
+//ints
+
+//string
+func (u *__MsgFile_Updater) ThumbData64(newVal string) *__MsgFile_Updater {
+	u.updates[" ThumbData64 = ? "] = newVal
+	return u
+}
+
+//ints
+
+//string
+func (u *__MsgFile_Updater) ServerSrc(newVal string) *__MsgFile_Updater {
+	u.updates[" ServerSrc = ? "] = newVal
+	return u
+}
+
+//ints
+
+//string
+func (u *__MsgFile_Updater) ServerPath(newVal string) *__MsgFile_Updater {
+	u.updates[" ServerPath = ? "] = newVal
+	return u
+}
+
+//ints
+
+func (u *__MsgFile_Updater) ServerId(newVal int) *__MsgFile_Updater {
+	u.updates[" ServerId = ? "] = newVal
+	return u
+}
+
+func (u *__MsgFile_Updater) ServerId_Increment(count int) *__MsgFile_Updater {
 	if count > 0 {
-		u.updates[" CreatedTime = CreatedTime+? "] = count
+		u.updates[" ServerId = ServerId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
+		u.updates[" ServerId = ServerId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3750,216 +3755,231 @@ func (u *__Session_Updater) CreatedTime_Increment(count int) *__Session_Updater 
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__Session_Selector) OrderBy_Id_Desc() *__Session_Selector {
+func (u *__MsgFile_Selector) OrderBy_Id_Desc() *__MsgFile_Selector {
 	u.orderBy = " ORDER BY Id DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_Id_Asc() *__Session_Selector {
+func (u *__MsgFile_Selector) OrderBy_Id_Asc() *__MsgFile_Selector {
 	u.orderBy = " ORDER BY Id ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_Id() *__Session_Selector {
+func (u *__MsgFile_Selector) Select_Id() *__MsgFile_Selector {
 	u.selectCol = "Id"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_UserId_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY UserId DESC "
+func (u *__MsgFile_Selector) OrderBy_Name_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Name DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_UserId_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY UserId ASC "
+func (u *__MsgFile_Selector) OrderBy_Name_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Name ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_UserId() *__Session_Selector {
-	u.selectCol = "UserId"
+func (u *__MsgFile_Selector) Select_Name() *__MsgFile_Selector {
+	u.selectCol = "Name"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_SessionUuid_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY SessionUuid DESC "
+func (u *__MsgFile_Selector) OrderBy_Size_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Size DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_SessionUuid_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY SessionUuid ASC "
+func (u *__MsgFile_Selector) OrderBy_Size_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Size ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_SessionUuid() *__Session_Selector {
-	u.selectCol = "SessionUuid"
+func (u *__MsgFile_Selector) Select_Size() *__MsgFile_Selector {
+	u.selectCol = "Size"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_ClientUuid_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY ClientUuid DESC "
+func (u *__MsgFile_Selector) OrderBy_FileType_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY FileType DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_ClientUuid_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY ClientUuid ASC "
+func (u *__MsgFile_Selector) OrderBy_FileType_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY FileType ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_ClientUuid() *__Session_Selector {
-	u.selectCol = "ClientUuid"
+func (u *__MsgFile_Selector) Select_FileType() *__MsgFile_Selector {
+	u.selectCol = "FileType"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_DeviceUuid_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY DeviceUuid DESC "
+func (u *__MsgFile_Selector) OrderBy_MimeType_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY MimeType DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_DeviceUuid_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY DeviceUuid ASC "
+func (u *__MsgFile_Selector) OrderBy_MimeType_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY MimeType ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_DeviceUuid() *__Session_Selector {
-	u.selectCol = "DeviceUuid"
+func (u *__MsgFile_Selector) Select_MimeType() *__MsgFile_Selector {
+	u.selectCol = "MimeType"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_LastActivityTime_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY LastActivityTime DESC "
+func (u *__MsgFile_Selector) OrderBy_Width_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Width DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_LastActivityTime_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY LastActivityTime ASC "
+func (u *__MsgFile_Selector) OrderBy_Width_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Width ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_LastActivityTime() *__Session_Selector {
-	u.selectCol = "LastActivityTime"
+func (u *__MsgFile_Selector) Select_Width() *__MsgFile_Selector {
+	u.selectCol = "Width"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_LastIpAddress_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY LastIpAddress DESC "
+func (u *__MsgFile_Selector) OrderBy_Height_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Height DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_LastIpAddress_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY LastIpAddress ASC "
+func (u *__MsgFile_Selector) OrderBy_Height_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Height ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_LastIpAddress() *__Session_Selector {
-	u.selectCol = "LastIpAddress"
+func (u *__MsgFile_Selector) Select_Height() *__MsgFile_Selector {
+	u.selectCol = "Height"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_LastWifiMacAddress_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY LastWifiMacAddress DESC "
+func (u *__MsgFile_Selector) OrderBy_Duration_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Duration DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_LastWifiMacAddress_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY LastWifiMacAddress ASC "
+func (u *__MsgFile_Selector) OrderBy_Duration_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Duration ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_LastWifiMacAddress() *__Session_Selector {
-	u.selectCol = "LastWifiMacAddress"
+func (u *__MsgFile_Selector) Select_Duration() *__MsgFile_Selector {
+	u.selectCol = "Duration"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_LastNetworkType_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY LastNetworkType DESC "
+func (u *__MsgFile_Selector) OrderBy_Extension_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Extension DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_LastNetworkType_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY LastNetworkType ASC "
+func (u *__MsgFile_Selector) OrderBy_Extension_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY Extension ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_LastNetworkType() *__Session_Selector {
-	u.selectCol = "LastNetworkType"
+func (u *__MsgFile_Selector) Select_Extension() *__MsgFile_Selector {
+	u.selectCol = "Extension"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_LastNetworkTypeId_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY LastNetworkTypeId DESC "
+func (u *__MsgFile_Selector) OrderBy_ThumbData_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY ThumbData DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_LastNetworkTypeId_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY LastNetworkTypeId ASC "
+func (u *__MsgFile_Selector) OrderBy_ThumbData_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY ThumbData ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_LastNetworkTypeId() *__Session_Selector {
-	u.selectCol = "LastNetworkTypeId"
+func (u *__MsgFile_Selector) Select_ThumbData() *__MsgFile_Selector {
+	u.selectCol = "ThumbData"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_AppVersion_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY AppVersion DESC "
+func (u *__MsgFile_Selector) OrderBy_ThumbData64_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY ThumbData64 DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_AppVersion_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY AppVersion ASC "
+func (u *__MsgFile_Selector) OrderBy_ThumbData64_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY ThumbData64 ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_AppVersion() *__Session_Selector {
-	u.selectCol = "AppVersion"
+func (u *__MsgFile_Selector) Select_ThumbData64() *__MsgFile_Selector {
+	u.selectCol = "ThumbData64"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_UpdatedTime_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY UpdatedTime DESC "
+func (u *__MsgFile_Selector) OrderBy_ServerSrc_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY ServerSrc DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_UpdatedTime_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY UpdatedTime ASC "
+func (u *__MsgFile_Selector) OrderBy_ServerSrc_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY ServerSrc ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_UpdatedTime() *__Session_Selector {
-	u.selectCol = "UpdatedTime"
+func (u *__MsgFile_Selector) Select_ServerSrc() *__MsgFile_Selector {
+	u.selectCol = "ServerSrc"
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_CreatedTime_Desc() *__Session_Selector {
-	u.orderBy = " ORDER BY CreatedTime DESC "
+func (u *__MsgFile_Selector) OrderBy_ServerPath_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY ServerPath DESC "
 	return u
 }
 
-func (u *__Session_Selector) OrderBy_CreatedTime_Asc() *__Session_Selector {
-	u.orderBy = " ORDER BY CreatedTime ASC "
+func (u *__MsgFile_Selector) OrderBy_ServerPath_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY ServerPath ASC "
 	return u
 }
 
-func (u *__Session_Selector) Select_CreatedTime() *__Session_Selector {
-	u.selectCol = "CreatedTime"
+func (u *__MsgFile_Selector) Select_ServerPath() *__MsgFile_Selector {
+	u.selectCol = "ServerPath"
 	return u
 }
 
-func (u *__Session_Selector) Limit(num int) *__Session_Selector {
+func (u *__MsgFile_Selector) OrderBy_ServerId_Desc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY ServerId DESC "
+	return u
+}
+
+func (u *__MsgFile_Selector) OrderBy_ServerId_Asc() *__MsgFile_Selector {
+	u.orderBy = " ORDER BY ServerId ASC "
+	return u
+}
+
+func (u *__MsgFile_Selector) Select_ServerId() *__MsgFile_Selector {
+	u.selectCol = "ServerId"
+	return u
+}
+
+func (u *__MsgFile_Selector) Limit(num int) *__MsgFile_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__Session_Selector) Offset(num int) *__Session_Selector {
+func (u *__MsgFile_Selector) Offset(num int) *__MsgFile_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__Session_Selector) _stoSql() (string, []interface{}) {
+func (u *__MsgFile_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
-	sqlstr := "SELECT " + u.selectCol + " FROM ms.session"
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.msg_file"
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -3979,14 +3999,14 @@ func (u *__Session_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__Session_Selector) GetRow(db *sqlx.DB) (*Session, error) {
+func (u *__MsgFile_Selector) GetRow(db *sqlx.DB) (*MsgFile, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &Session{}
+	row := &MsgFile{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -3996,19 +4016,19 @@ func (u *__Session_Selector) GetRow(db *sqlx.DB) (*Session, error) {
 
 	row._exists = true
 
-	OnSession_LoadOne(row)
+	OnMsgFile_LoadOne(row)
 
 	return row, nil
 }
 
-func (u *__Session_Selector) GetRows(db *sqlx.DB) ([]*Session, error) {
+func (u *__MsgFile_Selector) GetRows(db *sqlx.DB) ([]*MsgFile, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*Session
+	var rows []*MsgFile
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -4024,20 +4044,20 @@ func (u *__Session_Selector) GetRows(db *sqlx.DB) ([]*Session, error) {
 		rows[i]._exists = true
 	}
 
-	OnSession_LoadMany(rows)
+	OnMsgFile_LoadMany(rows)
 
 	return rows, nil
 }
 
 //dep use GetRows()
-func (u *__Session_Selector) GetRows2(db *sqlx.DB) ([]Session, error) {
+func (u *__MsgFile_Selector) GetRows2(db *sqlx.DB) ([]MsgFile, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*Session
+	var rows []*MsgFile
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -4053,9 +4073,9 @@ func (u *__Session_Selector) GetRows2(db *sqlx.DB) ([]Session, error) {
 		rows[i]._exists = true
 	}
 
-	OnSession_LoadMany(rows)
+	OnMsgFile_LoadMany(rows)
 
-	rows2 := make([]Session, len(rows))
+	rows2 := make([]MsgFile, len(rows))
 	for i := 0; i < len(rows); i++ {
 		cp := *rows[i]
 		rows2[i] = cp
@@ -4064,7 +4084,7 @@ func (u *__Session_Selector) GetRows2(db *sqlx.DB) ([]Session, error) {
 	return rows2, nil
 }
 
-func (u *__Session_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__MsgFile_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -4082,7 +4102,7 @@ func (u *__Session_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__Session_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__MsgFile_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -4100,7 +4120,7 @@ func (u *__Session_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	return rows, nil
 }
 
-func (u *__Session_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__MsgFile_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -4118,7 +4138,7 @@ func (u *__Session_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__Session_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__MsgFile_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -4137,7 +4157,7 @@ func (u *__Session_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__Session_Updater) Update(db XODB) (int, error) {
+func (u *__MsgFile_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -4154,7 +4174,7 @@ func (u *__Session_Updater) Update(db XODB) (int, error) {
 	allArgs = append(allArgs, updateArgs...)
 	allArgs = append(allArgs, whereArgs...)
 
-	sqlstr := `UPDATE ms.session SET ` + sqlUpdate
+	sqlstr := `UPDATE ms.msg_file SET ` + sqlUpdate
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -4176,7 +4196,7 @@ func (u *__Session_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__Session_Deleter) Delete(db XODB) (int, error) {
+func (d *__MsgFile_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -4189,7 +4209,7 @@ func (d *__Session_Deleter) Delete(db XODB) (int, error) {
 		args = append(args, w.args...)
 	}
 
-	sqlstr := "DELETE FROM ms.session WHERE " + wheresStr
+	sqlstr := "DELETE FROM ms.msg_file WHERE " + wheresStr
 
 	// run query
 	XOLog(sqlstr, args)
@@ -4209,16 +4229,16 @@ func (d *__Session_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  Session ////////////////
-func MassInsert_Session(rows []Session, db XODB) error {
+///////////////////////// Mass insert - replace for  MsgFile ////////////////
+func MassInsert_MsgFile(rows []MsgFile, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "INSERT INTO ms.session (" +
-		"UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime" +
+	sqlstr := "INSERT INTO ms.msg_file (" +
+		"Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId" +
 		") VALUES " + insVals
 
 	// run query
@@ -4226,18 +4246,19 @@ func MassInsert_Session(rows []Session, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.UserId)
-		vals = append(vals, row.SessionUuid)
-		vals = append(vals, row.ClientUuid)
-		vals = append(vals, row.DeviceUuid)
-		vals = append(vals, row.LastActivityTime)
-		vals = append(vals, row.LastIpAddress)
-		vals = append(vals, row.LastWifiMacAddress)
-		vals = append(vals, row.LastNetworkType)
-		vals = append(vals, row.LastNetworkTypeId)
-		vals = append(vals, row.AppVersion)
-		vals = append(vals, row.UpdatedTime)
-		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.Name)
+		vals = append(vals, row.Size)
+		vals = append(vals, row.FileType)
+		vals = append(vals, row.MimeType)
+		vals = append(vals, row.Width)
+		vals = append(vals, row.Height)
+		vals = append(vals, row.Duration)
+		vals = append(vals, row.Extension)
+		vals = append(vals, row.ThumbData)
+		vals = append(vals, row.ThumbData64)
+		vals = append(vals, row.ServerSrc)
+		vals = append(vals, row.ServerPath)
+		vals = append(vals, row.ServerId)
 
 	}
 
@@ -4252,15 +4273,15 @@ func MassInsert_Session(rows []Session, db XODB) error {
 	return nil
 }
 
-func MassReplace_Session(rows []Session, db XODB) error {
+func MassReplace_MsgFile(rows []MsgFile, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "REPLACE INTO ms.session (" +
-		"UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime" +
+	sqlstr := "REPLACE INTO ms.msg_file (" +
+		"Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId" +
 		") VALUES " + insVals
 
 	// run query
@@ -4268,18 +4289,19 @@ func MassReplace_Session(rows []Session, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.UserId)
-		vals = append(vals, row.SessionUuid)
-		vals = append(vals, row.ClientUuid)
-		vals = append(vals, row.DeviceUuid)
-		vals = append(vals, row.LastActivityTime)
-		vals = append(vals, row.LastIpAddress)
-		vals = append(vals, row.LastWifiMacAddress)
-		vals = append(vals, row.LastNetworkType)
-		vals = append(vals, row.LastNetworkTypeId)
-		vals = append(vals, row.AppVersion)
-		vals = append(vals, row.UpdatedTime)
-		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.Name)
+		vals = append(vals, row.Size)
+		vals = append(vals, row.FileType)
+		vals = append(vals, row.MimeType)
+		vals = append(vals, row.Width)
+		vals = append(vals, row.Height)
+		vals = append(vals, row.Duration)
+		vals = append(vals, row.Extension)
+		vals = append(vals, row.ThumbData)
+		vals = append(vals, row.ThumbData64)
+		vals = append(vals, row.ServerSrc)
+		vals = append(vals, row.ServerPath)
+		vals = append(vals, row.ServerId)
 
 	}
 
@@ -4322,60 +4344,33 @@ func MassReplace_Session(rows []Session, db XODB) error {
 
 //
 
-// SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
 //
-// Generated from index 'SessionUuid2'.
-func SessionBySessionUuid(db XODB, sessionUuid string) (*Session, error) {
+
+// MsgFileById retrieves a row from 'ms.msg_file' as a MsgFile.
+//
+// Generated from index 'msg_file_Id_pkey'.
+func MsgFileById(db XODB, id int) (*MsgFile, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime ` +
-		`FROM ms.session ` +
-		`WHERE SessionUuid = ?`
-
-	// run query
-	XOLog(sqlstr, sessionUuid)
-	s := Session{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, sessionUuid).Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.LastNetworkTypeId, &s.AppVersion, &s.UpdatedTime, &s.CreatedTime)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnSession_LoadOne(&s)
-
-	return &s, nil
-}
-
-// SessionById retrieves a row from 'ms.session' as a Session.
-//
-// Generated from index 'session_Id_pkey'.
-func SessionById(db XODB, id int) (*Session, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime ` +
-		`FROM ms.session ` +
+		`Id, Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId ` +
+		`FROM ms.msg_file ` +
 		`WHERE Id = ?`
 
 	// run query
 	XOLog(sqlstr, id)
-	s := Session{
+	mf := MsgFile{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.LastNetworkTypeId, &s.AppVersion, &s.UpdatedTime, &s.CreatedTime)
+	err = db.QueryRow(sqlstr, id).Scan(&mf.Id, &mf.Name, &mf.Size, &mf.FileType, &mf.MimeType, &mf.Width, &mf.Height, &mf.Duration, &mf.Extension, &mf.ThumbData, &mf.ThumbData64, &mf.ServerSrc, &mf.ServerPath, &mf.ServerId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
 	}
 
-	OnSession_LoadOne(&s)
+	OnMsgFile_LoadOne(&mf)
 
-	return &s, nil
+	return &mf, nil
 }

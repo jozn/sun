@@ -1,4 +1,6 @@
+
 package x
+
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -243,6 +245,47 @@ func PBConvPB_Message_To_Message ( o *Message) *PB_Message {
       Data64: string ( o.Data64 ),
       DataJson: string ( o.DataJson ),
       CreatedTimeMs: int64 ( o.CreatedTimeMs ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__MsgFile_To_MsgFile( o *PB_MsgFile) *MsgFile {
+     n := &MsgFile{
+      Id: int ( o.Id ),
+      Name: string ( o.Name ),
+      Size: int ( o.Size ),
+      FileType: int ( o.FileType ),
+      MimeType: string ( o.MimeType ),
+      Width: int ( o.Width ),
+      Height: int ( o.Height ),
+      Duration: int ( o.Duration ),
+      Extension: string ( o.Extension ),
+      ThumbData: []byte ( o.ThumbData ),
+      ThumbData64: string ( o.ThumbData64 ),
+      ServerSrc: string ( o.ServerSrc ),
+      ServerPath: string ( o.ServerPath ),
+      ServerId: int ( o.ServerId ),
+    }
+    return n
+}
+
+func PBConvPB_MsgFile_To_MsgFile ( o *MsgFile) *PB_MsgFile {
+     n := &PB_MsgFile{
+      Id: int64 ( o.Id ),
+      Name: string ( o.Name ),
+      Size: int32 ( o.Size ),
+      FileType: int32 ( o.FileType ),
+      MimeType: string ( o.MimeType ),
+      Width: int32 ( o.Width ),
+      Height: int32 ( o.Height ),
+      Duration: int32 ( o.Duration ),
+      Extension: string ( o.Extension ),
+      ThumbData: []byte ( o.ThumbData ),
+      ThumbData64: string ( o.ThumbData64 ),
+      ServerSrc: string ( o.ServerSrc ),
+      ServerPath: string ( o.ServerPath ),
+      ServerId: int32 ( o.ServerId ),
     }
     return n
 }

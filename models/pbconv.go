@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/golang/protobuf/proto"
+	"ms/Console2/dev5/m"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 )
@@ -112,4 +113,43 @@ func PBConv_MsgPushEvent_toNew_PB_MsgEvent(m *x.MsgPushEvent) x.PB_MsgEvent {
 	}
 
 	return pbEv
+}
+
+func PBConv_PB_MsgFile_toNew_MsgFile(f *x.PB_MsgFile) x.MsgFile {
+	row := x.MsgFile{
+		Id:          0,
+		Name:        f.Name,
+		Size:        int(f.Size),
+		FileType:    int(f.FileType),
+		MimeType:    f.MimeType,
+		Width:       int(f.Width),
+		Height:      int(f.Height),
+		Duration:    int(f.Duration),
+		Extension:   f.Extension,
+		ThumbData:   []byte{},
+		ThumbData64: helper.ToBase64Bin(f.ThumbData),
+		ServerSrc:   "", //must set with hand
+		ServerPath:  "", //must set with hand
+		ServerId:    0,  //must set with hand
+	}
+
+	return row
+}
+
+func PBConv_MsgFile_toNew_PB_MsgFile(f *x.MsgFile) x.PB_MsgFile {
+	data, _ := helper.FromBase64ToBin(f.ThumbData64)
+	pb := x.PB_MsgFile{
+		Name:      f.Name,
+		Size:      int64(f.Size),
+		FileType:  int32(f.FileType),
+		MimeType:  f.MimeType,
+		Width:     int32(f.Width),
+		Height:    int32(f.Height),
+		Duration:  int32(f.Duration),
+		Extension: f.Extension,
+		ThumbData: data,
+		ServerSrc: f.ServerSrc, //must set with hand
+	}
+
+	return pb
 }

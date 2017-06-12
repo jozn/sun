@@ -8,10 +8,10 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 
 option go_package = "x";
 
-//service Greeter {
-//  // Sends a greeting
-//  rpc SayHello (PB_Message) returns (PB_UserWithMe) {}
-//}*/
+/*service Greeter {
+  // Sends a greeting
+  rpc SayHello (PB_Message) returns (PB_UserWithMe) {}
+}*/
 
 message PB_CommandToServer {
 	int64 ClientCallId = 1;
@@ -74,6 +74,27 @@ message PB_Message {
     int32 ToPush = 17;
     string MsgFile_LocalSrc = 18;
     int32 MsgFile_Status = 19;
+
+    PB_MsgFile File = 100;
+}
+
+message PB_MsgFile {
+    //general
+    string Name = 1 ;
+    int64 Size = 2;
+    int32 FileType = 3;
+    string MimeType = 4;
+    int32 Width = 5;
+    int32 Height = 6;
+    int32 Duration = 7;
+    string Extension = 8;
+    bytes ThumbData = 11;
+
+    //just set in the client to server - data must be fetched sepratily for pushed msgs via ServerSrc
+    bytes Data = 10;
+
+    //just set for push data
+    string ServerSrc = 101;
 }
 
 message PB_Response {

@@ -93,6 +93,23 @@ public class J {
 		public Integer CreatedTimeMs;
 	}
 
+	public static class MsgFile {
+		public Integer Id;
+		public String Name;
+		public Integer Size;
+		public Integer FileType;
+		public String MimeType;
+		public Integer Width;
+		public Integer Height;
+		public Integer Duration;
+		public String Extension;
+		public UNKNOWN ThumbData;
+		public String ThumbData64;
+		public String ServerSrc;
+		public String ServerPath;
+		public Integer ServerId;
+	}
+
 	public static class MsgPush {
 		public Integer Id;
 		public Integer Uid;

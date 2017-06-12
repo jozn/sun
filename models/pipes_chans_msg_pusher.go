@@ -1,5 +1,6 @@
 package models
 
+//TODO delete this?
 type tMsgRecivedToUser struct {
 	userId int
 	msgUid int

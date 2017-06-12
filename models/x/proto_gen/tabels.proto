@@ -85,6 +85,22 @@ message PB_Message {
     string DataJson = 19;
     int64 CreatedTimeMs = 21;
 }
+message PB_MsgFile {
+    int64 Id = 1;
+    string Name = 3;
+    int32 Size = 5;
+    int32 FileType = 7;
+    string MimeType = 9;
+    int32 Width = 11;
+    int32 Height = 13;
+    int32 Duration = 15;
+    string Extension = 17;
+    ???? ThumbData = 19;
+    string ThumbData64 = 21;
+    string ServerSrc = 23;
+    string ServerPath = 25;
+    int32 ServerId = 27;
+}
 message PB_MsgPush {
     int64 Id = 1;
     int64 Uid = 3;

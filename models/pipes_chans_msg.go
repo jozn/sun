@@ -13,12 +13,13 @@ var chanNewChatMsgsBuffer = make(chan newChatMsgDelayer, 100000)
 //var chanNewMsgPushEventsBuffer = make(chan *x.MsgPushEvent, 20000)
 
 type newChatMsgDelayer struct {
-	msgPB      *x.PB_Message
-	fromUserId int
-	toUserId   int
-	roomKey    string
-	hashId     int
-	uid        int
+	msgPB        *x.PB_Message
+	fromUserId   int
+	toUserId     int
+	roomKey      string
+	hashId       int
+	uid          int
+	msgFileRowId int
 }
 
 func init() {
@@ -28,9 +29,9 @@ func init() {
 func batcheNewMsgsBufferProceess() {
 	const siz = 50000
 	arr := make([]newChatMsgDelayer, 0, siz)
-    cnt := 0
+	cnt := 0
 
-    ticker := time.NewTicker(10 * time.Millisecond)
+	ticker := time.NewTicker(10 * time.Millisecond)
 	for {
 		select {
 
@@ -39,8 +40,8 @@ func batcheNewMsgsBufferProceess() {
 
 		case <-ticker.C:
 			if len(arr) > 0 {
-                cnt++
-                fmt.Printf("batch of chanNewChatMsgsBuffer - cnt:%d - len:%d \n",cnt,len(arr))
+				cnt++
+				fmt.Printf("batch of chanNewChatMsgsBuffer - cnt:%d - len:%d \n", cnt, len(arr))
 				pre := arr
 				arr = make([]newChatMsgDelayer, 0, siz)
 				go processNewChatMsgBuffer(pre)

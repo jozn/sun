@@ -2405,49 +2405,6 @@ func MsgPushesByToUserCreatedTimeMs(db XODB, toUser int, createdTimeMs int) ([]*
 	return res, nil
 }
 
-// MsgPushesByUid retrieves a row from 'ms.msg_push' as a MsgPush.
-//
-// Generated from index 'Uid'.
-func MsgPushesByUid(db XODB, uid int) ([]*MsgPush, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, Uid, ToUser, MsgUid, CreatedTimeMs ` +
-		`FROM ms.msg_push ` +
-		`WHERE Uid = ?`
-
-	// run query
-	XOLog(sqlstr, uid)
-	q, err := db.Query(sqlstr, uid)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*MsgPush{}
-	for q.Next() {
-		mp := MsgPush{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&mp.Id, &mp.Uid, &mp.ToUser, &mp.MsgUid, &mp.CreatedTimeMs)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &mp)
-	}
-
-	OnMsgPush_LoadMany(res)
-
-	return res, nil
-}
-
 // MsgPushById retrieves a row from 'ms.msg_push' as a MsgPush.
 //
 // Generated from index 'msg_push_Id_pkey'.

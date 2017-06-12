@@ -223,6 +223,44 @@ type Message struct {
 	CreatedTimeMs: 0,
 */
 
+// MsgFile 'ms.msg_file'.
+type MsgFile struct {
+	Id          int
+	Name        string
+	Size        int
+	FileType    int
+	MimeType    string
+	Width       int
+	Height      int
+	Duration    int
+	Extension   string
+	ThumbData   []byte
+	ThumbData64 string
+	ServerSrc   string
+	ServerPath  string
+	ServerId    int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &MsgFile {
+	Id: 0,
+	Name: "",
+	Size: 0,
+	FileType: 0,
+	MimeType: "",
+	Width: 0,
+	Height: 0,
+	Duration: 0,
+	Extension: "",
+	ThumbData: UNKNOWN,
+	ThumbData64: "",
+	ServerSrc: "",
+	ServerPath: "",
+	ServerId: 0,
+*/
+
 // MsgPush 'ms.msg_push'.
 type MsgPush struct {
 	Id            int
