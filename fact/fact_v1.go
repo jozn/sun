@@ -28,7 +28,7 @@ func FactPostText() {
 	p.Text = helper.FactRandStrEmoji(200, true)
 
 	/*if rand.Intn(10) < 7 {
-		img, W, H := randImage()
+		img, W, H := RandImage()
 		p.TypeId = 2
 	}*/
 
@@ -42,7 +42,7 @@ func FactPosts(c *base.Action) {
 	target_url = fmt.Sprintf(target_url, rand.Intn(80)+1)
 
 	if rand.Intn(10) < 7 {
-		f, _, _ := randImage()
+		f, _, _ := RandImage()
 		postFile(f, target_url, helper.FactRandStrEmoji(200, true))
 	} else {
 		FactPostText()
@@ -95,7 +95,7 @@ func postFile(filename string, targetUrl string, text string) error {
 
 var imageFiles []os.FileInfo
 
-const dir = "./upload/posts1"
+const dir = `C:\Go\_gopath\src\ms\sun\upload\samples`
 
 func init() {
 	imageFiles, err := ioutil.ReadDir(dir)
@@ -105,7 +105,7 @@ func init() {
 	_ = imageFiles
 }
 
-func randImage() (string, int, int) {
+func RandImage() (string, int, int) {
 	imageFiles, err := ioutil.ReadDir(dir)
 	if err != nil {
 		log.Fatal(err)
@@ -114,7 +114,8 @@ func randImage() (string, int, int) {
 		_ = f
 		//fmt.Println(f.Name())
 	}
-	fn := "./upload/posts1" + "/" + imageFiles[rand.Intn(len(imageFiles))].Name()
+	//fn := "./upload/posts1" + "/" + imageFiles[rand.Intn(len(imageFiles))].Name()
+	fn := "./upload/samples" + "/" + imageFiles[rand.Intn(len(imageFiles))].Name()
 	file, err := os.Open(fn)
 	defer file.Close()
 	if err != nil {

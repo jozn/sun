@@ -8,10 +8,10 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 
 option go_package = "x";
 
-/*service Greeter {
+service Greeter {
   // Sends a greeting
   rpc SayHello (PB_Message) returns (PB_UserWithMe) {}
-}*/
+}
 
 message PB_CommandToServer {
 	int64 ClientCallId = 1;

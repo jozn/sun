@@ -8,6 +8,9 @@ import (
 )
 
 //Note don't use "" to wrap commands in args string it dosn't work, just plain text
+
+//see java-grpc : https://github.com/grpc/grpc-java/tree/master/compiler
+
 func main() {
 	fmt.Println(os.Getwd())
 	os.Chdir("../models/protos/")
@@ -15,7 +18,9 @@ func main() {
 
 	cd := []string{
 		`protoc --go_out=plugins=grpc:../x -I ./ *.proto`,
-		`protoc --java_out=D:\dev_working2\MS_Native\app\src\main\java --grpc-java_out=D:\dev_working2\MS_Native\app\src\main\java *.proto`,
+		// `protoc --java_out=D:\dev_working2\MS_Native\app\src\main\java --grpc-java_out=D:\dev_working2\MS_Native\app\src\main\java *.proto`,
+		`protoc --plugin=protoc-gen-grpc-java=./protoc-gen-grpc-java-1.3.0-windows-x86_64.exe --java_out=D:\dev_working2\MS_Native\app\src\main\java --grpc-java_out=lite:D:\dev_working2\MS_Native\app\src\main\java *.proto`,
+		// `protoc --grpc-java_out=lite:=D:\dev_working2\MS_Native\app\src\main\java --grpc-java_out=D:\dev_working2\MS_Native\app\src\main\java *.proto`,//java jsut grpc
 		`goimports -w ../x/`,
 	}
 

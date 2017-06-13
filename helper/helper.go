@@ -67,6 +67,10 @@ func TimeNowMs() int {
 	return int(time.Now().UnixNano() / 1000000)
 }
 
+func TimeNowMs64() int64 {
+    return int64(time.Now().UnixNano() / 1000000)
+}
+
 func DebugPrintln(msgs ...interface{}) {
 	if true {
 		fmt.Println(msgs...)
