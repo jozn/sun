@@ -29,6 +29,7 @@ var uidHolder = struct {
 
 var uid int64 = time.Now().UnixNano()
 
+//use this for not databases faster - use NextRowsSeqId() for databases ids
 func RandomSeqUid() int {
 	uidHolder.RLock()
 	_uid := uidHolder.uid

@@ -102,7 +102,7 @@ func SendSampleMesgTable3_v04(a *base.Action) base.AppErr {
 				f := &models.MsgFile{
 					LocalSrc:  "",
 					Hash:      helper.IntToStr(rand.Intn(21) + 1),
-					ServerSrc: "http://localhost:5000/public/photo/" + helper.IntToStr(rand.Intn(21)+1) + "_960.jpg",
+					ServerSrc: "http://192.168.0.10:5000/public/photo/" + helper.IntToStr(rand.Intn(21)+1) + "_960.jpg",
 					FileType:  1,
 					Status:    0,
 					Origin:    0,
