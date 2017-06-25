@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"ms/sun/helper"
 	"strconv"
 	"sync/atomic"
 	"time"
@@ -13,6 +14,13 @@ const N = 50000
 var Cnt int64 = 0
 
 func main() {
+	go func() {
+		for {
+			time.Sleep(time.Second * 2)
+			helper.GcPrintAll()
+		}
+	}()
+
 	for p := 0; p < N; p++ {
 
 		go func(p int) {

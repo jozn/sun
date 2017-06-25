@@ -31,10 +31,10 @@ func (p *sMsgPusher) pushToUser() {
 		if err == nil {
 			err := proto.Unmarshal(bts, pbMsg)
 			if err == nil {
-				logPipes.Println("befor file")
+				//logPipes.Println("befor file")
 				if m.MsgFileId > 0 {
 					fRow, ok := x.Store.GetMsgFileById(m.MsgFileId)
-					logPipes.Printf("after file: %b %s", ok, helper.ToJson(fRow))
+					//logPipes.Printf("after file: %b %s", ok, helper.ToJson(fRow))
 					if ok {
 						filePb := PBConv_MsgFile_toNew_PB_MsgFile(fRow)
 						pbMsg.File = &filePb

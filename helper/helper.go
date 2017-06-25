@@ -4,7 +4,9 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"github.com/hokaccha/go-prettyjson"
 	"math/rand"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -69,7 +71,7 @@ func TimeNowMs() int {
 }
 
 func TimeNowMs64() int64 {
-    return int64(time.Now().UnixNano() / 1000000)
+	return int64(time.Now().UnixNano() / 1000000)
 }
 
 func DebugPrintln(msgs ...interface{}) {
@@ -87,6 +89,43 @@ func DebugErr(err error) {
 func ToJson(structoo interface{}) string {
 	r, _ := json.Marshal(structoo)
 	return string(r)
+}
+
+func ToJsonPerety(structoo interface{}) string {
+	bts, _ := prettyjson.Marshal(structoo)
+	return string(bts)
+}
+
+func GcPrintAll() {
+	mem := runtime.MemStats{}
+	runtime.ReadMemStats(&mem)
+	fmt.Printf("================================== GC : %d ===========================================================\n", mem.NumGC)
+	fmt.Println(ToJsonPerety(mem))
+    fmt.Printf("================================== End GC : %d ===========================================================\n", mem.NumGC)
+}
+
+func GcPrintAllPerodicaly(second int) {
+	go func() {
+		for {
+			time.Sleep(time.Second * time.Duration(second))
+			GcPrintAll()
+		}
+	}()
+}
+
+func GcForceGCPerodicaly(second int) {
+	go func() {
+		for {
+			time.Sleep(time.Second * time.Duration(second))
+
+			t1 := time.Now()
+			runtime.GC()
+
+			fmt.Printf("GC took microsecond: %d \n", time.Now().Sub(t1).Nanoseconds()/1000)
+
+			//GcPrintAll()
+		}
+	}()
 }
 
 func init() {

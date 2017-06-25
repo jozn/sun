@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"sync"
 	"time"
+    "ms/sun/helper"
 )
 
 type User struct {
@@ -25,7 +26,7 @@ var uuu *User
 var str string
 
 func main() {
-	debug.SetGCPercent(500)
+	debug.SetGCPercent(100)
 
 	mm := MM{}
 	mm.m = make(map[int]User)
@@ -181,5 +182,7 @@ func printMem() {
 
 	fmt.Println("Time: ", (time.Now().Unix() - t1))
 	fmt.Println("Now: ", (time.Now().Unix()))
+
+    fmt.Println(helper.ToJsonPerety(mem))
 
 }
