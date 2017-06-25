@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/andreyvit/telegramapi"
-    "time"
+	"time"
 )
 
 func main() {
@@ -22,9 +22,9 @@ Slv8kg9qv1m6XHVQY3PnEw+QQtqSIXklHwIDAQAB
 		Verbose: 1000,
 	}
 	con := telegramapi.New(o, &telegramapi.State{}, &h{})
-    con.StartLogin("+989015132328")
+	con.StartLogin("+989015132328")
 
-    time.Sleep(time.Hour)
+	time.Sleep(time.Hour)
 }
 
 type h struct {

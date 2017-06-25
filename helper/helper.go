@@ -101,7 +101,7 @@ func GcPrintAll() {
 	runtime.ReadMemStats(&mem)
 	fmt.Printf("================================== GC : %d ===========================================================\n", mem.NumGC)
 	fmt.Println(ToJsonPerety(mem))
-    fmt.Printf("================================== End GC : %d ===========================================================\n", mem.NumGC)
+	fmt.Printf("================================== End GC : %d ===========================================================\n", mem.NumGC)
 }
 
 func GcPrintAllPerodicaly(second int) {

@@ -61,17 +61,17 @@ func main() {
 
 	fmt.Println(len("9223372036854775807"))
 
-    for {
-       time.Sleep(time.Millisecond)
-        fmt.Println(next())
-    }
+	for {
+		time.Sleep(time.Millisecond)
+		fmt.Println(next())
+	}
 }
 
 //must be an 19digit - max 64 bit signed is 9223372036854775807 ____  2*63 - 1
 
 func next() string {
-    SERVER_ID :=1    //2
-    t := helper.TimeNowMs() //13
+	SERVER_ID := 1              //2
+	t := helper.TimeNowMs()     //13
 	rnd := rand.Intn(10000 - 1) //4
 	_ = rnd
 

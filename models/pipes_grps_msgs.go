@@ -26,7 +26,7 @@ func (g GrpcMsg) UploadNewMsg(ctx context.Context, msgPb *x.PB_Message) (res *x.
 		return res, errors.New("session failed")
 	}
 
-    res =  &x.PB_ResRpcAddMsg{}
+	res = &x.PB_ResRpcAddMsg{}
 	filePb := msgPb.File
 
 	msgBuf := newChatMsgDelayer{
@@ -45,7 +45,7 @@ func (g GrpcMsg) UploadNewMsg(ctx context.Context, msgPb *x.PB_Message) (res *x.
 		dirName := fmt.Sprintf("./upload/msgs/%v/%d/%v/%v/", t.Year(), t.Month(), t.Day(), t.Hour())
 		//up_filename := strings.Replace(filePb.Name, ":", "-", -1)       //remove 17:24:56 file format -- just for windowse
 		up_filename := helper.RandString(10)
-		fullFileName := dirName + msgPb.MessageKey + "_" + up_filename  + filePb.Extension//msg.MediaName
+		fullFileName := dirName + msgPb.MessageKey + "_" + up_filename + filePb.Extension //msg.MediaName
 
 		fullFileName = strings.Replace(fullFileName, ":", "-", -1) //Windows dosn't accept ':'
 

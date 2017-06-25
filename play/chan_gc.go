@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"math/rand"
 	"ms/sun/helper"
+	"runtime/debug"
 	"time"
-    "runtime/debug"
 )
 
 const N = 1000

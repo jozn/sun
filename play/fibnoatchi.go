@@ -28,19 +28,19 @@ func fib(N int) int {
 }
 
 func fib64(N int) float64 {
-    if N <= 2 {
-        return 1
-    }
+	if N <= 2 {
+		return 1
+	}
 
-    //N>= 3
+	//N>= 3
 
-    nn := float64(1)  // n2
-    n_1 := float64(1) // n1
-    for i := 3; i <= N; i++ {
-        last := nn
-        nn = last + n_1
-        n_1 = last
-    }
+	nn := float64(1)  // n2
+	n_1 := float64(1) // n1
+	for i := 3; i <= N; i++ {
+		last := nn
+		nn = last + n_1
+		n_1 = last
+	}
 
-    return nn
+	return nn
 }

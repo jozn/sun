@@ -4,12 +4,12 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"ms/sun/helper"
 	"runtime"
 	"runtime/debug"
 	"strconv"
 	"sync"
 	"time"
-    "ms/sun/helper"
 )
 
 type User struct {
@@ -183,6 +183,6 @@ func printMem() {
 	fmt.Println("Time: ", (time.Now().Unix() - t1))
 	fmt.Println("Now: ", (time.Now().Unix()))
 
-    fmt.Println(helper.ToJsonPerety(mem))
+	fmt.Println(helper.ToJsonPerety(mem))
 
 }

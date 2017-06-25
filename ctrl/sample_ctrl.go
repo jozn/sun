@@ -1,9 +1,11 @@
 package ctrl
 
 import (
+	"context"
 	"fmt"
-	"log"
+	"google.golang.org/grpc/metadata"
 	"io/ioutil"
+	"log"
 	"math/rand"
 	"ms/sun/base"
 	"ms/sun/fact"
@@ -13,8 +15,6 @@ import (
 	"os"
 	"sync/atomic"
 	"time"
-    "google.golang.org/grpc/metadata"
-    "context"
 )
 
 var Cnt2 = int64(0)
@@ -118,13 +118,13 @@ func SendSampleMesg(a *base.Action) base.AppErr {
 
 			atomic.AddInt64(&Cnt2, 1)
 
-            rpc := models.GrpcMsg{}
+			rpc := models.GrpcMsg{}
 
-            ctx := context.Background()
-            md := metadata.Pairs("user_id", helper.IntToStr(fromUserId) )
-            ctx2 := metadata.NewContext(ctx,md)
+			ctx := context.Background()
+			md := metadata.Pairs("user_id", helper.IntToStr(fromUserId))
+			ctx2 := metadata.NewContext(ctx, md)
 
-            rpc.UploadNewMsg(ctx2, msg)
+			rpc.UploadNewMsg(ctx2, msg)
 
 			//fmt.Println( Cnt ," sending Sample msg toUser", toUserId, " msgKey: ", msg.MessageKey, " Room: ", msg.RoomKey)
 			//models.SampleSendMessage(toUserId, msg)
