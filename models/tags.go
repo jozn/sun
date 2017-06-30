@@ -56,8 +56,10 @@ func ReloadTopPostsForTopTags() {
 }
 
 func Tags_AddTagsInPost(post *x.Post) {
-	parser := TextParser{}
-	parser.Parse(post.Text)
+	/*parser := TextParser{}
+	parser.Parse(post.Text)*/
+
+	parser := helper.ParseText(post.Text)
 
 	if len(post.Text) == 0 {
 		return
