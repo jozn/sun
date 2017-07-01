@@ -15,9 +15,82 @@ import (
 
 	"github.com/nfnt/resize"
 	"github.com/syncthing/syncthing/lib/rand"
+	"io/ioutil"
 )
 
 func AddPostAction(c *base.Action) base.AppErr {
+	MustBeUserAndUpdate(c)
+
+	txt := c.Req.Form.Get("text")
+	params := models.NewPostAddParams{
+		UserId: c.UserId(),
+		Text:   txt,
+	}
+
+	upladedFile, fd, err := c.Req.FormFile("file")
+	if err == nil { //image
+		params.UploadedFileName = fd.Filename
+		params.UploadedImage, _ = ioutil.ReadAll(upladedFile)
+	}
+
+	post, err := models.PostAddNew(params)
+
+	c.SendJson(post)
+	return err
+}
+
+func GetPostsLatestAction(c *base.Action) base.AppErr {
+	param := UpdateSessionActivityIfUser(c)
+
+	selector := x.NewPost_Selector().
+		OrderBy_Id_Desc().Limit(param.Limit).
+		Offset(param.GetOffset())
+
+	if param.Last > 0 {
+		selector.Id_LT(param.Last)
+	}
+
+	posts, err := selector.GetRows(base.DB)
+	if err != nil {
+		return err
+	}
+	views := models.Views.PostsViews(posts, c.UserId())
+
+	c.SendJson(views)
+	return nil
+}
+
+func GetPostsStreamAction(c *base.Action) base.AppErr {
+	p := MustBeUserAndUpdate(c)
+
+	uid := c.UserId()
+
+	fids := models.MemoryStore.UserFollowingList_Get(uid).Values()
+	//var ins = make([]int,0, len(fids)+1)
+	ins := append(fids, c.UserId())
+	selctor := x.NewPost_Selector().UserId_In(ins).OrderBy_Id_Desc().Limit(p.Limit)
+
+	if p.Last > 0 {
+		selctor.Id_LT(p.Last)
+	} else if p.Page > 0 {
+		selctor.Offset(p.GetOffset())
+	}
+
+	posts, err := selctor.GetRows(base.DB)
+	if err != nil {
+		helper.DebugPrintln(err)
+		c.SendJson(nil)
+		return err
+	}
+
+	view := models.Views.PostsViews(posts, uid)
+	c.SendJson(view)
+	return nil
+}
+
+//////////////////////////// DEPRECATED ////////////////////
+
+func AddPostAction_DEPRECATED(c *base.Action) base.AppErr {
 	MustBeUserAndUpdate(c)
 
 	txt := c.Req.Form.Get("text")
@@ -39,6 +112,12 @@ func AddPostAction(c *base.Action) base.AppErr {
 			helper.DebugErr(err)
 			return err
 		}
+		//md5
+		md5 := ""
+		bts, err := ioutil.ReadAll(upladedFile)
+		if err == nil {
+			md5 = helper.MD5BytesToString(bts)
+		}
 
 		h := math.Ceil(float64((imageOrginal.Bounds().Dy() * 1080) / imageOrginal.Bounds().Dx()))
 		photo := &x.Photo{
@@ -48,6 +127,7 @@ func AddPostAction(c *base.Action) base.AppErr {
 			Width:       1080,   //imageOrginal.Bounds().Dx(),
 			Height:      int(h), //imageOrginal.Bounds().Dy(),
 			Ratio:       float32(imageOrginal.Bounds().Dx()) / float32(imageOrginal.Bounds().Dy()),
+			HashMd5:     md5,
 			Color:       helper.ExtractColoer(imageOrginal),
 			CreatedTime: helper.TimeNow(),
 			PathSrc:     PathSrcPath,
@@ -117,53 +197,4 @@ func AddPostAction(c *base.Action) base.AppErr {
 		c.SendJson(post)
 		return nil
 	}
-}
-
-func GetPostsLatestAction(c *base.Action) base.AppErr {
-	param := UpdateSessionActivityIfUser(c)
-
-	selector := x.NewPost_Selector().
-		OrderBy_Id_Desc().Limit(param.Limit).
-		Offset(param.GetOffset())
-
-	if param.Last > 0 {
-		selector.Id_LT(param.Last)
-	}
-
-	posts, err := selector.GetRows(base.DB)
-	if err != nil {
-		return err
-	}
-	views := models.Views.PostsViews(posts, c.UserId())
-
-	c.SendJson(views)
-	return nil
-}
-
-func GetPostsStreamAction(c *base.Action) base.AppErr {
-	p := MustBeUserAndUpdate(c)
-
-	uid := c.UserId()
-
-	fids := models.MemoryStore.UserFollowingList_Get(uid).Values()
-	//var ins = make([]int,0, len(fids)+1)
-	ins := append(fids, c.UserId())
-	selctor := x.NewPost_Selector().UserId_In(ins).OrderBy_Id_Desc().Limit(p.Limit)
-
-	if p.Last > 0 {
-		selctor.Id_LT(p.Last)
-	} else if p.Page > 0 {
-		selctor.Offset(p.GetOffset())
-	}
-
-	posts, err := selctor.GetRows(base.DB)
-	if err != nil {
-		helper.DebugPrintln(err)
-		c.SendJson(nil)
-		return err
-	}
-
-	view := models.Views.PostsViews(posts, uid)
-	c.SendJson(view)
-	return nil
 }
