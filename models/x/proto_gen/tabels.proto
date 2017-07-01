@@ -163,13 +163,14 @@ message PB_Photo {
     int32 Height = 21;
     float Ratio = 23;
     string HashMd5 = 25;
-    int32 CreatedTime = 27;
-    int32 W1080 = 29;
-    int32 W720 = 31;
-    int32 W480 = 33;
-    int32 W320 = 35;
-    int32 W160 = 37;
-    int32 W80 = 39;
+    string Color = 27;
+    int32 CreatedTime = 29;
+    int32 W1080 = 31;
+    int32 W720 = 33;
+    int32 W480 = 35;
+    int32 W320 = 37;
+    int32 W160 = 39;
+    int32 W80 = 41;
 }
 message PB_Post {
     int32 Id = 1;

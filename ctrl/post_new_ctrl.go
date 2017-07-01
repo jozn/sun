@@ -48,6 +48,7 @@ func AddPostAction(c *base.Action) base.AppErr {
 			Width:       1080,   //imageOrginal.Bounds().Dx(),
 			Height:      int(h), //imageOrginal.Bounds().Dy(),
 			Ratio:       float32(imageOrginal.Bounds().Dx()) / float32(imageOrginal.Bounds().Dy()),
+			Color:       helper.ExtractColoer(imageOrginal),
 			CreatedTime: helper.TimeNow(),
 			PathSrc:     PathSrcPath,
 			W1080:       1,

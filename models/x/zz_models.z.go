@@ -402,6 +402,7 @@ type Photo struct {
 	Height      int
 	Ratio       float32
 	HashMd5     string
+	Color       string
 	CreatedTime int
 	W1080       int
 	W720        int
@@ -428,6 +429,7 @@ type Photo struct {
 	Height: 0,
 	Ratio: float32(0),
 	HashMd5: "",
+	Color: "",
 	CreatedTime: 0,
 	W1080: 0,
 	W720: 0,

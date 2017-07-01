@@ -29,6 +29,7 @@ type Photo__ struct {
 	Height      int     `json:"Height"`      // Height -
 	Ratio       float32 `json:"Ratio"`       // Ratio -
 	HashMd5     string  `json:"HashMd5"`     // HashMd5 -
+	Color       string  `json:"Color"`       // Color -
 	CreatedTime int     `json:"CreatedTime"` // CreatedTime -
 	W1080       int     `json:"W1080"`       // W1080 -
 	W720        int     `json:"W720"`        // W720 -
@@ -62,14 +63,14 @@ func (p *Photo) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.photo (` +
-		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80` +
+		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, Color, CreatedTime, W1080, W720, W480, W320, W160, W80` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
-	res, err := db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
+	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.Color, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
+	res, err := db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.Color, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -97,14 +98,14 @@ func (p *Photo) Replace(db XODB) error {
 
 	// sql query
 	const sqlstr = `REPLACE INTO ms.photo (` +
-		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80` +
+		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, Color, CreatedTime, W1080, W720, W480, W320, W160, W80` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
-	res, err := db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
+	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.Color, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
+	res, err := db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.Color, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -142,12 +143,12 @@ func (p *Photo) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.photo SET ` +
-		`UserId = ?, PostId = ?, AlbumId = ?, ImageTypeId = ?, Title = ?, Src = ?, PathSrc = ?, BucketId = ?, Width = ?, Height = ?, Ratio = ?, HashMd5 = ?, CreatedTime = ?, W1080 = ?, W720 = ?, W480 = ?, W320 = ?, W160 = ?, W80 = ?` +
+		`UserId = ?, PostId = ?, AlbumId = ?, ImageTypeId = ?, Title = ?, Src = ?, PathSrc = ?, BucketId = ?, Width = ?, Height = ?, Ratio = ?, HashMd5 = ?, Color = ?, CreatedTime = ?, W1080 = ?, W720 = ?, W480 = ?, W320 = ?, W160 = ?, W80 = ?` +
 		` WHERE PhotoId = ?`
 
 	// run query
-	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.PhotoId)
-	_, err = db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.PhotoId)
+	XOLog(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.Color, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.PhotoId)
+	_, err = db.Exec(sqlstr, p.UserId, p.PostId, p.AlbumId, p.ImageTypeId, p.Title, p.Src, p.PathSrc, p.BucketId, p.Width, p.Height, p.Ratio, p.HashMd5, p.Color, p.CreatedTime, p.W1080, p.W720, p.W480, p.W320, p.W160, p.W80, p.PhotoId)
 
 	XOLogErr(err)
 	OnPhoto_AfterUpdate(p)
@@ -5229,6 +5230,66 @@ func (d *__Photo_Deleter) HashMd5_NotEq(val string) *__Photo_Deleter {
 	return d
 }
 
+func (u *__Photo_Deleter) Color_In(ins []string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Color IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Deleter) Color_NotIn(ins []string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Color NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Photo_Deleter) Color_Like(val string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Color LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Deleter) Color_Eq(val string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Color = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Deleter) Color_NotEq(val string) *__Photo_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Color != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 
 func (u *__Photo_Updater) Title_In(ins []string) *__Photo_Updater {
@@ -5466,6 +5527,66 @@ func (d *__Photo_Updater) HashMd5_NotEq(val string) *__Photo_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " HashMd5 != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Photo_Updater) Color_In(ins []string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Color IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Updater) Color_NotIn(ins []string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Color NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Photo_Updater) Color_Like(val string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Color LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Updater) Color_Eq(val string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Color = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Updater) Color_NotEq(val string) *__Photo_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Color != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -5713,6 +5834,66 @@ func (d *__Photo_Selector) HashMd5_NotEq(val string) *__Photo_Selector {
 	return d
 }
 
+func (u *__Photo_Selector) Color_In(ins []string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Color IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Photo_Selector) Color_NotIn(ins []string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Color NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Photo_Selector) Color_Like(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Color LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Photo_Selector) Color_Eq(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Color = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Photo_Selector) Color_NotEq(val string) *__Photo_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Color != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 /// End of wheres for selectors , updators, deletor
 
 /////////////////////////////// Updater /////////////////////////////
@@ -5918,6 +6099,14 @@ func (u *__Photo_Updater) Height_Increment(count int) *__Photo_Updater {
 //string
 func (u *__Photo_Updater) HashMd5(newVal string) *__Photo_Updater {
 	u.updates[" HashMd5 = ? "] = newVal
+	return u
+}
+
+//ints
+
+//string
+func (u *__Photo_Updater) Color(newVal string) *__Photo_Updater {
+	u.updates[" Color = ? "] = newVal
 	return u
 }
 
@@ -6265,6 +6454,21 @@ func (u *__Photo_Selector) OrderBy_HashMd5_Asc() *__Photo_Selector {
 
 func (u *__Photo_Selector) Select_HashMd5() *__Photo_Selector {
 	u.selectCol = "HashMd5"
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_Color_Desc() *__Photo_Selector {
+	u.orderBy = " ORDER BY Color DESC "
+	return u
+}
+
+func (u *__Photo_Selector) OrderBy_Color_Asc() *__Photo_Selector {
+	u.orderBy = " ORDER BY Color ASC "
+	return u
+}
+
+func (u *__Photo_Selector) Select_Color() *__Photo_Selector {
+	u.selectCol = "Color"
 	return u
 }
 
@@ -6641,12 +6845,12 @@ func (d *__Photo_Deleter) Delete(db XODB) (int, error) {
 func MassInsert_Photo(rows []Photo, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.photo (" +
-		"UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80" +
+		"UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, Color, CreatedTime, W1080, W720, W480, W320, W160, W80" +
 		") VALUES " + insVals
 
 	// run query
@@ -6666,6 +6870,7 @@ func MassInsert_Photo(rows []Photo, db XODB) error {
 		vals = append(vals, row.Height)
 		vals = append(vals, row.Ratio)
 		vals = append(vals, row.HashMd5)
+		vals = append(vals, row.Color)
 		vals = append(vals, row.CreatedTime)
 		vals = append(vals, row.W1080)
 		vals = append(vals, row.W720)
@@ -6690,12 +6895,12 @@ func MassInsert_Photo(rows []Photo, db XODB) error {
 func MassReplace_Photo(rows []Photo, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.photo (" +
-		"UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80" +
+		"UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, Color, CreatedTime, W1080, W720, W480, W320, W160, W80" +
 		") VALUES " + insVals
 
 	// run query
@@ -6715,6 +6920,7 @@ func MassReplace_Photo(rows []Photo, db XODB) error {
 		vals = append(vals, row.Height)
 		vals = append(vals, row.Ratio)
 		vals = append(vals, row.HashMd5)
+		vals = append(vals, row.Color)
 		vals = append(vals, row.CreatedTime)
 		vals = append(vals, row.W1080)
 		vals = append(vals, row.W720)
@@ -6778,6 +6984,8 @@ func MassReplace_Photo(rows []Photo, db XODB) error {
 
 //
 
+//
+
 // PhotosByAlbumId retrieves a row from 'ms.photo' as a Photo.
 //
 // Generated from index 'AlbumId'.
@@ -6786,7 +6994,7 @@ func PhotosByAlbumId(db XODB, albumId int) ([]*Photo, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
+		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, Color, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
 		`FROM ms.photo ` +
 		`WHERE AlbumId = ?`
 
@@ -6807,7 +7015,7 @@ func PhotosByAlbumId(db XODB, albumId int) ([]*Photo, error) {
 		}
 
 		// scan
-		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
+		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.Color, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -6829,7 +7037,7 @@ func PhotosByCreatedTime(db XODB, createdTime int) ([]*Photo, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
+		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, Color, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
 		`FROM ms.photo ` +
 		`WHERE CreatedTime = ?`
 
@@ -6850,7 +7058,7 @@ func PhotosByCreatedTime(db XODB, createdTime int) ([]*Photo, error) {
 		}
 
 		// scan
-		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
+		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.Color, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -6872,7 +7080,7 @@ func PhotosByHashMd5(db XODB, hashMd5 string) ([]*Photo, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
+		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, Color, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
 		`FROM ms.photo ` +
 		`WHERE HashMd5 = ?`
 
@@ -6893,7 +7101,7 @@ func PhotosByHashMd5(db XODB, hashMd5 string) ([]*Photo, error) {
 		}
 
 		// scan
-		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
+		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.Color, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -6915,7 +7123,7 @@ func PhotosByPostId(db XODB, postId int) ([]*Photo, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
+		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, Color, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
 		`FROM ms.photo ` +
 		`WHERE PostId = ?`
 
@@ -6936,7 +7144,7 @@ func PhotosByPostId(db XODB, postId int) ([]*Photo, error) {
 		}
 
 		// scan
-		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
+		err = q.Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.Color, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -6958,7 +7166,7 @@ func PhotoByPhotoId(db XODB, photoId int) (*Photo, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
+		`PhotoId, UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, Color, CreatedTime, W1080, W720, W480, W320, W160, W80 ` +
 		`FROM ms.photo ` +
 		`WHERE PhotoId = ?`
 
@@ -6968,7 +7176,7 @@ func PhotoByPhotoId(db XODB, photoId int) (*Photo, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, photoId).Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
+	err = db.QueryRow(sqlstr, photoId).Scan(&p.PhotoId, &p.UserId, &p.PostId, &p.AlbumId, &p.ImageTypeId, &p.Title, &p.Src, &p.PathSrc, &p.BucketId, &p.Width, &p.Height, &p.Ratio, &p.HashMd5, &p.Color, &p.CreatedTime, &p.W1080, &p.W720, &p.W480, &p.W320, &p.W160, &p.W80)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

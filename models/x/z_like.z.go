@@ -2718,47 +2718,33 @@ func MassReplace_Like(rows []Like, db XODB) error {
 
 //
 
-// LikesById retrieves a row from 'ms.likes' as a Like.
+// LikeByPostIdUserId retrieves a row from 'ms.likes' as a Like.
 //
-// Generated from index 'Id'.
-func LikesById(db XODB, id int) ([]*Like, error) {
+// Generated from index 'PostId'.
+func LikeByPostIdUserId(db XODB, postId int, userId int) (*Like, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
 		`Id, PostId, PostTypeId, UserId, TypeId, CreatedTime ` +
 		`FROM ms.likes ` +
-		`WHERE Id = ?`
+		`WHERE PostId = ? AND UserId = ?`
 
 	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
+	XOLog(sqlstr, postId, userId)
+	l := Like{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, postId, userId).Scan(&l.Id, &l.PostId, &l.PostTypeId, &l.UserId, &l.TypeId, &l.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
 	}
-	defer q.Close()
 
-	// load results
-	res := []*Like{}
-	for q.Next() {
-		l := Like{
-			_exists: true,
-		}
+	OnLike_LoadOne(&l)
 
-		// scan
-		err = q.Scan(&l.Id, &l.PostId, &l.PostTypeId, &l.UserId, &l.TypeId, &l.CreatedTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &l)
-	}
-
-	OnLike_LoadMany(res)
-
-	return res, nil
+	return &l, nil
 }
 
 // LikesByPostId retrieves a row from 'ms.likes' as a Like.

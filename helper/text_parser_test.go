@@ -3,6 +3,7 @@ package helper
 import (
 	"testing"
 )
+
 //50us
 func BenchmarkParseText(b *testing.B) {
 	t6 := `#hi #666 this is #one #we all like #At_Iran8 #من_را  888dsa sd

@@ -177,6 +177,7 @@ public class J {
 		public Integer Height;
 		public Float Ratio;
 		public String HashMd5;
+		public String Color;
 		public Integer CreatedTime;
 		public Integer W1080;
 		public Integer W720;
