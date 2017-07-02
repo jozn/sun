@@ -9,7 +9,7 @@ type AppError struct {
 	ForceShow bool
 }
 
-func (m *AppError) Error() string {
+func (m AppError) Error() string {
 	return fmt.Sprintf("Error %d: %s", m.Code, m.DescFa)
 }
 

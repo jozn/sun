@@ -59,6 +59,10 @@ func Tags_AddTagsInPost(post *x.Post) {
 	/*parser := TextParser{}
 	parser.Parse(post.Text)*/
 
+	if len(post.Text) == 0 {
+		return
+	}
+
 	parser := helper.ParseText(post.Text)
 
 	if len(post.Text) == 0 {
@@ -91,8 +95,12 @@ func Tags_AddTagsInPost(post *x.Post) {
 		tagsIds = append(tagsIds, tg.Id)
 	}
 
-	x.MassInsert_TagsPost(tagPosts, base.DB)
-	x.NewTag_Updater().Count_Increment(1).Id_In(tagsIds).Update(base.DB)
+	if len(tagPosts) > 0 {
+		x.MassInsert_TagsPost(tagPosts, base.DB)
+	}
+	if len(tagsIds) > 0 {
+		x.NewTag_Updater().Count_Increment(1).Id_In(tagsIds).Update(base.DB)
+	}
 }
 
 func Mentioned_AddUserMentionedInPost(post *x.Post) {
