@@ -3823,6 +3823,9 @@ func (d *__Message_Deleter) Delete(db XODB) (int, error) {
 
 ///////////////////////// Mass insert - replace for  Message ////////////////
 func MassInsert_Message(rows []Message, db XODB) error {
+	if len(rows) == 0 {
+		return errors.New("rows slice should not be empty - inserted nothing")
+	}
 	var err error
 	ln := len(rows)
 	s := "(?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
@@ -3949,35 +3952,6 @@ func MessageByMessageKey(db XODB, messageKey string) (*Message, error) {
 	}
 
 	err = db.QueryRow(sqlstr, messageKey).Scan(&m.Id, &m.Uid, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.MsgFileId, &m.DataPB, &m.Data64, &m.DataJson, &m.CreatedTimeMs)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnMessage_LoadOne(&m)
-
-	return &m, nil
-}
-
-// MessageByUid retrieves a row from 'ms.messages' as a Message.
-//
-// Generated from index 'Uid'.
-func MessageByUid(db XODB, uid int) (*Message, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, MsgFileId, DataPB, Data64, DataJson, CreatedTimeMs ` +
-		`FROM ms.messages ` +
-		`WHERE Uid = ?`
-
-	// run query
-	XOLog(sqlstr, uid)
-	m := Message{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, uid).Scan(&m.Id, &m.Uid, &m.UserId, &m.MessageKey, &m.RoomKey, &m.MessageType, &m.RoomType, &m.MsgFileId, &m.DataPB, &m.Data64, &m.DataJson, &m.CreatedTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

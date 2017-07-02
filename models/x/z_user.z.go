@@ -9771,6 +9771,9 @@ func (d *__User_Deleter) Delete(db XODB) (int, error) {
 
 ///////////////////////// Mass insert - replace for  User ////////////////
 func MassInsert_User(rows []User, db XODB) error {
+	if len(rows) == 0 {
+		return errors.New("rows slice should not be empty - inserted nothing")
+	}
 	var err error
 	ln := len(rows)
 	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`

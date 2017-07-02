@@ -2987,6 +2987,9 @@ func (d *__Activity_Deleter) Delete(db XODB) (int, error) {
 
 ///////////////////////// Mass insert - replace for  Activity ////////////////
 func MassInsert_Activity(rows []Activity, db XODB) error {
+	if len(rows) == 0 {
+		return errors.New("rows slice should not be empty - inserted nothing")
+	}
 	var err error
 	ln := len(rows)
 	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`

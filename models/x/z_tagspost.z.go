@@ -2283,6 +2283,9 @@ func (d *__TagsPost_Deleter) Delete(db XODB) (int, error) {
 
 ///////////////////////// Mass insert - replace for  TagsPost ////////////////
 func MassInsert_TagsPost(rows []TagsPost, db XODB) error {
+	if len(rows) == 0 {
+		return errors.New("rows slice should not be empty - inserted nothing")
+	}
 	var err error
 	ln := len(rows)
 	s := "(?,?,?,?)," //`(?, ?, ?, ?),`

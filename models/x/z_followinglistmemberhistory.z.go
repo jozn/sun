@@ -2987,6 +2987,9 @@ func (d *__FollowingListMemberHistory_Deleter) Delete(db XODB) (int, error) {
 
 ///////////////////////// Mass insert - replace for  FollowingListMemberHistory ////////////////
 func MassInsert_FollowingListMemberHistory(rows []FollowingListMemberHistory, db XODB) error {
+	if len(rows) == 0 {
+		return errors.New("rows slice should not be empty - inserted nothing")
+	}
 	var err error
 	ln := len(rows)
 	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`

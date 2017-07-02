@@ -6843,6 +6843,9 @@ func (d *__Photo_Deleter) Delete(db XODB) (int, error) {
 
 ///////////////////////// Mass insert - replace for  Photo ////////////////
 func MassInsert_Photo(rows []Photo, db XODB) error {
+	if len(rows) == 0 {
+		return errors.New("rows slice should not be empty - inserted nothing")
+	}
 	var err error
 	ln := len(rows)
 	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
