@@ -71,6 +71,7 @@ type PhotoView struct {
 	Width       int
 	Height      int
 	Ratio       float32
+	Color   string
 	UrlFormat   string
 	Sizes       []int //80,160,360
 }

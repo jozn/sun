@@ -16,6 +16,7 @@ func Convert_PhotoToNewPhotoView(p *x.Photo) *PhotoView {
 			Width:       p.Width,
 			Height:      p.Height,
 			Ratio:       p.Ratio,
+			Color:       p.Color,
 			UrlFormat:   "",
 			//Sizes:[]int
 		}

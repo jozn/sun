@@ -26,7 +26,7 @@ type PB_ReqRpcAddMsg struct {
 func (m *PB_ReqRpcAddMsg) Reset()                    { *m = PB_ReqRpcAddMsg{} }
 func (m *PB_ReqRpcAddMsg) String() string            { return proto.CompactTextString(m) }
 func (*PB_ReqRpcAddMsg) ProtoMessage()               {}
-func (*PB_ReqRpcAddMsg) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
+func (*PB_ReqRpcAddMsg) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
 
 func (m *PB_ReqRpcAddMsg) GetRequest() *PB_Request {
 	if m != nil {
@@ -50,7 +50,7 @@ type PB_ResRpcAddMsg struct {
 func (m *PB_ResRpcAddMsg) Reset()                    { *m = PB_ResRpcAddMsg{} }
 func (m *PB_ResRpcAddMsg) String() string            { return proto.CompactTextString(m) }
 func (*PB_ResRpcAddMsg) ProtoMessage()               {}
-func (*PB_ResRpcAddMsg) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
+func (*PB_ResRpcAddMsg) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
 
 func (m *PB_ResRpcAddMsg) GetResponse() *PB_Response {
 	if m != nil {
@@ -145,9 +145,9 @@ var _RpcMsgs_serviceDesc = grpc.ServiceDesc{
 	Metadata: "pb_rpc_msgs.proto",
 }
 
-func init() { proto.RegisterFile("pb_rpc_msgs.proto", fileDescriptor1) }
+func init() { proto.RegisterFile("pb_rpc_msgs.proto", fileDescriptor2) }
 
-var fileDescriptor1 = []byte{
+var fileDescriptor2 = []byte{
 	// 224 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x90, 0x3f, 0x4b, 0x03, 0x41,
 	0x10, 0x47, 0x5d, 0x05, 0x93, 0x4c, 0x02, 0x31, 0x57, 0x85, 0x60, 0x21, 0x07, 0x42, 0xaa, 0x15,
