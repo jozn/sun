@@ -1,106 +1,130 @@
 package models
 
 import (
+	"math"
 	"ms/sun/base"
+	"ms/sun/config"
+	"ms/sun/ds"
 	"ms/sun/helper"
-	"strings"
+	"time"
 )
 
-var TopUserIds []int = []int{}
+func Recommend_Jobs() {
+	go Recommend_Job_TopUsers_Infinit()
 
-func ReloadTopUserIds() {
-	TopUserIds = []int{}
-	base.DB.Select(&TopUserIds, "select * from user order by FollowersCount limit 500")
 }
 
-/////////////////////////////////////////////////////////////
-
-/*
-type RecommendUser struct {
-	Id          int
-	UserId      int
-	TargetId    int
-	CreatedTime int
-	Weight      float64
-	// xo fields
-	_exists, _deleted bool
-}
-*/
-
-func GenrateRecommends(ForUserId int) {
-	//NewRecommendUser_Deleter()
+func Recommend_GenPostsForUser_BG(ForUserId int) {
 	go func() {
 		defer helper.JustRecover()
-
-		helper.DebugPrintln("GenrateRecommends for user: ", ForUserId)
-		GenrateRecommendUser(ForUserId)
+		Recommend_ReGenPostsForUser(ForUserId)
 	}()
 
 }
-func GenrateRecommendUser(ForUserId int) {
 
-	////// load user Conatcs Id
+func Recommend_ReGenPostsForUser(ForUserId int) {
 
-	//var contacts []PhoneContactTable
-	var PhoneNumbers []string
-	base.DB.Select(&PhoneNumbers, "select PhoneNormalizedNumber from phone_contacts where UserId = ? ", ForUserId)
+}
 
-	var UserContactsIds []int
-	q := "select Id from user where Phone in ('" + strings.Join(PhoneNumbers, "','") + "' ) "
-	base.DB.Select(&UserContactsIds, q)
+func Recommend_GenUsersForUser_BG(ForUserId int) {
+	go func() {
+		defer helper.JustRecover()
+		Recommend_ReGenUsersForUser(ForUserId)
+	}()
 
-	/////////////////////////////////////
-	var RecomUsers []RecommendUser
+}
 
-	//1:: contacts
-	for _, uid := range UserContactsIds {
-		if MemoryStore.UserFollowingList_GetFollowingTypeForUsers(ForUserId, uid) == 0 {
-			r := RecommendUser{}
-			r.UserId = ForUserId
-			r.TargetId = uid
-			r.Weight = 1
-			r.CreatedTime = helper.TimeNow()
+func Recommend_ReGenUsersForUser(ForUserId int) {
+	contacts_coll := Contacts_GetChachesContactsUserIdsForUserId(ForUserId, 0) //contacts UserIds list
+	following_coll := MemoryStore.UserFollowingList_Get(ForUserId)
 
-			RecomUsers = append(RecomUsers, r)
+	notUserIds := following_coll.Values() //make([]int,0,len(following_coll) + len(contacts_coll))
+	for _, id := range contacts_coll.Values() {
+		if !following_coll.Contains(id) {
+			notUserIds = append(notUserIds, id)
 		}
 	}
-	/*helper.DebugPrintln("GenrateRecommends data: ",PhoneNumbers)
-	  helper.DebugPrintln("GenrateRecommends data: ",UserContactsIds)
-	  helper.DebugPrintln("GenrateRecommends data: ",q)
-	*/
-	// todo: implement this
-	//2: follings of my followes
 
-	//3: top user of MS -- for now jus followed count
+	//select those that they follows me but i don'f follow them
+	toFollowRows, err := NewFollowingListMember_Selector().
+		Select_UserId().
+		FollowedUserId_Eq(ForUserId).
+		UserId_NotIn(notUserIds).
+		GetIntSlice(base.DB)
 
-	l := len(RecomUsers)
+	if err != nil {
+		return
+	}
 
-	for i := 0; i < l-100; i++ {
-		if len(TopUserIds) > i {
-			uid := TopUserIds[i]
-			if MemoryStore.UserFollowingList_GetFollowingTypeForUsers(ForUserId, uid) == 0 {
-				r := RecommendUser{}
-				r.UserId = ForUserId
-				r.TargetId = uid
-				r.Weight = 1
-				r.CreatedTime = helper.TimeNow()
+	toFollow := ds.New()
+	toFollow.AddAndSort(toFollowRows...)
 
-				RecomUsers = append(RecomUsers, r)
-			}
+	for _, id := range contacts_coll.Values() {
+		if !following_coll.Contains(id) { //if we don't follow this contacts already
+			toFollow.Add(id)
 		}
+	}
+	toFollow.SortDesc()
 
+	var rows []RecommendUser
+	for _, id := range toFollow.Values() {
+		rows = append(rows, RecommendUser{
+			UserId:      ForUserId,
+			TargetId:    id,
+			Weight:      0.5,
+			CreatedTime: helper.TimeNow(),
+		})
 	}
 
-	//save to db
-	//helper.DebugPrintln("GenrateRecommends data: ",RecomUsers)
-
-	var _cs []interface{} //just for inserting in mass
-	for _, r := range RecomUsers {
-		v := r //it must be a local variable to -- r is just onece intiated
-		_cs = append(_cs, &v)
-		//base.DbInsertStruct( &r , "recommend_user")
+	for _, id := range TopUsers {
+		rows = append(rows, RecommendUser{
+			UserId:      ForUserId,
+			TargetId:    id,
+			Weight:      0.2,
+			CreatedTime: helper.TimeNow(),
+		})
 	}
 
-	base.DbExecute("delete from recommend_user where UserId =? ", ForUserId)
-	base.DbMassReplacetStructPoninters("recommend_user", _cs...)
+	MassInsert_RecommendUser(rows, base.DB)
+
+}
+
+func Recommend_GetTopPosts(ForUserId int) {
+
+}
+
+var TopUsers []int
+
+func Recommend_Job_TopUsers_Infinit() {
+	helper.JustRecover()
+	for {
+		if config.DEBUG_DELAY_RUN_STARTUPS { //just don't make the log files messy for this at each startups
+			time.Sleep(time.Minute * 5)
+		}
+		TopUsers = Recommend_genTopUsers(50)
+	}
+}
+
+func Recommend_genTopUsers(cnt int) []int {
+	//"select FollowedUserId as UserId, Count(*) AS Cnt form following_list_member where UpdatedTimeMs < ? group by FollowedUserId order by Cnt desc  limit 50  "
+	rows, err := NewFollowingListMember_Selector().Limit(20000).OrderBy_Id_Desc().GetRows(base.DB)
+	if err != nil {
+		return []int{}
+	}
+
+	mp := make(map[int]int, 20000) // map[FollowedUserId] = count
+	for _, r := range rows {
+		mp[r.FollowedUserId] += 1
+	}
+
+	coll := ds.New()
+	for user, _ := range mp {
+		coll.Add(user)
+	}
+	coll.SortDesc()
+
+	min := math.Min(float64(coll.Size()), 50)
+
+	return coll.Values()[:int(min)]
+
 }

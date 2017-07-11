@@ -7,6 +7,7 @@ func OnAppStart_Models() {
 	ReloadTopUserIds()
 
 	Tags_RepeatedlyJobs()
+	Recommend_Jobs()
 
 	go Session_periodicllyUpdateDB()
 
