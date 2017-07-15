@@ -12,6 +12,7 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+    "github.com/kr/pretty"
 )
 
 func TimeNow() int {
@@ -94,6 +95,10 @@ func ToJson(structoo interface{}) string {
 func ToJsonPerety(structoo interface{}) string {
 	bts, _ := prettyjson.Marshal(structoo)
 	return string(bts)
+}
+
+func PertyPrint(a interface{})  {
+    fmt.Printf("%# v", pretty.Formatter(a))
 }
 
 func GcPrintAll() {

@@ -220,9 +220,10 @@ message RoomDraft {
 }
 
 enum EnumRoomType {
-    CHAT = 0;
+    Peer = 0;
     GROUP = 1;
     CHANNEL = 2;
+    BULK = 3;
 }
 
 message Room {
