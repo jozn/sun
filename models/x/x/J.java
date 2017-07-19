@@ -30,6 +30,27 @@ public class J {
 		public Integer CreatedTime;
 	}
 
+	public static class DirectMessage {
+		public Integer MessageId;
+		public String RoomKey;
+		public Integer UserId;
+		public Integer MessageFileId;
+		public Integer MessageTypeEnum;
+		public String Text;
+		public Integer Time;
+		public Integer PeerReceivedTime;
+		public Integer PeerSeenTime;
+		public Integer DeliviryStatusEnum;
+	}
+
+	public static class DirectToMessage {
+		public Integer Id;
+		public Integer RoomId;
+		public Integer MessageId;
+		public Integer Seq;
+		public Integer SourceEnum;
+	}
+
 	public static class FollowingList {
 		public Integer Id;
 		public Integer UserId;
@@ -60,6 +81,46 @@ public class J {
 		public Integer FollowId;
 	}
 
+	public static class Group {
+		public Integer GroupId;
+		public String GroupName;
+		public Integer MembersCount;
+		public Integer GroupPrivacyEnum;
+		public Integer CreatorUserId;
+		public Integer CreatedTime;
+		public Integer UpdatedMs;
+		public Integer CurrentSeq;
+	}
+
+	public static class GroupMember {
+		public Integer Id;
+		public Integer GroupId;
+		public String GroupKey;
+		public Integer UserId;
+		public Integer ByUserId;
+		public Integer GroupRoleEnum;
+		public Integer CreatedTime;
+	}
+
+	public static class GroupMessage {
+		public Integer MessageId;
+		public String RoomKey;
+		public Integer UserId;
+		public Integer MessageFileId;
+		public Integer MessageTypeEnum;
+		public String Text;
+		public Integer CreatedMs;
+		public Integer DeliveryStatusEnum;
+	}
+
+	public static class GroupToMessage {
+		public Integer Id;
+		public Integer GroupId;
+		public Integer MessageId;
+		public Integer CreatedMs;
+		public Integer StatusEnum;
+	}
+
 	public static class Like {
 		public Integer Id;
 		public Integer PostId;
@@ -67,6 +128,11 @@ public class J {
 		public Integer UserId;
 		public Integer TypeId;
 		public Integer CreatedTime;
+	}
+
+	public static class LogChange {
+		public Integer Id;
+		public String T;
 	}
 
 	public static class Media {
@@ -79,26 +145,11 @@ public class J {
 		public String Src;
 	}
 
-	public static class Message {
-		public Integer Id;
-		public Integer Uid;
-		public Integer UserId;
-		public String MessageKey;
-		public String RoomKey;
-		public Integer MessageType;
-		public Integer RoomType;
-		public Integer MsgFileId;
-		public UNKNOWN DataPB;
-		public String Data64;
-		public String DataJson;
-		public Integer CreatedTimeMs;
-	}
-
-	public static class MsgFile {
-		public Integer Id;
+	public static class MessageFile {
+		public Integer MessageFileId;
 		public String Name;
 		public Integer Size;
-		public Integer FileType;
+		public Integer FileTypeEnum;
 		public String MimeType;
 		public Integer Width;
 		public Integer Height;
@@ -108,28 +159,11 @@ public class J {
 		public String ThumbData64;
 		public String ServerSrc;
 		public String ServerPath;
+		public String ServerThumbPath;
+		public String BucketId;
 		public Integer ServerId;
 		public Integer CanDel;
-	}
-
-	public static class MsgPush {
-		public Integer Id;
-		public Integer Uid;
-		public Integer ToUser;
-		public Integer MsgUid;
-		public Integer CreatedTimeMs;
-	}
-
-	public static class MsgPushEvent {
-		public Integer Id;
-		public Integer Uid;
-		public Integer ToUserId;
-		public Integer MsgUid;
-		public String MsgKey;
-		public String RoomKey;
-		public Integer PeerUserId;
-		public Integer EventType;
-		public Integer AtTime;
+		public Integer CreatedTime;
 	}
 
 	public static class Notification {
@@ -148,6 +182,59 @@ public class J {
 	public static class NotificationRemoved {
 		public Integer NotificationId;
 		public Integer ForUserId;
+	}
+
+	public static class OldMessage {
+		public Integer Id;
+		public Integer Uid;
+		public Integer UserId;
+		public String MessageKey;
+		public String RoomKey;
+		public Integer MessageType;
+		public Integer RoomType;
+		public Integer MsgFileId;
+		public UNKNOWN DataPB;
+		public String Data64;
+		public String DataJson;
+		public Integer CreatedTimeMs;
+	}
+
+	public static class OldMsgFile {
+		public Integer Id;
+		public String Name;
+		public Integer Size;
+		public Integer FileType;
+		public String MimeType;
+		public Integer Width;
+		public Integer Height;
+		public Integer Duration;
+		public String Extension;
+		public UNKNOWN ThumbData;
+		public String ThumbData64;
+		public String ServerSrc;
+		public String ServerPath;
+		public Integer ServerId;
+		public Integer CanDel;
+	}
+
+	public static class OldMsgPush {
+		public Integer Id;
+		public UNKNOWN Uid;
+		public Integer ToUser;
+		public Integer MsgUid;
+		public Integer CreatedTimeMs;
+	}
+
+	public static class OldMsgPushEvent {
+		public Integer Id;
+		public Integer Uid;
+		public Integer ToUserId;
+		public Integer MsgUid;
+		public String MsgKey;
+		public String RoomKey;
+		public Integer PeerUserId;
+		public Integer EventType;
+		public Integer AtTime;
 	}
 
 	public static class PhoneContact {
@@ -203,12 +290,46 @@ public class J {
 		public Integer CreatedTime;
 	}
 
+	public static class PushEvent {
+		public Integer PushEventId;
+		public Integer ToUserId;
+		public Integer ToDeviceId;
+		public Integer MessageId;
+		public Integer RoomTypeEnum;
+		public Integer RoomId;
+		public Integer PeerUserId;
+		public Integer PushEventTypeEnum;
+		public Integer AtTime;
+	}
+
+	public static class PushMessage {
+		public Integer PushMessageId;
+		public Integer ToUserId;
+		public Integer ToDeviceId;
+		public Integer MessageId;
+		public Integer RoomTypeEnum;
+		public Integer CreatedMs;
+	}
+
 	public static class RecommendUser {
 		public Integer Id;
 		public Integer UserId;
 		public Integer TargetId;
 		public Float Weight;
 		public Integer CreatedTime;
+	}
+
+	public static class Room {
+		public Integer RoomId;
+		public String RoomKey;
+		public Integer RoomTypeEnum;
+		public Integer UserId;
+		public Integer LastSeqSeen;
+		public Integer LastSeqDelete;
+		public Integer PeerUserId;
+		public Integer GroupId;
+		public Integer CreatedTime;
+		public Integer CurrentSeq;
 	}
 
 	public static class SearchClicked {
@@ -250,6 +371,19 @@ public class J {
 		public Integer PostId;
 		public Integer TypeId;
 		public Integer CreatedTime;
+	}
+
+	public static class TestChat {
+		public Integer Id;
+		public Integer Id4;
+		public Integer TimeMs;
+		public String Text;
+		public String Name;
+		public Integer UserId;
+		public Integer C2;
+		public Integer C3;
+		public Integer C4;
+		public Integer C5;
 	}
 
 	public static class User {

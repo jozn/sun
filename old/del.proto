@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+/*
+message Avatar {
+    uint64 id = 1;
+    File file = 2;
+}
+*/
+message RoomMessage {
+    uint64 message_id = 1;
+    uint64 message_version = 2;
+    RoomMessageStatus status = 3;
+    uint64 status_version = 4;
+    RoomMessageType message_type = 5;
+    string message = 6;
+    File attachment = 7;
+
+    message Author {
+        string hash = 1;
+
+        message User {
+            uint64 user_id = 1;
+            string cache_id = 2;
+        }
+        User user = 2;
+
+        message Room {
+            uint64 room_id = 1;
+        }
+        Room room = 3;
+    }
+    Author author = 8;
+
+    RoomMessageLocation location = 9;
+    RoomMessageLog log = 10;
+    RoomMessageContact contact = 11;
+    bool edited = 12;
+    uint32 create_time = 13;
+    uint32 update_time = 14;
+    bool deleted = 15;
+
+    RoomMessage forward_from = 16;
+    RoomMessage reply_to = 17;
+
+    uint64 previous_message_id = 18;
+
+    enum ExtraType {
+        NO_EXTRA = 0;
+        CHANNEL_EXTRA = 1;
+    }
+
+    ExtraType extra_type = 19;
+
+    message ChannelExtra {
+        string signature = 1;
+        string views_label = 2;
+        string thumbs_up_label = 3;
+        string thumbs_down_label = 4;
+    }
+    ChannelExtra channel_extra = 20;
+}
+
+
+message Room {
+    uint64 id = 1;
+    EnumRoomType type = 2;
+    string title = 3;
+    string initials = 4;
+    string color = 5;
+    uint32 unread_count = 6;
+    RoomMessage last_message = 7;
+    bool read_only = 8;
+    bool is_participant = 9;
+    RoomDraft draft = 10;
+    RoomMessage first_unread_message = 14;
+
+    ChatRoom chat_room_extra = 11;
+    GroupRoom group_room_extra = 12;
+    ChannelRoom channel_room_extra = 13;
+}
+
+message GroupRoom {
+    EnumRoomPrivacy type = 1;
+    EnumRoomMultiRole role = 2;
+    uint32 participants_count = 3;
+    string participants_count_label = 4;
+    uint32 participants_count_limit = 5;
+    string participants_count_limit_label = 6;
+    string description = 7;
+    uint32 avatar_count = 8;
+    Avatar avatar = 9;
+    string username = 1;
+
+    message PrivateExtra {
+        string invite_link = 1;
+        string invite_token = 2;
+    }
+    PrivateExtra private_extra = 10;
+
+    message PublicExtra {
+        string username = 1;
+    }
+    PublicExtra public_extra = 11;
+}
+
+
+message ChannelRoom {
+    enum Type {
+        PRIVATE_ROOM = 0;
+        PUBLIC_ROOM = 1;
+    }
+    Type type = 1;
+
+    enum Role {
+        MEMBER = 0;
+        MODERATOR = 1;
+        ADMIN = 2;
+        OWNER = 3;
+    }
+    Role role = 2;
+    uint32 participants_count = 3;
+    string participants_count_label = 4;
+    string description = 5;
+    uint32 avatar_count = 6;
+    Avatar avatar = 7;
+
+    message PrivateExtra {
+        string invite_link = 1;
+        string invite_token = 2;
+    }
+    PrivateExtra private_extra = 8;
+
+    message PublicExtra {
+        string username = 1;
+    }
+    PublicExtra public_extra = 9;
+
+    bool signature = 10;
+    uint64 seen_id = 11;
+}
+
+message Thumbnail {
+    int64 size = 1;
+    int32 width = 2;
+    int32 height = 3;
+    string cache_id = 4;
+}
+
+message File {
+    string token = 1;
+    string name = 2;
+    int64 size = 3;
+    Thumbnail large_thumbnail = 4;
+    Thumbnail small_thumbnail = 5;
+    Thumbnail waveform_thumbnail = 6;
+    int32 width = 7;
+    int32 height = 8;
+    double duration = 9;
+    string cache_id = 10;
+}
+

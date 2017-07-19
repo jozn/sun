@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+option java_package = "ir.ms.pb";
+//option java_outer_classname = "PB2";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME; //CODE_SIZE;
+
+option go_package = "x";
+
+message PB_MessageView {
+    int64 MessageId = 1;
+    string RoomKey = 3;
+    int32 UserId = 5;
+    int64 MessageFileId = 7;
+    int32 MessageTypeEnum = 9;
+    string Text = 11;
+    int64 CreatedMs = 13;
+    int32 PeerReceivedTime = 15;
+    int32 PeerSeenTime = 17;
+    int32 DeliviryStatusEnum = 19;
+
+    int32 PeerUserId  = 50;
+}
+
+message PB_GroupView {
+    int64 GroupId = 1;
+    string GroupName = 3;
+    int32 MembersCount = 5;
+    int32 GroupPrivacyEnum = 7;
+    int32 CreatorUserId = 9;
+    int32 CreatedTime = 11;
+    int64 UpdatedMs = 13;
+    int32 CurrentSeq = 15;
+}
+
+message PB_GroupMemberView {
+    int64 Id = 1;
+    int64 GroupId = 2;
+    int32 UserId = 3;
+    int32 ByUserId = 4;
+    int32 GroupRoleEnum = 5;
+    int32 CreatedTime = 6;
+}
+
+message PB_MessageFileView {
+    int64 MessageFileId = 1;
+    string Name = 3;
+    int32 Size = 5;
+    int32 FileTypeEnum = 7;
+    string MimeType = 9;
+    int32 Width = 11;
+    int32 Height = 13;
+    int32 Duration = 15;
+    string Extension = 17;
+//    ???? ThumbData = 19;
+    string ThumbData64 = 21;
+    string ServerSrc = 23;
+    string ServerPath = 25;
+    string ServerThumbPath = 27;
+    string BucketId = 29;
+    int32 ServerId = 31;
+    int32 CanDel = 33;
+    int32 CreatedTime = 35;
+}
+
+////////////////////////////////////////////////////////////////////
+
+////
+message PB_ReqLastChangesForTheRoom {
+    int64 RoomId = 1;
+    int64 LastLogId = 2;
+    int32 LastHaveSeq = 3;
+}
+
+message PB_ResponseLastChangesForTheRoom {
+    repeated PB_MessageView Messages = 1;
+}
+////
+message PB_RequestSetLastSeenMessages {
+    int64 RoomId = 1;
+    int64 FromMessageId = 2;
+    int32 ToMessageId = 3;
+    int64 AtTimeMs = 4;
+}
+
+message PB_ResponseSetLastSeenMessages {
+    repeated  PB_MessageView Messages = 1;
+}
+////
+
+
+service RPC_MessageReq {
+    rpc GetLastChnagesForRoom(PB_ReqLastChangesForTheRoom) returns (PB_ResponseLastChangesForTheRoom);
+
+}
+
+service RPC_MessageReqOffline {
+    rpc SetLastSeen(PB_RequestSetLastSeenMessages) returns (PB_ResponseSetLastSeenMessages);
+
+}
+
+//////////////////////////// User //////////////////////////////////
+
+
+//service RPC_UserOffline {
+//    rpc BlockUser(PB_RequestSetLastSeenMessages) returns (PB_ResponseSetLastSeenMessages);
+//
+//}
+
+

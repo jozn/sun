@@ -28,6 +28,25 @@ message PB_Comment {
     string Text = 7;
     int32 CreatedTime = 9;
 }
+message PB_DirectMessage {
+    int64 MessageId = 1;
+    string RoomKey = 3;
+    int32 UserId = 5;
+    int64 MessageFileId = 7;
+    int32 MessageTypeEnum = 9;
+    string Text = 11;
+    int32 Time = 13;
+    int32 PeerReceivedTime = 15;
+    int32 PeerSeenTime = 17;
+    int32 DeliviryStatusEnum = 19;
+}
+message PB_DirectToMessage {
+    int64 Id = 1;
+    int64 RoomId = 3;
+    int64 MessageId = 5;
+    int32 Seq = 7;
+    int32 SourceEnum = 9;
+}
 message PB_FollowingList {
     int32 Id = 1;
     int32 UserId = 3;
@@ -55,6 +74,42 @@ message PB_FollowingListMemberHistory {
     int64 UpdatedTimeMs = 11;
     int32 FollowId = 13;
 }
+message PB_Group {
+    int64 GroupId = 1;
+    string GroupName = 3;
+    int32 MembersCount = 5;
+    int32 GroupPrivacyEnum = 7;
+    int32 CreatorUserId = 9;
+    int32 CreatedTime = 11;
+    int64 UpdatedMs = 13;
+    int32 CurrentSeq = 15;
+}
+message PB_GroupMember {
+    int64 Id = 1;
+    int64 GroupId = 3;
+    string GroupKey = 5;
+    int32 UserId = 7;
+    int32 ByUserId = 9;
+    int32 GroupRoleEnum = 11;
+    int32 CreatedTime = 13;
+}
+message PB_GroupMessage {
+    int64 MessageId = 1;
+    string RoomKey = 3;
+    int32 UserId = 5;
+    int64 MessageFileId = 7;
+    int32 MessageTypeEnum = 9;
+    string Text = 11;
+    int64 CreatedMs = 13;
+    int32 DeliveryStatusEnum = 15;
+}
+message PB_GroupToMessage {
+    int64 Id = 1;
+    int64 GroupId = 3;
+    int64 MessageId = 5;
+    int64 CreatedMs = 7;
+    int32 StatusEnum = 9;
+}
 message PB_Like {
     int32 Id = 1;
     int32 PostId = 3;
@@ -62,6 +117,10 @@ message PB_Like {
     int32 UserId = 7;
     int32 TypeId = 9;
     int32 CreatedTime = 11;
+}
+message PB_LogChange {
+    int32 Id = 1;
+    string T = 3;
 }
 message PB_Media {
     int32 Id = 1;
@@ -72,25 +131,11 @@ message PB_Media {
     int32 CreatedTime = 11;
     string Src = 13;
 }
-message PB_Message {
-    int64 Id = 1;
-    int64 Uid = 3;
-    int64 UserId = 5;
-    string MessageKey = 7;
-    string RoomKey = 9;
-    int32 MessageType = 11;
-    int32 RoomType = 13;
-    int64 MsgFileId = 15;
-    ???? DataPB = 17;
-    string Data64 = 19;
-    string DataJson = 21;
-    int64 CreatedTimeMs = 23;
-}
-message PB_MsgFile {
-    int64 Id = 1;
+message PB_MessageFile {
+    int64 MessageFileId = 1;
     string Name = 3;
     int32 Size = 5;
-    int32 FileType = 7;
+    int32 FileTypeEnum = 7;
     string MimeType = 9;
     int32 Width = 11;
     int32 Height = 13;
@@ -100,26 +145,11 @@ message PB_MsgFile {
     string ThumbData64 = 21;
     string ServerSrc = 23;
     string ServerPath = 25;
-    int32 ServerId = 27;
-    int32 CanDel = 29;
-}
-message PB_MsgPush {
-    int64 Id = 1;
-    int64 Uid = 3;
-    int64 ToUser = 5;
-    int64 MsgUid = 7;
-    int64 CreatedTimeMs = 9;
-}
-message PB_MsgPushEvent {
-    int64 Id = 1;
-    int64 Uid = 3;
-    int32 ToUserId = 5;
-    int64 MsgUid = 7;
-    string MsgKey = 9;
-    string RoomKey = 11;
-    int32 PeerUserId = 13;
-    int32 EventType = 15;
-    int32 AtTime = 17;
+    string ServerThumbPath = 27;
+    string BucketId = 29;
+    int32 ServerId = 31;
+    int32 CanDel = 33;
+    int32 CreatedTime = 35;
 }
 message PB_Notification {
     int64 Id = 1;
@@ -136,6 +166,55 @@ message PB_Notification {
 message PB_NotificationRemoved {
     int32 NotificationId = 1;
     int32 ForUserId = 3;
+}
+message PB_OldMessage {
+    int64 Id = 1;
+    int64 Uid = 3;
+    int64 UserId = 5;
+    string MessageKey = 7;
+    string RoomKey = 9;
+    int32 MessageType = 11;
+    int32 RoomType = 13;
+    int64 MsgFileId = 15;
+    ???? DataPB = 17;
+    string Data64 = 19;
+    string DataJson = 21;
+    int64 CreatedTimeMs = 23;
+}
+message PB_OldMsgFile {
+    int64 Id = 1;
+    string Name = 3;
+    int32 Size = 5;
+    int32 FileType = 7;
+    string MimeType = 9;
+    int32 Width = 11;
+    int32 Height = 13;
+    int32 Duration = 15;
+    string Extension = 17;
+    ???? ThumbData = 19;
+    string ThumbData64 = 21;
+    string ServerSrc = 23;
+    string ServerPath = 25;
+    int32 ServerId = 27;
+    int32 CanDel = 29;
+}
+message PB_OldMsgPush {
+    int64 Id = 1;
+    int64 Uid = 3;
+    int64 ToUser = 5;
+    int64 MsgUid = 7;
+    int64 CreatedTimeMs = 9;
+}
+message PB_OldMsgPushEvent {
+    int64 Id = 1;
+    int64 Uid = 3;
+    int32 ToUserId = 5;
+    int64 MsgUid = 7;
+    string MsgKey = 9;
+    string RoomKey = 11;
+    int32 PeerUserId = 13;
+    int32 EventType = 15;
+    int32 AtTime = 17;
 }
 message PB_PhoneContact {
     int32 Id = 1;
@@ -187,12 +266,43 @@ message PB_Post {
     int32 EditedTime = 23;
     int32 CreatedTime = 25;
 }
+message PB_PushEvent {
+    int64 PushEventId = 1;
+    int32 ToUserId = 3;
+    int64 ToDeviceId = 5;
+    int64 MessageId = 7;
+    int32 RoomTypeEnum = 9;
+    int64 RoomId = 11;
+    int32 PeerUserId = 13;
+    int32 PushEventTypeEnum = 15;
+    int32 AtTime = 17;
+}
+message PB_PushMessage {
+    int64 PushMessageId = 1;
+    int32 ToUserId = 3;
+    int64 ToDeviceId = 5;
+    int64 MessageId = 7;
+    int32 RoomTypeEnum = 9;
+    int64 CreatedMs = 11;
+}
 message PB_RecommendUser {
     int32 Id = 1;
     int32 UserId = 3;
     int32 TargetId = 5;
     float Weight = 7;
     int32 CreatedTime = 9;
+}
+message PB_Room {
+    int64 RoomId = 1;
+    string RoomKey = 3;
+    int32 RoomTypeEnum = 5;
+    int32 UserId = 7;
+    int32 LastSeqSeen = 9;
+    int32 LastSeqDelete = 11;
+    int32 PeerUserId = 13;
+    int64 GroupId = 15;
+    int32 CreatedTime = 17;
+    int32 CurrentSeq = 19;
 }
 message PB_SearchClicked {
     int64 Id = 1;
@@ -230,6 +340,18 @@ message PB_TagsPost {
     int32 PostId = 5;
     int32 TypeId = 7;
     int32 CreatedTime = 9;
+}
+message PB_TestChat {
+    int64 Id = 1;
+    int64 Id4 = 3;
+    int64 TimeMs = 5;
+    string Text = 7;
+    string Name = 9;
+    int64 UserId = 11;
+    int32 C2 = 13;
+    int32 C3 = 15;
+    int32 C4 = 17;
+    int32 C5 = 19;
 }
 message PB_User {
     int32 Id = 1;

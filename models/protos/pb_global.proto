@@ -10,7 +10,7 @@ option go_package = "x";
 
 service Greeter {
   // Sends a greeting
-  rpc SayHello (PB_Message) returns (PB_UserWithMe) {}
+  rpc SayHello (PB_Message) returns (PB_UserWithMe) ;
 }
 
 message PB_CommandToServer {

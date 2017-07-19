@@ -1,0 +1,13 @@
+syntax = "proto3";
+///*
+//
+//service RPC_Auth {
+//    rpc CheckPhone (PB_UserParam_CheckUserName) returns (PB_UserResponse_CheckUserName);
+//    rpc SendCode (PB_UserParam_CheckUserName) returns (PB_UserResponse_CheckUserName);
+//    rpc SendCodeToSms (PB_UserParam_CheckUserName) returns (PB_UserResponse_CheckUserName);
+//    rpc SendCodeToTelgram (PB_UserParam_CheckUserName) returns (PB_UserResponse_CheckUserName);
+//    rpc SingUp (PB_UserParam_CheckUserName) returns (PB_UserResponse_CheckUserName);
+//    rpc SingIn (PB_UserParam_CheckUserName) returns (PB_UserResponse_CheckUserName);
+//    rpc LogOut (PB_UserParam_CheckUserName) returns (PB_UserResponse_CheckUserName);
+//}
+//*/

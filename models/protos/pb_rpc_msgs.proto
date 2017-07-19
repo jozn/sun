@@ -18,7 +18,7 @@ message PB_ResRpcAddMsg {
 
 service RpcMsgs {
     // Sends a greeting
-    rpc UploadNewMsg (PB_Message) returns (PB_ResRpcAddMsg) {}
+    rpc UploadNewMsg (PB_Message) returns (PB_ResRpcAddMsg);
 }
 //////////////////////////////
 
