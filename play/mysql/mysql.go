@@ -18,16 +18,16 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-    sql :="INSERT into test_chat (`Id`, `TimeMs`,`Text` ,`Name`, `UserId`, `c2`, `c3`, `c4`, `c5`) VALUES (?,?,?,?,?,?,?,?,?) "
+	sql := "INSERT into test_chat (`Id`, `TimeMs`,`Text` ,`Name`, `UserId`, `c2`, `c3`, `c4`, `c5`) VALUES (?,?,?,?,?,?,?,?,?) "
 	//(`Id`, `TimeMs`, `Name`, `UserId`, `c2`, `c3`, `c4`, `c5`) values ('1', '5445', 'sad', '25', '1', '2', '6', '5')
 	stm, err := DB.Prepare(sql)
 
-    go func() {
-        for  {
-            stm, err = DB.Prepare("INSERT into test_chat (`Id`, `TimeMs`,`Text` ,`Name`, `UserId`, `c2`, `c3`, `c4`, `c5`) VALUES (?,?,?,?,?,?,?,?,?) ")
-            time.Sleep(time.Second * 20)
-        }
-    }()
+	go func() {
+		for {
+			stm, err = DB.Prepare("INSERT into test_chat (`Id`, `TimeMs`,`Text` ,`Name`, `UserId`, `c2`, `c3`, `c4`, `c5`) VALUES (?,?,?,?,?,?,?,?,?) ")
+			time.Sleep(time.Second * 20)
+		}
+	}()
 	if err != nil {
 		log.Panic(err)
 	}
@@ -38,7 +38,7 @@ func main() {
 		go func() {
 			for i < 1000000000 {
 				r, err := stm.Exec(
-				//r, err := DB.Exec(sql,
+					//r, err := DB.Exec(sql,
 					helper.NextRowsSeqId(),
 					helper.TimeNowMs(),
 					helper.FactRandStr(50),

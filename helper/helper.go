@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/hokaccha/go-prettyjson"
+	"github.com/kr/pretty"
 	"math/rand"
 	"runtime"
 	"strconv"
@@ -12,7 +13,6 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
-    "github.com/kr/pretty"
 )
 
 func TimeNow() int {
@@ -97,8 +97,8 @@ func ToJsonPerety(structoo interface{}) string {
 	return string(bts)
 }
 
-func PertyPrint(a interface{})  {
-    fmt.Printf("%# v", pretty.Formatter(a))
+func PertyPrint(a interface{}) {
+	fmt.Printf("%# v", pretty.Formatter(a))
 }
 
 func GcPrintAll() {

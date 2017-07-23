@@ -23,9 +23,7 @@ func main() {
 
 	p := int32(1)
 
-    p = 1 << 30
+	p = 1 << 30
 	fmt.Println(p)
 
 }
-
-

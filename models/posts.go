@@ -29,7 +29,7 @@ type NewPostAddParams struct {
 }
 
 func Post_AddNewPostToDbAndItsTagsAndCounters(post *x.Post) {
-    fmt.Println(post)
+	fmt.Println(post)
 	err := post.Save(base.DB)
 	if err == nil {
 		Counter.UpdateUserPostsCounts(post.UserId, 1)
@@ -38,7 +38,7 @@ func Post_AddNewPostToDbAndItsTagsAndCounters(post *x.Post) {
 	} else {
 		helper.DebugErr(err)
 	}
-    fmt.Println("54555")
+	fmt.Println("54555")
 }
 
 func Post_PostsByIds(PostIds []int) ([]*x.Post, error) {
@@ -70,8 +70,8 @@ func PostAddNew(param NewPostAddParams) (*x.Post, error) {
 		return nil, ErrPostIsInvaid
 	}
 
-    helper.Debug(param)
-    fmt.Println(param)
+	helper.Debug(param)
+	fmt.Println(param)
 
 	var photo *x.Photo
 	post := &x.Post{

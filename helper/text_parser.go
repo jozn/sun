@@ -17,9 +17,9 @@ var regUsernames = regexp.MustCompile(`@([[:alnum:]])+`)
 
 func ParseText(text string) TextParser {
 	t := TextParser{}
-    if len(text) == 0 {
-        return t
-    }
+	if len(text) == 0 {
+		return t
+	}
 	tagsMap := make(map[string]int, 30)      //as set
 	userNamesMap := make(map[string]int, 30) //as set
 

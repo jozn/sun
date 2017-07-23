@@ -28,7 +28,7 @@ func main() {
 	t := time.Now()
 	for j := 0; j < 4; j++ {
 		go func() {
-			for ; i < 1000000000;  {
+			for i < 1000000000 {
 				//DB.Exec("INSERT into test2 (UID) VALUES (?) ", helper.RandString(2))
 				//DB.Exec("INSERT into test2 (UID) VALUES (?) ", helper.IntToStr(i)+":" + helper.IntToStr(helper.NextRowsSeqId()) )
 				//DB.Exec("INSERT into test2 (UID) VALUES (?) ", helper.IntToStr(i%1000)+":"+fmt.Sprintf("%x", helper.NextRowsSeqId()))
@@ -39,7 +39,7 @@ func main() {
 					fmt.Println("QPS: ", float64(i)/(time.Now().Sub(t).Seconds()), humanize.FormatInteger("", i))
 				}
 
-                //atomic.AddInt(&i,1)
+				//atomic.AddInt(&i,1)
 			}
 		}()
 	}

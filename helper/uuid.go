@@ -5,6 +5,7 @@ import (
 	"sync"
 )
 
+//fixme:: cosider times when clock has come back (in those situations we must add another serverid )
 var defGen = uuidGen{
 	timeMs:   TimeNowMs(),
 	counter:  0,

@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-    Tohex()
+	Tohex()
 }
 
 func Tohex() {

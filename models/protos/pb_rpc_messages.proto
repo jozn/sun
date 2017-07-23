@@ -8,15 +8,15 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 option go_package = "x";
 
 import "pb_enums.proto";
+import "pb_chat.proto";
 
 // AddNewTextMessage
 message PB_MsgParam_AddNewTextMessage {
     string Text = 1;
-    string Text2 = 2;
-
-    int32 RoomTypeId = 4;
-    int64 UserId = 3;
-    int64 PeerId = 20;
+    int32 PeerId = 5;
+    int32 Time = 6;
+    int64 ReplyToMessageId = 10;
+    PB_MessageForwardedFrom Forward = 14;
 }
 
 message PB_MsgResponse_AddNewTextMessage {

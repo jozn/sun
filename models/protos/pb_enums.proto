@@ -48,7 +48,7 @@ enum RoomMessageTypeEnum {
     CONTACT = 13;
 }
 
-enum RoomMessageStatusEnum {
+enum RoomMessageDeliviryStatusEnum {
     FAILED = 0;
     SENDING = 1;
     SENT = 2;
@@ -182,7 +182,7 @@ message RoomDraft {
 }
 
 enum RoomTypeEnum {
-    Peer = 0;
+    DIRECT = 0;
     GROUP = 1;
     CHANNEL = 2;
     BROADCAST = 3;

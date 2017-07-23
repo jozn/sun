@@ -22,6 +22,20 @@ public class J {
 		public Integer CreatedTime;
 	}
 
+	public static class Chat {
+		public Integer ChatId;
+		public String ChatKey;
+		public Integer RoomTypeEnumId;
+		public Integer UserId;
+		public Integer LastSeqSeen;
+		public Integer LastSeqDelete;
+		public Integer PeerUserId;
+		public Integer GroupId;
+		public Integer CreatedTime;
+		public Integer CurrentSeq;
+		public Integer UpdatedMs;
+	}
+
 	public static class Comment {
 		public Integer Id;
 		public Integer UserId;
@@ -45,7 +59,7 @@ public class J {
 
 	public static class DirectToMessage {
 		public Integer Id;
-		public Integer RoomId;
+		public Integer ChatId;
 		public Integer MessageId;
 		public Integer Seq;
 		public Integer SourceEnum;

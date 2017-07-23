@@ -37,57 +37,57 @@ type RPC_AllHandlersInteract interface {
 /////////////// Interfaces ////////////////
 
 type RPC_MessageReq interface {
-	GetLastChnagesForRoom(i *PB_ReqLastChangesForTheRoom) (*PB_ResponseLastChangesForTheRoom, error)
+	GetLastChnagesForRoom(i *PB_ReqLastChangesForTheRoom, p RPC_UserParam) (*PB_ResponseLastChangesForTheRoom, error)
 }
 
 type RPC_MessageReqOffline interface {
-	SetLastSeen(i *PB_RequestSetLastSeenMessages) (*PB_ResponseSetLastSeenMessages, error)
+	SetLastSeen(i *PB_RequestSetLastSeenMessages, p RPC_UserParam) (*PB_ResponseSetLastSeenMessages, error)
 }
 
 type Greeter interface {
-	SayHello(i *PB_Message) (*PB_UserWithMe, error)
+	SayHello(i *PB_Message, p RPC_UserParam) (*PB_UserWithMe, error)
 }
 
 type RPC_Msg interface {
-	AddNewTextMessage(i *PB_MsgParam_AddNewTextMessage) (*PB_MsgResponse_AddNewTextMessage, error)
-	SetRoomActionDoing(i *PB_MsgParam_SetRoomActionDoing) (*PB_MsgResponse_SetRoomActionDoing, error)
-	GetMessagesByIds(i *PB_MsgParam_GetMessagesByIds) (*PB_MsgResponse_GetMessagesByIds, error)
-	GetMessagesHistory(i *PB_MsgParam_GetMessagesHistory) (*PB_MsgResponse_GetMessagesHistory, error)
-	SetMessagesRangeAsSeen(i *PB_MsgParam_SetMessagesRangeAsSeen) (*PB_MsgResponse_SetMessagesRangeAsSeen, error)
-	DeleteRoomHistory(i *PB_MsgParam_DeleteRoomHistory) (*PB_MsgResponse_DeleteRoomHistory, error)
-	DeleteMessagesByIds(i *PB_MsgParam_DeleteMessagesByIds) (*PB_MsgResponse_DeleteMessagesByIds, error)
-	SetMessagesAsReceived(i *PB_MsgParam_SetMessagesAsReceived) (*PB_MsgResponse_SetMessagesAsReceived, error)
-	ForwardMessages(i *PB_MsgParam_ForwardMessages) (*PB_MsgResponse_ForwardMessages, error)
-	EditMessage(i *PB_MsgParam_EditMessage) (*PB_MsgResponse_EditMessage, error)
-	BroadcastNewMessage(i *PB_MsgParam_BroadcastNewMessage) (*PB_MsgResponse_BroadcastNewMessage, error)
+	AddNewTextMessage(i *PB_MsgParam_AddNewTextMessage, p RPC_UserParam) (*PB_MsgResponse_AddNewTextMessage, error)
+	SetRoomActionDoing(i *PB_MsgParam_SetRoomActionDoing, p RPC_UserParam) (*PB_MsgResponse_SetRoomActionDoing, error)
+	GetMessagesByIds(i *PB_MsgParam_GetMessagesByIds, p RPC_UserParam) (*PB_MsgResponse_GetMessagesByIds, error)
+	GetMessagesHistory(i *PB_MsgParam_GetMessagesHistory, p RPC_UserParam) (*PB_MsgResponse_GetMessagesHistory, error)
+	SetMessagesRangeAsSeen(i *PB_MsgParam_SetMessagesRangeAsSeen, p RPC_UserParam) (*PB_MsgResponse_SetMessagesRangeAsSeen, error)
+	DeleteRoomHistory(i *PB_MsgParam_DeleteRoomHistory, p RPC_UserParam) (*PB_MsgResponse_DeleteRoomHistory, error)
+	DeleteMessagesByIds(i *PB_MsgParam_DeleteMessagesByIds, p RPC_UserParam) (*PB_MsgResponse_DeleteMessagesByIds, error)
+	SetMessagesAsReceived(i *PB_MsgParam_SetMessagesAsReceived, p RPC_UserParam) (*PB_MsgResponse_SetMessagesAsReceived, error)
+	ForwardMessages(i *PB_MsgParam_ForwardMessages, p RPC_UserParam) (*PB_MsgResponse_ForwardMessages, error)
+	EditMessage(i *PB_MsgParam_EditMessage, p RPC_UserParam) (*PB_MsgResponse_EditMessage, error)
+	BroadcastNewMessage(i *PB_MsgParam_BroadcastNewMessage, p RPC_UserParam) (*PB_MsgResponse_BroadcastNewMessage, error)
 }
 
 type RpcMsgs interface {
-	UploadNewMsg(i *PB_Message) (*PB_ResRpcAddMsg, error)
+	UploadNewMsg(i *PB_Message, p RPC_UserParam) (*PB_ResRpcAddMsg, error)
 }
 
 type RPC_UserOffline interface {
-	BlockUser(i *PB_UserParam_BlockUser) (*PB_UserOfflineResponse_BlockUser, error)
-	UnBlockUser(i *PB_UserParam_UnBlockUser) (*PB_UserOfflineResponse_UnBlockUser, error)
-	UpdateAbout(i *PB_UserParam_UpdateAbout) (*PB_UserOfflineResponse_UpdateAbout, error)
-	UpdateUserName(i *PB_UserParam_UpdateUserName) (*PB_UserOfflineResponse_UpdateUserName, error)
-	ChangePrivacy(i *PB_UserParam_ChangePrivacy) (*PB_UserResponseOffline_ChangePrivacy, error)
-	ChangeAvatar(i *PB_UserParam_ChangeAvatar) (*PB_UserOfflineResponse_ChangeAvatar, error)
+	BlockUser(i *PB_UserParam_BlockUser, p RPC_UserParam) (*PB_UserOfflineResponse_BlockUser, error)
+	UnBlockUser(i *PB_UserParam_UnBlockUser, p RPC_UserParam) (*PB_UserOfflineResponse_UnBlockUser, error)
+	UpdateAbout(i *PB_UserParam_UpdateAbout, p RPC_UserParam) (*PB_UserOfflineResponse_UpdateAbout, error)
+	UpdateUserName(i *PB_UserParam_UpdateUserName, p RPC_UserParam) (*PB_UserOfflineResponse_UpdateUserName, error)
+	ChangePrivacy(i *PB_UserParam_ChangePrivacy, p RPC_UserParam) (*PB_UserResponseOffline_ChangePrivacy, error)
+	ChangeAvatar(i *PB_UserParam_ChangeAvatar, p RPC_UserParam) (*PB_UserOfflineResponse_ChangeAvatar, error)
 }
 
 type RPC_User interface {
-	CheckUserName(i *PB_UserParam_CheckUserName) (*PB_UserResponse_CheckUserName, error)
-	GetBlockedList(i *PB_UserParam_BlockedList) (*PB_UserResponse_BlockedList, error)
+	CheckUserName(i *PB_UserParam_CheckUserName, p RPC_UserParam) (*PB_UserResponse_CheckUserName, error)
+	GetBlockedList(i *PB_UserParam_BlockedList, p RPC_UserParam) (*PB_UserResponse_BlockedList, error)
 }
 
 type RPC_Auth interface {
-	CheckPhone(i *PB_UserParam_CheckUserName) (*PB_UserResponse_CheckUserName, error)
-	SendCode(i *PB_UserParam_CheckUserName) (*PB_UserResponse_CheckUserName, error)
-	SendCodeToSms(i *PB_UserParam_CheckUserName) (*PB_UserResponse_CheckUserName, error)
-	SendCodeToTelgram(i *PB_UserParam_CheckUserName) (*PB_UserResponse_CheckUserName, error)
-	SingUp(i *PB_UserParam_CheckUserName) (*PB_UserResponse_CheckUserName, error)
-	SingIn(i *PB_UserParam_CheckUserName) (*PB_UserResponse_CheckUserName, error)
-	LogOut(i *PB_UserParam_CheckUserName) (*PB_UserResponse_CheckUserName, error)
+	CheckPhone(i *PB_UserParam_CheckUserName, p RPC_UserParam) (*PB_UserResponse_CheckUserName, error)
+	SendCode(i *PB_UserParam_CheckUserName, p RPC_UserParam) (*PB_UserResponse_CheckUserName, error)
+	SendCodeToSms(i *PB_UserParam_CheckUserName, p RPC_UserParam) (*PB_UserResponse_CheckUserName, error)
+	SendCodeToTelgram(i *PB_UserParam_CheckUserName, p RPC_UserParam) (*PB_UserResponse_CheckUserName, error)
+	SingUp(i *PB_UserParam_CheckUserName, p RPC_UserParam) (*PB_UserResponse_CheckUserName, error)
+	SingIn(i *PB_UserParam_CheckUserName, p RPC_UserParam) (*PB_UserResponse_CheckUserName, error)
+	LogOut(i *PB_UserParam_CheckUserName, p RPC_UserParam) (*PB_UserResponse_CheckUserName, error)
 }
 
 func noDevErr(err error) {
@@ -122,7 +122,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_ReqLastChangesForTheRoom{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.GetLastChnagesForRoom(load)
+				res, err := rpc.GetLastChnagesForRoom(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -146,7 +146,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_RequestSetLastSeenMessages{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.SetLastSeen(load)
+				res, err := rpc.SetLastSeen(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -170,7 +170,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_Message{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.SayHello(load)
+				res, err := rpc.SayHello(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -194,7 +194,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_AddNewTextMessage{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.AddNewTextMessage(load)
+				res, err := rpc.AddNewTextMessage(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -207,7 +207,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_SetRoomActionDoing{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.SetRoomActionDoing(load)
+				res, err := rpc.SetRoomActionDoing(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -220,7 +220,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_GetMessagesByIds{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.GetMessagesByIds(load)
+				res, err := rpc.GetMessagesByIds(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -233,7 +233,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_GetMessagesHistory{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.GetMessagesHistory(load)
+				res, err := rpc.GetMessagesHistory(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -246,7 +246,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_SetMessagesRangeAsSeen{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.SetMessagesRangeAsSeen(load)
+				res, err := rpc.SetMessagesRangeAsSeen(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -259,7 +259,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_DeleteRoomHistory{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.DeleteRoomHistory(load)
+				res, err := rpc.DeleteRoomHistory(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -272,7 +272,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_DeleteMessagesByIds{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.DeleteMessagesByIds(load)
+				res, err := rpc.DeleteMessagesByIds(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -285,7 +285,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_SetMessagesAsReceived{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.SetMessagesAsReceived(load)
+				res, err := rpc.SetMessagesAsReceived(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -298,7 +298,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_ForwardMessages{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.ForwardMessages(load)
+				res, err := rpc.ForwardMessages(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -311,7 +311,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_EditMessage{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.EditMessage(load)
+				res, err := rpc.EditMessage(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -324,7 +324,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_MsgParam_BroadcastNewMessage{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.BroadcastNewMessage(load)
+				res, err := rpc.BroadcastNewMessage(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -348,7 +348,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_Message{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.UploadNewMsg(load)
+				res, err := rpc.UploadNewMsg(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -372,7 +372,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_BlockUser{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.BlockUser(load)
+				res, err := rpc.BlockUser(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -385,7 +385,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_UnBlockUser{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.UnBlockUser(load)
+				res, err := rpc.UnBlockUser(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -398,7 +398,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_UpdateAbout{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.UpdateAbout(load)
+				res, err := rpc.UpdateAbout(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -411,7 +411,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_UpdateUserName{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.UpdateUserName(load)
+				res, err := rpc.UpdateUserName(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -424,7 +424,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_ChangePrivacy{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.ChangePrivacy(load)
+				res, err := rpc.ChangePrivacy(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -437,7 +437,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_ChangeAvatar{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.ChangeAvatar(load)
+				res, err := rpc.ChangeAvatar(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -461,7 +461,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_CheckUserName{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.CheckUserName(load)
+				res, err := rpc.CheckUserName(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -474,7 +474,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_BlockedList{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.GetBlockedList(load)
+				res, err := rpc.GetBlockedList(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -498,7 +498,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_CheckUserName{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.CheckPhone(load)
+				res, err := rpc.CheckPhone(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -511,7 +511,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_CheckUserName{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.SendCode(load)
+				res, err := rpc.SendCode(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -524,7 +524,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_CheckUserName{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.SendCodeToSms(load)
+				res, err := rpc.SendCodeToSms(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -537,7 +537,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_CheckUserName{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.SendCodeToTelgram(load)
+				res, err := rpc.SendCodeToTelgram(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -550,7 +550,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_CheckUserName{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.SingUp(load)
+				res, err := rpc.SingUp(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -563,7 +563,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_CheckUserName{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.SingIn(load)
+				res, err := rpc.SingIn(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {
@@ -576,7 +576,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			load := &PB_UserParam_CheckUserName{}
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
-				res, err := rpc.LogOut(load)
+				res, err := rpc.LogOut(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {

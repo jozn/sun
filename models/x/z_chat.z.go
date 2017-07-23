@@ -12,80 +12,81 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// Room represents a row from 'ms.room'.
+// Chat represents a row from 'ms.chat'.
 
 // Manualy copy this to project
-type Room__ struct {
-	RoomId        int    `json:"RoomId"`        // RoomId -
-	RoomKey       string `json:"RoomKey"`       // RoomKey -
-	RoomTypeEnum  int    `json:"RoomTypeEnum"`  // RoomTypeEnum -
-	UserId        int    `json:"UserId"`        // UserId -
-	LastSeqSeen   int    `json:"LastSeqSeen"`   // LastSeqSeen -
-	LastSeqDelete int    `json:"LastSeqDelete"` // LastSeqDelete -
-	PeerUserId    int    `json:"PeerUserId"`    // PeerUserId -
-	GroupId       int    `json:"GroupId"`       // GroupId -
-	CreatedTime   int    `json:"CreatedTime"`   // CreatedTime -
-	CurrentSeq    int    `json:"CurrentSeq"`    // CurrentSeq -
+type Chat__ struct {
+	ChatId         int    `json:"ChatId"`         // ChatId -
+	ChatKey        string `json:"ChatKey"`        // ChatKey -
+	RoomTypeEnumId int    `json:"RoomTypeEnumId"` // RoomTypeEnumId -
+	UserId         int    `json:"UserId"`         // UserId -
+	LastSeqSeen    int    `json:"LastSeqSeen"`    // LastSeqSeen -
+	LastSeqDelete  int    `json:"LastSeqDelete"`  // LastSeqDelete -
+	PeerUserId     int    `json:"PeerUserId"`     // PeerUserId -
+	GroupId        int    `json:"GroupId"`        // GroupId -
+	CreatedTime    int    `json:"CreatedTime"`    // CreatedTime -
+	CurrentSeq     int    `json:"CurrentSeq"`     // CurrentSeq -
+	UpdatedMs      int    `json:"UpdatedMs"`      // UpdatedMs -
 
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists determines if the Room exists in the database.
-func (r *Room) Exists() bool {
-	return r._exists
+// Exists determines if the Chat exists in the database.
+func (c *Chat) Exists() bool {
+	return c._exists
 }
 
-// Deleted provides information if the Room has been deleted from the database.
-func (r *Room) Deleted() bool {
-	return r._deleted
+// Deleted provides information if the Chat has been deleted from the database.
+func (c *Chat) Deleted() bool {
+	return c._deleted
 }
 
-// Insert inserts the Room to the database.
-func (r *Room) Insert(db XODB) error {
+// Insert inserts the Chat to the database.
+func (c *Chat) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
-	if r._exists {
+	if c._exists {
 		return errors.New("insert failed: already exists")
 	}
 
 	// sql insert query, primary key must be provided
-	const sqlstr = `INSERT INTO ms.room (` +
-		`RoomId, RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq` +
+	const sqlstr = `INSERT INTO ms.chat (` +
+		`ChatId, ChatKey, RoomTypeEnumId, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq, UpdatedMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, r.RoomId, r.RoomKey, r.RoomTypeEnum, r.UserId, r.LastSeqSeen, r.LastSeqDelete, r.PeerUserId, r.GroupId, r.CreatedTime, r.CurrentSeq)
-	_, err = db.Exec(sqlstr, r.RoomId, r.RoomKey, r.RoomTypeEnum, r.UserId, r.LastSeqSeen, r.LastSeqDelete, r.PeerUserId, r.GroupId, r.CreatedTime, r.CurrentSeq)
+	XOLog(sqlstr, c.ChatId, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.LastSeqSeen, c.LastSeqDelete, c.PeerUserId, c.GroupId, c.CreatedTime, c.CurrentSeq, c.UpdatedMs)
+	_, err = db.Exec(sqlstr, c.ChatId, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.LastSeqSeen, c.LastSeqDelete, c.PeerUserId, c.GroupId, c.CreatedTime, c.CurrentSeq, c.UpdatedMs)
 	if err != nil {
 		return err
 	}
 
 	// set existence
-	r._exists = true
+	c._exists = true
 
-	OnRoom_AfterInsert(r)
+	OnChat_AfterInsert(c)
 
 	return nil
 }
 
-// Insert inserts the Room to the database.
-func (r *Room) Replace(db XODB) error {
+// Insert inserts the Chat to the database.
+func (c *Chat) Replace(db XODB) error {
 	var err error
 
 	// sql query
-	const sqlstr = `REPLACE INTO ms.room (` +
-		`RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq` +
+	const sqlstr = `REPLACE INTO ms.chat (` +
+		`ChatKey, RoomTypeEnumId, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq, UpdatedMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, r.RoomKey, r.RoomTypeEnum, r.UserId, r.LastSeqSeen, r.LastSeqDelete, r.PeerUserId, r.GroupId, r.CreatedTime, r.CurrentSeq)
-	res, err := db.Exec(sqlstr, r.RoomKey, r.RoomTypeEnum, r.UserId, r.LastSeqSeen, r.LastSeqDelete, r.PeerUserId, r.GroupId, r.CreatedTime, r.CurrentSeq)
+	XOLog(sqlstr, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.LastSeqSeen, c.LastSeqDelete, c.PeerUserId, c.GroupId, c.CreatedTime, c.CurrentSeq, c.UpdatedMs)
+	res, err := db.Exec(sqlstr, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.LastSeqSeen, c.LastSeqDelete, c.PeerUserId, c.GroupId, c.CreatedTime, c.CurrentSeq, c.UpdatedMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -99,81 +100,81 @@ func (r *Room) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	r.RoomId = int(id)
-	r._exists = true
+	c.ChatId = int(id)
+	c._exists = true
 
-	OnRoom_AfterInsert(r)
+	OnChat_AfterInsert(c)
 
 	return nil
 }
 
-// Update updates the Room in the database.
-func (r *Room) Update(db XODB) error {
+// Update updates the Chat in the database.
+func (c *Chat) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !r._exists {
+	if !c._exists {
 		return errors.New("update failed: does not exist")
 	}
 
 	// if deleted, bail
-	if r._deleted {
+	if c._deleted {
 		return errors.New("update failed: marked for deletion")
 	}
 
 	// sql query
-	const sqlstr = `UPDATE ms.room SET ` +
-		`RoomKey = ?, RoomTypeEnum = ?, UserId = ?, LastSeqSeen = ?, LastSeqDelete = ?, PeerUserId = ?, GroupId = ?, CreatedTime = ?, CurrentSeq = ?` +
-		` WHERE RoomId = ?`
+	const sqlstr = `UPDATE ms.chat SET ` +
+		`ChatKey = ?, RoomTypeEnumId = ?, UserId = ?, LastSeqSeen = ?, LastSeqDelete = ?, PeerUserId = ?, GroupId = ?, CreatedTime = ?, CurrentSeq = ?, UpdatedMs = ?` +
+		` WHERE ChatId = ?`
 
 	// run query
-	XOLog(sqlstr, r.RoomKey, r.RoomTypeEnum, r.UserId, r.LastSeqSeen, r.LastSeqDelete, r.PeerUserId, r.GroupId, r.CreatedTime, r.CurrentSeq, r.RoomId)
-	_, err = db.Exec(sqlstr, r.RoomKey, r.RoomTypeEnum, r.UserId, r.LastSeqSeen, r.LastSeqDelete, r.PeerUserId, r.GroupId, r.CreatedTime, r.CurrentSeq, r.RoomId)
+	XOLog(sqlstr, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.LastSeqSeen, c.LastSeqDelete, c.PeerUserId, c.GroupId, c.CreatedTime, c.CurrentSeq, c.UpdatedMs, c.ChatId)
+	_, err = db.Exec(sqlstr, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.LastSeqSeen, c.LastSeqDelete, c.PeerUserId, c.GroupId, c.CreatedTime, c.CurrentSeq, c.UpdatedMs, c.ChatId)
 
 	XOLogErr(err)
-	OnRoom_AfterUpdate(r)
+	OnChat_AfterUpdate(c)
 
 	return err
 }
 
-// Save saves the Room to the database.
-func (r *Room) Save(db XODB) error {
-	if r.Exists() {
-		return r.Update(db)
+// Save saves the Chat to the database.
+func (c *Chat) Save(db XODB) error {
+	if c.Exists() {
+		return c.Update(db)
 	}
 
-	return r.Replace(db)
+	return c.Replace(db)
 }
 
-// Delete deletes the Room from the database.
-func (r *Room) Delete(db XODB) error {
+// Delete deletes the Chat from the database.
+func (c *Chat) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !r._exists {
+	if !c._exists {
 		return nil
 	}
 
 	// if deleted, bail
-	if r._deleted {
+	if c._deleted {
 		return nil
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.room WHERE RoomId = ?`
+	const sqlstr = `DELETE FROM ms.chat WHERE ChatId = ?`
 
 	// run query
-	XOLog(sqlstr, r.RoomId)
-	_, err = db.Exec(sqlstr, r.RoomId)
+	XOLog(sqlstr, c.ChatId)
+	_, err = db.Exec(sqlstr, c.ChatId)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
 	// set deleted
-	r._deleted = true
+	c._deleted = true
 
-	OnRoom_AfterDelete(r)
+	OnChat_AfterDelete(c)
 
 	return nil
 }
@@ -184,18 +185,18 @@ func (r *Room) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __Room_Deleter struct {
+type __Chat_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __Room_Updater struct {
+type __Chat_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __Room_Selector struct {
+type __Chat_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -204,19 +205,19 @@ type __Room_Selector struct {
 	offset    int
 }
 
-func NewRoom_Deleter() *__Room_Deleter {
-	d := __Room_Deleter{whereSep: " AND "}
+func NewChat_Deleter() *__Chat_Deleter {
+	d := __Chat_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewRoom_Updater() *__Room_Updater {
-	u := __Room_Updater{whereSep: " AND "}
+func NewChat_Updater() *__Chat_Updater {
+	u := __Chat_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewRoom_Selector() *__Room_Selector {
-	u := __Room_Selector{whereSep: " AND ", selectCol: "*"}
+func NewChat_Selector() *__Chat_Selector {
+	u := __Chat_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -224,235 +225,222 @@ func NewRoom_Selector() *__Room_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Room_Deleter) Or() *__Room_Deleter {
+func (u *__Chat_Deleter) Or() *__Chat_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Room_Deleter) RoomId_In(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) ChatId_In(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Deleter) RoomId_Ins(ins ...int) *__Room_Deleter {
+func (u *__Chat_Deleter) ChatId_Ins(ins ...int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Deleter) RoomId_NotIn(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) ChatId_NotIn(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Room_Deleter) RoomId_Eq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) ChatId_Eq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId = ? "
+	w.condition = " ChatId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomId_NotEq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) ChatId_NotEq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId != ? "
+	w.condition = " ChatId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomId_LT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) ChatId_LT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId < ? "
+	w.condition = " ChatId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomId_LE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) ChatId_LE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId <= ? "
+	w.condition = " ChatId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomId_GT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) ChatId_GT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId > ? "
+	w.condition = " ChatId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomId_GE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) ChatId_GE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId >= ? "
+	w.condition = " ChatId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Room_Deleter) RoomTypeEnum_In(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) RoomTypeEnumId_In(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Deleter) RoomTypeEnum_Ins(ins ...int) *__Room_Deleter {
+func (u *__Chat_Deleter) RoomTypeEnumId_Ins(ins ...int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Deleter) RoomTypeEnum_NotIn(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) RoomTypeEnumId_NotIn(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomTypeEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomTypeEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Room_Deleter) RoomTypeEnum_Eq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) RoomTypeEnumId_Eq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum = ? "
+	w.condition = " RoomTypeEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomTypeEnum_NotEq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) RoomTypeEnumId_NotEq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum != ? "
+	w.condition = " RoomTypeEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomTypeEnum_LT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) RoomTypeEnumId_LT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum < ? "
+	w.condition = " RoomTypeEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomTypeEnum_LE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) RoomTypeEnumId_LE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum <= ? "
+	w.condition = " RoomTypeEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomTypeEnum_GT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) RoomTypeEnumId_GT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum > ? "
+	w.condition = " RoomTypeEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomTypeEnum_GE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) RoomTypeEnumId_GE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum >= ? "
+	w.condition = " RoomTypeEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Room_Deleter) UserId_In(ins []int) *__Room_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Room_Deleter) UserId_Ins(ins ...int) *__Room_Deleter {
+func (u *__Chat_Deleter) UserId_In(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -465,7 +453,20 @@ func (u *__Room_Deleter) UserId_Ins(ins ...int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) UserId_NotIn(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) UserId_Ins(ins ...int) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Deleter) UserId_NotIn(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -478,7 +479,7 @@ func (u *__Room_Deleter) UserId_NotIn(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (d *__Room_Deleter) UserId_Eq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) UserId_Eq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -489,7 +490,7 @@ func (d *__Room_Deleter) UserId_Eq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) UserId_NotEq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) UserId_NotEq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -500,7 +501,7 @@ func (d *__Room_Deleter) UserId_NotEq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) UserId_LT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) UserId_LT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -511,7 +512,7 @@ func (d *__Room_Deleter) UserId_LT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) UserId_LE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) UserId_LE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -522,7 +523,7 @@ func (d *__Room_Deleter) UserId_LE(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) UserId_GT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) UserId_GT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -533,7 +534,7 @@ func (d *__Room_Deleter) UserId_GT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) UserId_GE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) UserId_GE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -544,7 +545,7 @@ func (d *__Room_Deleter) UserId_GE(val int) *__Room_Deleter {
 	return d
 }
 
-func (u *__Room_Deleter) LastSeqSeen_In(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) LastSeqSeen_In(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -557,7 +558,7 @@ func (u *__Room_Deleter) LastSeqSeen_In(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) LastSeqSeen_Ins(ins ...int) *__Room_Deleter {
+func (u *__Chat_Deleter) LastSeqSeen_Ins(ins ...int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -570,7 +571,7 @@ func (u *__Room_Deleter) LastSeqSeen_Ins(ins ...int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) LastSeqSeen_NotIn(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) LastSeqSeen_NotIn(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -583,7 +584,7 @@ func (u *__Room_Deleter) LastSeqSeen_NotIn(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (d *__Room_Deleter) LastSeqSeen_Eq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqSeen_Eq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -594,7 +595,7 @@ func (d *__Room_Deleter) LastSeqSeen_Eq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) LastSeqSeen_NotEq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqSeen_NotEq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -605,7 +606,7 @@ func (d *__Room_Deleter) LastSeqSeen_NotEq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) LastSeqSeen_LT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqSeen_LT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -616,7 +617,7 @@ func (d *__Room_Deleter) LastSeqSeen_LT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) LastSeqSeen_LE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqSeen_LE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -627,7 +628,7 @@ func (d *__Room_Deleter) LastSeqSeen_LE(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) LastSeqSeen_GT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqSeen_GT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -638,7 +639,7 @@ func (d *__Room_Deleter) LastSeqSeen_GT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) LastSeqSeen_GE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqSeen_GE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -649,7 +650,7 @@ func (d *__Room_Deleter) LastSeqSeen_GE(val int) *__Room_Deleter {
 	return d
 }
 
-func (u *__Room_Deleter) LastSeqDelete_In(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) LastSeqDelete_In(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -662,7 +663,7 @@ func (u *__Room_Deleter) LastSeqDelete_In(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) LastSeqDelete_Ins(ins ...int) *__Room_Deleter {
+func (u *__Chat_Deleter) LastSeqDelete_Ins(ins ...int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -675,7 +676,7 @@ func (u *__Room_Deleter) LastSeqDelete_Ins(ins ...int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) LastSeqDelete_NotIn(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) LastSeqDelete_NotIn(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -688,7 +689,7 @@ func (u *__Room_Deleter) LastSeqDelete_NotIn(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (d *__Room_Deleter) LastSeqDelete_Eq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqDelete_Eq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -699,7 +700,7 @@ func (d *__Room_Deleter) LastSeqDelete_Eq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) LastSeqDelete_NotEq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqDelete_NotEq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -710,7 +711,7 @@ func (d *__Room_Deleter) LastSeqDelete_NotEq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) LastSeqDelete_LT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqDelete_LT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -721,7 +722,7 @@ func (d *__Room_Deleter) LastSeqDelete_LT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) LastSeqDelete_LE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqDelete_LE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -732,7 +733,7 @@ func (d *__Room_Deleter) LastSeqDelete_LE(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) LastSeqDelete_GT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqDelete_GT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -743,7 +744,7 @@ func (d *__Room_Deleter) LastSeqDelete_GT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) LastSeqDelete_GE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) LastSeqDelete_GE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -754,7 +755,7 @@ func (d *__Room_Deleter) LastSeqDelete_GE(val int) *__Room_Deleter {
 	return d
 }
 
-func (u *__Room_Deleter) PeerUserId_In(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) PeerUserId_In(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -767,7 +768,7 @@ func (u *__Room_Deleter) PeerUserId_In(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) PeerUserId_Ins(ins ...int) *__Room_Deleter {
+func (u *__Chat_Deleter) PeerUserId_Ins(ins ...int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -780,7 +781,7 @@ func (u *__Room_Deleter) PeerUserId_Ins(ins ...int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) PeerUserId_NotIn(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) PeerUserId_NotIn(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -793,7 +794,7 @@ func (u *__Room_Deleter) PeerUserId_NotIn(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (d *__Room_Deleter) PeerUserId_Eq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) PeerUserId_Eq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -804,7 +805,7 @@ func (d *__Room_Deleter) PeerUserId_Eq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) PeerUserId_NotEq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) PeerUserId_NotEq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -815,7 +816,7 @@ func (d *__Room_Deleter) PeerUserId_NotEq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) PeerUserId_LT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) PeerUserId_LT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -826,7 +827,7 @@ func (d *__Room_Deleter) PeerUserId_LT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) PeerUserId_LE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) PeerUserId_LE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -837,7 +838,7 @@ func (d *__Room_Deleter) PeerUserId_LE(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) PeerUserId_GT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) PeerUserId_GT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -848,7 +849,7 @@ func (d *__Room_Deleter) PeerUserId_GT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) PeerUserId_GE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) PeerUserId_GE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -859,7 +860,7 @@ func (d *__Room_Deleter) PeerUserId_GE(val int) *__Room_Deleter {
 	return d
 }
 
-func (u *__Room_Deleter) GroupId_In(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) GroupId_In(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -872,7 +873,7 @@ func (u *__Room_Deleter) GroupId_In(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) GroupId_Ins(ins ...int) *__Room_Deleter {
+func (u *__Chat_Deleter) GroupId_Ins(ins ...int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -885,7 +886,7 @@ func (u *__Room_Deleter) GroupId_Ins(ins ...int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) GroupId_NotIn(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) GroupId_NotIn(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -898,7 +899,7 @@ func (u *__Room_Deleter) GroupId_NotIn(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (d *__Room_Deleter) GroupId_Eq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) GroupId_Eq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -909,7 +910,7 @@ func (d *__Room_Deleter) GroupId_Eq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) GroupId_NotEq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) GroupId_NotEq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -920,7 +921,7 @@ func (d *__Room_Deleter) GroupId_NotEq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) GroupId_LT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) GroupId_LT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -931,7 +932,7 @@ func (d *__Room_Deleter) GroupId_LT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) GroupId_LE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) GroupId_LE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -942,7 +943,7 @@ func (d *__Room_Deleter) GroupId_LE(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) GroupId_GT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) GroupId_GT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -953,7 +954,7 @@ func (d *__Room_Deleter) GroupId_GT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) GroupId_GE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) GroupId_GE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -964,7 +965,7 @@ func (d *__Room_Deleter) GroupId_GE(val int) *__Room_Deleter {
 	return d
 }
 
-func (u *__Room_Deleter) CreatedTime_In(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) CreatedTime_In(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -977,7 +978,7 @@ func (u *__Room_Deleter) CreatedTime_In(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) CreatedTime_Ins(ins ...int) *__Room_Deleter {
+func (u *__Chat_Deleter) CreatedTime_Ins(ins ...int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -990,7 +991,7 @@ func (u *__Room_Deleter) CreatedTime_Ins(ins ...int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) CreatedTime_NotIn(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) CreatedTime_NotIn(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1003,7 +1004,7 @@ func (u *__Room_Deleter) CreatedTime_NotIn(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (d *__Room_Deleter) CreatedTime_Eq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CreatedTime_Eq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1014,7 +1015,7 @@ func (d *__Room_Deleter) CreatedTime_Eq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) CreatedTime_NotEq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CreatedTime_NotEq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1025,7 +1026,7 @@ func (d *__Room_Deleter) CreatedTime_NotEq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) CreatedTime_LT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CreatedTime_LT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1036,7 +1037,7 @@ func (d *__Room_Deleter) CreatedTime_LT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) CreatedTime_LE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CreatedTime_LE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1047,7 +1048,7 @@ func (d *__Room_Deleter) CreatedTime_LE(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) CreatedTime_GT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CreatedTime_GT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1058,7 +1059,7 @@ func (d *__Room_Deleter) CreatedTime_GT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) CreatedTime_GE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CreatedTime_GE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1069,7 +1070,7 @@ func (d *__Room_Deleter) CreatedTime_GE(val int) *__Room_Deleter {
 	return d
 }
 
-func (u *__Room_Deleter) CurrentSeq_In(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) CurrentSeq_In(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1082,7 +1083,7 @@ func (u *__Room_Deleter) CurrentSeq_In(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) CurrentSeq_Ins(ins ...int) *__Room_Deleter {
+func (u *__Chat_Deleter) CurrentSeq_Ins(ins ...int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1095,7 +1096,7 @@ func (u *__Room_Deleter) CurrentSeq_Ins(ins ...int) *__Room_Deleter {
 	return u
 }
 
-func (u *__Room_Deleter) CurrentSeq_NotIn(ins []int) *__Room_Deleter {
+func (u *__Chat_Deleter) CurrentSeq_NotIn(ins []int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1108,7 +1109,7 @@ func (u *__Room_Deleter) CurrentSeq_NotIn(ins []int) *__Room_Deleter {
 	return u
 }
 
-func (d *__Room_Deleter) CurrentSeq_Eq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CurrentSeq_Eq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1119,7 +1120,7 @@ func (d *__Room_Deleter) CurrentSeq_Eq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) CurrentSeq_NotEq(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CurrentSeq_NotEq(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1130,7 +1131,7 @@ func (d *__Room_Deleter) CurrentSeq_NotEq(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) CurrentSeq_LT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CurrentSeq_LT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1141,7 +1142,7 @@ func (d *__Room_Deleter) CurrentSeq_LT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) CurrentSeq_LE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CurrentSeq_LE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1152,7 +1153,7 @@ func (d *__Room_Deleter) CurrentSeq_LE(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) CurrentSeq_GT(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CurrentSeq_GT(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1163,247 +1164,339 @@ func (d *__Room_Deleter) CurrentSeq_GT(val int) *__Room_Deleter {
 	return d
 }
 
-func (d *__Room_Deleter) CurrentSeq_GE(val int) *__Room_Deleter {
+func (d *__Chat_Deleter) CurrentSeq_GE(val int) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " CurrentSeq >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Chat_Deleter) UpdatedMs_In(ins []int) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Deleter) UpdatedMs_Ins(ins ...int) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Deleter) UpdatedMs_NotIn(ins []int) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Chat_Deleter) UpdatedMs_Eq(val int) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Deleter) UpdatedMs_NotEq(val int) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Deleter) UpdatedMs_LT(val int) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Deleter) UpdatedMs_LE(val int) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Deleter) UpdatedMs_GT(val int) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Deleter) UpdatedMs_GE(val int) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
 ////////ints
-func (u *__Room_Updater) Or() *__Room_Updater {
+func (u *__Chat_Updater) Or() *__Chat_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Room_Updater) RoomId_In(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) ChatId_In(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Updater) RoomId_Ins(ins ...int) *__Room_Updater {
+func (u *__Chat_Updater) ChatId_Ins(ins ...int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Updater) RoomId_NotIn(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) ChatId_NotIn(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Room_Updater) RoomId_Eq(val int) *__Room_Updater {
+func (d *__Chat_Updater) ChatId_Eq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId = ? "
+	w.condition = " ChatId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomId_NotEq(val int) *__Room_Updater {
+func (d *__Chat_Updater) ChatId_NotEq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId != ? "
+	w.condition = " ChatId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomId_LT(val int) *__Room_Updater {
+func (d *__Chat_Updater) ChatId_LT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId < ? "
+	w.condition = " ChatId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomId_LE(val int) *__Room_Updater {
+func (d *__Chat_Updater) ChatId_LE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId <= ? "
+	w.condition = " ChatId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomId_GT(val int) *__Room_Updater {
+func (d *__Chat_Updater) ChatId_GT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId > ? "
+	w.condition = " ChatId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomId_GE(val int) *__Room_Updater {
+func (d *__Chat_Updater) ChatId_GE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId >= ? "
+	w.condition = " ChatId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Room_Updater) RoomTypeEnum_In(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) RoomTypeEnumId_In(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Updater) RoomTypeEnum_Ins(ins ...int) *__Room_Updater {
+func (u *__Chat_Updater) RoomTypeEnumId_Ins(ins ...int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Updater) RoomTypeEnum_NotIn(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) RoomTypeEnumId_NotIn(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomTypeEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomTypeEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Room_Updater) RoomTypeEnum_Eq(val int) *__Room_Updater {
+func (d *__Chat_Updater) RoomTypeEnumId_Eq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum = ? "
+	w.condition = " RoomTypeEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomTypeEnum_NotEq(val int) *__Room_Updater {
+func (d *__Chat_Updater) RoomTypeEnumId_NotEq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum != ? "
+	w.condition = " RoomTypeEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomTypeEnum_LT(val int) *__Room_Updater {
+func (d *__Chat_Updater) RoomTypeEnumId_LT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum < ? "
+	w.condition = " RoomTypeEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomTypeEnum_LE(val int) *__Room_Updater {
+func (d *__Chat_Updater) RoomTypeEnumId_LE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum <= ? "
+	w.condition = " RoomTypeEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomTypeEnum_GT(val int) *__Room_Updater {
+func (d *__Chat_Updater) RoomTypeEnumId_GT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum > ? "
+	w.condition = " RoomTypeEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomTypeEnum_GE(val int) *__Room_Updater {
+func (d *__Chat_Updater) RoomTypeEnumId_GE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum >= ? "
+	w.condition = " RoomTypeEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Room_Updater) UserId_In(ins []int) *__Room_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Room_Updater) UserId_Ins(ins ...int) *__Room_Updater {
+func (u *__Chat_Updater) UserId_In(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1416,7 +1509,20 @@ func (u *__Room_Updater) UserId_Ins(ins ...int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) UserId_NotIn(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) UserId_Ins(ins ...int) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Updater) UserId_NotIn(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1429,7 +1535,7 @@ func (u *__Room_Updater) UserId_NotIn(ins []int) *__Room_Updater {
 	return u
 }
 
-func (d *__Room_Updater) UserId_Eq(val int) *__Room_Updater {
+func (d *__Chat_Updater) UserId_Eq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1440,7 +1546,7 @@ func (d *__Room_Updater) UserId_Eq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) UserId_NotEq(val int) *__Room_Updater {
+func (d *__Chat_Updater) UserId_NotEq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1451,7 +1557,7 @@ func (d *__Room_Updater) UserId_NotEq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) UserId_LT(val int) *__Room_Updater {
+func (d *__Chat_Updater) UserId_LT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1462,7 +1568,7 @@ func (d *__Room_Updater) UserId_LT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) UserId_LE(val int) *__Room_Updater {
+func (d *__Chat_Updater) UserId_LE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1473,7 +1579,7 @@ func (d *__Room_Updater) UserId_LE(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) UserId_GT(val int) *__Room_Updater {
+func (d *__Chat_Updater) UserId_GT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1484,7 +1590,7 @@ func (d *__Room_Updater) UserId_GT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) UserId_GE(val int) *__Room_Updater {
+func (d *__Chat_Updater) UserId_GE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1495,7 +1601,7 @@ func (d *__Room_Updater) UserId_GE(val int) *__Room_Updater {
 	return d
 }
 
-func (u *__Room_Updater) LastSeqSeen_In(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) LastSeqSeen_In(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1508,7 +1614,7 @@ func (u *__Room_Updater) LastSeqSeen_In(ins []int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) LastSeqSeen_Ins(ins ...int) *__Room_Updater {
+func (u *__Chat_Updater) LastSeqSeen_Ins(ins ...int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1521,7 +1627,7 @@ func (u *__Room_Updater) LastSeqSeen_Ins(ins ...int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) LastSeqSeen_NotIn(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) LastSeqSeen_NotIn(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1534,7 +1640,7 @@ func (u *__Room_Updater) LastSeqSeen_NotIn(ins []int) *__Room_Updater {
 	return u
 }
 
-func (d *__Room_Updater) LastSeqSeen_Eq(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqSeen_Eq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1545,7 +1651,7 @@ func (d *__Room_Updater) LastSeqSeen_Eq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) LastSeqSeen_NotEq(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqSeen_NotEq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1556,7 +1662,7 @@ func (d *__Room_Updater) LastSeqSeen_NotEq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) LastSeqSeen_LT(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqSeen_LT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1567,7 +1673,7 @@ func (d *__Room_Updater) LastSeqSeen_LT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) LastSeqSeen_LE(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqSeen_LE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1578,7 +1684,7 @@ func (d *__Room_Updater) LastSeqSeen_LE(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) LastSeqSeen_GT(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqSeen_GT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1589,7 +1695,7 @@ func (d *__Room_Updater) LastSeqSeen_GT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) LastSeqSeen_GE(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqSeen_GE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1600,7 +1706,7 @@ func (d *__Room_Updater) LastSeqSeen_GE(val int) *__Room_Updater {
 	return d
 }
 
-func (u *__Room_Updater) LastSeqDelete_In(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) LastSeqDelete_In(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1613,7 +1719,7 @@ func (u *__Room_Updater) LastSeqDelete_In(ins []int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) LastSeqDelete_Ins(ins ...int) *__Room_Updater {
+func (u *__Chat_Updater) LastSeqDelete_Ins(ins ...int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1626,7 +1732,7 @@ func (u *__Room_Updater) LastSeqDelete_Ins(ins ...int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) LastSeqDelete_NotIn(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) LastSeqDelete_NotIn(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1639,7 +1745,7 @@ func (u *__Room_Updater) LastSeqDelete_NotIn(ins []int) *__Room_Updater {
 	return u
 }
 
-func (d *__Room_Updater) LastSeqDelete_Eq(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqDelete_Eq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1650,7 +1756,7 @@ func (d *__Room_Updater) LastSeqDelete_Eq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) LastSeqDelete_NotEq(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqDelete_NotEq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1661,7 +1767,7 @@ func (d *__Room_Updater) LastSeqDelete_NotEq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) LastSeqDelete_LT(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqDelete_LT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1672,7 +1778,7 @@ func (d *__Room_Updater) LastSeqDelete_LT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) LastSeqDelete_LE(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqDelete_LE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1683,7 +1789,7 @@ func (d *__Room_Updater) LastSeqDelete_LE(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) LastSeqDelete_GT(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqDelete_GT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1694,7 +1800,7 @@ func (d *__Room_Updater) LastSeqDelete_GT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) LastSeqDelete_GE(val int) *__Room_Updater {
+func (d *__Chat_Updater) LastSeqDelete_GE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1705,7 +1811,7 @@ func (d *__Room_Updater) LastSeqDelete_GE(val int) *__Room_Updater {
 	return d
 }
 
-func (u *__Room_Updater) PeerUserId_In(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) PeerUserId_In(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1718,7 +1824,7 @@ func (u *__Room_Updater) PeerUserId_In(ins []int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) PeerUserId_Ins(ins ...int) *__Room_Updater {
+func (u *__Chat_Updater) PeerUserId_Ins(ins ...int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1731,7 +1837,7 @@ func (u *__Room_Updater) PeerUserId_Ins(ins ...int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) PeerUserId_NotIn(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) PeerUserId_NotIn(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1744,7 +1850,7 @@ func (u *__Room_Updater) PeerUserId_NotIn(ins []int) *__Room_Updater {
 	return u
 }
 
-func (d *__Room_Updater) PeerUserId_Eq(val int) *__Room_Updater {
+func (d *__Chat_Updater) PeerUserId_Eq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1755,7 +1861,7 @@ func (d *__Room_Updater) PeerUserId_Eq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) PeerUserId_NotEq(val int) *__Room_Updater {
+func (d *__Chat_Updater) PeerUserId_NotEq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1766,7 +1872,7 @@ func (d *__Room_Updater) PeerUserId_NotEq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) PeerUserId_LT(val int) *__Room_Updater {
+func (d *__Chat_Updater) PeerUserId_LT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1777,7 +1883,7 @@ func (d *__Room_Updater) PeerUserId_LT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) PeerUserId_LE(val int) *__Room_Updater {
+func (d *__Chat_Updater) PeerUserId_LE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1788,7 +1894,7 @@ func (d *__Room_Updater) PeerUserId_LE(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) PeerUserId_GT(val int) *__Room_Updater {
+func (d *__Chat_Updater) PeerUserId_GT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1799,7 +1905,7 @@ func (d *__Room_Updater) PeerUserId_GT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) PeerUserId_GE(val int) *__Room_Updater {
+func (d *__Chat_Updater) PeerUserId_GE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1810,7 +1916,7 @@ func (d *__Room_Updater) PeerUserId_GE(val int) *__Room_Updater {
 	return d
 }
 
-func (u *__Room_Updater) GroupId_In(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) GroupId_In(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1823,7 +1929,7 @@ func (u *__Room_Updater) GroupId_In(ins []int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) GroupId_Ins(ins ...int) *__Room_Updater {
+func (u *__Chat_Updater) GroupId_Ins(ins ...int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1836,7 +1942,7 @@ func (u *__Room_Updater) GroupId_Ins(ins ...int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) GroupId_NotIn(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) GroupId_NotIn(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1849,7 +1955,7 @@ func (u *__Room_Updater) GroupId_NotIn(ins []int) *__Room_Updater {
 	return u
 }
 
-func (d *__Room_Updater) GroupId_Eq(val int) *__Room_Updater {
+func (d *__Chat_Updater) GroupId_Eq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1860,7 +1966,7 @@ func (d *__Room_Updater) GroupId_Eq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) GroupId_NotEq(val int) *__Room_Updater {
+func (d *__Chat_Updater) GroupId_NotEq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1871,7 +1977,7 @@ func (d *__Room_Updater) GroupId_NotEq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) GroupId_LT(val int) *__Room_Updater {
+func (d *__Chat_Updater) GroupId_LT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1882,7 +1988,7 @@ func (d *__Room_Updater) GroupId_LT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) GroupId_LE(val int) *__Room_Updater {
+func (d *__Chat_Updater) GroupId_LE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1893,7 +1999,7 @@ func (d *__Room_Updater) GroupId_LE(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) GroupId_GT(val int) *__Room_Updater {
+func (d *__Chat_Updater) GroupId_GT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1904,7 +2010,7 @@ func (d *__Room_Updater) GroupId_GT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) GroupId_GE(val int) *__Room_Updater {
+func (d *__Chat_Updater) GroupId_GE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1915,7 +2021,7 @@ func (d *__Room_Updater) GroupId_GE(val int) *__Room_Updater {
 	return d
 }
 
-func (u *__Room_Updater) CreatedTime_In(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) CreatedTime_In(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1928,7 +2034,7 @@ func (u *__Room_Updater) CreatedTime_In(ins []int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) CreatedTime_Ins(ins ...int) *__Room_Updater {
+func (u *__Chat_Updater) CreatedTime_Ins(ins ...int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1941,7 +2047,7 @@ func (u *__Room_Updater) CreatedTime_Ins(ins ...int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) CreatedTime_NotIn(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) CreatedTime_NotIn(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1954,7 +2060,7 @@ func (u *__Room_Updater) CreatedTime_NotIn(ins []int) *__Room_Updater {
 	return u
 }
 
-func (d *__Room_Updater) CreatedTime_Eq(val int) *__Room_Updater {
+func (d *__Chat_Updater) CreatedTime_Eq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1965,7 +2071,7 @@ func (d *__Room_Updater) CreatedTime_Eq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) CreatedTime_NotEq(val int) *__Room_Updater {
+func (d *__Chat_Updater) CreatedTime_NotEq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1976,7 +2082,7 @@ func (d *__Room_Updater) CreatedTime_NotEq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) CreatedTime_LT(val int) *__Room_Updater {
+func (d *__Chat_Updater) CreatedTime_LT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1987,7 +2093,7 @@ func (d *__Room_Updater) CreatedTime_LT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) CreatedTime_LE(val int) *__Room_Updater {
+func (d *__Chat_Updater) CreatedTime_LE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1998,7 +2104,7 @@ func (d *__Room_Updater) CreatedTime_LE(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) CreatedTime_GT(val int) *__Room_Updater {
+func (d *__Chat_Updater) CreatedTime_GT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2009,7 +2115,7 @@ func (d *__Room_Updater) CreatedTime_GT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) CreatedTime_GE(val int) *__Room_Updater {
+func (d *__Chat_Updater) CreatedTime_GE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2020,7 +2126,7 @@ func (d *__Room_Updater) CreatedTime_GE(val int) *__Room_Updater {
 	return d
 }
 
-func (u *__Room_Updater) CurrentSeq_In(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) CurrentSeq_In(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2033,7 +2139,7 @@ func (u *__Room_Updater) CurrentSeq_In(ins []int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) CurrentSeq_Ins(ins ...int) *__Room_Updater {
+func (u *__Chat_Updater) CurrentSeq_Ins(ins ...int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2046,7 +2152,7 @@ func (u *__Room_Updater) CurrentSeq_Ins(ins ...int) *__Room_Updater {
 	return u
 }
 
-func (u *__Room_Updater) CurrentSeq_NotIn(ins []int) *__Room_Updater {
+func (u *__Chat_Updater) CurrentSeq_NotIn(ins []int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2059,7 +2165,7 @@ func (u *__Room_Updater) CurrentSeq_NotIn(ins []int) *__Room_Updater {
 	return u
 }
 
-func (d *__Room_Updater) CurrentSeq_Eq(val int) *__Room_Updater {
+func (d *__Chat_Updater) CurrentSeq_Eq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2070,7 +2176,7 @@ func (d *__Room_Updater) CurrentSeq_Eq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) CurrentSeq_NotEq(val int) *__Room_Updater {
+func (d *__Chat_Updater) CurrentSeq_NotEq(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2081,7 +2187,7 @@ func (d *__Room_Updater) CurrentSeq_NotEq(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) CurrentSeq_LT(val int) *__Room_Updater {
+func (d *__Chat_Updater) CurrentSeq_LT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2092,7 +2198,7 @@ func (d *__Room_Updater) CurrentSeq_LT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) CurrentSeq_LE(val int) *__Room_Updater {
+func (d *__Chat_Updater) CurrentSeq_LE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2103,7 +2209,7 @@ func (d *__Room_Updater) CurrentSeq_LE(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) CurrentSeq_GT(val int) *__Room_Updater {
+func (d *__Chat_Updater) CurrentSeq_GT(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2114,247 +2220,339 @@ func (d *__Room_Updater) CurrentSeq_GT(val int) *__Room_Updater {
 	return d
 }
 
-func (d *__Room_Updater) CurrentSeq_GE(val int) *__Room_Updater {
+func (d *__Chat_Updater) CurrentSeq_GE(val int) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " CurrentSeq >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Chat_Updater) UpdatedMs_In(ins []int) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Updater) UpdatedMs_Ins(ins ...int) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Updater) UpdatedMs_NotIn(ins []int) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Chat_Updater) UpdatedMs_Eq(val int) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Updater) UpdatedMs_NotEq(val int) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Updater) UpdatedMs_LT(val int) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Updater) UpdatedMs_LE(val int) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Updater) UpdatedMs_GT(val int) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Updater) UpdatedMs_GE(val int) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
 ////////ints
-func (u *__Room_Selector) Or() *__Room_Selector {
+func (u *__Chat_Selector) Or() *__Chat_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Room_Selector) RoomId_In(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) ChatId_In(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Selector) RoomId_Ins(ins ...int) *__Room_Selector {
+func (u *__Chat_Selector) ChatId_Ins(ins ...int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Selector) RoomId_NotIn(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) ChatId_NotIn(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Room_Selector) RoomId_Eq(val int) *__Room_Selector {
+func (d *__Chat_Selector) ChatId_Eq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId = ? "
+	w.condition = " ChatId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomId_NotEq(val int) *__Room_Selector {
+func (d *__Chat_Selector) ChatId_NotEq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId != ? "
+	w.condition = " ChatId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomId_LT(val int) *__Room_Selector {
+func (d *__Chat_Selector) ChatId_LT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId < ? "
+	w.condition = " ChatId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomId_LE(val int) *__Room_Selector {
+func (d *__Chat_Selector) ChatId_LE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId <= ? "
+	w.condition = " ChatId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomId_GT(val int) *__Room_Selector {
+func (d *__Chat_Selector) ChatId_GT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId > ? "
+	w.condition = " ChatId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomId_GE(val int) *__Room_Selector {
+func (d *__Chat_Selector) ChatId_GE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomId >= ? "
+	w.condition = " ChatId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Room_Selector) RoomTypeEnum_In(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) RoomTypeEnumId_In(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Selector) RoomTypeEnum_Ins(ins ...int) *__Room_Selector {
+func (u *__Chat_Selector) RoomTypeEnumId_Ins(ins ...int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Selector) RoomTypeEnum_NotIn(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) RoomTypeEnumId_NotIn(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomTypeEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomTypeEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Room_Selector) RoomTypeEnum_Eq(val int) *__Room_Selector {
+func (d *__Chat_Selector) RoomTypeEnumId_Eq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum = ? "
+	w.condition = " RoomTypeEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomTypeEnum_NotEq(val int) *__Room_Selector {
+func (d *__Chat_Selector) RoomTypeEnumId_NotEq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum != ? "
+	w.condition = " RoomTypeEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomTypeEnum_LT(val int) *__Room_Selector {
+func (d *__Chat_Selector) RoomTypeEnumId_LT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum < ? "
+	w.condition = " RoomTypeEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomTypeEnum_LE(val int) *__Room_Selector {
+func (d *__Chat_Selector) RoomTypeEnumId_LE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum <= ? "
+	w.condition = " RoomTypeEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomTypeEnum_GT(val int) *__Room_Selector {
+func (d *__Chat_Selector) RoomTypeEnumId_GT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum > ? "
+	w.condition = " RoomTypeEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomTypeEnum_GE(val int) *__Room_Selector {
+func (d *__Chat_Selector) RoomTypeEnumId_GE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomTypeEnum >= ? "
+	w.condition = " RoomTypeEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Room_Selector) UserId_In(ins []int) *__Room_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Room_Selector) UserId_Ins(ins ...int) *__Room_Selector {
+func (u *__Chat_Selector) UserId_In(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2367,7 +2565,20 @@ func (u *__Room_Selector) UserId_Ins(ins ...int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) UserId_NotIn(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) UserId_Ins(ins ...int) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Selector) UserId_NotIn(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2380,7 +2591,7 @@ func (u *__Room_Selector) UserId_NotIn(ins []int) *__Room_Selector {
 	return u
 }
 
-func (d *__Room_Selector) UserId_Eq(val int) *__Room_Selector {
+func (d *__Chat_Selector) UserId_Eq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2391,7 +2602,7 @@ func (d *__Room_Selector) UserId_Eq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) UserId_NotEq(val int) *__Room_Selector {
+func (d *__Chat_Selector) UserId_NotEq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2402,7 +2613,7 @@ func (d *__Room_Selector) UserId_NotEq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) UserId_LT(val int) *__Room_Selector {
+func (d *__Chat_Selector) UserId_LT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2413,7 +2624,7 @@ func (d *__Room_Selector) UserId_LT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) UserId_LE(val int) *__Room_Selector {
+func (d *__Chat_Selector) UserId_LE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2424,7 +2635,7 @@ func (d *__Room_Selector) UserId_LE(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) UserId_GT(val int) *__Room_Selector {
+func (d *__Chat_Selector) UserId_GT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2435,7 +2646,7 @@ func (d *__Room_Selector) UserId_GT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) UserId_GE(val int) *__Room_Selector {
+func (d *__Chat_Selector) UserId_GE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2446,7 +2657,7 @@ func (d *__Room_Selector) UserId_GE(val int) *__Room_Selector {
 	return d
 }
 
-func (u *__Room_Selector) LastSeqSeen_In(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) LastSeqSeen_In(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2459,7 +2670,7 @@ func (u *__Room_Selector) LastSeqSeen_In(ins []int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) LastSeqSeen_Ins(ins ...int) *__Room_Selector {
+func (u *__Chat_Selector) LastSeqSeen_Ins(ins ...int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2472,7 +2683,7 @@ func (u *__Room_Selector) LastSeqSeen_Ins(ins ...int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) LastSeqSeen_NotIn(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) LastSeqSeen_NotIn(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2485,7 +2696,7 @@ func (u *__Room_Selector) LastSeqSeen_NotIn(ins []int) *__Room_Selector {
 	return u
 }
 
-func (d *__Room_Selector) LastSeqSeen_Eq(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqSeen_Eq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2496,7 +2707,7 @@ func (d *__Room_Selector) LastSeqSeen_Eq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) LastSeqSeen_NotEq(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqSeen_NotEq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2507,7 +2718,7 @@ func (d *__Room_Selector) LastSeqSeen_NotEq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) LastSeqSeen_LT(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqSeen_LT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2518,7 +2729,7 @@ func (d *__Room_Selector) LastSeqSeen_LT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) LastSeqSeen_LE(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqSeen_LE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2529,7 +2740,7 @@ func (d *__Room_Selector) LastSeqSeen_LE(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) LastSeqSeen_GT(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqSeen_GT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2540,7 +2751,7 @@ func (d *__Room_Selector) LastSeqSeen_GT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) LastSeqSeen_GE(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqSeen_GE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2551,7 +2762,7 @@ func (d *__Room_Selector) LastSeqSeen_GE(val int) *__Room_Selector {
 	return d
 }
 
-func (u *__Room_Selector) LastSeqDelete_In(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) LastSeqDelete_In(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2564,7 +2775,7 @@ func (u *__Room_Selector) LastSeqDelete_In(ins []int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) LastSeqDelete_Ins(ins ...int) *__Room_Selector {
+func (u *__Chat_Selector) LastSeqDelete_Ins(ins ...int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2577,7 +2788,7 @@ func (u *__Room_Selector) LastSeqDelete_Ins(ins ...int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) LastSeqDelete_NotIn(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) LastSeqDelete_NotIn(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2590,7 +2801,7 @@ func (u *__Room_Selector) LastSeqDelete_NotIn(ins []int) *__Room_Selector {
 	return u
 }
 
-func (d *__Room_Selector) LastSeqDelete_Eq(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqDelete_Eq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2601,7 +2812,7 @@ func (d *__Room_Selector) LastSeqDelete_Eq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) LastSeqDelete_NotEq(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqDelete_NotEq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2612,7 +2823,7 @@ func (d *__Room_Selector) LastSeqDelete_NotEq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) LastSeqDelete_LT(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqDelete_LT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2623,7 +2834,7 @@ func (d *__Room_Selector) LastSeqDelete_LT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) LastSeqDelete_LE(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqDelete_LE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2634,7 +2845,7 @@ func (d *__Room_Selector) LastSeqDelete_LE(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) LastSeqDelete_GT(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqDelete_GT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2645,7 +2856,7 @@ func (d *__Room_Selector) LastSeqDelete_GT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) LastSeqDelete_GE(val int) *__Room_Selector {
+func (d *__Chat_Selector) LastSeqDelete_GE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2656,7 +2867,7 @@ func (d *__Room_Selector) LastSeqDelete_GE(val int) *__Room_Selector {
 	return d
 }
 
-func (u *__Room_Selector) PeerUserId_In(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) PeerUserId_In(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2669,7 +2880,7 @@ func (u *__Room_Selector) PeerUserId_In(ins []int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) PeerUserId_Ins(ins ...int) *__Room_Selector {
+func (u *__Chat_Selector) PeerUserId_Ins(ins ...int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2682,7 +2893,7 @@ func (u *__Room_Selector) PeerUserId_Ins(ins ...int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) PeerUserId_NotIn(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) PeerUserId_NotIn(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2695,7 +2906,7 @@ func (u *__Room_Selector) PeerUserId_NotIn(ins []int) *__Room_Selector {
 	return u
 }
 
-func (d *__Room_Selector) PeerUserId_Eq(val int) *__Room_Selector {
+func (d *__Chat_Selector) PeerUserId_Eq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2706,7 +2917,7 @@ func (d *__Room_Selector) PeerUserId_Eq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) PeerUserId_NotEq(val int) *__Room_Selector {
+func (d *__Chat_Selector) PeerUserId_NotEq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2717,7 +2928,7 @@ func (d *__Room_Selector) PeerUserId_NotEq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) PeerUserId_LT(val int) *__Room_Selector {
+func (d *__Chat_Selector) PeerUserId_LT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2728,7 +2939,7 @@ func (d *__Room_Selector) PeerUserId_LT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) PeerUserId_LE(val int) *__Room_Selector {
+func (d *__Chat_Selector) PeerUserId_LE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2739,7 +2950,7 @@ func (d *__Room_Selector) PeerUserId_LE(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) PeerUserId_GT(val int) *__Room_Selector {
+func (d *__Chat_Selector) PeerUserId_GT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2750,7 +2961,7 @@ func (d *__Room_Selector) PeerUserId_GT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) PeerUserId_GE(val int) *__Room_Selector {
+func (d *__Chat_Selector) PeerUserId_GE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2761,7 +2972,7 @@ func (d *__Room_Selector) PeerUserId_GE(val int) *__Room_Selector {
 	return d
 }
 
-func (u *__Room_Selector) GroupId_In(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) GroupId_In(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2774,7 +2985,7 @@ func (u *__Room_Selector) GroupId_In(ins []int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) GroupId_Ins(ins ...int) *__Room_Selector {
+func (u *__Chat_Selector) GroupId_Ins(ins ...int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2787,7 +2998,7 @@ func (u *__Room_Selector) GroupId_Ins(ins ...int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) GroupId_NotIn(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) GroupId_NotIn(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2800,7 +3011,7 @@ func (u *__Room_Selector) GroupId_NotIn(ins []int) *__Room_Selector {
 	return u
 }
 
-func (d *__Room_Selector) GroupId_Eq(val int) *__Room_Selector {
+func (d *__Chat_Selector) GroupId_Eq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2811,7 +3022,7 @@ func (d *__Room_Selector) GroupId_Eq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) GroupId_NotEq(val int) *__Room_Selector {
+func (d *__Chat_Selector) GroupId_NotEq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2822,7 +3033,7 @@ func (d *__Room_Selector) GroupId_NotEq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) GroupId_LT(val int) *__Room_Selector {
+func (d *__Chat_Selector) GroupId_LT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2833,7 +3044,7 @@ func (d *__Room_Selector) GroupId_LT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) GroupId_LE(val int) *__Room_Selector {
+func (d *__Chat_Selector) GroupId_LE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2844,7 +3055,7 @@ func (d *__Room_Selector) GroupId_LE(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) GroupId_GT(val int) *__Room_Selector {
+func (d *__Chat_Selector) GroupId_GT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2855,7 +3066,7 @@ func (d *__Room_Selector) GroupId_GT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) GroupId_GE(val int) *__Room_Selector {
+func (d *__Chat_Selector) GroupId_GE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2866,7 +3077,7 @@ func (d *__Room_Selector) GroupId_GE(val int) *__Room_Selector {
 	return d
 }
 
-func (u *__Room_Selector) CreatedTime_In(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) CreatedTime_In(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2879,7 +3090,7 @@ func (u *__Room_Selector) CreatedTime_In(ins []int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) CreatedTime_Ins(ins ...int) *__Room_Selector {
+func (u *__Chat_Selector) CreatedTime_Ins(ins ...int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2892,7 +3103,7 @@ func (u *__Room_Selector) CreatedTime_Ins(ins ...int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) CreatedTime_NotIn(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) CreatedTime_NotIn(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2905,7 +3116,7 @@ func (u *__Room_Selector) CreatedTime_NotIn(ins []int) *__Room_Selector {
 	return u
 }
 
-func (d *__Room_Selector) CreatedTime_Eq(val int) *__Room_Selector {
+func (d *__Chat_Selector) CreatedTime_Eq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2916,7 +3127,7 @@ func (d *__Room_Selector) CreatedTime_Eq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) CreatedTime_NotEq(val int) *__Room_Selector {
+func (d *__Chat_Selector) CreatedTime_NotEq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2927,7 +3138,7 @@ func (d *__Room_Selector) CreatedTime_NotEq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) CreatedTime_LT(val int) *__Room_Selector {
+func (d *__Chat_Selector) CreatedTime_LT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2938,7 +3149,7 @@ func (d *__Room_Selector) CreatedTime_LT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) CreatedTime_LE(val int) *__Room_Selector {
+func (d *__Chat_Selector) CreatedTime_LE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2949,7 +3160,7 @@ func (d *__Room_Selector) CreatedTime_LE(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) CreatedTime_GT(val int) *__Room_Selector {
+func (d *__Chat_Selector) CreatedTime_GT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2960,7 +3171,7 @@ func (d *__Room_Selector) CreatedTime_GT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) CreatedTime_GE(val int) *__Room_Selector {
+func (d *__Chat_Selector) CreatedTime_GE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2971,7 +3182,7 @@ func (d *__Room_Selector) CreatedTime_GE(val int) *__Room_Selector {
 	return d
 }
 
-func (u *__Room_Selector) CurrentSeq_In(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) CurrentSeq_In(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2984,7 +3195,7 @@ func (u *__Room_Selector) CurrentSeq_In(ins []int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) CurrentSeq_Ins(ins ...int) *__Room_Selector {
+func (u *__Chat_Selector) CurrentSeq_Ins(ins ...int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2997,7 +3208,7 @@ func (u *__Room_Selector) CurrentSeq_Ins(ins ...int) *__Room_Selector {
 	return u
 }
 
-func (u *__Room_Selector) CurrentSeq_NotIn(ins []int) *__Room_Selector {
+func (u *__Chat_Selector) CurrentSeq_NotIn(ins []int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3010,7 +3221,7 @@ func (u *__Room_Selector) CurrentSeq_NotIn(ins []int) *__Room_Selector {
 	return u
 }
 
-func (d *__Room_Selector) CurrentSeq_Eq(val int) *__Room_Selector {
+func (d *__Chat_Selector) CurrentSeq_Eq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3021,7 +3232,7 @@ func (d *__Room_Selector) CurrentSeq_Eq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) CurrentSeq_NotEq(val int) *__Room_Selector {
+func (d *__Chat_Selector) CurrentSeq_NotEq(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3032,7 +3243,7 @@ func (d *__Room_Selector) CurrentSeq_NotEq(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) CurrentSeq_LT(val int) *__Room_Selector {
+func (d *__Chat_Selector) CurrentSeq_LT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3043,7 +3254,7 @@ func (d *__Room_Selector) CurrentSeq_LT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) CurrentSeq_LE(val int) *__Room_Selector {
+func (d *__Chat_Selector) CurrentSeq_LE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3054,7 +3265,7 @@ func (d *__Room_Selector) CurrentSeq_LE(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) CurrentSeq_GT(val int) *__Room_Selector {
+func (d *__Chat_Selector) CurrentSeq_GT(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3065,12 +3276,117 @@ func (d *__Room_Selector) CurrentSeq_GT(val int) *__Room_Selector {
 	return d
 }
 
-func (d *__Room_Selector) CurrentSeq_GE(val int) *__Room_Selector {
+func (d *__Chat_Selector) CurrentSeq_GE(val int) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " CurrentSeq >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Chat_Selector) UpdatedMs_In(ins []int) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Selector) UpdatedMs_Ins(ins ...int) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Selector) UpdatedMs_NotIn(ins []int) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " UpdatedMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Chat_Selector) UpdatedMs_Eq(val int) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Selector) UpdatedMs_NotEq(val int) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Selector) UpdatedMs_LT(val int) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Selector) UpdatedMs_LE(val int) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Selector) UpdatedMs_GT(val int) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Selector) UpdatedMs_GE(val int) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " UpdatedMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3080,61 +3396,61 @@ func (d *__Room_Selector) CurrentSeq_GE(val int) *__Room_Selector {
 
 ////////ints
 
-func (u *__Room_Deleter) RoomKey_In(ins []string) *__Room_Deleter {
+func (u *__Chat_Deleter) ChatKey_In(ins []string) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Deleter) RoomKey_NotIn(ins []string) *__Room_Deleter {
+func (u *__Chat_Deleter) ChatKey_NotIn(ins []string) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Room_Deleter) RoomKey_Like(val string) *__Room_Deleter {
+func (u *__Chat_Deleter) ChatKey_Like(val string) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomKey LIKE ? "
+	w.condition = " ChatKey LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Room_Deleter) RoomKey_Eq(val string) *__Room_Deleter {
+func (d *__Chat_Deleter) ChatKey_Eq(val string) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomKey = ? "
+	w.condition = " ChatKey = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Deleter) RoomKey_NotEq(val string) *__Room_Deleter {
+func (d *__Chat_Deleter) ChatKey_NotEq(val string) *__Chat_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomKey != ? "
+	w.condition = " ChatKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3142,61 +3458,61 @@ func (d *__Room_Deleter) RoomKey_NotEq(val string) *__Room_Deleter {
 
 ////////ints
 
-func (u *__Room_Updater) RoomKey_In(ins []string) *__Room_Updater {
+func (u *__Chat_Updater) ChatKey_In(ins []string) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Updater) RoomKey_NotIn(ins []string) *__Room_Updater {
+func (u *__Chat_Updater) ChatKey_NotIn(ins []string) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Room_Updater) RoomKey_Like(val string) *__Room_Updater {
+func (u *__Chat_Updater) ChatKey_Like(val string) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomKey LIKE ? "
+	w.condition = " ChatKey LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Room_Updater) RoomKey_Eq(val string) *__Room_Updater {
+func (d *__Chat_Updater) ChatKey_Eq(val string) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomKey = ? "
+	w.condition = " ChatKey = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Updater) RoomKey_NotEq(val string) *__Room_Updater {
+func (d *__Chat_Updater) ChatKey_NotEq(val string) *__Chat_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomKey != ? "
+	w.condition = " ChatKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3204,61 +3520,61 @@ func (d *__Room_Updater) RoomKey_NotEq(val string) *__Room_Updater {
 
 ////////ints
 
-func (u *__Room_Selector) RoomKey_In(ins []string) *__Room_Selector {
+func (u *__Chat_Selector) ChatKey_In(ins []string) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Room_Selector) RoomKey_NotIn(ins []string) *__Room_Selector {
+func (u *__Chat_Selector) ChatKey_NotIn(ins []string) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ChatKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Room_Selector) RoomKey_Like(val string) *__Room_Selector {
+func (u *__Chat_Selector) ChatKey_Like(val string) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomKey LIKE ? "
+	w.condition = " ChatKey LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Room_Selector) RoomKey_Eq(val string) *__Room_Selector {
+func (d *__Chat_Selector) ChatKey_Eq(val string) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomKey = ? "
+	w.condition = " ChatKey = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Room_Selector) RoomKey_NotEq(val string) *__Room_Selector {
+func (d *__Chat_Selector) ChatKey_NotEq(val string) *__Chat_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " RoomKey != ? "
+	w.condition = " ChatKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3270,18 +3586,18 @@ func (d *__Room_Selector) RoomKey_NotEq(val string) *__Room_Selector {
 
 //ints
 
-func (u *__Room_Updater) RoomId(newVal int) *__Room_Updater {
-	u.updates[" RoomId = ? "] = newVal
+func (u *__Chat_Updater) ChatId(newVal int) *__Chat_Updater {
+	u.updates[" ChatId = ? "] = newVal
 	return u
 }
 
-func (u *__Room_Updater) RoomId_Increment(count int) *__Room_Updater {
+func (u *__Chat_Updater) ChatId_Increment(count int) *__Chat_Updater {
 	if count > 0 {
-		u.updates[" RoomId = RoomId+? "] = count
+		u.updates[" ChatId = ChatId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" RoomId = RoomId-? "] = -(count) //make it positive
+		u.updates[" ChatId = ChatId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3292,25 +3608,25 @@ func (u *__Room_Updater) RoomId_Increment(count int) *__Room_Updater {
 //ints
 
 //string
-func (u *__Room_Updater) RoomKey(newVal string) *__Room_Updater {
-	u.updates[" RoomKey = ? "] = newVal
+func (u *__Chat_Updater) ChatKey(newVal string) *__Chat_Updater {
+	u.updates[" ChatKey = ? "] = newVal
 	return u
 }
 
 //ints
 
-func (u *__Room_Updater) RoomTypeEnum(newVal int) *__Room_Updater {
-	u.updates[" RoomTypeEnum = ? "] = newVal
+func (u *__Chat_Updater) RoomTypeEnumId(newVal int) *__Chat_Updater {
+	u.updates[" RoomTypeEnumId = ? "] = newVal
 	return u
 }
 
-func (u *__Room_Updater) RoomTypeEnum_Increment(count int) *__Room_Updater {
+func (u *__Chat_Updater) RoomTypeEnumId_Increment(count int) *__Chat_Updater {
 	if count > 0 {
-		u.updates[" RoomTypeEnum = RoomTypeEnum+? "] = count
+		u.updates[" RoomTypeEnumId = RoomTypeEnumId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" RoomTypeEnum = RoomTypeEnum-? "] = -(count) //make it positive
+		u.updates[" RoomTypeEnumId = RoomTypeEnumId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3320,12 +3636,12 @@ func (u *__Room_Updater) RoomTypeEnum_Increment(count int) *__Room_Updater {
 
 //ints
 
-func (u *__Room_Updater) UserId(newVal int) *__Room_Updater {
+func (u *__Chat_Updater) UserId(newVal int) *__Chat_Updater {
 	u.updates[" UserId = ? "] = newVal
 	return u
 }
 
-func (u *__Room_Updater) UserId_Increment(count int) *__Room_Updater {
+func (u *__Chat_Updater) UserId_Increment(count int) *__Chat_Updater {
 	if count > 0 {
 		u.updates[" UserId = UserId+? "] = count
 	}
@@ -3341,12 +3657,12 @@ func (u *__Room_Updater) UserId_Increment(count int) *__Room_Updater {
 
 //ints
 
-func (u *__Room_Updater) LastSeqSeen(newVal int) *__Room_Updater {
+func (u *__Chat_Updater) LastSeqSeen(newVal int) *__Chat_Updater {
 	u.updates[" LastSeqSeen = ? "] = newVal
 	return u
 }
 
-func (u *__Room_Updater) LastSeqSeen_Increment(count int) *__Room_Updater {
+func (u *__Chat_Updater) LastSeqSeen_Increment(count int) *__Chat_Updater {
 	if count > 0 {
 		u.updates[" LastSeqSeen = LastSeqSeen+? "] = count
 	}
@@ -3362,12 +3678,12 @@ func (u *__Room_Updater) LastSeqSeen_Increment(count int) *__Room_Updater {
 
 //ints
 
-func (u *__Room_Updater) LastSeqDelete(newVal int) *__Room_Updater {
+func (u *__Chat_Updater) LastSeqDelete(newVal int) *__Chat_Updater {
 	u.updates[" LastSeqDelete = ? "] = newVal
 	return u
 }
 
-func (u *__Room_Updater) LastSeqDelete_Increment(count int) *__Room_Updater {
+func (u *__Chat_Updater) LastSeqDelete_Increment(count int) *__Chat_Updater {
 	if count > 0 {
 		u.updates[" LastSeqDelete = LastSeqDelete+? "] = count
 	}
@@ -3383,12 +3699,12 @@ func (u *__Room_Updater) LastSeqDelete_Increment(count int) *__Room_Updater {
 
 //ints
 
-func (u *__Room_Updater) PeerUserId(newVal int) *__Room_Updater {
+func (u *__Chat_Updater) PeerUserId(newVal int) *__Chat_Updater {
 	u.updates[" PeerUserId = ? "] = newVal
 	return u
 }
 
-func (u *__Room_Updater) PeerUserId_Increment(count int) *__Room_Updater {
+func (u *__Chat_Updater) PeerUserId_Increment(count int) *__Chat_Updater {
 	if count > 0 {
 		u.updates[" PeerUserId = PeerUserId+? "] = count
 	}
@@ -3404,12 +3720,12 @@ func (u *__Room_Updater) PeerUserId_Increment(count int) *__Room_Updater {
 
 //ints
 
-func (u *__Room_Updater) GroupId(newVal int) *__Room_Updater {
+func (u *__Chat_Updater) GroupId(newVal int) *__Chat_Updater {
 	u.updates[" GroupId = ? "] = newVal
 	return u
 }
 
-func (u *__Room_Updater) GroupId_Increment(count int) *__Room_Updater {
+func (u *__Chat_Updater) GroupId_Increment(count int) *__Chat_Updater {
 	if count > 0 {
 		u.updates[" GroupId = GroupId+? "] = count
 	}
@@ -3425,12 +3741,12 @@ func (u *__Room_Updater) GroupId_Increment(count int) *__Room_Updater {
 
 //ints
 
-func (u *__Room_Updater) CreatedTime(newVal int) *__Room_Updater {
+func (u *__Chat_Updater) CreatedTime(newVal int) *__Chat_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
 	return u
 }
 
-func (u *__Room_Updater) CreatedTime_Increment(count int) *__Room_Updater {
+func (u *__Chat_Updater) CreatedTime_Increment(count int) *__Chat_Updater {
 	if count > 0 {
 		u.updates[" CreatedTime = CreatedTime+? "] = count
 	}
@@ -3446,12 +3762,12 @@ func (u *__Room_Updater) CreatedTime_Increment(count int) *__Room_Updater {
 
 //ints
 
-func (u *__Room_Updater) CurrentSeq(newVal int) *__Room_Updater {
+func (u *__Chat_Updater) CurrentSeq(newVal int) *__Chat_Updater {
 	u.updates[" CurrentSeq = ? "] = newVal
 	return u
 }
 
-func (u *__Room_Updater) CurrentSeq_Increment(count int) *__Room_Updater {
+func (u *__Chat_Updater) CurrentSeq_Increment(count int) *__Chat_Updater {
 	if count > 0 {
 		u.updates[" CurrentSeq = CurrentSeq+? "] = count
 	}
@@ -3465,176 +3781,212 @@ func (u *__Room_Updater) CurrentSeq_Increment(count int) *__Room_Updater {
 
 //string
 
+//ints
+
+func (u *__Chat_Updater) UpdatedMs(newVal int) *__Chat_Updater {
+	u.updates[" UpdatedMs = ? "] = newVal
+	return u
+}
+
+func (u *__Chat_Updater) UpdatedMs_Increment(count int) *__Chat_Updater {
+	if count > 0 {
+		u.updates[" UpdatedMs = UpdatedMs+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" UpdatedMs = UpdatedMs-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
 /////////////////////////////////////////////////////////////////////
 /////////////////////// Selector ///////////////////////////////////
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__Room_Selector) OrderBy_RoomId_Desc() *__Room_Selector {
-	u.orderBy = " ORDER BY RoomId DESC "
+func (u *__Chat_Selector) OrderBy_ChatId_Desc() *__Chat_Selector {
+	u.orderBy = " ORDER BY ChatId DESC "
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_RoomId_Asc() *__Room_Selector {
-	u.orderBy = " ORDER BY RoomId ASC "
+func (u *__Chat_Selector) OrderBy_ChatId_Asc() *__Chat_Selector {
+	u.orderBy = " ORDER BY ChatId ASC "
 	return u
 }
 
-func (u *__Room_Selector) Select_RoomId() *__Room_Selector {
-	u.selectCol = "RoomId"
+func (u *__Chat_Selector) Select_ChatId() *__Chat_Selector {
+	u.selectCol = "ChatId"
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_RoomKey_Desc() *__Room_Selector {
-	u.orderBy = " ORDER BY RoomKey DESC "
+func (u *__Chat_Selector) OrderBy_ChatKey_Desc() *__Chat_Selector {
+	u.orderBy = " ORDER BY ChatKey DESC "
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_RoomKey_Asc() *__Room_Selector {
-	u.orderBy = " ORDER BY RoomKey ASC "
+func (u *__Chat_Selector) OrderBy_ChatKey_Asc() *__Chat_Selector {
+	u.orderBy = " ORDER BY ChatKey ASC "
 	return u
 }
 
-func (u *__Room_Selector) Select_RoomKey() *__Room_Selector {
-	u.selectCol = "RoomKey"
+func (u *__Chat_Selector) Select_ChatKey() *__Chat_Selector {
+	u.selectCol = "ChatKey"
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_RoomTypeEnum_Desc() *__Room_Selector {
-	u.orderBy = " ORDER BY RoomTypeEnum DESC "
+func (u *__Chat_Selector) OrderBy_RoomTypeEnumId_Desc() *__Chat_Selector {
+	u.orderBy = " ORDER BY RoomTypeEnumId DESC "
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_RoomTypeEnum_Asc() *__Room_Selector {
-	u.orderBy = " ORDER BY RoomTypeEnum ASC "
+func (u *__Chat_Selector) OrderBy_RoomTypeEnumId_Asc() *__Chat_Selector {
+	u.orderBy = " ORDER BY RoomTypeEnumId ASC "
 	return u
 }
 
-func (u *__Room_Selector) Select_RoomTypeEnum() *__Room_Selector {
-	u.selectCol = "RoomTypeEnum"
+func (u *__Chat_Selector) Select_RoomTypeEnumId() *__Chat_Selector {
+	u.selectCol = "RoomTypeEnumId"
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_UserId_Desc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_UserId_Desc() *__Chat_Selector {
 	u.orderBy = " ORDER BY UserId DESC "
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_UserId_Asc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_UserId_Asc() *__Chat_Selector {
 	u.orderBy = " ORDER BY UserId ASC "
 	return u
 }
 
-func (u *__Room_Selector) Select_UserId() *__Room_Selector {
+func (u *__Chat_Selector) Select_UserId() *__Chat_Selector {
 	u.selectCol = "UserId"
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_LastSeqSeen_Desc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_LastSeqSeen_Desc() *__Chat_Selector {
 	u.orderBy = " ORDER BY LastSeqSeen DESC "
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_LastSeqSeen_Asc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_LastSeqSeen_Asc() *__Chat_Selector {
 	u.orderBy = " ORDER BY LastSeqSeen ASC "
 	return u
 }
 
-func (u *__Room_Selector) Select_LastSeqSeen() *__Room_Selector {
+func (u *__Chat_Selector) Select_LastSeqSeen() *__Chat_Selector {
 	u.selectCol = "LastSeqSeen"
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_LastSeqDelete_Desc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_LastSeqDelete_Desc() *__Chat_Selector {
 	u.orderBy = " ORDER BY LastSeqDelete DESC "
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_LastSeqDelete_Asc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_LastSeqDelete_Asc() *__Chat_Selector {
 	u.orderBy = " ORDER BY LastSeqDelete ASC "
 	return u
 }
 
-func (u *__Room_Selector) Select_LastSeqDelete() *__Room_Selector {
+func (u *__Chat_Selector) Select_LastSeqDelete() *__Chat_Selector {
 	u.selectCol = "LastSeqDelete"
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_PeerUserId_Desc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_PeerUserId_Desc() *__Chat_Selector {
 	u.orderBy = " ORDER BY PeerUserId DESC "
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_PeerUserId_Asc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_PeerUserId_Asc() *__Chat_Selector {
 	u.orderBy = " ORDER BY PeerUserId ASC "
 	return u
 }
 
-func (u *__Room_Selector) Select_PeerUserId() *__Room_Selector {
+func (u *__Chat_Selector) Select_PeerUserId() *__Chat_Selector {
 	u.selectCol = "PeerUserId"
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_GroupId_Desc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_GroupId_Desc() *__Chat_Selector {
 	u.orderBy = " ORDER BY GroupId DESC "
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_GroupId_Asc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_GroupId_Asc() *__Chat_Selector {
 	u.orderBy = " ORDER BY GroupId ASC "
 	return u
 }
 
-func (u *__Room_Selector) Select_GroupId() *__Room_Selector {
+func (u *__Chat_Selector) Select_GroupId() *__Chat_Selector {
 	u.selectCol = "GroupId"
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_CreatedTime_Desc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_CreatedTime_Desc() *__Chat_Selector {
 	u.orderBy = " ORDER BY CreatedTime DESC "
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_CreatedTime_Asc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_CreatedTime_Asc() *__Chat_Selector {
 	u.orderBy = " ORDER BY CreatedTime ASC "
 	return u
 }
 
-func (u *__Room_Selector) Select_CreatedTime() *__Room_Selector {
+func (u *__Chat_Selector) Select_CreatedTime() *__Chat_Selector {
 	u.selectCol = "CreatedTime"
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_CurrentSeq_Desc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_CurrentSeq_Desc() *__Chat_Selector {
 	u.orderBy = " ORDER BY CurrentSeq DESC "
 	return u
 }
 
-func (u *__Room_Selector) OrderBy_CurrentSeq_Asc() *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_CurrentSeq_Asc() *__Chat_Selector {
 	u.orderBy = " ORDER BY CurrentSeq ASC "
 	return u
 }
 
-func (u *__Room_Selector) Select_CurrentSeq() *__Room_Selector {
+func (u *__Chat_Selector) Select_CurrentSeq() *__Chat_Selector {
 	u.selectCol = "CurrentSeq"
 	return u
 }
 
-func (u *__Room_Selector) Limit(num int) *__Room_Selector {
+func (u *__Chat_Selector) OrderBy_UpdatedMs_Desc() *__Chat_Selector {
+	u.orderBy = " ORDER BY UpdatedMs DESC "
+	return u
+}
+
+func (u *__Chat_Selector) OrderBy_UpdatedMs_Asc() *__Chat_Selector {
+	u.orderBy = " ORDER BY UpdatedMs ASC "
+	return u
+}
+
+func (u *__Chat_Selector) Select_UpdatedMs() *__Chat_Selector {
+	u.selectCol = "UpdatedMs"
+	return u
+}
+
+func (u *__Chat_Selector) Limit(num int) *__Chat_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__Room_Selector) Offset(num int) *__Room_Selector {
+func (u *__Chat_Selector) Offset(num int) *__Chat_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__Room_Selector) _stoSql() (string, []interface{}) {
+func (u *__Chat_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
-	sqlstr := "SELECT " + u.selectCol + " FROM ms.room"
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.chat"
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -3654,14 +4006,14 @@ func (u *__Room_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__Room_Selector) GetRow(db *sqlx.DB) (*Room, error) {
+func (u *__Chat_Selector) GetRow(db *sqlx.DB) (*Chat, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &Room{}
+	row := &Chat{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -3671,19 +4023,19 @@ func (u *__Room_Selector) GetRow(db *sqlx.DB) (*Room, error) {
 
 	row._exists = true
 
-	OnRoom_LoadOne(row)
+	OnChat_LoadOne(row)
 
 	return row, nil
 }
 
-func (u *__Room_Selector) GetRows(db *sqlx.DB) ([]*Room, error) {
+func (u *__Chat_Selector) GetRows(db *sqlx.DB) ([]*Chat, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*Room
+	var rows []*Chat
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -3699,20 +4051,20 @@ func (u *__Room_Selector) GetRows(db *sqlx.DB) ([]*Room, error) {
 		rows[i]._exists = true
 	}
 
-	OnRoom_LoadMany(rows)
+	OnChat_LoadMany(rows)
 
 	return rows, nil
 }
 
 //dep use GetRows()
-func (u *__Room_Selector) GetRows2(db *sqlx.DB) ([]Room, error) {
+func (u *__Chat_Selector) GetRows2(db *sqlx.DB) ([]Chat, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*Room
+	var rows []*Chat
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -3728,9 +4080,9 @@ func (u *__Room_Selector) GetRows2(db *sqlx.DB) ([]Room, error) {
 		rows[i]._exists = true
 	}
 
-	OnRoom_LoadMany(rows)
+	OnChat_LoadMany(rows)
 
-	rows2 := make([]Room, len(rows))
+	rows2 := make([]Chat, len(rows))
 	for i := 0; i < len(rows); i++ {
 		cp := *rows[i]
 		rows2[i] = cp
@@ -3739,7 +4091,7 @@ func (u *__Room_Selector) GetRows2(db *sqlx.DB) ([]Room, error) {
 	return rows2, nil
 }
 
-func (u *__Room_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__Chat_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -3757,7 +4109,7 @@ func (u *__Room_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__Room_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__Chat_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -3775,7 +4127,7 @@ func (u *__Room_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	return rows, nil
 }
 
-func (u *__Room_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__Chat_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -3793,7 +4145,7 @@ func (u *__Room_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__Room_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__Chat_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -3812,7 +4164,7 @@ func (u *__Room_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__Room_Updater) Update(db XODB) (int, error) {
+func (u *__Chat_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -3829,7 +4181,7 @@ func (u *__Room_Updater) Update(db XODB) (int, error) {
 	allArgs = append(allArgs, updateArgs...)
 	allArgs = append(allArgs, whereArgs...)
 
-	sqlstr := `UPDATE ms.room SET ` + sqlUpdate
+	sqlstr := `UPDATE ms.chat SET ` + sqlUpdate
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -3851,7 +4203,7 @@ func (u *__Room_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__Room_Deleter) Delete(db XODB) (int, error) {
+func (d *__Chat_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -3864,7 +4216,7 @@ func (d *__Room_Deleter) Delete(db XODB) (int, error) {
 		args = append(args, w.args...)
 	}
 
-	sqlstr := "DELETE FROM ms.room WHERE " + wheresStr
+	sqlstr := "DELETE FROM ms.chat WHERE " + wheresStr
 
 	// run query
 	XOLog(sqlstr, args)
@@ -3884,19 +4236,19 @@ func (d *__Room_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  Room ////////////////
-func MassInsert_Room(rows []Room, db XODB) error {
+///////////////////////// Mass insert - replace for  Chat ////////////////
+func MassInsert_Chat(rows []Chat, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "INSERT INTO ms.room (" +
-		"RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq" +
+	sqlstr := "INSERT INTO ms.chat (" +
+		"ChatKey, RoomTypeEnumId, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq, UpdatedMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -3904,8 +4256,8 @@ func MassInsert_Room(rows []Room, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.RoomKey)
-		vals = append(vals, row.RoomTypeEnum)
+		vals = append(vals, row.ChatKey)
+		vals = append(vals, row.RoomTypeEnumId)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.LastSeqSeen)
 		vals = append(vals, row.LastSeqDelete)
@@ -3913,6 +4265,7 @@ func MassInsert_Room(rows []Room, db XODB) error {
 		vals = append(vals, row.GroupId)
 		vals = append(vals, row.CreatedTime)
 		vals = append(vals, row.CurrentSeq)
+		vals = append(vals, row.UpdatedMs)
 
 	}
 
@@ -3927,15 +4280,15 @@ func MassInsert_Room(rows []Room, db XODB) error {
 	return nil
 }
 
-func MassReplace_Room(rows []Room, db XODB) error {
+func MassReplace_Chat(rows []Chat, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "REPLACE INTO ms.room (" +
-		"RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq" +
+	sqlstr := "REPLACE INTO ms.chat (" +
+		"ChatKey, RoomTypeEnumId, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq, UpdatedMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -3943,8 +4296,8 @@ func MassReplace_Room(rows []Room, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.RoomKey)
-		vals = append(vals, row.RoomTypeEnum)
+		vals = append(vals, row.ChatKey)
+		vals = append(vals, row.RoomTypeEnumId)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.LastSeqSeen)
 		vals = append(vals, row.LastSeqDelete)
@@ -3952,6 +4305,7 @@ func MassReplace_Room(rows []Room, db XODB) error {
 		vals = append(vals, row.GroupId)
 		vals = append(vals, row.CreatedTime)
 		vals = append(vals, row.CurrentSeq)
+		vals = append(vals, row.UpdatedMs)
 
 	}
 
@@ -3988,31 +4342,33 @@ func MassReplace_Room(rows []Room, db XODB) error {
 
 //
 
-// RoomByRoomId retrieves a row from 'ms.room' as a Room.
 //
-// Generated from index 'room_RoomId_pkey'.
-func RoomByRoomId(db XODB, roomId int) (*Room, error) {
+
+// ChatByChatId retrieves a row from 'ms.chat' as a Chat.
+//
+// Generated from index 'chat_ChatId_pkey'.
+func ChatByChatId(db XODB, chatId int) (*Chat, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`RoomId, RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq ` +
-		`FROM ms.room ` +
-		`WHERE RoomId = ?`
+		`ChatId, ChatKey, RoomTypeEnumId, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq, UpdatedMs ` +
+		`FROM ms.chat ` +
+		`WHERE ChatId = ?`
 
 	// run query
-	XOLog(sqlstr, roomId)
-	r := Room{
+	XOLog(sqlstr, chatId)
+	c := Chat{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, roomId).Scan(&r.RoomId, &r.RoomKey, &r.RoomTypeEnum, &r.UserId, &r.LastSeqSeen, &r.LastSeqDelete, &r.PeerUserId, &r.GroupId, &r.CreatedTime, &r.CurrentSeq)
+	err = db.QueryRow(sqlstr, chatId).Scan(&c.ChatId, &c.ChatKey, &c.RoomTypeEnumId, &c.UserId, &c.LastSeqSeen, &c.LastSeqDelete, &c.PeerUserId, &c.GroupId, &c.CreatedTime, &c.CurrentSeq, &c.UpdatedMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
 	}
 
-	OnRoom_LoadOne(&r)
+	OnChat_LoadOne(&c)
 
-	return &r, nil
+	return &c, nil
 }

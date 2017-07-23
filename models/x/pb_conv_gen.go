@@ -1,6 +1,4 @@
-
 package x
-
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -59,6 +57,41 @@ func PBConvPB_Bucket_To_Bucket ( o *Bucket) *PB_Bucket {
 }
 */
 /*
+func PBConvPB__Chat_To_Chat( o *PB_Chat) *Chat {
+     n := &Chat{
+      ChatId: int ( o.ChatId ),
+      ChatKey: string ( o.ChatKey ),
+      RoomTypeEnumId: int ( o.RoomTypeEnumId ),
+      UserId: int ( o.UserId ),
+      LastSeqSeen: int ( o.LastSeqSeen ),
+      LastSeqDelete: int ( o.LastSeqDelete ),
+      PeerUserId: int ( o.PeerUserId ),
+      GroupId: int ( o.GroupId ),
+      CreatedTime: int ( o.CreatedTime ),
+      CurrentSeq: int ( o.CurrentSeq ),
+      UpdatedMs: int ( o.UpdatedMs ),
+    }
+    return n
+}
+
+func PBConvPB_Chat_To_Chat ( o *Chat) *PB_Chat {
+     n := &PB_Chat{
+      ChatId: int64 ( o.ChatId ),
+      ChatKey: string ( o.ChatKey ),
+      RoomTypeEnumId: int32 ( o.RoomTypeEnumId ),
+      UserId: int32 ( o.UserId ),
+      LastSeqSeen: int32 ( o.LastSeqSeen ),
+      LastSeqDelete: int32 ( o.LastSeqDelete ),
+      PeerUserId: int32 ( o.PeerUserId ),
+      GroupId: int64 ( o.GroupId ),
+      CreatedTime: int32 ( o.CreatedTime ),
+      CurrentSeq: int32 ( o.CurrentSeq ),
+      UpdatedMs: int64 ( o.UpdatedMs ),
+    }
+    return n
+}
+*/
+/*
 func PBConvPB__Comment_To_Comment( o *PB_Comment) *Comment {
      n := &Comment{
       Id: int ( o.Id ),
@@ -90,7 +123,7 @@ func PBConvPB__DirectMessage_To_DirectMessage( o *PB_DirectMessage) *DirectMessa
       MessageFileId: int ( o.MessageFileId ),
       MessageTypeEnum: int ( o.MessageTypeEnum ),
       Text: string ( o.Text ),
-      CreatedMs: int ( o.CreatedMs ),
+      Time: int ( o.Time ),
       PeerReceivedTime: int ( o.PeerReceivedTime ),
       PeerSeenTime: int ( o.PeerSeenTime ),
       DeliviryStatusEnum: int ( o.DeliviryStatusEnum ),
@@ -106,7 +139,7 @@ func PBConvPB_DirectMessage_To_DirectMessage ( o *DirectMessage) *PB_DirectMessa
       MessageFileId: int64 ( o.MessageFileId ),
       MessageTypeEnum: int32 ( o.MessageTypeEnum ),
       Text: string ( o.Text ),
-      CreatedMs: int64 ( o.CreatedMs ),
+      Time: int32 ( o.Time ),
       PeerReceivedTime: int32 ( o.PeerReceivedTime ),
       PeerSeenTime: int32 ( o.PeerSeenTime ),
       DeliviryStatusEnum: int32 ( o.DeliviryStatusEnum ),
@@ -118,7 +151,7 @@ func PBConvPB_DirectMessage_To_DirectMessage ( o *DirectMessage) *PB_DirectMessa
 func PBConvPB__DirectToMessage_To_DirectToMessage( o *PB_DirectToMessage) *DirectToMessage {
      n := &DirectToMessage{
       Id: int ( o.Id ),
-      RoomId: int ( o.RoomId ),
+      ChatId: int ( o.ChatId ),
       MessageId: int ( o.MessageId ),
       Seq: int ( o.Seq ),
       SourceEnum: int ( o.SourceEnum ),
@@ -129,7 +162,7 @@ func PBConvPB__DirectToMessage_To_DirectToMessage( o *PB_DirectToMessage) *Direc
 func PBConvPB_DirectToMessage_To_DirectToMessage ( o *DirectToMessage) *PB_DirectToMessage {
      n := &PB_DirectToMessage{
       Id: int64 ( o.Id ),
-      RoomId: int64 ( o.RoomId ),
+      ChatId: int64 ( o.ChatId ),
       MessageId: int64 ( o.MessageId ),
       Seq: int32 ( o.Seq ),
       SourceEnum: int32 ( o.SourceEnum ),
@@ -347,6 +380,23 @@ func PBConvPB_Like_To_Like ( o *Like) *PB_Like {
       UserId: int32 ( o.UserId ),
       TypeId: int32 ( o.TypeId ),
       CreatedTime: int32 ( o.CreatedTime ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__LogChange_To_LogChange( o *PB_LogChange) *LogChange {
+     n := &LogChange{
+      Id: int ( o.Id ),
+      T: string ( o.T ),
+    }
+    return n
+}
+
+func PBConvPB_LogChange_To_LogChange ( o *LogChange) *PB_LogChange {
+     n := &PB_LogChange{
+      Id: int32 ( o.Id ),
+      T: string ( o.T ),
     }
     return n
 }
@@ -956,6 +1006,39 @@ func PBConvPB_TagsPost_To_TagsPost ( o *TagsPost) *PB_TagsPost {
       PostId: int32 ( o.PostId ),
       TypeId: int32 ( o.TypeId ),
       CreatedTime: int32 ( o.CreatedTime ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__TestChat_To_TestChat( o *PB_TestChat) *TestChat {
+     n := &TestChat{
+      Id: int ( o.Id ),
+      Id4: int ( o.Id4 ),
+      TimeMs: int ( o.TimeMs ),
+      Text: string ( o.Text ),
+      Name: string ( o.Name ),
+      UserId: int ( o.UserId ),
+      C2: int ( o.C2 ),
+      C3: int ( o.C3 ),
+      C4: int ( o.C4 ),
+      C5: int ( o.C5 ),
+    }
+    return n
+}
+
+func PBConvPB_TestChat_To_TestChat ( o *TestChat) *PB_TestChat {
+     n := &PB_TestChat{
+      Id: int64 ( o.Id ),
+      Id4: int64 ( o.Id4 ),
+      TimeMs: int64 ( o.TimeMs ),
+      Text: string ( o.Text ),
+      Name: string ( o.Name ),
+      UserId: int64 ( o.UserId ),
+      C2: int32 ( o.C2 ),
+      C3: int32 ( o.C3 ),
+      C4: int32 ( o.C4 ),
+      C5: int32 ( o.C5 ),
     }
     return n
 }

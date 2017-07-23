@@ -21,6 +21,19 @@ message PB_Bucket {
     int32 ContentObjectCount = 13;
     int32 CreatedTime = 15;
 }
+message PB_Chat {
+    int64 ChatId = 1;
+    string ChatKey = 3;
+    int32 RoomTypeEnumId = 5;
+    int32 UserId = 7;
+    int32 LastSeqSeen = 9;
+    int32 LastSeqDelete = 11;
+    int32 PeerUserId = 13;
+    int64 GroupId = 15;
+    int32 CreatedTime = 17;
+    int32 CurrentSeq = 19;
+    int64 UpdatedMs = 21;
+}
 message PB_Comment {
     int32 Id = 1;
     int32 UserId = 3;
@@ -42,7 +55,7 @@ message PB_DirectMessage {
 }
 message PB_DirectToMessage {
     int64 Id = 1;
-    int64 RoomId = 3;
+    int64 ChatId = 3;
     int64 MessageId = 5;
     int32 Seq = 7;
     int32 SourceEnum = 9;

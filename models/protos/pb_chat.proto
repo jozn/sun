@@ -7,6 +7,23 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 
 option go_package = "x";
 
+import "pb_enums.proto";
+
+
+message PB_RoomInlineView {
+    int64 RoomId = 1;
+    RoomTypeEnum RoomTypeEnum = 2;
+}
+
+message PB_MessageForwardedFrom {
+    int64 RoomId = 1;
+    RoomTypeEnum RoomTypeEnum = 2;
+    int64 MessageId = 3;
+    int32 MessageSeq = 4;
+}
+
+////////////// Views /////////////
+
 message PB_MessageView {
     int64 MessageId = 1;
     string RoomKey = 3;

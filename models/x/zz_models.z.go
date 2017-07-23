@@ -53,6 +53,38 @@ type Bucket struct {
 	CreatedTime: 0,
 */
 
+// Chat 'ms.chat'.
+type Chat struct {
+	ChatId         int
+	ChatKey        string
+	RoomTypeEnumId int
+	UserId         int
+	LastSeqSeen    int
+	LastSeqDelete  int
+	PeerUserId     int
+	GroupId        int
+	CreatedTime    int
+	CurrentSeq     int //just for peer to peer
+	UpdatedMs      int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &Chat {
+	ChatId: 0,
+	ChatKey: "",
+	RoomTypeEnumId: 0,
+	UserId: 0,
+	LastSeqSeen: 0,
+	LastSeqDelete: 0,
+	PeerUserId: 0,
+	GroupId: 0,
+	CreatedTime: 0,
+	CurrentSeq: 0,
+	UpdatedMs: 0,
+*/
+
 // Comment 'ms.comments'.
 type Comment struct {
 	Id          int
@@ -106,7 +138,7 @@ type DirectMessage struct {
 // DirectToMessage 'ms.direct_to_message'.
 type DirectToMessage struct {
 	Id         int
-	RoomId     int
+	ChatId     int
 	MessageId  int
 	Seq        int
 	SourceEnum int
@@ -117,7 +149,7 @@ type DirectToMessage struct {
 /*
 := &DirectToMessage {
 	Id: 0,
-	RoomId: 0,
+	ChatId: 0,
 	MessageId: 0,
 	Seq: 0,
 	SourceEnum: 0,
