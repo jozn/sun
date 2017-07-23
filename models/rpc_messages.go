@@ -2,102 +2,53 @@ package models
 
 import "ms/sun/models/x"
 
-type RPC_MessageReqImple int
-type RPC2 int
+type rpcMsg int
 
-func (RPC2) GetLastChnagesForRoom(context.Context, *x.PB_ReqLastChangesForTheRoom) (*x.PB_ResponseLastChangesForTheRoom, error) {
+func (s rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage) (*x.PB_MsgResponse_AddNewTextMessage, error) {
+    
+}
+
+func (s rpcMsg) SetRoomActionDoing(i *x.PB_MsgParam_SetRoomActionDoing) (*x.PB_MsgResponse_SetRoomActionDoing, error) {
     panic("implement me")
 }
 
-func mm()  {
-    c := struct {
-        RPC_MessageReqImple
-        RPC2
-    }{
-        c2 :x.Activity__{},
-    }
-    c.GeLa
-
-
-}
-
-
-
-func (pv RPC_MessageReqImple) GetLastChnagesForRoom2(x.PB_ReqLastChangesForTheRoom) (x.PB_ResponseLastChangesForTheRoom, error) {
+func (s rpcMsg) GetMessagesByIds(i *x.PB_MsgParam_GetMessagesByIds) (*x.PB_MsgResponse_GetMessagesByIds, error) {
     panic("implement me")
 }
 
-func (pv RPC_MessageReqImple) SetLastSeen(x.PB_RequestSetLastSeenMessages) (x.PB_ResponseSetLastSeenMessages, error) {
+func (s rpcMsg) GetMessagesHistory(i *x.PB_MsgParam_GetMessagesHistory) (*x.PB_MsgResponse_GetMessagesHistory, error) {
     panic("implement me")
 }
 
-func (pv RPC_MessageReqImple) SayHello(x.PB_Message) (x.PB_UserWithMe, error) {
+func (s rpcMsg) SetMessagesRangeAsSeen(i *x.PB_MsgParam_SetMessagesRangeAsSeen) (*x.PB_MsgResponse_SetMessagesRangeAsSeen, error) {
     panic("implement me")
 }
 
-func (pv RPC_MessageReqImple) UploadNewMsg(x.PB_Message) (x.PB_ResRpcAddMsg, error) {
+func (s rpcMsg) DeleteRoomHistory(i *x.PB_MsgParam_DeleteRoomHistory) (*x.PB_MsgResponse_DeleteRoomHistory, error) {
     panic("implement me")
 }
 
-func (pv RPC_MessageReqImple) BlockUser(x.PB_UserParam_BlockUser) (x.PB_UserOfflineResponse_BlockUser, error) {
+func (s rpcMsg) DeleteMessagesByIds(i *x.PB_MsgParam_DeleteMessagesByIds) (*x.PB_MsgResponse_DeleteMessagesByIds, error) {
     panic("implement me")
 }
 
-func (pv RPC_MessageReqImple) UnBlockUser(x.PB_UserParam_UnBlockUser) (x.PB_UserOfflineResponse_UnBlockUser, error) {
+func (s rpcMsg) SetMessagesAsReceived(i *x.PB_MsgParam_SetMessagesAsReceived) (*x.PB_MsgResponse_SetMessagesAsReceived, error) {
     panic("implement me")
 }
 
-func (pv RPC_MessageReqImple) UpdateAbout(x.PB_UserParam_UpdateAbout) (x.PB_UserOfflineResponse_UpdateAbout, error) {
+func (s rpcMsg) ForwardMessages(i *x.PB_MsgParam_ForwardMessages) (*x.PB_MsgResponse_ForwardMessages, error) {
     panic("implement me")
 }
 
-func (pv RPC_MessageReqImple) UpdateUserName(x.PB_UserParam_UpdateUserName) (x.PB_UserOfflineResponse_UpdateUserName, error) {
+func (s rpcMsg) EditMessage(i *x.PB_MsgParam_EditMessage) (*x.PB_MsgResponse_EditMessage, error) {
     panic("implement me")
 }
 
-func (pv RPC_MessageReqImple) ChangePrivacy(x.PB_UserParam_ChangePrivacy) (x.PB_UserResponseOffline_ChangePrivacy, error) {
+func (s rpcMsg) BroadcastNewMessage(i *x.PB_MsgParam_BroadcastNewMessage) (*x.PB_MsgResponse_BroadcastNewMessage, error) {
     panic("implement me")
 }
 
-func (pv RPC_MessageReqImple) ChangeAvatar(x.PB_UserParam_ChangeAvatar) (x.PB_UserOfflineResponse_ChangeAvatar, error) {
-    panic("implement me")
-}
 
-func (pv RPC_MessageReqImple) CheckPhone(x.PB_UserParam_CheckUserName) (x.PB_UserResponse_CheckUserName, error) {
-    panic("implement me")
-}
 
-func (pv RPC_MessageReqImple) SendCode(x.PB_UserParam_CheckUserName) (x.PB_UserResponse_CheckUserName, error) {
-    panic("implement me")
-}
 
-func (pv RPC_MessageReqImple) SendCodeToSms(x.PB_UserParam_CheckUserName) (x.PB_UserResponse_CheckUserName, error) {
-    panic("implement me")
-}
-
-func (pv RPC_MessageReqImple) SendCodeToTelgram(x.PB_UserParam_CheckUserName) (x.PB_UserResponse_CheckUserName, error) {
-    panic("implement me")
-}
-
-func (pv RPC_MessageReqImple) SingUp(x.PB_UserParam_CheckUserName) (x.PB_UserResponse_CheckUserName, error) {
-    panic("implement me")
-}
-
-func (pv RPC_MessageReqImple) SingIn(x.PB_UserParam_CheckUserName) (x.PB_UserResponse_CheckUserName, error) {
-    panic("implement me")
-}
-
-func (pv RPC_MessageReqImple) LogOut(x.PB_UserParam_CheckUserName) (x.PB_UserResponse_CheckUserName, error) {
-    panic("implement me")
-}
-
-func (pv RPC_MessageReqImple) CheckUserName(x.PB_UserParam_CheckUserName) (x.PB_UserResponse_CheckUserName, error) {
-    panic("implement me")
-}
-
-func (pv RPC_MessageReqImple) GetBlockedList(x.PB_UserParam_BlockedList) (x.PB_UserResponse_BlockedList, error) {
-    panic("implement me")
-}
-
-func (pv RPC_MessageReqImple)s() {}
 

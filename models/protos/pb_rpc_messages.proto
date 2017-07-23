@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+option java_package = "ir.ms.pb";
+//option java_outer_classname = "PB2";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME; //CODE_SIZE;
+
+option go_package = "x";
+
+import "pb_enums.proto";
+
+// AddNewTextMessage
+message PB_MsgParam_AddNewTextMessage {
+    string Text = 1;
+    string Text2 = 2;
+
+    int32 RoomTypeId = 4;
+    int64 UserId = 3;
+    int64 PeerId = 20;
+}
+
+message PB_MsgResponse_AddNewTextMessage {
+
+}
+
+// SetRoomActionDoing
+message PB_MsgParam_SetRoomActionDoing {
+
+}
+message PB_MsgResponse_SetRoomActionDoing{
+}
+
+// GetMessagesByIds
+message PB_MsgParam_GetMessagesByIds {
+
+}
+message PB_MsgResponse_GetMessagesByIds {
+
+}
+
+// GetMessagesHistory
+message PB_MsgParam_GetMessagesHistory {
+
+}
+message PB_MsgResponse_GetMessagesHistory {
+
+}
+
+/////////
+message PB_MsgParam_SetMessagesRangeAsSeen {
+
+}
+message PB_MsgResponse_SetMessagesRangeAsSeen {
+
+}
+
+
+/////////////////////////////////////
+message PB_MsgParam_DeleteRoomHistory {
+
+}
+message PB_MsgResponse_DeleteRoomHistory {
+
+}
+
+/////////////////////////////////////
+message PB_MsgParam_DeleteMessagesByIds {
+
+}
+message PB_MsgResponse_DeleteMessagesByIds {
+
+}
+
+/////////////////////////////////////
+message PB_MsgParam_SetMessagesAsReceived {
+
+}
+message PB_MsgResponse_SetMessagesAsReceived {
+
+}
+
+/////////////////////////////////////
+message PB_MsgParam_ForwardMessages {
+
+}
+message PB_MsgResponse_ForwardMessages {
+
+}
+
+/////////////////////////////////////
+message PB_MsgParam_EditMessage {
+
+}
+message PB_MsgResponse_EditMessage {
+
+}
+
+/////////////////////////////////////
+message PB_MsgParam_BroadcastNewMessage {
+
+}
+message PB_MsgResponse_BroadcastNewMessage {
+
+}
+
+
+////////////////////////////////////////////////////////
+
+service RPC_Msg {
+    rpc AddNewTextMessage (PB_MsgParam_AddNewTextMessage) returns (PB_MsgResponse_AddNewTextMessage);
+    rpc SetRoomActionDoing (PB_MsgParam_SetRoomActionDoing) returns (PB_MsgResponse_SetRoomActionDoing);
+    rpc GetMessagesByIds (PB_MsgParam_GetMessagesByIds) returns (PB_MsgResponse_GetMessagesByIds);
+    rpc GetMessagesHistory (PB_MsgParam_GetMessagesHistory) returns (PB_MsgResponse_GetMessagesHistory);
+    rpc SetMessagesRangeAsSeen (PB_MsgParam_SetMessagesRangeAsSeen) returns (PB_MsgResponse_SetMessagesRangeAsSeen);
+    rpc DeleteRoomHistory (PB_MsgParam_DeleteRoomHistory) returns (PB_MsgResponse_DeleteRoomHistory);
+    rpc DeleteMessagesByIds (PB_MsgParam_DeleteMessagesByIds) returns (PB_MsgResponse_DeleteMessagesByIds);
+    rpc SetMessagesAsReceived (PB_MsgParam_SetMessagesAsReceived) returns (PB_MsgResponse_SetMessagesAsReceived);
+    rpc ForwardMessages (PB_MsgParam_ForwardMessages) returns (PB_MsgResponse_ForwardMessages);
+    rpc EditMessage (PB_MsgParam_EditMessage) returns (PB_MsgResponse_EditMessage);
+    rpc BroadcastNewMessage (PB_MsgParam_BroadcastNewMessage) returns (PB_MsgResponse_BroadcastNewMessage);
+}
