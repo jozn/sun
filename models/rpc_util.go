@@ -42,3 +42,7 @@ func Chat_IncermentForNewMessage(c *x.Chat) {
 	c.CurrentSeq += 1
 	c.UpdatedMs = helper.TimeNowMs()
 }
+
+func Chat_GetChatByIdAndUserId(chatId, userId int) (*x.Chat, error) {
+	return x.NewChat_Selector().ChatId_Eq(chatId).UserId_Eq(userId).GetRow(base.DB)
+}

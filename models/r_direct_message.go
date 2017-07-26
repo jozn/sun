@@ -14,11 +14,34 @@ type directMessaging struct {
 	Err        error
 }
 
-func NewDirectMessaging(me, peer int) *directMessaging {
-	return &directMessaging{
+func NewDirectMessagingByUsers(me, peer int) *directMessaging {
+	res := &directMessaging{
 		MeUserId:   me,
 		PeerUserId: peer,
 	}
+	res.LoadOrCreateRooms()
+	return res
+}
+
+func NewDirectMessagingByChatId(me, chatId int) (*directMessaging, error) {
+	ch, err := x.NewChat_Selector().ChatId_Eq(chatId).UserId_Eq(me).GetRow(base.DB)
+	if err != nil {
+		return nil, err
+	}
+
+	s := &directMessaging{
+		MeUserId:   me,
+		PeerUserId: ch.PeerUserId,
+	}
+	s.MeChat = ch
+	var e2 error
+	s.PeerChat, e2 = GetOrCreateDirectChatForPeers(s.PeerUserId, s.MeUserId)
+	if e2 != nil {
+		s.Err = e2
+	}
+
+	s.LoadOrCreateRooms()
+	return s, nil
 }
 
 func (s *directMessaging) LoadOrCreateRooms() {
@@ -86,7 +109,27 @@ func (s *directMessaging) EditMessageFromMe() {
 
 }
 
-func (s *directMessaging) SetMessagesAsSeen() {
+func (s *directMessaging) SetMessagesAsSeen(fromSeq, toSeq, time int) {
+	sel := x.NewDirectToMessage_Selector().Select_MessageId().
+		ChatId_Eq(s.MeChat.ChatId)
+	if fromSeq > 0 {
+		sel.Seq_GE(fromSeq)
+	}
+	if toSeq > 0 {
+		sel.Seq_GE(toSeq)
+	}
+
+	msgIds, err := sel.OrderBy_Id_Desc().GetIntSlice(base.DB)
+	if err != nil {
+		return
+	}
+
+	x.NewDirectMessage_Updater().
+		MessageId_In(msgIds).
+		DeliviryStatusEnum(int(x.RoomMessageDeliviryStatusEnum_SEEN)).
+		Update(base.DB)
+
+	s.MeChat.LastSeqSeen = toSeq
 
 }
 

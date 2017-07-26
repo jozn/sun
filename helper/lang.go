@@ -10,6 +10,14 @@ func JustRecover() {
 	}
 }
 
+func SliceInt64ToInt(ins []int64) []int {
+	res := make([]int, len(ins))
+	for i := 0; i < len(ins); i++ {
+		res[i] = int(ins[i])
+	}
+	return res
+}
+
 type R struct {
 	Start, End int
 }

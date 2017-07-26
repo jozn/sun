@@ -32,23 +32,29 @@ message PB_MsgResponse_SetRoomActionDoing{
 
 // GetMessagesByIds
 message PB_MsgParam_GetMessagesByIds {
-
+    repeated int64 MessageId = 1;
 }
 message PB_MsgResponse_GetMessagesByIds {
-
+    repeated PB_MessageView MessagesViews = 1 ;
 }
 
 // GetMessagesHistory
 message PB_MsgParam_GetMessagesHistory {
+    int64 ChatId = 1;
+    sint32 FromSeq = 2;
+    sint32 EndSeq = 3;
 
 }
 message PB_MsgResponse_GetMessagesHistory {
-
+    repeated PB_MessageView MessagesViews = 1 ;
 }
 
 /////////
 message PB_MsgParam_SetMessagesRangeAsSeen {
-
+    int64 ChatId = 1 ;
+    sint32 FromSeq = 2;//must persent 
+    sint32 EndSeq = 3;// must persent
+    int64 SeenTimeMs = 4;
 }
 message PB_MsgResponse_SetMessagesRangeAsSeen {
 

@@ -2,6 +2,7 @@ package models
 
 import (
 	"ms/sun/base"
+	"ms/sun/helper"
 	"ms/sun/models/x"
 )
 
@@ -24,7 +25,7 @@ func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_User
 
 	//msg.Insert(base.DB)
 
-	dm := NewDirectMessaging(p.GetUserId(), pid)
+	dm := NewDirectMessagingByUsers(p.GetUserId(), pid)
 	dm.AddMessage(msg)
 
 }
@@ -34,15 +35,52 @@ func (rpcMsg) SetRoomActionDoing(i *x.PB_MsgParam_SetRoomActionDoing, p x.RPC_Us
 }
 
 func (rpcMsg) GetMessagesByIds(i *x.PB_MsgParam_GetMessagesByIds, p x.RPC_UserParam) (*x.PB_MsgResponse_GetMessagesByIds, error) {
-	panic("implement me")
+	ids := helper.SliceInt64ToInt(i.MessageId)
+	x.Store.PreLoadDirectMessageByMessageIds(ids)
+
+	views := make([]*x.PB_MessageView, len(i.MessageId))
+	for i, id := range i.MessageId {
+		views[i] = ChatViews.MessageIddToMessageView(int(id))
+	}
+
+	res := &x.PB_MsgResponse_GetMessagesByIds{
+		views,
+	}
+	return res, nil
 }
 
 func (rpcMsg) GetMessagesHistory(i *x.PB_MsgParam_GetMessagesHistory, p x.RPC_UserParam) (*x.PB_MsgResponse_GetMessagesHistory, error) {
-	panic("implement me")
+	sel := x.NewDirectToMessage_Selector().Select_MessageId().ChatId_Eq(int(i.ChatId))
+	if i.FromSeq > 0 {
+		sel.Seq_GE(int(i.FromSeq))
+	}
+	if i.FromSeq > 0 {
+		sel.Seq_GE(int(i.FromSeq))
+	}
+
+	msgIds, err := sel.OrderBy_Id_Desc().GetIntSlice(base.DB)
+
+	if err != nil {
+		return nil, err
+	}
+
+	x.Store.PreLoadDirectMessageByMessageIds(msgIds)
+
+	res := &x.PB_MsgResponse_GetMessagesHistory{
+		ChatViews.MessageIdsToMessageViews(msgIds),
+	}
+	return res, nil
+
 }
 
 func (rpcMsg) SetMessagesRangeAsSeen(i *x.PB_MsgParam_SetMessagesRangeAsSeen, p x.RPC_UserParam) (*x.PB_MsgResponse_SetMessagesRangeAsSeen, error) {
-	panic("implement me")
+	dm, err := NewDirectMessagingByChatId(p.GetUserId(), int(i.ChatId))
+	if err != nil {
+		return nil, err
+	}
+	dm.SetMessagesAsSeen(int(i.FromSeq), int(i.EndSeq), int(i.SeenTimeMs))
+
+	return &x.PB_MsgResponse_SetMessagesRangeAsSeen{}, nil
 }
 
 func (rpcMsg) DeleteRoomHistory(i *x.PB_MsgParam_DeleteRoomHistory, p x.RPC_UserParam) (*x.PB_MsgResponse_DeleteRoomHistory, error) {
