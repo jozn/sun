@@ -63,7 +63,8 @@ message PB_MsgResponse_SetMessagesRangeAsSeen {
 
 /////////////////////////////////////
 message PB_MsgParam_DeleteRoomHistory {
-
+    int64 ChatId = 1 ;
+    sint32 ToSeq = 2;//must persent
 }
 message PB_MsgResponse_DeleteRoomHistory {
 

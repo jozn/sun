@@ -40,7 +40,7 @@ func (rpcMsg) GetMessagesByIds(i *x.PB_MsgParam_GetMessagesByIds, p x.RPC_UserPa
 
 	views := make([]*x.PB_MessageView, len(i.MessageId))
 	for i, id := range i.MessageId {
-		views[i] = ChatViews.MessageIddToMessageView(int(id))
+		views[i] = ChatViews.MessageIdToMessageView(int(id))
 	}
 
 	res := &x.PB_MsgResponse_GetMessagesByIds{
@@ -84,7 +84,14 @@ func (rpcMsg) SetMessagesRangeAsSeen(i *x.PB_MsgParam_SetMessagesRangeAsSeen, p 
 }
 
 func (rpcMsg) DeleteRoomHistory(i *x.PB_MsgParam_DeleteRoomHistory, p x.RPC_UserParam) (*x.PB_MsgResponse_DeleteRoomHistory, error) {
-	panic("implement me")
+	x.NewDirectToMessage_Deleter().
+        ChatId_Eq(int(i.ChatId)).
+        Seq_LE(int(i.ToSeq)).
+        Delete(base.DB)
+
+
+
+
 }
 
 func (rpcMsg) DeleteMessagesByIds(i *x.PB_MsgParam_DeleteMessagesByIds, p x.RPC_UserParam) (*x.PB_MsgResponse_DeleteMessagesByIds, error) {

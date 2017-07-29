@@ -62,25 +62,27 @@ enum RoomMessageDeliviryStatusEnum {
 //}*/
 
 message GeoLocation {
-    double lat = 1;
-    double lon = 2;
+    double Lat = 1;
+    double Lon = 2;
+}
+
+enum RoomMessageLogEnum {
+    USER_JOINED = 0;
+    USER_DELETED = 1;
+    ROOM_CREATED = 2;
+    MEMBER_ADDED = 3;
+    MEMBER_KICKED = 4;
+    MEMBER_LEFT = 5;
+    ROOM_CONVERTED_TO_PUBLIC = 6;
+    ROOM_CONVERTED_TO_PRIVATE = 7;
+    MEMBER_JOINED_BY_INVITE_LINK = 8;
+    ROOM_DELETED = 9;
 }
 
 message RoomMessageLog {
-    enum TypeEnum {
-        USER_JOINED = 0;
-        USER_DELETED = 1;
-        ROOM_CREATED = 2;
-        MEMBER_ADDED = 3;
-        MEMBER_KICKED = 4;
-        MEMBER_LEFT = 5;
-        ROOM_CONVERTED_TO_PUBLIC = 6;
-        ROOM_CONVERTED_TO_PRIVATE = 7;
-        MEMBER_JOINED_BY_INVITE_LINK = 8;
-        ROOM_DELETED = 9;
-    }
-    TypeEnum type = 1;
-    uint64 targetUserId = 2;
+
+    RoomMessageLogEnum typ = 1;
+    uint64 TargetUserId = 2;
     uint64 ByUserId = 3;
 //    /*
 //    enum ExtraType {
@@ -104,8 +106,8 @@ message RoomMessageLog {
 //}*/
 
 message RoomMessageForwardFrom {
-    uint64 roomId = 1;
-    uint64 messageId = 2;
+    uint64 RoomId = 1;
+    uint64 MessageId = 2;
     uint32 RoomTypeEnum = 3;
 }
 
@@ -177,8 +179,8 @@ enum RoomActionDoingEnum {
 
 
 message RoomDraft {
-    string message = 1;
-    uint64 reply_to = 2;
+    string Message = 1;
+    uint64 ReplyTo = 2;
 }
 
 enum RoomTypeEnum {
@@ -233,6 +235,6 @@ enum ProfilePrivacyLevelEnum {
 //}*/
 
 message Pagination {
-    uint32 offset = 1;
-    uint32 limit = 2;
+    uint32 Offset = 1;
+    uint32 Limit = 2;
 }

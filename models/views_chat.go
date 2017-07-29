@@ -6,7 +6,7 @@ type _chatViewImple int
 
 var ChatViews = _chatViewImple(1)
 
-func (_chatViewImple) MessageIddToMessageView(id int) *x.PB_MessageView {
+func (_chatViewImple) MessageIdToMessageView(id int) *x.PB_MessageView {
 
 	return nil
 }

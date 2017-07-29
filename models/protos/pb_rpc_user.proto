@@ -63,7 +63,7 @@ message PB_UserOfflineResponse_UpdateUserName {
 
 message PB_UserParam_ChangeAvatar {
     bool None = 1;
-    repeated bytes ImageData = 2;
+    bytes ImageData2 = 2;
 }
 message PB_UserOfflineResponse_ChangeAvatar {
 
