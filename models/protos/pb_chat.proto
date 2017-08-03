@@ -125,3 +125,10 @@ service RPC_MessageReqOffline {
 //}
 
 
+////////////////////////////////////
+
+message PB_MessagesCollections {
+    repeated int64 DirectMessagesIds = 10;
+    repeated int64 GroupMessagesIds = 20;
+    repeated int64 BroadCatMessagesIds = 21;
+}

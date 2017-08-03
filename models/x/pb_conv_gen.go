@@ -115,6 +115,33 @@ func PBConvPB_Comment_To_Comment ( o *Comment) *PB_Comment {
 }
 */
 /*
+func PBConvPB__DirectLog_To_DirectLog( o *PB_DirectLog) *DirectLog {
+     n := &DirectLog{
+      Id: int ( o.Id ),
+      ToUserId: int ( o.ToUserId ),
+      ChatId: int ( o.ChatId ),
+      LogTypeEnumId: int ( o.LogTypeEnumId ),
+      DataPB: []byte ( o.DataPB ),
+      DataJson: string ( o.DataJson ),
+      Created: int ( o.Created ),
+    }
+    return n
+}
+
+func PBConvPB_DirectLog_To_DirectLog ( o *DirectLog) *PB_DirectLog {
+     n := &PB_DirectLog{
+      Id: int64 ( o.Id ),
+      ToUserId: int32 ( o.ToUserId ),
+      ChatId: int64 ( o.ChatId ),
+      LogTypeEnumId: int32 ( o.LogTypeEnumId ),
+      DataPB: []byte ( o.DataPB ),
+      DataJson: string ( o.DataJson ),
+      Created: int32 ( o.Created ),
+    }
+    return n
+}
+*/
+/*
 func PBConvPB__DirectMessage_To_DirectMessage( o *PB_DirectMessage) *DirectMessage {
      n := &DirectMessage{
       MessageId: int ( o.MessageId ),
@@ -374,6 +401,31 @@ func PBConvPB__Like_To_Like( o *PB_Like) *Like {
 
 func PBConvPB_Like_To_Like ( o *Like) *PB_Like {
      n := &PB_Like{
+      Id: int32 ( o.Id ),
+      PostId: int32 ( o.PostId ),
+      PostTypeId: int32 ( o.PostTypeId ),
+      UserId: int32 ( o.UserId ),
+      TypeId: int32 ( o.TypeId ),
+      CreatedTime: int32 ( o.CreatedTime ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__LikesCopy_To_LikesCopy( o *PB_LikesCopy) *LikesCopy {
+     n := &LikesCopy{
+      Id: int ( o.Id ),
+      PostId: int ( o.PostId ),
+      PostTypeId: int ( o.PostTypeId ),
+      UserId: int ( o.UserId ),
+      TypeId: int ( o.TypeId ),
+      CreatedTime: int ( o.CreatedTime ),
+    }
+    return n
+}
+
+func PBConvPB_LikesCopy_To_LikesCopy ( o *LikesCopy) *PB_LikesCopy {
+     n := &PB_LikesCopy{
       Id: int32 ( o.Id ),
       PostId: int32 ( o.PostId ),
       PostTypeId: int32 ( o.PostTypeId ),
@@ -771,6 +823,45 @@ func PBConvPB__Post_To_Post( o *PB_Post) *Post {
 
 func PBConvPB_Post_To_Post ( o *Post) *PB_Post {
      n := &PB_Post{
+      Id: int32 ( o.Id ),
+      UserId: int32 ( o.UserId ),
+      TypeId: int32 ( o.TypeId ),
+      Text: string ( o.Text ),
+      FormatedText: string ( o.FormatedText ),
+      MediaCount: int32 ( o.MediaCount ),
+      SharedTo: int32 ( o.SharedTo ),
+      DisableComment: int32 ( o.DisableComment ),
+      HasTag: int32 ( o.HasTag ),
+      LikesCount: int32 ( o.LikesCount ),
+      CommentsCount: int32 ( o.CommentsCount ),
+      EditedTime: int32 ( o.EditedTime ),
+      CreatedTime: int32 ( o.CreatedTime ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__PostCopy_To_PostCopy( o *PB_PostCopy) *PostCopy {
+     n := &PostCopy{
+      Id: int ( o.Id ),
+      UserId: int ( o.UserId ),
+      TypeId: int ( o.TypeId ),
+      Text: string ( o.Text ),
+      FormatedText: string ( o.FormatedText ),
+      MediaCount: int ( o.MediaCount ),
+      SharedTo: int ( o.SharedTo ),
+      DisableComment: int ( o.DisableComment ),
+      HasTag: int ( o.HasTag ),
+      LikesCount: int ( o.LikesCount ),
+      CommentsCount: int ( o.CommentsCount ),
+      EditedTime: int ( o.EditedTime ),
+      CreatedTime: int ( o.CreatedTime ),
+    }
+    return n
+}
+
+func PBConvPB_PostCopy_To_PostCopy ( o *PostCopy) *PB_PostCopy {
+     n := &PB_PostCopy{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       TypeId: int32 ( o.TypeId ),

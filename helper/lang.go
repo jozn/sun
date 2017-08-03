@@ -19,14 +19,12 @@ func SliceInt64ToInt(ins []int64) []int {
 }
 
 func SliceIntToInt64(ins []int) []int64 {
-    res := make([]int64, len(ins))
-    for i := 0; i < len(ins); i++ {
-        res[i] = int64(ins[i])
-    }
-    return res
+	res := make([]int64, len(ins))
+	for i := 0; i < len(ins); i++ {
+		res[i] = int64(ins[i])
+	}
+	return res
 }
-
-
 
 type R struct {
 	Start, End int

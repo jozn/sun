@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var chanNewMsgPushEventsBuffer = make(chan x.MsgPushEvent, 100000)
+var chanNewMsgPushEventsBuffer = make(chan x.OldMsgPushEvent, 100000)
 
 func init() {
 	go batchechanNewMsgPushEventsBuffer()
@@ -14,7 +14,7 @@ func init() {
 
 func batchechanNewMsgPushEventsBuffer() {
 	const siz = 50000
-	arr := make([]x.MsgPushEvent, 0, siz)
+	arr := make([]x.OldMsgPushEvent, 0, siz)
 	go func() {
 		for m := range chanNewMsgPushEventsBuffer {
 			arr = append(arr, m)
@@ -26,14 +26,14 @@ func batchechanNewMsgPushEventsBuffer() {
 		if len(arr) > 0 {
 			//todo this has data racing problem + do it too for msg buffer
 			pre := arr
-			arr = make([]x.MsgPushEvent, 0, siz)
+			arr = make([]x.OldMsgPushEvent, 0, siz)
 			processchanNewMsgPushEventsBuffer(pre)
 		}
 	}
 }
 
-func processchanNewMsgPushEventsBuffer(msgEvents []x.MsgPushEvent) {
-	mp := make(map[int][]x.MsgPushEvent)
+func processchanNewMsgPushEventsBuffer(msgEvents []x.OldMsgPushEvent) {
+	mp := make(map[int][]x.OldMsgPushEvent)
 	uids := make([]int, 0, len(msgEvents))
 
 	for _, e := range msgEvents {
@@ -41,9 +41,9 @@ func processchanNewMsgPushEventsBuffer(msgEvents []x.MsgPushEvent) {
 		mp[e.ToUserId] = append(mp[e.ToUserId], e)
 	}
 
-	x.MassInsert_MsgPushEvent(msgEvents, base.DB)
+	x.MassInsert_OldMsgPushEvent(msgEvents, base.DB)
 
-	_, err := x.NewMsgPushEvent_Selector().Uid_In(uids).GetRows(base.DB)
+	_, err := x.NewOldMsgPushEvent_Selector().Uid_In(uids).GetRows(base.DB)
 	if err != nil {
 		return
 	}
@@ -54,7 +54,7 @@ func processchanNewMsgPushEventsBuffer(msgEvents []x.MsgPushEvent) {
 
 }
 
-func MessageModel_PushToPipeMsgEventsToUser(UserId int, eventsRows []x.MsgPushEvent) {
+func MessageModel_PushToPipeMsgEventsToUser(UserId int, eventsRows []x.OldMsgPushEvent) {
 	if len(eventsRows) == 0 || !AllPipesMap.IsPipeOpen(UserId) {
 		return
 	}

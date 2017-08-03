@@ -41,6 +41,15 @@ message PB_Comment {
     string Text = 7;
     int32 CreatedTime = 9;
 }
+message PB_DirectLog {
+    int64 Id = 1;
+    int32 ToUserId = 3;
+    int64 ChatId = 5;
+    int32 LogTypeEnumId = 7;
+    ???? DataPB = 9;
+    string DataJson = 11;
+    int32 Created = 13;
+}
 message PB_DirectMessage {
     int64 MessageId = 1;
     string RoomKey = 3;
@@ -124,6 +133,14 @@ message PB_GroupToMessage {
     int32 StatusEnum = 9;
 }
 message PB_Like {
+    int32 Id = 1;
+    int32 PostId = 3;
+    int32 PostTypeId = 5;
+    int32 UserId = 7;
+    int32 TypeId = 9;
+    int32 CreatedTime = 11;
+}
+message PB_LikesCopy {
     int32 Id = 1;
     int32 PostId = 3;
     int32 PostTypeId = 5;
@@ -265,6 +282,21 @@ message PB_Photo {
     int32 W80 = 41;
 }
 message PB_Post {
+    int32 Id = 1;
+    int32 UserId = 3;
+    int32 TypeId = 5;
+    string Text = 7;
+    string FormatedText = 9;
+    int32 MediaCount = 11;
+    int32 SharedTo = 13;
+    int32 DisableComment = 15;
+    int32 HasTag = 17;
+    int32 LikesCount = 19;
+    int32 CommentsCount = 21;
+    int32 EditedTime = 23;
+    int32 CreatedTime = 25;
+}
+message PB_PostCopy {
     int32 Id = 1;
     int32 UserId = 3;
     int32 TypeId = 5;

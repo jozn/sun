@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+option java_package = "ir.ms.pb";
+option java_outer_classname = "PB2";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME; //CODE_SIZE;
+
+option go_package = "x";
+
+import "pb_enums.proto";
+import "pb_chat.proto";
+
+message PB_UpdateNewMessage{
+    PB_MessageView Message = 1;
+}
+
+message PB_UpdateMessageId{
+    int64 OldMessageId =1;
+    int64 NewMessageId =2;
+}
+
+message PB_UpdateSeenMessages{
+    repeated int64 MessageIds =1;
+    int64 AtTime =2;
+}
+
+message PB_UpdateDelivierdMessages{
+    repeated int64 MessageIds =1;
+    int64 AtTime =2;
+}
+
+message PB_UpdateDeletedFromServerMessages{
+    repeated int64 MessageIds =1;
+    int64 AtTime =2;
+}
+
+/*message PB_UpdateSeenMessages{
+    repeated int64 MessageIds =1;
+    int64 AtTime =2;
+    MessageMetaUpdatesTypesEnum MetaType = 3;
+}*/
+message PB_UpdateDeleteMessages{
+    repeated int64 MessageIds =1;
+}
+
+message PB_UpdateRestoreMessage{
+    repeated int64 MessageIds =1;
+}
+
+message PB_UpdateRoomActionDoing{
+//    int64 ChatId = 1;
+    string RoomKey = 2;
+    RoomActionDoingEnum ActionType = 3;
+}
+
+message PB_UpdateGroupParticipants{
+
+}
+/*message PB_UpdateUserStatus{}
+message PB_UpdateUserAvatar{}
+message PB_pdateActivation{}
+message updateChatParticipantAdd{}
+message updateChatParticipantDelete{}*/
+
+message PB_UpdateUserBlocked{
+    int32 UserId = 1;
+    bool Blocked = 2;
+}
+message PB_UpdateNotifySettings{}
+message PB_UpdateServiceNotification{}
+
+/////////////// Deprecateds /////////////////
+
+message PB_UpdateEditMessage{
+    int64 MessageId =1;
+    string NewText =2;
+}

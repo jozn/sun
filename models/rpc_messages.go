@@ -28,6 +28,9 @@ func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_User
 	dm := NewDirectMessagingByUsers(p.GetUserId(), pid)
 	dm.AddMessage(msg)
 
+	res := &x.PB_MsgResponse_AddNewTextMessage{}
+
+	return res, nil
 }
 
 func (rpcMsg) SetRoomActionDoing(i *x.PB_MsgParam_SetRoomActionDoing, p x.RPC_UserParam) (*x.PB_MsgResponse_SetRoomActionDoing, error) {
@@ -85,17 +88,14 @@ func (rpcMsg) SetMessagesRangeAsSeen(i *x.PB_MsgParam_SetMessagesRangeAsSeen, p 
 
 func (rpcMsg) DeleteRoomHistory(i *x.PB_MsgParam_DeleteRoomHistory, p x.RPC_UserParam) (*x.PB_MsgResponse_DeleteRoomHistory, error) {
 	x.NewDirectToMessage_Deleter().
-        ChatId_Eq(int(i.ChatId)).
-        Seq_LE(int(i.ToSeq)).
-        Delete(base.DB)
-
-
-
+		ChatId_Eq(int(i.ChatId)).
+		Seq_LE(int(i.ToSeq)).
+		Delete(base.DB)
 
 }
 
 func (rpcMsg) DeleteMessagesByIds(i *x.PB_MsgParam_DeleteMessagesByIds, p x.RPC_UserParam) (*x.PB_MsgResponse_DeleteMessagesByIds, error) {
-	panic("implement me")
+	dm := NewDirectMessagingByUsers(p.GetUserId(), pid)
 }
 
 func (rpcMsg) SetMessagesAsReceived(i *x.PB_MsgParam_SetMessagesAsReceived, p x.RPC_UserParam) (*x.PB_MsgResponse_SetMessagesAsReceived, error) {

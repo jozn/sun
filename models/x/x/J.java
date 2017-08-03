@@ -44,6 +44,16 @@ public class J {
 		public Integer CreatedTime;
 	}
 
+	public static class DirectLog {
+		public Integer Id;
+		public UNKNOWN ToUserId;
+		public UNKNOWN ChatId;
+		public UNKNOWN LogTypeEnumId;
+		public UNKNOWN DataPB;
+		public UNKNOWN DataJson;
+		public UNKNOWN Created;
+	}
+
 	public static class DirectMessage {
 		public Integer MessageId;
 		public String RoomKey;
@@ -136,6 +146,15 @@ public class J {
 	}
 
 	public static class Like {
+		public Integer Id;
+		public Integer PostId;
+		public Integer PostTypeId;
+		public Integer UserId;
+		public Integer TypeId;
+		public Integer CreatedTime;
+	}
+
+	public static class LikesCopy {
 		public Integer Id;
 		public Integer PostId;
 		public Integer PostTypeId;
@@ -289,6 +308,22 @@ public class J {
 	}
 
 	public static class Post {
+		public Integer Id;
+		public Integer UserId;
+		public Integer TypeId;
+		public String Text;
+		public String FormatedText;
+		public Integer MediaCount;
+		public Integer SharedTo;
+		public Integer DisableComment;
+		public Integer HasTag;
+		public Integer LikesCount;
+		public Integer CommentsCount;
+		public Integer EditedTime;
+		public Integer CreatedTime;
+	}
+
+	public static class PostCopy {
 		public Integer Id;
 		public Integer UserId;
 		public Integer TypeId;

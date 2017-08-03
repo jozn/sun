@@ -44,7 +44,7 @@ func NewDirectMessagingByChatId(me, chatId int) (*directMessaging, error) {
 	return s, nil
 }
 
-func (s *directMessaging) LoadOrCreateRooms() {
+func (s *directMessaging) LoadOrCreateRooms() error {
 	var e1, e2 error
 	s.MeChat, e1 = GetOrCreateDirectChatForPeers(s.MeUserId, s.PeerUserId)
 	s.PeerChat, e2 = GetOrCreateDirectChatForPeers(s.PeerUserId, s.MeUserId)
@@ -55,6 +55,7 @@ func (s *directMessaging) LoadOrCreateRooms() {
 	if e2 != nil {
 		s.Err = e2
 	}
+	return s.Err
 }
 
 func (s *directMessaging) AddMessage(msg *x.DirectMessage) {

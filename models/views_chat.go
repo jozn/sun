@@ -13,7 +13,7 @@ func (_chatViewImple) MessageIdToMessageView(id int) *x.PB_MessageView {
 
 func (_chatViewImple) MessageIdsToMessageViews(ids []int) []*x.PB_MessageView {
 
-    x.Store.PreLoadDirectMessageByMessageIds(ids)
+	x.Store.PreLoadDirectMessageByMessageIds(ids)
 
-    return nil
+	return nil
 }

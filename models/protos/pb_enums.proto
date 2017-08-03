@@ -238,3 +238,10 @@ message Pagination {
     uint32 Offset = 1;
     uint32 Limit = 2;
 }
+
+enum MessageMetaUpdatesTypesEnum {
+    DELIVIERD_SERVER = 0;
+    DELIVIERD_PEER = 2;
+    SEEN = 3;
+    DELETE_SERVER = 3;
+}
