@@ -371,28 +371,6 @@ type Like struct {
 	CreatedTime: 0,
 */
 
-// LikesCopy 'ms.likes_copy'.
-type LikesCopy struct {
-	Id          int
-	PostId      int
-	PostTypeId  int
-	UserId      int
-	TypeId      int
-	CreatedTime int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &LikesCopy {
-	Id: 0,
-	PostId: 0,
-	PostTypeId: 0,
-	UserId: 0,
-	TypeId: 0,
-	CreatedTime: 0,
-*/
-
 // LogChange 'ms.log_changes'.
 type LogChange struct {
 	Id int
@@ -746,42 +724,6 @@ type Post struct {
 
 /*
 := &Post {
-	Id: 0,
-	UserId: 0,
-	TypeId: 0,
-	Text: "",
-	FormatedText: "",
-	MediaCount: 0,
-	SharedTo: 0,
-	DisableComment: 0,
-	HasTag: 0,
-	LikesCount: 0,
-	CommentsCount: 0,
-	EditedTime: 0,
-	CreatedTime: 0,
-*/
-
-// PostCopy 'ms.post_copy'.
-type PostCopy struct {
-	Id             int
-	UserId         int
-	TypeId         int
-	Text           string
-	FormatedText   string
-	MediaCount     int
-	SharedTo       int
-	DisableComment int
-	HasTag         int
-	LikesCount     int
-	CommentsCount  int
-	EditedTime     int
-	CreatedTime    int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &PostCopy {
 	Id: 0,
 	UserId: 0,
 	TypeId: 0,

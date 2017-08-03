@@ -140,14 +140,6 @@ message PB_Like {
     int32 TypeId = 9;
     int32 CreatedTime = 11;
 }
-message PB_LikesCopy {
-    int32 Id = 1;
-    int32 PostId = 3;
-    int32 PostTypeId = 5;
-    int32 UserId = 7;
-    int32 TypeId = 9;
-    int32 CreatedTime = 11;
-}
 message PB_LogChange {
     int32 Id = 1;
     string T = 3;
@@ -282,21 +274,6 @@ message PB_Photo {
     int32 W80 = 41;
 }
 message PB_Post {
-    int32 Id = 1;
-    int32 UserId = 3;
-    int32 TypeId = 5;
-    string Text = 7;
-    string FormatedText = 9;
-    int32 MediaCount = 11;
-    int32 SharedTo = 13;
-    int32 DisableComment = 15;
-    int32 HasTag = 17;
-    int32 LikesCount = 19;
-    int32 CommentsCount = 21;
-    int32 EditedTime = 23;
-    int32 CreatedTime = 25;
-}
-message PB_PostCopy {
     int32 Id = 1;
     int32 UserId = 3;
     int32 TypeId = 5;

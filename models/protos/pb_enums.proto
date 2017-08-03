@@ -53,7 +53,7 @@ enum RoomMessageDeliviryStatusEnum {
     SENDING = 1;
     SENT = 2;
     DELIVERED = 3;
-    SEEN = 4;
+    SEEN2 = 4;
 }
 
 ///*enum EnumRoomMessageReaction {
@@ -242,6 +242,6 @@ message Pagination {
 enum MessageMetaUpdatesTypesEnum {
     DELIVIERD_SERVER = 0;
     DELIVIERD_PEER = 2;
-    SEEN = 3;
+    SEEN = 4;
     DELETE_SERVER = 3;
 }

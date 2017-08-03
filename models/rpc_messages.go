@@ -87,15 +87,16 @@ func (rpcMsg) SetMessagesRangeAsSeen(i *x.PB_MsgParam_SetMessagesRangeAsSeen, p 
 }
 
 func (rpcMsg) DeleteRoomHistory(i *x.PB_MsgParam_DeleteRoomHistory, p x.RPC_UserParam) (*x.PB_MsgResponse_DeleteRoomHistory, error) {
-	x.NewDirectToMessage_Deleter().
+	/*x.NewDirectToMessage_Deleter().
 		ChatId_Eq(int(i.ChatId)).
 		Seq_LE(int(i.ToSeq)).
-		Delete(base.DB)
-
+		Delete(base.DB)*/
+    panic("implement me")
 }
 
 func (rpcMsg) DeleteMessagesByIds(i *x.PB_MsgParam_DeleteMessagesByIds, p x.RPC_UserParam) (*x.PB_MsgResponse_DeleteMessagesByIds, error) {
-	dm := NewDirectMessagingByUsers(p.GetUserId(), pid)
+	//dm := NewDirectMessagingByUsers(p.GetUserId(), pid)
+    panic("implement me")
 }
 
 func (rpcMsg) SetMessagesAsReceived(i *x.PB_MsgParam_SetMessagesAsReceived, p x.RPC_UserParam) (*x.PB_MsgResponse_SetMessagesAsReceived, error) {

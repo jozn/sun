@@ -154,15 +154,6 @@ public class J {
 		public Integer CreatedTime;
 	}
 
-	public static class LikesCopy {
-		public Integer Id;
-		public Integer PostId;
-		public Integer PostTypeId;
-		public Integer UserId;
-		public Integer TypeId;
-		public Integer CreatedTime;
-	}
-
 	public static class LogChange {
 		public Integer Id;
 		public String T;
@@ -308,22 +299,6 @@ public class J {
 	}
 
 	public static class Post {
-		public Integer Id;
-		public Integer UserId;
-		public Integer TypeId;
-		public String Text;
-		public String FormatedText;
-		public Integer MediaCount;
-		public Integer SharedTo;
-		public Integer DisableComment;
-		public Integer HasTag;
-		public Integer LikesCount;
-		public Integer CommentsCount;
-		public Integer EditedTime;
-		public Integer CreatedTime;
-	}
-
-	public static class PostCopy {
 		public Integer Id;
 		public Integer UserId;
 		public Integer TypeId;

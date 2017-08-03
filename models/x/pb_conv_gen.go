@@ -1,4 +1,6 @@
+
 package x
+
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -412,31 +414,6 @@ func PBConvPB_Like_To_Like ( o *Like) *PB_Like {
 }
 */
 /*
-func PBConvPB__LikesCopy_To_LikesCopy( o *PB_LikesCopy) *LikesCopy {
-     n := &LikesCopy{
-      Id: int ( o.Id ),
-      PostId: int ( o.PostId ),
-      PostTypeId: int ( o.PostTypeId ),
-      UserId: int ( o.UserId ),
-      TypeId: int ( o.TypeId ),
-      CreatedTime: int ( o.CreatedTime ),
-    }
-    return n
-}
-
-func PBConvPB_LikesCopy_To_LikesCopy ( o *LikesCopy) *PB_LikesCopy {
-     n := &PB_LikesCopy{
-      Id: int32 ( o.Id ),
-      PostId: int32 ( o.PostId ),
-      PostTypeId: int32 ( o.PostTypeId ),
-      UserId: int32 ( o.UserId ),
-      TypeId: int32 ( o.TypeId ),
-      CreatedTime: int32 ( o.CreatedTime ),
-    }
-    return n
-}
-*/
-/*
 func PBConvPB__LogChange_To_LogChange( o *PB_LogChange) *LogChange {
      n := &LogChange{
       Id: int ( o.Id ),
@@ -823,45 +800,6 @@ func PBConvPB__Post_To_Post( o *PB_Post) *Post {
 
 func PBConvPB_Post_To_Post ( o *Post) *PB_Post {
      n := &PB_Post{
-      Id: int32 ( o.Id ),
-      UserId: int32 ( o.UserId ),
-      TypeId: int32 ( o.TypeId ),
-      Text: string ( o.Text ),
-      FormatedText: string ( o.FormatedText ),
-      MediaCount: int32 ( o.MediaCount ),
-      SharedTo: int32 ( o.SharedTo ),
-      DisableComment: int32 ( o.DisableComment ),
-      HasTag: int32 ( o.HasTag ),
-      LikesCount: int32 ( o.LikesCount ),
-      CommentsCount: int32 ( o.CommentsCount ),
-      EditedTime: int32 ( o.EditedTime ),
-      CreatedTime: int32 ( o.CreatedTime ),
-    }
-    return n
-}
-*/
-/*
-func PBConvPB__PostCopy_To_PostCopy( o *PB_PostCopy) *PostCopy {
-     n := &PostCopy{
-      Id: int ( o.Id ),
-      UserId: int ( o.UserId ),
-      TypeId: int ( o.TypeId ),
-      Text: string ( o.Text ),
-      FormatedText: string ( o.FormatedText ),
-      MediaCount: int ( o.MediaCount ),
-      SharedTo: int ( o.SharedTo ),
-      DisableComment: int ( o.DisableComment ),
-      HasTag: int ( o.HasTag ),
-      LikesCount: int ( o.LikesCount ),
-      CommentsCount: int ( o.CommentsCount ),
-      EditedTime: int ( o.EditedTime ),
-      CreatedTime: int ( o.CreatedTime ),
-    }
-    return n
-}
-
-func PBConvPB_PostCopy_To_PostCopy ( o *PostCopy) *PB_PostCopy {
-     n := &PB_PostCopy{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       TypeId: int32 ( o.TypeId ),

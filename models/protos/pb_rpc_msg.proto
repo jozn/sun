@@ -58,7 +58,7 @@ message PB_MsgParam_SetChatMessagesRangeAsSeen {
     sint32 EndSeq = 3;// must persent
     int64 SeenTimeMs = 4;
 }
-message PB_MsgResponse_SetMessagesRangeAsSeen {
+message PB_MsgResponse_SetChatMessagesRangeAsSeen {
 
 }
 
@@ -68,7 +68,7 @@ message PB_MsgParam_DeleteChatHistory {//d+g
     int64 ChatId = 1 ;
     sint32 ToSeq = 2;//must persent
 }
-message PB_MsgResponse_DeleteRoomHistory {
+message PB_MsgResponse_DeleteChatHistory {
 
 }
 
@@ -128,7 +128,6 @@ message PB_MsgResponse_BroadcastNewMessage {
 
 }
 
-
 ////////////////////////////////////////////////////////
 
 service RPC_Msg {
@@ -136,8 +135,8 @@ service RPC_Msg {
     rpc SetRoomActionDoing (PB_MsgParam_SetRoomActionDoing) returns (PB_MsgResponse_SetRoomActionDoing);
     rpc GetMessagesByIds (PB_MsgParam_GetMessagesByIds) returns (PB_MsgResponse_GetMessagesByIds);
     rpc GetMessagesHistory (PB_MsgParam_GetMessagesHistory) returns (PB_MsgResponse_GetMessagesHistory);
-    rpc SetMessagesRangeAsSeen (PB_MsgParam_SetMessagesRangeAsSeen) returns (PB_MsgResponse_SetMessagesRangeAsSeen);
-    rpc DeleteRoomHistory (PB_MsgParam_DeleteRoomHistory) returns (PB_MsgResponse_DeleteRoomHistory);
+    rpc SetMessagesRangeAsSeen (PB_MsgParam_SetChatMessagesRangeAsSeen) returns (PB_MsgResponse_SetChatMessagesRangeAsSeen);
+    rpc DeleteChatHistory (PB_MsgParam_DeleteChatHistory) returns (PB_MsgResponse_DeleteChatHistory);
     rpc DeleteMessagesByIds (PB_MsgParam_DeleteMessagesByIds) returns (PB_MsgResponse_DeleteMessagesByIds);
     rpc SetMessagesAsReceived (PB_MsgParam_SetMessagesAsReceived) returns (PB_MsgResponse_SetMessagesAsReceived);
     rpc ForwardMessages (PB_MsgParam_ForwardMessages) returns (PB_MsgResponse_ForwardMessages);
