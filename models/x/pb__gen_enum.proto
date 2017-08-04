@@ -39,6 +39,7 @@ enum RPC_Msg_Enum {
     ForwardMessages = 333;
     EditMessage = 2882;
     BroadcastNewMessage = 7558;
+    Echo = 7265;
 }
 enum RPC_UserOffline_Enum {
     EMPTY = 0;

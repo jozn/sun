@@ -142,4 +142,16 @@ service RPC_Msg {
     rpc ForwardMessages (PB_MsgParam_ForwardMessages) returns (PB_MsgResponse_ForwardMessages);
     rpc EditMessage (PB_MsgParam_EditMessage) returns (PB_MsgResponse_EditMessage);
     rpc BroadcastNewMessage (PB_MsgParam_BroadcastNewMessage) returns (PB_MsgResponse_BroadcastNewMessage);
+
+    rpc Echo (PB_MsgParam_Echo) returns (PB_MsgResponse_PB_MsgParam_Echo);
+}
+
+////////////////////////////////
+////////////////////////////////
+message PB_MsgParam_Echo {
+    string Text = 1;
+
+}
+message PB_MsgResponse_PB_MsgParam_Echo {
+    string Text = 1;
 }

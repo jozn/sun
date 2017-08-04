@@ -25,7 +25,8 @@ public interface RPC_Msg {
     SetMessagesAsReceived( PB_MsgResponse_SetMessagesAsReceived );
     ForwardMessages( PB_MsgResponse_ForwardMessages );
     EditMessage( PB_MsgResponse_EditMessage );
-    BroadcastNewMessage( PB_MsgResponse_BroadcastNewMessage );}
+    BroadcastNewMessage( PB_MsgResponse_BroadcastNewMessage );
+    Echo( PB_MsgResponse_PB_MsgParam_Echo );}
 public interface RPC_UserOffline {
     BlockUser( PB_UserOfflineResponse_BlockUser );
     UnBlockUser( PB_UserOfflineResponse_UnBlockUser );

@@ -85,6 +85,9 @@ func (EmptyRPC_RPC_Msg) EditMessage(i *PB_MsgParam_EditMessage, p RPC_UserParam)
 func (EmptyRPC_RPC_Msg) BroadcastNewMessage(i *PB_MsgParam_BroadcastNewMessage, p RPC_UserParam) (*PB_MsgResponse_BroadcastNewMessage, error) {
 	return nil, nil
 }
+func (EmptyRPC_RPC_Msg) Echo(i *PB_MsgParam_Echo, p RPC_UserParam) (*PB_MsgResponse_PB_MsgParam_Echo, error) {
+	return nil, nil
+}
 
 /////////////////// RPC_UserOffline  -  EmptyRPC_RPC_UserOffline /////////////////////
 type EmptyRPC_RPC_UserOffline int

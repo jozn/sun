@@ -8,6 +8,12 @@ import (
 
 type rpcMsg int
 
+func (rpcMsg) Echo(i *x.PB_MsgParam_Echo, p x.RPC_UserParam) (*x.PB_MsgResponse_PB_MsgParam_Echo, error) {
+    return &x.PB_MsgResponse_PB_MsgParam_Echo{
+        Text: i.Text,
+    },nil
+}
+
 func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_UserParam) (*x.PB_MsgResponse_AddNewTextMessage, error) {
 	pid := int(i.PeerId)
 	msg := &x.DirectMessage{

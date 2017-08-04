@@ -480,6 +480,14 @@ type PB_MsgParam_BroadcastNewMessage_Flat struct {
 type PB_MsgResponse_BroadcastNewMessage_Flat struct {
 }
 
+type PB_MsgParam_Echo_Flat struct {
+	Text string
+}
+
+type PB_MsgResponse_PB_MsgParam_Echo_Flat struct {
+	Text string
+}
+
 type PB_UserParam_BlockUser_Flat struct {
 	UserId int
 
@@ -1106,6 +1114,20 @@ func (m *PB_MsgParam_BroadcastNewMessage) ToFlat() *PB_MsgParam_BroadcastNewMess
 
 func (m *PB_MsgResponse_BroadcastNewMessage) ToFlat() *PB_MsgResponse_BroadcastNewMessage_Flat {
 	r := &PB_MsgResponse_BroadcastNewMessage_Flat{}
+	return r
+}
+
+func (m *PB_MsgParam_Echo) ToFlat() *PB_MsgParam_Echo_Flat {
+	r := &PB_MsgParam_Echo_Flat{
+		Text: m.Text,
+	}
+	return r
+}
+
+func (m *PB_MsgResponse_PB_MsgParam_Echo) ToFlat() *PB_MsgResponse_PB_MsgParam_Echo_Flat {
+	r := &PB_MsgResponse_PB_MsgParam_Echo_Flat{
+		Text: m.Text,
+	}
 	return r
 }
 
@@ -1795,6 +1817,20 @@ func (m *PB_MsgParam_BroadcastNewMessage_Flat) ToPB() *PB_MsgParam_BroadcastNewM
 
 func (m *PB_MsgResponse_BroadcastNewMessage_Flat) ToPB() *PB_MsgResponse_BroadcastNewMessage {
 	r := &PB_MsgResponse_BroadcastNewMessage{}
+	return r
+}
+
+func (m *PB_MsgParam_Echo_Flat) ToPB() *PB_MsgParam_Echo {
+	r := &PB_MsgParam_Echo{
+		Text: m.Text,
+	}
+	return r
+}
+
+func (m *PB_MsgResponse_PB_MsgParam_Echo_Flat) ToPB() *PB_MsgResponse_PB_MsgParam_Echo {
+	r := &PB_MsgResponse_PB_MsgParam_Echo{
+		Text: m.Text,
+	}
 	return r
 }
 

@@ -64,6 +64,7 @@ type RPC_Msg interface {
 	ForwardMessages(i *PB_MsgParam_ForwardMessages, p RPC_UserParam) (*PB_MsgResponse_ForwardMessages, error)
 	EditMessage(i *PB_MsgParam_EditMessage, p RPC_UserParam) (*PB_MsgResponse_EditMessage, error)
 	BroadcastNewMessage(i *PB_MsgParam_BroadcastNewMessage, p RPC_UserParam) (*PB_MsgResponse_BroadcastNewMessage, error)
+	Echo(i *PB_MsgParam_Echo, p RPC_UserParam) (*PB_MsgResponse_PB_MsgParam_Echo, error)
 }
 
 type RPC_UserOffline interface {
@@ -393,6 +394,19 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			err := proto.Unmarshal(cmd.Data, load)
 			if err == nil {
 				res, err := rpc.BroadcastNewMessage(load, params)
+				if err == nil {
+					RPC_ResponseHandler.HandelError(err)
+				} else {
+					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				}
+			} else {
+				RPC_ResponseHandler.HandelError(err)
+			}
+		case "Echo": //each pb_service_method
+			load := &PB_MsgParam_Echo{}
+			err := proto.Unmarshal(cmd.Data, load)
+			if err == nil {
+				res, err := rpc.Echo(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandelError(err)
 				} else {

@@ -74,6 +74,8 @@ It has these top-level messages:
 	PB_MsgResponse_EditMessage
 	PB_MsgParam_BroadcastNewMessage
 	PB_MsgResponse_BroadcastNewMessage
+	PB_MsgParam_Echo
+	PB_MsgResponse_PB_MsgParam_Echo
 	PB_UserParam_BlockUser
 	PB_UserOfflineResponse_BlockUser
 	PB_UserParam_UnBlockUser
