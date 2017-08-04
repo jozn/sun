@@ -80,7 +80,7 @@ func startApp() {
 	_ = v1Tree
 
 	go func() {
-		helper.JustRecover()
+		defer helper.JustRecover()
 		//http.ListenAndServe(":6000", v1Tree)
 	}()
 

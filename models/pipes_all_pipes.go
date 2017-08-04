@@ -121,9 +121,9 @@ func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 
 	m.AddUserPipe(UserId, pipe)
 
-	flusher_flushPushMsgs(UserId)
+	/*flusher_flushPushMsgs(UserId)
 	flusher_flushPushEvents(UserId)
-	flusher_flushPushNotifications(UserId)
+	flusher_flushPushNotifications(UserId)*/
 
 	/*OnNewUserWsConnected(UserId) //do and send Stored Cmds in here
 	MessageModel.FlushAllStoredMessagesToUser(UserId)

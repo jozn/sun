@@ -357,8 +357,8 @@ func (*PB_MsgResponse_SetMessagesAsReceived) Descriptor() ([]byte, []int) {
 
 // ///////////////////////////////////
 type PB_MsgParam_ForwardMessages struct {
-	// repeated int64 DirectMessagesIds = 1;
-	// repeated int64 GroupMessagesIds = 2;
+	//    /*repeated int64 DirectMessagesIds = 1;
+	//    repeated int64 GroupMessagesIds = 2;*/
 	MessagesCollections *PB_MessagesCollections `protobuf:"bytes,1,opt,name=MessagesCollections" json:"MessagesCollections,omitempty"`
 	ToDirectChatIds     []int64                 `protobuf:"varint,3,rep,packed,name=ToDirectChatIds" json:"ToDirectChatIds,omitempty"`
 	ToGroupChatIds      []int64                 `protobuf:"varint,4,rep,packed,name=ToGroupChatIds" json:"ToGroupChatIds,omitempty"`

@@ -118,13 +118,14 @@ func SendSampleMesg(a *base.Action) base.AppErr {
 
 			atomic.AddInt64(&Cnt2, 1)
 
-			rpc := models.GrpcMsg{}
-
 			ctx := context.Background()
 			md := metadata.Pairs("user_id", helper.IntToStr(fromUserId))
 			ctx2 := metadata.NewContext(ctx, md)
+			_ = ctx2
 
-			rpc.UploadNewMsg(ctx2, msg)
+			//fIXME update for new grpc
+			/*rpc := models.GrpcMsg{}
+			  rpc.UploadNewMsg(ctx2, msg)*/
 
 			//fmt.Println( Cnt ," sending Sample msg toUser", toUserId, " msgKey: ", msg.MessageKey, " Room: ", msg.RoomKey)
 			//models.SampleSendMessage(toUserId, msg)

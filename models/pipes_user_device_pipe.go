@@ -133,16 +133,13 @@ func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 		AllPipesMap.SendToUser(pipe.UserId, cmdRec)
 	}
 
-	//reqCall.UserId = pipe.UserId
-	fnCall := CallMapRouter[reqCall.Command]
-	helper.DebugPrintln("serving Cmd: ", reqCall.Command, " Userid: ", pipe.UserId)
-	if fnCall != nil {
-		fnCall(reqCall, pipe)
-	} else { //send call func not found -- in debug
-		logPipes.Println("ERROR command nor registerd in CallMapRouter : ", reqCall.Command)
-		helper.DebugPrintln("ERROR command nor registerd in CallMapRouter : ", reqCall.Command)
+	userParam := RPC_UserParam_Imple{
+		userId: pipe.UserId,
 	}
 
+	logPipes.Println("WS serving: ", reqCall.Command)
+
+	x.HandleRpcs(*reqCall, userParam, RpcAll)
 }
 
 var _wsLogFile *os.File
@@ -155,3 +152,39 @@ var wsDebugLog = func(strings ...interface{}) {
 		_wsLogFile.Sync()
 	}
 }
+
+////////////////////// Backups before imple of cloud-chat /////////////////////
+
+/*
+func serverWSReqCalls_bk(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
+
+	if reqCall.Command == PB_CommandReceivedToClient {
+		pb_rec := &x.PB_CommandReceivedToClient{}
+		err := proto.Unmarshal(reqCall.Data, pb_rec)
+		if err == nil {
+			callRespondMap.runSucceded(pb_rec.ServerCallId)
+		}
+		return
+	}
+
+	if reqCall.ClientCallId != 0 {
+		callReceived := &x.PB_CommandReceivedToServer{
+			ClientCallId: reqCall.ClientCallId,
+		}
+		cmdRec := NewPB_CommandToClient_WithData(PB_CommandReceivedToServer, callReceived)
+
+		AllPipesMap.SendToUser(pipe.UserId, cmdRec)
+	}
+
+	//reqCall.UserId = pipe.UserId
+	fnCall := CallMapRouter[reqCall.Command]
+	helper.DebugPrintln("serving Cmd: ", reqCall.Command, " Userid: ", pipe.UserId)
+	if fnCall != nil {
+		fnCall(reqCall, pipe)
+	} else { //send call func not found -- in debug
+		logPipes.Println("ERROR command nor registerd in CallMapRouter : ", reqCall.Command)
+		helper.DebugPrintln("ERROR command nor registerd in CallMapRouter : ", reqCall.Command)
+	}
+
+}
+*/

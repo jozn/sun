@@ -16,9 +16,15 @@ enum RPC_MessageReqOffline_Enum {
     EMPTY = 0;
     SetLastSeen = 2402;
 }
-enum Greeter_Enum {
+enum RPC_Auth_Enum {
     EMPTY = 0;
-    SayHello = 6869;
+    CheckPhone = 9452;
+    SendCode = 5271;
+    SendCodeToSms = 3103;
+    SendCodeToTelgram = 1536;
+    SingUp = 2532;
+    SingIn = 4399;
+    LogOut = 6941;
 }
 enum RPC_Msg_Enum {
     EMPTY = 0;
@@ -27,16 +33,12 @@ enum RPC_Msg_Enum {
     GetMessagesByIds = 9361;
     GetMessagesHistory = 6469;
     SetMessagesRangeAsSeen = 1565;
-    DeleteRoomHistory = 4330;
+    DeleteChatHistory = 5524;
     DeleteMessagesByIds = 1169;
     SetMessagesAsReceived = 6852;
     ForwardMessages = 333;
     EditMessage = 2882;
     BroadcastNewMessage = 7558;
-}
-enum RpcMsgs_Enum {
-    EMPTY = 0;
-    UploadNewMsg = 1590;
 }
 enum RPC_UserOffline_Enum {
     EMPTY = 0;
@@ -51,14 +53,4 @@ enum RPC_User_Enum {
     EMPTY = 0;
     CheckUserName = 4;
     GetBlockedList = 2156;
-}
-enum RPC_Auth_Enum {
-    EMPTY = 0;
-    CheckPhone = 9452;
-    SendCode = 5271;
-    SendCodeToSms = 3103;
-    SendCodeToTelgram = 1536;
-    SingUp = 2532;
-    SingIn = 4399;
-    LogOut = 6941;
 }

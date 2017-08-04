@@ -2,6 +2,7 @@ package helper
 
 import "ms/sun/config"
 
+//NOTE: proper use is defer helper.JustRecover()
 func JustRecover() {
 	if r := recover(); r != nil {
 		if config.IS_DEBUG {

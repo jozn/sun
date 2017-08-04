@@ -1,37 +1,34 @@
 package models
 
 import (
-	"ms/sun/helper"
 	"ms/sun/models/x"
-
-	"github.com/golang/protobuf/proto"
 )
 
 //just return the by value
 
-func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {
-	bytes, _ := proto.Marshal(pb)
-	json := helper.ToJson(pb)
-	msg := x.Message{
-		Id:            0,
-		Uid:           helper.RandomSeqUid(),
-		UserId:        int(pb.UserId),
-		MessageKey:    pb.MessageKey,
-		RoomKey:       pb.RoomKey,
-		MessageType:   int(pb.MessageTypeId),
-		RoomType:      int(pb.RoomTypeId),
-		DataPB:        []byte(""),                //bytes,
-		Data64:        helper.ToBase64Bin(bytes), //bytes,
-		DataJson:      json,
-		CreatedTimeMs: int(helper.TimeNowMs()),
-	}
-	/*bs, err := proto.Marshal(pb)
-	if err == nil {
-		msg.DataPB = bs
-	}*/
+/*func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {
+bytes, _ := proto.Marshal(pb)
+json := helper.ToJson(pb)
+msg := x.Message{
+	Id:            0,
+	Uid:           helper.RandomSeqUid(),
+	UserId:        int(pb.UserId),
+	MessageKey:    pb.MessageKey,
+	RoomKey:       pb.RoomKey,
+	MessageType:   int(pb.MessageTypeId),
+	RoomType:      int(pb.RoomTypeId),
+	DataPB:        []byte(""),                //bytes,
+	Data64:        helper.ToBase64Bin(bytes), //bytes,
+	DataJson:      json,
+	CreatedTimeMs: int(helper.TimeNowMs()),
+}
+*/ /*bs, err := proto.Marshal(pb)
+if err == nil {
+	msg.DataPB = bs
+}*/ /*
 
 	return msg
-}
+}*/
 
 /*func PBConv_Message_toNew_PB_Message(pb *x.Message) x.PB_Message {
     msg := &x.PB_Message{
@@ -53,7 +50,7 @@ func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {
     return msg
 }*/
 
-func PBConv_PB_MsgSeen_toNew_MsgPushEvent(pb *x.PB_MsgSeen) x.MsgPushEvent {
+/*func PBConv_PB_MsgSeen_toNew_MsgPushEvent(pb *x.PB_MsgSeen) x.MsgPushEvent {
 	msg := x.MsgPushEvent{
 		Id:         0,
 		Uid:        helper.RandomSeqUid(),
@@ -66,7 +63,7 @@ func PBConv_PB_MsgSeen_toNew_MsgPushEvent(pb *x.PB_MsgSeen) x.MsgPushEvent {
 	}
 
 	return msg
-}
+}*/
 
 func PBConv_User_toNew_PB_UserWithMe(p *x.User, meId int) x.PB_UserWithMe {
 	u := x.PB_UserWithMe{
@@ -103,7 +100,7 @@ func PBNew_PB_UserWithMe(UserId, meId int) *x.PB_UserWithMe {
 	return msg
 }
 
-func PBConv_MsgPushEvent_toNew_PB_MsgEvent(m *x.MsgPushEvent) x.PB_MsgEvent {
+/*func PBConv_MsgPushEvent_toNew_PB_MsgEvent(m *x.MsgPushEvent) x.PB_MsgEvent {
 	pbEv := x.PB_MsgEvent{
 		MessageKey: m.MsgKey,
 		RoomKey:    m.RoomKey,
@@ -113,8 +110,9 @@ func PBConv_MsgPushEvent_toNew_PB_MsgEvent(m *x.MsgPushEvent) x.PB_MsgEvent {
 	}
 
 	return pbEv
-}
+}*/
 
+/*
 func PBConv_PB_MsgFile_toNew_MsgFile(f *x.PB_MsgFile) x.MsgFile {
 	row := x.MsgFile{
 		Id:          0,
@@ -135,7 +133,9 @@ func PBConv_PB_MsgFile_toNew_MsgFile(f *x.PB_MsgFile) x.MsgFile {
 
 	return row
 }
+*/
 
+/*
 func PBConv_MsgFile_toNew_PB_MsgFile(f *x.MsgFile) x.PB_MsgFile {
 	data, _ := helper.FromBase64ToBin(f.ThumbData64)
 	pb := x.PB_MsgFile{
@@ -153,3 +153,4 @@ func PBConv_MsgFile_toNew_PB_MsgFile(f *x.MsgFile) x.PB_MsgFile {
 
 	return pb
 }
+*/

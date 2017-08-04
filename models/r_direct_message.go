@@ -127,7 +127,7 @@ func (s *directMessaging) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 
 	x.NewDirectMessage_Updater().
 		MessageId_In(msgIds).
-		DeliviryStatusEnum(int(x.RoomMessageDeliviryStatusEnum_SEEN)).
+		DeliviryStatusEnum(int(x.RoomMessageDeliviryStatusEnum_SEEN2)).
 		Update(base.DB)
 
 	s.MeChat.LastSeqSeen = toSeq

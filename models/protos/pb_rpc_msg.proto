@@ -75,8 +75,8 @@ message PB_MsgResponse_DeleteChatHistory {
 /////////////////////////////////////
 message PB_MsgParam_DeleteMessagesByIds {
     PB_MessagesCollections MessagesCollections = 1;
-    /*repeated int64 DirectMessagesIds = 10;
-    repeated int64 GroupMessagesIds = 20;*/
+//    /*repeated int64 DirectMessagesIds = 10;
+//    repeated int64 GroupMessagesIds = 20;*/
 }
 message PB_MsgResponse_DeleteMessagesByIds {
 
@@ -85,11 +85,11 @@ message PB_MsgResponse_DeleteMessagesByIds {
 /////////////////////////////////////
 message PB_MsgParam_SetMessagesAsReceived {
     PB_MessagesCollections MessagesCollections = 1;
-    /*int64 ChatId = 1;
-    RoomTypeEnum RoomType = 2;
-    repeated int64 MessageId = 3;
-    repeated int64 DirectMessagesIds = 10;
-    repeated int64 GroupMessagesIds = 20;*/
+//    /*int64 ChatId = 1;
+//    RoomTypeEnum RoomType = 2;
+//    repeated int64 MessageId = 3;
+//    repeated int64 DirectMessagesIds = 10;
+//    repeated int64 GroupMessagesIds = 20;*/
 }
 message PB_MsgResponse_SetMessagesAsReceived {
 
@@ -97,8 +97,8 @@ message PB_MsgResponse_SetMessagesAsReceived {
 
 /////////////////////////////////////
 message PB_MsgParam_ForwardMessages {
-    /*repeated int64 DirectMessagesIds = 1;
-    repeated int64 GroupMessagesIds = 2;*/
+//    /*repeated int64 DirectMessagesIds = 1;
+//    repeated int64 GroupMessagesIds = 2;*/
     PB_MessagesCollections MessagesCollections = 1;
     repeated int64 ToDirectChatIds = 3;
     repeated int64 ToGroupChatIds = 4;

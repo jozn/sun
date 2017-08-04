@@ -127,11 +127,11 @@ func (m *PB_UpdateDeletedFromServerMessages) GetAtTime() int64 {
 	return 0
 }
 
-// message PB_UpdateSeenMessages{
-// repeated int64 MessageIds =1;
-// int64 AtTime =2;
-// MessageMetaUpdatesTypesEnum MetaType = 3;
-// }
+// /*message PB_UpdateSeenMessages{
+//    repeated int64 MessageIds =1;
+//    int64 AtTime =2;
+//    MessageMetaUpdatesTypesEnum MetaType = 3;
+// }*/
 type PB_UpdateDeleteMessages struct {
 	MessageIds []int64 `protobuf:"varint,1,rep,packed,name=MessageIds" json:"MessageIds,omitempty"`
 }

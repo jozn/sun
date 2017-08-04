@@ -20,7 +20,7 @@ func Recommend_Jobs() {
 }
 
 func Recommend_Job_TopUsers_Infinite() {
-	helper.JustRecover()
+	defer helper.JustRecover()
 
 	helper.SleepForDebugDelay(5)
 
@@ -31,7 +31,7 @@ func Recommend_Job_TopUsers_Infinite() {
 }
 
 func Recommend_Job_TopPosts_Infinite() {
-	helper.JustRecover()
+	defer helper.JustRecover()
 
 	helper.SleepForDebugDelay(-1)
 

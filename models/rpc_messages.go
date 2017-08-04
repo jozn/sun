@@ -38,11 +38,11 @@ func (rpcMsg) SetRoomActionDoing(i *x.PB_MsgParam_SetRoomActionDoing, p x.RPC_Us
 }
 
 func (rpcMsg) GetMessagesByIds(i *x.PB_MsgParam_GetMessagesByIds, p x.RPC_UserParam) (*x.PB_MsgResponse_GetMessagesByIds, error) {
-	ids := helper.SliceInt64ToInt(i.MessageId)
+	ids := helper.SliceInt64ToInt(i.MessagesCollections.DirectMessagesIds)
 	x.Store.PreLoadDirectMessageByMessageIds(ids)
 
-	views := make([]*x.PB_MessageView, len(i.MessageId))
-	for i, id := range i.MessageId {
+	views := make([]*x.PB_MessageView, len(ids))
+	for i, id := range ids {
 		views[i] = ChatViews.MessageIdToMessageView(int(id))
 	}
 
@@ -76,27 +76,23 @@ func (rpcMsg) GetMessagesHistory(i *x.PB_MsgParam_GetMessagesHistory, p x.RPC_Us
 
 }
 
-func (rpcMsg) SetMessagesRangeAsSeen(i *x.PB_MsgParam_SetMessagesRangeAsSeen, p x.RPC_UserParam) (*x.PB_MsgResponse_SetMessagesRangeAsSeen, error) {
+func (rpcMsg) SetMessagesRangeAsSeen(i *x.PB_MsgParam_SetChatMessagesRangeAsSeen, p x.RPC_UserParam) (*x.PB_MsgResponse_SetChatMessagesRangeAsSeen, error) {
 	dm, err := NewDirectMessagingByChatId(p.GetUserId(), int(i.ChatId))
 	if err != nil {
 		return nil, err
 	}
 	dm.SetMessagesAsSeen(int(i.FromSeq), int(i.EndSeq), int(i.SeenTimeMs))
 
-	return &x.PB_MsgResponse_SetMessagesRangeAsSeen{}, nil
+	return &x.PB_MsgResponse_SetChatMessagesRangeAsSeen{}, nil
 }
 
-func (rpcMsg) DeleteRoomHistory(i *x.PB_MsgParam_DeleteRoomHistory, p x.RPC_UserParam) (*x.PB_MsgResponse_DeleteRoomHistory, error) {
-	/*x.NewDirectToMessage_Deleter().
-		ChatId_Eq(int(i.ChatId)).
-		Seq_LE(int(i.ToSeq)).
-		Delete(base.DB)*/
-    panic("implement me")
+func (rpcMsg) DeleteChatHistory(i *x.PB_MsgParam_DeleteChatHistory, p x.RPC_UserParam) (*x.PB_MsgResponse_DeleteChatHistory, error) {
+	panic("implement me")
 }
 
 func (rpcMsg) DeleteMessagesByIds(i *x.PB_MsgParam_DeleteMessagesByIds, p x.RPC_UserParam) (*x.PB_MsgResponse_DeleteMessagesByIds, error) {
 	//dm := NewDirectMessagingByUsers(p.GetUserId(), pid)
-    panic("implement me")
+	panic("implement me")
 }
 
 func (rpcMsg) SetMessagesAsReceived(i *x.PB_MsgParam_SetMessagesAsReceived, p x.RPC_UserParam) (*x.PB_MsgResponse_SetMessagesAsReceived, error) {
@@ -114,3 +110,5 @@ func (rpcMsg) EditMessage(i *x.PB_MsgParam_EditMessage, p x.RPC_UserParam) (*x.P
 func (rpcMsg) BroadcastNewMessage(i *x.PB_MsgParam_BroadcastNewMessage, p x.RPC_UserParam) (*x.PB_MsgResponse_BroadcastNewMessage, error) {
 	panic("implement me")
 }
+
+/////////////////////////////

@@ -4,23 +4,29 @@ import "ms/sun/helper"
 
 type GeoLocation_Flat struct {
 	Lat float64
+
 	Lon float64
 }
 
 type RoomMessageLog_Flat struct {
-	typ          RoomMessageLogEnum
+	typ RoomMessageLogEnum
+
 	TargetUserId int
-	ByUserId     int
+
+	ByUserId int
 }
 
 type RoomMessageForwardFrom_Flat struct {
-	RoomId       int
-	MessageId    int
+	RoomId int
+
+	MessageId int
+
 	RoomTypeEnum int
 }
 
 type RoomDraft_Flat struct {
 	Message string
+
 	ReplyTo int
 }
 
@@ -29,78 +35,123 @@ type ChatRoom_Flat struct {
 
 type Pagination_Flat struct {
 	Offset int
-	Limit  int
+
+	Limit int
 }
 
 type PB_RoomInlineView_Flat struct {
-	RoomId       int
+	RoomId int
+
 	RoomTypeEnum RoomTypeEnum
 }
 
 type PB_MessageForwardedFrom_Flat struct {
-	RoomId       int
+	RoomId int
+
 	RoomTypeEnum RoomTypeEnum
-	MessageId    int
-	MessageSeq   int
+
+	MessageId int
+
+	MessageSeq int
 }
 
 type PB_MessageView_Flat struct {
-	MessageId          int
-	RoomKey            string
-	UserId             int
-	MessageFileId      int
-	MessageTypeEnum    int
-	Text               string
-	CreatedMs          int
-	PeerReceivedTime   int
-	PeerSeenTime       int
+	MessageId int
+
+	RoomKey string
+
+	UserId int
+
+	MessageFileId int
+
+	MessageTypeEnum int
+
+	Text string
+
+	CreatedMs int
+
+	PeerReceivedTime int
+
+	PeerSeenTime int
+
 	DeliviryStatusEnum int
-	PeerUserId         int
+
+	PeerUserId int
 }
 
 type PB_GroupView_Flat struct {
-	GroupId          int
-	GroupName        string
-	MembersCount     int
+	GroupId int
+
+	GroupName string
+
+	MembersCount int
+
 	GroupPrivacyEnum int
-	CreatorUserId    int
-	CreatedTime      int
-	UpdatedMs        int
-	CurrentSeq       int
+
+	CreatorUserId int
+
+	CreatedTime int
+
+	UpdatedMs int
+
+	CurrentSeq int
 }
 
 type PB_GroupMemberView_Flat struct {
-	Id            int
-	GroupId       int
-	UserId        int
-	ByUserId      int
+	Id int
+
+	GroupId int
+
+	UserId int
+
+	ByUserId int
+
 	GroupRoleEnum int
-	CreatedTime   int
+
+	CreatedTime int
 }
 
 type PB_MessageFileView_Flat struct {
-	MessageFileId   int
-	Name            string
-	Size            int
-	FileTypeEnum    int
-	MimeType        string
-	Width           int
-	Height          int
-	Duration        int
-	Extension       string
-	ThumbData64     string
-	ServerSrc       string
-	ServerPath      string
+	MessageFileId int
+
+	Name string
+
+	Size int
+
+	FileTypeEnum int
+
+	MimeType string
+
+	Width int
+
+	Height int
+
+	Duration int
+
+	Extension string
+
+	ThumbData64 string
+
+	ServerSrc string
+
+	ServerPath string
+
 	ServerThumbPath string
-	BucketId        string
-	ServerId        int
-	CanDel          int
-	CreatedTime     int
+
+	BucketId string
+
+	ServerId int
+
+	CanDel int
+
+	CreatedTime int
 }
 
 type PB_ReqLastChangesForTheRoom_Flat struct {
-	RoomId      int
-	LastLogId   int
+	RoomId int
+
+	LastLogId int
+
 	LastHaveSeq int
 }
 
@@ -109,26 +160,39 @@ type PB_ResponseLastChangesForTheRoom_Flat struct {
 }
 
 type PB_RequestSetLastSeenMessages_Flat struct {
-	RoomId        int
+	RoomId int
+
 	FromMessageId int
-	ToMessageId   int
-	AtTimeMs      int
+
+	ToMessageId int
+
+	AtTimeMs int
 }
 
 type PB_ResponseSetLastSeenMessages_Flat struct {
 	Messages []PB_MessageView
 }
 
+type PB_MessagesCollections_Flat struct {
+	DirectMessagesIds   []int
+	GroupMessagesIds    []int
+	BroadCatMessagesIds []int
+}
+
 type PB_CommandToServer_Flat struct {
 	ClientCallId int
-	Command      string
-	Data         []byte
+
+	Command string
+
+	Data []byte
 }
 
 type PB_CommandToClient_Flat struct {
 	ServerCallId int
-	Command      string
-	Data         []byte
+
+	Command string
+
+	Data []byte
 }
 
 type PB_CommandReceivedToServer_Flat struct {
@@ -140,55 +204,96 @@ type PB_CommandReceivedToClient_Flat struct {
 }
 
 type PB_UserWithMe_Flat struct {
-	UserId         int
-	UserName       string
-	FirstName      string
-	LastName       string
-	About          string
-	FullName       string
-	AvatarUrl      string
+	UserId int
+
+	UserName string
+
+	FirstName string
+
+	LastName string
+
+	About string
+
+	FullName string
+
+	AvatarUrl string
+
 	PrivacyProfile int
-	Phone          string
-	UpdatedTime    int
-	AppVersion     int
-	FollowingType  int
+
+	Phone string
+
+	UpdatedTime int
+
+	AppVersion int
+
+	FollowingType int
 }
 
 type PB_Message_Flat struct {
-	MessageKey         string
-	RoomKey            string
-	UserId             int
-	PeerId             int
-	RoomTypeId         int
-	MessageTypeId      int
-	Text               string
-	ExtraJson          string
-	IsByMe             int
-	IsStared           int
-	CreatedMs          int
-	CreatedDeviceMs    int
-	SortId             int
-	PeerSeenTime       int
+	MessageKey string
+
+	RoomKey string
+
+	UserId int
+
+	PeerId int
+
+	RoomTypeId int
+
+	MessageTypeId int
+
+	Text string
+
+	ExtraJson string
+
+	IsByMe int
+
+	IsStared int
+
+	CreatedMs int
+
+	CreatedDeviceMs int
+
+	SortId int
+
+	PeerSeenTime int
+
 	ServerReceivedTime int
-	ServerDeletedTime  int
-	ISeenTime          int
-	ToPush             int
-	MsgFile_LocalSrc   string
-	MsgFile_Status     int
-	File               PB_MsgFile
+
+	ServerDeletedTime int
+
+	ISeenTime int
+
+	ToPush int
+
+	MsgFile_LocalSrc string
+
+	MsgFile_Status int
+
+	File PB_MsgFile
 }
 
 type PB_MsgFile_Flat struct {
-	Name      string
-	Size      int
-	FileType  int
-	MimeType  string
-	Width     int
-	Height    int
-	Duration  int
+	Name string
+
+	Size int
+
+	FileType int
+
+	MimeType string
+
+	Width int
+
+	Height int
+
+	Duration int
+
 	Extension string
+
 	ThumbData []byte
-	Data      []byte
+
+	Data []byte
+
 	ServerSrc string
 }
 
@@ -231,10 +336,14 @@ type PB_ResultMsgAddMany_Flat struct {
 
 type PB_MsgEvent_Flat struct {
 	MessageKey string
-	RoomKey    string
+
+	RoomKey string
+
 	PeerUserId int
-	EventType  int
-	AtTime     int
+
+	EventType int
+
+	AtTime int
 }
 
 type PB_PushMsgEvents_Flat struct {
@@ -247,25 +356,40 @@ type PB_ResultMsgEvents_Flat struct {
 	Result PB_Result
 }
 
+type PB_UserParam_CheckUserName2_Flat struct {
+}
+
+type PB_UserResponse_CheckUserName2_Flat struct {
+}
+
 type PB_MsgParam_AddNewTextMessage_Flat struct {
-	Text             string
-	PeerId           int
-	Time             int
+	Text string
+
+	PeerId int
+
+	Time int
+
 	ReplyToMessageId int
-	Forward          PB_MessageForwardedFrom
+
+	Forward PB_MessageForwardedFrom
 }
 
 type PB_MsgResponse_AddNewTextMessage_Flat struct {
 }
 
 type PB_MsgParam_SetRoomActionDoing_Flat struct {
+	GroupId int
+
+	DirectRoomKey string
+
+	ActionType RoomActionDoingEnum
 }
 
 type PB_MsgResponse_SetRoomActionDoing_Flat struct {
 }
 
 type PB_MsgParam_GetMessagesByIds_Flat struct {
-	MessageId []int
+	MessagesCollections PB_MessagesCollections
 }
 
 type PB_MsgResponse_GetMessagesByIds_Flat struct {
@@ -273,87 +397,107 @@ type PB_MsgResponse_GetMessagesByIds_Flat struct {
 }
 
 type PB_MsgParam_GetMessagesHistory_Flat struct {
-	ChatId  int
+	ChatId int
+
 	FromSeq int
-	EndSeq  int
+
+	EndSeq int
 }
 
 type PB_MsgResponse_GetMessagesHistory_Flat struct {
 	MessagesViews []PB_MessageView
 }
 
-type PB_MsgParam_SetMessagesRangeAsSeen_Flat struct {
-	ChatId     int
-	FromSeq    int
-	EndSeq     int
+type PB_MsgParam_SetChatMessagesRangeAsSeen_Flat struct {
+	ChatId int
+
+	FromSeq int
+
+	EndSeq int
+
 	SeenTimeMs int
 }
 
-type PB_MsgResponse_SetMessagesRangeAsSeen_Flat struct {
+type PB_MsgResponse_SetChatMessagesRangeAsSeen_Flat struct {
 }
 
-type PB_MsgParam_DeleteRoomHistory_Flat struct {
+type PB_MsgParam_DeleteChatHistory_Flat struct {
 	ChatId int
-	ToSeq  int
+
+	ToSeq int
 }
 
-type PB_MsgResponse_DeleteRoomHistory_Flat struct {
+type PB_MsgResponse_DeleteChatHistory_Flat struct {
 }
 
 type PB_MsgParam_DeleteMessagesByIds_Flat struct {
+	MessagesCollections PB_MessagesCollections
 }
 
 type PB_MsgResponse_DeleteMessagesByIds_Flat struct {
 }
 
 type PB_MsgParam_SetMessagesAsReceived_Flat struct {
+	MessagesCollections PB_MessagesCollections
 }
 
 type PB_MsgResponse_SetMessagesAsReceived_Flat struct {
 }
 
 type PB_MsgParam_ForwardMessages_Flat struct {
+	MessagesCollections PB_MessagesCollections
+
+	ToDirectChatIds []int
+	ToGroupChatIds  []int
 }
 
 type PB_MsgResponse_ForwardMessages_Flat struct {
 }
 
 type PB_MsgParam_EditMessage_Flat struct {
+	ChatId int
+
+	RoomType RoomTypeEnum
+
+	MessageId int
+
+	NewText string
 }
 
 type PB_MsgResponse_EditMessage_Flat struct {
 }
 
 type PB_MsgParam_BroadcastNewMessage_Flat struct {
+	Text string
+
+	PeerId int
+
+	Time int
+
+	Forward PB_MessageForwardedFrom
 }
 
 type PB_MsgResponse_BroadcastNewMessage_Flat struct {
 }
 
-type PB_ReqRpcAddMsg_Flat struct {
-	Request PB_Request
-	Message PB_Message
-}
-
-type PB_ResRpcAddMsg_Flat struct {
-	Response  PB_Response
-	ServerSrc string
-}
-
 type PB_UserParam_BlockUser_Flat struct {
-	UserId   int
+	UserId int
+
 	UserName string
 }
 
 type PB_UserOfflineResponse_BlockUser_Flat struct {
-	ByUserId       int
-	TargetUserId   int
+	ByUserId int
+
+	TargetUserId int
+
 	TargetUserName string
 }
 
 type PB_UserParam_UnBlockUser_Flat struct {
 	Offset int
-	Limit  int
+
+	Limit int
 }
 
 type PB_UserOfflineResponse_UnBlockUser_Flat struct {
@@ -361,13 +505,16 @@ type PB_UserOfflineResponse_UnBlockUser_Flat struct {
 }
 
 type PB_UserParam_BlockedList_Flat struct {
-	UserId   int
+	UserId int
+
 	UserName string
 }
 
 type PB_UserResponse_BlockedList_Flat struct {
-	ByUserId       int
-	TargetUserId   int
+	ByUserId int
+
+	TargetUserId int
+
 	TargetUserName string
 }
 
@@ -376,7 +523,8 @@ type PB_UserParam_UpdateAbout_Flat struct {
 }
 
 type PB_UserOfflineResponse_UpdateAbout_Flat struct {
-	UserId   int
+	UserId int
+
 	NewAbout string
 }
 
@@ -385,12 +533,14 @@ type PB_UserParam_UpdateUserName_Flat struct {
 }
 
 type PB_UserOfflineResponse_UpdateUserName_Flat struct {
-	UserId      int
+	UserId int
+
 	NewUserName string
 }
 
 type PB_UserParam_ChangeAvatar_Flat struct {
-	None       bool
+	None bool
+
 	ImageData2 []byte
 }
 
@@ -414,28 +564,64 @@ type PB_UserResponse_CheckUserName_Flat struct {
 type UserView_Flat struct {
 }
 
-type PB_MsgsSeenFromClient_Flat struct {
-	MessageKey string
-	RoomKey    string
-	UserId     int
+type PB_UpdateNewMessage_Flat struct {
+	Message PB_MessageView
+}
+
+type PB_UpdateMessageId_Flat struct {
+	OldMessageId int
+
+	NewMessageId int
+}
+
+type PB_UpdateSeenMessages_Flat struct {
+	MessageIds []int
 	AtTime     int
 }
 
-type PB_MsgSeen_Flat struct {
-	MessageKey string
-	RoomKey    string
-	UserId     int
+type PB_UpdateDelivierdMessages_Flat struct {
+	MessageIds []int
 	AtTime     int
 }
 
-type PB_RequestMsgsSeen_Flat struct {
-	Request PB_Request
-
-	Seen []PB_MsgSeen
+type PB_UpdateDeletedFromServerMessages_Flat struct {
+	MessageIds []int
+	AtTime     int
 }
 
-type PB_ResponseMsgsSeen_Flat struct {
-	Response PB_Response
+type PB_UpdateDeleteMessages_Flat struct {
+	MessageIds []int
+}
+
+type PB_UpdateRestoreMessage_Flat struct {
+	MessageIds []int
+}
+
+type PB_UpdateRoomActionDoing_Flat struct {
+	RoomKey string
+
+	ActionType RoomActionDoingEnum
+}
+
+type PB_UpdateGroupParticipants_Flat struct {
+}
+
+type PB_UpdateUserBlocked_Flat struct {
+	UserId int
+
+	Blocked bool
+}
+
+type PB_UpdateNotifySettings_Flat struct {
+}
+
+type PB_UpdateServiceNotification_Flat struct {
+}
+
+type PB_UpdateEditMessage_Flat struct {
+	MessageId int
+
+	NewText string
 }
 
 ///// to_flat ///
@@ -596,6 +782,15 @@ func (m *PB_RequestSetLastSeenMessages) ToFlat() *PB_RequestSetLastSeenMessages_
 
 func (m *PB_ResponseSetLastSeenMessages) ToFlat() *PB_ResponseSetLastSeenMessages_Flat {
 	r := &PB_ResponseSetLastSeenMessages_Flat{}
+	return r
+}
+
+func (m *PB_MessagesCollections) ToFlat() *PB_MessagesCollections_Flat {
+	r := &PB_MessagesCollections_Flat{
+		DirectMessagesIds:   helper.SliceInt64ToInt(m.DirectMessagesIds),
+		GroupMessagesIds:    helper.SliceInt64ToInt(m.GroupMessagesIds),
+		BroadCatMessagesIds: helper.SliceInt64ToInt(m.BroadCatMessagesIds),
+	}
 	return r
 }
 
@@ -761,6 +956,16 @@ func (m *PB_ResultMsgEvents) ToFlat() *PB_ResultMsgEvents_Flat {
 	return r
 }
 
+func (m *PB_UserParam_CheckUserName2) ToFlat() *PB_UserParam_CheckUserName2_Flat {
+	r := &PB_UserParam_CheckUserName2_Flat{}
+	return r
+}
+
+func (m *PB_UserResponse_CheckUserName2) ToFlat() *PB_UserResponse_CheckUserName2_Flat {
+	r := &PB_UserResponse_CheckUserName2_Flat{}
+	return r
+}
+
 func (m *PB_MsgParam_AddNewTextMessage) ToFlat() *PB_MsgParam_AddNewTextMessage_Flat {
 	r := &PB_MsgParam_AddNewTextMessage_Flat{
 		Text:             m.Text,
@@ -777,7 +982,10 @@ func (m *PB_MsgResponse_AddNewTextMessage) ToFlat() *PB_MsgResponse_AddNewTextMe
 }
 
 func (m *PB_MsgParam_SetRoomActionDoing) ToFlat() *PB_MsgParam_SetRoomActionDoing_Flat {
-	r := &PB_MsgParam_SetRoomActionDoing_Flat{}
+	r := &PB_MsgParam_SetRoomActionDoing_Flat{
+		GroupId:       int(m.GroupId),
+		DirectRoomKey: m.DirectRoomKey,
+	}
 	return r
 }
 
@@ -787,9 +995,7 @@ func (m *PB_MsgResponse_SetRoomActionDoing) ToFlat() *PB_MsgResponse_SetRoomActi
 }
 
 func (m *PB_MsgParam_GetMessagesByIds) ToFlat() *PB_MsgParam_GetMessagesByIds_Flat {
-	r := &PB_MsgParam_GetMessagesByIds_Flat{
-		MessageId: helper.SliceInt64ToInt(m.MessageId),
-	}
+	r := &PB_MsgParam_GetMessagesByIds_Flat{}
 	return r
 }
 
@@ -812,8 +1018,8 @@ func (m *PB_MsgResponse_GetMessagesHistory) ToFlat() *PB_MsgResponse_GetMessages
 	return r
 }
 
-func (m *PB_MsgParam_SetMessagesRangeAsSeen) ToFlat() *PB_MsgParam_SetMessagesRangeAsSeen_Flat {
-	r := &PB_MsgParam_SetMessagesRangeAsSeen_Flat{
+func (m *PB_MsgParam_SetChatMessagesRangeAsSeen) ToFlat() *PB_MsgParam_SetChatMessagesRangeAsSeen_Flat {
+	r := &PB_MsgParam_SetChatMessagesRangeAsSeen_Flat{
 		ChatId:     int(m.ChatId),
 		FromSeq:    int(m.FromSeq),
 		EndSeq:     int(m.EndSeq),
@@ -822,21 +1028,21 @@ func (m *PB_MsgParam_SetMessagesRangeAsSeen) ToFlat() *PB_MsgParam_SetMessagesRa
 	return r
 }
 
-func (m *PB_MsgResponse_SetMessagesRangeAsSeen) ToFlat() *PB_MsgResponse_SetMessagesRangeAsSeen_Flat {
-	r := &PB_MsgResponse_SetMessagesRangeAsSeen_Flat{}
+func (m *PB_MsgResponse_SetChatMessagesRangeAsSeen) ToFlat() *PB_MsgResponse_SetChatMessagesRangeAsSeen_Flat {
+	r := &PB_MsgResponse_SetChatMessagesRangeAsSeen_Flat{}
 	return r
 }
 
-func (m *PB_MsgParam_DeleteRoomHistory) ToFlat() *PB_MsgParam_DeleteRoomHistory_Flat {
-	r := &PB_MsgParam_DeleteRoomHistory_Flat{
+func (m *PB_MsgParam_DeleteChatHistory) ToFlat() *PB_MsgParam_DeleteChatHistory_Flat {
+	r := &PB_MsgParam_DeleteChatHistory_Flat{
 		ChatId: int(m.ChatId),
 		ToSeq:  int(m.ToSeq),
 	}
 	return r
 }
 
-func (m *PB_MsgResponse_DeleteRoomHistory) ToFlat() *PB_MsgResponse_DeleteRoomHistory_Flat {
-	r := &PB_MsgResponse_DeleteRoomHistory_Flat{}
+func (m *PB_MsgResponse_DeleteChatHistory) ToFlat() *PB_MsgResponse_DeleteChatHistory_Flat {
+	r := &PB_MsgResponse_DeleteChatHistory_Flat{}
 	return r
 }
 
@@ -861,7 +1067,11 @@ func (m *PB_MsgResponse_SetMessagesAsReceived) ToFlat() *PB_MsgResponse_SetMessa
 }
 
 func (m *PB_MsgParam_ForwardMessages) ToFlat() *PB_MsgParam_ForwardMessages_Flat {
-	r := &PB_MsgParam_ForwardMessages_Flat{}
+	r := &PB_MsgParam_ForwardMessages_Flat{
+
+		ToDirectChatIds: helper.SliceInt64ToInt(m.ToDirectChatIds),
+		ToGroupChatIds:  helper.SliceInt64ToInt(m.ToGroupChatIds),
+	}
 	return r
 }
 
@@ -871,7 +1081,12 @@ func (m *PB_MsgResponse_ForwardMessages) ToFlat() *PB_MsgResponse_ForwardMessage
 }
 
 func (m *PB_MsgParam_EditMessage) ToFlat() *PB_MsgParam_EditMessage_Flat {
-	r := &PB_MsgParam_EditMessage_Flat{}
+	r := &PB_MsgParam_EditMessage_Flat{
+		ChatId: int(m.ChatId),
+
+		MessageId: int(m.MessageId),
+		NewText:   m.NewText,
+	}
 	return r
 }
 
@@ -881,25 +1096,16 @@ func (m *PB_MsgResponse_EditMessage) ToFlat() *PB_MsgResponse_EditMessage_Flat {
 }
 
 func (m *PB_MsgParam_BroadcastNewMessage) ToFlat() *PB_MsgParam_BroadcastNewMessage_Flat {
-	r := &PB_MsgParam_BroadcastNewMessage_Flat{}
+	r := &PB_MsgParam_BroadcastNewMessage_Flat{
+		Text:   m.Text,
+		PeerId: int(m.PeerId),
+		Time:   int(m.Time),
+	}
 	return r
 }
 
 func (m *PB_MsgResponse_BroadcastNewMessage) ToFlat() *PB_MsgResponse_BroadcastNewMessage_Flat {
 	r := &PB_MsgResponse_BroadcastNewMessage_Flat{}
-	return r
-}
-
-func (m *PB_ReqRpcAddMsg) ToFlat() *PB_ReqRpcAddMsg_Flat {
-	r := &PB_ReqRpcAddMsg_Flat{}
-	return r
-}
-
-func (m *PB_ResRpcAddMsg) ToFlat() *PB_ResRpcAddMsg_Flat {
-	r := &PB_ResRpcAddMsg_Flat{
-
-		ServerSrc: m.ServerSrc,
-	}
 	return r
 }
 
@@ -1018,33 +1224,92 @@ func (m *UserView) ToFlat() *UserView_Flat {
 	return r
 }
 
-func (m *PB_MsgsSeenFromClient) ToFlat() *PB_MsgsSeenFromClient_Flat {
-	r := &PB_MsgsSeenFromClient_Flat{
-		MessageKey: m.MessageKey,
-		RoomKey:    m.RoomKey,
-		UserId:     int(m.UserId),
+func (m *PB_UpdateNewMessage) ToFlat() *PB_UpdateNewMessage_Flat {
+	r := &PB_UpdateNewMessage_Flat{}
+	return r
+}
+
+func (m *PB_UpdateMessageId) ToFlat() *PB_UpdateMessageId_Flat {
+	r := &PB_UpdateMessageId_Flat{
+		OldMessageId: int(m.OldMessageId),
+		NewMessageId: int(m.NewMessageId),
+	}
+	return r
+}
+
+func (m *PB_UpdateSeenMessages) ToFlat() *PB_UpdateSeenMessages_Flat {
+	r := &PB_UpdateSeenMessages_Flat{
+		MessageIds: helper.SliceInt64ToInt(m.MessageIds),
 		AtTime:     int(m.AtTime),
 	}
 	return r
 }
 
-func (m *PB_MsgSeen) ToFlat() *PB_MsgSeen_Flat {
-	r := &PB_MsgSeen_Flat{
-		MessageKey: m.MessageKey,
-		RoomKey:    m.RoomKey,
-		UserId:     int(m.UserId),
+func (m *PB_UpdateDelivierdMessages) ToFlat() *PB_UpdateDelivierdMessages_Flat {
+	r := &PB_UpdateDelivierdMessages_Flat{
+		MessageIds: helper.SliceInt64ToInt(m.MessageIds),
 		AtTime:     int(m.AtTime),
 	}
 	return r
 }
 
-func (m *PB_RequestMsgsSeen) ToFlat() *PB_RequestMsgsSeen_Flat {
-	r := &PB_RequestMsgsSeen_Flat{}
+func (m *PB_UpdateDeletedFromServerMessages) ToFlat() *PB_UpdateDeletedFromServerMessages_Flat {
+	r := &PB_UpdateDeletedFromServerMessages_Flat{
+		MessageIds: helper.SliceInt64ToInt(m.MessageIds),
+		AtTime:     int(m.AtTime),
+	}
 	return r
 }
 
-func (m *PB_ResponseMsgsSeen) ToFlat() *PB_ResponseMsgsSeen_Flat {
-	r := &PB_ResponseMsgsSeen_Flat{}
+func (m *PB_UpdateDeleteMessages) ToFlat() *PB_UpdateDeleteMessages_Flat {
+	r := &PB_UpdateDeleteMessages_Flat{
+		MessageIds: helper.SliceInt64ToInt(m.MessageIds),
+	}
+	return r
+}
+
+func (m *PB_UpdateRestoreMessage) ToFlat() *PB_UpdateRestoreMessage_Flat {
+	r := &PB_UpdateRestoreMessage_Flat{
+		MessageIds: helper.SliceInt64ToInt(m.MessageIds),
+	}
+	return r
+}
+
+func (m *PB_UpdateRoomActionDoing) ToFlat() *PB_UpdateRoomActionDoing_Flat {
+	r := &PB_UpdateRoomActionDoing_Flat{
+		RoomKey: m.RoomKey,
+	}
+	return r
+}
+
+func (m *PB_UpdateGroupParticipants) ToFlat() *PB_UpdateGroupParticipants_Flat {
+	r := &PB_UpdateGroupParticipants_Flat{}
+	return r
+}
+
+func (m *PB_UpdateUserBlocked) ToFlat() *PB_UpdateUserBlocked_Flat {
+	r := &PB_UpdateUserBlocked_Flat{
+		UserId:  int(m.UserId),
+		Blocked: m.Blocked,
+	}
+	return r
+}
+
+func (m *PB_UpdateNotifySettings) ToFlat() *PB_UpdateNotifySettings_Flat {
+	r := &PB_UpdateNotifySettings_Flat{}
+	return r
+}
+
+func (m *PB_UpdateServiceNotification) ToFlat() *PB_UpdateServiceNotification_Flat {
+	r := &PB_UpdateServiceNotification_Flat{}
+	return r
+}
+
+func (m *PB_UpdateEditMessage) ToFlat() *PB_UpdateEditMessage_Flat {
+	r := &PB_UpdateEditMessage_Flat{
+		MessageId: int(m.MessageId),
+		NewText:   m.NewText,
+	}
 	return r
 }
 
@@ -1206,6 +1471,15 @@ func (m *PB_RequestSetLastSeenMessages_Flat) ToPB() *PB_RequestSetLastSeenMessag
 
 func (m *PB_ResponseSetLastSeenMessages_Flat) ToPB() *PB_ResponseSetLastSeenMessages {
 	r := &PB_ResponseSetLastSeenMessages{}
+	return r
+}
+
+func (m *PB_MessagesCollections_Flat) ToPB() *PB_MessagesCollections {
+	r := &PB_MessagesCollections{
+		DirectMessagesIds:   helper.SliceIntToInt64(m.DirectMessagesIds),
+		GroupMessagesIds:    helper.SliceIntToInt64(m.GroupMessagesIds),
+		BroadCatMessagesIds: helper.SliceIntToInt64(m.BroadCatMessagesIds),
+	}
 	return r
 }
 
@@ -1371,6 +1645,16 @@ func (m *PB_ResultMsgEvents_Flat) ToPB() *PB_ResultMsgEvents {
 	return r
 }
 
+func (m *PB_UserParam_CheckUserName2_Flat) ToPB() *PB_UserParam_CheckUserName2 {
+	r := &PB_UserParam_CheckUserName2{}
+	return r
+}
+
+func (m *PB_UserResponse_CheckUserName2_Flat) ToPB() *PB_UserResponse_CheckUserName2 {
+	r := &PB_UserResponse_CheckUserName2{}
+	return r
+}
+
 func (m *PB_MsgParam_AddNewTextMessage_Flat) ToPB() *PB_MsgParam_AddNewTextMessage {
 	r := &PB_MsgParam_AddNewTextMessage{
 		Text:             m.Text,
@@ -1387,7 +1671,10 @@ func (m *PB_MsgResponse_AddNewTextMessage_Flat) ToPB() *PB_MsgResponse_AddNewTex
 }
 
 func (m *PB_MsgParam_SetRoomActionDoing_Flat) ToPB() *PB_MsgParam_SetRoomActionDoing {
-	r := &PB_MsgParam_SetRoomActionDoing{}
+	r := &PB_MsgParam_SetRoomActionDoing{
+		GroupId:       int64(m.GroupId),
+		DirectRoomKey: m.DirectRoomKey,
+	}
 	return r
 }
 
@@ -1397,9 +1684,7 @@ func (m *PB_MsgResponse_SetRoomActionDoing_Flat) ToPB() *PB_MsgResponse_SetRoomA
 }
 
 func (m *PB_MsgParam_GetMessagesByIds_Flat) ToPB() *PB_MsgParam_GetMessagesByIds {
-	r := &PB_MsgParam_GetMessagesByIds{
-		MessageId: helper.SliceIntToInt64(m.MessageId),
-	}
+	r := &PB_MsgParam_GetMessagesByIds{}
 	return r
 }
 
@@ -1422,8 +1707,8 @@ func (m *PB_MsgResponse_GetMessagesHistory_Flat) ToPB() *PB_MsgResponse_GetMessa
 	return r
 }
 
-func (m *PB_MsgParam_SetMessagesRangeAsSeen_Flat) ToPB() *PB_MsgParam_SetMessagesRangeAsSeen {
-	r := &PB_MsgParam_SetMessagesRangeAsSeen{
+func (m *PB_MsgParam_SetChatMessagesRangeAsSeen_Flat) ToPB() *PB_MsgParam_SetChatMessagesRangeAsSeen {
+	r := &PB_MsgParam_SetChatMessagesRangeAsSeen{
 		ChatId:     int64(m.ChatId),
 		FromSeq:    int32(m.FromSeq),
 		EndSeq:     int32(m.EndSeq),
@@ -1432,21 +1717,21 @@ func (m *PB_MsgParam_SetMessagesRangeAsSeen_Flat) ToPB() *PB_MsgParam_SetMessage
 	return r
 }
 
-func (m *PB_MsgResponse_SetMessagesRangeAsSeen_Flat) ToPB() *PB_MsgResponse_SetMessagesRangeAsSeen {
-	r := &PB_MsgResponse_SetMessagesRangeAsSeen{}
+func (m *PB_MsgResponse_SetChatMessagesRangeAsSeen_Flat) ToPB() *PB_MsgResponse_SetChatMessagesRangeAsSeen {
+	r := &PB_MsgResponse_SetChatMessagesRangeAsSeen{}
 	return r
 }
 
-func (m *PB_MsgParam_DeleteRoomHistory_Flat) ToPB() *PB_MsgParam_DeleteRoomHistory {
-	r := &PB_MsgParam_DeleteRoomHistory{
+func (m *PB_MsgParam_DeleteChatHistory_Flat) ToPB() *PB_MsgParam_DeleteChatHistory {
+	r := &PB_MsgParam_DeleteChatHistory{
 		ChatId: int64(m.ChatId),
 		ToSeq:  int32(m.ToSeq),
 	}
 	return r
 }
 
-func (m *PB_MsgResponse_DeleteRoomHistory_Flat) ToPB() *PB_MsgResponse_DeleteRoomHistory {
-	r := &PB_MsgResponse_DeleteRoomHistory{}
+func (m *PB_MsgResponse_DeleteChatHistory_Flat) ToPB() *PB_MsgResponse_DeleteChatHistory {
+	r := &PB_MsgResponse_DeleteChatHistory{}
 	return r
 }
 
@@ -1471,7 +1756,11 @@ func (m *PB_MsgResponse_SetMessagesAsReceived_Flat) ToPB() *PB_MsgResponse_SetMe
 }
 
 func (m *PB_MsgParam_ForwardMessages_Flat) ToPB() *PB_MsgParam_ForwardMessages {
-	r := &PB_MsgParam_ForwardMessages{}
+	r := &PB_MsgParam_ForwardMessages{
+
+		ToDirectChatIds: helper.SliceIntToInt64(m.ToDirectChatIds),
+		ToGroupChatIds:  helper.SliceIntToInt64(m.ToGroupChatIds),
+	}
 	return r
 }
 
@@ -1481,7 +1770,12 @@ func (m *PB_MsgResponse_ForwardMessages_Flat) ToPB() *PB_MsgResponse_ForwardMess
 }
 
 func (m *PB_MsgParam_EditMessage_Flat) ToPB() *PB_MsgParam_EditMessage {
-	r := &PB_MsgParam_EditMessage{}
+	r := &PB_MsgParam_EditMessage{
+		ChatId: int64(m.ChatId),
+
+		MessageId: int64(m.MessageId),
+		NewText:   m.NewText,
+	}
 	return r
 }
 
@@ -1491,25 +1785,16 @@ func (m *PB_MsgResponse_EditMessage_Flat) ToPB() *PB_MsgResponse_EditMessage {
 }
 
 func (m *PB_MsgParam_BroadcastNewMessage_Flat) ToPB() *PB_MsgParam_BroadcastNewMessage {
-	r := &PB_MsgParam_BroadcastNewMessage{}
+	r := &PB_MsgParam_BroadcastNewMessage{
+		Text:   m.Text,
+		PeerId: int32(m.PeerId),
+		Time:   int32(m.Time),
+	}
 	return r
 }
 
 func (m *PB_MsgResponse_BroadcastNewMessage_Flat) ToPB() *PB_MsgResponse_BroadcastNewMessage {
 	r := &PB_MsgResponse_BroadcastNewMessage{}
-	return r
-}
-
-func (m *PB_ReqRpcAddMsg_Flat) ToPB() *PB_ReqRpcAddMsg {
-	r := &PB_ReqRpcAddMsg{}
-	return r
-}
-
-func (m *PB_ResRpcAddMsg_Flat) ToPB() *PB_ResRpcAddMsg {
-	r := &PB_ResRpcAddMsg{
-
-		ServerSrc: m.ServerSrc,
-	}
 	return r
 }
 
@@ -1628,32 +1913,91 @@ func (m *UserView_Flat) ToPB() *UserView {
 	return r
 }
 
-func (m *PB_MsgsSeenFromClient_Flat) ToPB() *PB_MsgsSeenFromClient {
-	r := &PB_MsgsSeenFromClient{
-		MessageKey: m.MessageKey,
-		RoomKey:    m.RoomKey,
-		UserId:     int64(m.UserId),
+func (m *PB_UpdateNewMessage_Flat) ToPB() *PB_UpdateNewMessage {
+	r := &PB_UpdateNewMessage{}
+	return r
+}
+
+func (m *PB_UpdateMessageId_Flat) ToPB() *PB_UpdateMessageId {
+	r := &PB_UpdateMessageId{
+		OldMessageId: int64(m.OldMessageId),
+		NewMessageId: int64(m.NewMessageId),
+	}
+	return r
+}
+
+func (m *PB_UpdateSeenMessages_Flat) ToPB() *PB_UpdateSeenMessages {
+	r := &PB_UpdateSeenMessages{
+		MessageIds: helper.SliceIntToInt64(m.MessageIds),
 		AtTime:     int64(m.AtTime),
 	}
 	return r
 }
 
-func (m *PB_MsgSeen_Flat) ToPB() *PB_MsgSeen {
-	r := &PB_MsgSeen{
-		MessageKey: m.MessageKey,
-		RoomKey:    m.RoomKey,
-		UserId:     int64(m.UserId),
+func (m *PB_UpdateDelivierdMessages_Flat) ToPB() *PB_UpdateDelivierdMessages {
+	r := &PB_UpdateDelivierdMessages{
+		MessageIds: helper.SliceIntToInt64(m.MessageIds),
 		AtTime:     int64(m.AtTime),
 	}
 	return r
 }
 
-func (m *PB_RequestMsgsSeen_Flat) ToPB() *PB_RequestMsgsSeen {
-	r := &PB_RequestMsgsSeen{}
+func (m *PB_UpdateDeletedFromServerMessages_Flat) ToPB() *PB_UpdateDeletedFromServerMessages {
+	r := &PB_UpdateDeletedFromServerMessages{
+		MessageIds: helper.SliceIntToInt64(m.MessageIds),
+		AtTime:     int64(m.AtTime),
+	}
 	return r
 }
 
-func (m *PB_ResponseMsgsSeen_Flat) ToPB() *PB_ResponseMsgsSeen {
-	r := &PB_ResponseMsgsSeen{}
+func (m *PB_UpdateDeleteMessages_Flat) ToPB() *PB_UpdateDeleteMessages {
+	r := &PB_UpdateDeleteMessages{
+		MessageIds: helper.SliceIntToInt64(m.MessageIds),
+	}
+	return r
+}
+
+func (m *PB_UpdateRestoreMessage_Flat) ToPB() *PB_UpdateRestoreMessage {
+	r := &PB_UpdateRestoreMessage{
+		MessageIds: helper.SliceIntToInt64(m.MessageIds),
+	}
+	return r
+}
+
+func (m *PB_UpdateRoomActionDoing_Flat) ToPB() *PB_UpdateRoomActionDoing {
+	r := &PB_UpdateRoomActionDoing{
+		RoomKey: m.RoomKey,
+	}
+	return r
+}
+
+func (m *PB_UpdateGroupParticipants_Flat) ToPB() *PB_UpdateGroupParticipants {
+	r := &PB_UpdateGroupParticipants{}
+	return r
+}
+
+func (m *PB_UpdateUserBlocked_Flat) ToPB() *PB_UpdateUserBlocked {
+	r := &PB_UpdateUserBlocked{
+		UserId:  int32(m.UserId),
+		Blocked: m.Blocked,
+	}
+	return r
+}
+
+func (m *PB_UpdateNotifySettings_Flat) ToPB() *PB_UpdateNotifySettings {
+	r := &PB_UpdateNotifySettings{}
+	return r
+}
+
+func (m *PB_UpdateServiceNotification_Flat) ToPB() *PB_UpdateServiceNotification {
+	r := &PB_UpdateServiceNotification{}
+	return r
+}
+
+func (m *PB_UpdateEditMessage_Flat) ToPB() *PB_UpdateEditMessage {
+	r := &PB_UpdateEditMessage{
+		MessageId: int64(m.MessageId),
+		NewText:   m.NewText,
+	}
 	return r
 }

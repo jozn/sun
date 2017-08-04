@@ -34,11 +34,11 @@ message PB_UpdateDeletedFromServerMessages{
     int64 AtTime =2;
 }
 
-/*message PB_UpdateSeenMessages{
-    repeated int64 MessageIds =1;
-    int64 AtTime =2;
-    MessageMetaUpdatesTypesEnum MetaType = 3;
-}*/
+///*message PB_UpdateSeenMessages{
+//    repeated int64 MessageIds =1;
+//    int64 AtTime =2;
+//    MessageMetaUpdatesTypesEnum MetaType = 3;
+//}*/
 message PB_UpdateDeleteMessages{
     repeated int64 MessageIds =1;
 }
@@ -56,11 +56,11 @@ message PB_UpdateRoomActionDoing{
 message PB_UpdateGroupParticipants{
 
 }
-/*message PB_UpdateUserStatus{}
-message PB_UpdateUserAvatar{}
-message PB_pdateActivation{}
-message updateChatParticipantAdd{}
-message updateChatParticipantDelete{}*/
+///*message PB_UpdateUserStatus{}
+//message PB_UpdateUserAvatar{}
+//message PB_pdateActivation{}
+//message updateChatParticipantAdd{}
+//message updateChatParticipantDelete{}*/
 
 message PB_UpdateUserBlocked{
     int32 UserId = 1;
