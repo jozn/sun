@@ -138,6 +138,7 @@ func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	}
 
 	logPipes.Println("WS serving: ", reqCall.Command)
+	fmt.Println("WS serving: ", reqCall.Command)
 
 	x.HandleRpcs(*reqCall, userParam, RpcAll)
 }

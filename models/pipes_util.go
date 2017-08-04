@@ -3,13 +3,12 @@ package models
 import (
 	"errors"
 	"fmt"
+	"github.com/golang/protobuf/proto"
 	"ms/sun/helper"
 	"ms/sun/models/x"
+	"runtime/debug"
 	"strconv"
 	"strings"
-	"time"
-
-	"github.com/golang/protobuf/proto"
 )
 
 // room key format "p142_1569"
@@ -52,7 +51,7 @@ func UserIdsToRoomKey(UserId1, UserId2 int) string {
 //////////////////////////////////////////////////////////////
 func NewPB_CommandToClient(cmd string) x.PB_CommandToClient {
 	p := x.PB_CommandToClient{
-		ServerCallId: int64(time.Now().UnixNano()),
+		ServerCallId: int64(helper.RandomSeqUid()), //int64(time.Now().UnixNano()),
 		Command:      cmd,
 	}
 	return p
@@ -67,4 +66,11 @@ func NewPB_CommandToClient_WithData(cmd string, protoMsg proto.Message) x.PB_Com
 		helper.DebugPrintln("ERROR : proto.Marshal NewPB_CommandToClient_WithData, ", err)
 	}
 	return m
+}
+
+///////////////////////////////
+
+func init2222() {
+	debug.SetGCPercent(1000)
+	helper.GcPrintAllPerodicaly(10)
 }

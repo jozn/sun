@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
@@ -9,9 +10,10 @@ import (
 type rpcMsg int
 
 func (rpcMsg) Echo(i *x.PB_MsgParam_Echo, p x.RPC_UserParam) (*x.PB_MsgResponse_PB_MsgParam_Echo, error) {
-    return &x.PB_MsgResponse_PB_MsgParam_Echo{
-        Text: i.Text,
-    },nil
+	fmt.Println("in Echo --> ", i.Text)
+	return &x.PB_MsgResponse_PB_MsgParam_Echo{
+		Text: i.Text,
+	}, nil
 }
 
 func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_UserParam) (*x.PB_MsgResponse_AddNewTextMessage, error) {

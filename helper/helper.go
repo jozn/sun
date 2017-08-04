@@ -24,6 +24,7 @@ func TimeNowNano() int64 {
 }
 
 var uidHolder = struct {
+	n   int64
 	uid int64
 	sync.RWMutex
 }{
@@ -32,6 +33,7 @@ var uidHolder = struct {
 
 var uid int64 = time.Now().UnixNano()
 
+//1 501 879 789 423 370 622
 //use this for not databases faster - use NextRowsSeqId() for databases ids
 func RandomSeqUid() int {
 	uidHolder.RLock()
@@ -39,6 +41,9 @@ func RandomSeqUid() int {
 	uidHolder.RUnlock()
 
 	if time.Now().UnixNano()-_uid > 1e8 { //100 miliscond diff
+		/*t := time.Now().UnixNano()
+		n := t / 1e6
+		n = n * 1e6*/
 		uidHolder.Lock()
 		uidHolder.uid = time.Now().UnixNano()
 		uidHolder.Unlock()
@@ -106,6 +111,7 @@ func GcPrintAll() {
 	runtime.ReadMemStats(&mem)
 	fmt.Printf("================================== GC : %d ===========================================================\n", mem.NumGC)
 	fmt.Println(ToJsonPerety(mem))
+	//PertyPrint(&mem)
 	fmt.Printf("================================== End GC : %d ===========================================================\n", mem.NumGC)
 }
 

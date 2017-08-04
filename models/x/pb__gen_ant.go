@@ -2,11 +2,10 @@ package x
 
 import (
 	"errors"
+	"github.com/golang/protobuf/proto"
 	"log"
 	"ms/sun/config"
 	"strings"
-
-	"github.com/golang/protobuf/proto"
 )
 
 type RPC_UserParam interface {
@@ -100,6 +99,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 	switch splits[0] {
 
 	case "RPC_MessageReq":
+
 		rpc, ok := rpcHandler.(RPC_MessageReq)
 		if !ok {
 			e := errors.New("rpcHandler could not be cast to : RPC_MessageReq")
@@ -115,15 +115,18 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.GetLastChnagesForRoom(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
 			}
+		default:
+			noDevErr(errors.New("rpc method is does not exist: " + cmd.Command))
 		}
 	case "RPC_MessageReqOffline":
+
 		rpc, ok := rpcHandler.(RPC_MessageReqOffline)
 		if !ok {
 			e := errors.New("rpcHandler could not be cast to : RPC_MessageReqOffline")
@@ -139,15 +142,18 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.SetLastSeen(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
 			}
+		default:
+			noDevErr(errors.New("rpc method is does not exist: " + cmd.Command))
 		}
 	case "RPC_Auth":
+
 		rpc, ok := rpcHandler.(RPC_Auth)
 		if !ok {
 			e := errors.New("rpcHandler could not be cast to : RPC_Auth")
@@ -163,9 +169,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.CheckPhone(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -176,9 +182,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.SendCode(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -189,9 +195,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.SendCodeToSms(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -202,9 +208,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.SendCodeToTelgram(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -215,9 +221,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.SingUp(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -228,9 +234,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.SingIn(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -241,15 +247,18 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.LogOut(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
 			}
+		default:
+			noDevErr(errors.New("rpc method is does not exist: " + cmd.Command))
 		}
 	case "RPC_Msg":
+
 		rpc, ok := rpcHandler.(RPC_Msg)
 		if !ok {
 			e := errors.New("rpcHandler could not be cast to : RPC_Msg")
@@ -265,9 +274,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.AddNewTextMessage(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -278,9 +287,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.SetRoomActionDoing(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -291,9 +300,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.GetMessagesByIds(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -304,9 +313,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.GetMessagesHistory(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -317,9 +326,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.SetMessagesRangeAsSeen(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -330,9 +339,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.DeleteChatHistory(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -343,9 +352,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.DeleteMessagesByIds(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -356,9 +365,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.SetMessagesAsReceived(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -369,9 +378,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.ForwardMessages(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -382,9 +391,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.EditMessage(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -395,9 +404,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.BroadcastNewMessage(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -408,15 +417,18 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.Echo(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
 			}
+		default:
+			noDevErr(errors.New("rpc method is does not exist: " + cmd.Command))
 		}
 	case "RPC_UserOffline":
+
 		rpc, ok := rpcHandler.(RPC_UserOffline)
 		if !ok {
 			e := errors.New("rpcHandler could not be cast to : RPC_UserOffline")
@@ -432,9 +444,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.BlockUser(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -445,9 +457,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.UnBlockUser(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -458,9 +470,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.UpdateAbout(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -471,9 +483,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.UpdateUserName(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -484,9 +496,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.ChangePrivacy(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -497,15 +509,18 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.ChangeAvatar(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
 			}
+		default:
+			noDevErr(errors.New("rpc method is does not exist: " + cmd.Command))
 		}
 	case "RPC_User":
+
 		rpc, ok := rpcHandler.(RPC_User)
 		if !ok {
 			e := errors.New("rpcHandler could not be cast to : RPC_User")
@@ -521,9 +536,9 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.CheckUserName(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
@@ -534,15 +549,17 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			if err == nil {
 				res, err := rpc.GetBlockedList(load, params)
 				if err == nil {
-					RPC_ResponseHandler.HandelError(err)
-				} else {
 					RPC_ResponseHandler.HandleOfflineResult(res, cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
 				}
 			} else {
 				RPC_ResponseHandler.HandelError(err)
 			}
+		default:
+			noDevErr(errors.New("rpc method is does not exist: " + cmd.Command))
 		}
 	default:
-		noDevErr(errors.New("HandleRpcs: splic is not 2 parts"))
+		noDevErr(errors.New("rpc dosent exisit for: " + cmd.Command))
 	}
 }
