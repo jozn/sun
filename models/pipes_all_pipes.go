@@ -7,6 +7,7 @@ import (
 	"ms/sun/models/x"
 
 	"github.com/gorilla/websocket"
+    "sync/atomic"
 )
 
 //todo change UserDevicePipe => *UserDevicePipe
@@ -23,7 +24,7 @@ func init() {
 
 var AllPipesMap *pipesMap
 
-func (m pipesMap) IsPipeOpen(UserId int) bool {
+func (m *pipesMap) IsPipeOpen(UserId int) bool {
 	pipe, ok := m.GetUserPipe(UserId)
 	if ok && pipe.IsOpen {
 		return true
@@ -31,7 +32,7 @@ func (m pipesMap) IsPipeOpen(UserId int) bool {
 	return false
 }
 
-func (m pipesMap) SendToUser(UserId int, cmd x.PB_CommandToClient) {
+func (m *pipesMap) SendToUser(UserId int, cmd x.PB_CommandToClient) {
 	pipe, ok := m.GetUserPipe(UserId)
 
 	//helper.Debugf("pipesMap.SendToUser() to user:%d %v %v ", UserId, ok, cmd.Command)
@@ -50,11 +51,11 @@ func (m pipesMap) SendToUser(UserId int, cmd x.PB_CommandToClient) {
 	}
 }
 
-func (m pipesMap) SendToUserWithCallBack(UserId int, call x.PB_CommandToClient, callback func()) {
+func (m *pipesMap) SendToUserWithCallBack(UserId int, call x.PB_CommandToClient, callback func()) {
 	m.SendToUserWithCallBacks(UserId, call, callback, nil)
 }
 
-func (m pipesMap) SendToUserWithCallBacks(UserId int, call x.PB_CommandToClient, callback func(), errback func()) {
+func (m *pipesMap) SendToUserWithCallBacks(UserId int, call x.PB_CommandToClient, callback func(), errback func()) {
 	pipe, ok := m.GetUserPipe(UserId)
 	//helper.Debugf("sending to user:%d  - pipe is: %v --- %s ", UserId, ok, call.Command)
 	logPipes.Infof("pipesMap sending to user withCallbacks:%d %v %v ", UserId, ok, call.Command)
@@ -87,14 +88,14 @@ func (m pipesMap) SendToUserWithCallBacks(UserId int, call x.PB_CommandToClient,
 	}
 }
 
-func (m pipesMap) GetUserPipe(UserId int) (*UserDevicePipe, bool) {
+func (m *pipesMap) GetUserPipe(UserId int) (*UserDevicePipe, bool) {
 	m.m.RLock()
 	pipe, ok := m.mp[UserId]
 	m.m.RUnlock()
 	return pipe, ok
 }
 
-func (m pipesMap) ShutDownUser(UserId int) {
+func (m *pipesMap) ShutDownUser(UserId int) {
 	logPipes.Info("pipesMap ShutDownUser ", UserId)
 
 	pipe, ok := m.GetUserPipe(UserId)
@@ -105,7 +106,7 @@ func (m pipesMap) ShutDownUser(UserId int) {
 }
 
 //adds a new pip
-func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
+func (m *pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 	pipe := &UserDevicePipe{
 		UserId:       UserId,
 		ToDeviceChan: make(chan x.PB_CommandToClient, 10),
@@ -133,14 +134,14 @@ func (m pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 
 }
 
-func (m pipesMap) AddUserPipe(UserId int, pipe *UserDevicePipe) {
+func (m *pipesMap) AddUserPipe(UserId int, pipe *UserDevicePipe) {
 	logPipes.Info("pipesMap AddUserPipe UserId ", UserId)
 	m.m.Lock()
-	defer m.m.Unlock()
 	m.mp[UserId] = pipe
+	m.m.Unlock()
 }
 
-func (m pipesMap) DeleteUserPipe(UserId int) {
+func (m *pipesMap) DeleteUserPipe(UserId int) {
 	logPipes.Info("pipesMap DeleteUserPipe UserId ", UserId)
 	m.m.Lock()
 	delete(m.mp, UserId)

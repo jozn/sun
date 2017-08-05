@@ -21,17 +21,17 @@ type _registerMap struct {
 	isRunningTimeout bool
 }
 
-var callRespondMap _registerMap
+var callRespondMap *_registerMap
 
 func init() {
-	callRespondMap = _registerMap{
+	callRespondMap = &_registerMap{
 		mp: make(map[int64]callRespondCallback, 100),
 	}
 	go intervalRunCallsTimeOutChecker()
 
 }
 
-func (m _registerMap) register(callback callRespondCallback) {
+func (m *_registerMap) register(callback callRespondCallback) {
 	if callback.serverCallId == 0 {
 		helper.DebugErr(errors.New("ERROr: In callRespondCallback, callback.serverCallId must not be 0"))
 		callback.serverCallId = int64(helper.RandomSeqUid())
@@ -45,7 +45,7 @@ func (m _registerMap) register(callback callRespondCallback) {
 	m.Unlock()
 }
 
-func (m _registerMap) get(serverCallId int64) (*callRespondCallback, error) {
+func (m *_registerMap) get(serverCallId int64) (*callRespondCallback, error) {
 	if serverCallId == 0 {
 		return nil, errors.New(" serverCallId could not be 0")
 	}
@@ -58,7 +58,7 @@ func (m _registerMap) get(serverCallId int64) (*callRespondCallback, error) {
 	return &callback, nil
 }
 
-func (m _registerMap) getAndRemove(serverCallId int64) (*callRespondCallback, error) {
+func (m *_registerMap) getAndRemove(serverCallId int64) (*callRespondCallback, error) {
 	if serverCallId == 0 {
 		return nil, errors.New(" serverCallId could not be 0")
 	}
@@ -72,16 +72,16 @@ func (m _registerMap) getAndRemove(serverCallId int64) (*callRespondCallback, er
 	return &callback, nil
 }
 
-func (m _registerMap) remove(serverCallId int64) {
+func (m *_registerMap) remove(serverCallId int64) {
 	m.Lock()
 	delete(m.mp, serverCallId)
 	m.Unlock()
 }
 
-func (m _registerMap) runSucceded(serverCallId int64) {
+func (m *_registerMap) runSucceded(serverCallId int64) {
 	helper.Debugf("runSucceded() %d", serverCallId)
 
-	logPipes.Println("_registerMap runSucceded() of: ", serverCallId)
+	logPipes.Println("*_registerMap runSucceded() of: ", serverCallId)
 	callback, err := m.getAndRemove(serverCallId)
 	if err != nil {
 		return
@@ -91,7 +91,7 @@ func (m _registerMap) runSucceded(serverCallId int64) {
 	}
 }
 
-func (m _registerMap) runError(serverCallId int64) {
+func (m *_registerMap) runError(serverCallId int64) {
 	helper.Debugf("runSucceded() %d", serverCallId)
 
 	logPipes.Println("_registerMap runError() of: ", serverCallId)
@@ -104,13 +104,13 @@ func (m _registerMap) runError(serverCallId int64) {
 	}
 }
 
-func (m _registerMap) setIsRunningTimeout(is bool) {
+func (m *_registerMap) setIsRunningTimeout(is bool) {
 	m.Lock()
 	m.isRunningTimeout = is
 	m.Unlock()
 }
 
-func (m _registerMap) runErrorOfTimeouts() {
+func (m *_registerMap) runErrorOfTimeouts() {
 	//logPipes2.Println("_registerMap runErrorOfTimeouts()")
 	if m.isRunningTimeout {
 		return
