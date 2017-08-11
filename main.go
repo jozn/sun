@@ -13,6 +13,7 @@ import (
 
 	_ "github.com/garyburd/redigo/redis"
 	//_ "net/http/pprof"
+	_ "github.com/rakyll/gom/http"
 	_ "net/http/pprof"
 
 	. "ms/sun/actions"
@@ -44,6 +45,13 @@ func main() {
 		//http.ListenAndServe(":5000", nil)
 	}()*/
 
+	go func() {
+		log.Println(http.ListenAndServe("localhost:8080", nil))
+	}()
+
+	go func() { //for gom
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
 	http.ListenAndServe(":5000", nil)
 
 	//http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)

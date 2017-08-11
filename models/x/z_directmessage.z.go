@@ -77,29 +77,21 @@ func (dm *DirectMessage) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.direct_message (` +
-		`RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnum` +
+		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnum` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnum, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnum)
-	res, err := db.Exec(sqlstr, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnum, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnum)
+	XOLog(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnum, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnum)
+	_, err = db.Exec(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnum, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnum)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	dm.MessageId = int(id)
 	dm._exists = true
 
 	OnDirectMessage_AfterInsert(dm)

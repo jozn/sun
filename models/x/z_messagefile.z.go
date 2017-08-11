@@ -94,6 +94,7 @@ func (mf *MessageFile) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.message_file (` +
 		`Name, Size, FileTypeEnum, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel, CreatedTime` +
 		`) VALUES (` +

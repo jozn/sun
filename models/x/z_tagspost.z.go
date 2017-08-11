@@ -81,6 +81,7 @@ func (tp *TagsPost) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.tags_posts (` +
 		`TagId, PostId, TypeId, CreatedTime` +
 		`) VALUES (` +

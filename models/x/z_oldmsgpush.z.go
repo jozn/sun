@@ -81,6 +81,7 @@ func (omp *OldMsgPush) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.old_msg_push (` +
 		`Uid, ToUser, MsgUid, CreatedTimeMs` +
 		`) VALUES (` +

@@ -86,6 +86,7 @@ func (n *Notification) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.notification (` +
 		`ForUserId, ActorUserId, ActionTypeId, ObjectTypeId, RowId, RootId, RefId, SeenStatus, CreatedTime` +
 		`) VALUES (` +

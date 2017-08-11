@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
@@ -10,7 +9,7 @@ import (
 type rpcMsg int
 
 func (rpcMsg) Echo(i *x.PB_MsgParam_Echo, p x.RPC_UserParam) (*x.PB_MsgResponse_PB_MsgParam_Echo, error) {
-	fmt.Println("in Echo --> ", i.Text)
+	//fmt.Println("in Echo --> ", i.Text)
 	return &x.PB_MsgResponse_PB_MsgParam_Echo{
 		Text: i.Text,
 	}, nil
@@ -19,7 +18,7 @@ func (rpcMsg) Echo(i *x.PB_MsgParam_Echo, p x.RPC_UserParam) (*x.PB_MsgResponse_
 func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_UserParam) (*x.PB_MsgResponse_AddNewTextMessage, error) {
 	pid := int(i.PeerId)
 	msg := &x.DirectMessage{
-		MessageId:          0,
+		MessageId:          helper.NextRowsSeqId(),
 		RoomKey:            UsersToRoomKey(p.GetUserId(), int(i.GetPeerId())),
 		UserId:             p.GetUserId(),
 		MessageFileId:      0,
@@ -31,13 +30,10 @@ func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_User
 		DeliviryStatusEnum: int(x.RoomMessageDeliviryStatusEnum_SENT),
 	}
 
-	//msg.Insert(base.DB)
-
 	dm := NewDirectMessagingByUsers(p.GetUserId(), pid)
 	dm.AddMessage(msg)
 
 	res := &x.PB_MsgResponse_AddNewTextMessage{}
-
 	return res, nil
 }
 

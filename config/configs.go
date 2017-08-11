@@ -13,7 +13,7 @@ const CDN_CHAT_MSG_UPLOAD_URL = "http://192.168.0.10:5000/"
 
 const NUMBER_OF_USER_AVATAR_DIRS = 5
 
-const IS_DEBUG = true
+const IS_DEBUG = false
 const DEBUG_LOG_SQL = IS_DEBUG
 const IS_PRODUCTION = false
 const DEBUG_DELAY_RUN_STARTUPS = false //IS_DEBUG

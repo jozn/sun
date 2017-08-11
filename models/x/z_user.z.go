@@ -109,6 +109,7 @@ func (u *User) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.user (` +
 		`UserName, UserNameLower, FirstName, LastName, About, FullName, AvatarUrl, PrivacyProfile, Phone, Email, IsDeleted, PasswordHash, PasswordSalt, FollowersCount, FollowingCount, PostsCount, MediaCount, LikesCount, ResharedCount, LastActionTime, LastPostTime, PrimaryFollowingList, CreatedTime, UpdatedTime, SessionUuid, DeviceUuid, LastWifiMacAddress, LastNetworkType, AppVersion, LastActivityTime, LastLoginTime, LastIpAddress` +
 		`) VALUES (` +

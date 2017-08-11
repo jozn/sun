@@ -91,6 +91,7 @@ func (omf *OldMsgFile) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.old_msg_file (` +
 		`Name, Size, FileType, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerId, CanDel` +
 		`) VALUES (` +

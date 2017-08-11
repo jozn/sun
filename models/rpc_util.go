@@ -16,10 +16,16 @@ func UsersToRoomKey(me int, peer int) string {
 }
 
 func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {
+	keyChach := fmt.Sprintf("chat_%d_%d", me, peer)
+	ch, ok := RowCache.GetChatByChatId(keyChach)
+	if ok {
+		return ch, nil
+	}
+
 	chatMe, err := x.NewChat_Selector().UserId_Eq(me).PeerUserId_Eq(peer).GetRow(base.DB)
 	if err != nil {
 		chatMe = &x.Chat{
-			ChatId:         0,
+			ChatId:         helper.NextRowsSeqId(),
 			ChatKey:        UsersToRoomKey(me, peer),
 			RoomTypeEnumId: int(x.RoomTypeEnum_DIRECT),
 			UserId:         me,
@@ -35,6 +41,7 @@ func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {
 			return nil, err
 		}
 	}
+	RowCache.SetChatByKey(keyChach, chatMe)
 	return chatMe, nil
 }
 

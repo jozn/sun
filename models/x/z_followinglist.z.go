@@ -84,6 +84,7 @@ func (fl *FollowingList) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.following_list (` +
 		`Id, ListType, Name, Count, IsAuto, IsPimiry, CreatedTime` +
 		`) VALUES (` +

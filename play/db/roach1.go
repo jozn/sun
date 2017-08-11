@@ -3,8 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/dustin/go-humanize"
-	_ "github.com/go-sql-driver/mysql"
+	//_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"log"
 	"math/rand"
 	"ms/sun/helper"
@@ -13,8 +14,7 @@ import (
 
 func main() {
 
-	//DB, err := sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms?charset=utf8mb4")
-	DB, err := sqlx.Open("postgres", "postgresql://maxroach@78.46.161.115:26257/bank?sslmode=disable")
+	DB, err := sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms?charset=utf8mb4")
 
 	if err != nil {
 		log.Panic(err)

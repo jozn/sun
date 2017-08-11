@@ -78,29 +78,21 @@ func (c *Chat) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.chat (` +
-		`ChatKey, RoomTypeEnumId, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq, UpdatedMs` +
+		`ChatId, ChatKey, RoomTypeEnumId, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq, UpdatedMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.LastSeqSeen, c.LastSeqDelete, c.PeerUserId, c.GroupId, c.CreatedTime, c.CurrentSeq, c.UpdatedMs)
-	res, err := db.Exec(sqlstr, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.LastSeqSeen, c.LastSeqDelete, c.PeerUserId, c.GroupId, c.CreatedTime, c.CurrentSeq, c.UpdatedMs)
+	XOLog(sqlstr, c.ChatId, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.LastSeqSeen, c.LastSeqDelete, c.PeerUserId, c.GroupId, c.CreatedTime, c.CurrentSeq, c.UpdatedMs)
+	_, err = db.Exec(sqlstr, c.ChatId, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.LastSeqSeen, c.LastSeqDelete, c.PeerUserId, c.GroupId, c.CreatedTime, c.CurrentSeq, c.UpdatedMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	c.ChatId = int(id)
 	c._exists = true
 
 	OnChat_AfterInsert(c)

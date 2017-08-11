@@ -75,29 +75,21 @@ func (g *Group) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.group (` +
-		`GroupName, MembersCount, GroupPrivacyEnum, CreatorUserId, CreatedTime, UpdatedMs, CurrentSeq` +
+		`GroupId, GroupName, MembersCount, GroupPrivacyEnum, CreatorUserId, CreatedTime, UpdatedMs, CurrentSeq` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, g.GroupName, g.MembersCount, g.GroupPrivacyEnum, g.CreatorUserId, g.CreatedTime, g.UpdatedMs, g.CurrentSeq)
-	res, err := db.Exec(sqlstr, g.GroupName, g.MembersCount, g.GroupPrivacyEnum, g.CreatorUserId, g.CreatedTime, g.UpdatedMs, g.CurrentSeq)
+	XOLog(sqlstr, g.GroupId, g.GroupName, g.MembersCount, g.GroupPrivacyEnum, g.CreatorUserId, g.CreatedTime, g.UpdatedMs, g.CurrentSeq)
+	_, err = db.Exec(sqlstr, g.GroupId, g.GroupName, g.MembersCount, g.GroupPrivacyEnum, g.CreatorUserId, g.CreatedTime, g.UpdatedMs, g.CurrentSeq)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	g.GroupId = int(id)
 	g._exists = true
 
 	OnGroup_AfterInsert(g)

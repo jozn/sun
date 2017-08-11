@@ -86,6 +86,7 @@ func (tc *TestChat) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.test_chat (` +
 		`Id, TimeMs, Text, Name, UserId, C2, C3, C4, C5` +
 		`) VALUES (` +

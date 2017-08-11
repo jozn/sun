@@ -65,7 +65,7 @@ func DBStructsToTable(a *base.Action) base.AppErr {
 
 func ShowCached(a *base.Action) base.AppErr {
 
-	a.SendJson(models.RowCache.Items())
+	a.SendJson(models.Dep_RowCache_DEP.Items())
 	return nil
 }
 
@@ -77,13 +77,13 @@ func ShowCacher(a *base.Action) base.AppErr {
 
 func ShowCacheKeys(a *base.Action) base.AppErr {
 
-	a.SendJson(models.RowCache.Items())
+	a.SendJson(models.Dep_RowCache_DEP.Items())
 	return nil
 }
 
 func ShowCacheRowKeys(a *base.Action) base.AppErr {
 	var arr []string
-	m := models.RowCache.Items()
+	m := models.Dep_RowCache_DEP.Items()
 	for k, _ := range m {
 		arr = append(arr, k)
 	}

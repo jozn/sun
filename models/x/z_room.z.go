@@ -77,29 +77,21 @@ func (r *Room) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.room (` +
-		`RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq` +
+		`RoomId, RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, r.RoomKey, r.RoomTypeEnum, r.UserId, r.LastSeqSeen, r.LastSeqDelete, r.PeerUserId, r.GroupId, r.CreatedTime, r.CurrentSeq)
-	res, err := db.Exec(sqlstr, r.RoomKey, r.RoomTypeEnum, r.UserId, r.LastSeqSeen, r.LastSeqDelete, r.PeerUserId, r.GroupId, r.CreatedTime, r.CurrentSeq)
+	XOLog(sqlstr, r.RoomId, r.RoomKey, r.RoomTypeEnum, r.UserId, r.LastSeqSeen, r.LastSeqDelete, r.PeerUserId, r.GroupId, r.CreatedTime, r.CurrentSeq)
+	_, err = db.Exec(sqlstr, r.RoomId, r.RoomKey, r.RoomTypeEnum, r.UserId, r.LastSeqSeen, r.LastSeqDelete, r.PeerUserId, r.GroupId, r.CreatedTime, r.CurrentSeq)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	r.RoomId = int(id)
 	r._exists = true
 
 	OnRoom_AfterInsert(r)

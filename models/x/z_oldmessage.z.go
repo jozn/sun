@@ -88,6 +88,7 @@ func (om *OldMessage) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.old_messages (` +
 		`Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, MsgFileId, DataPB, Data64, DataJson, CreatedTimeMs` +
 		`) VALUES (` +

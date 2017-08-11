@@ -6,9 +6,9 @@ import (
 )
 
 //fixme:: cosider times when clock has come back (in those situations we must add another serverid )
-var defGen = uuidGen{
+var defGen = &uuidGen{
 	timeMs:   TimeNowMs(),
-	counter:  0,
+	counter:  1,
 	serverId: 1,
 }
 
@@ -25,6 +25,10 @@ func (gen *uuidGen) next() int {
 	gen.Lock()
 	if gen.timeMs < now {
 		gen.timeMs = now
+		//gen.counter = 1
+	}
+
+	if gen.counter >= 9999 {
 		gen.counter = 0
 	}
 

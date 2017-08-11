@@ -75,29 +75,21 @@ func (dl *DirectLog) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.direct_log (` +
-		`ToUserId, ChatId, LogTypeEnumId, DataPB, DataJson, Created` +
+		`Id, ToUserId, ChatId, LogTypeEnumId, DataPB, DataJson, Created` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dl.ToUserId, dl.ChatId, dl.LogTypeEnumId, dl.DataPB, dl.DataJson, dl.Created)
-	res, err := db.Exec(sqlstr, dl.ToUserId, dl.ChatId, dl.LogTypeEnumId, dl.DataPB, dl.DataJson, dl.Created)
+	XOLog(sqlstr, dl.Id, dl.ToUserId, dl.ChatId, dl.LogTypeEnumId, dl.DataPB, dl.DataJson, dl.Created)
+	_, err = db.Exec(sqlstr, dl.Id, dl.ToUserId, dl.ChatId, dl.LogTypeEnumId, dl.DataPB, dl.DataJson, dl.Created)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	dl.Id = int(id)
 	dl._exists = true
 
 	OnDirectLog_AfterInsert(dl)

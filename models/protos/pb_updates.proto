@@ -75,3 +75,18 @@ message PB_UpdateEditMessage{
     int64 MessageId =1;
     string NewText =2;
 }
+
+/////////////////////////////////////////////
+enum UpdateLogEnum {
+    EMPTY_UPDATE_LOG = 0;
+    PB_UpdateNewMessage = 1;
+    PB_UpdateMessageId = 2;
+    PB_UpdateSeenMessages = 3;
+    PB_UpdateDelivierdMessages = 4;
+    PB_UpdateDeletedFromServerMessages = 5;
+    PB_UpdateDeleteMessages = 6;
+    PB_UpdateRoomActionDoing = 10;
+    PB_UpdateUserBlocked = 11;
+    PB_UpdateNotifySettings = 12;
+    PB_UpdateServiceNotification = 15;
+}

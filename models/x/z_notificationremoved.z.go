@@ -69,29 +69,21 @@ func (nr *NotificationRemoved) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.notification_removed (` +
-		`ForUserId` +
+		`NotificationId, ForUserId` +
 		`) VALUES (` +
-		`?` +
+		`?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, nr.ForUserId)
-	res, err := db.Exec(sqlstr, nr.ForUserId)
+	XOLog(sqlstr, nr.NotificationId, nr.ForUserId)
+	_, err = db.Exec(sqlstr, nr.NotificationId, nr.ForUserId)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	nr.NotificationId = int(id)
 	nr._exists = true
 
 	OnNotificationRemoved_AfterInsert(nr)

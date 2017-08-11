@@ -75,29 +75,21 @@ func (gm *GroupMessage) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.group_message (` +
-		`RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, CreatedMs, DeliveryStatusEnum` +
+		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, CreatedMs, DeliveryStatusEnum` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, gm.RoomKey, gm.UserId, gm.MessageFileId, gm.MessageTypeEnum, gm.Text, gm.CreatedMs, gm.DeliveryStatusEnum)
-	res, err := db.Exec(sqlstr, gm.RoomKey, gm.UserId, gm.MessageFileId, gm.MessageTypeEnum, gm.Text, gm.CreatedMs, gm.DeliveryStatusEnum)
+	XOLog(sqlstr, gm.MessageId, gm.RoomKey, gm.UserId, gm.MessageFileId, gm.MessageTypeEnum, gm.Text, gm.CreatedMs, gm.DeliveryStatusEnum)
+	_, err = db.Exec(sqlstr, gm.MessageId, gm.RoomKey, gm.UserId, gm.MessageFileId, gm.MessageTypeEnum, gm.Text, gm.CreatedMs, gm.DeliveryStatusEnum)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	gm.MessageId = int(id)
 	gm._exists = true
 
 	OnGroupMessage_AfterInsert(gm)

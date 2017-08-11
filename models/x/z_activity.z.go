@@ -83,6 +83,7 @@ func (a *Activity) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.activity (` +
 		`ActorUserId, ActionTypeId, RowId, RootId, RefId, CreatedAt` +
 		`) VALUES (` +

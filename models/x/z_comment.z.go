@@ -81,6 +81,7 @@ func (c *Comment) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.comments (` +
 		`UserId, PostId, Text, CreatedTime` +
 		`) VALUES (` +

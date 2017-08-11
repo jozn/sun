@@ -97,6 +97,7 @@ func (p *Photo) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.photo (` +
 		`UserId, PostId, AlbumId, ImageTypeId, Title, Src, PathSrc, BucketId, Width, Height, Ratio, HashMd5, Color, CreatedTime, W1080, W720, W480, W320, W160, W80` +
 		`) VALUES (` +

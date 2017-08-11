@@ -84,6 +84,7 @@ func (b *Bucket) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.bucket (` +
 		`BucketName, Server1Id, Server2Id, BackupServerId, ContentObjectTypeId, ContentObjectCount, CreatedTime` +
 		`) VALUES (` +

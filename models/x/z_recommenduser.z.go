@@ -81,6 +81,7 @@ func (ru *RecommendUser) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.recommend_user (` +
 		`UserId, TargetId, Weight, CreatedTime` +
 		`) VALUES (` +

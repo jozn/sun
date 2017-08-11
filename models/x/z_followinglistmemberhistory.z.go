@@ -83,6 +83,7 @@ func (flmh *FollowingListMemberHistory) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.following_list_member_history (` +
 		`ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs, FollowId` +
 		`) VALUES (` +

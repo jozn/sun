@@ -81,6 +81,7 @@ func (gtm *GroupToMessage) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.group_to_message (` +
 		`GroupId, MessageId, CreatedMs, StatusEnum` +
 		`) VALUES (` +

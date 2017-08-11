@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+ // option allow_alias = true;
+
 option java_package = "ir.ms.pb";
 option java_outer_classname = "PB2";
 option java_multiple_files = true;
@@ -8,7 +10,8 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 option go_package = "x";
 
 enum GenderEnum {
-    UNKNOWN = 0;
+	// option allow_alias = true;
+    UNKNOWN_GENDER = 0;
     MALE = 1;
     FEMALE = 2;
 }
@@ -31,6 +34,7 @@ enum PlatformEnum {
 }
 
 enum RoomMessageTypeEnum {
+	//UNKNOWN = 0;
     TEXT = 0;
     IMAGE = 1;
     IMAGE_TEXT = 2;
@@ -44,8 +48,8 @@ enum RoomMessageTypeEnum {
     FILE = 9;
     FILE_TEXT = 10;
     LOCATION = 11;
-    LOG = 12;
-    CONTACT = 13;
+    CONTACT = 12;
+    LOG = 100; //from 100 to 200 all are log types
 }
 
 enum RoomMessageDeliviryStatusEnum {
@@ -244,4 +248,12 @@ enum MessageMetaUpdatesTypesEnum {
     DELIVIERD_PEER = 2;
     SEEN = 4;
     DELETE_SERVER = 3;
+}
+
+enum DirectMessageSourceEnum {
+	EMPTY_SOURCE = 0;
+    COMPOSE_SOURCE = 1;
+    FORWARD_SOURCE = 2;
+    BROADCAST_SOURCE = 3;
+     // FEMALE = 12;
 }

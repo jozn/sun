@@ -89,6 +89,7 @@ func (p *Post) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.post (` +
 		`UserId, TypeId, Text, FormatedText, MediaCount, SharedTo, DisableComment, HasTag, LikesCount, CommentsCount, EditedTime, CreatedTime` +
 		`) VALUES (` +

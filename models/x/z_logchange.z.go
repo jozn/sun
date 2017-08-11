@@ -69,29 +69,21 @@ func (lc *LogChange) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.log_changes (` +
-		`T` +
+		`Id, T` +
 		`) VALUES (` +
-		`?` +
+		`?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, lc.T)
-	res, err := db.Exec(sqlstr, lc.T)
+	XOLog(sqlstr, lc.Id, lc.T)
+	_, err = db.Exec(sqlstr, lc.Id, lc.T)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	lc.Id = int(id)
 	lc._exists = true
 
 	OnLogChange_AfterInsert(lc)

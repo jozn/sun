@@ -83,6 +83,7 @@ func (gm *GroupMember) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.group_member (` +
 		`GroupId, GroupKey, UserId, ByUserId, GroupRoleEnum, CreatedTime` +
 		`) VALUES (` +

@@ -203,6 +203,14 @@ type PB_CommandReceivedToClient_Flat struct {
 	ServerCallId int
 }
 
+type PB_ResToClient_Flat struct {
+	ClientCallId int
+
+	PBClass string
+
+	Data []byte
+}
+
 type PB_UserWithMe_Flat struct {
 	UserId int
 
@@ -830,6 +838,15 @@ func (m *PB_CommandReceivedToServer) ToFlat() *PB_CommandReceivedToServer_Flat {
 func (m *PB_CommandReceivedToClient) ToFlat() *PB_CommandReceivedToClient_Flat {
 	r := &PB_CommandReceivedToClient_Flat{
 		ServerCallId: int(m.ServerCallId),
+	}
+	return r
+}
+
+func (m *PB_ResToClient) ToFlat() *PB_ResToClient_Flat {
+	r := &PB_ResToClient_Flat{
+		ClientCallId: int(m.ClientCallId),
+		PBClass:      m.PBClass,
+		Data:         []byte(m.Data),
 	}
 	return r
 }
@@ -1533,6 +1550,15 @@ func (m *PB_CommandReceivedToServer_Flat) ToPB() *PB_CommandReceivedToServer {
 func (m *PB_CommandReceivedToClient_Flat) ToPB() *PB_CommandReceivedToClient {
 	r := &PB_CommandReceivedToClient{
 		ServerCallId: int64(m.ServerCallId),
+	}
+	return r
+}
+
+func (m *PB_ResToClient_Flat) ToPB() *PB_ResToClient {
+	r := &PB_ResToClient{
+		ClientCallId: int64(m.ClientCallId),
+		PBClass:      m.PBClass,
+		Data:         m.Data,
 	}
 	return r
 }

@@ -29,6 +29,12 @@ message PB_CommandReceivedToClient {
 	int64 ServerCallId = 1;
 }
 
+message PB_ResToClient {
+    int64 ClientCallId = 1;
+    string PBClass = 2;
+    bytes Data = 3;
+}
+
 
 /////////////////////////////////
 

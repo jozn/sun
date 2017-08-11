@@ -7,6 +7,7 @@ import (
 	"github.com/hokaccha/go-prettyjson"
 	"github.com/kr/pretty"
 	"math/rand"
+	"ms/sun/config"
 	"runtime"
 	"strconv"
 	"strings"
@@ -81,7 +82,7 @@ func TimeNowMs64() int64 {
 }
 
 func DebugPrintln(msgs ...interface{}) {
-	if true {
+	if config.IS_DEBUG {
 		fmt.Println(msgs...)
 	}
 }

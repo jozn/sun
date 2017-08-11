@@ -24,6 +24,15 @@ func NewDirectMessagingByUsers(me, peer int) *directMessaging {
 }
 
 func NewDirectMessagingByChatId(me, chatId int) (*directMessaging, error) {
+	/* if me <=  0 {
+	       return  nil,errors.New("not user")
+	   }
+	   if chatId > 0 {
+	       ch, err := x.Store.GetChatByChatId(chatId)
+	       if err != nil {
+
+	       }
+	   }*/
 	ch, err := x.NewChat_Selector().ChatId_Eq(chatId).UserId_Eq(me).GetRow(base.DB)
 	if err != nil {
 		return nil, err
@@ -77,7 +86,7 @@ func (s *directMessaging) AddMessage(msg *x.DirectMessage) {
 		ChatId:     s.MeChat.ChatId,
 		MessageId:  msg.MessageId,
 		Seq:        s.MeChat.CurrentSeq,
-		SourceEnum: 0,
+		SourceEnum: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
 	}
 
 	d2mPeer := x.DirectToMessage{
@@ -85,7 +94,7 @@ func (s *directMessaging) AddMessage(msg *x.DirectMessage) {
 		ChatId:     s.PeerChat.ChatId,
 		MessageId:  msg.MessageId,
 		Seq:        s.PeerChat.CurrentSeq,
-		SourceEnum: 0,
+		SourceEnum: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
 	}
 
 	tx, err := base.DB.Begin()
@@ -94,10 +103,13 @@ func (s *directMessaging) AddMessage(msg *x.DirectMessage) {
 	}
 
 	s.PeerChat.Save(tx)
-	s.PeerChat.Save(tx)
+	s.MeChat.Save(tx)
 	d2mMe.Insert(tx)
 	d2mPeer.Insert(tx)
-	tx.Commit()
+	err = tx.Commit()
+	if err != nil {
+		return
+	}
 
 	//todo add to chanels logs
 }

@@ -82,6 +82,7 @@ func (sc *SearchClicked) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.search_clicked (` +
 		`Query, ClickType, TargetId, UserId, CreatedAt` +
 		`) VALUES (` +

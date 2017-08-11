@@ -81,6 +81,7 @@ func (t *Tag) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.tags (` +
 		`Name, Count, IsBlocked, CreatedTime` +
 		`) VALUES (` +

@@ -47,11 +47,20 @@ func init() {
 	x.RPC_ResponseHandler = rpcResHand
 }
 
-func (rpcResHandeler) HandleOfflineResult(i interface{}, c x.PB_CommandToServer, p x.RPC_UserParam) {
-	fmt.Println("implement me", i, c, p)
-	res, ok := i.(proto.Message)
+func (rpcResHandeler) HandleOfflineResult(i interface{}, PBClass string, c x.PB_CommandToServer, p x.RPC_UserParam) {
+	//fmt.Println("implement me", i, c, p)
+	resOfRpcFunc, ok := i.(proto.Message)
 	if ok {
-		cmd := NewPB_CommandToClient_WithData("cmd_res", res)
+		data, err := proto.Marshal(resOfRpcFunc)
+		if err != nil {
+			return
+		}
+		resToClient := &x.PB_ResToClient{
+			ClientCallId: int64(c.ClientCallId),
+			PBClass:      PBClass,
+			Data:         data,
+		}
+		cmd := NewPB_CommandToClient_WithData("PB_ResToClient", resToClient)
 		AllPipesMap.SendToUser(p.GetUserId(), cmd)
 	}
 

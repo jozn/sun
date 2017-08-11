@@ -79,6 +79,7 @@ func (up *UserPassword) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.user_password (` +
 		`Password, CreatedTime` +
 		`) VALUES (` +

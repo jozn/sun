@@ -83,6 +83,7 @@ func (m *Media) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.media (` +
 		`UserId, PostId, AlbumId, TypeId, CreatedTime, Src` +
 		`) VALUES (` +

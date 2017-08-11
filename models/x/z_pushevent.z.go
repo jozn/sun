@@ -85,6 +85,7 @@ func (pe *PushEvent) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.push_event (` +
 		`ToUserId, ToDeviceId, MessageId, RoomTypeEnum, RoomId, PeerUserId, PushEventTypeEnum, AtTime` +
 		`) VALUES (` +

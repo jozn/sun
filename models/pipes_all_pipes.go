@@ -7,7 +7,6 @@ import (
 	"ms/sun/models/x"
 
 	"github.com/gorilla/websocket"
-    "sync/atomic"
 )
 
 //todo change UserDevicePipe => *UserDevicePipe

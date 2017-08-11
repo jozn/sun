@@ -85,6 +85,7 @@ func (ompe *OldMsgPushEvent) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.old_msg_push_event (` +
 		`Uid, ToUserId, MsgUid, MsgKey, RoomKey, PeerUserId, EventType, AtTime` +
 		`) VALUES (` +
@@ -3508,6 +3509,49 @@ func OldMsgPushEventsByToUserId(db XODB, toUserId int) ([]*OldMsgPushEvent, erro
 	// run query
 	XOLog(sqlstr, toUserId)
 	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*OldMsgPushEvent{}
+	for q.Next() {
+		ompe := OldMsgPushEvent{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&ompe.Id, &ompe.Uid, &ompe.ToUserId, &ompe.MsgUid, &ompe.MsgKey, &ompe.RoomKey, &ompe.PeerUserId, &ompe.EventType, &ompe.AtTime)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &ompe)
+	}
+
+	OnOldMsgPushEvent_LoadMany(res)
+
+	return res, nil
+}
+
+// OldMsgPushEventsByUid retrieves a row from 'ms.old_msg_push_event' as a OldMsgPushEvent.
+//
+// Generated from index 'Uid'.
+func OldMsgPushEventsByUid(db XODB, uid int) ([]*OldMsgPushEvent, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, Uid, ToUserId, MsgUid, MsgKey, RoomKey, PeerUserId, EventType, AtTime ` +
+		`FROM ms.old_msg_push_event ` +
+		`WHERE Uid = ?`
+
+	// run query
+	XOLog(sqlstr, uid)
+	q, err := db.Query(sqlstr, uid)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

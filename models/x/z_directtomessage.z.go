@@ -45,30 +45,21 @@ func (dtm *DirectToMessage) Insert(db XODB) error {
 		return errors.New("insert failed: already exists")
 	}
 
-	// sql insert query, primary key provided by autoincrement
+	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.direct_to_message (` +
-		`ChatId, MessageId, Seq, SourceEnum` +
+		`Id, ChatId, MessageId, Seq, SourceEnum` +
 		`) VALUES (` +
-		`?, ?, ?, ?` +
+		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
-	res, err := db.Exec(sqlstr, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
+	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
+	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
 	if err != nil {
-		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	dtm.Id = int(id)
+	// set existence
 	dtm._exists = true
 
 	OnDirectToMessage_AfterInsert(dtm)
@@ -81,29 +72,21 @@ func (dtm *DirectToMessage) Replace(db XODB) error {
 	var err error
 
 	// sql query
+
 	const sqlstr = `REPLACE INTO ms.direct_to_message (` +
-		`ChatId, MessageId, Seq, SourceEnum` +
+		`Id, ChatId, MessageId, Seq, SourceEnum` +
 		`) VALUES (` +
-		`?, ?, ?, ?` +
+		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
-	res, err := db.Exec(sqlstr, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
+	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
+	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	dtm.Id = int(id)
 	dtm._exists = true
 
 	OnDirectToMessage_AfterInsert(dtm)
