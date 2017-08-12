@@ -67,6 +67,19 @@ public class J {
 		public Integer DeliviryStatusEnum;
 	}
 
+	public static class DirectMessage2 {
+		public Integer MessageId;
+		public String RoomKey;
+		public Integer UserId;
+		public Integer MessageFileId;
+		public Integer MessageTypeEnum;
+		public String Text;
+		public Integer Time;
+		public Integer PeerReceivedTime;
+		public Integer PeerSeenTime;
+		public Integer DeliviryStatusEnum;
+	}
+
 	public static class DirectToMessage {
 		public Integer Id;
 		public Integer ChatId;

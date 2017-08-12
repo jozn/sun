@@ -161,6 +161,36 @@ type DirectMessage struct {
 	DeliviryStatusEnum: 0,
 */
 
+// DirectMessage2 'ms.direct_message2'.
+type DirectMessage2 struct {
+	MessageId          int
+	RoomKey            string
+	UserId             int
+	MessageFileId      int
+	MessageTypeEnum    int
+	Text               string
+	Time               int
+	PeerReceivedTime   int
+	PeerSeenTime       int
+	DeliviryStatusEnum int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &DirectMessage2 {
+	MessageId: 0,
+	RoomKey: "",
+	UserId: 0,
+	MessageFileId: 0,
+	MessageTypeEnum: 0,
+	Text: "",
+	Time: 0,
+	PeerReceivedTime: 0,
+	PeerSeenTime: 0,
+	DeliviryStatusEnum: 0,
+*/
+
 // DirectToMessage 'ms.direct_to_message'.
 type DirectToMessage struct {
 	Id         int
