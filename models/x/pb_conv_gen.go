@@ -1,4 +1,6 @@
+
 package x
+
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -119,6 +121,39 @@ func PBConvPB__DirectLog_To_DirectLog( o *PB_DirectLog) *DirectLog {
      n := &DirectLog{
       Id: int ( o.Id ),
       ToUserId: int ( o.ToUserId ),
+      MessageId: int ( o.MessageId ),
+      ChatId: int ( o.ChatId ),
+      PeerUserId: int ( o.PeerUserId ),
+      EventType: int ( o.EventType ),
+      LogEnumTypeId: int ( o.LogEnumTypeId ),
+      ExtraPB: []byte ( o.ExtraPB ),
+      ExtraJson: string ( o.ExtraJson ),
+      AtTimeMs: int ( o.AtTimeMs ),
+    }
+    return n
+}
+
+func PBConvPB_DirectLog_To_DirectLog ( o *DirectLog) *PB_DirectLog {
+     n := &PB_DirectLog{
+      Id: int64 ( o.Id ),
+      ToUserId: int32 ( o.ToUserId ),
+      MessageId: int64 ( o.MessageId ),
+      ChatId: int64 ( o.ChatId ),
+      PeerUserId: int32 ( o.PeerUserId ),
+      EventType: int32 ( o.EventType ),
+      LogEnumTypeId: int32 ( o.LogEnumTypeId ),
+      ExtraPB: []byte ( o.ExtraPB ),
+      ExtraJson: string ( o.ExtraJson ),
+      AtTimeMs: int64 ( o.AtTimeMs ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__DirectLog2_To_DirectLog2( o *PB_DirectLog2) *DirectLog2 {
+     n := &DirectLog2{
+      Id: int ( o.Id ),
+      ToUserId: int ( o.ToUserId ),
       ChatId: int ( o.ChatId ),
       LogTypeEnumId: int ( o.LogTypeEnumId ),
       DataPB: []byte ( o.DataPB ),
@@ -128,8 +163,8 @@ func PBConvPB__DirectLog_To_DirectLog( o *PB_DirectLog) *DirectLog {
     return n
 }
 
-func PBConvPB_DirectLog_To_DirectLog ( o *DirectLog) *PB_DirectLog {
-     n := &PB_DirectLog{
+func PBConvPB_DirectLog2_To_DirectLog2 ( o *DirectLog2) *PB_DirectLog2 {
+     n := &PB_DirectLog2{
       Id: int64 ( o.Id ),
       ToUserId: int32 ( o.ToUserId ),
       ChatId: int64 ( o.ChatId ),
@@ -160,39 +195,6 @@ func PBConvPB__DirectMessage_To_DirectMessage( o *PB_DirectMessage) *DirectMessa
 
 func PBConvPB_DirectMessage_To_DirectMessage ( o *DirectMessage) *PB_DirectMessage {
      n := &PB_DirectMessage{
-      MessageId: int64 ( o.MessageId ),
-      RoomKey: string ( o.RoomKey ),
-      UserId: int32 ( o.UserId ),
-      MessageFileId: int64 ( o.MessageFileId ),
-      MessageTypeEnum: int32 ( o.MessageTypeEnum ),
-      Text: string ( o.Text ),
-      Time: int32 ( o.Time ),
-      PeerReceivedTime: int32 ( o.PeerReceivedTime ),
-      PeerSeenTime: int32 ( o.PeerSeenTime ),
-      DeliviryStatusEnum: int32 ( o.DeliviryStatusEnum ),
-    }
-    return n
-}
-*/
-/*
-func PBConvPB__DirectMessage2_To_DirectMessage2( o *PB_DirectMessage2) *DirectMessage2 {
-     n := &DirectMessage2{
-      MessageId: int ( o.MessageId ),
-      RoomKey: string ( o.RoomKey ),
-      UserId: int ( o.UserId ),
-      MessageFileId: int ( o.MessageFileId ),
-      MessageTypeEnum: int ( o.MessageTypeEnum ),
-      Text: string ( o.Text ),
-      Time: int ( o.Time ),
-      PeerReceivedTime: int ( o.PeerReceivedTime ),
-      PeerSeenTime: int ( o.PeerSeenTime ),
-      DeliviryStatusEnum: int ( o.DeliviryStatusEnum ),
-    }
-    return n
-}
-
-func PBConvPB_DirectMessage2_To_DirectMessage2 ( o *DirectMessage2) *PB_DirectMessage2 {
-     n := &PB_DirectMessage2{
       MessageId: int64 ( o.MessageId ),
       RoomKey: string ( o.RoomKey ),
       UserId: int32 ( o.UserId ),

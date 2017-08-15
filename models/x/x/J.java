@@ -46,6 +46,19 @@ public class J {
 
 	public static class DirectLog {
 		public Integer Id;
+		public Integer ToUserId;
+		public Integer MessageId;
+		public Integer ChatId;
+		public Integer PeerUserId;
+		public Integer EventType;
+		public Integer LogEnumTypeId;
+		public UNKNOWN ExtraPB;
+		public String ExtraJson;
+		public Integer AtTimeMs;
+	}
+
+	public static class DirectLog2 {
+		public Integer Id;
 		public UNKNOWN ToUserId;
 		public UNKNOWN ChatId;
 		public UNKNOWN LogTypeEnumId;
@@ -55,19 +68,6 @@ public class J {
 	}
 
 	public static class DirectMessage {
-		public Integer MessageId;
-		public String RoomKey;
-		public Integer UserId;
-		public Integer MessageFileId;
-		public Integer MessageTypeEnum;
-		public String Text;
-		public Integer Time;
-		public Integer PeerReceivedTime;
-		public Integer PeerSeenTime;
-		public Integer DeliviryStatusEnum;
-	}
-
-	public static class DirectMessage2 {
 		public Integer MessageId;
 		public String RoomKey;
 		public Integer UserId;

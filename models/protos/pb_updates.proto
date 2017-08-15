@@ -91,13 +91,13 @@ enum UpdateLogEnum {
     UPDATE_SERVICE_NOTIFICATION = 15;
 }
 
-/*UpdateNewMessage = 1;
-   UpdateMessageId = 2;
-   UpdateSeenMessages = 3;
-   UpdateDelivierdMessages = 4;
-   UpdateDeletedFromServerMessages = 5;
-   UpdateDeleteMessages = 6;
-   UpdateRoomActionDoing = 10;
-   UpdateUserBlocked = 11;
-   UpdateNotifySettings = 12;
-   UpdateServiceNotification = 15;*/
+///*UpdateNewMessage = 1;
+//   UpdateMessageId = 2;
+//   UpdateSeenMessages = 3;
+//   UpdateDelivierdMessages = 4;
+//   UpdateDeletedFromServerMessages = 5;
+//   UpdateDeleteMessages = 6;
+//   UpdateRoomActionDoing = 10;
+//   UpdateUserBlocked = 11;
+//   UpdateNotifySettings = 12;
+//   UpdateServiceNotification = 15;*/

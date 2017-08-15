@@ -110,6 +110,36 @@ type Comment struct {
 // DirectLog 'ms.direct_log'.
 type DirectLog struct {
 	Id            int
+	ToUserId      int
+	MessageId     int
+	ChatId        int
+	PeerUserId    int
+	EventType     int
+	LogEnumTypeId int
+	ExtraPB       []byte
+	ExtraJson     string
+	AtTimeMs      int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &DirectLog {
+	Id: 0,
+	ToUserId: 0,
+	MessageId: 0,
+	ChatId: 0,
+	PeerUserId: 0,
+	EventType: 0,
+	LogEnumTypeId: 0,
+	ExtraPB: UNKNOWN,
+	ExtraJson: "",
+	AtTimeMs: 0,
+*/
+
+// DirectLog2 'ms.direct_log2'.
+type DirectLog2 struct {
+	Id            int
 	ToUserId      sql.NullInt64
 	ChatId        sql.NullInt64
 	LogTypeEnumId sql.NullInt64
@@ -121,7 +151,7 @@ type DirectLog struct {
 }
 
 /*
-:= &DirectLog {
+:= &DirectLog2 {
 	Id: 0,
 	ToUserId: UNKNOWN,
 	ChatId: UNKNOWN,
@@ -149,36 +179,6 @@ type DirectMessage struct {
 
 /*
 := &DirectMessage {
-	MessageId: 0,
-	RoomKey: "",
-	UserId: 0,
-	MessageFileId: 0,
-	MessageTypeEnum: 0,
-	Text: "",
-	Time: 0,
-	PeerReceivedTime: 0,
-	PeerSeenTime: 0,
-	DeliviryStatusEnum: 0,
-*/
-
-// DirectMessage2 'ms.direct_message2'.
-type DirectMessage2 struct {
-	MessageId          int
-	RoomKey            string
-	UserId             int
-	MessageFileId      int
-	MessageTypeEnum    int
-	Text               string
-	Time               int
-	PeerReceivedTime   int
-	PeerSeenTime       int
-	DeliviryStatusEnum int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &DirectMessage2 {
 	MessageId: 0,
 	RoomKey: "",
 	UserId: 0,

@@ -44,6 +44,18 @@ message PB_Comment {
 message PB_DirectLog {
     int64 Id = 1;
     int32 ToUserId = 3;
+    int64 MessageId = 5;
+    int64 ChatId = 7;
+    int32 PeerUserId = 9;
+    int32 EventType = 11;
+    int32 LogEnumTypeId = 13;
+    ???? ExtraPB = 15;
+    string ExtraJson = 17;
+    int64 AtTimeMs = 19;
+}
+message PB_DirectLog2 {
+    int64 Id = 1;
+    int32 ToUserId = 3;
     int64 ChatId = 5;
     int32 LogTypeEnumId = 7;
     ???? DataPB = 9;
@@ -51,18 +63,6 @@ message PB_DirectLog {
     int32 Created = 13;
 }
 message PB_DirectMessage {
-    int64 MessageId = 1;
-    string RoomKey = 3;
-    int32 UserId = 5;
-    int64 MessageFileId = 7;
-    int32 MessageTypeEnum = 9;
-    string Text = 11;
-    int32 Time = 13;
-    int32 PeerReceivedTime = 15;
-    int32 PeerSeenTime = 17;
-    int32 DeliviryStatusEnum = 19;
-}
-message PB_DirectMessage2 {
     int64 MessageId = 1;
     string RoomKey = 3;
     int32 UserId = 5;

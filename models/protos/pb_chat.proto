@@ -132,3 +132,17 @@ message PB_MessagesCollections {
     repeated int64 GroupMessagesIds = 20;
     repeated int64 BroadCatMessagesIds = 21;
 }
+
+
+enum RoomLogTypeEnum {
+    UNKNOWN_ROOM_UPDATE_LOG = 0;
+    NEW_DIRECT_MESSAGE = 1;
+    CHANGE_MESSAGE_ID = 2;
+    MESSAGE_RECIVED_TO_SERVER = 3;
+    MESSAGE_DELIVIERD_TO_PEER = 4;
+    MESSAGE_SEEN_BY_PEER = 5;
+    MESSAGE_DELETED_FROM_SERVER = 6;
+    MESSAGE_UPDATE_BY_USER = 7;
+    MESSAGE_DELET_BY_USER = 8;
+    ROOM_ACTION_DOING = 10;
+}
