@@ -78,15 +78,26 @@ message PB_UpdateEditMessage{
 
 /////////////////////////////////////////////
 enum UpdateLogEnum {
-    EMPTY_UPDATE_LOG = 0;
-    PB_UpdateNewMessage = 1;
-    PB_UpdateMessageId = 2;
-    PB_UpdateSeenMessages = 3;
-    PB_UpdateDelivierdMessages = 4;
-    PB_UpdateDeletedFromServerMessages = 5;
-    PB_UpdateDeleteMessages = 6;
-    PB_UpdateRoomActionDoing = 10;
-    PB_UpdateUserBlocked = 11;
-    PB_UpdateNotifySettings = 12;
-    PB_UpdateServiceNotification = 15;
+    UNKNOWN_UPDATE_LOG = 0;
+    UPDATE_NEWMESSAGE = 1;
+    UPDATE_MESSAGE_ID = 2;
+    UPDATE_SEENMESSAGES = 3;
+    UPDATE_DELIVIERD_MESSAGES = 4;
+    UPDATE_DELETED_FROM_SERVERM_ESSAGES = 5;
+    UPDATE_DELETE_MESSAGES = 6;
+    UPDATE_ROOM_ACTIONDOING = 10;
+    UPDATE_USER_BLOCKED = 11;
+    UPDATE_NOTIF_YSETTINGS = 12;
+    UPDATE_SERVICE_NOTIFICATION = 15;
 }
+
+/*UpdateNewMessage = 1;
+   UpdateMessageId = 2;
+   UpdateSeenMessages = 3;
+   UpdateDelivierdMessages = 4;
+   UpdateDeletedFromServerMessages = 5;
+   UpdateDeleteMessages = 6;
+   UpdateRoomActionDoing = 10;
+   UpdateUserBlocked = 11;
+   UpdateNotifySettings = 12;
+   UpdateServiceNotification = 15;*/

@@ -106,7 +106,7 @@ func (m *PB_MsgParam_SetRoomActionDoing) GetActionType() RoomActionDoingEnum {
 	if m != nil {
 		return m.ActionType
 	}
-	return RoomActionDoingEnum_CANCEL
+	return RoomActionDoingEnum_UNKNOWN_ROOM_ACTION_DOING
 }
 
 type PB_MsgResponse_SetRoomActionDoing struct {
@@ -421,7 +421,7 @@ func (m *PB_MsgParam_EditMessage) GetRoomType() RoomTypeEnum {
 	if m != nil {
 		return m.RoomType
 	}
-	return RoomTypeEnum_DIRECT
+	return RoomTypeEnum_UNKNOWN_ROOM_TYPE
 }
 
 func (m *PB_MsgParam_EditMessage) GetMessageId() int64 {

@@ -11,6 +11,7 @@ It is generated from these files:
 	pb_rpc_auth2.proto
 	pb_rpc_msg.proto
 	pb_rpc_user.proto
+	pb_updates.proto
 
 It has these top-level messages:
 	PB_RoomInlineView
@@ -92,6 +93,19 @@ It has these top-level messages:
 	PB_UserParam_CheckUserName
 	PB_UserResponse_CheckUserName
 	UserView
+	PB_UpdateNewMessage
+	PB_UpdateMessageId
+	PB_UpdateSeenMessages
+	PB_UpdateDelivierdMessages
+	PB_UpdateDeletedFromServerMessages
+	PB_UpdateDeleteMessages
+	PB_UpdateRestoreMessage
+	PB_UpdateRoomActionDoing
+	PB_UpdateGroupParticipants
+	PB_UpdateUserBlocked
+	PB_UpdateNotifySettings
+	PB_UpdateServiceNotification
+	PB_UpdateEditMessage
 */
 package x
 
@@ -136,7 +150,7 @@ func (m *PB_RoomInlineView) GetRoomTypeEnum() RoomTypeEnum {
 	if m != nil {
 		return m.RoomTypeEnum
 	}
-	return RoomTypeEnum_DIRECT
+	return RoomTypeEnum_UNKNOWN_ROOM_TYPE
 }
 
 type PB_MessageForwardedFrom struct {
@@ -162,7 +176,7 @@ func (m *PB_MessageForwardedFrom) GetRoomTypeEnum() RoomTypeEnum {
 	if m != nil {
 		return m.RoomTypeEnum
 	}
-	return RoomTypeEnum_DIRECT
+	return RoomTypeEnum_UNKNOWN_ROOM_TYPE
 }
 
 func (m *PB_MessageForwardedFrom) GetMessageId() int64 {
