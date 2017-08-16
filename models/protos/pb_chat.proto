@@ -143,6 +143,31 @@ enum RoomLogTypeEnum {
     MESSAGE_SEEN_BY_PEER = 5;
     MESSAGE_DELETED_FROM_SERVER = 6;
     MESSAGE_UPDATE_BY_USER = 7;
-    MESSAGE_DELET_BY_USER = 8;
+    MESSAGE_DELETE_BY_USER = 8;
     ROOM_ACTION_DOING = 10;
+}
+
+
+message PB_DirectLogView {
+    PB_DirectLog Row = 1;
+    PB_MessageView NewMessage = 2;
+}
+
+message PB_DirectLog {
+    int64 Id = 1;
+    int32 ToUserId = 3;
+    int64 MessageId = 5;
+    int64 ChatId = 7;
+    int32 PeerUserId = 9;
+    int32 EventType = 11;
+    int32 RoomLogTypeId = 13;
+    int32 FromSeq = 15;
+    int32 ToSeq = 17;
+    bytes ExtraPB = 19;
+    string ExtraJson = 21;
+    int64 AtTimeMs = 23;
+}
+
+message PB_PushDirectLogsMany {
+    repeated PB_DirectLogView Rows = 1;
 }

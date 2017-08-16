@@ -22,7 +22,9 @@ type DirectLog__ struct {
 	ChatId        int    `json:"ChatId"`        // ChatId -
 	PeerUserId    int    `json:"PeerUserId"`    // PeerUserId -
 	EventType     int    `json:"EventType"`     // EventType -
-	LogEnumTypeId int    `json:"LogEnumTypeId"` // LogEnumTypeId -
+	RoomLogTypeId int    `json:"RoomLogTypeId"` // RoomLogTypeId -
+	FromSeq       int    `json:"FromSeq"`       // FromSeq -
+	ToSeq         int    `json:"ToSeq"`         // ToSeq -
 	ExtraPB       []byte `json:"ExtraPB"`       // ExtraPB -
 	ExtraJson     string `json:"ExtraJson"`     // ExtraJson -
 	AtTimeMs      int    `json:"AtTimeMs"`      // AtTimeMs -
@@ -52,14 +54,14 @@ func (dl *DirectLog) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.direct_log (` +
-		`ToUserId, MessageId, ChatId, PeerUserId, EventType, LogEnumTypeId, ExtraPB, ExtraJson, AtTimeMs` +
+		`ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.LogEnumTypeId, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
-	res, err := db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.LogEnumTypeId, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
+	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
+	res, err := db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -88,14 +90,14 @@ func (dl *DirectLog) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.direct_log (` +
-		`ToUserId, MessageId, ChatId, PeerUserId, EventType, LogEnumTypeId, ExtraPB, ExtraJson, AtTimeMs` +
+		`ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.LogEnumTypeId, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
-	res, err := db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.LogEnumTypeId, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
+	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
+	res, err := db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -133,12 +135,12 @@ func (dl *DirectLog) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.direct_log SET ` +
-		`ToUserId = ?, MessageId = ?, ChatId = ?, PeerUserId = ?, EventType = ?, LogEnumTypeId = ?, ExtraPB = ?, ExtraJson = ?, AtTimeMs = ?` +
+		`ToUserId = ?, MessageId = ?, ChatId = ?, PeerUserId = ?, EventType = ?, RoomLogTypeId = ?, FromSeq = ?, ToSeq = ?, ExtraPB = ?, ExtraJson = ?, AtTimeMs = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.LogEnumTypeId, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs, dl.Id)
-	_, err = db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.LogEnumTypeId, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs, dl.Id)
+	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs, dl.Id)
+	_, err = db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs, dl.Id)
 
 	XOLogErr(err)
 	OnDirectLog_AfterUpdate(dl)
@@ -869,106 +871,316 @@ func (d *__DirectLog_Deleter) EventType_GE(val int) *__DirectLog_Deleter {
 	return d
 }
 
-func (u *__DirectLog_Deleter) LogEnumTypeId_In(ins []int) *__DirectLog_Deleter {
+func (u *__DirectLog_Deleter) RoomLogTypeId_In(ins []int) *__DirectLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LogEnumTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomLogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectLog_Deleter) LogEnumTypeId_Ins(ins ...int) *__DirectLog_Deleter {
+func (u *__DirectLog_Deleter) RoomLogTypeId_Ins(ins ...int) *__DirectLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LogEnumTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomLogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectLog_Deleter) LogEnumTypeId_NotIn(ins []int) *__DirectLog_Deleter {
+func (u *__DirectLog_Deleter) RoomLogTypeId_NotIn(ins []int) *__DirectLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LogEnumTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomLogTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectLog_Deleter) LogEnumTypeId_Eq(val int) *__DirectLog_Deleter {
+func (d *__DirectLog_Deleter) RoomLogTypeId_Eq(val int) *__DirectLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId = ? "
+	w.condition = " RoomLogTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Deleter) LogEnumTypeId_NotEq(val int) *__DirectLog_Deleter {
+func (d *__DirectLog_Deleter) RoomLogTypeId_NotEq(val int) *__DirectLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId != ? "
+	w.condition = " RoomLogTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Deleter) LogEnumTypeId_LT(val int) *__DirectLog_Deleter {
+func (d *__DirectLog_Deleter) RoomLogTypeId_LT(val int) *__DirectLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId < ? "
+	w.condition = " RoomLogTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Deleter) LogEnumTypeId_LE(val int) *__DirectLog_Deleter {
+func (d *__DirectLog_Deleter) RoomLogTypeId_LE(val int) *__DirectLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId <= ? "
+	w.condition = " RoomLogTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Deleter) LogEnumTypeId_GT(val int) *__DirectLog_Deleter {
+func (d *__DirectLog_Deleter) RoomLogTypeId_GT(val int) *__DirectLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId > ? "
+	w.condition = " RoomLogTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Deleter) LogEnumTypeId_GE(val int) *__DirectLog_Deleter {
+func (d *__DirectLog_Deleter) RoomLogTypeId_GE(val int) *__DirectLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId >= ? "
+	w.condition = " RoomLogTypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectLog_Deleter) FromSeq_In(ins []int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Deleter) FromSeq_Ins(ins ...int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Deleter) FromSeq_NotIn(ins []int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromSeq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectLog_Deleter) FromSeq_Eq(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) FromSeq_NotEq(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) FromSeq_LT(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) FromSeq_LE(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) FromSeq_GT(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) FromSeq_GE(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectLog_Deleter) ToSeq_In(ins []int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Deleter) ToSeq_Ins(ins ...int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Deleter) ToSeq_NotIn(ins []int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToSeq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectLog_Deleter) ToSeq_Eq(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) ToSeq_NotEq(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) ToSeq_LT(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) ToSeq_LE(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) ToSeq_GT(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) ToSeq_GE(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1715,106 +1927,316 @@ func (d *__DirectLog_Updater) EventType_GE(val int) *__DirectLog_Updater {
 	return d
 }
 
-func (u *__DirectLog_Updater) LogEnumTypeId_In(ins []int) *__DirectLog_Updater {
+func (u *__DirectLog_Updater) RoomLogTypeId_In(ins []int) *__DirectLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LogEnumTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomLogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectLog_Updater) LogEnumTypeId_Ins(ins ...int) *__DirectLog_Updater {
+func (u *__DirectLog_Updater) RoomLogTypeId_Ins(ins ...int) *__DirectLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LogEnumTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomLogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectLog_Updater) LogEnumTypeId_NotIn(ins []int) *__DirectLog_Updater {
+func (u *__DirectLog_Updater) RoomLogTypeId_NotIn(ins []int) *__DirectLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LogEnumTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomLogTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectLog_Updater) LogEnumTypeId_Eq(val int) *__DirectLog_Updater {
+func (d *__DirectLog_Updater) RoomLogTypeId_Eq(val int) *__DirectLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId = ? "
+	w.condition = " RoomLogTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Updater) LogEnumTypeId_NotEq(val int) *__DirectLog_Updater {
+func (d *__DirectLog_Updater) RoomLogTypeId_NotEq(val int) *__DirectLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId != ? "
+	w.condition = " RoomLogTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Updater) LogEnumTypeId_LT(val int) *__DirectLog_Updater {
+func (d *__DirectLog_Updater) RoomLogTypeId_LT(val int) *__DirectLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId < ? "
+	w.condition = " RoomLogTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Updater) LogEnumTypeId_LE(val int) *__DirectLog_Updater {
+func (d *__DirectLog_Updater) RoomLogTypeId_LE(val int) *__DirectLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId <= ? "
+	w.condition = " RoomLogTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Updater) LogEnumTypeId_GT(val int) *__DirectLog_Updater {
+func (d *__DirectLog_Updater) RoomLogTypeId_GT(val int) *__DirectLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId > ? "
+	w.condition = " RoomLogTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Updater) LogEnumTypeId_GE(val int) *__DirectLog_Updater {
+func (d *__DirectLog_Updater) RoomLogTypeId_GE(val int) *__DirectLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId >= ? "
+	w.condition = " RoomLogTypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectLog_Updater) FromSeq_In(ins []int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Updater) FromSeq_Ins(ins ...int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Updater) FromSeq_NotIn(ins []int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromSeq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectLog_Updater) FromSeq_Eq(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) FromSeq_NotEq(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) FromSeq_LT(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) FromSeq_LE(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) FromSeq_GT(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) FromSeq_GE(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectLog_Updater) ToSeq_In(ins []int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Updater) ToSeq_Ins(ins ...int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Updater) ToSeq_NotIn(ins []int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToSeq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectLog_Updater) ToSeq_Eq(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) ToSeq_NotEq(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) ToSeq_LT(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) ToSeq_LE(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) ToSeq_GT(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) ToSeq_GE(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2561,106 +2983,316 @@ func (d *__DirectLog_Selector) EventType_GE(val int) *__DirectLog_Selector {
 	return d
 }
 
-func (u *__DirectLog_Selector) LogEnumTypeId_In(ins []int) *__DirectLog_Selector {
+func (u *__DirectLog_Selector) RoomLogTypeId_In(ins []int) *__DirectLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LogEnumTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomLogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectLog_Selector) LogEnumTypeId_Ins(ins ...int) *__DirectLog_Selector {
+func (u *__DirectLog_Selector) RoomLogTypeId_Ins(ins ...int) *__DirectLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LogEnumTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomLogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectLog_Selector) LogEnumTypeId_NotIn(ins []int) *__DirectLog_Selector {
+func (u *__DirectLog_Selector) RoomLogTypeId_NotIn(ins []int) *__DirectLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " LogEnumTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " RoomLogTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectLog_Selector) LogEnumTypeId_Eq(val int) *__DirectLog_Selector {
+func (d *__DirectLog_Selector) RoomLogTypeId_Eq(val int) *__DirectLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId = ? "
+	w.condition = " RoomLogTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Selector) LogEnumTypeId_NotEq(val int) *__DirectLog_Selector {
+func (d *__DirectLog_Selector) RoomLogTypeId_NotEq(val int) *__DirectLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId != ? "
+	w.condition = " RoomLogTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Selector) LogEnumTypeId_LT(val int) *__DirectLog_Selector {
+func (d *__DirectLog_Selector) RoomLogTypeId_LT(val int) *__DirectLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId < ? "
+	w.condition = " RoomLogTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Selector) LogEnumTypeId_LE(val int) *__DirectLog_Selector {
+func (d *__DirectLog_Selector) RoomLogTypeId_LE(val int) *__DirectLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId <= ? "
+	w.condition = " RoomLogTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Selector) LogEnumTypeId_GT(val int) *__DirectLog_Selector {
+func (d *__DirectLog_Selector) RoomLogTypeId_GT(val int) *__DirectLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId > ? "
+	w.condition = " RoomLogTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectLog_Selector) LogEnumTypeId_GE(val int) *__DirectLog_Selector {
+func (d *__DirectLog_Selector) RoomLogTypeId_GE(val int) *__DirectLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " LogEnumTypeId >= ? "
+	w.condition = " RoomLogTypeId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectLog_Selector) FromSeq_In(ins []int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Selector) FromSeq_Ins(ins ...int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Selector) FromSeq_NotIn(ins []int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " FromSeq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectLog_Selector) FromSeq_Eq(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) FromSeq_NotEq(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) FromSeq_LT(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) FromSeq_LE(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) FromSeq_GT(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) FromSeq_GE(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " FromSeq >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectLog_Selector) ToSeq_In(ins []int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Selector) ToSeq_Ins(ins ...int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToSeq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Selector) ToSeq_NotIn(ins []int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ToSeq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectLog_Selector) ToSeq_Eq(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) ToSeq_NotEq(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) ToSeq_LT(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) ToSeq_LE(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) ToSeq_GT(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) ToSeq_GE(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ToSeq >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3091,18 +3723,60 @@ func (u *__DirectLog_Updater) EventType_Increment(count int) *__DirectLog_Update
 
 //ints
 
-func (u *__DirectLog_Updater) LogEnumTypeId(newVal int) *__DirectLog_Updater {
-	u.updates[" LogEnumTypeId = ? "] = newVal
+func (u *__DirectLog_Updater) RoomLogTypeId(newVal int) *__DirectLog_Updater {
+	u.updates[" RoomLogTypeId = ? "] = newVal
 	return u
 }
 
-func (u *__DirectLog_Updater) LogEnumTypeId_Increment(count int) *__DirectLog_Updater {
+func (u *__DirectLog_Updater) RoomLogTypeId_Increment(count int) *__DirectLog_Updater {
 	if count > 0 {
-		u.updates[" LogEnumTypeId = LogEnumTypeId+? "] = count
+		u.updates[" RoomLogTypeId = RoomLogTypeId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" LogEnumTypeId = LogEnumTypeId-? "] = -(count) //make it positive
+		u.updates[" RoomLogTypeId = RoomLogTypeId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__DirectLog_Updater) FromSeq(newVal int) *__DirectLog_Updater {
+	u.updates[" FromSeq = ? "] = newVal
+	return u
+}
+
+func (u *__DirectLog_Updater) FromSeq_Increment(count int) *__DirectLog_Updater {
+	if count > 0 {
+		u.updates[" FromSeq = FromSeq+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" FromSeq = FromSeq-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__DirectLog_Updater) ToSeq(newVal int) *__DirectLog_Updater {
+	u.updates[" ToSeq = ? "] = newVal
+	return u
+}
+
+func (u *__DirectLog_Updater) ToSeq_Increment(count int) *__DirectLog_Updater {
+	if count > 0 {
+		u.updates[" ToSeq = ToSeq+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" ToSeq = ToSeq-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3238,18 +3912,48 @@ func (u *__DirectLog_Selector) Select_EventType() *__DirectLog_Selector {
 	return u
 }
 
-func (u *__DirectLog_Selector) OrderBy_LogEnumTypeId_Desc() *__DirectLog_Selector {
-	u.orderBy = " ORDER BY LogEnumTypeId DESC "
+func (u *__DirectLog_Selector) OrderBy_RoomLogTypeId_Desc() *__DirectLog_Selector {
+	u.orderBy = " ORDER BY RoomLogTypeId DESC "
 	return u
 }
 
-func (u *__DirectLog_Selector) OrderBy_LogEnumTypeId_Asc() *__DirectLog_Selector {
-	u.orderBy = " ORDER BY LogEnumTypeId ASC "
+func (u *__DirectLog_Selector) OrderBy_RoomLogTypeId_Asc() *__DirectLog_Selector {
+	u.orderBy = " ORDER BY RoomLogTypeId ASC "
 	return u
 }
 
-func (u *__DirectLog_Selector) Select_LogEnumTypeId() *__DirectLog_Selector {
-	u.selectCol = "LogEnumTypeId"
+func (u *__DirectLog_Selector) Select_RoomLogTypeId() *__DirectLog_Selector {
+	u.selectCol = "RoomLogTypeId"
+	return u
+}
+
+func (u *__DirectLog_Selector) OrderBy_FromSeq_Desc() *__DirectLog_Selector {
+	u.orderBy = " ORDER BY FromSeq DESC "
+	return u
+}
+
+func (u *__DirectLog_Selector) OrderBy_FromSeq_Asc() *__DirectLog_Selector {
+	u.orderBy = " ORDER BY FromSeq ASC "
+	return u
+}
+
+func (u *__DirectLog_Selector) Select_FromSeq() *__DirectLog_Selector {
+	u.selectCol = "FromSeq"
+	return u
+}
+
+func (u *__DirectLog_Selector) OrderBy_ToSeq_Desc() *__DirectLog_Selector {
+	u.orderBy = " ORDER BY ToSeq DESC "
+	return u
+}
+
+func (u *__DirectLog_Selector) OrderBy_ToSeq_Asc() *__DirectLog_Selector {
+	u.orderBy = " ORDER BY ToSeq ASC "
+	return u
+}
+
+func (u *__DirectLog_Selector) Select_ToSeq() *__DirectLog_Selector {
+	u.selectCol = "ToSeq"
 	return u
 }
 
@@ -3569,12 +4273,12 @@ func MassInsert_DirectLog(rows []DirectLog, db XODB) error {
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_log (" +
-		"ToUserId, MessageId, ChatId, PeerUserId, EventType, LogEnumTypeId, ExtraPB, ExtraJson, AtTimeMs" +
+		"ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -3587,7 +4291,9 @@ func MassInsert_DirectLog(rows []DirectLog, db XODB) error {
 		vals = append(vals, row.ChatId)
 		vals = append(vals, row.PeerUserId)
 		vals = append(vals, row.EventType)
-		vals = append(vals, row.LogEnumTypeId)
+		vals = append(vals, row.RoomLogTypeId)
+		vals = append(vals, row.FromSeq)
+		vals = append(vals, row.ToSeq)
 		vals = append(vals, row.ExtraPB)
 		vals = append(vals, row.ExtraJson)
 		vals = append(vals, row.AtTimeMs)
@@ -3608,12 +4314,12 @@ func MassInsert_DirectLog(rows []DirectLog, db XODB) error {
 func MassReplace_DirectLog(rows []DirectLog, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_log (" +
-		"ToUserId, MessageId, ChatId, PeerUserId, EventType, LogEnumTypeId, ExtraPB, ExtraJson, AtTimeMs" +
+		"ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -3626,7 +4332,9 @@ func MassReplace_DirectLog(rows []DirectLog, db XODB) error {
 		vals = append(vals, row.ChatId)
 		vals = append(vals, row.PeerUserId)
 		vals = append(vals, row.EventType)
-		vals = append(vals, row.LogEnumTypeId)
+		vals = append(vals, row.RoomLogTypeId)
+		vals = append(vals, row.FromSeq)
+		vals = append(vals, row.ToSeq)
 		vals = append(vals, row.ExtraPB)
 		vals = append(vals, row.ExtraJson)
 		vals = append(vals, row.AtTimeMs)
@@ -3666,6 +4374,10 @@ func MassReplace_DirectLog(rows []DirectLog, db XODB) error {
 
 //
 
+//
+
+//
+
 // DirectLogsByToUserId retrieves a row from 'ms.direct_log' as a DirectLog.
 //
 // Generated from index 'ToUserId'.
@@ -3674,7 +4386,7 @@ func DirectLogsByToUserId(db XODB, toUserId int) ([]*DirectLog, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MessageId, ChatId, PeerUserId, EventType, LogEnumTypeId, ExtraPB, ExtraJson, AtTimeMs ` +
+		`Id, ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
 		`FROM ms.direct_log ` +
 		`WHERE ToUserId = ?`
 
@@ -3695,7 +4407,7 @@ func DirectLogsByToUserId(db XODB, toUserId int) ([]*DirectLog, error) {
 		}
 
 		// scan
-		err = q.Scan(&dl.Id, &dl.ToUserId, &dl.MessageId, &dl.ChatId, &dl.PeerUserId, &dl.EventType, &dl.LogEnumTypeId, &dl.ExtraPB, &dl.ExtraJson, &dl.AtTimeMs)
+		err = q.Scan(&dl.Id, &dl.ToUserId, &dl.MessageId, &dl.ChatId, &dl.PeerUserId, &dl.EventType, &dl.RoomLogTypeId, &dl.FromSeq, &dl.ToSeq, &dl.ExtraPB, &dl.ExtraJson, &dl.AtTimeMs)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -3717,7 +4429,7 @@ func DirectLogById(db XODB, id int) (*DirectLog, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MessageId, ChatId, PeerUserId, EventType, LogEnumTypeId, ExtraPB, ExtraJson, AtTimeMs ` +
+		`Id, ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
 		`FROM ms.direct_log ` +
 		`WHERE Id = ?`
 
@@ -3727,7 +4439,7 @@ func DirectLogById(db XODB, id int) (*DirectLog, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&dl.Id, &dl.ToUserId, &dl.MessageId, &dl.ChatId, &dl.PeerUserId, &dl.EventType, &dl.LogEnumTypeId, &dl.ExtraPB, &dl.ExtraJson, &dl.AtTimeMs)
+	err = db.QueryRow(sqlstr, id).Scan(&dl.Id, &dl.ToUserId, &dl.MessageId, &dl.ChatId, &dl.PeerUserId, &dl.EventType, &dl.RoomLogTypeId, &dl.FromSeq, &dl.ToSeq, &dl.ExtraPB, &dl.ExtraJson, &dl.AtTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

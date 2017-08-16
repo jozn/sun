@@ -51,7 +51,9 @@ public class J {
 		public Integer ChatId;
 		public Integer PeerUserId;
 		public Integer EventType;
-		public Integer LogEnumTypeId;
+		public Integer RoomLogTypeId;
+		public Integer FromSeq;
+		public Integer ToSeq;
 		public UNKNOWN ExtraPB;
 		public String ExtraJson;
 		public Integer AtTimeMs;

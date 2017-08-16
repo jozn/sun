@@ -115,7 +115,9 @@ type DirectLog struct {
 	ChatId        int
 	PeerUserId    int
 	EventType     int
-	LogEnumTypeId int
+	RoomLogTypeId int
+	FromSeq       int
+	ToSeq         int
 	ExtraPB       []byte
 	ExtraJson     string
 	AtTimeMs      int
@@ -131,7 +133,9 @@ type DirectLog struct {
 	ChatId: 0,
 	PeerUserId: 0,
 	EventType: 0,
-	LogEnumTypeId: 0,
+	RoomLogTypeId: 0,
+	FromSeq: 0,
+	ToSeq: 0,
 	ExtraPB: UNKNOWN,
 	ExtraJson: "",
 	AtTimeMs: 0,

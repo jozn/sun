@@ -48,10 +48,12 @@ message PB_DirectLog {
     int64 ChatId = 7;
     int32 PeerUserId = 9;
     int32 EventType = 11;
-    int32 LogEnumTypeId = 13;
-    ???? ExtraPB = 15;
-    string ExtraJson = 17;
-    int64 AtTimeMs = 19;
+    int32 RoomLogTypeId = 13;
+    int32 FromSeq = 15;
+    int32 ToSeq = 17;
+    ???? ExtraPB = 19;
+    string ExtraJson = 21;
+    int64 AtTimeMs = 23;
 }
 message PB_DirectLog2 {
     int64 Id = 1;

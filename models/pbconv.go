@@ -6,6 +6,42 @@ import (
 
 //just return the by value
 
+func PBConv_PB_DirectLog_To_DirectLog(o *x.PB_DirectLog) *x.DirectLog {
+	n := &x.DirectLog{
+		Id:            int(o.Id),
+		ToUserId:      int(o.ToUserId),
+		MessageId:     int(o.MessageId),
+		ChatId:        int(o.ChatId),
+		PeerUserId:    int(o.PeerUserId),
+		EventType:     int(o.EventType),
+		RoomLogTypeId: int(o.RoomLogTypeId),
+		FromSeq:       int(o.FromSeq),
+		ToSeq:         int(o.ToSeq),
+		ExtraPB:       []byte(o.ExtraPB),
+		ExtraJson:     string(o.ExtraJson),
+		AtTimeMs:      int(o.AtTimeMs),
+	}
+	return n
+}
+
+func PBConv_DirectLog_To_DirectLog(o *x.DirectLog) *x.PB_DirectLog {
+	n := &x.PB_DirectLog{
+		Id:            int64(o.Id),
+		ToUserId:      int32(o.ToUserId),
+		MessageId:     int64(o.MessageId),
+		ChatId:        int64(o.ChatId),
+		PeerUserId:    int32(o.PeerUserId),
+		EventType:     int32(o.EventType),
+		RoomLogTypeId: int32(o.RoomLogTypeId),
+		FromSeq:       int32(o.FromSeq),
+		ToSeq:         int32(o.ToSeq),
+		ExtraPB:       []byte(o.ExtraPB),
+		ExtraJson:     string(o.ExtraJson),
+		AtTimeMs:      int64(o.AtTimeMs),
+	}
+	return n
+}
+
 /*func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {
 bytes, _ := proto.Marshal(pb)
 json := helper.ToJson(pb)

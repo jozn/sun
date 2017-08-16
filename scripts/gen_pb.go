@@ -17,7 +17,7 @@ func main() {
 	fmt.Println(os.Getwd())
 
 	cd := []string{
-		`ant`,
+		`ant.exe -alaki`,
 		`protoc --go_out=plugins=grpc:../x -I ./ *.proto`,
 		// `protoc --java_out=D:\dev_working2\MS_Native\app\src\main\java --grpc-java_out=D:\dev_working2\MS_Native\app\src\main\java *.proto`,
 		`protoc --plugin=protoc-gen-grpc-java=C:\Go\_gopath\src\ms\sun\scripts\protoc-gen-grpc-java-1.4.0-windows-x86_64.exe --java_out=D:\dev_working2\MS_Native\app\src\main\java --grpc-java_out=lite:D:\dev_working2\MS_Native\app\src\main\java *.proto`,

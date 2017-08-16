@@ -67,6 +67,7 @@ func (s *directMessaging) LoadOrCreateRooms() error {
 	return s.Err
 }
 
+///////////////// main fuctionalities ///////////////////
 func (s *directMessaging) AddMessage(msg *x.DirectMessage) {
 	s.LoadOrCreateRooms()
 	if s.Err != nil {
@@ -111,7 +112,36 @@ func (s *directMessaging) AddMessage(msg *x.DirectMessage) {
 		return
 	}
 
-	//todo add to chanels logs
+	dlNew := x.DirectLog{
+		Id:            helper.NextRowsSeqId(),
+		ToUserId:      s.PeerChat.UserId,
+		MessageId:     msg.MessageId,
+		ChatId:        s.PeerChat.ChatId,
+		PeerUserId:    s.MeChat.UserId,
+		RoomLogTypeId: int(x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE),
+		FromSeq:       -1,
+		ToSeq:         -1,
+		ExtraPB:       []byte{},
+		ExtraJson:     "",
+		AtTimeMs:      helper.TimeNowMs(),
+	}
+
+	dlRec := x.DirectLog{
+		Id:            helper.NextRowsSeqId(),
+		ToUserId:      s.MeChat.UserId,
+		MessageId:     msg.MessageId,
+		ChatId:        s.MeChat.ChatId,
+		PeerUserId:    s.PeerChat.UserId,
+		RoomLogTypeId: int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
+		FromSeq:       -1,
+		ToSeq:         -1,
+		ExtraPB:       []byte{},
+		ExtraJson:     "",
+		AtTimeMs:      helper.TimeNowMs(),
+	}
+
+	LogUpdater.HereDirectDelayer <- logDelayer{directLog: dlNew}
+	LogUpdater.HereDirectDelayer <- logDelayer{directLog: dlRec}
 }
 
 func (s *directMessaging) DeleteMessageFromMe() {
@@ -122,6 +152,7 @@ func (s *directMessaging) EditMessageFromMe() {
 
 }
 
+//todo: make this more performant with MsgIds passing
 func (s *directMessaging) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 	sel := x.NewDirectToMessage_Selector().Select_MessageId().
 		ChatId_Eq(s.MeChat.ChatId)
@@ -144,6 +175,21 @@ func (s *directMessaging) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 
 	s.MeChat.LastSeqSeen = toSeq
 
+	/*dlRec := x.DirectLog{
+	      Id:            helper.NextRowsSeqId(),
+	      ToUserId:      s.MeChat.UserId,
+	      MessageId:     msg.MessageId,
+	      ChatId:        s.MeChat.ChatId,
+	      PeerUserId:    s.PeerChat.UserId,
+	      RoomLogTypeId: int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
+	      FromSeq:       -1,
+	      ToSeq:         -1,
+	      ExtraPB:       []byte{},
+	      ExtraJson:     "",
+	      AtTimeMs:      helper.TimeNowMs(),
+	  }
+
+	  LogUpdater.HereDirectDelayer <- logDelayer{directLog: dlNew}*/
 }
 
 func (s *directMessaging) SetMessagesStatus() {
