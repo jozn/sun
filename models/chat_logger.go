@@ -38,7 +38,7 @@ var LogUpdater = chatUpdater{
 }
 
 func init() {
-    LogUpdater.StartLoops()
+	LogUpdater.StartLoops()
 }
 
 func (m *chatUpdater) StartLoops() {
@@ -150,7 +150,11 @@ func directLogToView(log x.DirectLog) *x.PB_DirectLogView {
 	}
 	switch x.RoomLogTypeEnum(log.RoomLogTypeId) {
 	case x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE:
-
+		msg, ok := x.Store.GetDirectMessageByMessageId(log.MessageId)
+		if ok {
+            _ =msg
+            v.NewMessage = &x.PB_MessageView{}
+		}
 	}
 	return v
 }
