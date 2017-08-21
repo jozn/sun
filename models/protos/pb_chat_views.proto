@@ -1,0 +1,38 @@
+
+syntax = "proto3";
+
+option java_package = "ir.ms.pb";
+option java_outer_classname = "PB";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME; //CODE_SIZE;
+
+option go_package = "x";
+/////////////////////////////////
+
+//message PB_Chat {
+//    int64 ChatId = 1;
+//    string ChatKey = 3;
+//    int32 RoomTypeEnumId = 5;
+//    int32 UserId = 7;
+//    int32 LastSeqSeen = 9;
+//    int32 LastSeqDelete = 11;
+//    int32 PeerUserId = 13;
+//    int64 GroupId = 15;
+//    int32 CreatedTime = 17;
+//    int32 CurrentSeq = 19;
+//    int64 UpdatedMs = 21;
+//}
+//
+//message PB_MessageView {
+//    int64 MessageId = 1;
+//    string RoomKey = 3;
+//    int32 UserId = 5;
+//    int64 MessageFileId = 7;
+//    int32 MessageTypeEnum = 9;
+//    string Text = 11;
+//    int32 Time = 13;
+//    int32 PeerReceivedTime = 15;
+//    int32 PeerSeenTime = 17;
+//    int32 DeliviryStatusEnum = 19;
+//}
+//

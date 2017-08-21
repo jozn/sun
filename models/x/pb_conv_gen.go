@@ -1,6 +1,4 @@
-
 package x
-
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {

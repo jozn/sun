@@ -12,6 +12,10 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// Ignoring public import of PB_Chat from pb_table.proto
+
+// Ignoring public import of PB_DirectMessage from pb_table.proto
+
 type PB_CommandToServer struct {
 	ClientCallId int64  `protobuf:"varint,1,opt,name=ClientCallId" json:"ClientCallId,omitempty"`
 	Command      string `protobuf:"bytes,2,opt,name=Command" json:"Command,omitempty"`
@@ -21,7 +25,7 @@ type PB_CommandToServer struct {
 func (m *PB_CommandToServer) Reset()                    { *m = PB_CommandToServer{} }
 func (m *PB_CommandToServer) String() string            { return proto.CompactTextString(m) }
 func (*PB_CommandToServer) ProtoMessage()               {}
-func (*PB_CommandToServer) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
+func (*PB_CommandToServer) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{0} }
 
 func (m *PB_CommandToServer) GetClientCallId() int64 {
 	if m != nil {
@@ -53,7 +57,7 @@ type PB_CommandToClient struct {
 func (m *PB_CommandToClient) Reset()                    { *m = PB_CommandToClient{} }
 func (m *PB_CommandToClient) String() string            { return proto.CompactTextString(m) }
 func (*PB_CommandToClient) ProtoMessage()               {}
-func (*PB_CommandToClient) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
+func (*PB_CommandToClient) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{1} }
 
 func (m *PB_CommandToClient) GetServerCallId() int64 {
 	if m != nil {
@@ -83,7 +87,7 @@ type PB_CommandReceivedToServer struct {
 func (m *PB_CommandReceivedToServer) Reset()                    { *m = PB_CommandReceivedToServer{} }
 func (m *PB_CommandReceivedToServer) String() string            { return proto.CompactTextString(m) }
 func (*PB_CommandReceivedToServer) ProtoMessage()               {}
-func (*PB_CommandReceivedToServer) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{2} }
+func (*PB_CommandReceivedToServer) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{2} }
 
 func (m *PB_CommandReceivedToServer) GetClientCallId() int64 {
 	if m != nil {
@@ -99,7 +103,7 @@ type PB_CommandReceivedToClient struct {
 func (m *PB_CommandReceivedToClient) Reset()                    { *m = PB_CommandReceivedToClient{} }
 func (m *PB_CommandReceivedToClient) String() string            { return proto.CompactTextString(m) }
 func (*PB_CommandReceivedToClient) ProtoMessage()               {}
-func (*PB_CommandReceivedToClient) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{3} }
+func (*PB_CommandReceivedToClient) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{3} }
 
 func (m *PB_CommandReceivedToClient) GetServerCallId() int64 {
 	if m != nil {
@@ -117,7 +121,7 @@ type PB_ResToClient struct {
 func (m *PB_ResToClient) Reset()                    { *m = PB_ResToClient{} }
 func (m *PB_ResToClient) String() string            { return proto.CompactTextString(m) }
 func (*PB_ResToClient) ProtoMessage()               {}
-func (*PB_ResToClient) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{4} }
+func (*PB_ResToClient) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{4} }
 
 func (m *PB_ResToClient) GetClientCallId() int64 {
 	if m != nil {
@@ -140,717 +144,31 @@ func (m *PB_ResToClient) GetData() []byte {
 	return nil
 }
 
-type PB_UserWithMe struct {
-	UserId         int32  `protobuf:"varint,1,opt,name=UserId" json:"UserId,omitempty"`
-	UserName       string `protobuf:"bytes,2,opt,name=UserName" json:"UserName,omitempty"`
-	FirstName      string `protobuf:"bytes,3,opt,name=FirstName" json:"FirstName,omitempty"`
-	LastName       string `protobuf:"bytes,4,opt,name=LastName" json:"LastName,omitempty"`
-	About          string `protobuf:"bytes,5,opt,name=About" json:"About,omitempty"`
-	FullName       string `protobuf:"bytes,6,opt,name=FullName" json:"FullName,omitempty"`
-	AvatarUrl      string `protobuf:"bytes,7,opt,name=AvatarUrl" json:"AvatarUrl,omitempty"`
-	PrivacyProfile int32  `protobuf:"varint,8,opt,name=PrivacyProfile" json:"PrivacyProfile,omitempty"`
-	Phone          string `protobuf:"bytes,9,opt,name=Phone" json:"Phone,omitempty"`
-	UpdatedTime    int32  `protobuf:"varint,10,opt,name=UpdatedTime" json:"UpdatedTime,omitempty"`
-	AppVersion     int32  `protobuf:"varint,11,opt,name=AppVersion" json:"AppVersion,omitempty"`
-	FollowingType  int32  `protobuf:"varint,14,opt,name=FollowingType" json:"FollowingType,omitempty"`
-}
-
-func (m *PB_UserWithMe) Reset()                    { *m = PB_UserWithMe{} }
-func (m *PB_UserWithMe) String() string            { return proto.CompactTextString(m) }
-func (*PB_UserWithMe) ProtoMessage()               {}
-func (*PB_UserWithMe) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{5} }
-
-func (m *PB_UserWithMe) GetUserId() int32 {
-	if m != nil {
-		return m.UserId
-	}
-	return 0
-}
-
-func (m *PB_UserWithMe) GetUserName() string {
-	if m != nil {
-		return m.UserName
-	}
-	return ""
-}
-
-func (m *PB_UserWithMe) GetFirstName() string {
-	if m != nil {
-		return m.FirstName
-	}
-	return ""
-}
-
-func (m *PB_UserWithMe) GetLastName() string {
-	if m != nil {
-		return m.LastName
-	}
-	return ""
-}
-
-func (m *PB_UserWithMe) GetAbout() string {
-	if m != nil {
-		return m.About
-	}
-	return ""
-}
-
-func (m *PB_UserWithMe) GetFullName() string {
-	if m != nil {
-		return m.FullName
-	}
-	return ""
-}
-
-func (m *PB_UserWithMe) GetAvatarUrl() string {
-	if m != nil {
-		return m.AvatarUrl
-	}
-	return ""
-}
-
-func (m *PB_UserWithMe) GetPrivacyProfile() int32 {
-	if m != nil {
-		return m.PrivacyProfile
-	}
-	return 0
-}
-
-func (m *PB_UserWithMe) GetPhone() string {
-	if m != nil {
-		return m.Phone
-	}
-	return ""
-}
-
-func (m *PB_UserWithMe) GetUpdatedTime() int32 {
-	if m != nil {
-		return m.UpdatedTime
-	}
-	return 0
-}
-
-func (m *PB_UserWithMe) GetAppVersion() int32 {
-	if m != nil {
-		return m.AppVersion
-	}
-	return 0
-}
-
-func (m *PB_UserWithMe) GetFollowingType() int32 {
-	if m != nil {
-		return m.FollowingType
-	}
-	return 0
-}
-
-type PB_Message struct {
-	MessageKey         string      `protobuf:"bytes,1,opt,name=MessageKey" json:"MessageKey,omitempty"`
-	RoomKey            string      `protobuf:"bytes,2,opt,name=RoomKey" json:"RoomKey,omitempty"`
-	UserId             int64       `protobuf:"varint,3,opt,name=UserId" json:"UserId,omitempty"`
-	PeerId             int64       `protobuf:"varint,20,opt,name=PeerId" json:"PeerId,omitempty"`
-	RoomTypeId         int32       `protobuf:"varint,4,opt,name=RoomTypeId" json:"RoomTypeId,omitempty"`
-	MessageTypeId      int32       `protobuf:"varint,5,opt,name=MessageTypeId" json:"MessageTypeId,omitempty"`
-	Text               string      `protobuf:"bytes,6,opt,name=Text" json:"Text,omitempty"`
-	ExtraJson          string      `protobuf:"bytes,7,opt,name=ExtraJson" json:"ExtraJson,omitempty"`
-	IsByMe             int32       `protobuf:"varint,8,opt,name=IsByMe" json:"IsByMe,omitempty"`
-	IsStared           int32       `protobuf:"varint,9,opt,name=IsStared" json:"IsStared,omitempty"`
-	CreatedMs          int64       `protobuf:"varint,10,opt,name=CreatedMs" json:"CreatedMs,omitempty"`
-	CreatedDeviceMs    int64       `protobuf:"varint,11,opt,name=CreatedDeviceMs" json:"CreatedDeviceMs,omitempty"`
-	SortId             int64       `protobuf:"varint,12,opt,name=SortId" json:"SortId,omitempty"`
-	PeerSeenTime       int64       `protobuf:"varint,13,opt,name=PeerSeenTime" json:"PeerSeenTime,omitempty"`
-	ServerReceivedTime int64       `protobuf:"varint,14,opt,name=ServerReceivedTime" json:"ServerReceivedTime,omitempty"`
-	ServerDeletedTime  int64       `protobuf:"varint,15,opt,name=ServerDeletedTime" json:"ServerDeletedTime,omitempty"`
-	ISeenTime          int64       `protobuf:"varint,16,opt,name=ISeenTime" json:"ISeenTime,omitempty"`
-	ToPush             int32       `protobuf:"varint,17,opt,name=ToPush" json:"ToPush,omitempty"`
-	MsgFile_LocalSrc   string      `protobuf:"bytes,18,opt,name=MsgFile_LocalSrc,json=MsgFileLocalSrc" json:"MsgFile_LocalSrc,omitempty"`
-	MsgFile_Status     int32       `protobuf:"varint,19,opt,name=MsgFile_Status,json=MsgFileStatus" json:"MsgFile_Status,omitempty"`
-	File               *PB_MsgFile `protobuf:"bytes,100,opt,name=File" json:"File,omitempty"`
-}
-
-func (m *PB_Message) Reset()                    { *m = PB_Message{} }
-func (m *PB_Message) String() string            { return proto.CompactTextString(m) }
-func (*PB_Message) ProtoMessage()               {}
-func (*PB_Message) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{6} }
-
-func (m *PB_Message) GetMessageKey() string {
-	if m != nil {
-		return m.MessageKey
-	}
-	return ""
-}
-
-func (m *PB_Message) GetRoomKey() string {
-	if m != nil {
-		return m.RoomKey
-	}
-	return ""
-}
-
-func (m *PB_Message) GetUserId() int64 {
-	if m != nil {
-		return m.UserId
-	}
-	return 0
-}
-
-func (m *PB_Message) GetPeerId() int64 {
-	if m != nil {
-		return m.PeerId
-	}
-	return 0
-}
-
-func (m *PB_Message) GetRoomTypeId() int32 {
-	if m != nil {
-		return m.RoomTypeId
-	}
-	return 0
-}
-
-func (m *PB_Message) GetMessageTypeId() int32 {
-	if m != nil {
-		return m.MessageTypeId
-	}
-	return 0
-}
-
-func (m *PB_Message) GetText() string {
-	if m != nil {
-		return m.Text
-	}
-	return ""
-}
-
-func (m *PB_Message) GetExtraJson() string {
-	if m != nil {
-		return m.ExtraJson
-	}
-	return ""
-}
-
-func (m *PB_Message) GetIsByMe() int32 {
-	if m != nil {
-		return m.IsByMe
-	}
-	return 0
-}
-
-func (m *PB_Message) GetIsStared() int32 {
-	if m != nil {
-		return m.IsStared
-	}
-	return 0
-}
-
-func (m *PB_Message) GetCreatedMs() int64 {
-	if m != nil {
-		return m.CreatedMs
-	}
-	return 0
-}
-
-func (m *PB_Message) GetCreatedDeviceMs() int64 {
-	if m != nil {
-		return m.CreatedDeviceMs
-	}
-	return 0
-}
-
-func (m *PB_Message) GetSortId() int64 {
-	if m != nil {
-		return m.SortId
-	}
-	return 0
-}
-
-func (m *PB_Message) GetPeerSeenTime() int64 {
-	if m != nil {
-		return m.PeerSeenTime
-	}
-	return 0
-}
-
-func (m *PB_Message) GetServerReceivedTime() int64 {
-	if m != nil {
-		return m.ServerReceivedTime
-	}
-	return 0
-}
-
-func (m *PB_Message) GetServerDeletedTime() int64 {
-	if m != nil {
-		return m.ServerDeletedTime
-	}
-	return 0
-}
-
-func (m *PB_Message) GetISeenTime() int64 {
-	if m != nil {
-		return m.ISeenTime
-	}
-	return 0
-}
-
-func (m *PB_Message) GetToPush() int32 {
-	if m != nil {
-		return m.ToPush
-	}
-	return 0
-}
-
-func (m *PB_Message) GetMsgFile_LocalSrc() string {
-	if m != nil {
-		return m.MsgFile_LocalSrc
-	}
-	return ""
-}
-
-func (m *PB_Message) GetMsgFile_Status() int32 {
-	if m != nil {
-		return m.MsgFile_Status
-	}
-	return 0
-}
-
-func (m *PB_Message) GetFile() *PB_MsgFile {
-	if m != nil {
-		return m.File
-	}
-	return nil
-}
-
-type PB_MsgFile struct {
-	// general
-	Name      string `protobuf:"bytes,1,opt,name=Name" json:"Name,omitempty"`
-	Size      int64  `protobuf:"varint,2,opt,name=Size" json:"Size,omitempty"`
-	FileType  int32  `protobuf:"varint,3,opt,name=FileType" json:"FileType,omitempty"`
-	MimeType  string `protobuf:"bytes,4,opt,name=MimeType" json:"MimeType,omitempty"`
-	Width     int32  `protobuf:"varint,5,opt,name=Width" json:"Width,omitempty"`
-	Height    int32  `protobuf:"varint,6,opt,name=Height" json:"Height,omitempty"`
-	Duration  int32  `protobuf:"varint,7,opt,name=Duration" json:"Duration,omitempty"`
-	Extension string `protobuf:"bytes,8,opt,name=Extension" json:"Extension,omitempty"`
-	ThumbData []byte `protobuf:"bytes,11,opt,name=ThumbData,proto3" json:"ThumbData,omitempty"`
-	// just set in the client to server - data must be fetched sepratily for pushed msgs via ServerSrc
-	Data []byte `protobuf:"bytes,10,opt,name=Data,proto3" json:"Data,omitempty"`
-	// just set for push data
-	ServerSrc string `protobuf:"bytes,101,opt,name=ServerSrc" json:"ServerSrc,omitempty"`
-}
-
-func (m *PB_MsgFile) Reset()                    { *m = PB_MsgFile{} }
-func (m *PB_MsgFile) String() string            { return proto.CompactTextString(m) }
-func (*PB_MsgFile) ProtoMessage()               {}
-func (*PB_MsgFile) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{7} }
-
-func (m *PB_MsgFile) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *PB_MsgFile) GetSize() int64 {
-	if m != nil {
-		return m.Size
-	}
-	return 0
-}
-
-func (m *PB_MsgFile) GetFileType() int32 {
-	if m != nil {
-		return m.FileType
-	}
-	return 0
-}
-
-func (m *PB_MsgFile) GetMimeType() string {
-	if m != nil {
-		return m.MimeType
-	}
-	return ""
-}
-
-func (m *PB_MsgFile) GetWidth() int32 {
-	if m != nil {
-		return m.Width
-	}
-	return 0
-}
-
-func (m *PB_MsgFile) GetHeight() int32 {
-	if m != nil {
-		return m.Height
-	}
-	return 0
-}
-
-func (m *PB_MsgFile) GetDuration() int32 {
-	if m != nil {
-		return m.Duration
-	}
-	return 0
-}
-
-func (m *PB_MsgFile) GetExtension() string {
-	if m != nil {
-		return m.Extension
-	}
-	return ""
-}
-
-func (m *PB_MsgFile) GetThumbData() []byte {
-	if m != nil {
-		return m.ThumbData
-	}
-	return nil
-}
-
-func (m *PB_MsgFile) GetData() []byte {
-	if m != nil {
-		return m.Data
-	}
-	return nil
-}
-
-func (m *PB_MsgFile) GetServerSrc() string {
-	if m != nil {
-		return m.ServerSrc
-	}
-	return ""
-}
-
-type PB_Response struct {
-	Status int32 `protobuf:"varint,1,opt,name=Status" json:"Status,omitempty"`
-}
-
-func (m *PB_Response) Reset()                    { *m = PB_Response{} }
-func (m *PB_Response) String() string            { return proto.CompactTextString(m) }
-func (*PB_Response) ProtoMessage()               {}
-func (*PB_Response) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{8} }
-
-func (m *PB_Response) GetStatus() int32 {
-	if m != nil {
-		return m.Status
-	}
-	return 0
-}
-
-type PB_Request struct {
-	Status int32 `protobuf:"varint,1,opt,name=Status" json:"Status,omitempty"`
-}
-
-func (m *PB_Request) Reset()                    { *m = PB_Request{} }
-func (m *PB_Request) String() string            { return proto.CompactTextString(m) }
-func (*PB_Request) ProtoMessage()               {}
-func (*PB_Request) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{9} }
-
-func (m *PB_Request) GetStatus() int32 {
-	if m != nil {
-		return m.Status
-	}
-	return 0
-}
-
-// //
-type PB_RequestMsgAddMany struct {
-	Request  *PB_Request   `protobuf:"bytes,1,opt,name=Request" json:"Request,omitempty"`
-	Messages []*PB_Message `protobuf:"bytes,2,rep,name=Messages" json:"Messages,omitempty"`
-}
-
-func (m *PB_RequestMsgAddMany) Reset()                    { *m = PB_RequestMsgAddMany{} }
-func (m *PB_RequestMsgAddMany) String() string            { return proto.CompactTextString(m) }
-func (*PB_RequestMsgAddMany) ProtoMessage()               {}
-func (*PB_RequestMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{10} }
-
-func (m *PB_RequestMsgAddMany) GetRequest() *PB_Request {
-	if m != nil {
-		return m.Request
-	}
-	return nil
-}
-
-func (m *PB_RequestMsgAddMany) GetMessages() []*PB_Message {
-	if m != nil {
-		return m.Messages
-	}
-	return nil
-}
-
-type PB_ResponseMsgAddMany struct {
-	Response *PB_Response `protobuf:"bytes,1,opt,name=Response" json:"Response,omitempty"`
-}
-
-func (m *PB_ResponseMsgAddMany) Reset()                    { *m = PB_ResponseMsgAddMany{} }
-func (m *PB_ResponseMsgAddMany) String() string            { return proto.CompactTextString(m) }
-func (*PB_ResponseMsgAddMany) ProtoMessage()               {}
-func (*PB_ResponseMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{11} }
-
-func (m *PB_ResponseMsgAddMany) GetResponse() *PB_Response {
-	if m != nil {
-		return m.Response
-	}
-	return nil
-}
-
-// ////////// Pushes ////////////
-type PB_Push struct {
-	Status int32 `protobuf:"varint,1,opt,name=Status" json:"Status,omitempty"`
-}
-
-func (m *PB_Push) Reset()                    { *m = PB_Push{} }
-func (m *PB_Push) String() string            { return proto.CompactTextString(m) }
-func (*PB_Push) ProtoMessage()               {}
-func (*PB_Push) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{12} }
-
-func (m *PB_Push) GetStatus() int32 {
-	if m != nil {
-		return m.Status
-	}
-	return 0
-}
-
-type PB_Result struct {
-	Status int32 `protobuf:"varint,1,opt,name=Status" json:"Status,omitempty"`
-}
-
-func (m *PB_Result) Reset()                    { *m = PB_Result{} }
-func (m *PB_Result) String() string            { return proto.CompactTextString(m) }
-func (*PB_Result) ProtoMessage()               {}
-func (*PB_Result) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{13} }
-
-func (m *PB_Result) GetStatus() int32 {
-	if m != nil {
-		return m.Status
-	}
-	return 0
-}
-
-// /
-type PB_PushMsgAddMany struct {
-	Push     *PB_Push         `protobuf:"bytes,1,opt,name=Push" json:"Push,omitempty"`
-	Messages []*PB_Message    `protobuf:"bytes,2,rep,name=Messages" json:"Messages,omitempty"`
-	Users    []*PB_UserWithMe `protobuf:"bytes,3,rep,name=Users" json:"Users,omitempty"`
-}
-
-func (m *PB_PushMsgAddMany) Reset()                    { *m = PB_PushMsgAddMany{} }
-func (m *PB_PushMsgAddMany) String() string            { return proto.CompactTextString(m) }
-func (*PB_PushMsgAddMany) ProtoMessage()               {}
-func (*PB_PushMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{14} }
-
-func (m *PB_PushMsgAddMany) GetPush() *PB_Push {
-	if m != nil {
-		return m.Push
-	}
-	return nil
-}
-
-func (m *PB_PushMsgAddMany) GetMessages() []*PB_Message {
-	if m != nil {
-		return m.Messages
-	}
-	return nil
-}
-
-func (m *PB_PushMsgAddMany) GetUsers() []*PB_UserWithMe {
-	if m != nil {
-		return m.Users
-	}
-	return nil
-}
-
-type PB_ResultMsgAddMany struct {
-	Result *PB_Result `protobuf:"bytes,1,opt,name=Result" json:"Result,omitempty"`
-}
-
-func (m *PB_ResultMsgAddMany) Reset()                    { *m = PB_ResultMsgAddMany{} }
-func (m *PB_ResultMsgAddMany) String() string            { return proto.CompactTextString(m) }
-func (*PB_ResultMsgAddMany) ProtoMessage()               {}
-func (*PB_ResultMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{15} }
-
-func (m *PB_ResultMsgAddMany) GetResult() *PB_Result {
-	if m != nil {
-		return m.Result
-	}
-	return nil
-}
-
-type PB_MsgEvent struct {
-	MessageKey string `protobuf:"bytes,1,opt,name=MessageKey" json:"MessageKey,omitempty"`
-	RoomKey    string `protobuf:"bytes,2,opt,name=RoomKey" json:"RoomKey,omitempty"`
-	PeerUserId int64  `protobuf:"varint,3,opt,name=PeerUserId" json:"PeerUserId,omitempty"`
-	EventType  int32  `protobuf:"varint,4,opt,name=EventType" json:"EventType,omitempty"`
-	AtTime     int64  `protobuf:"varint,10,opt,name=AtTime" json:"AtTime,omitempty"`
-}
-
-func (m *PB_MsgEvent) Reset()                    { *m = PB_MsgEvent{} }
-func (m *PB_MsgEvent) String() string            { return proto.CompactTextString(m) }
-func (*PB_MsgEvent) ProtoMessage()               {}
-func (*PB_MsgEvent) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{16} }
-
-func (m *PB_MsgEvent) GetMessageKey() string {
-	if m != nil {
-		return m.MessageKey
-	}
-	return ""
-}
-
-func (m *PB_MsgEvent) GetRoomKey() string {
-	if m != nil {
-		return m.RoomKey
-	}
-	return ""
-}
-
-func (m *PB_MsgEvent) GetPeerUserId() int64 {
-	if m != nil {
-		return m.PeerUserId
-	}
-	return 0
-}
-
-func (m *PB_MsgEvent) GetEventType() int32 {
-	if m != nil {
-		return m.EventType
-	}
-	return 0
-}
-
-func (m *PB_MsgEvent) GetAtTime() int64 {
-	if m != nil {
-		return m.AtTime
-	}
-	return 0
-}
-
-type PB_PushMsgEvents struct {
-	Push   *PB_Push       `protobuf:"bytes,1,opt,name=Push" json:"Push,omitempty"`
-	Events []*PB_MsgEvent `protobuf:"bytes,2,rep,name=Events" json:"Events,omitempty"`
-}
-
-func (m *PB_PushMsgEvents) Reset()                    { *m = PB_PushMsgEvents{} }
-func (m *PB_PushMsgEvents) String() string            { return proto.CompactTextString(m) }
-func (*PB_PushMsgEvents) ProtoMessage()               {}
-func (*PB_PushMsgEvents) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{17} }
-
-func (m *PB_PushMsgEvents) GetPush() *PB_Push {
-	if m != nil {
-		return m.Push
-	}
-	return nil
-}
-
-func (m *PB_PushMsgEvents) GetEvents() []*PB_MsgEvent {
-	if m != nil {
-		return m.Events
-	}
-	return nil
-}
-
-type PB_ResultMsgEvents struct {
-	Result *PB_Result `protobuf:"bytes,1,opt,name=Result" json:"Result,omitempty"`
-}
-
-func (m *PB_ResultMsgEvents) Reset()                    { *m = PB_ResultMsgEvents{} }
-func (m *PB_ResultMsgEvents) String() string            { return proto.CompactTextString(m) }
-func (*PB_ResultMsgEvents) ProtoMessage()               {}
-func (*PB_ResultMsgEvents) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{18} }
-
-func (m *PB_ResultMsgEvents) GetResult() *PB_Result {
-	if m != nil {
-		return m.Result
-	}
-	return nil
-}
-
 func init() {
 	proto.RegisterType((*PB_CommandToServer)(nil), "PB_CommandToServer")
 	proto.RegisterType((*PB_CommandToClient)(nil), "PB_CommandToClient")
 	proto.RegisterType((*PB_CommandReceivedToServer)(nil), "PB_CommandReceivedToServer")
 	proto.RegisterType((*PB_CommandReceivedToClient)(nil), "PB_CommandReceivedToClient")
 	proto.RegisterType((*PB_ResToClient)(nil), "PB_ResToClient")
-	proto.RegisterType((*PB_UserWithMe)(nil), "PB_UserWithMe")
-	proto.RegisterType((*PB_Message)(nil), "PB_Message")
-	proto.RegisterType((*PB_MsgFile)(nil), "PB_MsgFile")
-	proto.RegisterType((*PB_Response)(nil), "PB_Response")
-	proto.RegisterType((*PB_Request)(nil), "PB_Request")
-	proto.RegisterType((*PB_RequestMsgAddMany)(nil), "PB_RequestMsgAddMany")
-	proto.RegisterType((*PB_ResponseMsgAddMany)(nil), "PB_ResponseMsgAddMany")
-	proto.RegisterType((*PB_Push)(nil), "PB_Push")
-	proto.RegisterType((*PB_Result)(nil), "PB_Result")
-	proto.RegisterType((*PB_PushMsgAddMany)(nil), "PB_PushMsgAddMany")
-	proto.RegisterType((*PB_ResultMsgAddMany)(nil), "PB_ResultMsgAddMany")
-	proto.RegisterType((*PB_MsgEvent)(nil), "PB_MsgEvent")
-	proto.RegisterType((*PB_PushMsgEvents)(nil), "PB_PushMsgEvents")
-	proto.RegisterType((*PB_ResultMsgEvents)(nil), "PB_ResultMsgEvents")
 }
 
-func init() { proto.RegisterFile("pb_global.proto", fileDescriptor2) }
+func init() { proto.RegisterFile("pb_global.proto", fileDescriptor4) }
 
-var fileDescriptor2 = []byte{
-	// 1038 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x56, 0x5f, 0x6f, 0xe3, 0x44,
-	0x10, 0x57, 0xea, 0x3a, 0x97, 0x4e, 0xd2, 0xb4, 0xdd, 0xeb, 0x9d, 0xac, 0xd3, 0xe9, 0x08, 0xa6,
-	0x85, 0x20, 0x21, 0x3f, 0xc0, 0x0b, 0xbc, 0x91, 0xa4, 0x57, 0x5d, 0xe0, 0x8c, 0xac, 0x4d, 0x7a,
-	0x27, 0xf1, 0x12, 0x39, 0xf1, 0x36, 0xb1, 0xe4, 0xd8, 0xc1, 0xeb, 0x84, 0x86, 0x27, 0xbe, 0x08,
-	0x6f, 0xbc, 0xf2, 0xe9, 0xf8, 0x02, 0x68, 0x66, 0xd7, 0x1b, 0xa7, 0x5c, 0x45, 0x8f, 0xb7, 0xfd,
-	0xfd, 0x66, 0x66, 0x67, 0x76, 0xfe, 0xd9, 0x70, 0xb2, 0x9a, 0x4e, 0xe6, 0x49, 0x36, 0x0d, 0x13,
-	0x6f, 0x95, 0x67, 0x45, 0xe6, 0xde, 0x02, 0x0b, 0xfa, 0x93, 0x41, 0xb6, 0x5c, 0x86, 0x69, 0x34,
-	0xce, 0x46, 0x22, 0xdf, 0x88, 0x9c, 0xb9, 0xd0, 0x1a, 0x24, 0xb1, 0x48, 0x8b, 0x41, 0x98, 0x24,
-	0xc3, 0xc8, 0xa9, 0x75, 0x6a, 0x5d, 0x8b, 0xef, 0x71, 0xcc, 0x81, 0x27, 0xda, 0xcc, 0x39, 0xe8,
-	0xd4, 0xba, 0x47, 0xbc, 0x84, 0x8c, 0xc1, 0xe1, 0x55, 0x58, 0x84, 0x8e, 0xd5, 0xa9, 0x75, 0x5b,
-	0x9c, 0xce, 0xf7, 0xfd, 0xa8, 0x9b, 0xd0, 0x8f, 0xf2, 0xb8, 0xef, 0xa7, 0xca, 0x7d, 0xa4, 0x9f,
-	0xef, 0xe1, 0xc5, 0xce, 0x0f, 0x17, 0x33, 0x11, 0x6f, 0xc4, 0x47, 0xbd, 0xeb, 0xa1, 0x1b, 0x1e,
-	0x1f, 0xb1, 0x3b, 0x85, 0x76, 0xd0, 0x9f, 0x70, 0x21, 0xab, 0x56, 0x8f, 0xc9, 0x67, 0xd0, 0x1f,
-	0x24, 0xa1, 0x94, 0xe5, 0x3b, 0x35, 0xfc, 0xe0, 0x3b, 0xff, 0x3e, 0x80, 0xe3, 0xa0, 0x3f, 0xb9,
-	0x91, 0x22, 0x7f, 0x1f, 0x17, 0x0b, 0x5f, 0xb0, 0xe7, 0x50, 0x47, 0xa4, 0x6f, 0xb7, 0xb9, 0x46,
-	0xec, 0x05, 0x34, 0xf0, 0xf4, 0x53, 0xb8, 0x14, 0xfa, 0x62, 0x83, 0xd9, 0x4b, 0x38, 0xba, 0x8e,
-	0x73, 0x59, 0x90, 0xd0, 0x22, 0xe1, 0x8e, 0x40, 0xcb, 0xb7, 0xa1, 0x16, 0x1e, 0x2a, 0xcb, 0x12,
-	0xb3, 0x73, 0xb0, 0x7b, 0xd3, 0x6c, 0x5d, 0x38, 0x36, 0x09, 0x14, 0x40, 0x8b, 0xeb, 0x75, 0x92,
-	0x90, 0x45, 0x5d, 0x59, 0x94, 0x18, 0x7d, 0xf5, 0x36, 0x61, 0x11, 0xe6, 0x37, 0x79, 0xe2, 0x3c,
-	0x51, 0xbe, 0x0c, 0xc1, 0x3e, 0x87, 0x76, 0x90, 0xc7, 0x9b, 0x70, 0xb6, 0x0d, 0xf2, 0xec, 0x36,
-	0x4e, 0x84, 0xd3, 0xa0, 0x57, 0xdc, 0x63, 0xd1, 0x6f, 0xb0, 0xc8, 0x52, 0xe1, 0x1c, 0x29, 0xbf,
-	0x04, 0x58, 0x07, 0x9a, 0x37, 0xab, 0x28, 0x2c, 0x44, 0x34, 0x8e, 0x97, 0xc2, 0x01, 0x32, 0xad,
-	0x52, 0xec, 0x15, 0x40, 0x6f, 0xb5, 0x7a, 0x27, 0x72, 0x19, 0x67, 0xa9, 0xd3, 0x24, 0x85, 0x0a,
-	0xc3, 0x2e, 0xe0, 0xf8, 0x3a, 0x4b, 0x92, 0xec, 0xd7, 0x38, 0x9d, 0x8f, 0xb7, 0x2b, 0xe1, 0xb4,
-	0x49, 0x65, 0x9f, 0x74, 0xff, 0xb2, 0x01, 0x82, 0xfe, 0xc4, 0x17, 0x52, 0x86, 0x73, 0xba, 0x54,
-	0x1f, 0x7f, 0x14, 0x5b, 0x4a, 0xfb, 0x11, 0xaf, 0x30, 0x58, 0x52, 0x9e, 0x65, 0x4b, 0x14, 0xea,
-	0x92, 0x6a, 0x58, 0x29, 0x96, 0x45, 0xad, 0x50, 0x16, 0xeb, 0x39, 0xd4, 0x03, 0x41, 0xfc, 0xb9,
-	0xe2, 0x15, 0x42, 0x4f, 0x68, 0x8a, 0x41, 0x0c, 0x23, 0x2a, 0x86, 0xcd, 0x2b, 0x0c, 0x86, 0xaf,
-	0xfd, 0x6a, 0x15, 0x5b, 0x85, 0xbf, 0x47, 0x62, 0x23, 0x8d, 0xc5, 0x5d, 0xa1, 0x4b, 0x43, 0x67,
-	0x2c, 0xcb, 0xeb, 0xbb, 0x22, 0x0f, 0x7f, 0x90, 0x59, 0x5a, 0x96, 0xc5, 0x10, 0x18, 0xcf, 0x50,
-	0xf6, 0xb7, 0x7e, 0x59, 0x0e, 0x8d, 0xb0, 0xd0, 0x43, 0x39, 0x2a, 0xc2, 0x5c, 0x44, 0x54, 0x09,
-	0x9b, 0x1b, 0x8c, 0x37, 0x0e, 0x72, 0x81, 0x99, 0xf7, 0x25, 0x95, 0xc2, 0xe2, 0x3b, 0x82, 0x75,
-	0xe1, 0x44, 0x83, 0x2b, 0xb1, 0x89, 0x67, 0xc2, 0x97, 0x54, 0x0d, 0x8b, 0xdf, 0xa7, 0xd1, 0xf7,
-	0x28, 0xcb, 0x8b, 0x61, 0xe4, 0xb4, 0x54, 0x2e, 0x14, 0xc2, 0x61, 0xc2, 0xac, 0x8c, 0x84, 0x48,
-	0xa9, 0xda, 0xc7, 0x6a, 0x98, 0xaa, 0x1c, 0xf3, 0x80, 0xa9, 0x91, 0x34, 0x03, 0x8c, 0x9a, 0x6d,
-	0xd2, 0xfc, 0x80, 0x84, 0x7d, 0x05, 0x67, 0x8a, 0xbd, 0x12, 0x89, 0x28, 0xdb, 0xe8, 0x84, 0xd4,
-	0xff, 0x2d, 0xc0, 0x17, 0x0e, 0x8d, 0xfb, 0x53, 0xf5, 0x42, 0x43, 0x60, 0xdc, 0xe3, 0x2c, 0x58,
-	0xcb, 0x85, 0x73, 0xa6, 0x72, 0xa6, 0x10, 0xfb, 0x12, 0x4e, 0x7d, 0x39, 0xbf, 0x8e, 0x13, 0x31,
-	0x79, 0x9b, 0xcd, 0xc2, 0x64, 0x94, 0xcf, 0x1c, 0x46, 0x09, 0x3f, 0xd1, 0x7c, 0x49, 0xb3, 0x4b,
-	0x68, 0x97, 0xaa, 0xa3, 0x22, 0x2c, 0xd6, 0xd2, 0x79, 0xaa, 0xeb, 0xa9, 0x58, 0x45, 0xb2, 0x4f,
-	0xe0, 0x10, 0x91, 0x13, 0x75, 0x6a, 0xdd, 0xe6, 0xd7, 0x4d, 0x0f, 0x5b, 0x53, 0x29, 0x70, 0x12,
-	0xb8, 0x7f, 0x1e, 0xa8, 0x7e, 0x55, 0x24, 0xd6, 0x9f, 0x46, 0x53, 0x75, 0x2a, 0x9d, 0x91, 0x1b,
-	0xc5, 0xbf, 0xa9, 0xd5, 0x60, 0x71, 0x3a, 0xd3, 0x18, 0xc7, 0x09, 0x75, 0x0d, 0xf5, 0xa7, 0xcd,
-	0x0d, 0x46, 0x99, 0x1f, 0x2f, 0x95, 0x4c, 0x2f, 0x85, 0x12, 0xe3, 0x70, 0xbe, 0x8f, 0xa3, 0x62,
-	0xa1, 0xbb, 0x4f, 0x01, 0xcc, 0xc7, 0x1b, 0x11, 0xcf, 0x17, 0xaa, 0xef, 0x6c, 0xae, 0x11, 0xde,
-	0x74, 0xb5, 0xce, 0xc3, 0x22, 0xd6, 0x8d, 0x67, 0x73, 0x83, 0x75, 0x57, 0x8a, 0x94, 0xa6, 0xb5,
-	0x61, 0xba, 0x52, 0x11, 0x28, 0x1d, 0x2f, 0xd6, 0xcb, 0x29, 0x6d, 0xc5, 0x26, 0x6d, 0xc5, 0x1d,
-	0x61, 0xd6, 0x25, 0xec, 0xd6, 0x25, 0x5a, 0xa8, 0x32, 0x62, 0xd2, 0x85, 0xba, 0xcf, 0x10, 0xee,
-	0x25, 0x34, 0xd5, 0xc2, 0x5e, 0x65, 0xa9, 0xa4, 0x02, 0xea, 0xac, 0xeb, 0x4d, 0xaa, 0x90, 0x7b,
-	0x41, 0xc9, 0xe4, 0xe2, 0x97, 0xb5, 0x90, 0xc5, 0x83, 0x5a, 0xb7, 0x70, 0xbe, 0xd3, 0xf2, 0xe5,
-	0xbc, 0x17, 0x45, 0x7e, 0x98, 0x6e, 0xd9, 0x25, 0x3c, 0xd1, 0x24, 0x19, 0xe8, 0x7a, 0x69, 0x8a,
-	0x97, 0x32, 0xf6, 0x05, 0x34, 0xf4, 0xd0, 0xe2, 0x77, 0xc0, 0x32, 0x75, 0x55, 0x1c, 0x37, 0x42,
-	0xb7, 0x07, 0xcf, 0x2a, 0x41, 0x57, 0x1c, 0x75, 0xa1, 0x51, 0xb2, 0xda, 0x53, 0xcb, 0xab, 0x68,
-	0x72, 0x23, 0x75, 0x3f, 0xc5, 0x4f, 0xce, 0x84, 0x9a, 0xf3, 0xa1, 0xd7, 0x7c, 0x06, 0x47, 0xca,
-	0x76, 0x9d, 0x3c, 0xfc, 0xe4, 0xdf, 0x6b, 0x70, 0xa6, 0x2f, 0xaa, 0xc4, 0xf1, 0x12, 0x0e, 0x69,
-	0x0a, 0x54, 0x0c, 0x0d, 0x4f, 0x6b, 0x70, 0x62, 0x1f, 0xfd, 0x4e, 0x76, 0x01, 0x36, 0x2e, 0x47,
-	0xe9, 0x58, 0xa4, 0xd5, 0xf6, 0xf6, 0x3e, 0x7b, 0x5c, 0x09, 0xdd, 0xef, 0xe0, 0xa9, 0x89, 0xb3,
-	0x12, 0x83, 0x0b, 0x75, 0xc5, 0xe9, 0x28, 0xc0, 0x33, 0x5a, 0x5c, 0x4b, 0xdc, 0x3f, 0x6a, 0x54,
-	0x7e, 0x5f, 0xce, 0x5f, 0x6f, 0xf0, 0x63, 0xfd, 0xff, 0xb7, 0xfa, 0x2b, 0x00, 0xdc, 0x42, 0x7b,
-	0x9b, 0xbd, 0xc2, 0x50, 0x57, 0xa3, 0x0b, 0x33, 0x3c, 0x36, 0xdf, 0x11, 0x98, 0xdd, 0x5e, 0x61,
-	0xbe, 0x5f, 0x16, 0xd7, 0xc8, 0x7d, 0x07, 0xa7, 0xbb, 0xe4, 0x92, 0xba, 0xfc, 0x8f, 0xdc, 0x5e,
-	0x40, 0x5d, 0xe9, 0xe9, 0xcc, 0xb6, 0xbc, 0xca, 0xfb, 0xb8, 0x96, 0xb9, 0xdf, 0xd2, 0x2f, 0x99,
-	0x49, 0x99, 0xbe, 0xf9, 0x11, 0x19, 0xeb, 0x3f, 0x83, 0x46, 0x9c, 0x7b, 0x4b, 0xe9, 0xad, 0xa6,
-	0xfd, 0x83, 0xa0, 0xff, 0xc6, 0x0a, 0x6a, 0x3f, 0xd7, 0xee, 0xa6, 0x75, 0xfa, 0xa5, 0xfc, 0xe6,
-	0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xa5, 0xd8, 0xff, 0x7e, 0x65, 0x0a, 0x00, 0x00,
+var fileDescriptor4 = []byte{
+	// 225 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2f, 0x48, 0x8a, 0x4f,
+	0xcf, 0xc9, 0x4f, 0x4a, 0xcc, 0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x97, 0xe2, 0x2b, 0x48, 0x8a,
+	0x2f, 0x49, 0x4c, 0xca, 0x49, 0x85, 0xf0, 0x95, 0xd2, 0xb8, 0x84, 0x02, 0x9c, 0xe2, 0x9d, 0xf3,
+	0x73, 0x73, 0x13, 0xf3, 0x52, 0x42, 0xf2, 0x83, 0x53, 0x8b, 0xca, 0x52, 0x8b, 0x84, 0x94, 0xb8,
+	0x78, 0x9c, 0x73, 0x32, 0x53, 0xf3, 0x4a, 0x9c, 0x13, 0x73, 0x72, 0x3c, 0x53, 0x24, 0x18, 0x15,
+	0x18, 0x35, 0x98, 0x83, 0x50, 0xc4, 0x84, 0x24, 0xb8, 0xd8, 0xa1, 0xda, 0x24, 0x98, 0x14, 0x18,
+	0x35, 0x38, 0x83, 0x60, 0x5c, 0x21, 0x21, 0x2e, 0x16, 0x97, 0xc4, 0x92, 0x44, 0x09, 0x66, 0x05,
+	0x46, 0x0d, 0x9e, 0x20, 0x30, 0x1b, 0xdd, 0x1e, 0x88, 0x49, 0x20, 0x7b, 0x20, 0x36, 0xa2, 0xda,
+	0x83, 0x2c, 0x46, 0xa2, 0x3d, 0x0e, 0x5c, 0x52, 0x08, 0x7b, 0x82, 0x52, 0x93, 0x53, 0x33, 0xcb,
+	0x52, 0x49, 0xf2, 0x17, 0x2e, 0x13, 0x88, 0x77, 0xb1, 0x52, 0x12, 0x17, 0x5f, 0x80, 0x53, 0x7c,
+	0x50, 0x6a, 0x31, 0xb2, 0x2e, 0x62, 0xc2, 0x33, 0xc0, 0xc9, 0x39, 0x27, 0xb1, 0xb8, 0x18, 0xe6,
+	0x4f, 0x28, 0x17, 0x9b, 0x3f, 0x9d, 0x44, 0xb9, 0x38, 0x32, 0x8b, 0xf4, 0x72, 0x8b, 0xf5, 0x0a,
+	0x92, 0x9c, 0x98, 0x02, 0x9c, 0x3c, 0x98, 0x03, 0x18, 0xa3, 0x18, 0x2b, 0x02, 0x18, 0x92, 0xd8,
+	0xc0, 0xf1, 0x6a, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x03, 0x4f, 0xd1, 0x01, 0xfa, 0x01, 0x00,
+	0x00,
 }

@@ -59,7 +59,7 @@ var UpdateLogEnum_value = map[string]int32{
 func (x UpdateLogEnum) String() string {
 	return proto.EnumName(UpdateLogEnum_name, int32(x))
 }
-func (UpdateLogEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor6, []int{0} }
+func (UpdateLogEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor9, []int{0} }
 
 type PB_UpdateNewMessage struct {
 	Message *PB_MessageView `protobuf:"bytes,1,opt,name=Message" json:"Message,omitempty"`
@@ -68,7 +68,7 @@ type PB_UpdateNewMessage struct {
 func (m *PB_UpdateNewMessage) Reset()                    { *m = PB_UpdateNewMessage{} }
 func (m *PB_UpdateNewMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateNewMessage) ProtoMessage()               {}
-func (*PB_UpdateNewMessage) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{0} }
+func (*PB_UpdateNewMessage) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{0} }
 
 func (m *PB_UpdateNewMessage) GetMessage() *PB_MessageView {
 	if m != nil {
@@ -85,7 +85,7 @@ type PB_UpdateMessageId struct {
 func (m *PB_UpdateMessageId) Reset()                    { *m = PB_UpdateMessageId{} }
 func (m *PB_UpdateMessageId) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateMessageId) ProtoMessage()               {}
-func (*PB_UpdateMessageId) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{1} }
+func (*PB_UpdateMessageId) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{1} }
 
 func (m *PB_UpdateMessageId) GetOldMessageId() int64 {
 	if m != nil {
@@ -109,7 +109,7 @@ type PB_UpdateSeenMessages struct {
 func (m *PB_UpdateSeenMessages) Reset()                    { *m = PB_UpdateSeenMessages{} }
 func (m *PB_UpdateSeenMessages) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateSeenMessages) ProtoMessage()               {}
-func (*PB_UpdateSeenMessages) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{2} }
+func (*PB_UpdateSeenMessages) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{2} }
 
 func (m *PB_UpdateSeenMessages) GetMessageIds() []int64 {
 	if m != nil {
@@ -133,7 +133,7 @@ type PB_UpdateDelivierdMessages struct {
 func (m *PB_UpdateDelivierdMessages) Reset()                    { *m = PB_UpdateDelivierdMessages{} }
 func (m *PB_UpdateDelivierdMessages) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateDelivierdMessages) ProtoMessage()               {}
-func (*PB_UpdateDelivierdMessages) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{3} }
+func (*PB_UpdateDelivierdMessages) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{3} }
 
 func (m *PB_UpdateDelivierdMessages) GetMessageIds() []int64 {
 	if m != nil {
@@ -158,7 +158,7 @@ func (m *PB_UpdateDeletedFromServerMessages) Reset()         { *m = PB_UpdateDel
 func (m *PB_UpdateDeletedFromServerMessages) String() string { return proto.CompactTextString(m) }
 func (*PB_UpdateDeletedFromServerMessages) ProtoMessage()    {}
 func (*PB_UpdateDeletedFromServerMessages) Descriptor() ([]byte, []int) {
-	return fileDescriptor6, []int{4}
+	return fileDescriptor9, []int{4}
 }
 
 func (m *PB_UpdateDeletedFromServerMessages) GetMessageIds() []int64 {
@@ -187,7 +187,7 @@ type PB_UpdateDeleteMessages struct {
 func (m *PB_UpdateDeleteMessages) Reset()                    { *m = PB_UpdateDeleteMessages{} }
 func (m *PB_UpdateDeleteMessages) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateDeleteMessages) ProtoMessage()               {}
-func (*PB_UpdateDeleteMessages) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{5} }
+func (*PB_UpdateDeleteMessages) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{5} }
 
 func (m *PB_UpdateDeleteMessages) GetMessageIds() []int64 {
 	if m != nil {
@@ -203,7 +203,7 @@ type PB_UpdateRestoreMessage struct {
 func (m *PB_UpdateRestoreMessage) Reset()                    { *m = PB_UpdateRestoreMessage{} }
 func (m *PB_UpdateRestoreMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateRestoreMessage) ProtoMessage()               {}
-func (*PB_UpdateRestoreMessage) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{6} }
+func (*PB_UpdateRestoreMessage) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{6} }
 
 func (m *PB_UpdateRestoreMessage) GetMessageIds() []int64 {
 	if m != nil {
@@ -221,7 +221,7 @@ type PB_UpdateRoomActionDoing struct {
 func (m *PB_UpdateRoomActionDoing) Reset()                    { *m = PB_UpdateRoomActionDoing{} }
 func (m *PB_UpdateRoomActionDoing) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateRoomActionDoing) ProtoMessage()               {}
-func (*PB_UpdateRoomActionDoing) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{7} }
+func (*PB_UpdateRoomActionDoing) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{7} }
 
 func (m *PB_UpdateRoomActionDoing) GetRoomKey() string {
 	if m != nil {
@@ -243,7 +243,7 @@ type PB_UpdateGroupParticipants struct {
 func (m *PB_UpdateGroupParticipants) Reset()                    { *m = PB_UpdateGroupParticipants{} }
 func (m *PB_UpdateGroupParticipants) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateGroupParticipants) ProtoMessage()               {}
-func (*PB_UpdateGroupParticipants) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{8} }
+func (*PB_UpdateGroupParticipants) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{8} }
 
 type PB_UpdateUserBlocked struct {
 	UserId  int32 `protobuf:"varint,1,opt,name=UserId" json:"UserId,omitempty"`
@@ -253,7 +253,7 @@ type PB_UpdateUserBlocked struct {
 func (m *PB_UpdateUserBlocked) Reset()                    { *m = PB_UpdateUserBlocked{} }
 func (m *PB_UpdateUserBlocked) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateUserBlocked) ProtoMessage()               {}
-func (*PB_UpdateUserBlocked) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{9} }
+func (*PB_UpdateUserBlocked) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{9} }
 
 func (m *PB_UpdateUserBlocked) GetUserId() int32 {
 	if m != nil {
@@ -275,7 +275,7 @@ type PB_UpdateNotifySettings struct {
 func (m *PB_UpdateNotifySettings) Reset()                    { *m = PB_UpdateNotifySettings{} }
 func (m *PB_UpdateNotifySettings) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateNotifySettings) ProtoMessage()               {}
-func (*PB_UpdateNotifySettings) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{10} }
+func (*PB_UpdateNotifySettings) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{10} }
 
 type PB_UpdateServiceNotification struct {
 }
@@ -283,7 +283,7 @@ type PB_UpdateServiceNotification struct {
 func (m *PB_UpdateServiceNotification) Reset()                    { *m = PB_UpdateServiceNotification{} }
 func (m *PB_UpdateServiceNotification) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateServiceNotification) ProtoMessage()               {}
-func (*PB_UpdateServiceNotification) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{11} }
+func (*PB_UpdateServiceNotification) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{11} }
 
 type PB_UpdateEditMessage struct {
 	MessageId int64  `protobuf:"varint,1,opt,name=MessageId" json:"MessageId,omitempty"`
@@ -293,7 +293,7 @@ type PB_UpdateEditMessage struct {
 func (m *PB_UpdateEditMessage) Reset()                    { *m = PB_UpdateEditMessage{} }
 func (m *PB_UpdateEditMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateEditMessage) ProtoMessage()               {}
-func (*PB_UpdateEditMessage) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{12} }
+func (*PB_UpdateEditMessage) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{12} }
 
 func (m *PB_UpdateEditMessage) GetMessageId() int64 {
 	if m != nil {
@@ -326,9 +326,9 @@ func init() {
 	proto.RegisterEnum("UpdateLogEnum", UpdateLogEnum_name, UpdateLogEnum_value)
 }
 
-func init() { proto.RegisterFile("pb_updates.proto", fileDescriptor6) }
+func init() { proto.RegisterFile("pb_updates.proto", fileDescriptor9) }
 
-var fileDescriptor6 = []byte{
+var fileDescriptor9 = []byte{
 	// 612 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0x4b, 0x6f, 0x9b, 0x4c,
 	0x14, 0xfd, 0x08, 0x5f, 0x5e, 0x37, 0x2f, 0x3a, 0x49, 0x1c, 0xe7, 0xd1, 0x34, 0xa2, 0x8b, 0xa6,
