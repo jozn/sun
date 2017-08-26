@@ -2,7 +2,7 @@
 syntax = "proto3";
 
 option java_package = "ir.ms.pb";
-option java_outer_classname = "PB";
+//option java_outer_classname = "PB";
 option java_multiple_files = true;
 option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 
@@ -79,16 +79,16 @@ message PB_Request {
     int32 Status = 1;
 }
 
-////
-/*message PB_RequestMsgAddMany {
+
+message PB_RequestMsgAddMany {
 	PB_Request Request = 1;
 	repeated PB_Message Messages = 2;
 	// repeated PB_UserWithMe Users = 2;
-}*/
+}
 
-/*message PB_ResponseMsgAddMany {
+message PB_ResponseMsgAddMany {
 	PB_Response Response = 1;
-}*/
+}
 
 //////////////////////
 
@@ -130,3 +130,45 @@ message PB_ResultMsgEvents {
     PB_Result Result = 1;
 }
 
+
+/////////// from very old just for android to compile legacy //////////
+message PB_MsgsSeenFromClient {
+    string MessageKey = 1 ;
+    string RoomKey = 2 ;
+    int64 UserId = 3;
+    int64 AtTime = 10;
+}
+
+message PB_MsgSeen {
+    string MessageKey = 1 ;
+    string RoomKey = 2 ;
+    int64 UserId = 3;
+    int64 AtTime = 10;
+}
+
+message PB_RequestMsgsSeen {
+    PB_Request Request = 1;
+    repeated PB_MsgSeen Seen = 2;
+}
+
+message PB_ResponseMsgsSeen {
+    PB_Response Response = 1;
+}
+
+
+///////////////////////////////
+
+message PB_ReqRpcAddMsg {
+    PB_Request Request = 1;
+    PB_Message Message = 2;
+}
+
+message PB_ResRpcAddMsg {
+    PB_Response Response = 1;
+    string ServerSrc = 2;
+}
+
+service RpcMsgs {
+    // Sends a greeting
+    rpc UploadNewMsg (PB_Message) returns (PB_ResRpcAddMsg);
+}

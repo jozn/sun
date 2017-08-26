@@ -18,6 +18,7 @@ const TMP_DIR = SUN_DIR + "scripts/tmp/"
 const SCRIPTS_DIR = SUN_DIR + "scripts/"
 const ANDROID_APP_DIR = `D:\dev_working2\MS_Native\app\src\main\java\com\mardomsara\`
 const ANDROID_SOCIAL_DIR = `D:\dev_working2\MS_Native\app\src\main\java\com\mardomsara\social`
+const ANTS_DIR = `C:\Go\_gopath\src\ms\ants`
 
 func main() {
 	bts := bytes.NewBufferString("")
@@ -53,6 +54,15 @@ func main() {
 	bts.WriteString(header("End Android Social"))
 	bts.WriteString("\n\n\n")
 	////////////////// End Android Social //////////////////
+
+    ///////////////// Android Social /////////////////////
+    bts.WriteString(header("Ants"))
+    cmd = exec.Command("cloc.exe", ANTS_DIR)
+    cmd.Stdout = bts
+    cmd.Run()
+    bts.WriteString(header("End Ants"))
+    bts.WriteString("\n\n\n")
+    ////////////////// End Android Social //////////////////
 
 	fmt.Println(bts.String())
 

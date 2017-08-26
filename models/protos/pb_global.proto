@@ -2,7 +2,7 @@
 syntax = "proto3";
 
 option java_package = "ir.ms.pb";
-option java_outer_classname = "PB";
+//option java_outer_classname = "PB";
 option java_multiple_files = true;
 option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 
@@ -13,25 +13,27 @@ import public "pb_table.proto";
 message PB_CommandToServer {
 	int64 ClientCallId = 1;
 	string Command = 2;
-	bytes Data = 3;
+    bool RespondReached = 3;
+	bytes Data = 4;
 }
 
 message PB_CommandToClient {
 	int64 ServerCallId = 1;
 	string Command = 2;
-	bytes Data = 3;
+    bool RespondReached = 3;
+	bytes Data = 4;
 }
 
 
-message PB_CommandReceivedToServer {
+message PB_CommandReachedToServer {
 	int64 ClientCallId = 1;
 }
 
-message PB_CommandReceivedToClient {
+message PB_CommandReachedToClient {
 	int64 ServerCallId = 1;
 }
 
-message PB_ResToClient {
+message PB_ResponseToClient {
     int64 ClientCallId = 1;
     string PBClass = 2;
     bytes Data = 3;

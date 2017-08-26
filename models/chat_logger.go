@@ -130,7 +130,7 @@ func (m *chatUpdater) sendToUsersUpdates(logs []x.DirectLog) {
 	for uid, logs := range mp { //each user
 		if AllPipesMap.IsPipeOpen(uid) && len(logs) > 0 {
 			rowsView := directLogsToView(logs)
-			push := &x.PB_PushDirectLogsMany{Rows: rowsView}
+			push := &x.PB_PushDirectLogViewsMany{Rows: rowsView}
 			cmd := NewPB_CommandToClient_WithData("PB_PushDirectLogsMany", push)
 			AllPipesMap.SendToUser(uid, cmd)
 		}

@@ -11,7 +11,7 @@ type rpcMsg int
 func (rpcMsg) Echo(i *x.PB_MsgParam_Echo, p x.RPC_UserParam) (*x.PB_MsgResponse_PB_MsgParam_Echo, error) {
 	//fmt.Println("in Echo --> ", i.Text)
 	return &x.PB_MsgResponse_PB_MsgParam_Echo{
-		Text: i.Text,
+		Text: i.Text + " ECHO =====" + helper.FactRandStrEmoji(10, true),
 	}, nil
 }
 

@@ -116,7 +116,7 @@ func (pipe *UserDevicePipe) ShutDownCompletely() {
 func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 
 	if reqCall.Command == PB_CommandReceivedToClient {
-		pb_rec := &x.PB_CommandReceivedToClient{}
+		pb_rec := &x.PB_CommandReachedToClient{}
 		err := proto.Unmarshal(reqCall.Data, pb_rec)
 		if err == nil {
 			callRespondMap.runSucceded(pb_rec.ServerCallId)
@@ -125,7 +125,7 @@ func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	}
 
 	if reqCall.ClientCallId != 0 {
-		callReceived := &x.PB_CommandReceivedToServer{
+		callReceived := &x.PB_CommandReachedToServer{
 			ClientCallId: reqCall.ClientCallId,
 		}
 		cmdRec := NewPB_CommandToClient_WithData(PB_CommandReceivedToServer, callReceived)
@@ -160,8 +160,8 @@ var wsDebugLog = func(strings ...interface{}) {
 /*
 func serverWSReqCalls_bk(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 
-	if reqCall.Command == PB_CommandReceivedToClient {
-		pb_rec := &x.PB_CommandReceivedToClient{}
+	if reqCall.Command == PB_CommandReachedToClient {
+		pb_rec := &x.PB_CommandReachedToClient{}
 		err := proto.Unmarshal(reqCall.Data, pb_rec)
 		if err == nil {
 			callRespondMap.runSucceded(pb_rec.ServerCallId)
@@ -170,10 +170,10 @@ func serverWSReqCalls_bk(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	}
 
 	if reqCall.ClientCallId != 0 {
-		callReceived := &x.PB_CommandReceivedToServer{
+		callReceived := &x.PB_CommandReachedToServer{
 			ClientCallId: reqCall.ClientCallId,
 		}
-		cmdRec := NewPB_CommandToClient_WithData(PB_CommandReceivedToServer, callReceived)
+		cmdRec := NewPB_CommandToClient_WithData(PB_CommandReachedToServer, callReceived)
 
 		AllPipesMap.SendToUser(pipe.UserId, cmdRec)
 	}

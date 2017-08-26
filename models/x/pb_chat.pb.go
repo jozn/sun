@@ -38,6 +38,8 @@ It has these top-level messages:
 	PB_MsgFile
 	PB_Response
 	PB_Request
+	PB_RequestMsgAddMany
+	PB_ResponseMsgAddMany
 	PB_Push
 	PB_Result
 	PB_PushMsgAddMany
@@ -45,6 +47,12 @@ It has these top-level messages:
 	PB_MsgEvent
 	PB_PushMsgEvents
 	PB_ResultMsgEvents
+	PB_MsgsSeenFromClient
+	PB_MsgSeen
+	PB_RequestMsgsSeen
+	PB_ResponseMsgsSeen
+	PB_ReqRpcAddMsg
+	PB_ResRpcAddMsg
 	GeoLocation
 	RoomMessageLog
 	RoomMessageForwardFrom
@@ -53,9 +61,9 @@ It has these top-level messages:
 	Pagination
 	PB_CommandToServer
 	PB_CommandToClient
-	PB_CommandReceivedToServer
-	PB_CommandReceivedToClient
-	PB_ResToClient
+	PB_CommandReachedToServer
+	PB_CommandReachedToClient
+	PB_ResponseToClient
 	PB_UserParam_CheckUserName2
 	PB_UserResponse_CheckUserName2
 	PB_MsgParam_AddNewTextMessage
