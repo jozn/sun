@@ -794,33 +794,6 @@ type PB_UserView_Flat struct {
 	AtTimeMs int
 }
 
-type PB_UpdateNewMessage_Flat struct {
-	Message PB_MessageView
-}
-
-type PB_UpdateSeenMessages_Flat struct {
-	MessageIds []int
-	AtTime     int
-}
-
-type PB_UpdateDelivierdMessages_Flat struct {
-	MessageIds []int
-	AtTime     int
-}
-
-type PB_UpdateDeletedFromServerMessages_Flat struct {
-	MessageIds []int
-	AtTime     int
-}
-
-type PB_UpdateDeleteMessages_Flat struct {
-	MessageIds []int
-}
-
-type PB_UpdateRestoreMessage_Flat struct {
-	MessageIds []int
-}
-
 type PB_UpdateGroupParticipants_Flat struct {
 }
 
@@ -842,10 +815,14 @@ type PB_UpdateMessageId_Flat struct {
 	NewMessageId int
 }
 
-type PB_UpdateEditMessage_Flat struct {
+type PB_UpdateMessageToEdit_Flat struct {
 	MessageId int
 
 	NewText string
+}
+
+type PB_UpdateMessageToDelete_Flat struct {
+	MessageId int
 }
 
 type PB_UpdateRoomActionDoing_Flat struct {
@@ -865,11 +842,13 @@ type PB_ChangesHolderView_Flat struct {
 	ChatFiles                 []PB_MessageFileView
 	Chats                     []PB_ChatView
 	Users                     []PB_UserView
-	ChangeMessageIds          []PB_UpdateMessageId
-	UpdateMessages            []PB_UpdateEditMessage
-	DelivierdToServerMessages []PB_UpdateMessageMeta
-	DelivierdToPeerMessages   []PB_UpdateMessageMeta
-	SeenMessagsByPeer         []PB_UpdateMessageMeta
+	MessagesChangeIds         []PB_UpdateMessageId
+	MessagesToUpdate          []PB_UpdateMessageToEdit
+	MessagesToDelete          []PB_UpdateMessageToDelete
+	MessagesDelivierdToServer []PB_UpdateMessageMeta
+	MessagesDelivierdToPeer   []PB_UpdateMessageMeta
+	MessagesSeenByPeer        []PB_UpdateMessageMeta
+	MessagesDeletedFromServer []PB_UpdateMessageMeta
 	RoomActionDoing           []PB_UpdateRoomActionDoing
 	UserBlockedByMe           []PB_UpdateUserBlocked
 	UserBlockedMe             []PB_UpdateUserBlocked
@@ -1662,49 +1641,6 @@ func (m *PB_UserView) ToFlat() *PB_UserView_Flat {
 	return r
 }
 
-func (m *PB_UpdateNewMessage) ToFlat() *PB_UpdateNewMessage_Flat {
-	r := &PB_UpdateNewMessage_Flat{}
-	return r
-}
-
-func (m *PB_UpdateSeenMessages) ToFlat() *PB_UpdateSeenMessages_Flat {
-	r := &PB_UpdateSeenMessages_Flat{
-		MessageIds: helper.SliceInt64ToInt(m.MessageIds),
-		AtTime:     int(m.AtTime),
-	}
-	return r
-}
-
-func (m *PB_UpdateDelivierdMessages) ToFlat() *PB_UpdateDelivierdMessages_Flat {
-	r := &PB_UpdateDelivierdMessages_Flat{
-		MessageIds: helper.SliceInt64ToInt(m.MessageIds),
-		AtTime:     int(m.AtTime),
-	}
-	return r
-}
-
-func (m *PB_UpdateDeletedFromServerMessages) ToFlat() *PB_UpdateDeletedFromServerMessages_Flat {
-	r := &PB_UpdateDeletedFromServerMessages_Flat{
-		MessageIds: helper.SliceInt64ToInt(m.MessageIds),
-		AtTime:     int(m.AtTime),
-	}
-	return r
-}
-
-func (m *PB_UpdateDeleteMessages) ToFlat() *PB_UpdateDeleteMessages_Flat {
-	r := &PB_UpdateDeleteMessages_Flat{
-		MessageIds: helper.SliceInt64ToInt(m.MessageIds),
-	}
-	return r
-}
-
-func (m *PB_UpdateRestoreMessage) ToFlat() *PB_UpdateRestoreMessage_Flat {
-	r := &PB_UpdateRestoreMessage_Flat{
-		MessageIds: helper.SliceInt64ToInt(m.MessageIds),
-	}
-	return r
-}
-
 func (m *PB_UpdateGroupParticipants) ToFlat() *PB_UpdateGroupParticipants_Flat {
 	r := &PB_UpdateGroupParticipants_Flat{}
 	return r
@@ -1736,10 +1672,17 @@ func (m *PB_UpdateMessageId) ToFlat() *PB_UpdateMessageId_Flat {
 	return r
 }
 
-func (m *PB_UpdateEditMessage) ToFlat() *PB_UpdateEditMessage_Flat {
-	r := &PB_UpdateEditMessage_Flat{
+func (m *PB_UpdateMessageToEdit) ToFlat() *PB_UpdateMessageToEdit_Flat {
+	r := &PB_UpdateMessageToEdit_Flat{
 		MessageId: int(m.MessageId),
 		NewText:   m.NewText,
+	}
+	return r
+}
+
+func (m *PB_UpdateMessageToDelete) ToFlat() *PB_UpdateMessageToDelete_Flat {
+	r := &PB_UpdateMessageToDelete_Flat{
+		MessageId: int(m.MessageId),
 	}
 	return r
 }
@@ -2551,49 +2494,6 @@ func (m *PB_UserView_Flat) ToPB() *PB_UserView {
 	return r
 }
 
-func (m *PB_UpdateNewMessage_Flat) ToPB() *PB_UpdateNewMessage {
-	r := &PB_UpdateNewMessage{}
-	return r
-}
-
-func (m *PB_UpdateSeenMessages_Flat) ToPB() *PB_UpdateSeenMessages {
-	r := &PB_UpdateSeenMessages{
-		MessageIds: helper.SliceIntToInt64(m.MessageIds),
-		AtTime:     int64(m.AtTime),
-	}
-	return r
-}
-
-func (m *PB_UpdateDelivierdMessages_Flat) ToPB() *PB_UpdateDelivierdMessages {
-	r := &PB_UpdateDelivierdMessages{
-		MessageIds: helper.SliceIntToInt64(m.MessageIds),
-		AtTime:     int64(m.AtTime),
-	}
-	return r
-}
-
-func (m *PB_UpdateDeletedFromServerMessages_Flat) ToPB() *PB_UpdateDeletedFromServerMessages {
-	r := &PB_UpdateDeletedFromServerMessages{
-		MessageIds: helper.SliceIntToInt64(m.MessageIds),
-		AtTime:     int64(m.AtTime),
-	}
-	return r
-}
-
-func (m *PB_UpdateDeleteMessages_Flat) ToPB() *PB_UpdateDeleteMessages {
-	r := &PB_UpdateDeleteMessages{
-		MessageIds: helper.SliceIntToInt64(m.MessageIds),
-	}
-	return r
-}
-
-func (m *PB_UpdateRestoreMessage_Flat) ToPB() *PB_UpdateRestoreMessage {
-	r := &PB_UpdateRestoreMessage{
-		MessageIds: helper.SliceIntToInt64(m.MessageIds),
-	}
-	return r
-}
-
 func (m *PB_UpdateGroupParticipants_Flat) ToPB() *PB_UpdateGroupParticipants {
 	r := &PB_UpdateGroupParticipants{}
 	return r
@@ -2625,10 +2525,17 @@ func (m *PB_UpdateMessageId_Flat) ToPB() *PB_UpdateMessageId {
 	return r
 }
 
-func (m *PB_UpdateEditMessage_Flat) ToPB() *PB_UpdateEditMessage {
-	r := &PB_UpdateEditMessage{
+func (m *PB_UpdateMessageToEdit_Flat) ToPB() *PB_UpdateMessageToEdit {
+	r := &PB_UpdateMessageToEdit{
 		MessageId: int64(m.MessageId),
 		NewText:   m.NewText,
+	}
+	return r
+}
+
+func (m *PB_UpdateMessageToDelete_Flat) ToPB() *PB_UpdateMessageToDelete {
+	r := &PB_UpdateMessageToDelete{
+		MessageId: int64(m.MessageId),
 	}
 	return r
 }

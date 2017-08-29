@@ -35,7 +35,7 @@ type PB_UserWithMe struct {
 func (m *PB_UserWithMe) Reset()                    { *m = PB_UserWithMe{} }
 func (m *PB_UserWithMe) String() string            { return proto.CompactTextString(m) }
 func (*PB_UserWithMe) ProtoMessage()               {}
-func (*PB_UserWithMe) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
+func (*PB_UserWithMe) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
 
 func (m *PB_UserWithMe) GetUserId() int32 {
 	if m != nil {
@@ -148,7 +148,7 @@ type PB_Message struct {
 func (m *PB_Message) Reset()                    { *m = PB_Message{} }
 func (m *PB_Message) String() string            { return proto.CompactTextString(m) }
 func (*PB_Message) ProtoMessage()               {}
-func (*PB_Message) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
+func (*PB_Message) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
 
 func (m *PB_Message) GetMessageKey() string {
 	if m != nil {
@@ -317,7 +317,7 @@ type PB_MsgFile struct {
 func (m *PB_MsgFile) Reset()                    { *m = PB_MsgFile{} }
 func (m *PB_MsgFile) String() string            { return proto.CompactTextString(m) }
 func (*PB_MsgFile) ProtoMessage()               {}
-func (*PB_MsgFile) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{2} }
+func (*PB_MsgFile) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{2} }
 
 func (m *PB_MsgFile) GetName() string {
 	if m != nil {
@@ -403,7 +403,7 @@ type PB_Response struct {
 func (m *PB_Response) Reset()                    { *m = PB_Response{} }
 func (m *PB_Response) String() string            { return proto.CompactTextString(m) }
 func (*PB_Response) ProtoMessage()               {}
-func (*PB_Response) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{3} }
+func (*PB_Response) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{3} }
 
 func (m *PB_Response) GetStatus() int32 {
 	if m != nil {
@@ -419,7 +419,7 @@ type PB_Request struct {
 func (m *PB_Request) Reset()                    { *m = PB_Request{} }
 func (m *PB_Request) String() string            { return proto.CompactTextString(m) }
 func (*PB_Request) ProtoMessage()               {}
-func (*PB_Request) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{4} }
+func (*PB_Request) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{4} }
 
 func (m *PB_Request) GetStatus() int32 {
 	if m != nil {
@@ -436,7 +436,7 @@ type PB_RequestMsgAddMany struct {
 func (m *PB_RequestMsgAddMany) Reset()                    { *m = PB_RequestMsgAddMany{} }
 func (m *PB_RequestMsgAddMany) String() string            { return proto.CompactTextString(m) }
 func (*PB_RequestMsgAddMany) ProtoMessage()               {}
-func (*PB_RequestMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{5} }
+func (*PB_RequestMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{5} }
 
 func (m *PB_RequestMsgAddMany) GetRequest() *PB_Request {
 	if m != nil {
@@ -459,7 +459,7 @@ type PB_ResponseMsgAddMany struct {
 func (m *PB_ResponseMsgAddMany) Reset()                    { *m = PB_ResponseMsgAddMany{} }
 func (m *PB_ResponseMsgAddMany) String() string            { return proto.CompactTextString(m) }
 func (*PB_ResponseMsgAddMany) ProtoMessage()               {}
-func (*PB_ResponseMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{6} }
+func (*PB_ResponseMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{6} }
 
 func (m *PB_ResponseMsgAddMany) GetResponse() *PB_Response {
 	if m != nil {
@@ -476,7 +476,7 @@ type PB_Push struct {
 func (m *PB_Push) Reset()                    { *m = PB_Push{} }
 func (m *PB_Push) String() string            { return proto.CompactTextString(m) }
 func (*PB_Push) ProtoMessage()               {}
-func (*PB_Push) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{7} }
+func (*PB_Push) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{7} }
 
 func (m *PB_Push) GetStatus() int32 {
 	if m != nil {
@@ -492,7 +492,7 @@ type PB_Result struct {
 func (m *PB_Result) Reset()                    { *m = PB_Result{} }
 func (m *PB_Result) String() string            { return proto.CompactTextString(m) }
 func (*PB_Result) ProtoMessage()               {}
-func (*PB_Result) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{8} }
+func (*PB_Result) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{8} }
 
 func (m *PB_Result) GetStatus() int32 {
 	if m != nil {
@@ -511,7 +511,7 @@ type PB_PushMsgAddMany struct {
 func (m *PB_PushMsgAddMany) Reset()                    { *m = PB_PushMsgAddMany{} }
 func (m *PB_PushMsgAddMany) String() string            { return proto.CompactTextString(m) }
 func (*PB_PushMsgAddMany) ProtoMessage()               {}
-func (*PB_PushMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{9} }
+func (*PB_PushMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{9} }
 
 func (m *PB_PushMsgAddMany) GetPush() *PB_Push {
 	if m != nil {
@@ -541,7 +541,7 @@ type PB_ResultMsgAddMany struct {
 func (m *PB_ResultMsgAddMany) Reset()                    { *m = PB_ResultMsgAddMany{} }
 func (m *PB_ResultMsgAddMany) String() string            { return proto.CompactTextString(m) }
 func (*PB_ResultMsgAddMany) ProtoMessage()               {}
-func (*PB_ResultMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{10} }
+func (*PB_ResultMsgAddMany) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{10} }
 
 func (m *PB_ResultMsgAddMany) GetResult() *PB_Result {
 	if m != nil {
@@ -561,7 +561,7 @@ type PB_MsgEvent struct {
 func (m *PB_MsgEvent) Reset()                    { *m = PB_MsgEvent{} }
 func (m *PB_MsgEvent) String() string            { return proto.CompactTextString(m) }
 func (*PB_MsgEvent) ProtoMessage()               {}
-func (*PB_MsgEvent) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{11} }
+func (*PB_MsgEvent) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{11} }
 
 func (m *PB_MsgEvent) GetMessageKey() string {
 	if m != nil {
@@ -606,7 +606,7 @@ type PB_PushMsgEvents struct {
 func (m *PB_PushMsgEvents) Reset()                    { *m = PB_PushMsgEvents{} }
 func (m *PB_PushMsgEvents) String() string            { return proto.CompactTextString(m) }
 func (*PB_PushMsgEvents) ProtoMessage()               {}
-func (*PB_PushMsgEvents) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{12} }
+func (*PB_PushMsgEvents) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{12} }
 
 func (m *PB_PushMsgEvents) GetPush() *PB_Push {
 	if m != nil {
@@ -629,7 +629,7 @@ type PB_ResultMsgEvents struct {
 func (m *PB_ResultMsgEvents) Reset()                    { *m = PB_ResultMsgEvents{} }
 func (m *PB_ResultMsgEvents) String() string            { return proto.CompactTextString(m) }
 func (*PB_ResultMsgEvents) ProtoMessage()               {}
-func (*PB_ResultMsgEvents) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{13} }
+func (*PB_ResultMsgEvents) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{13} }
 
 func (m *PB_ResultMsgEvents) GetResult() *PB_Result {
 	if m != nil {
@@ -649,7 +649,7 @@ type PB_MsgsSeenFromClient struct {
 func (m *PB_MsgsSeenFromClient) Reset()                    { *m = PB_MsgsSeenFromClient{} }
 func (m *PB_MsgsSeenFromClient) String() string            { return proto.CompactTextString(m) }
 func (*PB_MsgsSeenFromClient) ProtoMessage()               {}
-func (*PB_MsgsSeenFromClient) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{14} }
+func (*PB_MsgsSeenFromClient) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{14} }
 
 func (m *PB_MsgsSeenFromClient) GetMessageKey() string {
 	if m != nil {
@@ -689,7 +689,7 @@ type PB_MsgSeen struct {
 func (m *PB_MsgSeen) Reset()                    { *m = PB_MsgSeen{} }
 func (m *PB_MsgSeen) String() string            { return proto.CompactTextString(m) }
 func (*PB_MsgSeen) ProtoMessage()               {}
-func (*PB_MsgSeen) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{15} }
+func (*PB_MsgSeen) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{15} }
 
 func (m *PB_MsgSeen) GetMessageKey() string {
 	if m != nil {
@@ -727,7 +727,7 @@ type PB_RequestMsgsSeen struct {
 func (m *PB_RequestMsgsSeen) Reset()                    { *m = PB_RequestMsgsSeen{} }
 func (m *PB_RequestMsgsSeen) String() string            { return proto.CompactTextString(m) }
 func (*PB_RequestMsgsSeen) ProtoMessage()               {}
-func (*PB_RequestMsgsSeen) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{16} }
+func (*PB_RequestMsgsSeen) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{16} }
 
 func (m *PB_RequestMsgsSeen) GetRequest() *PB_Request {
 	if m != nil {
@@ -750,7 +750,7 @@ type PB_ResponseMsgsSeen struct {
 func (m *PB_ResponseMsgsSeen) Reset()                    { *m = PB_ResponseMsgsSeen{} }
 func (m *PB_ResponseMsgsSeen) String() string            { return proto.CompactTextString(m) }
 func (*PB_ResponseMsgsSeen) ProtoMessage()               {}
-func (*PB_ResponseMsgsSeen) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{17} }
+func (*PB_ResponseMsgsSeen) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{17} }
 
 func (m *PB_ResponseMsgsSeen) GetResponse() *PB_Response {
 	if m != nil {
@@ -767,7 +767,7 @@ type PB_ReqRpcAddMsg struct {
 func (m *PB_ReqRpcAddMsg) Reset()                    { *m = PB_ReqRpcAddMsg{} }
 func (m *PB_ReqRpcAddMsg) String() string            { return proto.CompactTextString(m) }
 func (*PB_ReqRpcAddMsg) ProtoMessage()               {}
-func (*PB_ReqRpcAddMsg) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{18} }
+func (*PB_ReqRpcAddMsg) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{18} }
 
 func (m *PB_ReqRpcAddMsg) GetRequest() *PB_Request {
 	if m != nil {
@@ -791,7 +791,7 @@ type PB_ResRpcAddMsg struct {
 func (m *PB_ResRpcAddMsg) Reset()                    { *m = PB_ResRpcAddMsg{} }
 func (m *PB_ResRpcAddMsg) String() string            { return proto.CompactTextString(m) }
 func (*PB_ResRpcAddMsg) ProtoMessage()               {}
-func (*PB_ResRpcAddMsg) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{19} }
+func (*PB_ResRpcAddMsg) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{19} }
 
 func (m *PB_ResRpcAddMsg) GetResponse() *PB_Response {
 	if m != nil {
@@ -904,9 +904,9 @@ var _RpcMsgs_serviceDesc = grpc.ServiceDesc{
 	Metadata: "pb_del.proto",
 }
 
-func init() { proto.RegisterFile("pb_del.proto", fileDescriptor2) }
+func init() { proto.RegisterFile("pb_del.proto", fileDescriptor1) }
 
-var fileDescriptor2 = []byte{
+var fileDescriptor1 = []byte{
 	// 1068 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0x5f, 0x8f, 0xda, 0x46,
 	0x10, 0x17, 0xc7, 0x99, 0x3f, 0x03, 0xc7, 0xdd, 0x6d, 0xae, 0x91, 0x15, 0x45, 0x09, 0x75, 0xef,

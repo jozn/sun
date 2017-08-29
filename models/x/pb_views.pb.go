@@ -30,7 +30,7 @@ type PB_UserView struct {
 func (m *PB_UserView) Reset()                    { *m = PB_UserView{} }
 func (m *PB_UserView) String() string            { return proto.CompactTextString(m) }
 func (*PB_UserView) ProtoMessage()               {}
-func (*PB_UserView) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{0} }
+func (*PB_UserView) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{0} }
 
 func (m *PB_UserView) GetId() int64 {
 	if m != nil {
@@ -120,9 +120,9 @@ func init() {
 	proto.RegisterType((*PB_UserView)(nil), "PB_UserView")
 }
 
-func init() { proto.RegisterFile("pb_views.proto", fileDescriptor10) }
+func init() { proto.RegisterFile("pb_views.proto", fileDescriptor9) }
 
-var fileDescriptor10 = []byte{
+var fileDescriptor9 = []byte{
 	// 275 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x54, 0x90, 0xcd, 0x4e, 0xeb, 0x30,
 	0x10, 0x85, 0xe5, 0x46, 0x69, 0x9b, 0xe9, 0x6d, 0xaf, 0x6a, 0xfe, 0x46, 0x08, 0xa1, 0x08, 0xb1,

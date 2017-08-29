@@ -26,7 +26,7 @@ type PB_CommandToServer struct {
 func (m *PB_CommandToServer) Reset()                    { *m = PB_CommandToServer{} }
 func (m *PB_CommandToServer) String() string            { return proto.CompactTextString(m) }
 func (*PB_CommandToServer) ProtoMessage()               {}
-func (*PB_CommandToServer) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{0} }
+func (*PB_CommandToServer) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{0} }
 
 func (m *PB_CommandToServer) GetClientCallId() int64 {
 	if m != nil {
@@ -66,7 +66,7 @@ type PB_CommandToClient struct {
 func (m *PB_CommandToClient) Reset()                    { *m = PB_CommandToClient{} }
 func (m *PB_CommandToClient) String() string            { return proto.CompactTextString(m) }
 func (*PB_CommandToClient) ProtoMessage()               {}
-func (*PB_CommandToClient) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{1} }
+func (*PB_CommandToClient) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{1} }
 
 func (m *PB_CommandToClient) GetServerCallId() int64 {
 	if m != nil {
@@ -103,7 +103,7 @@ type PB_CommandReachedToServer struct {
 func (m *PB_CommandReachedToServer) Reset()                    { *m = PB_CommandReachedToServer{} }
 func (m *PB_CommandReachedToServer) String() string            { return proto.CompactTextString(m) }
 func (*PB_CommandReachedToServer) ProtoMessage()               {}
-func (*PB_CommandReachedToServer) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{2} }
+func (*PB_CommandReachedToServer) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{2} }
 
 func (m *PB_CommandReachedToServer) GetClientCallId() int64 {
 	if m != nil {
@@ -119,7 +119,7 @@ type PB_CommandReachedToClient struct {
 func (m *PB_CommandReachedToClient) Reset()                    { *m = PB_CommandReachedToClient{} }
 func (m *PB_CommandReachedToClient) String() string            { return proto.CompactTextString(m) }
 func (*PB_CommandReachedToClient) ProtoMessage()               {}
-func (*PB_CommandReachedToClient) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{3} }
+func (*PB_CommandReachedToClient) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{3} }
 
 func (m *PB_CommandReachedToClient) GetServerCallId() int64 {
 	if m != nil {
@@ -137,7 +137,7 @@ type PB_ResponseToClient struct {
 func (m *PB_ResponseToClient) Reset()                    { *m = PB_ResponseToClient{} }
 func (m *PB_ResponseToClient) String() string            { return proto.CompactTextString(m) }
 func (*PB_ResponseToClient) ProtoMessage()               {}
-func (*PB_ResponseToClient) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{4} }
+func (*PB_ResponseToClient) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{4} }
 
 func (m *PB_ResponseToClient) GetClientCallId() int64 {
 	if m != nil {
@@ -168,9 +168,9 @@ func init() {
 	proto.RegisterType((*PB_ResponseToClient)(nil), "PB_ResponseToClient")
 }
 
-func init() { proto.RegisterFile("pb_global.proto", fileDescriptor4) }
+func init() { proto.RegisterFile("pb_global.proto", fileDescriptor3) }
 
-var fileDescriptor4 = []byte{
+var fileDescriptor3 = []byte{
 	// 250 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2f, 0x48, 0x8a, 0x4f,
 	0xcf, 0xc9, 0x4f, 0x4a, 0xcc, 0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x97, 0xe2, 0x2b, 0x48, 0x8a,

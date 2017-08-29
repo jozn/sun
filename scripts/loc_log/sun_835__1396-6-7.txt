@@ -3,15 +3,15 @@
 classified 117 filesDuplicate file check 117 files (110 known unique)Unique:      100 files                                               117 unique files.                              
 Counting:  100      20 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.39 s (275.9 files/s, 23828.9 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.25 s (431.8 files/s, 37306.1 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Go                              95           1389            803           5817
-Protocol Buffers                11            214            219            789
+Go                              96           1407            806           5882
+Protocol Buffers                10            198            155            785
 Bourne Shell                     1              1              1             10
 -------------------------------------------------------------------------------
-SUM:                           107           1604           1023           6616
+SUM:                           107           1606            962           6677
 -------------------------------------------------------------------------------
 =================================== End Sun ===================================
 
@@ -22,7 +22,7 @@ SUM:                           107           1604           1023           6616
 classified 412 filesDuplicate file check 412 files (396 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                               412 unique files.                              
 Counting:  100Counting:  200Counting:  300Counting:  400     109 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=1.74 s (232.7 files/s, 29698.9 lines/s)
+http://cloc.sourceforge.net v 1.64  T=1.10 s (366.8 files/s, 46819.3 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ SUM:                           405           7779           7025          36886
 classified 322 filesDuplicate file check 322 files (309 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                               322 unique files.                              
 Counting:  100Counting:  200Counting:  300      88 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=1.29 s (243.4 files/s, 28865.0 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.83 s (381.0 files/s, 45182.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -56,16 +56,16 @@ SUM:                           315           6374           5047          25933
 classified 33 files      33 unique files.                              
       16 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.10 s (256.7 files/s, 17995.5 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.07 s (353.7 files/s, 24815.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-XML                              8              1              0            961
+XML                              8              1              0            962
 Go                              11            109             25            539
 Java                             4             17             20             69
 Protocol Buffers                 3             12             14             56
 -------------------------------------------------------------------------------
-SUM:                            26            139             59           1625
+SUM:                            26            139             59           1626
 -------------------------------------------------------------------------------
 =================================== End Ants ===================================
 

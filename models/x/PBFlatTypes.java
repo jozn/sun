@@ -578,33 +578,6 @@ public class PBFlatTypes {
 	   public long AtTimeMs;
 	}
 
-	public class PB_UpdateNewMessage {
-	   public PB_MessageView Message;
-	}
-
-	public class PB_UpdateSeenMessages {
-	   public long MessageIds;
-	   public long AtTime;
-	}
-
-	public class PB_UpdateDelivierdMessages {
-	   public long MessageIds;
-	   public long AtTime;
-	}
-
-	public class PB_UpdateDeletedFromServerMessages {
-	   public long MessageIds;
-	   public long AtTime;
-	}
-
-	public class PB_UpdateDeleteMessages {
-	   public long MessageIds;
-	}
-
-	public class PB_UpdateRestoreMessage {
-	   public long MessageIds;
-	}
-
 	public class PB_UpdateGroupParticipants {
 	}
 
@@ -624,9 +597,13 @@ public class PBFlatTypes {
 	   public long NewMessageId;
 	}
 
-	public class PB_UpdateEditMessage {
+	public class PB_UpdateMessageToEdit {
 	   public long MessageId;
 	   public String NewText;
+	}
+
+	public class PB_UpdateMessageToDelete {
+	   public long MessageId;
 	}
 
 	public class PB_UpdateRoomActionDoing {
@@ -644,11 +621,13 @@ public class PBFlatTypes {
 	   public PB_MessageFileView ChatFiles;
 	   public PB_ChatView Chats;
 	   public PB_UserView Users;
-	   public PB_UpdateMessageId ChangeMessageIds;
-	   public PB_UpdateEditMessage UpdateMessages;
-	   public PB_UpdateMessageMeta DelivierdToServerMessages;
-	   public PB_UpdateMessageMeta DelivierdToPeerMessages;
-	   public PB_UpdateMessageMeta SeenMessagsByPeer;
+	   public PB_UpdateMessageId MessagesChangeIds;
+	   public PB_UpdateMessageToEdit MessagesToUpdate;
+	   public PB_UpdateMessageToDelete MessagesToDelete;
+	   public PB_UpdateMessageMeta MessagesDelivierdToServer;
+	   public PB_UpdateMessageMeta MessagesDelivierdToPeer;
+	   public PB_UpdateMessageMeta MessagesSeenByPeer;
+	   public PB_UpdateMessageMeta MessagesDeletedFromServer;
 	   public PB_UpdateRoomActionDoing RoomActionDoing;
 	   public PB_UpdateUserBlocked UserBlockedByMe;
 	   public PB_UpdateUserBlocked UserBlockedMe;

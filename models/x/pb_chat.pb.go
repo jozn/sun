@@ -6,7 +6,6 @@ Package x is a generated protocol buffer package.
 
 It is generated from these files:
 	pb_chat.proto
-	pb_chat_views.proto
 	pb_del.proto
 	pb_enums.proto
 	pb_global.proto
@@ -110,18 +109,13 @@ It has these top-level messages:
 	UserView
 	PB_Chat
 	PB_DirectMessage
-	PB_UpdateNewMessage
-	PB_UpdateSeenMessages
-	PB_UpdateDelivierdMessages
-	PB_UpdateDeletedFromServerMessages
-	PB_UpdateDeleteMessages
-	PB_UpdateRestoreMessage
 	PB_UpdateGroupParticipants
 	PB_UpdateNotifySettings
 	PB_UpdateServiceNotification
 	PB_UpdateMessageMeta
 	PB_UpdateMessageId
-	PB_UpdateEditMessage
+	PB_UpdateMessageToEdit
+	PB_UpdateMessageToDelete
 	PB_UpdateRoomActionDoing
 	PB_UpdateUserBlocked
 	PB_ChangesHolderView

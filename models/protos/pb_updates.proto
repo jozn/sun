@@ -11,71 +11,12 @@ import "pb_enums.proto";
 import "pb_chat.proto";
 import "pb_views.proto";
 
-//dep
-//message PB_UpdateNewMessage{
-//    PB_MessageView Message = 1;
-//}
-//
-//message PB_UpdateSeenMessages{
-//    repeated int64 MessageIds =1;
-//    int64 AtTime =2;
-//}
-//
-//message PB_UpdateDelivierdMessages{
-//    repeated int64 MessageIds =1;
-//    int64 AtTime =2;
-//}
-//
-//message PB_UpdateDeletedFromServerMessages{
-//    repeated int64 MessageIds =1;
-//    int64 AtTime =2;
-//}
-
-
-///*message PB_UpdateSeenMessages{
-//    repeated int64 MessageIds =1;
-//    int64 AtTime =2;
-//    MessageMetaUpdatesTypesEnum MetaType = 3;
-//}*/
-
-
-//message PB_UpdateRestoreMessage{
-//    repeated int64 MessageIds =1;
-//}
-//
-
-
 message PB_UpdateGroupParticipants{
 
 }
-///*message PB_UpdateUserStatus{}
-//message PB_UpdateUserAvatar{}
-//message PB_pdateActivation{}
-//message updateChatParticipantAdd{}
-//message updateChatParticipantDelete{}*/
-
 
 message PB_UpdateNotifySettings{}
 message PB_UpdateServiceNotification{}
-
-/////////////// Deprecateds /////////////////
-
-
-
-/////////////////////////////////////////////
-enum UpdateLogEnum {
-    UNKNOWN_UPDATE_LOG = 0;
-    UPDATE_NEW_MESSAGE = 1;
-    UPDATE_MESSAGE_ID = 2;
-    UPDATE_SEE_NMESSAGES = 3;
-    UPDATE_DELIVIERD_MESSAGES = 4;
-    UPDATE_DELETED_FROM_SERVERM_ESSAGES = 5;
-    UPDATE_DELETE_MESSAGES = 6;
-    UPDATE_ROOM_ACTIONDOING = 10;
-    UPDATE_USER_BLOCKED = 11;
-    UPDATE_NOTIFY_SETTINGS = 12;
-    UPDATE_SERVICE_NOTIFICATION = 15;
-}
 
 ////////////////////////////////////////////////
 message PB_UpdateMessageMeta{
@@ -88,12 +29,12 @@ message PB_UpdateMessageId{
     int64 NewMessageId =2;
 }
 
-message PB_UpdateEditMessage{
+message PB_UpdateMessageToEdit{
     int64 MessageId =1;
     string NewText =2;
 }
 
-message PB_UpdateDeleteMessage{
+message PB_UpdateMessageToDelete{
     int64 MessageId =1;
 }
 
@@ -115,14 +56,15 @@ message PB_ChangesHolderView {
     repeated PB_ChatView Chats = 3;
     repeated PB_UserView Users = 6;
 
-    repeated PB_UpdateMessageId ChangeMessageIds = 10;
-    repeated PB_UpdateEditMessage UpdateMessages = 11;
-    repeated PB_UpdateDeleteMessage DeleteMessages = 12;
+    repeated PB_UpdateMessageId MessagesChangeIds = 10;
+    repeated PB_UpdateMessageToEdit MessagesToUpdate = 11;
+    repeated PB_UpdateMessageToDelete MessagesToDelete = 12;
 
     //messages meta info
-    repeated PB_UpdateMessageMeta DelivierdToServerMessages = 20;
-    repeated PB_UpdateMessageMeta DelivierdToPeerMessages = 21;
-    repeated PB_UpdateMessageMeta SeenMessagsByPeer = 22;
+    repeated PB_UpdateMessageMeta MessagesDelivierdToServer = 20;
+    repeated PB_UpdateMessageMeta MessagesDelivierdToPeer = 21;
+    repeated PB_UpdateMessageMeta MessagesSeenByPeer = 22;
+    repeated PB_UpdateMessageMeta MessagesDeletedFromServer = 23;
 
     //room updates
     repeated PB_UpdateRoomActionDoing RoomActionDoing = 30;
@@ -135,6 +77,18 @@ message PB_ChangesHolderView {
 
     //notifications
     //settings
+}
 
-
+enum UpdateLogEnum {
+    UNKNOWN_UPDATE_LOG = 0;
+    UPDATE_NEW_MESSAGE = 1;
+    UPDATE_MESSAGE_ID = 2;
+    UPDATE_SEE_NMESSAGES = 3;
+    UPDATE_DELIVIERD_MESSAGES = 4;
+    UPDATE_DELETED_FROM_SERVERM_ESSAGES = 5;
+    UPDATE_DELETE_MESSAGES = 6;
+    UPDATE_ROOM_ACTIONDOING = 10;
+    UPDATE_USER_BLOCKED = 11;
+    UPDATE_NOTIFY_SETTINGS = 12;
+    UPDATE_SERVICE_NOTIFICATION = 15;
 }

@@ -29,7 +29,7 @@ type PB_Chat struct {
 func (m *PB_Chat) Reset()                    { *m = PB_Chat{} }
 func (m *PB_Chat) String() string            { return proto.CompactTextString(m) }
 func (*PB_Chat) ProtoMessage()               {}
-func (*PB_Chat) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
+func (*PB_Chat) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{0} }
 
 func (m *PB_Chat) GetChatId() int64 {
 	if m != nil {
@@ -124,7 +124,7 @@ type PB_DirectMessage struct {
 func (m *PB_DirectMessage) Reset()                    { *m = PB_DirectMessage{} }
 func (m *PB_DirectMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_DirectMessage) ProtoMessage()               {}
-func (*PB_DirectMessage) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
+func (*PB_DirectMessage) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{1} }
 
 func (m *PB_DirectMessage) GetMessageId() int64 {
 	if m != nil {
@@ -201,9 +201,9 @@ func init() {
 	proto.RegisterType((*PB_DirectMessage)(nil), "PB_DirectMessage")
 }
 
-func init() { proto.RegisterFile("pb_table.proto", fileDescriptor8) }
+func init() { proto.RegisterFile("pb_table.proto", fileDescriptor7) }
 
-var fileDescriptor8 = []byte{
+var fileDescriptor7 = []byte{
 	// 394 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x92, 0xdd, 0x6e, 0xaa, 0x40,
 	0x10, 0x80, 0x83, 0x1c, 0xf5, 0x30, 0x1e, 0xff, 0xf6, 0xe4, 0x9c, 0xec, 0x45, 0xd3, 0x10, 0x63,
