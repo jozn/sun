@@ -82,7 +82,7 @@ func PushView_directLogsTo_PB_ChangesHolderView(meId int, logs []*x.DirectLog) *
 
 func pushView_newDirectMessage(log *x.DirectLog) (*x.PB_MessageView, bool) {
 	if directMsg, ok := x.Store.GetDirectMessageByMessageId(log.MessageId); ok {
-		v := PBConv_DirectMessage_to_PB_MessageView(directMsg)
+		v := PBConv_DirectMessage_to_PB_MessageView(directMsg,log.ChatId)
 		return v, true
 	}
 	return nil, false
@@ -109,8 +109,8 @@ func pushView_userView(meId int, peerIds map[int]bool) (res []*x.PB_UserView) {
 				FullName:         user.FullName,
 				AvatarUrl:        user.AvatarUrl,
 				PrivacyProfile:   int32(user.PrivacyProfile),
-				Phone:            user.Phone,
-				Email:            user.Email,
+				//Phone:            user.Phone,
+				//Email:            user.Email,
 				IsDeleted:        int32(user.IsDeleted),
 				FollowersCount:   int32(user.FollowersCount),
 				FollowingCount:   int32(user.FollowingCount),

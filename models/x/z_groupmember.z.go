@@ -2930,49 +2930,6 @@ func MassReplace_GroupMember(rows []GroupMember, db XODB) error {
 
 //
 
-// GroupMembersById retrieves a row from 'ms.group_member' as a GroupMember.
-//
-// Generated from index 'Id'.
-func GroupMembersById(db XODB, id int) ([]*GroupMember, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, GroupId, GroupKey, UserId, ByUserId, GroupRoleEnum, CreatedTime ` +
-		`FROM ms.group_member ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*GroupMember{}
-	for q.Next() {
-		gm := GroupMember{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&gm.Id, &gm.GroupId, &gm.GroupKey, &gm.UserId, &gm.ByUserId, &gm.GroupRoleEnum, &gm.CreatedTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &gm)
-	}
-
-	OnGroupMember_LoadMany(res)
-
-	return res, nil
-}
-
 // GroupMemberById retrieves a row from 'ms.group_member' as a GroupMember.
 //
 // Generated from index 'group_member_Id_pkey'.

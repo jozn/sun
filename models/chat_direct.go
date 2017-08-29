@@ -87,7 +87,7 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		ChatId:     s.MeChat.ChatId,
 		MessageId:  msg.MessageId,
 		Seq:        s.MeChat.CurrentSeq,
-		SourceEnum: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
+		SourceEnumId: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
 	}
 
 	d2mPeer := x.DirectToMessage{
@@ -95,7 +95,7 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		ChatId:     s.PeerChat.ChatId,
 		MessageId:  msg.MessageId,
 		Seq:        s.PeerChat.CurrentSeq,
-		SourceEnum: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
+		SourceEnumId: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
 	}
 
 	tx, err := base.DB.Begin()
@@ -170,7 +170,7 @@ func (s *chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 
 	x.NewDirectMessage_Updater().
 		MessageId_In(msgIds).
-		DeliviryStatusEnum(int(x.RoomMessageDeliviryStatusEnum_SEEN2)).
+		DeliviryStatusEnumId(int(x.RoomMessageDeliviryStatusEnum_SEEN2)).
 		Update(base.DB)
 
 	s.MeChat.LastSeqSeen = toSeq

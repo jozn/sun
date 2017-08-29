@@ -24,7 +24,7 @@ message PB_ChatView {
 }
 
 message PB_MessageView {
-    int64 MessageId = 1;
+    uint64 MessageId = 1;
     string RoomKey = 3;
     int32 UserId = 5;
     int64 MessageFileId = 7;
@@ -35,7 +35,7 @@ message PB_MessageView {
     int32 PeerSeenTime = 17;
     int32 DeliviryStatusEnumId = 19;
 
-    int32 ChatId = 30;
+    int64 ChatId = 30;
 }
 
 message PB_MessageFileView {
@@ -68,8 +68,8 @@ message PB_UserView {
     string FullName = 13;
     string AvatarUrl = 15;
     int32 PrivacyProfile = 17;
-    string Phone = 19;
-    string Email = 21;
+    //string Phone = 19;
+    //string Email = 21;
     int32 IsDeleted = 23;
     int32 FollowersCount = 29;
     int32 FollowingCount = 31;

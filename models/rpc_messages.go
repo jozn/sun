@@ -22,12 +22,12 @@ func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_User
 		RoomKey:            UsersToRoomKey(p.GetUserId(), int(i.GetPeerId())),
 		UserId:             p.GetUserId(),
 		MessageFileId:      0,
-		MessageTypeEnum:    int(x.RoomMessageTypeEnum_TEXT),
+		MessageTypeEnumId:    int(x.RoomMessageTypeEnum_TEXT),
 		Text:               i.Text,
 		Time:               int(i.Time),
 		PeerReceivedTime:   0,
 		PeerSeenTime:       0,
-		DeliviryStatusEnum: int(x.RoomMessageDeliviryStatusEnum_SENT),
+		DeliviryStatusEnumId: int(x.RoomMessageDeliviryStatusEnum_SENT),
 	}
 
 	dm := NewDirectMessagingByUsers(p.GetUserId(), pid)

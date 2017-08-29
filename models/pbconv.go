@@ -42,22 +42,22 @@ func PBConv_DirectLog_To_DirectLog(o *x.DirectLog) *x.PB_DirectLog {
 	return n
 }
 
-func PBConv_DirectMessage_to_PB_MessageView(m *x.DirectMessage) *x.PB_MessageView {
-    r := &x.PB_MessageView{
-        MessageId:          int64(m.MessageId),
-        RoomKey:            m.RoomKey,
-        UserId:             int32(m.UserId),
-        MessageFileId:      int64(m.MessageFileId),
-        MessageTypeEnum:    int32(m.MessageTypeEnum),
-        Text:               m.Text,
-        Time:               int32(m.Time),
-        PeerReceivedTime:   int32(m.PeerReceivedTime),
-        PeerSeenTime:       int32(m.PeerSeenTime),
-        DeliviryStatusEnum: int32(m.DeliviryStatusEnum),
-        PeerUserId:         0,//int32(m.PeerUserId),
-    }
+func PBConv_DirectMessage_to_PB_MessageView(m *x.DirectMessage, chatId int) *x.PB_MessageView {
+	r := &x.PB_MessageView{
+		MessageId:            uint64(m.MessageId),
+		RoomKey:              m.RoomKey,
+		UserId:               int32(m.UserId),
+		MessageFileId:        int64(m.MessageFileId),
+		MessageTypeEnumId:    int32(m.MessageTypeEnumId),
+		Text:                 m.Text,
+		Time:                 int32(m.Time),
+		PeerReceivedTime:     int32(m.PeerReceivedTime),
+		PeerSeenTime:         int32(m.PeerSeenTime),
+		DeliviryStatusEnumId: int32(m.DeliviryStatusEnumId),
+		ChatId:               int64(chatId), //int32(m.PeerUserId),
+	}
 
-    return r
+	return r
 }
 
 /*func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {
