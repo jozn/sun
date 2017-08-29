@@ -9,7 +9,7 @@ import (
 )
 
 type chatUpdater struct {
-	HereDirect        chan x.DirectLog
+	//HereDirect        chan x.DirectLog
 	HereDirectDelayer chan logDelayer
 	StoredDirect      chan x.DirectLog
 
@@ -30,7 +30,7 @@ type logDelayer struct {
 ///////////////////////////////
 
 var LogUpdater = chatUpdater{
-	HereDirect:        make(chan x.DirectLog, 10000),
+	//HereDirect:        make(chan x.DirectLog, 10000),//dep?? use HereDirectDelayer
 	HereDirectDelayer: make(chan logDelayer, 10000),
 	StoredDirect:      make(chan x.DirectLog, 10000),
 	HereGroup:         make(chan x.DirectLog, 10000),
@@ -93,6 +93,8 @@ func (m *chatUpdater) loopDirectToUser() {
 	cnt := 0
 
 	ticker := time.NewTicker(10 * time.Millisecond)
+
+    //todo add fetching from database every 10ms and push it to x.StoredDirect
 	for {
 		select {
 		case m := <-m.StoredDirect:
@@ -104,13 +106,13 @@ func (m *chatUpdater) loopDirectToUser() {
 				fmt.Printf("batch of chanNewChatMsgsBuffer - cnt:%d - len:%d \n", cnt, len(arr))
 				pre := arr
 				arr = make([]x.DirectLog, 0, siz)
-				go m.sendToUsersUpdates(pre)
+				go chatLogger_sendToUsersUpdates(pre)
 			}
 		}
 	}
 }
 
-func (m *chatUpdater) sendToUsersUpdates(logs []x.DirectLog) {
+func chatLogger_sendToUsersUpdates(logs []x.DirectLog) {
 	defer helper.JustRecover()
 
 	if len(logs) == 0 {
@@ -118,15 +120,15 @@ func (m *chatUpdater) sendToUsersUpdates(logs []x.DirectLog) {
 	}
 
 	mp := make(map[int][]x.DirectLog, len(logs))
-	mids := make([]int, 0, len(logs))
+	msgIds := make([]int, 0, len(logs))
 	for _, l := range logs {
 		mp[l.ToUserId] = append(mp[l.ToUserId], l)
 		if l.MessageId > 0 {
-			mids = append(mids, l.MessageId)
+			msgIds = append(msgIds, l.MessageId)
 		}
 	}
 
-	x.Store.PreLoadDirectMessageByMessageIds(mids)
+	x.Store.PreLoadDirectMessageByMessageIds(msgIds)
 	for uid, logs := range mp { //each user
 		if AllPipesMap.IsPipeOpen(uid) && len(logs) > 0 {
 			rowsView := directLogsToView(logs)
@@ -152,8 +154,8 @@ func directLogToView(log x.DirectLog) *x.PB_DirectLogView {
 	case x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE:
 		msg, ok := x.Store.GetDirectMessageByMessageId(log.MessageId)
 		if ok {
-            _ =msg
-            v.NewMessage = &x.PB_MessageView{}
+			_ = msg
+			v.NewMessage = &x.PB_MessageView{}
 		}
 	}
 	return v

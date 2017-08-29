@@ -16,11 +16,11 @@ import (
 
 // Manualy copy this to project
 type OldMsgPush__ struct {
-	Id            int  `json:"Id"`            // Id -
-	Uid           uint `json:"Uid"`           // Uid -
-	ToUser        int  `json:"ToUser"`        // ToUser -
-	MsgUid        int  `json:"MsgUid"`        // MsgUid -
-	CreatedTimeMs int  `json:"CreatedTimeMs"` // CreatedTimeMs -
+	Id            int `json:"Id"`            // Id -
+	Uid           int `json:"Uid"`           // Uid -
+	ToUser        int `json:"ToUser"`        // ToUser -
+	MsgUid        int `json:"MsgUid"`        // MsgUid -
+	CreatedTimeMs int `json:"CreatedTimeMs"` // CreatedTimeMs -
 
 	// xo fields
 	_exists, _deleted bool
@@ -334,6 +334,111 @@ func (d *__OldMsgPush_Deleter) Id_GE(val int) *__OldMsgPush_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Id >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__OldMsgPush_Deleter) Uid_In(ins []int) *__OldMsgPush_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__OldMsgPush_Deleter) Uid_Ins(ins ...int) *__OldMsgPush_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__OldMsgPush_Deleter) Uid_NotIn(ins []int) *__OldMsgPush_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__OldMsgPush_Deleter) Uid_Eq(val int) *__OldMsgPush_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Deleter) Uid_NotEq(val int) *__OldMsgPush_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Deleter) Uid_LT(val int) *__OldMsgPush_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Deleter) Uid_LE(val int) *__OldMsgPush_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Deleter) Uid_GT(val int) *__OldMsgPush_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Deleter) Uid_GE(val int) *__OldMsgPush_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -765,6 +870,111 @@ func (d *__OldMsgPush_Updater) Id_GE(val int) *__OldMsgPush_Updater {
 	return d
 }
 
+func (u *__OldMsgPush_Updater) Uid_In(ins []int) *__OldMsgPush_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__OldMsgPush_Updater) Uid_Ins(ins ...int) *__OldMsgPush_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__OldMsgPush_Updater) Uid_NotIn(ins []int) *__OldMsgPush_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__OldMsgPush_Updater) Uid_Eq(val int) *__OldMsgPush_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Updater) Uid_NotEq(val int) *__OldMsgPush_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Updater) Uid_LT(val int) *__OldMsgPush_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Updater) Uid_LE(val int) *__OldMsgPush_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Updater) Uid_GT(val int) *__OldMsgPush_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Updater) Uid_GE(val int) *__OldMsgPush_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__OldMsgPush_Updater) ToUser_In(ins []int) *__OldMsgPush_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1191,6 +1401,111 @@ func (d *__OldMsgPush_Selector) Id_GE(val int) *__OldMsgPush_Selector {
 	return d
 }
 
+func (u *__OldMsgPush_Selector) Uid_In(ins []int) *__OldMsgPush_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__OldMsgPush_Selector) Uid_Ins(ins ...int) *__OldMsgPush_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__OldMsgPush_Selector) Uid_NotIn(ins []int) *__OldMsgPush_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " Uid NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__OldMsgPush_Selector) Uid_Eq(val int) *__OldMsgPush_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Selector) Uid_NotEq(val int) *__OldMsgPush_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Selector) Uid_LT(val int) *__OldMsgPush_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Selector) Uid_LE(val int) *__OldMsgPush_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Selector) Uid_GT(val int) *__OldMsgPush_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__OldMsgPush_Selector) Uid_GE(val int) *__OldMsgPush_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " Uid >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__OldMsgPush_Selector) ToUser_In(ins []int) *__OldMsgPush_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1540,6 +1855,23 @@ func (u *__OldMsgPush_Updater) Id_Increment(count int) *__OldMsgPush_Updater {
 //string
 
 //ints
+
+func (u *__OldMsgPush_Updater) Uid(newVal int) *__OldMsgPush_Updater {
+	u.updates[" Uid = ? "] = newVal
+	return u
+}
+
+func (u *__OldMsgPush_Updater) Uid_Increment(count int) *__OldMsgPush_Updater {
+	if count > 0 {
+		u.updates[" Uid = Uid+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" Uid = Uid-? "] = -(count) //make it positive
+	}
+
+	return u
+}
 
 //string
 

@@ -610,7 +610,7 @@ type OldMsgFile struct {
 // OldMsgPush 'ms.old_msg_push'.
 type OldMsgPush struct {
 	Id            int
-	Uid           uint
+	Uid           int
 	ToUser        int
 	MsgUid        int
 	CreatedTimeMs int
@@ -621,7 +621,7 @@ type OldMsgPush struct {
 /*
 := &OldMsgPush {
 	Id: 0,
-	Uid: UNKNOWN,
+	Uid: 0,
 	ToUser: 0,
 	MsgUid: 0,
 	CreatedTimeMs: 0,

@@ -6,7 +6,7 @@ import (
 	"ms/sun/models/x"
 )
 
-type directMessaging struct {
+type chatDirect struct {
 	MeUserId   int
 	PeerUserId int
 	MeChat     *x.Chat
@@ -14,8 +14,8 @@ type directMessaging struct {
 	Err        error
 }
 
-func NewDirectMessagingByUsers(me, peer int) *directMessaging {
-	res := &directMessaging{
+func NewDirectMessagingByUsers(me, peer int) *chatDirect {
+	res := &chatDirect{
 		MeUserId:   me,
 		PeerUserId: peer,
 	}
@@ -23,7 +23,7 @@ func NewDirectMessagingByUsers(me, peer int) *directMessaging {
 	return res
 }
 
-func NewDirectMessagingByChatId(me, chatId int) (*directMessaging, error) {
+func NewDirectMessagingByChatId(me, chatId int) (*chatDirect, error) {
 	/* if me <=  0 {
 	       return  nil,errors.New("not user")
 	   }
@@ -38,7 +38,7 @@ func NewDirectMessagingByChatId(me, chatId int) (*directMessaging, error) {
 		return nil, err
 	}
 
-	s := &directMessaging{
+	s := &chatDirect{
 		MeUserId:   me,
 		PeerUserId: ch.PeerUserId,
 	}
@@ -53,7 +53,7 @@ func NewDirectMessagingByChatId(me, chatId int) (*directMessaging, error) {
 	return s, nil
 }
 
-func (s *directMessaging) LoadOrCreateRooms() error {
+func (s *chatDirect) LoadOrCreateRooms() error {
 	var e1, e2 error
 	s.MeChat, e1 = GetOrCreateDirectChatForPeers(s.MeUserId, s.PeerUserId)
 	s.PeerChat, e2 = GetOrCreateDirectChatForPeers(s.PeerUserId, s.MeUserId)
@@ -68,7 +68,7 @@ func (s *directMessaging) LoadOrCreateRooms() error {
 }
 
 ///////////////// main fuctionalities ///////////////////
-func (s *directMessaging) AddMessage(msg *x.DirectMessage) {
+func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 	s.LoadOrCreateRooms()
 	if s.Err != nil {
 		return
@@ -144,16 +144,16 @@ func (s *directMessaging) AddMessage(msg *x.DirectMessage) {
 	LogUpdater.HereDirectDelayer <- logDelayer{directLog: dlRec}
 }
 
-func (s *directMessaging) DeleteMessageFromMe() {
+func (s *chatDirect) DeleteMessageFromMe() {
 
 }
 
-func (s *directMessaging) EditMessageFromMe() {
+func (s *chatDirect) EditMessageFromMe() {
 
 }
 
 //todo: make this more performant with MsgIds passing
-func (s *directMessaging) SetMessagesAsSeen(fromSeq, toSeq, time int) {
+func (s *chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 	sel := x.NewDirectToMessage_Selector().Select_MessageId().
 		ChatId_Eq(s.MeChat.ChatId)
 	if fromSeq > 0 {
@@ -192,10 +192,10 @@ func (s *directMessaging) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 	  LogUpdater.HereDirectDelayer <- logDelayer{directLog: dlNew}*/
 }
 
-func (s *directMessaging) SetMessagesStatus() {
+func (s *chatDirect) SetMessagesStatus() {
 
 }
 
-func (s *directMessaging) DeleteMyHistory() {
+func (s *chatDirect) DeleteMyHistory() {
 
 }

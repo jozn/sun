@@ -563,13 +563,23 @@ public class PBFlatTypes {
 	   public byte[] Data;
 	}
 
-	public class PB_UpdateNewMessage {
-	   public PB_MessageView Message;
+	public class PB_UserView {
+	   public long Id;
+	   public int ToUserId;
+	   public long MessageId;
+	   public long ChatId;
+	   public int PeerUserId;
+	   public int EventType;
+	   public int RoomLogTypeId;
+	   public int FromSeq;
+	   public int ToSeq;
+	   public byte[] ExtraPB;
+	   public String ExtraJson;
+	   public long AtTimeMs;
 	}
 
-	public class PB_UpdateMessageId {
-	   public long OldMessageId;
-	   public long NewMessageId;
+	public class PB_UpdateNewMessage {
+	   public PB_MessageView Message;
 	}
 
 	public class PB_UpdateSeenMessages {
@@ -595,17 +605,7 @@ public class PBFlatTypes {
 	   public long MessageIds;
 	}
 
-	public class PB_UpdateRoomActionDoing {
-	   public String RoomKey;
-	   public RoomActionDoingEnum ActionType;
-	}
-
 	public class PB_UpdateGroupParticipants {
-	}
-
-	public class PB_UpdateUserBlocked {
-	   public int UserId;
-	   public boolean Blocked;
 	}
 
 	public class PB_UpdateNotifySettings {
@@ -614,9 +614,44 @@ public class PBFlatTypes {
 	public class PB_UpdateServiceNotification {
 	}
 
+	public class PB_UpdateMessageMeta {
+	   public long MessageId;
+	   public long AtTime;
+	}
+
+	public class PB_UpdateMessageId {
+	   public long OldMessageId;
+	   public long NewMessageId;
+	}
+
 	public class PB_UpdateEditMessage {
 	   public long MessageId;
 	   public String NewText;
+	}
+
+	public class PB_UpdateRoomActionDoing {
+	   public String RoomKey;
+	   public RoomActionDoingEnum ActionType;
+	}
+
+	public class PB_UpdateUserBlocked {
+	   public int UserId;
+	   public boolean Blocked;
+	}
+
+	public class PB_ChangesHolderView {
+	   public PB_MessageView NewMessages;
+	   public PB_MessageFileView ChatFiles;
+	   public PB_ChatView Chats;
+	   public PB_UserView Users;
+	   public PB_UpdateMessageId ChangeMessageIds;
+	   public PB_UpdateEditMessage UpdateMessages;
+	   public PB_UpdateMessageMeta DelivierdToServerMessages;
+	   public PB_UpdateMessageMeta DelivierdToPeerMessages;
+	   public PB_UpdateMessageMeta SeenMessagsByPeer;
+	   public PB_UpdateRoomActionDoing RoomActionDoing;
+	   public PB_UpdateUserBlocked UserBlockedByMe;
+	   public PB_UpdateUserBlocked UserBlockedMe;
 	}
 
 	

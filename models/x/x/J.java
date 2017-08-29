@@ -258,7 +258,7 @@ public class J {
 
 	public static class OldMsgPush {
 		public Integer Id;
-		public UNKNOWN Uid;
+		public Integer Uid;
 		public Integer ToUser;
 		public Integer MsgUid;
 		public Integer CreatedTimeMs;

@@ -15,6 +15,7 @@ It is generated from these files:
 	pb_rpc_user.proto
 	pb_table.proto
 	pb_updates.proto
+	pb_views.proto
 
 It has these top-level messages:
 	PB_RoomInlineView
@@ -110,18 +111,21 @@ It has these top-level messages:
 	PB_Chat
 	PB_DirectMessage
 	PB_UpdateNewMessage
-	PB_UpdateMessageId
 	PB_UpdateSeenMessages
 	PB_UpdateDelivierdMessages
 	PB_UpdateDeletedFromServerMessages
 	PB_UpdateDeleteMessages
 	PB_UpdateRestoreMessage
-	PB_UpdateRoomActionDoing
 	PB_UpdateGroupParticipants
-	PB_UpdateUserBlocked
 	PB_UpdateNotifySettings
 	PB_UpdateServiceNotification
+	PB_UpdateMessageMeta
+	PB_UpdateMessageId
 	PB_UpdateEditMessage
+	PB_UpdateRoomActionDoing
+	PB_UpdateUserBlocked
+	PB_ChangesHolderView
+	PB_UserView
 */
 package x
 

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_package = "ir.ms.pb";
+//option java_outer_classname = "PB";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME; //CODE_SIZE;
+
+option go_package = "x";
+
+message PB_UserView {
+    int64 Id = 1;
+    int32 ToUserId = 3;
+    int64 MessageId = 5;
+    int64 ChatId = 7;
+    int32 PeerUserId = 9;
+    int32 EventType = 11;
+    int32 RoomLogTypeId = 13;
+    int32 FromSeq = 15;
+    int32 ToSeq = 17;
+    bytes ExtraPB = 19;
+    string ExtraJson = 21;
+    int64 AtTimeMs = 23;
+}

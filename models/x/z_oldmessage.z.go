@@ -3963,35 +3963,6 @@ func OldMessageByMessageKey(db XODB, messageKey string) (*OldMessage, error) {
 	return &om, nil
 }
 
-// OldMessageByUid retrieves a row from 'ms.old_messages' as a OldMessage.
-//
-// Generated from index 'Uid'.
-func OldMessageByUid(db XODB, uid int) (*OldMessage, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, Uid, UserId, MessageKey, RoomKey, MessageType, RoomType, MsgFileId, DataPB, Data64, DataJson, CreatedTimeMs ` +
-		`FROM ms.old_messages ` +
-		`WHERE Uid = ?`
-
-	// run query
-	XOLog(sqlstr, uid)
-	om := OldMessage{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, uid).Scan(&om.Id, &om.Uid, &om.UserId, &om.MessageKey, &om.RoomKey, &om.MessageType, &om.RoomType, &om.MsgFileId, &om.DataPB, &om.Data64, &om.DataJson, &om.CreatedTimeMs)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnOldMessage_LoadOne(&om)
-
-	return &om, nil
-}
-
 // OldMessageById retrieves a row from 'ms.old_messages' as a OldMessage.
 //
 // Generated from index 'old_messages_Id_pkey'.
