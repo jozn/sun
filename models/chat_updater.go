@@ -18,7 +18,7 @@ const (
 	Push_ROOM_ACTION_DOING           Push = 10
 )
 
-func pushView_directLogsTo_PB_ChangesHolderView(meId int, logs []x.DirectLog) *x.PB_ChangesHolderView {
+func PushView_directLogsTo_PB_ChangesHolderView(meId int, logs []*x.DirectLog) *x.PB_ChangesHolderView {
 
 	//preload in here
 	usersToLoad := make(map[int]bool)
@@ -37,7 +37,7 @@ func pushView_directLogsTo_PB_ChangesHolderView(meId int, logs []x.DirectLog) *x
 	res := &x.PB_ChangesHolderView{}
 
 	for _, logRow := range logs { //each user
-		switch x.UpdateLogEnum(logRow.RoomLogTypeId) {
+		switch Push(logRow.RoomLogTypeId) {
 		case Push_NEW_DIRECT_MESSAGE:
 			if v, ok := pushView_newDirectMessage(logRow); ok {
 				res.NewMessages = append(res.NewMessages, v)
@@ -80,7 +80,7 @@ func pushView_directLogsTo_PB_ChangesHolderView(meId int, logs []x.DirectLog) *x
 	return res
 }
 
-func pushView_newDirectMessage(log x.DirectLog) (*x.PB_MessageView, bool) {
+func pushView_newDirectMessage(log *x.DirectLog) (*x.PB_MessageView, bool) {
 	if directMsg, ok := x.Store.GetDirectMessageByMessageId(log.MessageId); ok {
 		v := PBConv_DirectMessage_to_PB_MessageView(directMsg)
 		return v, true
@@ -88,7 +88,7 @@ func pushView_newDirectMessage(log x.DirectLog) (*x.PB_MessageView, bool) {
 	return nil, false
 }
 
-func pushView_messageMeta(log x.DirectLog) (*x.PB_UpdateMessageMeta, bool) {
+func pushView_messageMeta(log *x.DirectLog) (*x.PB_UpdateMessageMeta, bool) {
 	v := &x.PB_UpdateMessageMeta{
 		MessageId: int64(log.MessageId),
 		AtTime:    int64(log.AtTimeMs / 1000),
@@ -127,24 +127,24 @@ func pushView_userView(meId int, peerIds map[int]bool) (res []*x.PB_UserView) {
 }
 
 func pushView_chatView(meId int, chatIds map[int]bool) (res []*x.PB_ChatView) {
-    for chatId, _ := range chatIds {
-        if chat, ok := x.Store.GetChatByChatId(chatId); ok{
-            chatView := &x.PB_ChatView{
-                ChatId:         int64(chat.ChatId),
-                ChatKey:        chat.ChatKey,
-                RoomTypeEnumId: int32(chat.RoomTypeEnumId),
-                UserId:         int32(chat.UserId),
-                LastSeqSeen:    int32(chat.LastSeqSeen),
-                LastSeqDelete:  int32(chat.LastSeqDelete),
-                PeerUserId:     int32(chat.PeerUserId),
-                GroupId:        int64(chat.GroupId),
-                CreatedTime:    int32(chat.CreatedTime),
-                CurrentSeq:     int32(chat.CurrentSeq),
-                UpdatedMs:      int64(chat.UpdatedMs),
-            }
-            res = append(res, chatView)
-        }
-    }
+	for chatId, _ := range chatIds {
+		if chat, ok := x.Store.GetChatByChatId(chatId); ok {
+			chatView := &x.PB_ChatView{
+				ChatId:         int64(chat.ChatId),
+				ChatKey:        chat.ChatKey,
+				RoomTypeEnumId: int32(chat.RoomTypeEnumId),
+				UserId:         int32(chat.UserId),
+				LastSeqSeen:    int32(chat.LastSeqSeen),
+				LastSeqDelete:  int32(chat.LastSeqDelete),
+				PeerUserId:     int32(chat.PeerUserId),
+				GroupId:        int64(chat.GroupId),
+				CreatedTime:    int32(chat.CreatedTime),
+				CurrentSeq:     int32(chat.CurrentSeq),
+				UpdatedMs:      int64(chat.UpdatedMs),
+			}
+			res = append(res, chatView)
+		}
+	}
 
 	return
 }

@@ -233,7 +233,10 @@ func registerRoutes() *httptreemux.TreeMux {
 		http.Handle("/i/mem_user2", actionToFunc(ctrl.DebugMemUser_ctrl2))
 		http.HandleFunc("/i/java", DBStructsTojava2)
 
-		http.HandleFunc("/f/activity", actionToFunc(ctrl.InsertActivity))
+        http.HandleFunc("/i/push", actionToFunc(ctrl.PushViewAction))
+
+
+        http.HandleFunc("/f/activity", actionToFunc(ctrl.InsertActivity))
 
 		////////////// New Facts from v0.4 /////////////////
 		http.Handle("/fact/follow", actioner(fact.FactFollow))

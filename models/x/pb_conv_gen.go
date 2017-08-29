@@ -1,4 +1,6 @@
+
 package x
+
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -152,45 +154,18 @@ func PBConvPB_DirectLog_To_DirectLog ( o *DirectLog) *PB_DirectLog {
 }
 */
 /*
-func PBConvPB__DirectLog2_To_DirectLog2( o *PB_DirectLog2) *DirectLog2 {
-     n := &DirectLog2{
-      Id: int ( o.Id ),
-      ToUserId: int ( o.ToUserId ),
-      ChatId: int ( o.ChatId ),
-      LogTypeEnumId: int ( o.LogTypeEnumId ),
-      DataPB: []byte ( o.DataPB ),
-      DataJson: string ( o.DataJson ),
-      Created: int ( o.Created ),
-    }
-    return n
-}
-
-func PBConvPB_DirectLog2_To_DirectLog2 ( o *DirectLog2) *PB_DirectLog2 {
-     n := &PB_DirectLog2{
-      Id: int64 ( o.Id ),
-      ToUserId: int32 ( o.ToUserId ),
-      ChatId: int64 ( o.ChatId ),
-      LogTypeEnumId: int32 ( o.LogTypeEnumId ),
-      DataPB: []byte ( o.DataPB ),
-      DataJson: string ( o.DataJson ),
-      Created: int32 ( o.Created ),
-    }
-    return n
-}
-*/
-/*
 func PBConvPB__DirectMessage_To_DirectMessage( o *PB_DirectMessage) *DirectMessage {
      n := &DirectMessage{
       MessageId: int ( o.MessageId ),
       RoomKey: string ( o.RoomKey ),
       UserId: int ( o.UserId ),
       MessageFileId: int ( o.MessageFileId ),
-      MessageTypeEnum: int ( o.MessageTypeEnum ),
+      MessageTypeEnumId: int ( o.MessageTypeEnumId ),
       Text: string ( o.Text ),
       Time: int ( o.Time ),
       PeerReceivedTime: int ( o.PeerReceivedTime ),
       PeerSeenTime: int ( o.PeerSeenTime ),
-      DeliviryStatusEnum: int ( o.DeliviryStatusEnum ),
+      DeliviryStatusEnumId: int ( o.DeliviryStatusEnumId ),
     }
     return n
 }
@@ -201,12 +176,12 @@ func PBConvPB_DirectMessage_To_DirectMessage ( o *DirectMessage) *PB_DirectMessa
       RoomKey: string ( o.RoomKey ),
       UserId: int32 ( o.UserId ),
       MessageFileId: int64 ( o.MessageFileId ),
-      MessageTypeEnum: int32 ( o.MessageTypeEnum ),
+      MessageTypeEnumId: int32 ( o.MessageTypeEnumId ),
       Text: string ( o.Text ),
       Time: int32 ( o.Time ),
       PeerReceivedTime: int32 ( o.PeerReceivedTime ),
       PeerSeenTime: int32 ( o.PeerSeenTime ),
-      DeliviryStatusEnum: int32 ( o.DeliviryStatusEnum ),
+      DeliviryStatusEnumId: int32 ( o.DeliviryStatusEnumId ),
     }
     return n
 }
@@ -218,7 +193,7 @@ func PBConvPB__DirectToMessage_To_DirectToMessage( o *PB_DirectToMessage) *Direc
       ChatId: int ( o.ChatId ),
       MessageId: int ( o.MessageId ),
       Seq: int ( o.Seq ),
-      SourceEnum: int ( o.SourceEnum ),
+      SourceEnumId: int ( o.SourceEnumId ),
     }
     return n
 }
@@ -229,7 +204,7 @@ func PBConvPB_DirectToMessage_To_DirectToMessage ( o *DirectToMessage) *PB_Direc
       ChatId: int64 ( o.ChatId ),
       MessageId: int64 ( o.MessageId ),
       Seq: int32 ( o.Seq ),
-      SourceEnum: int32 ( o.SourceEnum ),
+      SourceEnumId: int32 ( o.SourceEnumId ),
     }
     return n
 }

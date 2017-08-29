@@ -55,33 +55,24 @@ message PB_DirectLog {
     string ExtraJson = 21;
     int64 AtTimeMs = 23;
 }
-message PB_DirectLog2 {
-    int64 Id = 1;
-    int32 ToUserId = 3;
-    int64 ChatId = 5;
-    int32 LogTypeEnumId = 7;
-    ???? DataPB = 9;
-    string DataJson = 11;
-    int32 Created = 13;
-}
 message PB_DirectMessage {
     int64 MessageId = 1;
     string RoomKey = 3;
     int32 UserId = 5;
     int64 MessageFileId = 7;
-    int32 MessageTypeEnum = 9;
+    int32 MessageTypeEnumId = 9;
     string Text = 11;
     int32 Time = 13;
     int32 PeerReceivedTime = 15;
     int32 PeerSeenTime = 17;
-    int32 DeliviryStatusEnum = 19;
+    int32 DeliviryStatusEnumId = 19;
 }
 message PB_DirectToMessage {
     int64 Id = 1;
     int64 ChatId = 3;
     int64 MessageId = 5;
     int32 Seq = 7;
-    int32 SourceEnum = 9;
+    int32 SourceEnumId = 9;
 }
 message PB_FollowingList {
     int32 Id = 1;

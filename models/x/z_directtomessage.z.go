@@ -16,11 +16,11 @@ import (
 
 // Manualy copy this to project
 type DirectToMessage__ struct {
-	Id         int `json:"Id"`         // Id -
-	ChatId     int `json:"ChatId"`     // ChatId -
-	MessageId  int `json:"MessageId"`  // MessageId -
-	Seq        int `json:"Seq"`        // Seq -
-	SourceEnum int `json:"SourceEnum"` // SourceEnum -
+	Id           int `json:"Id"`           // Id -
+	ChatId       int `json:"ChatId"`       // ChatId -
+	MessageId    int `json:"MessageId"`    // MessageId -
+	Seq          int `json:"Seq"`          // Seq -
+	SourceEnumId int `json:"SourceEnumId"` // SourceEnumId -
 
 	// xo fields
 	_exists, _deleted bool
@@ -47,14 +47,14 @@ func (dtm *DirectToMessage) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.direct_to_message (` +
-		`Id, ChatId, MessageId, Seq, SourceEnum` +
+		`Id, ChatId, MessageId, Seq, SourceEnumId` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
-	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
+	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
+	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
 	if err != nil {
 		return err
 	}
@@ -74,14 +74,14 @@ func (dtm *DirectToMessage) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.direct_to_message (` +
-		`Id, ChatId, MessageId, Seq, SourceEnum` +
+		`Id, ChatId, MessageId, Seq, SourceEnumId` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
-	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum)
+	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
+	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -110,12 +110,12 @@ func (dtm *DirectToMessage) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.direct_to_message SET ` +
-		`ChatId = ?, MessageId = ?, Seq = ?, SourceEnum = ?` +
+		`ChatId = ?, MessageId = ?, Seq = ?, SourceEnumId = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum, dtm.Id)
-	_, err = db.Exec(sqlstr, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnum, dtm.Id)
+	XOLog(sqlstr, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId, dtm.Id)
+	_, err = db.Exec(sqlstr, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId, dtm.Id)
 
 	XOLogErr(err)
 	OnDirectToMessage_AfterUpdate(dtm)
@@ -636,106 +636,106 @@ func (d *__DirectToMessage_Deleter) Seq_GE(val int) *__DirectToMessage_Deleter {
 	return d
 }
 
-func (u *__DirectToMessage_Deleter) SourceEnum_In(ins []int) *__DirectToMessage_Deleter {
+func (u *__DirectToMessage_Deleter) SourceEnumId_In(ins []int) *__DirectToMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) SourceEnum_Ins(ins ...int) *__DirectToMessage_Deleter {
+func (u *__DirectToMessage_Deleter) SourceEnumId_Ins(ins ...int) *__DirectToMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) SourceEnum_NotIn(ins []int) *__DirectToMessage_Deleter {
+func (u *__DirectToMessage_Deleter) SourceEnumId_NotIn(ins []int) *__DirectToMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " SourceEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnum_Eq(val int) *__DirectToMessage_Deleter {
+func (d *__DirectToMessage_Deleter) SourceEnumId_Eq(val int) *__DirectToMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum = ? "
+	w.condition = " SourceEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnum_NotEq(val int) *__DirectToMessage_Deleter {
+func (d *__DirectToMessage_Deleter) SourceEnumId_NotEq(val int) *__DirectToMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum != ? "
+	w.condition = " SourceEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnum_LT(val int) *__DirectToMessage_Deleter {
+func (d *__DirectToMessage_Deleter) SourceEnumId_LT(val int) *__DirectToMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum < ? "
+	w.condition = " SourceEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnum_LE(val int) *__DirectToMessage_Deleter {
+func (d *__DirectToMessage_Deleter) SourceEnumId_LE(val int) *__DirectToMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum <= ? "
+	w.condition = " SourceEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnum_GT(val int) *__DirectToMessage_Deleter {
+func (d *__DirectToMessage_Deleter) SourceEnumId_GT(val int) *__DirectToMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum > ? "
+	w.condition = " SourceEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnum_GE(val int) *__DirectToMessage_Deleter {
+func (d *__DirectToMessage_Deleter) SourceEnumId_GE(val int) *__DirectToMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum >= ? "
+	w.condition = " SourceEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1167,106 +1167,106 @@ func (d *__DirectToMessage_Updater) Seq_GE(val int) *__DirectToMessage_Updater {
 	return d
 }
 
-func (u *__DirectToMessage_Updater) SourceEnum_In(ins []int) *__DirectToMessage_Updater {
+func (u *__DirectToMessage_Updater) SourceEnumId_In(ins []int) *__DirectToMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) SourceEnum_Ins(ins ...int) *__DirectToMessage_Updater {
+func (u *__DirectToMessage_Updater) SourceEnumId_Ins(ins ...int) *__DirectToMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) SourceEnum_NotIn(ins []int) *__DirectToMessage_Updater {
+func (u *__DirectToMessage_Updater) SourceEnumId_NotIn(ins []int) *__DirectToMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " SourceEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Updater) SourceEnum_Eq(val int) *__DirectToMessage_Updater {
+func (d *__DirectToMessage_Updater) SourceEnumId_Eq(val int) *__DirectToMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum = ? "
+	w.condition = " SourceEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) SourceEnum_NotEq(val int) *__DirectToMessage_Updater {
+func (d *__DirectToMessage_Updater) SourceEnumId_NotEq(val int) *__DirectToMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum != ? "
+	w.condition = " SourceEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) SourceEnum_LT(val int) *__DirectToMessage_Updater {
+func (d *__DirectToMessage_Updater) SourceEnumId_LT(val int) *__DirectToMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum < ? "
+	w.condition = " SourceEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) SourceEnum_LE(val int) *__DirectToMessage_Updater {
+func (d *__DirectToMessage_Updater) SourceEnumId_LE(val int) *__DirectToMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum <= ? "
+	w.condition = " SourceEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) SourceEnum_GT(val int) *__DirectToMessage_Updater {
+func (d *__DirectToMessage_Updater) SourceEnumId_GT(val int) *__DirectToMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum > ? "
+	w.condition = " SourceEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) SourceEnum_GE(val int) *__DirectToMessage_Updater {
+func (d *__DirectToMessage_Updater) SourceEnumId_GE(val int) *__DirectToMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum >= ? "
+	w.condition = " SourceEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1698,106 +1698,106 @@ func (d *__DirectToMessage_Selector) Seq_GE(val int) *__DirectToMessage_Selector
 	return d
 }
 
-func (u *__DirectToMessage_Selector) SourceEnum_In(ins []int) *__DirectToMessage_Selector {
+func (u *__DirectToMessage_Selector) SourceEnumId_In(ins []int) *__DirectToMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Selector) SourceEnum_Ins(ins ...int) *__DirectToMessage_Selector {
+func (u *__DirectToMessage_Selector) SourceEnumId_Ins(ins ...int) *__DirectToMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Selector) SourceEnum_NotIn(ins []int) *__DirectToMessage_Selector {
+func (u *__DirectToMessage_Selector) SourceEnumId_NotIn(ins []int) *__DirectToMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " SourceEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Selector) SourceEnum_Eq(val int) *__DirectToMessage_Selector {
+func (d *__DirectToMessage_Selector) SourceEnumId_Eq(val int) *__DirectToMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum = ? "
+	w.condition = " SourceEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) SourceEnum_NotEq(val int) *__DirectToMessage_Selector {
+func (d *__DirectToMessage_Selector) SourceEnumId_NotEq(val int) *__DirectToMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum != ? "
+	w.condition = " SourceEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) SourceEnum_LT(val int) *__DirectToMessage_Selector {
+func (d *__DirectToMessage_Selector) SourceEnumId_LT(val int) *__DirectToMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum < ? "
+	w.condition = " SourceEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) SourceEnum_LE(val int) *__DirectToMessage_Selector {
+func (d *__DirectToMessage_Selector) SourceEnumId_LE(val int) *__DirectToMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum <= ? "
+	w.condition = " SourceEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) SourceEnum_GT(val int) *__DirectToMessage_Selector {
+func (d *__DirectToMessage_Selector) SourceEnumId_GT(val int) *__DirectToMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum > ? "
+	w.condition = " SourceEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) SourceEnum_GE(val int) *__DirectToMessage_Selector {
+func (d *__DirectToMessage_Selector) SourceEnumId_GE(val int) *__DirectToMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnum >= ? "
+	w.condition = " SourceEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1901,18 +1901,18 @@ func (u *__DirectToMessage_Updater) Seq_Increment(count int) *__DirectToMessage_
 
 //ints
 
-func (u *__DirectToMessage_Updater) SourceEnum(newVal int) *__DirectToMessage_Updater {
-	u.updates[" SourceEnum = ? "] = newVal
+func (u *__DirectToMessage_Updater) SourceEnumId(newVal int) *__DirectToMessage_Updater {
+	u.updates[" SourceEnumId = ? "] = newVal
 	return u
 }
 
-func (u *__DirectToMessage_Updater) SourceEnum_Increment(count int) *__DirectToMessage_Updater {
+func (u *__DirectToMessage_Updater) SourceEnumId_Increment(count int) *__DirectToMessage_Updater {
 	if count > 0 {
-		u.updates[" SourceEnum = SourceEnum+? "] = count
+		u.updates[" SourceEnumId = SourceEnumId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" SourceEnum = SourceEnum-? "] = -(count) //make it positive
+		u.updates[" SourceEnumId = SourceEnumId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1985,18 +1985,18 @@ func (u *__DirectToMessage_Selector) Select_Seq() *__DirectToMessage_Selector {
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_SourceEnum_Desc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY SourceEnum DESC "
+func (u *__DirectToMessage_Selector) OrderBy_SourceEnumId_Desc() *__DirectToMessage_Selector {
+	u.orderBy = " ORDER BY SourceEnumId DESC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_SourceEnum_Asc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY SourceEnum ASC "
+func (u *__DirectToMessage_Selector) OrderBy_SourceEnumId_Asc() *__DirectToMessage_Selector {
+	u.orderBy = " ORDER BY SourceEnumId ASC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Select_SourceEnum() *__DirectToMessage_Selector {
-	u.selectCol = "SourceEnum"
+func (u *__DirectToMessage_Selector) Select_SourceEnumId() *__DirectToMessage_Selector {
+	u.selectCol = "SourceEnumId"
 	return u
 }
 
@@ -2276,7 +2276,7 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_to_message (" +
-		"ChatId, MessageId, Seq, SourceEnum" +
+		"ChatId, MessageId, Seq, SourceEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -2287,7 +2287,7 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 		vals = append(vals, row.ChatId)
 		vals = append(vals, row.MessageId)
 		vals = append(vals, row.Seq)
-		vals = append(vals, row.SourceEnum)
+		vals = append(vals, row.SourceEnumId)
 
 	}
 
@@ -2310,7 +2310,7 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_to_message (" +
-		"ChatId, MessageId, Seq, SourceEnum" +
+		"ChatId, MessageId, Seq, SourceEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -2321,7 +2321,7 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 		vals = append(vals, row.ChatId)
 		vals = append(vals, row.MessageId)
 		vals = append(vals, row.Seq)
-		vals = append(vals, row.SourceEnum)
+		vals = append(vals, row.SourceEnumId)
 
 	}
 
@@ -2356,7 +2356,7 @@ func DirectToMessagesBySeq(db XODB, seq int) ([]*DirectToMessage, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ChatId, MessageId, Seq, SourceEnum ` +
+		`Id, ChatId, MessageId, Seq, SourceEnumId ` +
 		`FROM ms.direct_to_message ` +
 		`WHERE Seq = ?`
 
@@ -2377,7 +2377,7 @@ func DirectToMessagesBySeq(db XODB, seq int) ([]*DirectToMessage, error) {
 		}
 
 		// scan
-		err = q.Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnum)
+		err = q.Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -2399,7 +2399,7 @@ func DirectToMessageById(db XODB, id int) (*DirectToMessage, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ChatId, MessageId, Seq, SourceEnum ` +
+		`Id, ChatId, MessageId, Seq, SourceEnumId ` +
 		`FROM ms.direct_to_message ` +
 		`WHERE Id = ?`
 
@@ -2409,7 +2409,7 @@ func DirectToMessageById(db XODB, id int) (*DirectToMessage, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnum)
+	err = db.QueryRow(sqlstr, id).Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

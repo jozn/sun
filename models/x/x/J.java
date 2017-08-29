@@ -59,27 +59,17 @@ public class J {
 		public Integer AtTimeMs;
 	}
 
-	public static class DirectLog2 {
-		public Integer Id;
-		public UNKNOWN ToUserId;
-		public UNKNOWN ChatId;
-		public UNKNOWN LogTypeEnumId;
-		public UNKNOWN DataPB;
-		public UNKNOWN DataJson;
-		public UNKNOWN Created;
-	}
-
 	public static class DirectMessage {
 		public Integer MessageId;
 		public String RoomKey;
 		public Integer UserId;
 		public Integer MessageFileId;
-		public Integer MessageTypeEnum;
+		public Integer MessageTypeEnumId;
 		public String Text;
 		public Integer Time;
 		public Integer PeerReceivedTime;
 		public Integer PeerSeenTime;
-		public Integer DeliviryStatusEnum;
+		public Integer DeliviryStatusEnumId;
 	}
 
 	public static class DirectToMessage {
@@ -87,7 +77,7 @@ public class J {
 		public Integer ChatId;
 		public Integer MessageId;
 		public Integer Seq;
-		public Integer SourceEnum;
+		public Integer SourceEnumId;
 	}
 
 	public static class FollowingList {

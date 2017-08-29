@@ -8,6 +8,7 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 option go_package = "x";
 
 import "pb_enums.proto";
+import "pb_views.proto";
 
 
 message PB_RoomInlineView {
@@ -22,57 +23,7 @@ message PB_MessageForwardedFrom {
     int32 MessageSeq = 4;
 }
 
-////////////// Views /////////////
 
-message PB_MessageView {
-    int64 MessageId = 1;
-    string RoomKey = 3;
-    int32 UserId = 5;
-    int64 MessageFileId = 7;
-    int32 MessageTypeEnum = 9;
-    string Text = 11;
-    int32 Time = 13;
-    int32 PeerReceivedTime = 15;
-    int32 PeerSeenTime = 17;
-    int32 DeliviryStatusEnum = 19;
-
-    int32 PeerUserId  = 50;
-}
-
-message PB_ChatView {
-    int64 ChatId = 1;
-    string ChatKey = 3;
-    int32 RoomTypeEnumId = 5;
-    int32 UserId = 7;
-    int32 LastSeqSeen = 9;
-    int32 LastSeqDelete = 11;
-    int32 PeerUserId = 13;
-    int64 GroupId = 15;
-    int32 CreatedTime = 17;
-    int32 CurrentSeq = 19;
-    int64 UpdatedMs = 21;
-}
-
-message PB_MessageFileView {
-    int64 MessageFileId = 1;
-    string Name = 3;
-    int32 Size = 5;
-    int32 FileTypeEnum = 7;
-    string MimeType = 9;
-    int32 Width = 11;
-    int32 Height = 13;
-    int32 Duration = 15;
-    string Extension = 17;
-    //???? ThumbData = 19;
-    string ThumbData64 = 21;
-    string ServerSrc = 23;
-    string ServerPath = 25;
-    string ServerThumbPath = 27;
-    string BucketId = 29;
-    int32 ServerId = 31;
-    int32 CanDel = 33;
-    int32 CreatedTime = 35;
-}
 
 ///////////////////// later ////////////////////
 

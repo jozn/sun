@@ -16,16 +16,16 @@ import (
 
 // Manualy copy this to project
 type DirectMessage__ struct {
-	MessageId          int    `json:"MessageId"`          // MessageId -
-	RoomKey            string `json:"RoomKey"`            // RoomKey -
-	UserId             int    `json:"UserId"`             // UserId -
-	MessageFileId      int    `json:"MessageFileId"`      // MessageFileId -
-	MessageTypeEnum    int    `json:"MessageTypeEnum"`    // MessageTypeEnum -
-	Text               string `json:"Text"`               // Text -
-	Time               int    `json:"Time"`               // Time -
-	PeerReceivedTime   int    `json:"PeerReceivedTime"`   // PeerReceivedTime -
-	PeerSeenTime       int    `json:"PeerSeenTime"`       // PeerSeenTime -
-	DeliviryStatusEnum int    `json:"DeliviryStatusEnum"` // DeliviryStatusEnum -
+	MessageId            int    `json:"MessageId"`            // MessageId -
+	RoomKey              string `json:"RoomKey"`              // RoomKey -
+	UserId               int    `json:"UserId"`               // UserId -
+	MessageFileId        int    `json:"MessageFileId"`        // MessageFileId -
+	MessageTypeEnumId    int    `json:"MessageTypeEnumId"`    // MessageTypeEnumId -
+	Text                 string `json:"Text"`                 // Text -
+	Time                 int    `json:"Time"`                 // Time -
+	PeerReceivedTime     int    `json:"PeerReceivedTime"`     // PeerReceivedTime -
+	PeerSeenTime         int    `json:"PeerSeenTime"`         // PeerSeenTime -
+	DeliviryStatusEnumId int    `json:"DeliviryStatusEnumId"` // DeliviryStatusEnumId -
 
 	// xo fields
 	_exists, _deleted bool
@@ -52,14 +52,14 @@ func (dm *DirectMessage) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.direct_message (` +
-		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnum` +
+		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnum, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnum)
-	_, err = db.Exec(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnum, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnum)
+	XOLog(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
+	_, err = db.Exec(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
 	if err != nil {
 		return err
 	}
@@ -79,14 +79,14 @@ func (dm *DirectMessage) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.direct_message (` +
-		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnum` +
+		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnum, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnum)
-	_, err = db.Exec(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnum, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnum)
+	XOLog(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
+	_, err = db.Exec(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -115,12 +115,12 @@ func (dm *DirectMessage) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.direct_message SET ` +
-		`RoomKey = ?, UserId = ?, MessageFileId = ?, MessageTypeEnum = ?, Text = ?, Time = ?, PeerReceivedTime = ?, PeerSeenTime = ?, DeliviryStatusEnum = ?` +
+		`RoomKey = ?, UserId = ?, MessageFileId = ?, MessageTypeEnumId = ?, Text = ?, Time = ?, PeerReceivedTime = ?, PeerSeenTime = ?, DeliviryStatusEnumId = ?` +
 		` WHERE MessageId = ?`
 
 	// run query
-	XOLog(sqlstr, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnum, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnum, dm.MessageId)
-	_, err = db.Exec(sqlstr, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnum, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnum, dm.MessageId)
+	XOLog(sqlstr, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId, dm.MessageId)
+	_, err = db.Exec(sqlstr, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId, dm.MessageId)
 
 	XOLogErr(err)
 	OnDirectMessage_AfterUpdate(dm)
@@ -536,106 +536,106 @@ func (d *__DirectMessage_Deleter) MessageFileId_GE(val int) *__DirectMessage_Del
 	return d
 }
 
-func (u *__DirectMessage_Deleter) MessageTypeEnum_In(ins []int) *__DirectMessage_Deleter {
+func (u *__DirectMessage_Deleter) MessageTypeEnumId_In(ins []int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Deleter) MessageTypeEnum_Ins(ins ...int) *__DirectMessage_Deleter {
+func (u *__DirectMessage_Deleter) MessageTypeEnumId_Ins(ins ...int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Deleter) MessageTypeEnum_NotIn(ins []int) *__DirectMessage_Deleter {
+func (u *__DirectMessage_Deleter) MessageTypeEnumId_NotIn(ins []int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageTypeEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageTypeEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectMessage_Deleter) MessageTypeEnum_Eq(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) MessageTypeEnumId_Eq(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum = ? "
+	w.condition = " MessageTypeEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) MessageTypeEnum_NotEq(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) MessageTypeEnumId_NotEq(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum != ? "
+	w.condition = " MessageTypeEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) MessageTypeEnum_LT(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) MessageTypeEnumId_LT(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum < ? "
+	w.condition = " MessageTypeEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) MessageTypeEnum_LE(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) MessageTypeEnumId_LE(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum <= ? "
+	w.condition = " MessageTypeEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) MessageTypeEnum_GT(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) MessageTypeEnumId_GT(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum > ? "
+	w.condition = " MessageTypeEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) MessageTypeEnum_GE(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) MessageTypeEnumId_GE(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum >= ? "
+	w.condition = " MessageTypeEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -956,106 +956,106 @@ func (d *__DirectMessage_Deleter) PeerSeenTime_GE(val int) *__DirectMessage_Dele
 	return d
 }
 
-func (u *__DirectMessage_Deleter) DeliviryStatusEnum_In(ins []int) *__DirectMessage_Deleter {
+func (u *__DirectMessage_Deleter) DeliviryStatusEnumId_In(ins []int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DeliviryStatusEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Deleter) DeliviryStatusEnum_Ins(ins ...int) *__DirectMessage_Deleter {
+func (u *__DirectMessage_Deleter) DeliviryStatusEnumId_Ins(ins ...int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DeliviryStatusEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Deleter) DeliviryStatusEnum_NotIn(ins []int) *__DirectMessage_Deleter {
+func (u *__DirectMessage_Deleter) DeliviryStatusEnumId_NotIn(ins []int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DeliviryStatusEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectMessage_Deleter) DeliviryStatusEnum_Eq(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) DeliviryStatusEnumId_Eq(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum = ? "
+	w.condition = " DeliviryStatusEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) DeliviryStatusEnum_NotEq(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) DeliviryStatusEnumId_NotEq(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum != ? "
+	w.condition = " DeliviryStatusEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) DeliviryStatusEnum_LT(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) DeliviryStatusEnumId_LT(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum < ? "
+	w.condition = " DeliviryStatusEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) DeliviryStatusEnum_LE(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) DeliviryStatusEnumId_LE(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum <= ? "
+	w.condition = " DeliviryStatusEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) DeliviryStatusEnum_GT(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) DeliviryStatusEnumId_GT(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum > ? "
+	w.condition = " DeliviryStatusEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) DeliviryStatusEnum_GE(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) DeliviryStatusEnumId_GE(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum >= ? "
+	w.condition = " DeliviryStatusEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1382,106 +1382,106 @@ func (d *__DirectMessage_Updater) MessageFileId_GE(val int) *__DirectMessage_Upd
 	return d
 }
 
-func (u *__DirectMessage_Updater) MessageTypeEnum_In(ins []int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) MessageTypeEnumId_In(ins []int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Updater) MessageTypeEnum_Ins(ins ...int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) MessageTypeEnumId_Ins(ins ...int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Updater) MessageTypeEnum_NotIn(ins []int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) MessageTypeEnumId_NotIn(ins []int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageTypeEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageTypeEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectMessage_Updater) MessageTypeEnum_Eq(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) MessageTypeEnumId_Eq(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum = ? "
+	w.condition = " MessageTypeEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) MessageTypeEnum_NotEq(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) MessageTypeEnumId_NotEq(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum != ? "
+	w.condition = " MessageTypeEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) MessageTypeEnum_LT(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) MessageTypeEnumId_LT(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum < ? "
+	w.condition = " MessageTypeEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) MessageTypeEnum_LE(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) MessageTypeEnumId_LE(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum <= ? "
+	w.condition = " MessageTypeEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) MessageTypeEnum_GT(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) MessageTypeEnumId_GT(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum > ? "
+	w.condition = " MessageTypeEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) MessageTypeEnum_GE(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) MessageTypeEnumId_GE(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum >= ? "
+	w.condition = " MessageTypeEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1802,106 +1802,106 @@ func (d *__DirectMessage_Updater) PeerSeenTime_GE(val int) *__DirectMessage_Upda
 	return d
 }
 
-func (u *__DirectMessage_Updater) DeliviryStatusEnum_In(ins []int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) DeliviryStatusEnumId_In(ins []int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DeliviryStatusEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Updater) DeliviryStatusEnum_Ins(ins ...int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) DeliviryStatusEnumId_Ins(ins ...int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DeliviryStatusEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Updater) DeliviryStatusEnum_NotIn(ins []int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) DeliviryStatusEnumId_NotIn(ins []int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DeliviryStatusEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectMessage_Updater) DeliviryStatusEnum_Eq(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) DeliviryStatusEnumId_Eq(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum = ? "
+	w.condition = " DeliviryStatusEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) DeliviryStatusEnum_NotEq(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) DeliviryStatusEnumId_NotEq(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum != ? "
+	w.condition = " DeliviryStatusEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) DeliviryStatusEnum_LT(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) DeliviryStatusEnumId_LT(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum < ? "
+	w.condition = " DeliviryStatusEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) DeliviryStatusEnum_LE(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) DeliviryStatusEnumId_LE(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum <= ? "
+	w.condition = " DeliviryStatusEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) DeliviryStatusEnum_GT(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) DeliviryStatusEnumId_GT(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum > ? "
+	w.condition = " DeliviryStatusEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) DeliviryStatusEnum_GE(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) DeliviryStatusEnumId_GE(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum >= ? "
+	w.condition = " DeliviryStatusEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2228,106 +2228,106 @@ func (d *__DirectMessage_Selector) MessageFileId_GE(val int) *__DirectMessage_Se
 	return d
 }
 
-func (u *__DirectMessage_Selector) MessageTypeEnum_In(ins []int) *__DirectMessage_Selector {
+func (u *__DirectMessage_Selector) MessageTypeEnumId_In(ins []int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Selector) MessageTypeEnum_Ins(ins ...int) *__DirectMessage_Selector {
+func (u *__DirectMessage_Selector) MessageTypeEnumId_Ins(ins ...int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Selector) MessageTypeEnum_NotIn(ins []int) *__DirectMessage_Selector {
+func (u *__DirectMessage_Selector) MessageTypeEnumId_NotIn(ins []int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageTypeEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " MessageTypeEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectMessage_Selector) MessageTypeEnum_Eq(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) MessageTypeEnumId_Eq(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum = ? "
+	w.condition = " MessageTypeEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) MessageTypeEnum_NotEq(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) MessageTypeEnumId_NotEq(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum != ? "
+	w.condition = " MessageTypeEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) MessageTypeEnum_LT(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) MessageTypeEnumId_LT(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum < ? "
+	w.condition = " MessageTypeEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) MessageTypeEnum_LE(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) MessageTypeEnumId_LE(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum <= ? "
+	w.condition = " MessageTypeEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) MessageTypeEnum_GT(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) MessageTypeEnumId_GT(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum > ? "
+	w.condition = " MessageTypeEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) MessageTypeEnum_GE(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) MessageTypeEnumId_GE(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageTypeEnum >= ? "
+	w.condition = " MessageTypeEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2648,106 +2648,106 @@ func (d *__DirectMessage_Selector) PeerSeenTime_GE(val int) *__DirectMessage_Sel
 	return d
 }
 
-func (u *__DirectMessage_Selector) DeliviryStatusEnum_In(ins []int) *__DirectMessage_Selector {
+func (u *__DirectMessage_Selector) DeliviryStatusEnumId_In(ins []int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DeliviryStatusEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Selector) DeliviryStatusEnum_Ins(ins ...int) *__DirectMessage_Selector {
+func (u *__DirectMessage_Selector) DeliviryStatusEnumId_Ins(ins ...int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DeliviryStatusEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Selector) DeliviryStatusEnum_NotIn(ins []int) *__DirectMessage_Selector {
+func (u *__DirectMessage_Selector) DeliviryStatusEnumId_NotIn(ins []int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DeliviryStatusEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectMessage_Selector) DeliviryStatusEnum_Eq(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) DeliviryStatusEnumId_Eq(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum = ? "
+	w.condition = " DeliviryStatusEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) DeliviryStatusEnum_NotEq(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) DeliviryStatusEnumId_NotEq(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum != ? "
+	w.condition = " DeliviryStatusEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) DeliviryStatusEnum_LT(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) DeliviryStatusEnumId_LT(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum < ? "
+	w.condition = " DeliviryStatusEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) DeliviryStatusEnum_LE(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) DeliviryStatusEnumId_LE(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum <= ? "
+	w.condition = " DeliviryStatusEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) DeliviryStatusEnum_GT(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) DeliviryStatusEnumId_GT(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum > ? "
+	w.condition = " DeliviryStatusEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) DeliviryStatusEnum_GE(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) DeliviryStatusEnumId_GE(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " DeliviryStatusEnum >= ? "
+	w.condition = " DeliviryStatusEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3198,18 +3198,18 @@ func (u *__DirectMessage_Updater) MessageFileId_Increment(count int) *__DirectMe
 
 //ints
 
-func (u *__DirectMessage_Updater) MessageTypeEnum(newVal int) *__DirectMessage_Updater {
-	u.updates[" MessageTypeEnum = ? "] = newVal
+func (u *__DirectMessage_Updater) MessageTypeEnumId(newVal int) *__DirectMessage_Updater {
+	u.updates[" MessageTypeEnumId = ? "] = newVal
 	return u
 }
 
-func (u *__DirectMessage_Updater) MessageTypeEnum_Increment(count int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) MessageTypeEnumId_Increment(count int) *__DirectMessage_Updater {
 	if count > 0 {
-		u.updates[" MessageTypeEnum = MessageTypeEnum+? "] = count
+		u.updates[" MessageTypeEnumId = MessageTypeEnumId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" MessageTypeEnum = MessageTypeEnum-? "] = -(count) //make it positive
+		u.updates[" MessageTypeEnumId = MessageTypeEnumId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3290,18 +3290,18 @@ func (u *__DirectMessage_Updater) PeerSeenTime_Increment(count int) *__DirectMes
 
 //ints
 
-func (u *__DirectMessage_Updater) DeliviryStatusEnum(newVal int) *__DirectMessage_Updater {
-	u.updates[" DeliviryStatusEnum = ? "] = newVal
+func (u *__DirectMessage_Updater) DeliviryStatusEnumId(newVal int) *__DirectMessage_Updater {
+	u.updates[" DeliviryStatusEnumId = ? "] = newVal
 	return u
 }
 
-func (u *__DirectMessage_Updater) DeliviryStatusEnum_Increment(count int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) DeliviryStatusEnumId_Increment(count int) *__DirectMessage_Updater {
 	if count > 0 {
-		u.updates[" DeliviryStatusEnum = DeliviryStatusEnum+? "] = count
+		u.updates[" DeliviryStatusEnumId = DeliviryStatusEnumId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" DeliviryStatusEnum = DeliviryStatusEnum-? "] = -(count) //make it positive
+		u.updates[" DeliviryStatusEnumId = DeliviryStatusEnumId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3374,18 +3374,18 @@ func (u *__DirectMessage_Selector) Select_MessageFileId() *__DirectMessage_Selec
 	return u
 }
 
-func (u *__DirectMessage_Selector) OrderBy_MessageTypeEnum_Desc() *__DirectMessage_Selector {
-	u.orderBy = " ORDER BY MessageTypeEnum DESC "
+func (u *__DirectMessage_Selector) OrderBy_MessageTypeEnumId_Desc() *__DirectMessage_Selector {
+	u.orderBy = " ORDER BY MessageTypeEnumId DESC "
 	return u
 }
 
-func (u *__DirectMessage_Selector) OrderBy_MessageTypeEnum_Asc() *__DirectMessage_Selector {
-	u.orderBy = " ORDER BY MessageTypeEnum ASC "
+func (u *__DirectMessage_Selector) OrderBy_MessageTypeEnumId_Asc() *__DirectMessage_Selector {
+	u.orderBy = " ORDER BY MessageTypeEnumId ASC "
 	return u
 }
 
-func (u *__DirectMessage_Selector) Select_MessageTypeEnum() *__DirectMessage_Selector {
-	u.selectCol = "MessageTypeEnum"
+func (u *__DirectMessage_Selector) Select_MessageTypeEnumId() *__DirectMessage_Selector {
+	u.selectCol = "MessageTypeEnumId"
 	return u
 }
 
@@ -3449,18 +3449,18 @@ func (u *__DirectMessage_Selector) Select_PeerSeenTime() *__DirectMessage_Select
 	return u
 }
 
-func (u *__DirectMessage_Selector) OrderBy_DeliviryStatusEnum_Desc() *__DirectMessage_Selector {
-	u.orderBy = " ORDER BY DeliviryStatusEnum DESC "
+func (u *__DirectMessage_Selector) OrderBy_DeliviryStatusEnumId_Desc() *__DirectMessage_Selector {
+	u.orderBy = " ORDER BY DeliviryStatusEnumId DESC "
 	return u
 }
 
-func (u *__DirectMessage_Selector) OrderBy_DeliviryStatusEnum_Asc() *__DirectMessage_Selector {
-	u.orderBy = " ORDER BY DeliviryStatusEnum ASC "
+func (u *__DirectMessage_Selector) OrderBy_DeliviryStatusEnumId_Asc() *__DirectMessage_Selector {
+	u.orderBy = " ORDER BY DeliviryStatusEnumId ASC "
 	return u
 }
 
-func (u *__DirectMessage_Selector) Select_DeliviryStatusEnum() *__DirectMessage_Selector {
-	u.selectCol = "DeliviryStatusEnum"
+func (u *__DirectMessage_Selector) Select_DeliviryStatusEnumId() *__DirectMessage_Selector {
+	u.selectCol = "DeliviryStatusEnumId"
 	return u
 }
 
@@ -3740,7 +3740,7 @@ func MassInsert_DirectMessage(rows []DirectMessage, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_message (" +
-		"RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnum" +
+		"RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -3751,12 +3751,12 @@ func MassInsert_DirectMessage(rows []DirectMessage, db XODB) error {
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.MessageFileId)
-		vals = append(vals, row.MessageTypeEnum)
+		vals = append(vals, row.MessageTypeEnumId)
 		vals = append(vals, row.Text)
 		vals = append(vals, row.Time)
 		vals = append(vals, row.PeerReceivedTime)
 		vals = append(vals, row.PeerSeenTime)
-		vals = append(vals, row.DeliviryStatusEnum)
+		vals = append(vals, row.DeliviryStatusEnumId)
 
 	}
 
@@ -3779,7 +3779,7 @@ func MassReplace_DirectMessage(rows []DirectMessage, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_message (" +
-		"RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnum" +
+		"RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -3790,12 +3790,12 @@ func MassReplace_DirectMessage(rows []DirectMessage, db XODB) error {
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.MessageFileId)
-		vals = append(vals, row.MessageTypeEnum)
+		vals = append(vals, row.MessageTypeEnumId)
 		vals = append(vals, row.Text)
 		vals = append(vals, row.Time)
 		vals = append(vals, row.PeerReceivedTime)
 		vals = append(vals, row.PeerSeenTime)
-		vals = append(vals, row.DeliviryStatusEnum)
+		vals = append(vals, row.DeliviryStatusEnumId)
 
 	}
 
@@ -3840,7 +3840,7 @@ func DirectMessageByMessageId(db XODB, messageId int) (*DirectMessage, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnum ` +
+		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId ` +
 		`FROM ms.direct_message ` +
 		`WHERE MessageId = ?`
 
@@ -3850,7 +3850,7 @@ func DirectMessageByMessageId(db XODB, messageId int) (*DirectMessage, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, messageId).Scan(&dm.MessageId, &dm.RoomKey, &dm.UserId, &dm.MessageFileId, &dm.MessageTypeEnum, &dm.Text, &dm.Time, &dm.PeerReceivedTime, &dm.PeerSeenTime, &dm.DeliviryStatusEnum)
+	err = db.QueryRow(sqlstr, messageId).Scan(&dm.MessageId, &dm.RoomKey, &dm.UserId, &dm.MessageFileId, &dm.MessageTypeEnumId, &dm.Text, &dm.Time, &dm.PeerReceivedTime, &dm.PeerSeenTime, &dm.DeliviryStatusEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
