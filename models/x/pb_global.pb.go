@@ -16,6 +16,8 @@ var _ = math.Inf
 
 // Ignoring public import of PB_DirectMessage from pb_table.proto
 
+// Ignoring public import of PB_User from pb_table.proto
+
 type PB_CommandToServer struct {
 	ClientCallId   int64  `protobuf:"varint,1,opt,name=ClientCallId" json:"ClientCallId,omitempty"`
 	Command        string `protobuf:"bytes,2,opt,name=Command" json:"Command,omitempty"`

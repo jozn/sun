@@ -2,6 +2,7 @@ package models
 
 import (
 	"ms/sun/models/x"
+    "ms/Console2/dev5/m"
 )
 
 //just return the by value
@@ -40,6 +41,24 @@ func PBConv_DirectLog_To_DirectLog(o *x.DirectLog) *x.PB_DirectLog {
 		AtTimeMs:      int64(o.AtTimeMs),
 	}
 	return n
+}
+
+func PBConv_DirectMessage_to_PB_MessageView(m *x.DirectMessage) *x.PB_MessageView {
+    r := &x.PB_MessageView{
+        MessageId:          int64(m.MessageId),
+        RoomKey:            m.RoomKey,
+        UserId:             int32(m.UserId),
+        MessageFileId:      int64(m.MessageFileId),
+        MessageTypeEnum:    int32(m.MessageTypeEnum),
+        Text:               m.Text,
+        Time:               int32(m.Time),
+        PeerReceivedTime:   int32(m.PeerReceivedTime),
+        PeerSeenTime:       int32(m.PeerSeenTime),
+        DeliviryStatusEnum: int32(m.DeliviryStatusEnum),
+        PeerUserId:         0,//int32(m.PeerUserId),
+    }
+
+    return r
 }
 
 /*func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {

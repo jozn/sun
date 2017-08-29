@@ -36,3 +36,38 @@ message PB_DirectMessage {
     int32 DeliviryStatusEnum = 19;
 }
 
+message PB_User {
+    int32 Id = 1;
+    string UserName = 3;
+    string UserNameLower = 5;
+    string FirstName = 7;
+    string LastName = 9;
+    string About = 11;
+    string FullName = 13;
+    string AvatarUrl = 15;
+    int32 PrivacyProfile = 17;
+    string Phone = 19;
+    string Email = 21;
+    int32 IsDeleted = 23;
+    string PasswordHash = 25;
+    string PasswordSalt = 27;
+    int32 FollowersCount = 29;
+    int32 FollowingCount = 31;
+    int32 PostsCount = 33;
+    int32 MediaCount = 35;
+    int32 LikesCount = 37;
+    int32 ResharedCount = 39;
+    int32 LastActionTime = 41;
+    int32 LastPostTime = 43;
+    int32 PrimaryFollowingList = 45;
+    int32 CreatedTime = 47;
+    int32 UpdatedTime = 49;
+    string SessionUuid = 51;
+    string DeviceUuid = 53;
+    string LastWifiMacAddress = 55;
+    string LastNetworkType = 57;
+    int32 AppVersion = 59;
+    int32 LastActivityTime = 61;
+    int32 LastLoginTime = 63;
+    string LastIpAddress = 65;
+}

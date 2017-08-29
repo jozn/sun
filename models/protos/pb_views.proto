@@ -8,16 +8,22 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 option go_package = "x";
 
 message PB_UserView {
-    int64 Id = 1;
-    int32 ToUserId = 3;
-    int64 MessageId = 5;
-    int64 ChatId = 7;
-    int32 PeerUserId = 9;
-    int32 EventType = 11;
-    int32 RoomLogTypeId = 13;
-    int32 FromSeq = 15;
-    int32 ToSeq = 17;
-    bytes ExtraPB = 19;
-    string ExtraJson = 21;
-    int64 AtTimeMs = 23;
+    int32 UserId = 1;
+    string UserName = 3;
+    string FirstName = 7;
+    string LastName = 9;
+    string About = 11;
+    string FullName = 13;
+    string AvatarUrl = 15;
+    int32 PrivacyProfile = 17;
+    string Phone = 19;
+    string Email = 21;
+    int32 IsDeleted = 23;
+    int32 FollowersCount = 29;
+    int32 FollowingCount = 31;
+    int32 PostsCount = 33;
+    int32 UpdatedTime = 49;
+    int32 AppVersion = 59;
+    int32 LastActivityTime = 61;
+    int32 FollowingType = 62;
 }
