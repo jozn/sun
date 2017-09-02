@@ -63,13 +63,15 @@ func PBConvPB__Chat_To_Chat( o *PB_Chat) *Chat {
       ChatKey: string ( o.ChatKey ),
       RoomTypeEnumId: int ( o.RoomTypeEnumId ),
       UserId: int ( o.UserId ),
-      LastSeqSeen: int ( o.LastSeqSeen ),
-      LastSeqDelete: int ( o.LastSeqDelete ),
       PeerUserId: int ( o.PeerUserId ),
       GroupId: int ( o.GroupId ),
       CreatedTime: int ( o.CreatedTime ),
-      CurrentSeq: int ( o.CurrentSeq ),
       UpdatedMs: int ( o.UpdatedMs ),
+      DirectLastMessageId: int ( o.DirectLastMessageId ),
+      LastSeenMessageId: int ( o.LastSeenMessageId ),
+      LastSeqSeen: int ( o.LastSeqSeen ),
+      LastSeqDelete: int ( o.LastSeqDelete ),
+      CurrentSeq: int ( o.CurrentSeq ),
     }
     return n
 }
@@ -80,13 +82,15 @@ func PBConvPB_Chat_To_Chat ( o *Chat) *PB_Chat {
       ChatKey: string ( o.ChatKey ),
       RoomTypeEnumId: int32 ( o.RoomTypeEnumId ),
       UserId: int32 ( o.UserId ),
-      LastSeqSeen: int32 ( o.LastSeqSeen ),
-      LastSeqDelete: int32 ( o.LastSeqDelete ),
       PeerUserId: int32 ( o.PeerUserId ),
       GroupId: int64 ( o.GroupId ),
       CreatedTime: int32 ( o.CreatedTime ),
-      CurrentSeq: int32 ( o.CurrentSeq ),
       UpdatedMs: int64 ( o.UpdatedMs ),
+      DirectLastMessageId: int64 ( o.DirectLastMessageId ),
+      LastSeenMessageId: int64 ( o.LastSeenMessageId ),
+      LastSeqSeen: int32 ( o.LastSeqSeen ),
+      LastSeqDelete: int32 ( o.LastSeqDelete ),
+      CurrentSeq: int32 ( o.CurrentSeq ),
     }
     return n
 }

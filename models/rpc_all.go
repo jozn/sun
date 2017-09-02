@@ -67,6 +67,7 @@ func (rpcResHandeler) HandleOfflineResult(i interface{}, PBClass string, c x.PB_
         wsDebugLog(fmt.Sprintf("%s %s","HandleOfflineResult: " + PBClass + " " ,i ))
 		cmd := NewPB_CommandToClient_WithData("PB_ResponseToClient", resToClient)
 		AllPipesMap.SendToUser(p.GetUserId(), cmd)
+        //_ = cmd
 	}
 
 }

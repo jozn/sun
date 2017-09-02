@@ -49,7 +49,7 @@ message PB_UpdateUserBlocked{
     bool Blocked = 2;
 }
 
-message PB_ChangesHolderView {
+message PB_PushHolderView {
     //new mssages
     repeated PB_MessageView NewMessages = 1;
     repeated PB_MessageFileView ChatFiles = 2;

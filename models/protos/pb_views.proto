@@ -7,23 +7,34 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 
 option go_package = "x";
 
+import "pb_enums.proto";
+
+
 ////////////// Views /////////////
 
 message PB_ChatView {
+    option realm = "1";
+
     int64 ChatId = 1;
     string ChatKey = 3;
     int32 RoomTypeEnumId = 5;
     int32 UserId = 7;
-    int32 LastSeqSeen = 9;
-    int32 LastSeqDelete = 11;
-    int32 PeerUserId = 13;
-    int64 GroupId = 15;
-    int32 CreatedTime = 17;
-    int32 CurrentSeq = 19;
-    int64 UpdatedMs = 21;
+    int32 PeerUserId = 9;
+    int64 GroupId = 11;
+    int32 CreatedTime = 13;
+    int64 UpdatedMs = 15;
+    int64 DirectLastMessageId = 17;
+    int64 LastSeenMessageId = 19;
+    int32 LastSeqSeen = 21;
+    int32 LastSeqDelete = 23;
+    int32 CurrentSeq = 25;
+
+    PB_UserView User = 100;
 }
 
 message PB_MessageView {
+    option realm = "1";
+
     uint64 MessageId = 1;
     string RoomKey = 3;
     int32 UserId = 5;
@@ -36,9 +47,15 @@ message PB_MessageView {
     int32 DeliviryStatusEnumId = 19;
 
     int64 ChatId = 30;
+    RoomTypeEnum RoomTypeEnum = 31;
+    bool IsByMe = 33;
+
+    PB_MessageFileView File = 100;
 }
 
 message PB_MessageFileView {
+    option realm = "1";
+
     int64 MessageFileId = 1;
     string Name = 3;
     int32 Size = 5;
@@ -60,6 +77,8 @@ message PB_MessageFileView {
 }
 
 message PB_UserView {
+    option realm = "1";
+
     int32 UserId = 1;
     string UserName = 3;
     string FirstName = 7;

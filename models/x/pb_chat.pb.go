@@ -116,7 +116,7 @@ It has these top-level messages:
 	PB_UpdateMessageToDelete
 	PB_UpdateRoomActionDoing
 	PB_UpdateUserBlocked
-	PB_ChangesHolderView
+	PB_PushHolderView
 	PB_ChatView
 	PB_MessageView
 	PB_MessageFileView

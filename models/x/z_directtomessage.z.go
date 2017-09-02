@@ -110,12 +110,12 @@ func (dtm *DirectToMessage) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.direct_to_message SET ` +
-		`ChatId = ?, MessageId = ?, Seq = ?, SourceEnumId = ?` +
-		` WHERE Id = ?`
+		`Id = ?, ChatId = ?, Seq = ?, SourceEnumId = ?` +
+		` WHERE MessageId = ?`
 
 	// run query
-	XOLog(sqlstr, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId, dtm.Id)
-	_, err = db.Exec(sqlstr, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId, dtm.Id)
+	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.Seq, dtm.SourceEnumId, dtm.MessageId)
+	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.Seq, dtm.SourceEnumId, dtm.MessageId)
 
 	XOLogErr(err)
 	OnDirectToMessage_AfterUpdate(dtm)
@@ -147,11 +147,11 @@ func (dtm *DirectToMessage) Delete(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.direct_to_message WHERE Id = ?`
+	const sqlstr = `DELETE FROM ms.direct_to_message WHERE MessageId = ?`
 
 	// run query
-	XOLog(sqlstr, dtm.Id)
-	_, err = db.Exec(sqlstr, dtm.Id)
+	XOLog(sqlstr, dtm.MessageId)
+	_, err = db.Exec(sqlstr, dtm.MessageId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -2276,7 +2276,7 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_to_message (" +
-		"ChatId, MessageId, Seq, SourceEnumId" +
+		"Id, ChatId, Seq, SourceEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -2284,8 +2284,8 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
 		vals = append(vals, row.ChatId)
-		vals = append(vals, row.MessageId)
 		vals = append(vals, row.Seq)
 		vals = append(vals, row.SourceEnumId)
 
@@ -2310,7 +2310,7 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_to_message (" +
-		"ChatId, MessageId, Seq, SourceEnumId" +
+		"Id, ChatId, Seq, SourceEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -2318,8 +2318,8 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
 		vals = append(vals, row.ChatId)
-		vals = append(vals, row.MessageId)
 		vals = append(vals, row.Seq)
 		vals = append(vals, row.SourceEnumId)
 
@@ -2347,6 +2347,35 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 //
 
 //
+
+// DirectToMessageById retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
+//
+// Generated from index 'Id'.
+func DirectToMessageById(db XODB, id int) (*DirectToMessage, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ChatId, MessageId, Seq, SourceEnumId ` +
+		`FROM ms.direct_to_message ` +
+		`WHERE Id = ?`
+
+	// run query
+	XOLog(sqlstr, id)
+	dtm := DirectToMessage{
+		_exists: true,
+	}
+
+	err = db.QueryRow(sqlstr, id).Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+
+	OnDirectToMessage_LoadOne(&dtm)
+
+	return &dtm, nil
+}
 
 // DirectToMessagesBySeq retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
 //
@@ -2391,25 +2420,25 @@ func DirectToMessagesBySeq(db XODB, seq int) ([]*DirectToMessage, error) {
 	return res, nil
 }
 
-// DirectToMessageById retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
+// DirectToMessageByMessageId retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
 //
-// Generated from index 'direct_to_message_Id_pkey'.
-func DirectToMessageById(db XODB, id int) (*DirectToMessage, error) {
+// Generated from index 'direct_to_message_MessageId_pkey'.
+func DirectToMessageByMessageId(db XODB, messageId int) (*DirectToMessage, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
 		`Id, ChatId, MessageId, Seq, SourceEnumId ` +
 		`FROM ms.direct_to_message ` +
-		`WHERE Id = ?`
+		`WHERE MessageId = ?`
 
 	// run query
-	XOLog(sqlstr, id)
+	XOLog(sqlstr, messageId)
 	dtm := DirectToMessage{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
+	err = db.QueryRow(sqlstr, messageId).Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

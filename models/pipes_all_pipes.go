@@ -7,6 +7,9 @@ import (
 	"ms/sun/models/x"
 
 	"github.com/gorilla/websocket"
+	"ms/sun/base"
+	"time"
+    "fmt"
 )
 
 //todo change UserDevicePipe => *UserDevicePipe
@@ -120,6 +123,20 @@ func (m *pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 	pipe.ServeSendToUserDevice()
 
 	m.AddUserPipe(UserId, pipe)
+
+    go func() {
+        for {
+            time.Sleep(time.Second * 5)
+            fmt.Println("sendin pushes")
+            logs, err := x.NewDirectLog_Selector().ToUserId_Eq(UserId).GetRows(base.DB)
+            if err == nil {
+                res := PushView_directLogsTo_PB_ChangesHolderView(UserId, logs)
+                cmd := NewPB_CommandToClient_WithData("PB_PushHolderView", res)
+                AllPipesMap.SendToUser(UserId, cmd)
+            }
+        }
+    }()
+
 
 	/*flusher_flushPushMsgs(UserId)
 	flusher_flushPushEvents(UserId)

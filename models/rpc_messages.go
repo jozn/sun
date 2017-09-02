@@ -18,15 +18,15 @@ func (rpcMsg) Echo(i *x.PB_MsgParam_Echo, p x.RPC_UserParam) (*x.PB_MsgResponse_
 func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_UserParam) (*x.PB_MsgResponse_AddNewTextMessage, error) {
 	pid := int(i.PeerId)
 	msg := &x.DirectMessage{
-		MessageId:          helper.NextRowsSeqId(),
-		RoomKey:            UsersToRoomKey(p.GetUserId(), int(i.GetPeerId())),
-		UserId:             p.GetUserId(),
-		MessageFileId:      0,
+		MessageId:            helper.NextRowsSeqId(),
+		RoomKey:              UsersToRoomKey(p.GetUserId(), int(i.GetPeerId())),
+		UserId:               p.GetUserId(),
+		MessageFileId:        0,
 		MessageTypeEnumId:    int(x.RoomMessageTypeEnum_TEXT),
-		Text:               i.Text,
-		Time:               int(i.Time),
-		PeerReceivedTime:   0,
-		PeerSeenTime:       0,
+		Text:                 i.Text,
+		Time:                 int(i.Time),
+		PeerReceivedTime:     0,
+		PeerSeenTime:         0,
 		DeliviryStatusEnumId: int(x.RoomMessageDeliviryStatusEnum_SENT),
 	}
 

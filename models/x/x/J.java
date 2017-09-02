@@ -27,13 +27,15 @@ public class J {
 		public String ChatKey;
 		public Integer RoomTypeEnumId;
 		public Integer UserId;
-		public Integer LastSeqSeen;
-		public Integer LastSeqDelete;
 		public Integer PeerUserId;
 		public Integer GroupId;
 		public Integer CreatedTime;
-		public Integer CurrentSeq;
 		public Integer UpdatedMs;
+		public Integer DirectLastMessageId;
+		public Integer LastSeenMessageId;
+		public Integer LastSeqSeen;
+		public Integer LastSeqDelete;
+		public Integer CurrentSeq;
 	}
 
 	public static class Comment {

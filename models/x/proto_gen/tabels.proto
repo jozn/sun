@@ -26,13 +26,15 @@ message PB_Chat {
     string ChatKey = 3;
     int32 RoomTypeEnumId = 5;
     int32 UserId = 7;
-    int32 LastSeqSeen = 9;
-    int32 LastSeqDelete = 11;
-    int32 PeerUserId = 13;
-    int64 GroupId = 15;
-    int32 CreatedTime = 17;
-    int32 CurrentSeq = 19;
-    int64 UpdatedMs = 21;
+    int32 PeerUserId = 9;
+    int64 GroupId = 11;
+    int32 CreatedTime = 13;
+    int64 UpdatedMs = 15;
+    int64 DirectLastMessageId = 17;
+    int64 LastSeenMessageId = 19;
+    int32 LastSeqSeen = 21;
+    int32 LastSeqDelete = 23;
+    int32 CurrentSeq = 25;
 }
 message PB_Comment {
     int32 Id = 1;

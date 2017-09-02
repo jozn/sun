@@ -8,6 +8,14 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 option go_package = "x";
 
 
+enum RPC_MessageReq_Enum {
+    EMPTY = 0;
+    GetLastChnagesForRoom = 7919;
+}
+enum RPC_MessageReqOffline_Enum {
+    EMPTY = 0;
+    SetLastSeen = 2402;
+}
 enum RpcMsgs_Enum {
     EMPTY = 0;
     UploadNewMsg = 1590;
@@ -21,28 +29,6 @@ enum RPC_Auth_Enum {
     SingUp = 2532;
     SingIn = 4399;
     LogOut = 6941;
-}
-enum RPC_UserOffline_Enum {
-    EMPTY = 0;
-    BlockUser = 6486;
-    UnBlockUser = 9764;
-    UpdateAbout = 2139;
-    UpdateUserName = 2469;
-    ChangePrivacy = 7847;
-    ChangeAvatar = 5921;
-}
-enum RPC_User_Enum {
-    EMPTY = 0;
-    CheckUserName = 4;
-    GetBlockedList = 2156;
-}
-enum RPC_MessageReq_Enum {
-    EMPTY = 0;
-    GetLastChnagesForRoom = 7919;
-}
-enum RPC_MessageReqOffline_Enum {
-    EMPTY = 0;
-    SetLastSeen = 2402;
 }
 enum RPC_Msg_Enum {
     EMPTY = 0;
@@ -58,4 +44,18 @@ enum RPC_Msg_Enum {
     EditMessage = 2882;
     BroadcastNewMessage = 7558;
     Echo = 7265;
+}
+enum RPC_UserOffline_Enum {
+    EMPTY = 0;
+    BlockUser = 6486;
+    UnBlockUser = 9764;
+    UpdateAbout = 2139;
+    UpdateUserName = 2469;
+    ChangePrivacy = 7847;
+    ChangeAvatar = 5921;
+}
+enum RPC_User_Enum {
+    EMPTY = 0;
+    CheckUserName = 4;
+    GetBlockedList = 2156;
 }
