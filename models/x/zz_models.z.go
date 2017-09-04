@@ -55,19 +55,20 @@ type Bucket struct {
 
 // Chat 'ms.chat'.
 type Chat struct {
-	ChatId              int
-	ChatKey             string
-	RoomTypeEnumId      int
-	UserId              int
-	PeerUserId          int
-	GroupId             int
-	CreatedTime         int
-	UpdatedMs           int
-	DirectLastMessageId int
-	LastSeenMessageId   int
-	LastSeqSeen         int
-	LastSeqDelete       int
-	CurrentSeq          int //just for peer to peer
+	ChatId               int
+	ChatKey              string
+	RoomTypeEnumId       int
+	UserId               int
+	PeerUserId           int
+	GroupId              int
+	CreatedTime          int
+	UpdatedMs            int
+	LastMessageId        int //just direct
+	LastDeletedMessageId int
+	LastSeenMessageId    int
+	LastSeqSeen          int
+	LastSeqDelete        int
+	CurrentSeq           int //just for peer to peer
 
 	_exists, _deleted bool
 }
@@ -82,7 +83,8 @@ type Chat struct {
 	GroupId: 0,
 	CreatedTime: 0,
 	UpdatedMs: 0,
-	DirectLastMessageId: 0,
+	LastMessageId: 0,
+	LastDeletedMessageId: 0,
 	LastSeenMessageId: 0,
 	LastSeqSeen: 0,
 	LastSeqDelete: 0,

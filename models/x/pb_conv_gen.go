@@ -1,4 +1,6 @@
+
 package x
+
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -67,7 +69,8 @@ func PBConvPB__Chat_To_Chat( o *PB_Chat) *Chat {
       GroupId: int ( o.GroupId ),
       CreatedTime: int ( o.CreatedTime ),
       UpdatedMs: int ( o.UpdatedMs ),
-      DirectLastMessageId: int ( o.DirectLastMessageId ),
+      LastMessageId: int ( o.LastMessageId ),
+      LastDeletedMessageId: int ( o.LastDeletedMessageId ),
       LastSeenMessageId: int ( o.LastSeenMessageId ),
       LastSeqSeen: int ( o.LastSeqSeen ),
       LastSeqDelete: int ( o.LastSeqDelete ),
@@ -86,7 +89,8 @@ func PBConvPB_Chat_To_Chat ( o *Chat) *PB_Chat {
       GroupId: int64 ( o.GroupId ),
       CreatedTime: int32 ( o.CreatedTime ),
       UpdatedMs: int64 ( o.UpdatedMs ),
-      DirectLastMessageId: int64 ( o.DirectLastMessageId ),
+      LastMessageId: int64 ( o.LastMessageId ),
+      LastDeletedMessageId: int64 ( o.LastDeletedMessageId ),
       LastSeenMessageId: int64 ( o.LastSeenMessageId ),
       LastSeqSeen: int32 ( o.LastSeqSeen ),
       LastSeqDelete: int32 ( o.LastSeqDelete ),

@@ -29,7 +29,7 @@ import (
 var redisPool *pool.Pool
 
 func main() {
-	print("Try To Start The App")
+	print("Try To Start The App\n")
 	startApp()
 
 	/*go func() {
@@ -66,7 +66,7 @@ func startApp() {
 	//DB.Exec("SET NAMES 'utf8mb4';")
 	noErr(err)
 	base.DB.MapperFunc(func(s string) string { return s })
-	redisInit()
+	//redisInit()
 
 	fmt.Println("main start")
 	v1Tree := registerRoutes()

@@ -2348,35 +2348,6 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 //
 
-// DirectToMessageById retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
-//
-// Generated from index 'Id'.
-func DirectToMessageById(db XODB, id int) (*DirectToMessage, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ChatId, MessageId, Seq, SourceEnumId ` +
-		`FROM ms.direct_to_message ` +
-		`WHERE Id = ?`
-
-	// run query
-	XOLog(sqlstr, id)
-	dtm := DirectToMessage{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, id).Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnDirectToMessage_LoadOne(&dtm)
-
-	return &dtm, nil
-}
-
 // DirectToMessagesBySeq retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
 //
 // Generated from index 'Seq'.

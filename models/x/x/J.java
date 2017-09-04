@@ -31,7 +31,8 @@ public class J {
 		public Integer GroupId;
 		public Integer CreatedTime;
 		public Integer UpdatedMs;
-		public Integer DirectLastMessageId;
+		public Integer LastMessageId;
+		public Integer LastDeletedMessageId;
 		public Integer LastSeenMessageId;
 		public Integer LastSeqSeen;
 		public Integer LastSeqDelete;

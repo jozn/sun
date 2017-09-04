@@ -2,10 +2,7 @@ package main
 
 // go test -bench .
 import (
-	// "fmt"
-	"encoding/json"
-	"ms/sun/models"
-	"sync"
+    "sync"
 	"testing"
 	"unicode"
 	//"time"
@@ -260,6 +257,7 @@ func BenchmarkStr(b *testing.B) {
 		loopStr(c)
 	}
 }
+/*
 
 func BenchmarkJson1(b *testing.B) {
 	u := models.User{}
@@ -291,6 +289,7 @@ func BenchmarkJson3(b *testing.B) {
 		json.Marshal(s)
 	}
 }
+*/
 
 func TestHello(b *testing.T) {
 	b.Logf("num: %d mut be %t", 25, "adas")

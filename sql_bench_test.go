@@ -1,12 +1,7 @@
 package main
 
 import (
-	"math/rand"
-	"ms/sun/base"
-	"ms/sun/helper"
-	. "ms/sun/models"
 	"sync"
-	"testing"
 )
 
 var onc sync.Once
@@ -14,6 +9,7 @@ var onc sync.Once
 func prepareTest() {
 	onc.Do(func() { startApp() })
 }
+/*
 
 func Benchmark_sql_Activity_selext(b *testing.B) {
 	prepareTest()
@@ -65,3 +61,4 @@ func Benchmark__sql_NewUser_Selector_GetRows(b *testing.B) {
 		NewUser_Selector().GetRows2(base.DB)
 	}
 }
+*/

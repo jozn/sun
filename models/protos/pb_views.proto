@@ -8,22 +8,39 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 option go_package = "x";
 
 import "pb_enums.proto";
+//import "google/protobuf/descriptor.proto";
 
 
 ////////////// Views /////////////
 
-message PB_ChatView {
-    option realm = "1";
+///*
+//extend google.protobuf.MessageOptions {
+//    string foo = 50001;
+//}
+//
+//extend google.protobuf.MessageOptions {
+//     string realm = 51234;
+//}
+//*/
 
-    int64 ChatId = 1;
+//message MyMessage {
+//    option (my_option) = "Hello world!";
+//}
+
+// {realm} ,
+message PB_ChatView {
+    //option realm = "1";
+
     string ChatKey = 3;
+    int64 ChatId = 1;
     int32 RoomTypeEnumId = 5;
     int32 UserId = 7;
     int32 PeerUserId = 9;
     int64 GroupId = 11;
     int32 CreatedTime = 13;
     int64 UpdatedMs = 15;
-    int64 DirectLastMessageId = 17;
+    int64 LastMessageId = 17;
+    int64 LastDeletedMessageId = 18;
     int64 LastSeenMessageId = 19;
     int32 LastSeqSeen = 21;
     int32 LastSeqDelete = 23;
@@ -32,8 +49,9 @@ message PB_ChatView {
     PB_UserView User = 100;
 }
 
+// {realm} ,
 message PB_MessageView {
-    option realm = "1";
+//    option realm = "1";
 
     uint64 MessageId = 1;
     string RoomKey = 3;
@@ -53,8 +71,10 @@ message PB_MessageView {
     PB_MessageFileView File = 100;
 }
 
+// {realm} ,
+
 message PB_MessageFileView {
-    option realm = "1";
+//    option realm = "1";
 
     int64 MessageFileId = 1;
     string Name = 3;
@@ -76,8 +96,9 @@ message PB_MessageFileView {
     int32 CreatedTime = 35;
 }
 
+// {realm} ,
 message PB_UserView {
-    option realm = "1";
+//    option realm = "1";
 
     int32 UserId = 1;
     string UserName = 3;

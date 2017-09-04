@@ -2719,15 +2719,16 @@ public class PBFlatTypes {
 	*/
 
 	public class PB_ChatView {
-	   public long ChatId;
 	   public String ChatKey;
+	   public long ChatId;
 	   public int RoomTypeEnumId;
 	   public int UserId;
 	   public int PeerUserId;
 	   public long GroupId;
 	   public int CreatedTime;
 	   public long UpdatedMs;
-	   public long DirectLastMessageId;
+	   public long LastMessageId;
+	   public long LastDeletedMessageId;
 	   public long LastSeenMessageId;
 	   public int LastSeqSeen;
 	   public int LastSeqDelete;
@@ -2737,15 +2738,16 @@ public class PBFlatTypes {
 	/*
 	folding
 	PBFlatTypes.PB_ChatView t = new PBFlatTypes.PB_ChatView();
-    t.setChatId();
     t.setChatKey();
+    t.setChatId();
     t.setRoomTypeEnumId();
     t.setUserId();
     t.setPeerUserId();
     t.setGroupId();
     t.setCreatedTime();
     t.setUpdatedMs();
-    t.setDirectLastMessageId();
+    t.setLastMessageId();
+    t.setLastDeletedMessageId();
     t.setLastSeenMessageId();
     t.setLastSeqSeen();
     t.setLastSeqDelete();
@@ -2755,15 +2757,16 @@ public class PBFlatTypes {
 
 	/*
 	PBFlatTypes.PB_ChatView t = new PBFlatTypes.PB_ChatView();
-	t.ChatId = ;
 	t.ChatKey = ;
+	t.ChatId = ;
 	t.RoomTypeEnumId = ;
 	t.UserId = ;
 	t.PeerUserId = ;
 	t.GroupId = ;
 	t.CreatedTime = ;
 	t.UpdatedMs = ;
-	t.DirectLastMessageId = ;
+	t.LastMessageId = ;
+	t.LastDeletedMessageId = ;
 	t.LastSeenMessageId = ;
 	t.LastSeqSeen = ;
 	t.LastSeqDelete = ;
@@ -2773,15 +2776,16 @@ public class PBFlatTypes {
 
 	/*
 	PB_ChatView t = new PB_ChatView();
-	t.ChatId = m.getChatId() ;
 	t.ChatKey = m.getChatKey() ;
+	t.ChatId = m.getChatId() ;
 	t.RoomTypeEnumId = m.getRoomTypeEnumId() ;
 	t.UserId = m.getUserId() ;
 	t.PeerUserId = m.getPeerUserId() ;
 	t.GroupId = m.getGroupId() ;
 	t.CreatedTime = m.getCreatedTime() ;
 	t.UpdatedMs = m.getUpdatedMs() ;
-	t.DirectLastMessageId = m.getDirectLastMessageId() ;
+	t.LastMessageId = m.getLastMessageId() ;
+	t.LastDeletedMessageId = m.getLastDeletedMessageId() ;
 	t.LastSeenMessageId = m.getLastSeenMessageId() ;
 	t.LastSeqSeen = m.getLastSeqSeen() ;
 	t.LastSeqDelete = m.getLastSeqDelete() ;

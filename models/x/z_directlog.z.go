@@ -4378,6 +4378,49 @@ func MassReplace_DirectLog(rows []DirectLog, db XODB) error {
 
 //
 
+// DirectLogsByToUserId retrieves a row from 'ms.direct_log' as a DirectLog.
+//
+// Generated from index 'ToUserId'.
+func DirectLogsByToUserId(db XODB, toUserId int) ([]*DirectLog, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
+		`FROM ms.direct_log ` +
+		`WHERE ToUserId = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId)
+	q, err := db.Query(sqlstr, toUserId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*DirectLog{}
+	for q.Next() {
+		dl := DirectLog{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&dl.Id, &dl.ToUserId, &dl.MessageId, &dl.ChatId, &dl.PeerUserId, &dl.EventType, &dl.RoomLogTypeId, &dl.FromSeq, &dl.ToSeq, &dl.ExtraPB, &dl.ExtraJson, &dl.AtTimeMs)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &dl)
+	}
+
+	OnDirectLog_LoadMany(res)
+
+	return res, nil
+}
+
 // DirectLogById retrieves a row from 'ms.direct_log' as a DirectLog.
 //
 // Generated from index 'direct_log_Id_pkey'.

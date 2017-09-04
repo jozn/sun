@@ -130,21 +130,22 @@ func pushView_chatView(meId int, chatIds map[int]bool) (res []*x.PB_ChatView) {
 	for chatId, _ := range chatIds {
 		if chat, ok := x.Store.GetChatByChatId(chatId); ok {
 			chatView := &x.PB_ChatView{
-				ChatId:              int64(chat.ChatId),
-				ChatKey:             chat.ChatKey,
-				RoomTypeEnumId:      int32(chat.RoomTypeEnumId),
-				UserId:              int32(chat.UserId),
-				PeerUserId:          int32(chat.PeerUserId),
-				GroupId:             int64(chat.GroupId),
-				CreatedTime:         int32(chat.CreatedTime),
-				UpdatedMs:           int64(chat.UpdatedMs),
-				DirectLastMessageId: int64(chat.DirectLastMessageId),
-				LastSeenMessageId:   int64(chat.LastSeenMessageId),
-				LastSeqSeen:         int32(chat.LastSeqSeen),
-				LastSeqDelete:       int32(chat.LastSeqDelete),
-				CurrentSeq:          int32(chat.CurrentSeq),
-				User:                view_getUserVIew(meId, chat.PeerUserId),
+				ChatKey:              chat.ChatKey,
+				ChatId:               int64(chat.ChatId),
+				RoomTypeEnumId:       int32(chat.RoomTypeEnumId),
+				UserId:               int32(chat.UserId),
+				PeerUserId:           int32(chat.PeerUserId),
+				GroupId:              int64(chat.GroupId),
+				CreatedTime:          int32(chat.CreatedTime),
+				UpdatedMs:            int64(chat.UpdatedMs),
+				LastMessageId:        int64(chat.LastMessageId),
+				LastDeletedMessageId: int64(chat.LastDeletedMessageId),
+				LastSeenMessageId:    int64(chat.LastSeenMessageId),
+				LastSeqSeen:          int32(chat.LastSeqSeen),
+				LastSeqDelete:        int32(chat.LastSeqDelete),
+				CurrentSeq:           int32(chat.CurrentSeq),
 			}
+
 			res = append(res, chatView)
 		}
 	}
