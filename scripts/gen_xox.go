@@ -12,7 +12,7 @@ func main() {
 
 	//cmd := exec.Command(`xox mysql://root:123456@localhost:3307/ms -o "../models/x" --package x --template-path C:\Go\_gopath\src\ms\xox\templates`)
 	//args := []string{"xox", "mysql://root:123456@localhost:3307/ms" , "-o", "../models/x" , "--package"}
-	args := strings.Split(`mysql://root:123456@localhost:3307/ms -o ../models/x --package x --template-path C:\Go\_gopath\src\ms\xox\templates`, " ")
+	args := strings.Split(`mysql://root:123456@localhost:3306/ms -o ../models/x --package x --template-path C:\Go\_gopath\src\ms\xox\templates`, " ")
 	fmt.Println("")
 	fmt.Println(strings.Join(args, " * "))
 	cmd := exec.Command(`xox`, args...)

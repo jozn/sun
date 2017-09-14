@@ -19,21 +19,20 @@ type MessageFile__ struct {
 	MessageFileId   int    `json:"MessageFileId"`   // MessageFileId -
 	Name            string `json:"Name"`            // Name -
 	Size            int    `json:"Size"`            // Size -
-	FileTypeEnum    int    `json:"FileTypeEnum"`    // FileTypeEnum -
-	MimeType        string `json:"MimeType"`        // MimeType -
+	FileTypeEnumId  int    `json:"FileTypeEnumId"`  // FileTypeEnumId -
 	Width           int    `json:"Width"`           // Width -
 	Height          int    `json:"Height"`          // Height -
 	Duration        int    `json:"Duration"`        // Duration -
 	Extension       string `json:"Extension"`       // Extension -
-	ThumbData       []byte `json:"ThumbData"`       // ThumbData -
-	ThumbData64     string `json:"ThumbData64"`     // ThumbData64 -
+	HashMd5         string `json:"HashMd5"`         // HashMd5 -
+	HashAccess      int    `json:"HashAccess"`      // HashAccess -
+	CreatedSe       int    `json:"CreatedSe"`       // CreatedSe -
 	ServerSrc       string `json:"ServerSrc"`       // ServerSrc -
 	ServerPath      string `json:"ServerPath"`      // ServerPath -
 	ServerThumbPath string `json:"ServerThumbPath"` // ServerThumbPath -
 	BucketId        string `json:"BucketId"`        // BucketId -
 	ServerId        int    `json:"ServerId"`        // ServerId -
 	CanDel          int    `json:"CanDel"`          // CanDel -
-	CreatedTime     int    `json:"CreatedTime"`     // CreatedTime -
 
 	// xo fields
 	_exists, _deleted bool
@@ -60,14 +59,14 @@ func (mf *MessageFile) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.message_file (` +
-		`Name, Size, FileTypeEnum, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel, CreatedTime` +
+		`Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mf.Name, mf.Size, mf.FileTypeEnum, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.CreatedTime)
-	res, err := db.Exec(sqlstr, mf.Name, mf.Size, mf.FileTypeEnum, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.CreatedTime)
+	XOLog(sqlstr, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
+	res, err := db.Exec(sqlstr, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -96,14 +95,14 @@ func (mf *MessageFile) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.message_file (` +
-		`Name, Size, FileTypeEnum, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel, CreatedTime` +
+		`Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mf.Name, mf.Size, mf.FileTypeEnum, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.CreatedTime)
-	res, err := db.Exec(sqlstr, mf.Name, mf.Size, mf.FileTypeEnum, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.CreatedTime)
+	XOLog(sqlstr, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
+	res, err := db.Exec(sqlstr, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -141,12 +140,12 @@ func (mf *MessageFile) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.message_file SET ` +
-		`Name = ?, Size = ?, FileTypeEnum = ?, MimeType = ?, Width = ?, Height = ?, Duration = ?, Extension = ?, ThumbData = ?, ThumbData64 = ?, ServerSrc = ?, ServerPath = ?, ServerThumbPath = ?, BucketId = ?, ServerId = ?, CanDel = ?, CreatedTime = ?` +
+		`Name = ?, Size = ?, FileTypeEnumId = ?, Width = ?, Height = ?, Duration = ?, Extension = ?, HashMd5 = ?, HashAccess = ?, CreatedSe = ?, ServerSrc = ?, ServerPath = ?, ServerThumbPath = ?, BucketId = ?, ServerId = ?, CanDel = ?` +
 		` WHERE MessageFileId = ?`
 
 	// run query
-	XOLog(sqlstr, mf.Name, mf.Size, mf.FileTypeEnum, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.CreatedTime, mf.MessageFileId)
-	_, err = db.Exec(sqlstr, mf.Name, mf.Size, mf.FileTypeEnum, mf.MimeType, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.ThumbData, mf.ThumbData64, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.CreatedTime, mf.MessageFileId)
+	XOLog(sqlstr, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.MessageFileId)
+	_, err = db.Exec(sqlstr, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.MessageFileId)
 
 	XOLogErr(err)
 	OnMessageFile_AfterUpdate(mf)
@@ -457,106 +456,106 @@ func (d *__MessageFile_Deleter) Size_GE(val int) *__MessageFile_Deleter {
 	return d
 }
 
-func (u *__MessageFile_Deleter) FileTypeEnum_In(ins []int) *__MessageFile_Deleter {
+func (u *__MessageFile_Deleter) FileTypeEnumId_In(ins []int) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FileTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MessageFile_Deleter) FileTypeEnum_Ins(ins ...int) *__MessageFile_Deleter {
+func (u *__MessageFile_Deleter) FileTypeEnumId_Ins(ins ...int) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FileTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MessageFile_Deleter) FileTypeEnum_NotIn(ins []int) *__MessageFile_Deleter {
+func (u *__MessageFile_Deleter) FileTypeEnumId_NotIn(ins []int) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FileTypeEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileTypeEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MessageFile_Deleter) FileTypeEnum_Eq(val int) *__MessageFile_Deleter {
+func (d *__MessageFile_Deleter) FileTypeEnumId_Eq(val int) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum = ? "
+	w.condition = " FileTypeEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Deleter) FileTypeEnum_NotEq(val int) *__MessageFile_Deleter {
+func (d *__MessageFile_Deleter) FileTypeEnumId_NotEq(val int) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum != ? "
+	w.condition = " FileTypeEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Deleter) FileTypeEnum_LT(val int) *__MessageFile_Deleter {
+func (d *__MessageFile_Deleter) FileTypeEnumId_LT(val int) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum < ? "
+	w.condition = " FileTypeEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Deleter) FileTypeEnum_LE(val int) *__MessageFile_Deleter {
+func (d *__MessageFile_Deleter) FileTypeEnumId_LE(val int) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum <= ? "
+	w.condition = " FileTypeEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Deleter) FileTypeEnum_GT(val int) *__MessageFile_Deleter {
+func (d *__MessageFile_Deleter) FileTypeEnumId_GT(val int) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum > ? "
+	w.condition = " FileTypeEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Deleter) FileTypeEnum_GE(val int) *__MessageFile_Deleter {
+func (d *__MessageFile_Deleter) FileTypeEnumId_GE(val int) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum >= ? "
+	w.condition = " FileTypeEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -877,6 +876,216 @@ func (d *__MessageFile_Deleter) Duration_GE(val int) *__MessageFile_Deleter {
 	return d
 }
 
+func (u *__MessageFile_Deleter) HashAccess_In(ins []int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashAccess IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Deleter) HashAccess_Ins(ins ...int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashAccess IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Deleter) HashAccess_NotIn(ins []int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashAccess NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MessageFile_Deleter) HashAccess_Eq(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) HashAccess_NotEq(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) HashAccess_LT(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) HashAccess_LE(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) HashAccess_GT(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) HashAccess_GE(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MessageFile_Deleter) CreatedSe_In(ins []int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Deleter) CreatedSe_Ins(ins ...int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Deleter) CreatedSe_NotIn(ins []int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedSe NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MessageFile_Deleter) CreatedSe_Eq(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) CreatedSe_NotEq(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) CreatedSe_LT(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) CreatedSe_LE(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) CreatedSe_GT(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) CreatedSe_GE(val int) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__MessageFile_Deleter) ServerId_In(ins []int) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1082,111 +1291,6 @@ func (d *__MessageFile_Deleter) CanDel_GE(val int) *__MessageFile_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " CanDel >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__MessageFile_Deleter) CreatedTime_In(ins []int) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__MessageFile_Deleter) CreatedTime_Ins(ins ...int) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__MessageFile_Deleter) CreatedTime_NotIn(ins []int) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__MessageFile_Deleter) CreatedTime_Eq(val int) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Deleter) CreatedTime_NotEq(val int) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Deleter) CreatedTime_LT(val int) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Deleter) CreatedTime_LE(val int) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Deleter) CreatedTime_GT(val int) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Deleter) CreatedTime_GE(val int) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1408,106 +1512,106 @@ func (d *__MessageFile_Updater) Size_GE(val int) *__MessageFile_Updater {
 	return d
 }
 
-func (u *__MessageFile_Updater) FileTypeEnum_In(ins []int) *__MessageFile_Updater {
+func (u *__MessageFile_Updater) FileTypeEnumId_In(ins []int) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FileTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MessageFile_Updater) FileTypeEnum_Ins(ins ...int) *__MessageFile_Updater {
+func (u *__MessageFile_Updater) FileTypeEnumId_Ins(ins ...int) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FileTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MessageFile_Updater) FileTypeEnum_NotIn(ins []int) *__MessageFile_Updater {
+func (u *__MessageFile_Updater) FileTypeEnumId_NotIn(ins []int) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FileTypeEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileTypeEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MessageFile_Updater) FileTypeEnum_Eq(val int) *__MessageFile_Updater {
+func (d *__MessageFile_Updater) FileTypeEnumId_Eq(val int) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum = ? "
+	w.condition = " FileTypeEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Updater) FileTypeEnum_NotEq(val int) *__MessageFile_Updater {
+func (d *__MessageFile_Updater) FileTypeEnumId_NotEq(val int) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum != ? "
+	w.condition = " FileTypeEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Updater) FileTypeEnum_LT(val int) *__MessageFile_Updater {
+func (d *__MessageFile_Updater) FileTypeEnumId_LT(val int) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum < ? "
+	w.condition = " FileTypeEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Updater) FileTypeEnum_LE(val int) *__MessageFile_Updater {
+func (d *__MessageFile_Updater) FileTypeEnumId_LE(val int) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum <= ? "
+	w.condition = " FileTypeEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Updater) FileTypeEnum_GT(val int) *__MessageFile_Updater {
+func (d *__MessageFile_Updater) FileTypeEnumId_GT(val int) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum > ? "
+	w.condition = " FileTypeEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Updater) FileTypeEnum_GE(val int) *__MessageFile_Updater {
+func (d *__MessageFile_Updater) FileTypeEnumId_GE(val int) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum >= ? "
+	w.condition = " FileTypeEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1828,6 +1932,216 @@ func (d *__MessageFile_Updater) Duration_GE(val int) *__MessageFile_Updater {
 	return d
 }
 
+func (u *__MessageFile_Updater) HashAccess_In(ins []int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashAccess IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Updater) HashAccess_Ins(ins ...int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashAccess IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Updater) HashAccess_NotIn(ins []int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashAccess NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MessageFile_Updater) HashAccess_Eq(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) HashAccess_NotEq(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) HashAccess_LT(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) HashAccess_LE(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) HashAccess_GT(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) HashAccess_GE(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MessageFile_Updater) CreatedSe_In(ins []int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Updater) CreatedSe_Ins(ins ...int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Updater) CreatedSe_NotIn(ins []int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedSe NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MessageFile_Updater) CreatedSe_Eq(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) CreatedSe_NotEq(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) CreatedSe_LT(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) CreatedSe_LE(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) CreatedSe_GT(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) CreatedSe_GE(val int) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__MessageFile_Updater) ServerId_In(ins []int) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2033,111 +2347,6 @@ func (d *__MessageFile_Updater) CanDel_GE(val int) *__MessageFile_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " CanDel >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__MessageFile_Updater) CreatedTime_In(ins []int) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__MessageFile_Updater) CreatedTime_Ins(ins ...int) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__MessageFile_Updater) CreatedTime_NotIn(ins []int) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__MessageFile_Updater) CreatedTime_Eq(val int) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Updater) CreatedTime_NotEq(val int) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Updater) CreatedTime_LT(val int) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Updater) CreatedTime_LE(val int) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Updater) CreatedTime_GT(val int) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Updater) CreatedTime_GE(val int) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2359,106 +2568,106 @@ func (d *__MessageFile_Selector) Size_GE(val int) *__MessageFile_Selector {
 	return d
 }
 
-func (u *__MessageFile_Selector) FileTypeEnum_In(ins []int) *__MessageFile_Selector {
+func (u *__MessageFile_Selector) FileTypeEnumId_In(ins []int) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FileTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MessageFile_Selector) FileTypeEnum_Ins(ins ...int) *__MessageFile_Selector {
+func (u *__MessageFile_Selector) FileTypeEnumId_Ins(ins ...int) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FileTypeEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileTypeEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MessageFile_Selector) FileTypeEnum_NotIn(ins []int) *__MessageFile_Selector {
+func (u *__MessageFile_Selector) FileTypeEnumId_NotIn(ins []int) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " FileTypeEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " FileTypeEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MessageFile_Selector) FileTypeEnum_Eq(val int) *__MessageFile_Selector {
+func (d *__MessageFile_Selector) FileTypeEnumId_Eq(val int) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum = ? "
+	w.condition = " FileTypeEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Selector) FileTypeEnum_NotEq(val int) *__MessageFile_Selector {
+func (d *__MessageFile_Selector) FileTypeEnumId_NotEq(val int) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum != ? "
+	w.condition = " FileTypeEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Selector) FileTypeEnum_LT(val int) *__MessageFile_Selector {
+func (d *__MessageFile_Selector) FileTypeEnumId_LT(val int) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum < ? "
+	w.condition = " FileTypeEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Selector) FileTypeEnum_LE(val int) *__MessageFile_Selector {
+func (d *__MessageFile_Selector) FileTypeEnumId_LE(val int) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum <= ? "
+	w.condition = " FileTypeEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Selector) FileTypeEnum_GT(val int) *__MessageFile_Selector {
+func (d *__MessageFile_Selector) FileTypeEnumId_GT(val int) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum > ? "
+	w.condition = " FileTypeEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Selector) FileTypeEnum_GE(val int) *__MessageFile_Selector {
+func (d *__MessageFile_Selector) FileTypeEnumId_GE(val int) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " FileTypeEnum >= ? "
+	w.condition = " FileTypeEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2779,6 +2988,216 @@ func (d *__MessageFile_Selector) Duration_GE(val int) *__MessageFile_Selector {
 	return d
 }
 
+func (u *__MessageFile_Selector) HashAccess_In(ins []int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashAccess IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Selector) HashAccess_Ins(ins ...int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashAccess IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Selector) HashAccess_NotIn(ins []int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " HashAccess NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MessageFile_Selector) HashAccess_Eq(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) HashAccess_NotEq(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) HashAccess_LT(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) HashAccess_LE(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) HashAccess_GT(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) HashAccess_GE(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " HashAccess >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__MessageFile_Selector) CreatedSe_In(ins []int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Selector) CreatedSe_Ins(ins ...int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Selector) CreatedSe_NotIn(ins []int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedSe NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MessageFile_Selector) CreatedSe_Eq(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) CreatedSe_NotEq(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) CreatedSe_LT(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) CreatedSe_LE(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) CreatedSe_GT(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) CreatedSe_GE(val int) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " CreatedSe >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__MessageFile_Selector) ServerId_In(ins []int) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2989,111 +3408,6 @@ func (d *__MessageFile_Selector) CanDel_GE(val int) *__MessageFile_Selector {
 	return d
 }
 
-func (u *__MessageFile_Selector) CreatedTime_In(ins []int) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__MessageFile_Selector) CreatedTime_Ins(ins ...int) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__MessageFile_Selector) CreatedTime_NotIn(ins []int) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__MessageFile_Selector) CreatedTime_Eq(val int) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Selector) CreatedTime_NotEq(val int) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Selector) CreatedTime_LT(val int) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Selector) CreatedTime_LE(val int) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Selector) CreatedTime_GT(val int) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Selector) CreatedTime_GE(val int) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 ///// for strings //copy of above with type int -> string + rm if eq + $ms_str_cond
 
 ////////ints
@@ -3153,66 +3467,6 @@ func (d *__MessageFile_Deleter) Name_NotEq(val string) *__MessageFile_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " Name != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__MessageFile_Deleter) MimeType_In(ins []string) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MimeType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__MessageFile_Deleter) MimeType_NotIn(ins []string) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MimeType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__MessageFile_Deleter) MimeType_Like(val string) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MimeType LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__MessageFile_Deleter) MimeType_Eq(val string) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MimeType = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Deleter) MimeType_NotEq(val string) *__MessageFile_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MimeType != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3278,61 +3532,61 @@ func (d *__MessageFile_Deleter) Extension_NotEq(val string) *__MessageFile_Delet
 	return d
 }
 
-func (u *__MessageFile_Deleter) ThumbData64_In(ins []string) *__MessageFile_Deleter {
+func (u *__MessageFile_Deleter) HashMd5_In(ins []string) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ThumbData64 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " HashMd5 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MessageFile_Deleter) ThumbData64_NotIn(ins []string) *__MessageFile_Deleter {
+func (u *__MessageFile_Deleter) HashMd5_NotIn(ins []string) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ThumbData64 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " HashMd5 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__MessageFile_Deleter) ThumbData64_Like(val string) *__MessageFile_Deleter {
+func (u *__MessageFile_Deleter) HashMd5_Like(val string) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ThumbData64 LIKE ? "
+	w.condition = " HashMd5 LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MessageFile_Deleter) ThumbData64_Eq(val string) *__MessageFile_Deleter {
+func (d *__MessageFile_Deleter) HashMd5_Eq(val string) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ThumbData64 = ? "
+	w.condition = " HashMd5 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Deleter) ThumbData64_NotEq(val string) *__MessageFile_Deleter {
+func (d *__MessageFile_Deleter) HashMd5_NotEq(val string) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ThumbData64 != ? "
+	w.condition = " HashMd5 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3640,66 +3894,6 @@ func (d *__MessageFile_Updater) Name_NotEq(val string) *__MessageFile_Updater {
 	return d
 }
 
-func (u *__MessageFile_Updater) MimeType_In(ins []string) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MimeType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__MessageFile_Updater) MimeType_NotIn(ins []string) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MimeType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__MessageFile_Updater) MimeType_Like(val string) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MimeType LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__MessageFile_Updater) MimeType_Eq(val string) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MimeType = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Updater) MimeType_NotEq(val string) *__MessageFile_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MimeType != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__MessageFile_Updater) Extension_In(ins []string) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3760,61 +3954,61 @@ func (d *__MessageFile_Updater) Extension_NotEq(val string) *__MessageFile_Updat
 	return d
 }
 
-func (u *__MessageFile_Updater) ThumbData64_In(ins []string) *__MessageFile_Updater {
+func (u *__MessageFile_Updater) HashMd5_In(ins []string) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ThumbData64 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " HashMd5 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MessageFile_Updater) ThumbData64_NotIn(ins []string) *__MessageFile_Updater {
+func (u *__MessageFile_Updater) HashMd5_NotIn(ins []string) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ThumbData64 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " HashMd5 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__MessageFile_Updater) ThumbData64_Like(val string) *__MessageFile_Updater {
+func (u *__MessageFile_Updater) HashMd5_Like(val string) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ThumbData64 LIKE ? "
+	w.condition = " HashMd5 LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MessageFile_Updater) ThumbData64_Eq(val string) *__MessageFile_Updater {
+func (d *__MessageFile_Updater) HashMd5_Eq(val string) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ThumbData64 = ? "
+	w.condition = " HashMd5 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Updater) ThumbData64_NotEq(val string) *__MessageFile_Updater {
+func (d *__MessageFile_Updater) HashMd5_NotEq(val string) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ThumbData64 != ? "
+	w.condition = " HashMd5 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4122,66 +4316,6 @@ func (d *__MessageFile_Selector) Name_NotEq(val string) *__MessageFile_Selector 
 	return d
 }
 
-func (u *__MessageFile_Selector) MimeType_In(ins []string) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MimeType IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__MessageFile_Selector) MimeType_NotIn(ins []string) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " MimeType NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-//must be used like: UserName_like("hamid%")
-func (u *__MessageFile_Selector) MimeType_Like(val string) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MimeType LIKE ? "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__MessageFile_Selector) MimeType_Eq(val string) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MimeType = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__MessageFile_Selector) MimeType_NotEq(val string) *__MessageFile_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " MimeType != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__MessageFile_Selector) Extension_In(ins []string) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4242,61 +4376,61 @@ func (d *__MessageFile_Selector) Extension_NotEq(val string) *__MessageFile_Sele
 	return d
 }
 
-func (u *__MessageFile_Selector) ThumbData64_In(ins []string) *__MessageFile_Selector {
+func (u *__MessageFile_Selector) HashMd5_In(ins []string) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ThumbData64 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " HashMd5 IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__MessageFile_Selector) ThumbData64_NotIn(ins []string) *__MessageFile_Selector {
+func (u *__MessageFile_Selector) HashMd5_NotIn(ins []string) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ThumbData64 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " HashMd5 NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__MessageFile_Selector) ThumbData64_Like(val string) *__MessageFile_Selector {
+func (u *__MessageFile_Selector) HashMd5_Like(val string) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ThumbData64 LIKE ? "
+	w.condition = " HashMd5 LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__MessageFile_Selector) ThumbData64_Eq(val string) *__MessageFile_Selector {
+func (d *__MessageFile_Selector) HashMd5_Eq(val string) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ThumbData64 = ? "
+	w.condition = " HashMd5 = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__MessageFile_Selector) ThumbData64_NotEq(val string) *__MessageFile_Selector {
+func (d *__MessageFile_Selector) HashMd5_NotEq(val string) *__MessageFile_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ThumbData64 != ? "
+	w.condition = " HashMd5 != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4598,32 +4732,24 @@ func (u *__MessageFile_Updater) Size_Increment(count int) *__MessageFile_Updater
 
 //ints
 
-func (u *__MessageFile_Updater) FileTypeEnum(newVal int) *__MessageFile_Updater {
-	u.updates[" FileTypeEnum = ? "] = newVal
+func (u *__MessageFile_Updater) FileTypeEnumId(newVal int) *__MessageFile_Updater {
+	u.updates[" FileTypeEnumId = ? "] = newVal
 	return u
 }
 
-func (u *__MessageFile_Updater) FileTypeEnum_Increment(count int) *__MessageFile_Updater {
+func (u *__MessageFile_Updater) FileTypeEnumId_Increment(count int) *__MessageFile_Updater {
 	if count > 0 {
-		u.updates[" FileTypeEnum = FileTypeEnum+? "] = count
+		u.updates[" FileTypeEnumId = FileTypeEnumId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" FileTypeEnum = FileTypeEnum-? "] = -(count) //make it positive
+		u.updates[" FileTypeEnumId = FileTypeEnumId-? "] = -(count) //make it positive
 	}
 
 	return u
 }
 
 //string
-
-//ints
-
-//string
-func (u *__MessageFile_Updater) MimeType(newVal string) *__MessageFile_Updater {
-	u.updates[" MimeType = ? "] = newVal
-	return u
-}
 
 //ints
 
@@ -4699,14 +4825,52 @@ func (u *__MessageFile_Updater) Extension(newVal string) *__MessageFile_Updater 
 //ints
 
 //string
+func (u *__MessageFile_Updater) HashMd5(newVal string) *__MessageFile_Updater {
+	u.updates[" HashMd5 = ? "] = newVal
+	return u
+}
 
 //ints
 
-//string
-func (u *__MessageFile_Updater) ThumbData64(newVal string) *__MessageFile_Updater {
-	u.updates[" ThumbData64 = ? "] = newVal
+func (u *__MessageFile_Updater) HashAccess(newVal int) *__MessageFile_Updater {
+	u.updates[" HashAccess = ? "] = newVal
 	return u
 }
+
+func (u *__MessageFile_Updater) HashAccess_Increment(count int) *__MessageFile_Updater {
+	if count > 0 {
+		u.updates[" HashAccess = HashAccess+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" HashAccess = HashAccess-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__MessageFile_Updater) CreatedSe(newVal int) *__MessageFile_Updater {
+	u.updates[" CreatedSe = ? "] = newVal
+	return u
+}
+
+func (u *__MessageFile_Updater) CreatedSe_Increment(count int) *__MessageFile_Updater {
+	if count > 0 {
+		u.updates[" CreatedSe = CreatedSe+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" CreatedSe = CreatedSe-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
 
 //ints
 
@@ -4782,27 +4946,6 @@ func (u *__MessageFile_Updater) CanDel_Increment(count int) *__MessageFile_Updat
 
 //string
 
-//ints
-
-func (u *__MessageFile_Updater) CreatedTime(newVal int) *__MessageFile_Updater {
-	u.updates[" CreatedTime = ? "] = newVal
-	return u
-}
-
-func (u *__MessageFile_Updater) CreatedTime_Increment(count int) *__MessageFile_Updater {
-	if count > 0 {
-		u.updates[" CreatedTime = CreatedTime+? "] = count
-	}
-
-	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
-	}
-
-	return u
-}
-
-//string
-
 /////////////////////////////////////////////////////////////////////
 /////////////////////// Selector ///////////////////////////////////
 
@@ -4853,33 +4996,18 @@ func (u *__MessageFile_Selector) Select_Size() *__MessageFile_Selector {
 	return u
 }
 
-func (u *__MessageFile_Selector) OrderBy_FileTypeEnum_Desc() *__MessageFile_Selector {
-	u.orderBy = " ORDER BY FileTypeEnum DESC "
+func (u *__MessageFile_Selector) OrderBy_FileTypeEnumId_Desc() *__MessageFile_Selector {
+	u.orderBy = " ORDER BY FileTypeEnumId DESC "
 	return u
 }
 
-func (u *__MessageFile_Selector) OrderBy_FileTypeEnum_Asc() *__MessageFile_Selector {
-	u.orderBy = " ORDER BY FileTypeEnum ASC "
+func (u *__MessageFile_Selector) OrderBy_FileTypeEnumId_Asc() *__MessageFile_Selector {
+	u.orderBy = " ORDER BY FileTypeEnumId ASC "
 	return u
 }
 
-func (u *__MessageFile_Selector) Select_FileTypeEnum() *__MessageFile_Selector {
-	u.selectCol = "FileTypeEnum"
-	return u
-}
-
-func (u *__MessageFile_Selector) OrderBy_MimeType_Desc() *__MessageFile_Selector {
-	u.orderBy = " ORDER BY MimeType DESC "
-	return u
-}
-
-func (u *__MessageFile_Selector) OrderBy_MimeType_Asc() *__MessageFile_Selector {
-	u.orderBy = " ORDER BY MimeType ASC "
-	return u
-}
-
-func (u *__MessageFile_Selector) Select_MimeType() *__MessageFile_Selector {
-	u.selectCol = "MimeType"
+func (u *__MessageFile_Selector) Select_FileTypeEnumId() *__MessageFile_Selector {
+	u.selectCol = "FileTypeEnumId"
 	return u
 }
 
@@ -4943,33 +5071,48 @@ func (u *__MessageFile_Selector) Select_Extension() *__MessageFile_Selector {
 	return u
 }
 
-func (u *__MessageFile_Selector) OrderBy_ThumbData_Desc() *__MessageFile_Selector {
-	u.orderBy = " ORDER BY ThumbData DESC "
+func (u *__MessageFile_Selector) OrderBy_HashMd5_Desc() *__MessageFile_Selector {
+	u.orderBy = " ORDER BY HashMd5 DESC "
 	return u
 }
 
-func (u *__MessageFile_Selector) OrderBy_ThumbData_Asc() *__MessageFile_Selector {
-	u.orderBy = " ORDER BY ThumbData ASC "
+func (u *__MessageFile_Selector) OrderBy_HashMd5_Asc() *__MessageFile_Selector {
+	u.orderBy = " ORDER BY HashMd5 ASC "
 	return u
 }
 
-func (u *__MessageFile_Selector) Select_ThumbData() *__MessageFile_Selector {
-	u.selectCol = "ThumbData"
+func (u *__MessageFile_Selector) Select_HashMd5() *__MessageFile_Selector {
+	u.selectCol = "HashMd5"
 	return u
 }
 
-func (u *__MessageFile_Selector) OrderBy_ThumbData64_Desc() *__MessageFile_Selector {
-	u.orderBy = " ORDER BY ThumbData64 DESC "
+func (u *__MessageFile_Selector) OrderBy_HashAccess_Desc() *__MessageFile_Selector {
+	u.orderBy = " ORDER BY HashAccess DESC "
 	return u
 }
 
-func (u *__MessageFile_Selector) OrderBy_ThumbData64_Asc() *__MessageFile_Selector {
-	u.orderBy = " ORDER BY ThumbData64 ASC "
+func (u *__MessageFile_Selector) OrderBy_HashAccess_Asc() *__MessageFile_Selector {
+	u.orderBy = " ORDER BY HashAccess ASC "
 	return u
 }
 
-func (u *__MessageFile_Selector) Select_ThumbData64() *__MessageFile_Selector {
-	u.selectCol = "ThumbData64"
+func (u *__MessageFile_Selector) Select_HashAccess() *__MessageFile_Selector {
+	u.selectCol = "HashAccess"
+	return u
+}
+
+func (u *__MessageFile_Selector) OrderBy_CreatedSe_Desc() *__MessageFile_Selector {
+	u.orderBy = " ORDER BY CreatedSe DESC "
+	return u
+}
+
+func (u *__MessageFile_Selector) OrderBy_CreatedSe_Asc() *__MessageFile_Selector {
+	u.orderBy = " ORDER BY CreatedSe ASC "
+	return u
+}
+
+func (u *__MessageFile_Selector) Select_CreatedSe() *__MessageFile_Selector {
+	u.selectCol = "CreatedSe"
 	return u
 }
 
@@ -5060,21 +5203,6 @@ func (u *__MessageFile_Selector) OrderBy_CanDel_Asc() *__MessageFile_Selector {
 
 func (u *__MessageFile_Selector) Select_CanDel() *__MessageFile_Selector {
 	u.selectCol = "CanDel"
-	return u
-}
-
-func (u *__MessageFile_Selector) OrderBy_CreatedTime_Desc() *__MessageFile_Selector {
-	u.orderBy = " ORDER BY CreatedTime DESC "
-	return u
-}
-
-func (u *__MessageFile_Selector) OrderBy_CreatedTime_Asc() *__MessageFile_Selector {
-	u.orderBy = " ORDER BY CreatedTime ASC "
-	return u
-}
-
-func (u *__MessageFile_Selector) Select_CreatedTime() *__MessageFile_Selector {
-	u.selectCol = "CreatedTime"
 	return u
 }
 
@@ -5349,12 +5477,12 @@ func MassInsert_MessageFile(rows []MessageFile, db XODB) error {
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.message_file (" +
-		"Name, Size, FileTypeEnum, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel, CreatedTime" +
+		"Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel" +
 		") VALUES " + insVals
 
 	// run query
@@ -5364,21 +5492,20 @@ func MassInsert_MessageFile(rows []MessageFile, db XODB) error {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.Name)
 		vals = append(vals, row.Size)
-		vals = append(vals, row.FileTypeEnum)
-		vals = append(vals, row.MimeType)
+		vals = append(vals, row.FileTypeEnumId)
 		vals = append(vals, row.Width)
 		vals = append(vals, row.Height)
 		vals = append(vals, row.Duration)
 		vals = append(vals, row.Extension)
-		vals = append(vals, row.ThumbData)
-		vals = append(vals, row.ThumbData64)
+		vals = append(vals, row.HashMd5)
+		vals = append(vals, row.HashAccess)
+		vals = append(vals, row.CreatedSe)
 		vals = append(vals, row.ServerSrc)
 		vals = append(vals, row.ServerPath)
 		vals = append(vals, row.ServerThumbPath)
 		vals = append(vals, row.BucketId)
 		vals = append(vals, row.ServerId)
 		vals = append(vals, row.CanDel)
-		vals = append(vals, row.CreatedTime)
 
 	}
 
@@ -5396,12 +5523,12 @@ func MassInsert_MessageFile(rows []MessageFile, db XODB) error {
 func MassReplace_MessageFile(rows []MessageFile, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.message_file (" +
-		"Name, Size, FileTypeEnum, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel, CreatedTime" +
+		"Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel" +
 		") VALUES " + insVals
 
 	// run query
@@ -5411,21 +5538,20 @@ func MassReplace_MessageFile(rows []MessageFile, db XODB) error {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.Name)
 		vals = append(vals, row.Size)
-		vals = append(vals, row.FileTypeEnum)
-		vals = append(vals, row.MimeType)
+		vals = append(vals, row.FileTypeEnumId)
 		vals = append(vals, row.Width)
 		vals = append(vals, row.Height)
 		vals = append(vals, row.Duration)
 		vals = append(vals, row.Extension)
-		vals = append(vals, row.ThumbData)
-		vals = append(vals, row.ThumbData64)
+		vals = append(vals, row.HashMd5)
+		vals = append(vals, row.HashAccess)
+		vals = append(vals, row.CreatedSe)
 		vals = append(vals, row.ServerSrc)
 		vals = append(vals, row.ServerPath)
 		vals = append(vals, row.ServerThumbPath)
 		vals = append(vals, row.BucketId)
 		vals = append(vals, row.ServerId)
 		vals = append(vals, row.CanDel)
-		vals = append(vals, row.CreatedTime)
 
 	}
 
@@ -5476,8 +5602,6 @@ func MassReplace_MessageFile(rows []MessageFile, db XODB) error {
 
 //
 
-//
-
 // MessageFileByMessageFileId retrieves a row from 'ms.message_file' as a MessageFile.
 //
 // Generated from index 'message_file_MessageFileId_pkey'.
@@ -5486,7 +5610,7 @@ func MessageFileByMessageFileId(db XODB, messageFileId int) (*MessageFile, error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`MessageFileId, Name, Size, FileTypeEnum, MimeType, Width, Height, Duration, Extension, ThumbData, ThumbData64, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel, CreatedTime ` +
+		`MessageFileId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel ` +
 		`FROM ms.message_file ` +
 		`WHERE MessageFileId = ?`
 
@@ -5496,7 +5620,7 @@ func MessageFileByMessageFileId(db XODB, messageFileId int) (*MessageFile, error
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, messageFileId).Scan(&mf.MessageFileId, &mf.Name, &mf.Size, &mf.FileTypeEnum, &mf.MimeType, &mf.Width, &mf.Height, &mf.Duration, &mf.Extension, &mf.ThumbData, &mf.ThumbData64, &mf.ServerSrc, &mf.ServerPath, &mf.ServerThumbPath, &mf.BucketId, &mf.ServerId, &mf.CanDel, &mf.CreatedTime)
+	err = db.QueryRow(sqlstr, messageFileId).Scan(&mf.MessageFileId, &mf.Name, &mf.Size, &mf.FileTypeEnumId, &mf.Width, &mf.Height, &mf.Duration, &mf.Extension, &mf.HashMd5, &mf.HashAccess, &mf.CreatedSe, &mf.ServerSrc, &mf.ServerPath, &mf.ServerThumbPath, &mf.BucketId, &mf.ServerId, &mf.CanDel)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

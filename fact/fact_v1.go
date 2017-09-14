@@ -95,12 +95,13 @@ func postFile(filename string, targetUrl string, text string) error {
 
 var imageFiles []os.FileInfo
 
-const dir = `C:\Go\_gopath\src\ms\sun\upload\samples`
+//const dir = `C:\Go\_gopath\src\ms\sun\upload\samples`
+const dir = `./upload/samples`
 
 func init() {
 	imageFiles, err := ioutil.ReadDir(dir)
 	if err != nil {
-		log.Fatal(err)
+		log.Println("no such directy: ",err)
 	}
 	_ = imageFiles
 }

@@ -1,9 +1,9 @@
 package ctrl
 
 import (
-	"context"
+	// "context"
 	"fmt"
-	"google.golang.org/grpc/metadata"
+	// "google.golang.org/grpc/metadata"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -118,10 +118,10 @@ func SendSampleMesg(a *base.Action) base.AppErr {
 
 			atomic.AddInt64(&Cnt2, 1)
 
-			ctx := context.Background()
-			md := metadata.Pairs("user_id", helper.IntToStr(fromUserId))
-			ctx2 := metadata.NewContext(ctx, md)
-			_ = ctx2
+			// ctx := context.Background()
+			// md := metadata.Pairs("user_id", helper.IntToStr(fromUserId))
+			// ctx2 := metadata.NewContext(ctx, md)
+			// _ = ctx2
 
 			//fIXME update for new grpc
 			/*rpc := models.GrpcMsg{}

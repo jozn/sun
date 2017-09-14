@@ -146,6 +146,8 @@ func pushView_chatView(meId int, chatIds map[int]bool) (res []*x.PB_ChatView) {
 				CurrentSeq:           int32(chat.CurrentSeq),
 			}
 
+            chatView.User = view_getUserVIew(meId,chat.PeerUserId)
+
 			res = append(res, chatView)
 		}
 	}

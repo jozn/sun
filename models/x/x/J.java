@@ -181,21 +181,20 @@ public class J {
 		public Integer MessageFileId;
 		public String Name;
 		public Integer Size;
-		public Integer FileTypeEnum;
-		public String MimeType;
+		public Integer FileTypeEnumId;
 		public Integer Width;
 		public Integer Height;
 		public Integer Duration;
 		public String Extension;
-		public UNKNOWN ThumbData;
-		public String ThumbData64;
+		public String HashMd5;
+		public Integer HashAccess;
+		public Integer CreatedSe;
 		public String ServerSrc;
 		public String ServerPath;
 		public String ServerThumbPath;
 		public String BucketId;
 		public Integer ServerId;
 		public Integer CanDel;
-		public Integer CreatedTime;
 	}
 
 	public static class Notification {

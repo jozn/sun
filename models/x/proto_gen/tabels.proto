@@ -165,21 +165,20 @@ message PB_MessageFile {
     int64 MessageFileId = 1;
     string Name = 3;
     int32 Size = 5;
-    int32 FileTypeEnum = 7;
-    string MimeType = 9;
-    int32 Width = 11;
-    int32 Height = 13;
-    int32 Duration = 15;
-    string Extension = 17;
-    ???? ThumbData = 19;
-    string ThumbData64 = 21;
+    int32 FileTypeEnumId = 7;
+    int32 Width = 9;
+    int32 Height = 11;
+    int32 Duration = 13;
+    string Extension = 15;
+    string HashMd5 = 17;
+    int64 HashAccess = 19;
+    int32 CreatedSe = 21;
     string ServerSrc = 23;
     string ServerPath = 25;
     string ServerThumbPath = 27;
     string BucketId = 29;
     int32 ServerId = 31;
     int32 CanDel = 33;
-    int32 CreatedTime = 35;
 }
 message PB_Notification {
     int64 Id = 1;

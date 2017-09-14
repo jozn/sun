@@ -49,16 +49,18 @@ enum RoomMessageTypeEnum {
     FILE_TEXT = 12;
     LOCATION = 13;
     CONTACT = 14;
+    EMOJI = 15;
     LOG = 100; //from 100 to 200 all are log types
 }
 
 enum RoomMessageDeliviryStatusEnum {
     UNKNOWN_MESSAGE_DELIVIRY = 0;
-    FAILED = 1;
-    SENDING = 2;
-    SENT = 3;
-    DELIVERED = 4;
-    SEEN2 = 5;
+    NEED_TO_SINK = 1;
+    FAILED = 2;
+    SENDING = 3;
+    SENT = 4;
+    DELIVERED = 5;
+    SEEN2 = 6;
 }
 
 ///*enum EnumRoomMessageReaction {

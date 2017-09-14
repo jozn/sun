@@ -1,6 +1,4 @@
-
 package x
-
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -479,21 +477,20 @@ func PBConvPB__MessageFile_To_MessageFile( o *PB_MessageFile) *MessageFile {
       MessageFileId: int ( o.MessageFileId ),
       Name: string ( o.Name ),
       Size: int ( o.Size ),
-      FileTypeEnum: int ( o.FileTypeEnum ),
-      MimeType: string ( o.MimeType ),
+      FileTypeEnumId: int ( o.FileTypeEnumId ),
       Width: int ( o.Width ),
       Height: int ( o.Height ),
       Duration: int ( o.Duration ),
       Extension: string ( o.Extension ),
-      ThumbData: []byte ( o.ThumbData ),
-      ThumbData64: string ( o.ThumbData64 ),
+      HashMd5: string ( o.HashMd5 ),
+      HashAccess: int ( o.HashAccess ),
+      CreatedSe: int ( o.CreatedSe ),
       ServerSrc: string ( o.ServerSrc ),
       ServerPath: string ( o.ServerPath ),
       ServerThumbPath: string ( o.ServerThumbPath ),
       BucketId: string ( o.BucketId ),
       ServerId: int ( o.ServerId ),
       CanDel: int ( o.CanDel ),
-      CreatedTime: int ( o.CreatedTime ),
     }
     return n
 }
@@ -503,21 +500,20 @@ func PBConvPB_MessageFile_To_MessageFile ( o *MessageFile) *PB_MessageFile {
       MessageFileId: int64 ( o.MessageFileId ),
       Name: string ( o.Name ),
       Size: int32 ( o.Size ),
-      FileTypeEnum: int32 ( o.FileTypeEnum ),
-      MimeType: string ( o.MimeType ),
+      FileTypeEnumId: int32 ( o.FileTypeEnumId ),
       Width: int32 ( o.Width ),
       Height: int32 ( o.Height ),
       Duration: int32 ( o.Duration ),
       Extension: string ( o.Extension ),
-      ThumbData: []byte ( o.ThumbData ),
-      ThumbData64: string ( o.ThumbData64 ),
+      HashMd5: string ( o.HashMd5 ),
+      HashAccess: int64 ( o.HashAccess ),
+      CreatedSe: int32 ( o.CreatedSe ),
       ServerSrc: string ( o.ServerSrc ),
       ServerPath: string ( o.ServerPath ),
       ServerThumbPath: string ( o.ServerThumbPath ),
       BucketId: string ( o.BucketId ),
       ServerId: int32 ( o.ServerId ),
       CanDel: int32 ( o.CanDel ),
-      CreatedTime: int32 ( o.CreatedTime ),
     }
     return n
 }

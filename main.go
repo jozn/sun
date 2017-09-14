@@ -61,7 +61,7 @@ func main() {
 func startApp() {
 	var err error
 	//DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3308)/ms?charset=utf8mb4,utf8&collation=utf8mb4_general_ci")
-	base.DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3307)/ms?charset=utf8mb4")
+	base.DB, err = sqlx.Connect("mysql", "root:123456@tcp(localhost:3306)/ms?charset=utf8mb4")
 	//DB, err = sqlx.Connect("mysql", "root:123456@localhost:3307/ms?charset=utf8mb4")
 	//DB.Exec("SET NAMES 'utf8mb4';")
 	noErr(err)

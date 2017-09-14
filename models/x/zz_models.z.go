@@ -428,21 +428,20 @@ type MessageFile struct {
 	MessageFileId   int
 	Name            string
 	Size            int
-	FileTypeEnum    int
-	MimeType        string
+	FileTypeEnumId  int
 	Width           int
 	Height          int
 	Duration        int
 	Extension       string
-	ThumbData       []byte
-	ThumbData64     string
+	HashMd5         string
+	HashAccess      int
+	CreatedSe       int
 	ServerSrc       string
 	ServerPath      string
 	ServerThumbPath string
 	BucketId        string
 	ServerId        int
 	CanDel          int
-	CreatedTime     int
 
 	_exists, _deleted bool
 }
@@ -452,21 +451,20 @@ type MessageFile struct {
 	MessageFileId: 0,
 	Name: "",
 	Size: 0,
-	FileTypeEnum: 0,
-	MimeType: "",
+	FileTypeEnumId: 0,
 	Width: 0,
 	Height: 0,
 	Duration: 0,
 	Extension: "",
-	ThumbData: UNKNOWN,
-	ThumbData64: "",
+	HashMd5: "",
+	HashAccess: 0,
+	CreatedSe: 0,
 	ServerSrc: "",
 	ServerPath: "",
 	ServerThumbPath: "",
 	BucketId: "",
 	ServerId: 0,
 	CanDel: 0,
-	CreatedTime: 0,
 */
 
 // Notification 'ms.notification'.

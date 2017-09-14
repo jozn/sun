@@ -2637,6 +2637,95 @@ var PB_DirectMessage__FOlD = &PB_DirectMessage{
 	DeliviryStatusEnum: 0,
 }
 
+type PB_MessageFile_Flat struct {
+	MessageFileId   int
+	Name            string
+	Size            int
+	FileTypeEnumId  int
+	Width           int
+	Height          int
+	Duration        int
+	Extension       string
+	HashMd5         string
+	HashAccess      int
+	CreatedSe       int
+	ServerSrc       string
+	ServerPath      string
+	ServerThumbPath string
+	BucketId        string
+	ServerId        int
+	CanDel          int
+}
+
+//ToPB
+func (m *PB_MessageFile) ToFlat() *PB_MessageFile_Flat {
+	r := &PB_MessageFile_Flat{
+		MessageFileId:   int(m.MessageFileId),
+		Name:            m.Name,
+		Size:            int(m.Size),
+		FileTypeEnumId:  int(m.FileTypeEnumId),
+		Width:           int(m.Width),
+		Height:          int(m.Height),
+		Duration:        int(m.Duration),
+		Extension:       m.Extension,
+		HashMd5:         m.HashMd5,
+		HashAccess:      int(m.HashAccess),
+		CreatedSe:       int(m.CreatedSe),
+		ServerSrc:       m.ServerSrc,
+		ServerPath:      m.ServerPath,
+		ServerThumbPath: m.ServerThumbPath,
+		BucketId:        m.BucketId,
+		ServerId:        int(m.ServerId),
+		CanDel:          int(m.CanDel),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_MessageFile_Flat) ToPB() *PB_MessageFile {
+	r := &PB_MessageFile{
+		MessageFileId:   int64(m.MessageFileId),
+		Name:            m.Name,
+		Size:            int32(m.Size),
+		FileTypeEnumId:  int32(m.FileTypeEnumId),
+		Width:           int32(m.Width),
+		Height:          int32(m.Height),
+		Duration:        int32(m.Duration),
+		Extension:       m.Extension,
+		HashMd5:         m.HashMd5,
+		HashAccess:      int64(m.HashAccess),
+		CreatedSe:       int32(m.CreatedSe),
+		ServerSrc:       m.ServerSrc,
+		ServerPath:      m.ServerPath,
+		ServerThumbPath: m.ServerThumbPath,
+		BucketId:        m.BucketId,
+		ServerId:        int32(m.ServerId),
+		CanDel:          int32(m.CanDel),
+	}
+	return r
+}
+
+//folding
+var PB_MessageFile__FOlD = &PB_MessageFile{
+	MessageFileId:   0,
+	Name:            "",
+	Size:            0,
+	FileTypeEnumId:  0,
+	Width:           0,
+	Height:          0,
+	Duration:        0,
+	Extension:       "",
+	HashMd5:         "",
+	HashAccess:      0,
+	CreatedSe:       0,
+	ServerSrc:       "",
+	ServerPath:      "",
+	ServerThumbPath: "",
+	BucketId:        "",
+	ServerId:        0,
+	CanDel:          0,
+}
+
 type PB_User_Flat struct {
 	Id                   int
 	UserName             string
@@ -3059,6 +3148,10 @@ type PB_ChatView_Flat struct {
 	LastSeqDelete        int
 	CurrentSeq           int
 	User                 PB_UserView
+	SharedMediaCount     int
+	UnseenCount          int
+	FirstUnreadMessage   PB_MessageView
+	LastMessage          PB_MessageView
 }
 
 //ToPB
@@ -3078,6 +3171,9 @@ func (m *PB_ChatView) ToFlat() *PB_ChatView_Flat {
 		LastSeqSeen:          int(m.LastSeqSeen),
 		LastSeqDelete:        int(m.LastSeqDelete),
 		CurrentSeq:           int(m.CurrentSeq),
+
+		SharedMediaCount: int(m.SharedMediaCount),
+		UnseenCount:      int(m.UnseenCount),
 	}
 	return r
 }
@@ -3099,6 +3195,9 @@ func (m *PB_ChatView_Flat) ToPB() *PB_ChatView {
 		LastSeqSeen:          int32(m.LastSeqSeen),
 		LastSeqDelete:        int32(m.LastSeqDelete),
 		CurrentSeq:           int32(m.CurrentSeq),
+
+		SharedMediaCount: int32(m.SharedMediaCount),
+		UnseenCount:      int32(m.UnseenCount),
 	}
 	return r
 }
@@ -3119,6 +3218,9 @@ var PB_ChatView__FOlD = &PB_ChatView{
 	LastSeqSeen:          0,
 	LastSeqDelete:        0,
 	CurrentSeq:           0,
+
+	SharedMediaCount: 0,
+	UnseenCount:      0,
 }
 
 type PB_MessageView_Flat struct {
@@ -3133,8 +3235,9 @@ type PB_MessageView_Flat struct {
 	PeerSeenTime         int
 	DeliviryStatusEnumId int
 	ChatId               int
-	RoomTypeEnum         RoomTypeEnum
+	RoomTypeEnumId       int
 	IsByMe               bool
+	RemoteId             bool
 	File                 PB_MessageFileView
 }
 
@@ -3152,8 +3255,9 @@ func (m *PB_MessageView) ToFlat() *PB_MessageView_Flat {
 		PeerSeenTime:         int(m.PeerSeenTime),
 		DeliviryStatusEnumId: int(m.DeliviryStatusEnumId),
 		ChatId:               int(m.ChatId),
-
-		IsByMe: m.IsByMe,
+		RoomTypeEnumId:       int(m.RoomTypeEnumId),
+		IsByMe:               m.IsByMe,
+		RemoteId:             m.RemoteId,
 	}
 	return r
 }
@@ -3172,8 +3276,9 @@ func (m *PB_MessageView_Flat) ToPB() *PB_MessageView {
 		PeerSeenTime:         int32(m.PeerSeenTime),
 		DeliviryStatusEnumId: int32(m.DeliviryStatusEnumId),
 		ChatId:               int64(m.ChatId),
-
-		IsByMe: m.IsByMe,
+		RoomTypeEnumId:       int32(m.RoomTypeEnumId),
+		IsByMe:               m.IsByMe,
+		RemoteId:             m.RemoteId,
 	}
 	return r
 }
@@ -3191,50 +3296,63 @@ var PB_MessageView__FOlD = &PB_MessageView{
 	PeerSeenTime:         0,
 	DeliviryStatusEnumId: 0,
 	ChatId:               0,
-
-	IsByMe: false,
+	RoomTypeEnumId:       0,
+	IsByMe:               false,
+	RemoteId:             false,
 }
 
 type PB_MessageFileView_Flat struct {
-	MessageFileId   int
-	Name            string
-	Size            int
-	FileTypeEnum    int
-	MimeType        string
-	Width           int
-	Height          int
-	Duration        int
-	Extension       string
-	ThumbData64     string
-	ServerSrc       string
-	ServerPath      string
-	ServerThumbPath string
-	BucketId        string
-	ServerId        int
-	CanDel          int
-	CreatedTime     int
+	MessageFileId       int
+	OriginalUserId      int
+	Name                string
+	Size                int
+	FileTypeEnumId      int
+	Width               int
+	Height              int
+	Duration            int
+	Extension           string
+	HashMd5             string
+	HashAccess          int
+	CreatedSe           int
+	ServerSrc           string
+	ServerPath          string
+	ServerThumbPath     string
+	BucketId            string
+	ServerId            int
+	CanDel              int
+	ServerThumbLocalSrc string
+	RemoteMessageFileId int
+	LocalSrc            string
+	ThumbLocalSrc       string
+	MessageFileStatusId string
 }
 
 //ToPB
 func (m *PB_MessageFileView) ToFlat() *PB_MessageFileView_Flat {
 	r := &PB_MessageFileView_Flat{
-		MessageFileId:   int(m.MessageFileId),
-		Name:            m.Name,
-		Size:            int(m.Size),
-		FileTypeEnum:    int(m.FileTypeEnum),
-		MimeType:        m.MimeType,
-		Width:           int(m.Width),
-		Height:          int(m.Height),
-		Duration:        int(m.Duration),
-		Extension:       m.Extension,
-		ThumbData64:     m.ThumbData64,
-		ServerSrc:       m.ServerSrc,
-		ServerPath:      m.ServerPath,
-		ServerThumbPath: m.ServerThumbPath,
-		BucketId:        m.BucketId,
-		ServerId:        int(m.ServerId),
-		CanDel:          int(m.CanDel),
-		CreatedTime:     int(m.CreatedTime),
+		MessageFileId:       int(m.MessageFileId),
+		OriginalUserId:      int(m.OriginalUserId),
+		Name:                m.Name,
+		Size:                int(m.Size),
+		FileTypeEnumId:      int(m.FileTypeEnumId),
+		Width:               int(m.Width),
+		Height:              int(m.Height),
+		Duration:            int(m.Duration),
+		Extension:           m.Extension,
+		HashMd5:             m.HashMd5,
+		HashAccess:          int(m.HashAccess),
+		CreatedSe:           int(m.CreatedSe),
+		ServerSrc:           m.ServerSrc,
+		ServerPath:          m.ServerPath,
+		ServerThumbPath:     m.ServerThumbPath,
+		BucketId:            m.BucketId,
+		ServerId:            int(m.ServerId),
+		CanDel:              int(m.CanDel),
+		ServerThumbLocalSrc: m.ServerThumbLocalSrc,
+		RemoteMessageFileId: int(m.RemoteMessageFileId),
+		LocalSrc:            m.LocalSrc,
+		ThumbLocalSrc:       m.ThumbLocalSrc,
+		MessageFileStatusId: m.MessageFileStatusId,
 	}
 	return r
 }
@@ -3242,46 +3360,58 @@ func (m *PB_MessageFileView) ToFlat() *PB_MessageFileView_Flat {
 //ToPB
 func (m *PB_MessageFileView_Flat) ToPB() *PB_MessageFileView {
 	r := &PB_MessageFileView{
-		MessageFileId:   int64(m.MessageFileId),
-		Name:            m.Name,
-		Size:            int32(m.Size),
-		FileTypeEnum:    int32(m.FileTypeEnum),
-		MimeType:        m.MimeType,
-		Width:           int32(m.Width),
-		Height:          int32(m.Height),
-		Duration:        int32(m.Duration),
-		Extension:       m.Extension,
-		ThumbData64:     m.ThumbData64,
-		ServerSrc:       m.ServerSrc,
-		ServerPath:      m.ServerPath,
-		ServerThumbPath: m.ServerThumbPath,
-		BucketId:        m.BucketId,
-		ServerId:        int32(m.ServerId),
-		CanDel:          int32(m.CanDel),
-		CreatedTime:     int32(m.CreatedTime),
+		MessageFileId:       int64(m.MessageFileId),
+		OriginalUserId:      int32(m.OriginalUserId),
+		Name:                m.Name,
+		Size:                int32(m.Size),
+		FileTypeEnumId:      int32(m.FileTypeEnumId),
+		Width:               int32(m.Width),
+		Height:              int32(m.Height),
+		Duration:            int32(m.Duration),
+		Extension:           m.Extension,
+		HashMd5:             m.HashMd5,
+		HashAccess:          int64(m.HashAccess),
+		CreatedSe:           int32(m.CreatedSe),
+		ServerSrc:           m.ServerSrc,
+		ServerPath:          m.ServerPath,
+		ServerThumbPath:     m.ServerThumbPath,
+		BucketId:            m.BucketId,
+		ServerId:            int32(m.ServerId),
+		CanDel:              int32(m.CanDel),
+		ServerThumbLocalSrc: m.ServerThumbLocalSrc,
+		RemoteMessageFileId: int64(m.RemoteMessageFileId),
+		LocalSrc:            m.LocalSrc,
+		ThumbLocalSrc:       m.ThumbLocalSrc,
+		MessageFileStatusId: m.MessageFileStatusId,
 	}
 	return r
 }
 
 //folding
 var PB_MessageFileView__FOlD = &PB_MessageFileView{
-	MessageFileId:   0,
-	Name:            "",
-	Size:            0,
-	FileTypeEnum:    0,
-	MimeType:        "",
-	Width:           0,
-	Height:          0,
-	Duration:        0,
-	Extension:       "",
-	ThumbData64:     "",
-	ServerSrc:       "",
-	ServerPath:      "",
-	ServerThumbPath: "",
-	BucketId:        "",
-	ServerId:        0,
-	CanDel:          0,
-	CreatedTime:     0,
+	MessageFileId:       0,
+	OriginalUserId:      0,
+	Name:                "",
+	Size:                0,
+	FileTypeEnumId:      0,
+	Width:               0,
+	Height:              0,
+	Duration:            0,
+	Extension:           "",
+	HashMd5:             "",
+	HashAccess:          0,
+	CreatedSe:           0,
+	ServerSrc:           "",
+	ServerPath:          "",
+	ServerThumbPath:     "",
+	BucketId:            "",
+	ServerId:            0,
+	CanDel:              0,
+	ServerThumbLocalSrc: "",
+	RemoteMessageFileId: 0,
+	LocalSrc:            "",
+	ThumbLocalSrc:       "",
+	MessageFileStatusId: "",
 }
 
 type PB_UserView_Flat struct {
@@ -4152,6 +4282,29 @@ r := &PB_DirectMessage_Flat{
 return r
 }
 
+func(m *PB_MessageFile)ToFlat() *PB_MessageFile_Flat {
+r := &PB_MessageFile_Flat{
+    MessageFileId:  int(m.MessageFileId) ,
+    Name:  m.Name ,
+    Size:  int(m.Size) ,
+    FileTypeEnumId:  int(m.FileTypeEnumId) ,
+    Width:  int(m.Width) ,
+    Height:  int(m.Height) ,
+    Duration:  int(m.Duration) ,
+    Extension:  m.Extension ,
+    HashMd5:  m.HashMd5 ,
+    HashAccess:  int(m.HashAccess) ,
+    CreatedSe:  int(m.CreatedSe) ,
+    ServerSrc:  m.ServerSrc ,
+    ServerPath:  m.ServerPath ,
+    ServerThumbPath:  m.ServerThumbPath ,
+    BucketId:  m.BucketId ,
+    ServerId:  int(m.ServerId) ,
+    CanDel:  int(m.CanDel) ,
+}
+return r
+}
+
 func(m *PB_User)ToFlat() *PB_User_Flat {
 r := &PB_User_Flat{
     Id:  int(m.Id) ,
@@ -4293,6 +4446,10 @@ r := &PB_ChatView_Flat{
     LastSeqDelete:  int(m.LastSeqDelete) ,
     CurrentSeq:  int(m.CurrentSeq) ,
 
+    SharedMediaCount:  int(m.SharedMediaCount) ,
+    UnseenCount:  int(m.UnseenCount) ,
+
+
 }
 return r
 }
@@ -4310,8 +4467,9 @@ r := &PB_MessageView_Flat{
     PeerSeenTime:  int(m.PeerSeenTime) ,
     DeliviryStatusEnumId:  int(m.DeliviryStatusEnumId) ,
     ChatId:  int(m.ChatId) ,
-
+    RoomTypeEnumId:  int(m.RoomTypeEnumId) ,
     IsByMe:  m.IsByMe ,
+    RemoteId:  m.RemoteId ,
 
 }
 return r
@@ -4320,22 +4478,28 @@ return r
 func(m *PB_MessageFileView)ToFlat() *PB_MessageFileView_Flat {
 r := &PB_MessageFileView_Flat{
     MessageFileId:  int(m.MessageFileId) ,
+    OriginalUserId:  int(m.OriginalUserId) ,
     Name:  m.Name ,
     Size:  int(m.Size) ,
-    FileTypeEnum:  int(m.FileTypeEnum) ,
-    MimeType:  m.MimeType ,
+    FileTypeEnumId:  int(m.FileTypeEnumId) ,
     Width:  int(m.Width) ,
     Height:  int(m.Height) ,
     Duration:  int(m.Duration) ,
     Extension:  m.Extension ,
-    ThumbData64:  m.ThumbData64 ,
+    HashMd5:  m.HashMd5 ,
+    HashAccess:  int(m.HashAccess) ,
+    CreatedSe:  int(m.CreatedSe) ,
     ServerSrc:  m.ServerSrc ,
     ServerPath:  m.ServerPath ,
     ServerThumbPath:  m.ServerThumbPath ,
     BucketId:  m.BucketId ,
     ServerId:  int(m.ServerId) ,
     CanDel:  int(m.CanDel) ,
-    CreatedTime:  int(m.CreatedTime) ,
+    ServerThumbLocalSrc:  m.ServerThumbLocalSrc ,
+    RemoteMessageFileId:  int(m.RemoteMessageFileId) ,
+    LocalSrc:  m.LocalSrc ,
+    ThumbLocalSrc:  m.ThumbLocalSrc ,
+    MessageFileStatusId:  m.MessageFileStatusId ,
 }
 return r
 }
@@ -5146,6 +5310,29 @@ r := &PB_DirectMessage{
 return r
 }
 
+func(m *PB_MessageFile_Flat)ToPB() *PB_MessageFile {
+r := &PB_MessageFile{
+    MessageFileId:  int64(m.MessageFileId) ,
+    Name:  m.Name ,
+    Size:  int32(m.Size) ,
+    FileTypeEnumId:  int32(m.FileTypeEnumId) ,
+    Width:  int32(m.Width) ,
+    Height:  int32(m.Height) ,
+    Duration:  int32(m.Duration) ,
+    Extension:  m.Extension ,
+    HashMd5:  m.HashMd5 ,
+    HashAccess:  int64(m.HashAccess) ,
+    CreatedSe:  int32(m.CreatedSe) ,
+    ServerSrc:  m.ServerSrc ,
+    ServerPath:  m.ServerPath ,
+    ServerThumbPath:  m.ServerThumbPath ,
+    BucketId:  m.BucketId ,
+    ServerId:  int32(m.ServerId) ,
+    CanDel:  int32(m.CanDel) ,
+}
+return r
+}
+
 func(m *PB_User_Flat)ToPB() *PB_User {
 r := &PB_User{
     Id:  int32(m.Id) ,
@@ -5287,6 +5474,10 @@ r := &PB_ChatView{
     LastSeqDelete:  int32(m.LastSeqDelete) ,
     CurrentSeq:  int32(m.CurrentSeq) ,
 
+    SharedMediaCount:  int32(m.SharedMediaCount) ,
+    UnseenCount:  int32(m.UnseenCount) ,
+
+
 }
 return r
 }
@@ -5304,8 +5495,9 @@ r := &PB_MessageView{
     PeerSeenTime:  int32(m.PeerSeenTime) ,
     DeliviryStatusEnumId:  int32(m.DeliviryStatusEnumId) ,
     ChatId:  int64(m.ChatId) ,
-
+    RoomTypeEnumId:  int32(m.RoomTypeEnumId) ,
     IsByMe:  m.IsByMe ,
+    RemoteId:  m.RemoteId ,
 
 }
 return r
@@ -5314,22 +5506,28 @@ return r
 func(m *PB_MessageFileView_Flat)ToPB() *PB_MessageFileView {
 r := &PB_MessageFileView{
     MessageFileId:  int64(m.MessageFileId) ,
+    OriginalUserId:  int32(m.OriginalUserId) ,
     Name:  m.Name ,
     Size:  int32(m.Size) ,
-    FileTypeEnum:  int32(m.FileTypeEnum) ,
-    MimeType:  m.MimeType ,
+    FileTypeEnumId:  int32(m.FileTypeEnumId) ,
     Width:  int32(m.Width) ,
     Height:  int32(m.Height) ,
     Duration:  int32(m.Duration) ,
     Extension:  m.Extension ,
-    ThumbData64:  m.ThumbData64 ,
+    HashMd5:  m.HashMd5 ,
+    HashAccess:  int64(m.HashAccess) ,
+    CreatedSe:  int32(m.CreatedSe) ,
     ServerSrc:  m.ServerSrc ,
     ServerPath:  m.ServerPath ,
     ServerThumbPath:  m.ServerThumbPath ,
     BucketId:  m.BucketId ,
     ServerId:  int32(m.ServerId) ,
     CanDel:  int32(m.CanDel) ,
-    CreatedTime:  int32(m.CreatedTime) ,
+    ServerThumbLocalSrc:  m.ServerThumbLocalSrc ,
+    RemoteMessageFileId:  int64(m.RemoteMessageFileId) ,
+    LocalSrc:  m.LocalSrc ,
+    ThumbLocalSrc:  m.ThumbLocalSrc ,
+    MessageFileStatusId:  m.MessageFileStatusId ,
 }
 return r
 }
@@ -5962,6 +6160,27 @@ var PB_DirectMessage__FOlD = &PB_DirectMessage{
 }
 
 
+var PB_MessageFile__FOlD = &PB_MessageFile{
+        MessageFileId:  0 ,
+        Name:  "" ,
+        Size:  0 ,
+        FileTypeEnumId:  0 ,
+        Width:  0 ,
+        Height:  0 ,
+        Duration:  0 ,
+        Extension:  "" ,
+        HashMd5:  "" ,
+        HashAccess:  0 ,
+        CreatedSe:  0 ,
+        ServerSrc:  "" ,
+        ServerPath:  "" ,
+        ServerThumbPath:  "" ,
+        BucketId:  "" ,
+        ServerId:  0 ,
+        CanDel:  0 ,
+}
+
+
 var PB_User__FOlD = &PB_User{
         Id:  0 ,
         UserName:  "" ,
@@ -6080,6 +6299,10 @@ var PB_ChatView__FOlD = &PB_ChatView{
         LastSeqDelete:  0 ,
         CurrentSeq:  0 ,
 
+        SharedMediaCount:  0 ,
+        UnseenCount:  0 ,
+
+
 }
 
 
@@ -6095,30 +6318,37 @@ var PB_MessageView__FOlD = &PB_MessageView{
         PeerSeenTime:  0 ,
         DeliviryStatusEnumId:  0 ,
         ChatId:  0 ,
-
+        RoomTypeEnumId:  0 ,
         IsByMe:  false ,
+        RemoteId:  false ,
 
 }
 
 
 var PB_MessageFileView__FOlD = &PB_MessageFileView{
         MessageFileId:  0 ,
+        OriginalUserId:  0 ,
         Name:  "" ,
         Size:  0 ,
-        FileTypeEnum:  0 ,
-        MimeType:  "" ,
+        FileTypeEnumId:  0 ,
         Width:  0 ,
         Height:  0 ,
         Duration:  0 ,
         Extension:  "" ,
-        ThumbData64:  "" ,
+        HashMd5:  "" ,
+        HashAccess:  0 ,
+        CreatedSe:  0 ,
         ServerSrc:  "" ,
         ServerPath:  "" ,
         ServerThumbPath:  "" ,
         BucketId:  "" ,
         ServerId:  0 ,
         CanDel:  0 ,
-        CreatedTime:  0 ,
+        ServerThumbLocalSrc:  "" ,
+        RemoteMessageFileId:  0 ,
+        LocalSrc:  "" ,
+        ThumbLocalSrc:  "" ,
+        MessageFileStatusId:  "" ,
 }
 
 

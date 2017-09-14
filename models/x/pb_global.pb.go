@@ -16,6 +16,8 @@ var _ = math.Inf
 
 // Ignoring public import of PB_DirectMessage from pb_table.proto
 
+// Ignoring public import of PB_MessageFile from pb_table.proto
+
 // Ignoring public import of PB_User from pb_table.proto
 
 type PB_CommandToServer struct {

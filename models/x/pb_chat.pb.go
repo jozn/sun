@@ -106,6 +106,7 @@ It has these top-level messages:
 	UserView
 	PB_Chat
 	PB_DirectMessage
+	PB_MessageFile
 	PB_User
 	PB_UpdateGroupParticipants
 	PB_UpdateNotifySettings

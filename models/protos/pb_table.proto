@@ -36,6 +36,26 @@ message PB_DirectMessage {
     int32 DeliviryStatusEnum = 19;
 }
 
+message PB_MessageFile {
+    int64 MessageFileId = 1;
+    string Name = 3;
+    int32 Size = 5;
+    int32 FileTypeEnumId = 7;
+    int32 Width = 9;
+    int32 Height = 11;
+    int32 Duration = 13;
+    string Extension = 15;
+    string HashMd5 = 17;
+    int64 HashAccess = 19;
+    int32 CreatedSe = 21;
+    string ServerSrc = 23;
+    string ServerPath = 25;
+    string ServerThumbPath = 27;
+    string BucketId = 29;
+    int32 ServerId = 31;
+    int32 CanDel = 33;
+}
+
 message PB_User {
     int32 Id = 1;
     string UserName = 3;
@@ -71,3 +91,4 @@ message PB_User {
     int32 LastLoginTime = 63;
     string LastIpAddress = 65;
 }
+
