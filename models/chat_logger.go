@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"ms/sun/base"
+	"ms/sun/config"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 	"time"
@@ -104,7 +105,7 @@ func (m *chatUpdater) loopDirectToUser() {
 		case <-ticker.C:
 			if len(arr) > 0 {
 				cnt++
-				fmt.Printf("batch of chanNewChatMsgsBuffer - cnt:%d - len:%d \n", cnt, len(arr))
+				fmt.Printf("batch of loopDirectToUser - cnt:%d - len:%d \n", cnt, len(arr))
 				pre := arr
 				arr = make([]x.DirectLog, 0, siz)
 				go chatLogger_sendToUsersUpdates(pre)
@@ -123,29 +124,35 @@ func chatLogger_sendToUsersUpdates(logs []x.DirectLog) {
 	mp := make(map[int][]*x.DirectLog, len(logs))
 	msgIds := make([]int, 0, len(logs))
 	for _, l := range logs {
-		mp[l.ToUserId] = append(mp[l.ToUserId], &l)
+		l2 := l
+		mp[l.ToUserId] = append(mp[l.ToUserId], &l2)
 		if l.MessageId > 0 {
 			msgIds = append(msgIds, l.MessageId)
 		}
 	}
 
 	x.Store.PreLoadDirectMessageByMessageIds(msgIds)
-	for UserId, logs := range mp { //each user
-		if AllPipesMap.IsPipeOpen(UserId) && len(logs) > 0 {
-			res := PushView_directLogsTo_PB_ChangesHolderView(UserId, logs)
+
+	for UserId, lgs := range mp { //each user
+		if AllPipesMap.IsPipeOpen(UserId) && len(lgs) > 0 {
+			res := PushView_directLogsTo_PB_ChangesHolderView(UserId, lgs)
 			cmd := NewPB_CommandToClient_WithData(PB_PushHolderView, res)
 			AllPipesMap.SendToUser(UserId, cmd)
+			if config.IS_DEBUG {
+				fmt.Printf("send to user: %d PushViews : %s", UserId, helper.ToJson(res))
+			}
 		}
 	}
+}
 
-	/*for UserId, logs := range mp { //each user
-	    if AllPipesMap.IsPipeOpen(UserId) && len(logs) > 0 {
-	        rowsView := directLogsToView(logs)
+/*for UserId, lgs := range mp { //each user
+	    if AllPipesMap.IsPipeOpen(UserId) && len(lgs) > 0 {
+	        rowsView := directLogsToView(lgs)
 	        push := &x.PB_PushDirectLogViewsMany{Rows: rowsView}
 	        cmd := NewPB_CommandToClient_WithData("PB_PushDirectLogsMany", push)
 	        AllPipesMap.SendToUser(UserId, cmd)
 	    }
-	}*/
+	}
 }
 
 ///////////// all below deprecated ///////////////
@@ -170,3 +177,4 @@ func directLogToView(log x.DirectLog) *x.PB_DirectLogView {
 	}
 	return v
 }
+*/

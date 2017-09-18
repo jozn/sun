@@ -36,7 +36,38 @@ func PushView_directLogsTo_PB_ChangesHolderView(meId int, logs []*x.DirectLog) *
 	//
 	res := &x.PB_PushHolderView{}
 
-	for _, logRow := range logs { //each user
+    for _, logRow := range logs { //each user
+        switch Push(logRow.RoomLogTypeId) {
+        case Push_NEW_DIRECT_MESSAGE:
+            if v, ok := pushView_newDirectMessage(logRow); ok {
+                res.NewMessages = append(res.NewMessages, v)
+            }
+
+            //metas
+        case Push_MESSAGE_RECIVED_TO_SERVER:
+            if v, ok := pushView_messageMeta(logRow); ok {
+                res.MessagesDelivierdToServer = append(res.MessagesDelivierdToServer, v)
+            }
+
+        case Push_MESSAGE_DELIVIERD_TO_PEER:
+            if v, ok := pushView_messageMeta(logRow); ok {
+                res.MessagesDelivierdToPeer = append(res.MessagesDelivierdToPeer, v)
+            }
+
+        case Push_MESSAGE_SEEN_BY_PEER:
+            if v, ok := pushView_messageMeta(logRow); ok {
+                res.MessagesSeenByPeer = append(res.MessagesSeenByPeer, v)
+            }
+
+        case Push_MESSAGE_DELETED_FROM_SERVER:
+            if v, ok := pushView_messageMeta(logRow); ok {
+                res.MessagesDeletedFromServer = append(res.MessagesDeletedFromServer, v)
+            }
+
+        }
+    }
+
+	/*for _, logRow := range logs { //each user
 		switch Push(logRow.RoomLogTypeId) {
 		case Push_NEW_DIRECT_MESSAGE:
 			if v, ok := pushView_newDirectMessage(logRow); ok {
@@ -65,7 +96,7 @@ func PushView_directLogsTo_PB_ChangesHolderView(meId int, logs []*x.DirectLog) *
 			}
 
 		}
-	}
+	}*/
 
 	if len(usersToLoad) > 0 {
 		res.Users = pushView_userView(meId, usersToLoad)

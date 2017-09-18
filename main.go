@@ -24,12 +24,21 @@ import (
 
 	"github.com/dimfeld/httptreemux"
 	"github.com/mediocregopher/radix.v2/pool"
+    "time"
 )
 
 var redisPool *pool.Pool
 
 func main() {
-	print("Try To Start The App\n")
+
+	defer func() {
+		err := recover()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}()
+
+	fmt.Println("Try To Start The App \n", time.Now().Second())
 	startApp()
 
 	/*go func() {
@@ -46,13 +55,27 @@ func main() {
 	}()*/
 
 	go func() {
+        defer func() {
+            err := recover()
+            if err != nil {
+                fmt.Println(err)
+            }
+        }()
 		log.Println(http.ListenAndServe("localhost:8080", nil))
 	}()
 
 	go func() { //for gom
-		log.Println(http.ListenAndServe("localhost:6060", nil))
+        defer func() {
+            err := recover()
+            if err != nil {
+                fmt.Println(err)
+            }
+        }()
+		log.Println(http.ListenAndServe("localhost:6061", nil))
 	}()
-	http.ListenAndServe(":5000", nil)
+
+	err :=http.ListenAndServe(":5000", nil)
+	helper.NoErr(err)
 
 	//http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
 	//runtime.MemProfileRecord{}.
@@ -94,7 +117,7 @@ func startApp() {
 
 }
 
-func redisInit() {
+func redisInit1() {
 	var err error
 	redisPool, err = pool.New("tcp", "localhost:6379", 10)
 	if err != nil {
@@ -234,10 +257,9 @@ func registerRoutes() *httptreemux.TreeMux {
 		http.Handle("/i/mem_user2", actionToFunc(ctrl.DebugMemUser_ctrl2))
 		http.HandleFunc("/i/java", DBStructsTojava2)
 
-        http.HandleFunc("/i/push", actionToFunc(ctrl.PushViewAction))
+		http.HandleFunc("/i/push", actionToFunc(ctrl.PushViewAction))
 
-
-        http.HandleFunc("/f/activity", actionToFunc(ctrl.InsertActivity))
+		http.HandleFunc("/f/activity", actionToFunc(ctrl.InsertActivity))
 
 		////////////// New Facts from v0.4 /////////////////
 		http.Handle("/fact/follow", actioner(fact.FactFollow))

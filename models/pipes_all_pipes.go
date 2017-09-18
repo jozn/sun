@@ -6,10 +6,7 @@ import (
 
 	"ms/sun/models/x"
 
-	"fmt"
 	"github.com/gorilla/websocket"
-	"ms/sun/base"
-	"time"
 )
 
 //todo change UserDevicePipe => *UserDevicePipe
@@ -124,7 +121,7 @@ func (m *pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 
 	m.AddUserPipe(UserId, pipe)
 
-	go func() {
+	/*go func() {
 		//    for {
 		time.Sleep(time.Second * 5)
 		fmt.Println("sendin pushes")
@@ -150,7 +147,7 @@ func (m *pipesMap) ServeNewHttpWsForUser(UserId int, ws *websocket.Conn) {
 				AllPipesMap.SendToUser(UserId, cmd)
 			}
 		}
-	}()
+	}()*/
 
 	/*flusher_flushPushMsgs(UserId)
 	flusher_flushPushEvents(UserId)

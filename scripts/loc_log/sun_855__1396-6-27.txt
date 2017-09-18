@@ -3,15 +3,15 @@
 classified 140 filesDuplicate file check 140 files (112 known unique)Unique:      100 files                                               140 unique files.                              
 Counting:  100      42 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.39 s (274.0 files/s, 24861.0 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.37 s (294.7 files/s, 26873.3 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Go                              97           1443            847           6233
+Go                              97           1452            928           6191
 Protocol Buffers                10            219            181            866
 Bourne Shell                     1              1              1             10
 -------------------------------------------------------------------------------
-SUM:                           108           1663           1029           7109
+SUM:                           108           1672           1110           7067
 -------------------------------------------------------------------------------
 =================================== End Sun ===================================
 
@@ -22,7 +22,7 @@ SUM:                           108           1663           1029           7109
 classified 477 filesDuplicate file check 477 files (456 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                          Unique:      400 files                                               477 unique files.                              
 Counting:  100Counting:  200Counting:  300Counting:  400     126 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=2.22 s (211.4 files/s, 27408.4 lines/s)
+http://cloc.sourceforge.net v 1.64  T=1.54 s (305.9 files/s, 39668.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ SUM:                           470           9135           9353          42455
 classified 359 filesDuplicate file check 359 files (343 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                               359 unique files.                              
 Counting:  100Counting:  200Counting:  300      98 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=1.80 s (195.7 files/s, 23428.6 lines/s)
+http://cloc.sourceforge.net v 1.64  T=1.00 s (350.3 files/s, 41931.7 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ SUM:                           352           7173           6165          28798
 classified 30 files      30 unique files.                              
       14 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.11 s (217.4 files/s, 20115.8 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.11 s (210.9 files/s, 19513.9 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------

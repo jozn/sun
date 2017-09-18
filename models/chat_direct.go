@@ -83,18 +83,18 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 	Chat_IncermentForNewMessage(s.PeerChat)
 
 	d2mMe := x.DirectToMessage{
-		Id:         helper.NextRowsSeqId(),
-		ChatId:     s.MeChat.ChatId,
-		MessageId:  msg.MessageId,
-		Seq:        s.MeChat.CurrentSeq,
+		Id:           helper.NextRowsSeqId(),
+		ChatId:       s.MeChat.ChatId,
+		MessageId:    msg.MessageId,
+		Seq:          s.MeChat.CurrentSeq,
 		SourceEnumId: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
 	}
 
 	d2mPeer := x.DirectToMessage{
-		Id:         helper.NextRowsSeqId(),
-		ChatId:     s.PeerChat.ChatId,
-		MessageId:  msg.MessageId,
-		Seq:        s.PeerChat.CurrentSeq,
+		Id:           helper.NextRowsSeqId(),
+		ChatId:       s.PeerChat.ChatId,
+		MessageId:    msg.MessageId,
+		Seq:          s.PeerChat.CurrentSeq,
 		SourceEnumId: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
 	}
 
@@ -118,7 +118,7 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		MessageId:     msg.MessageId,
 		ChatId:        s.PeerChat.ChatId,
 		PeerUserId:    s.MeChat.UserId,
-		RoomLogTypeId: int(x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE),
+		RoomLogTypeId: int(Push_NEW_DIRECT_MESSAGE), //x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE),
 		FromSeq:       -1,
 		ToSeq:         -1,
 		ExtraPB:       []byte{},
@@ -132,7 +132,7 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		MessageId:     msg.MessageId,
 		ChatId:        s.MeChat.ChatId,
 		PeerUserId:    s.PeerChat.UserId,
-		RoomLogTypeId: int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
+		RoomLogTypeId: int(Push_MESSAGE_RECIVED_TO_SERVER), //int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
 		FromSeq:       -1,
 		ToSeq:         -1,
 		ExtraPB:       []byte{},
