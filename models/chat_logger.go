@@ -43,6 +43,7 @@ func init() {
 
 func (m *chatUpdater) StartLoops() {
 	go m.loopHereDirect()
+	go m.loopDirectToUser()
 }
 
 func (m *chatUpdater) loopHereDirect() {
@@ -94,7 +95,7 @@ func (m *chatUpdater) loopDirectToUser() {
 
 	ticker := time.NewTicker(10 * time.Millisecond)
 
-    //todo add fetching from database every 10ms and push it to x.StoredDirect
+	//todo add fetching from database every 10ms and push it to x.StoredDirect
 	for {
 		select {
 		case m := <-m.StoredDirect:
@@ -119,26 +120,35 @@ func chatLogger_sendToUsersUpdates(logs []x.DirectLog) {
 		return
 	}
 
-	mp := make(map[int][]x.DirectLog, len(logs))
+	mp := make(map[int][]*x.DirectLog, len(logs))
 	msgIds := make([]int, 0, len(logs))
 	for _, l := range logs {
-		mp[l.ToUserId] = append(mp[l.ToUserId], l)
+		mp[l.ToUserId] = append(mp[l.ToUserId], &l)
 		if l.MessageId > 0 {
 			msgIds = append(msgIds, l.MessageId)
 		}
 	}
 
 	x.Store.PreLoadDirectMessageByMessageIds(msgIds)
-	for uid, logs := range mp { //each user
-		if AllPipesMap.IsPipeOpen(uid) && len(logs) > 0 {
-			rowsView := directLogsToView(logs)
-			push := &x.PB_PushDirectLogViewsMany{Rows: rowsView}
-			cmd := NewPB_CommandToClient_WithData("PB_PushDirectLogsMany", push)
-			AllPipesMap.SendToUser(uid, cmd)
+	for UserId, logs := range mp { //each user
+		if AllPipesMap.IsPipeOpen(UserId) && len(logs) > 0 {
+			res := PushView_directLogsTo_PB_ChangesHolderView(UserId, logs)
+			cmd := NewPB_CommandToClient_WithData(PB_PushHolderView, res)
+			AllPipesMap.SendToUser(UserId, cmd)
 		}
 	}
+
+	/*for UserId, logs := range mp { //each user
+	    if AllPipesMap.IsPipeOpen(UserId) && len(logs) > 0 {
+	        rowsView := directLogsToView(logs)
+	        push := &x.PB_PushDirectLogViewsMany{Rows: rowsView}
+	        cmd := NewPB_CommandToClient_WithData("PB_PushDirectLogsMany", push)
+	        AllPipesMap.SendToUser(UserId, cmd)
+	    }
+	}*/
 }
 
+///////////// all below deprecated ///////////////
 func directLogsToView(logs []x.DirectLog) (res []*x.PB_DirectLogView) {
 	for _, log := range logs { //each user
 		res = append(res, directLogToView(log))

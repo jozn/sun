@@ -12,7 +12,10 @@ func UsersToRoomKey32(me, peer int32) string {
 }
 
 func UsersToRoomKey(me int, peer int) string {
-	return fmt.Sprintf("%d_%d", me, peer)
+	if me > peer {
+		me, peer = peer, me
+	}
+	return fmt.Sprintf("d%d_%d", me, peer)
 }
 
 func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {
