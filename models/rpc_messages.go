@@ -1,6 +1,7 @@
 package models
 
 import (
+	"math/rand"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
@@ -34,6 +35,58 @@ func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_User
 	dm.AddMessage(msg)
 
 	res := &x.PB_MsgResponse_AddNewTextMessage{}
+	return res, nil
+}
+
+func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (*x.PB_MsgResponse_AddNewMessage, error) {
+
+	pid := int(i.PeerId)
+	msg := &x.DirectMessage{
+		MessageId:            helper.NextRowsSeqId(),
+		RoomKey:              UsersToRoomKey(p.GetUserId(), int(i.GetPeerId())),
+		UserId:               p.GetUserId(),
+		MessageFileId:        0,
+		MessageTypeEnumId:    int(x.RoomMessageTypeEnum_TEXT),
+		Text:                 i.Text,
+		Time:                 int(i.Time),
+		PeerReceivedTime:     0,
+		PeerSeenTime:         0,
+		DeliviryStatusEnumId: int(x.RoomMessageDeliviryStatusEnum_SENT),
+	}
+
+	if i.MessageView != nil && i.MessageView.File != nil {
+		f := i.MessageView.File
+		igPb := &x.MessageFile{
+			MessageFileId:   (helper.NextRowsSeqId()),
+			OriginalUserId: p.GetUserId(),
+			Name:            f.Name,
+			Size:            int(f.Size),
+			FileTypeEnumId:  1,
+			Width:           int(f.Width),
+			Height:          int(f.Height),
+			Duration:        0,
+			Extension:       ".jpg",
+			HashMd5:         helper.MD5BytesToString(i.Blob),
+			HashAccess:      int(rand.Int63n(9e12)),
+			CreatedSe:       int(helper.TimeNow()),
+			ServerSrc:       "",
+			ServerPath:      "",
+			ServerThumbPath: f.LocalSrc,
+			BucketId:        "",
+			ServerId:        0,
+			CanDel:          0,
+		}
+
+		err := igPb.Save(base.DB)
+		helper.NoErr(err)
+		msg.MessageFileId = igPb.MessageFileId
+		msg.MessageTypeEnumId = int(x.RoomMessageTypeEnum_IMAGE_TEXT)
+	}
+
+	dm := NewDirectMessagingByUsers(p.GetUserId(), pid)
+	dm.AddMessage(msg)
+
+	res := &x.PB_MsgResponse_AddNewMessage{}
 	return res, nil
 }
 

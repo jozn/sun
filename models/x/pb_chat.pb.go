@@ -65,6 +65,8 @@ It has these top-level messages:
 	PB_UserResponse_CheckUserName2
 	PB_MsgParam_AddNewTextMessage
 	PB_MsgResponse_AddNewTextMessage
+	PB_MsgParam_AddNewMessage
+	PB_MsgResponse_AddNewMessage
 	PB_MsgParam_SetRoomActionDoing
 	PB_MsgResponse_SetRoomActionDoing
 	PB_MsgParam_GetMessagesByIds

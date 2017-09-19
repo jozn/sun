@@ -59,6 +59,7 @@ type RPC_Auth interface {
 
 type RPC_Msg interface {
 	AddNewTextMessage(i *PB_MsgParam_AddNewTextMessage, p RPC_UserParam) (*PB_MsgResponse_AddNewTextMessage, error)
+	AddNewMessage(i *PB_MsgParam_AddNewMessage, p RPC_UserParam) (*PB_MsgResponse_AddNewMessage, error)
 	SetRoomActionDoing(i *PB_MsgParam_SetRoomActionDoing, p RPC_UserParam) (*PB_MsgResponse_SetRoomActionDoing, error)
 	GetMessagesByIds(i *PB_MsgParam_GetMessagesByIds, p RPC_UserParam) (*PB_MsgResponse_GetMessagesByIds, error)
 	GetMessagesHistory(i *PB_MsgParam_GetMessagesHistory, p RPC_UserParam) (*PB_MsgResponse_GetMessagesHistory, error)
@@ -308,6 +309,19 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 				res, err := rpc.AddNewTextMessage(load, params)
 				if err == nil {
 					RPC_ResponseHandler.HandleOfflineResult(res, "PB_MsgResponse_AddNewTextMessage", cmd, params)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
+				}
+			} else {
+				RPC_ResponseHandler.HandelError(err)
+			}
+		case "AddNewMessage": //each pb_service_method
+			load := &PB_MsgParam_AddNewMessage{}
+			err := proto.Unmarshal(cmd.Data, load)
+			if err == nil {
+				res, err := rpc.AddNewMessage(load, params)
+				if err == nil {
+					RPC_ResponseHandler.HandleOfflineResult(res, "PB_MsgResponse_AddNewMessage", cmd, params)
 				} else {
 					RPC_ResponseHandler.HandelError(err)
 				}
@@ -624,6 +638,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 
 
  RPC_Msg.AddNewTextMessage
+ RPC_Msg.AddNewMessage
  RPC_Msg.SetRoomActionDoing
  RPC_Msg.GetMessagesByIds
  RPC_Msg.GetMessagesHistory

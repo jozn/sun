@@ -1410,6 +1410,68 @@ public class PBFlatTypes {
 	PB_MsgResponse_AddNewTextMessage t = new PB_MsgResponse_AddNewTextMessage();
 	*/
 
+	public class PB_MsgParam_AddNewMessage {
+	   public String Text;
+	   public int PeerId;
+	   public int Time;
+	   public long ReplyToMessageId;
+	   public PB_MessageForwardedFrom Forward;
+	   public RoomMessageTypeEnum RoomMessageType;
+	   public byte[] Blob;
+	   public PB_MessageView MessageView;
+	}
+	/*
+	folding
+	PBFlatTypes.PB_MsgParam_AddNewMessage t = new PBFlatTypes.PB_MsgParam_AddNewMessage();
+    t.setText();
+    t.setPeerId();
+    t.setTime();
+    t.setReplyToMessageId();
+    t.setForward();
+    t.setRoomMessageType();
+    t.setBlob();
+    t.setMessageView();
+	*/
+
+	/*
+	PBFlatTypes.PB_MsgParam_AddNewMessage t = new PBFlatTypes.PB_MsgParam_AddNewMessage();
+	t.Text = ;
+	t.PeerId = ;
+	t.Time = ;
+	t.ReplyToMessageId = ;
+	t.Forward = ;
+	t.RoomMessageType = ;
+	t.Blob = ;
+	t.MessageView = ;
+	*/
+
+	/*
+	PB_MsgParam_AddNewMessage t = new PB_MsgParam_AddNewMessage();
+	t.Text = m.getText() ;
+	t.PeerId = m.getPeerId() ;
+	t.Time = m.getTime() ;
+	t.ReplyToMessageId = m.getReplyToMessageId() ;
+	t.Forward = m.getForward() ;
+	t.RoomMessageType = m.getRoomMessageType() ;
+	t.Blob = m.getBlob() ;
+	t.MessageView = m.getMessageView() ;
+	*/
+
+	public class PB_MsgResponse_AddNewMessage {
+	}
+	/*
+	folding
+	PBFlatTypes.PB_MsgResponse_AddNewMessage t = new PBFlatTypes.PB_MsgResponse_AddNewMessage();
+	*/
+
+	/*
+	PBFlatTypes.PB_MsgResponse_AddNewMessage t = new PBFlatTypes.PB_MsgResponse_AddNewMessage();
+	*/
+
+	/*
+	PB_MsgResponse_AddNewMessage t = new PB_MsgResponse_AddNewMessage();
+	*/
+
 	public class PB_MsgParam_SetRoomActionDoing {
 	   public long GroupId;
 	   public String DirectRoomKey;

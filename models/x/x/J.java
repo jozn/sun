@@ -179,6 +179,7 @@ public class J {
 
 	public static class MessageFile {
 		public Integer MessageFileId;
+		public Integer OriginalUserId;
 		public String Name;
 		public Integer Size;
 		public Integer FileTypeEnumId;

@@ -2,11 +2,15 @@ package ctrl
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"math/rand"
 	"ms/sun/base"
+	"ms/sun/fact"
 	"ms/sun/helper"
 	"ms/sun/models"
 	"ms/sun/models/x"
+	"os"
 	"sync/atomic"
 	"time"
 )
@@ -16,11 +20,11 @@ var Cnt3 = int64(0)
 type userParamSample int
 
 func (m userParamSample) GetUserId() int {
-    return int(m)
+	return int(m)
 }
 
 func (m userParamSample) IsUser() bool {
-   return true
+	return true
 }
 
 func SendSampleMesgNew(a *base.Action) base.AppErr {
@@ -32,7 +36,7 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 	img := a.GetParamInt("img", -1)
 	emoj := a.GetParamInt("emoji", -1)
 
-    _ = img
+	_ = img
 	emoji := false
 	if emoj > 0 {
 		emoji = true
@@ -59,7 +63,7 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				txt = fmt.Sprintf("id: %d ", Cnt2) + txt
 			}
 
-            fromUserId := fromUserIdDef
+			fromUserId := fromUserIdDef
 			if fromUserIdDef < 1 {
 				fromUserId = rand.Intn(82) + 1
 			}
@@ -68,48 +72,100 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				continue
 			}
 
-            paramAdd := &x.PB_MsgParam_AddNewTextMessage{
-                Text:  txt ,
-                PeerId:  int32(toUserId) ,
-                Time:  int32(helper.TimeNow()) ,
-                ReplyToMessageId:  0 ,
-            }
+			if img < 1 { //just text
+				paramAdd := &x.PB_MsgParam_AddNewTextMessage{
+					Text:             txt,
+					PeerId:           int32(toUserId),
+					Time:             int32(helper.TimeNow()),
+					ReplyToMessageId: 0,
+				}
 
-            uParam := userParamSample(fromUserId)
-            models.RpcAll.AddNewTextMessage(paramAdd,&uParam)
+				uParam := userParamSample(fromUserId)
+				models.RpcAll.AddNewTextMessage(paramAdd, &uParam)
+			}
 
-            /*if img > 0 {
-                imgRnd, w, h := fact.RandImage()
-                igFile, err := os.Open(imgRnd)
-                if err != nil {
-                    log.Fatal(err)
-                }
-                st, _ := igFile.Stat()
-                st.Size()
+			if img > 0 {
+				imgRnd, w, h := fact.RandImage()
+				igFile, err := os.Open(imgRnd)
+				if err != nil {
+					log.Fatal(err)
+				}
+				st, _ := igFile.Stat()
+				st.Size()
 
-                bs, _ := ioutil.ReadAll(igFile)
-                bs64, _ := helper.FromBase64ToBin(thumb64)
+				bs, _ := ioutil.ReadAll(igFile)
+				//bs64, _ := helper.FromBase64ToBin(thumb64)
 
-                igPb := &x.PB_MsgFile{
-                    Name:      st.Name(),
-                    Size:      int64(st.Size()),
-                    FileType:  models.MESSAGE_IMAGE,
-                    MimeType:  "image/jpeg",
-                    Width:     int32(w),
-                    Height:    int32(h),
-                    Duration:  int32(0),
-                    Extension: ".jpg",
-                    ThumbData: bs64,
-                    Data:      bs,
-                    ServerSrc: "", //must set with hand
 
-                }
-				msg.File = igPb
-				msg.MessageTypeId = models.MESSAGE_IMAGE
-			}*/
+				igPb := &x.PB_MessageFileView{
+					MessageFileId:   int64(helper.NextRowsSeqId()),
+					Name:            imgRnd,
+					Size:            int32(st.Size()),
+					FileTypeEnumId:  1,
+					Width:           int32(w),
+					Height:          int32(h),
+					Duration:        0,
+					Extension:       ".jpg",
+					HashMd5:         helper.MD5BytesToString(bs),
+					HashAccess:      int64(rand.Int63n(9e12)),
+					CreatedSe:       int32(helper.TimeNow()),
+					ServerSrc:       "",
+					ServerPath:      "",
+					ServerThumbPath: "",
+					BucketId:        "",
+					ServerId:        0,
+					CanDel:          0,
+				}
+
+				m := &x.PB_MessageView{
+					MessageFileId: igPb.MessageFileId,
+					File:          igPb,
+				}
+
+				paramAdd := &x.PB_MsgParam_AddNewMessage{
+					Text:             txt,
+					PeerId:           int32(toUserId),
+					Time:             int32(helper.TimeNow()),
+					ReplyToMessageId: 0,
+					Blob:             bs,
+					MessageView:      m,
+				}
+
+				uParam := userParamSample(fromUserId)
+				models.RpcAll.AddNewMessage(paramAdd, &uParam)
+			}
+
+			/*if img > 0 {
+			                imgRnd, w, h := fact.RandImage()
+			                igFile, err := os.Open(imgRnd)
+			                if err != nil {
+			                    log.Fatal(err)
+			                }
+			                st, _ := igFile.Stat()
+			                st.Size()
+
+			                bs, _ := ioutil.ReadAll(igFile)
+			                bs64, _ := helper.FromBase64ToBin(thumb64)
+
+			                igPb := &x.PB_MsgFile{
+			                    Name:      st.Name(),
+			                    Size:      int64(st.Size()),
+			                    FileType:  models.MESSAGE_IMAGE,
+			                    MimeType:  "image/jpeg",
+			                    Width:     int32(w),
+			                    Height:    int32(h),
+			                    Duration:  int32(0),
+			                    Extension: ".jpg",
+			                    ThumbData: bs64,
+			                    Data:      bs,
+			                    ServerSrc: "", //must set with hand
+
+			                }
+							msg.File = igPb
+							msg.MessageTypeId = models.MESSAGE_IMAGE
+						}*/
 
 			atomic.AddInt64(&Cnt3, 1)
-
 
 			time.Sleep(time.Millisecond * time.Duration(delay))
 		}

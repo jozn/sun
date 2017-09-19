@@ -1574,6 +1574,71 @@ func (m *PB_MsgResponse_AddNewTextMessage_Flat) ToPB() *PB_MsgResponse_AddNewTex
 //folding
 var PB_MsgResponse_AddNewTextMessage__FOlD = &PB_MsgResponse_AddNewTextMessage{}
 
+type PB_MsgParam_AddNewMessage_Flat struct {
+	Text             string
+	PeerId           int
+	Time             int
+	ReplyToMessageId int
+	Forward          PB_MessageForwardedFrom
+	RoomMessageType  RoomMessageTypeEnum
+	Blob             []byte
+	MessageView      PB_MessageView
+}
+
+//ToPB
+func (m *PB_MsgParam_AddNewMessage) ToFlat() *PB_MsgParam_AddNewMessage_Flat {
+	r := &PB_MsgParam_AddNewMessage_Flat{
+		Text:             m.Text,
+		PeerId:           int(m.PeerId),
+		Time:             int(m.Time),
+		ReplyToMessageId: int(m.ReplyToMessageId),
+
+		Blob: []byte(m.Blob),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_MsgParam_AddNewMessage_Flat) ToPB() *PB_MsgParam_AddNewMessage {
+	r := &PB_MsgParam_AddNewMessage{
+		Text:             m.Text,
+		PeerId:           int32(m.PeerId),
+		Time:             int32(m.Time),
+		ReplyToMessageId: int64(m.ReplyToMessageId),
+
+		Blob: m.Blob,
+	}
+	return r
+}
+
+//folding
+var PB_MsgParam_AddNewMessage__FOlD = &PB_MsgParam_AddNewMessage{
+	Text:             "",
+	PeerId:           0,
+	Time:             0,
+	ReplyToMessageId: 0,
+
+	Blob: []byte{},
+}
+
+type PB_MsgResponse_AddNewMessage_Flat struct {
+}
+
+//ToPB
+func (m *PB_MsgResponse_AddNewMessage) ToFlat() *PB_MsgResponse_AddNewMessage_Flat {
+	r := &PB_MsgResponse_AddNewMessage_Flat{}
+	return r
+}
+
+//ToPB
+func (m *PB_MsgResponse_AddNewMessage_Flat) ToPB() *PB_MsgResponse_AddNewMessage {
+	r := &PB_MsgResponse_AddNewMessage{}
+	return r
+}
+
+//folding
+var PB_MsgResponse_AddNewMessage__FOlD = &PB_MsgResponse_AddNewMessage{}
+
 type PB_MsgParam_SetRoomActionDoing_Flat struct {
 	GroupId       int
 	DirectRoomKey string
@@ -3962,6 +4027,26 @@ r := &PB_MsgResponse_AddNewTextMessage_Flat{
 return r
 }
 
+func(m *PB_MsgParam_AddNewMessage)ToFlat() *PB_MsgParam_AddNewMessage_Flat {
+r := &PB_MsgParam_AddNewMessage_Flat{
+    Text:  m.Text ,
+    PeerId:  int(m.PeerId) ,
+    Time:  int(m.Time) ,
+    ReplyToMessageId:  int(m.ReplyToMessageId) ,
+
+
+    Blob:  []byte(m.Blob) ,
+
+}
+return r
+}
+
+func(m *PB_MsgResponse_AddNewMessage)ToFlat() *PB_MsgResponse_AddNewMessage_Flat {
+r := &PB_MsgResponse_AddNewMessage_Flat{
+}
+return r
+}
+
 func(m *PB_MsgParam_SetRoomActionDoing)ToFlat() *PB_MsgParam_SetRoomActionDoing_Flat {
 r := &PB_MsgParam_SetRoomActionDoing_Flat{
     GroupId:  int(m.GroupId) ,
@@ -4990,6 +5075,26 @@ r := &PB_MsgResponse_AddNewTextMessage{
 return r
 }
 
+func(m *PB_MsgParam_AddNewMessage_Flat)ToPB() *PB_MsgParam_AddNewMessage {
+r := &PB_MsgParam_AddNewMessage{
+    Text:  m.Text ,
+    PeerId:  int32(m.PeerId) ,
+    Time:  int32(m.Time) ,
+    ReplyToMessageId:  int64(m.ReplyToMessageId) ,
+
+
+    Blob:  m.Blob ,
+
+}
+return r
+}
+
+func(m *PB_MsgResponse_AddNewMessage_Flat)ToPB() *PB_MsgResponse_AddNewMessage {
+r := &PB_MsgResponse_AddNewMessage{
+}
+return r
+}
+
 func(m *PB_MsgParam_SetRoomActionDoing_Flat)ToPB() *PB_MsgParam_SetRoomActionDoing {
 r := &PB_MsgParam_SetRoomActionDoing{
     GroupId:  int64(m.GroupId) ,
@@ -5919,6 +6024,22 @@ var PB_MsgParam_AddNewTextMessage__FOlD = &PB_MsgParam_AddNewTextMessage{
 
 
 var PB_MsgResponse_AddNewTextMessage__FOlD = &PB_MsgResponse_AddNewTextMessage{
+}
+
+
+var PB_MsgParam_AddNewMessage__FOlD = &PB_MsgParam_AddNewMessage{
+        Text:  "" ,
+        PeerId:  0 ,
+        Time:  0 ,
+        ReplyToMessageId:  0 ,
+
+
+        Blob:  []byte{} ,
+
+}
+
+
+var PB_MsgResponse_AddNewMessage__FOlD = &PB_MsgResponse_AddNewMessage{
 }
 
 

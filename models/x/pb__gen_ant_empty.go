@@ -64,6 +64,9 @@ var Empty_RPC_RPC_Msg_Sample = EmptyRPC_RPC_Msg(0)
 func (EmptyRPC_RPC_Msg) AddNewTextMessage(i *PB_MsgParam_AddNewTextMessage, p RPC_UserParam) (*PB_MsgResponse_AddNewTextMessage, error) {
 	return nil, nil
 }
+func (EmptyRPC_RPC_Msg) AddNewMessage(i *PB_MsgParam_AddNewMessage, p RPC_UserParam) (*PB_MsgResponse_AddNewMessage, error) {
+	return nil, nil
+}
 func (EmptyRPC_RPC_Msg) SetRoomActionDoing(i *PB_MsgParam_SetRoomActionDoing, p RPC_UserParam) (*PB_MsgResponse_SetRoomActionDoing, error) {
 	return nil, nil
 }

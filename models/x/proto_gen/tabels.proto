@@ -163,22 +163,23 @@ message PB_Media {
 }
 message PB_MessageFile {
     int64 MessageFileId = 1;
-    string Name = 3;
-    int32 Size = 5;
-    int32 FileTypeEnumId = 7;
-    int32 Width = 9;
-    int32 Height = 11;
-    int32 Duration = 13;
-    string Extension = 15;
-    string HashMd5 = 17;
-    int64 HashAccess = 19;
-    int32 CreatedSe = 21;
-    string ServerSrc = 23;
-    string ServerPath = 25;
-    string ServerThumbPath = 27;
-    string BucketId = 29;
-    int32 ServerId = 31;
-    int32 CanDel = 33;
+    int32 OriginalUserId = 3;
+    string Name = 5;
+    int32 Size = 7;
+    int32 FileTypeEnumId = 9;
+    int32 Width = 11;
+    int32 Height = 13;
+    int32 Duration = 15;
+    string Extension = 17;
+    string HashMd5 = 19;
+    int64 HashAccess = 21;
+    int32 CreatedSe = 23;
+    string ServerSrc = 25;
+    string ServerPath = 27;
+    string ServerThumbPath = 29;
+    string BucketId = 31;
+    int32 ServerId = 33;
+    int32 CanDel = 35;
 }
 message PB_Notification {
     int64 Id = 1;

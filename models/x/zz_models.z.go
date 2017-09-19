@@ -426,6 +426,7 @@ type Media struct {
 // MessageFile 'ms.message_file'.
 type MessageFile struct {
 	MessageFileId   int
+	OriginalUserId  int
 	Name            string
 	Size            int
 	FileTypeEnumId  int
@@ -449,6 +450,7 @@ type MessageFile struct {
 /*
 := &MessageFile {
 	MessageFileId: 0,
+	OriginalUserId: 0,
 	Name: "",
 	Size: 0,
 	FileTypeEnumId: 0,

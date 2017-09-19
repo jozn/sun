@@ -24,6 +24,23 @@ message PB_MsgResponse_AddNewTextMessage {
 
 }
 
+// AddNewMessage
+message PB_MsgParam_AddNewMessage {
+    string Text = 1;
+    int32 PeerId = 5;
+    int32 Time = 6;
+    int64 ReplyToMessageId = 10;
+    PB_MessageForwardedFrom Forward = 14;
+    RoomMessageTypeEnum RoomMessageType = 15;
+    bytes Blob = 17;
+
+    PB_MessageView MessageView = 19;
+}
+
+message PB_MsgResponse_AddNewMessage {
+
+}
+
 // SetRoomActionDoing
 message PB_MsgParam_SetRoomActionDoing {
     int64 GroupId = 12;
@@ -133,6 +150,7 @@ message PB_MsgResponse_BroadcastNewMessage {
 
 service RPC_Msg {
     rpc AddNewTextMessage (PB_MsgParam_AddNewTextMessage) returns (PB_MsgResponse_AddNewTextMessage);
+    rpc AddNewMessage (PB_MsgParam_AddNewMessage) returns (PB_MsgResponse_AddNewMessage);
     rpc SetRoomActionDoing (PB_MsgParam_SetRoomActionDoing) returns (PB_MsgResponse_SetRoomActionDoing);
     rpc GetMessagesByIds (PB_MsgParam_GetMessagesByIds) returns (PB_MsgResponse_GetMessagesByIds);
     rpc GetMessagesHistory (PB_MsgParam_GetMessagesHistory) returns (PB_MsgResponse_GetMessagesHistory);

@@ -1,4 +1,6 @@
+
 package x
+
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -475,6 +477,7 @@ func PBConvPB_Media_To_Media ( o *Media) *PB_Media {
 func PBConvPB__MessageFile_To_MessageFile( o *PB_MessageFile) *MessageFile {
      n := &MessageFile{
       MessageFileId: int ( o.MessageFileId ),
+      OriginalUserId: int ( o.OriginalUserId ),
       Name: string ( o.Name ),
       Size: int ( o.Size ),
       FileTypeEnumId: int ( o.FileTypeEnumId ),
@@ -498,6 +501,7 @@ func PBConvPB__MessageFile_To_MessageFile( o *PB_MessageFile) *MessageFile {
 func PBConvPB_MessageFile_To_MessageFile ( o *MessageFile) *PB_MessageFile {
      n := &PB_MessageFile{
       MessageFileId: int64 ( o.MessageFileId ),
+      OriginalUserId: int32 ( o.OriginalUserId ),
       Name: string ( o.Name ),
       Size: int32 ( o.Size ),
       FileTypeEnumId: int32 ( o.FileTypeEnumId ),
