@@ -12,7 +12,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// User represents a row from 'ms.user'.
+// UserView represents a row from 'ms.user'.
 
 // Manualy copy this to project
 type User__ struct {
@@ -54,17 +54,17 @@ type User__ struct {
 	_exists, _deleted bool
 }
 
-// Exists determines if the User exists in the database.
+// Exists determines if the UserView exists in the database.
 func (u *User) Exists() bool {
 	return u._exists
 }
 
-// Deleted provides information if the User has been deleted from the database.
+// Deleted provides information if the UserView has been deleted from the database.
 func (u *User) Deleted() bool {
 	return u._deleted
 }
 
-// Insert inserts the User to the database.
+// Insert inserts the UserView to the database.
 func (u *User) Insert(db XODB) error {
 	var err error
 
@@ -104,7 +104,7 @@ func (u *User) Insert(db XODB) error {
 	return nil
 }
 
-// Insert inserts the User to the database.
+// Insert inserts the UserView to the database.
 func (u *User) Replace(db XODB) error {
 	var err error
 
@@ -140,7 +140,7 @@ func (u *User) Replace(db XODB) error {
 	return nil
 }
 
-// Update updates the User in the database.
+// Update updates the UserView in the database.
 func (u *User) Update(db XODB) error {
 	var err error
 
@@ -169,7 +169,7 @@ func (u *User) Update(db XODB) error {
 	return err
 }
 
-// Save saves the User to the database.
+// Save saves the UserView to the database.
 func (u *User) Save(db XODB) error {
 	if u.Exists() {
 		return u.Update(db)
@@ -178,7 +178,7 @@ func (u *User) Save(db XODB) error {
 	return u.Replace(db)
 }
 
-// Delete deletes the User from the database.
+// Delete deletes the UserView from the database.
 func (u *User) Delete(db XODB) error {
 	var err error
 
@@ -9770,7 +9770,7 @@ func (d *__User_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  User ////////////////
+///////////////////////// Mass insert - replace for  UserView ////////////////
 func MassInsert_User(rows []User, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
@@ -9966,7 +9966,7 @@ func MassReplace_User(rows []User, db XODB) error {
 
 //
 
-// UserByEmail retrieves a row from 'ms.user' as a User.
+// UserByEmail retrieves a row from 'ms.user' as a UserView.
 //
 // Generated from index 'Email'.
 func UserByEmail(db XODB, email string) (*User, error) {
@@ -9995,7 +9995,7 @@ func UserByEmail(db XODB, email string) (*User, error) {
 	return &u, nil
 }
 
-// UsersByPhone retrieves a row from 'ms.user' as a User.
+// UsersByPhone retrieves a row from 'ms.user' as a UserView.
 //
 // Generated from index 'Phone'.
 func UsersByPhone(db XODB, phone string) ([]*User, error) {
@@ -10038,7 +10038,7 @@ func UsersByPhone(db XODB, phone string) ([]*User, error) {
 	return res, nil
 }
 
-// UsersBySessionUuid retrieves a row from 'ms.user' as a User.
+// UsersBySessionUuid retrieves a row from 'ms.user' as a UserView.
 //
 // Generated from index 'SessionUuid'.
 func UsersBySessionUuid(db XODB, sessionUuid string) ([]*User, error) {
@@ -10081,7 +10081,7 @@ func UsersBySessionUuid(db XODB, sessionUuid string) ([]*User, error) {
 	return res, nil
 }
 
-// UserByUserName retrieves a row from 'ms.user' as a User.
+// UserByUserName retrieves a row from 'ms.user' as a UserView.
 //
 // Generated from index 'UserName'.
 func UserByUserName(db XODB, userName string) (*User, error) {
@@ -10110,7 +10110,7 @@ func UserByUserName(db XODB, userName string) (*User, error) {
 	return &u, nil
 }
 
-// UserById retrieves a row from 'ms.user' as a User.
+// UserById retrieves a row from 'ms.user' as a UserView.
 //
 // Generated from index 'user_Id_pkey'.
 func UserById(db XODB, id int) (*User, error) {

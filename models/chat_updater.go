@@ -1,7 +1,9 @@
 package models
 
 import (
+	"ms/sun/config"
 	"ms/sun/models/x"
+    "fmt"
 )
 
 type Push int
@@ -24,50 +26,22 @@ func PushView_directLogsTo_PB_ChangesHolderView(meId int, logs []*x.DirectLog) *
 	usersToLoad := make(map[int]bool)
 	chatIdsToLoad := make(map[int]bool)
 	msgIdsToLoad := []int{}
+	msgFileIdsToLoad := []int{}
 	for _, log := range logs { //each user
 		if log.RoomLogTypeId == int(Push_NEW_DIRECT_MESSAGE) {
 			usersToLoad[log.PeerUserId] = true
 			chatIdsToLoad[log.ChatId] = true
 			msgIdsToLoad = append(msgIdsToLoad, log.MessageId)
-
+			if log.MessageFileId > 0 {
+				msgFileIdsToLoad = append(msgFileIdsToLoad, log.MessageFileId)
+			}
 		}
 	}
 
 	//
 	res := &x.PB_PushHolderView{}
 
-    for _, logRow := range logs { //each user
-        switch Push(logRow.RoomLogTypeId) {
-        case Push_NEW_DIRECT_MESSAGE:
-            if v, ok := pushView_newDirectMessage(logRow); ok {
-                res.NewMessages = append(res.NewMessages, v)
-            }
-
-            //metas
-        case Push_MESSAGE_RECIVED_TO_SERVER:
-            if v, ok := pushView_messageMeta(logRow); ok {
-                res.MessagesDelivierdToServer = append(res.MessagesDelivierdToServer, v)
-            }
-
-        case Push_MESSAGE_DELIVIERD_TO_PEER:
-            if v, ok := pushView_messageMeta(logRow); ok {
-                res.MessagesDelivierdToPeer = append(res.MessagesDelivierdToPeer, v)
-            }
-
-        case Push_MESSAGE_SEEN_BY_PEER:
-            if v, ok := pushView_messageMeta(logRow); ok {
-                res.MessagesSeenByPeer = append(res.MessagesSeenByPeer, v)
-            }
-
-        case Push_MESSAGE_DELETED_FROM_SERVER:
-            if v, ok := pushView_messageMeta(logRow); ok {
-                res.MessagesDeletedFromServer = append(res.MessagesDeletedFromServer, v)
-            }
-
-        }
-    }
-
-	/*for _, logRow := range logs { //each user
+	for _, logRow := range logs { //each user
 		switch Push(logRow.RoomLogTypeId) {
 		case Push_NEW_DIRECT_MESSAGE:
 			if v, ok := pushView_newDirectMessage(logRow); ok {
@@ -96,7 +70,7 @@ func PushView_directLogsTo_PB_ChangesHolderView(meId int, logs []*x.DirectLog) *
 			}
 
 		}
-	}*/
+	}
 
 	if len(usersToLoad) > 0 {
 		res.Users = pushView_userView(meId, usersToLoad)
@@ -114,6 +88,15 @@ func PushView_directLogsTo_PB_ChangesHolderView(meId int, logs []*x.DirectLog) *
 func pushView_newDirectMessage(log *x.DirectLog) (*x.PB_MessageView, bool) {
 	if directMsg, ok := x.Store.GetDirectMessageByMessageId(log.MessageId); ok {
 		v := PBConv_DirectMessage_to_PB_MessageView(directMsg, log.ChatId)
+		if log.MessageFileId > 0 {
+		    fmt.Println("log.MessageFileId ",log.MessageFileId)
+			msgFile, ok := x.Store.GetMessageFileByMessageFileId(log.MessageFileId)
+			if ok {
+				v.MessageFileView = PBConvPB_MessageFile_To_MessageFile(msgFile)
+				v.MessageFileView.ServerSrc = config.CDN_CHAT_MSG_UPLOAD_URL + v.MessageFileView.Name
+                fmt.Println("v.MessageFileView ",v.MessageFileView)
+            }
+		}
 		return v, true
 	}
 	return nil, false
@@ -177,7 +160,7 @@ func pushView_chatView(meId int, chatIds map[int]bool) (res []*x.PB_ChatView) {
 				CurrentSeq:           int32(chat.CurrentSeq),
 			}
 
-            chatView.User = view_getUserVIew(meId,chat.PeerUserId)
+			chatView.UserView = view_getUserVIew(meId, chat.PeerUserId)
 
 			res = append(res, chatView)
 		}

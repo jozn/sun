@@ -118,8 +118,8 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				}
 
 				m := &x.PB_MessageView{
-					MessageFileId: igPb.MessageFileId,
-					File:          igPb,
+					MessageFileId:   igPb.MessageFileId,
+					MessageFileView: igPb,
 				}
 
 				paramAdd := &x.PB_MsgParam_AddNewMessage{
@@ -161,7 +161,7 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 			                    ServerSrc: "", //must set with hand
 
 			                }
-							msg.File = igPb
+							msg.MessageFileView = igPb
 							msg.MessageTypeId = models.MESSAGE_IMAGE
 						}*/
 

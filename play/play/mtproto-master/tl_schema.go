@@ -931,7 +931,7 @@ type TL_auth_sentCode struct {
 
 type TL_auth_authorization struct {
 	expires int32
-	user    TL // User
+	user    TL // UserView
 }
 
 type TL_auth_exportedAuthorization struct {
@@ -989,7 +989,7 @@ type TL_wallPaper struct {
 }
 
 type TL_userFull struct {
-	user            TL // User
+	user            TL // UserView
 	link            TL // contacts_Link
 	profile_photo   TL // Photo
 	notify_settings TL // PeerNotifySettings
@@ -1051,7 +1051,7 @@ type TL_contacts_myLinkContact struct {
 type TL_contacts_link struct {
 	my_link      TL // contacts_MyLink
 	foreign_link TL // contacts_ForeignLink
-	user         TL // User
+	user         TL // UserView
 }
 
 type TL_contacts_contactsNotModified struct {
@@ -1059,36 +1059,36 @@ type TL_contacts_contactsNotModified struct {
 
 type TL_contacts_contacts struct {
 	contacts []TL // Contact
-	users    []TL // User
+	users    []TL // UserView
 }
 
 type TL_contacts_importedContacts struct {
 	imported       []TL // ImportedContact
 	retry_contacts []int64
-	users          []TL // User
+	users          []TL // UserView
 }
 
 type TL_contacts_blocked struct {
 	blocked []TL // ContactBlocked
-	users   []TL // User
+	users   []TL // UserView
 }
 
 type TL_contacts_blockedSlice struct {
 	count   int32
 	blocked []TL // ContactBlocked
-	users   []TL // User
+	users   []TL // UserView
 }
 
 type TL_contacts_suggested struct {
 	results []TL // ContactSuggested
-	users   []TL // User
+	users   []TL // UserView
 }
 
 type TL_messages_dialogs struct {
 	dialogs  []TL // Dialog
 	messages []TL // Message
 	chats    []TL // Chat
-	users    []TL // User
+	users    []TL // UserView
 }
 
 type TL_messages_dialogsSlice struct {
@@ -1096,20 +1096,20 @@ type TL_messages_dialogsSlice struct {
 	dialogs  []TL // Dialog
 	messages []TL // Message
 	chats    []TL // Chat
-	users    []TL // User
+	users    []TL // UserView
 }
 
 type TL_messages_messages struct {
 	messages []TL // Message
 	chats    []TL // Chat
-	users    []TL // User
+	users    []TL // UserView
 }
 
 type TL_messages_messagesSlice struct {
 	count    int32
 	messages []TL // Message
 	chats    []TL // Chat
-	users    []TL // User
+	users    []TL // UserView
 }
 
 type TL_messages_messageEmpty struct {
@@ -1118,7 +1118,7 @@ type TL_messages_messageEmpty struct {
 type TL_messages_statedMessages struct {
 	messages []TL // Message
 	chats    []TL // Chat
-	users    []TL // User
+	users    []TL // UserView
 	pts      int32
 	seq      int32
 }
@@ -1126,7 +1126,7 @@ type TL_messages_statedMessages struct {
 type TL_messages_statedMessage struct {
 	message TL   // Message
 	chats   []TL // Chat
-	users   []TL // User
+	users   []TL // UserView
 	pts     int32
 	seq     int32
 }
@@ -1140,13 +1140,13 @@ type TL_messages_sentMessage struct {
 
 type TL_messages_chats struct {
 	chats []TL // Chat
-	users []TL // User
+	users []TL // UserView
 }
 
 type TL_messages_chatFull struct {
 	full_chat TL   // ChatFull
 	chats     []TL // Chat
-	users     []TL // User
+	users     []TL // UserView
 }
 
 type TL_messages_affectedHistory struct {
@@ -1266,7 +1266,7 @@ type TL_updates_difference struct {
 	new_encrypted_messages []TL // EncryptedMessage
 	other_updates          []TL // Update
 	chats                  []TL // Chat
-	users                  []TL // User
+	users                  []TL // UserView
 	state                  TL   // updates_State
 }
 
@@ -1275,7 +1275,7 @@ type TL_updates_differenceSlice struct {
 	new_encrypted_messages []TL // EncryptedMessage
 	other_updates          []TL // Update
 	chats                  []TL // Chat
-	users                  []TL // User
+	users                  []TL // UserView
 	intermediate_state     TL   // updates_State
 }
 
@@ -1308,7 +1308,7 @@ type TL_updateShort struct {
 
 type TL_updatesCombined struct {
 	updates   []TL // Update
-	users     []TL // User
+	users     []TL // UserView
 	chats     []TL // Chat
 	date      int32
 	seq_start int32
@@ -1317,7 +1317,7 @@ type TL_updatesCombined struct {
 
 type TL_updates struct {
 	updates []TL // Update
-	users   []TL // User
+	users   []TL // UserView
 	chats   []TL // Chat
 	date    int32
 	seq     int32
@@ -1325,18 +1325,18 @@ type TL_updates struct {
 
 type TL_photos_photos struct {
 	photos []TL // Photo
-	users  []TL // User
+	users  []TL // UserView
 }
 
 type TL_photos_photosSlice struct {
 	count  int32
 	photos []TL // Photo
-	users  []TL // User
+	users  []TL // UserView
 }
 
 type TL_photos_photo struct {
 	photo TL   // Photo
-	users []TL // User
+	users []TL // UserView
 }
 
 type TL_upload_file struct {
@@ -1387,7 +1387,7 @@ type TL_help_inviteText struct {
 type TL_messages_statedMessagesLinks struct {
 	messages []TL // Message
 	chats    []TL // Chat
-	users    []TL // User
+	users    []TL // UserView
 	links    []TL // contacts_Link
 	pts      int32
 	seq      int32
@@ -1396,7 +1396,7 @@ type TL_messages_statedMessagesLinks struct {
 type TL_messages_statedMessageLink struct {
 	message TL   // Message
 	chats   []TL // Chat
-	users   []TL // User
+	users   []TL // UserView
 	links   []TL // contacts_Link
 	pts     int32
 	seq     int32
@@ -1458,7 +1458,7 @@ type TL_geoChatMessageService struct {
 type TL_geochats_statedMessage struct {
 	message TL   // GeoChatMessage
 	chats   []TL // Chat
-	users   []TL // User
+	users   []TL // UserView
 	seq     int32
 }
 
@@ -1466,20 +1466,20 @@ type TL_geochats_located struct {
 	results  []TL // ChatLocated
 	messages []TL // GeoChatMessage
 	chats    []TL // Chat
-	users    []TL // User
+	users    []TL // UserView
 }
 
 type TL_geochats_messages struct {
 	messages []TL // GeoChatMessage
 	chats    []TL // Chat
-	users    []TL // User
+	users    []TL // UserView
 }
 
 type TL_geochats_messagesSlice struct {
 	count    int32
 	messages []TL // GeoChatMessage
 	chats    []TL // Chat
-	users    []TL // User
+	users    []TL // UserView
 }
 
 type TL_messageActionGeoChatCreate struct {
@@ -1749,7 +1749,7 @@ type TL_document struct {
 
 type TL_help_support struct {
 	phone_number string
-	user         TL // User
+	user         TL // UserView
 }
 
 type TL_notifyPeer struct {
@@ -1818,7 +1818,7 @@ type TL_contactFound struct {
 
 type TL_contacts_found struct {
 	results []TL // ContactFound
-	users   []TL // User
+	users   []TL // UserView
 }
 
 type TL_updateServiceNotification struct {
@@ -1890,7 +1890,7 @@ type TL_privacyValueDisallowUsers struct {
 
 type TL_account_privacyRules struct {
 	rules []TL // PrivacyRule
-	users []TL // User
+	users []TL // UserView
 }
 
 type TL_accountDaysTTL struct {

@@ -46,7 +46,7 @@ message PB_ChatView {
     int32 LastSeqDelete = 23;
     int32 CurrentSeq = 25;
 
-    PB_UserView User = 100;
+    PB_UserView UserView = 100;
 
     //local
     int32 SharedMediaCount = 200;
@@ -76,9 +76,9 @@ message PB_MessageView {
     int32 RoomTypeEnumId = 31;
     bool IsByMe = 33;
 
-    bool RemoteId = 50;
+    int64 RemoteId = 50;
 
-    PB_MessageFileView File = 100;
+    PB_MessageFileView MessageFileView = 100;
 }
 
 // {realm} ,

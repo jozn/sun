@@ -49,7 +49,7 @@ func (m *mapMemoryStore_UserImpl) ReloadAll() {
 			m.MapSessionToId[u.SessionUuid] = u.Id
 		}
 	}
-	helper.DebugPrintln("Loaded User to models.MemoryStore_User counts: ", len(m.MapUserToData))
+	helper.DebugPrintln("Loaded UserView to models.MemoryStore_User counts: ", len(m.MapUserToData))
 }
 
 func (m mapMemoryStore_UserImpl) GetUser(UserId int) (x.User, bool) {

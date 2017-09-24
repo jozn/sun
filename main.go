@@ -24,7 +24,7 @@ import (
 
 	"github.com/dimfeld/httptreemux"
 	"github.com/mediocregopher/radix.v2/pool"
-    "time"
+	"time"
 )
 
 var redisPool *pool.Pool
@@ -55,26 +55,26 @@ func main() {
 	}()*/
 
 	go func() {
-        defer func() {
-            err := recover()
-            if err != nil {
-                fmt.Println(err)
-            }
-        }()
+		defer func() {
+			err := recover()
+			if err != nil {
+				fmt.Println(err)
+			}
+		}()
 		log.Println(http.ListenAndServe("localhost:8080", nil))
 	}()
 
 	go func() { //for gom
-        defer func() {
-            err := recover()
-            if err != nil {
-                fmt.Println(err)
-            }
-        }()
+		defer func() {
+			err := recover()
+			if err != nil {
+				fmt.Println(err)
+			}
+		}()
 		log.Println(http.ListenAndServe("localhost:6061", nil))
 	}()
 
-	err :=http.ListenAndServe(":5000", nil)
+	err := http.ListenAndServe(":5000", nil)
 	helper.NoErr(err)
 
 	//http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
@@ -99,9 +99,11 @@ func startApp() {
 	//registerCmdRouters()
 
 	http.HandleFunc("/public/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Http: ", r.URL.String())
 		http.ServeFile(w, r, r.URL.Path[1:])
 	})
 	http.HandleFunc("/upload/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Http: ", r.URL.String())
 		http.ServeFile(w, r, r.URL.Path[1:])
 	})
 

@@ -25,7 +25,7 @@ type Command struct {
 
 // Reads user input and returns Command pointer
 func (cli *TelegramCLI) readCommand() *Command {
-	fmt.Printf("\nUser input: ")
+	fmt.Printf("\nUserView input: ")
 	input, err := cli.reader.ReadString('\n')
 	if err != nil {
 		fmt.Println(err)
@@ -191,7 +191,7 @@ UpdateCycle:
 		select {
 		case <-cli.read:
 			command := cli.readCommand()
-			logger.Info("User input: ")
+			logger.Info("UserView input: ")
 			logger.LogStruct(*command)
 			err := cli.RunCommand(command)
 			if err != nil {

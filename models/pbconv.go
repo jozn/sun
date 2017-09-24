@@ -55,9 +55,58 @@ func PBConv_DirectMessage_to_PB_MessageView(m *x.DirectMessage, chatId int) *x.P
 		PeerSeenTime:         int32(m.PeerSeenTime),
 		DeliviryStatusEnumId: int32(m.DeliviryStatusEnumId),
 		ChatId:               int64(chatId), //int32(m.PeerUserId),
+		RemoteId:             int64(m.MessageId),
 	}
 
 	return r
+}
+
+/*func PBConv_PB_MessageFile_To_MessageFile( o *PB_MessageFile) *MessageFile {
+    n := &MessageFile{
+        MessageFileId: int ( o.MessageFileId ),
+        OriginalUserId: int ( o.OriginalUserId ),
+        Name: string ( o.Name ),
+        Size: int ( o.Size ),
+        FileTypeEnumId: int ( o.FileTypeEnumId ),
+        Width: int ( o.Width ),
+        Height: int ( o.Height ),
+        Duration: int ( o.Duration ),
+        Extension: string ( o.Extension ),
+        HashMd5: string ( o.HashMd5 ),
+        HashAccess: int ( o.HashAccess ),
+        CreatedSe: int ( o.CreatedSe ),
+        ServerSrc: string ( o.ServerSrc ),
+        ServerPath: string ( o.ServerPath ),
+        ServerThumbPath: string ( o.ServerThumbPath ),
+        BucketId: string ( o.BucketId ),
+        ServerId: int ( o.ServerId ),
+        CanDel: int ( o.CanDel ),
+    }
+    return n
+}*/
+
+func PBConvPB_MessageFile_To_MessageFile(o *x.MessageFile) *x.PB_MessageFileView {
+	n := &x.PB_MessageFileView{
+		MessageFileId:   int64(o.MessageFileId),
+		OriginalUserId:  int32(o.OriginalUserId),
+		Name:            string(o.Name),
+		Size:            int32(o.Size),
+		FileTypeEnumId:  int32(o.FileTypeEnumId),
+		Width:           int32(o.Width),
+		Height:          int32(o.Height),
+		Duration:        int32(o.Duration),
+		Extension:       string(o.Extension),
+		HashMd5:         string(o.HashMd5),
+		HashAccess:      int64(o.HashAccess),
+		CreatedSe:       int32(o.CreatedSe),
+		ServerSrc:       string(o.ServerSrc),
+		ServerPath:      string(o.ServerPath),
+		ServerThumbPath: string(o.ServerThumbPath),
+		BucketId:        string(o.BucketId),
+		ServerId:        int32(o.ServerId),
+		CanDel:          int32(o.CanDel),
+	}
+	return n
 }
 
 /*func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {

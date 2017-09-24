@@ -50,7 +50,7 @@ type TopTagsWithPostsView struct {
 
 ///////////// Others //////////
 type UserInlineView struct {
-	// User
+	// UserView
 	UserId    int
 	UserName  string
 	FullName  string

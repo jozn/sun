@@ -51,6 +51,7 @@ public class J {
 		public Integer Id;
 		public Integer ToUserId;
 		public Integer MessageId;
+		public Integer MessageFileId;
 		public Integer ChatId;
 		public Integer PeerUserId;
 		public Integer EventType;

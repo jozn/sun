@@ -72,7 +72,7 @@ type UserTable struct {
 	UserExtra
 }
 
-/// User functions
+/// UserView functions
 func (ub *UserBasic) GetFullName() string {
 	return ub.FirstName + " " + ub.LastName
 }

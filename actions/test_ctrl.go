@@ -31,7 +31,7 @@ func TestJson1(c *Action) AppErr {
 	u.Id = int(sint)
 	u.FullName = c.Req.Host
 	u.FirstName = c.Req.Method
-	//var us []User
+	//var us []UserView
 	var us []interface{}
 	helper.StructToFiledsRejects(u22)
 	n, m := helper.StructToFiledsRejects(&u)

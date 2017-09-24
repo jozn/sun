@@ -54,8 +54,8 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 		DeliviryStatusEnumId: int(x.RoomMessageDeliviryStatusEnum_SENT),
 	}
 
-	if i.MessageView != nil && i.MessageView.File != nil {
-		f := i.MessageView.File
+	if i.MessageView != nil && i.MessageView.MessageFileView != nil {
+		f := i.MessageView.MessageFileView
 		igPb := &x.MessageFile{
 			MessageFileId:   (helper.NextRowsSeqId()),
 			OriginalUserId: p.GetUserId(),

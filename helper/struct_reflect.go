@@ -70,7 +70,7 @@ func DeepFields(iface interface{}) (valeus []interface{}, fields []string) {
 
 /*
 example
-u := User{}
+u := UserView{}
 u.In = 5888
 u.Name = "asdasdasdasdسسس"
 u.fi =444
@@ -87,7 +87,7 @@ func StructToFiledsCollect(structPointer interface{}, collectFileds ...string) (
 
 /*
 example
-u := User{}
+u := UserView{}
 u.In = 5888
 u.Name = "asdasdasdasdسسس"
 u.fi =444

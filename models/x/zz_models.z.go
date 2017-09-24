@@ -116,6 +116,7 @@ type DirectLog struct {
 	Id            int
 	ToUserId      int
 	MessageId     int
+	MessageFileId int
 	ChatId        int
 	PeerUserId    int
 	EventType     int
@@ -134,6 +135,7 @@ type DirectLog struct {
 	Id: 0,
 	ToUserId: 0,
 	MessageId: 0,
+	MessageFileId: 0,
 	ChatId: 0,
 	PeerUserId: 0,
 	EventType: 0,

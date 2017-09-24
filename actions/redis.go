@@ -12,7 +12,7 @@ import (
 func RedisSavePlay(c *base.Action) base.AppErr {
 	p := store.GetRedisPool()
 	U := x.UserTable{}
-	key := "User:" + helper.RandString(1)
+	key := "UserView:" + helper.RandString(1)
 	con, _ := p.Get()
 	con.Cmd("set", key, helper.ToJson(U))
 
@@ -41,7 +41,7 @@ func __sorted_redis() {
 	//p := base.GetRedisPool()
 	//U := models.UserTable{}
 	//U.Id = rand.Intn(1000)
-	//key := "User:6"
+	//key := "UserView:6"
 	//con,_ := p.get()
 	//r := con.Cmd("zadd",key , U.Id ,helper.ToJson(U))
 	//fmt.Println("__sorted_redis  ",r.Err,U)

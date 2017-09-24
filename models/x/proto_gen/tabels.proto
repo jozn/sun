@@ -48,15 +48,16 @@ message PB_DirectLog {
     int64 Id = 1;
     int32 ToUserId = 3;
     int64 MessageId = 5;
-    int64 ChatId = 7;
-    int32 PeerUserId = 9;
-    int32 EventType = 11;
-    int32 RoomLogTypeId = 13;
-    int32 FromSeq = 15;
-    int32 ToSeq = 17;
-    ???? ExtraPB = 19;
-    string ExtraJson = 21;
-    int64 AtTimeMs = 23;
+    int64 MessageFileId = 7;
+    int64 ChatId = 9;
+    int32 PeerUserId = 11;
+    int32 EventType = 13;
+    int32 RoomLogTypeId = 15;
+    int32 FromSeq = 17;
+    int32 ToSeq = 19;
+    ???? ExtraPB = 21;
+    string ExtraJson = 23;
+    int64 AtTimeMs = 25;
 }
 message PB_DirectMessage {
     int64 MessageId = 1;

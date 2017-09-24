@@ -50,7 +50,7 @@ CREATE INDEX ON users_groups (group_id, user_id);
     permissionsPerGroup := 100
 
     for id := 0; id < numberOfUsers; id++ {
-        fmt.Println("User ", id)
+        fmt.Println("UserView ", id)
         name := fmt.Sprintf("user-%d", id)
         _, err := db.Exec("INSERT INTO users VALUES ($1, $2);", id, name)
         if err != nil {
@@ -78,7 +78,7 @@ CREATE INDEX ON users_groups (group_id, user_id);
 
     rid := 0
     for id := 0; id < permissionsPerUser; id++ {
-        fmt.Println("User Permissions ", id)
+        fmt.Println("UserView Permissions ", id)
         name := fmt.Sprintf("rid-user-%d", rid)
         _, err := db.Exec("INSERT INTO permissions VALUES ($1, $2);", id, name)
         if err != nil {

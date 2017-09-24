@@ -260,7 +260,7 @@ func BenchmarkStr(b *testing.B) {
 /*
 
 func BenchmarkJson1(b *testing.B) {
-	u := models.User{}
+	u := models.UserView{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		json.Marshal(u)
@@ -268,8 +268,8 @@ func BenchmarkJson1(b *testing.B) {
 }
 
 func BenchmarkJson2(b *testing.B) {
-	u := models.User{}
-	u2 := models.User{}
+	u := models.UserView{}
+	u2 := models.UserView{}
 	bits, _ := json.Marshal(u2)
 	u.FullName = string(bits)
 	b.ResetTimer()
@@ -279,8 +279,8 @@ func BenchmarkJson2(b *testing.B) {
 }
 
 func BenchmarkJson3(b *testing.B) {
-	u := models.User{}
-	u2 := models.User{}
+	u := models.UserView{}
+	u2 := models.UserView{}
 	bits, _ := json.Marshal(u2)
 	u.FullName = string(bits)
 	s := string(bits)

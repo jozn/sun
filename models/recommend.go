@@ -41,7 +41,7 @@ func Recommend_Job_TopPosts_Infinite() {
 	}
 }
 
-//////////////// User //////////////////
+//////////////// UserView //////////////////
 func Recommend_Scheduler_GenUserRecomendations(ForUserId int) {
 	m, ok := x.Store.UserMetaInfo_ByUserId(ForUserId)
 	if ok {

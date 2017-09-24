@@ -1,6 +1,4 @@
-
 package x
-
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -128,6 +126,7 @@ func PBConvPB__DirectLog_To_DirectLog( o *PB_DirectLog) *DirectLog {
       Id: int ( o.Id ),
       ToUserId: int ( o.ToUserId ),
       MessageId: int ( o.MessageId ),
+      MessageFileId: int ( o.MessageFileId ),
       ChatId: int ( o.ChatId ),
       PeerUserId: int ( o.PeerUserId ),
       EventType: int ( o.EventType ),
@@ -146,6 +145,7 @@ func PBConvPB_DirectLog_To_DirectLog ( o *DirectLog) *PB_DirectLog {
       Id: int64 ( o.Id ),
       ToUserId: int32 ( o.ToUserId ),
       MessageId: int64 ( o.MessageId ),
+      MessageFileId: int64 ( o.MessageFileId ),
       ChatId: int64 ( o.ChatId ),
       PeerUserId: int32 ( o.PeerUserId ),
       EventType: int32 ( o.EventType ),
@@ -1089,7 +1089,7 @@ func PBConvPB_TestChat_To_TestChat ( o *TestChat) *PB_TestChat {
 }
 */
 /*
-func PBConvPB__User_To_User( o *PB_User) *User {n := &User{}
+func PBConvPB__User_To_User( o *PB_User) *UserView {n := &UserView{}
    n.Id = int ( o.Id )
    n.UserName = string ( o.UserName )
    n.UserNameLower = string ( o.UserNameLower )
@@ -1126,7 +1126,7 @@ func PBConvPB__User_To_User( o *PB_User) *User {n := &User{}
     return n
 }
 
-func PBConvPB_User_To_User ( o *User) *PB_User {n := &PB_User{}
+func PBConvPB_User_To_User ( o *UserView) *PB_User {n := &PB_User{}
    n.Id = int32 ( o.Id )
    n.UserName = string ( o.UserName )
    n.UserNameLower = string ( o.UserNameLower )

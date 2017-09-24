@@ -92,7 +92,7 @@ func (e _viewImpl) GetUserInlineView(uid int) (UserInlineView, error) {
 		v.AvatarUrl = u.AvatarUrl
 		return v, nil
 	}
-	return UserInlineView{}, errors.New("User NOT Fund")
+	return UserInlineView{}, errors.New("UserView NOT Fund")
 }
 
 func (e _viewImpl) GetUserInlineWithMeView(meUId, OtherUId int) (*UserInlineWithMeView, error) {

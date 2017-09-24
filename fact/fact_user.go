@@ -72,10 +72,10 @@ func FactUpdateAboutMe(c *Action) {
 }
 
 func FactRealUser(c *Action) {
-	//q :=User{}
+	//q :=UserView{}
 
 	us := []x.User{
-	//User{
+	//UserView{
 	//	UserName: "AliAsgh",
 	//	FirstName: "علی اصضر",
 	//	LastName: "کریمی",
@@ -83,7 +83,7 @@ func FactRealUser(c *Action) {
 	//	Phone: "+989176506200",
 	//	AvatarUrl: "public/avatars/100.jpg",
 	//},
-	//User{
+	//UserView{
 	//	UserName: "abas",
 	//	FirstName: "فباس",
 	//	LastName: "کریمی",
@@ -91,7 +91,7 @@ func FactRealUser(c *Action) {
 	//	Phone: "+989178023320",
 	//	AvatarUrl: "public/avatars/101.jpg",
 	//},
-	//User{
+	//UserView{
 	//	UserName: "abas22",
 	//	FirstName: "علی الامردشتی",
 	//	LastName: "",
@@ -99,7 +99,7 @@ func FactRealUser(c *Action) {
 	//	Phone: "+989177819068",
 	//	AvatarUrl: "public/avatars/102.jpg",
 	//},
-	//User{
+	//UserView{
 	//	UserName: "ali_bagheri",
 	//	FirstName: "ali ",
 	//	LastName: "bagrinia",
@@ -107,7 +107,7 @@ func FactRealUser(c *Action) {
 	//	Phone: "+989176152801",
 	//	AvatarUrl: "public/avatars/103.jpg",
 	//},
-	//User{
+	//UserView{
 	//	UserName: "Alipoor",
 	//	FirstName: "خسین",
 	//	LastName: "Alipoor",
@@ -115,7 +115,7 @@ func FactRealUser(c *Action) {
 	//	Phone: "+989178783190",
 	//	AvatarUrl: "public/avatars/104.jpg",
 	//},
-	//User{
+	//UserView{
 	//	UserName: "Edris",
 	//	FirstName: "Edris",
 	//	LastName: " اعتماد",
@@ -123,7 +123,7 @@ func FactRealUser(c *Action) {
 	//	Phone: "+987823623335",
 	//	AvatarUrl: "public/avatars/105.jpg",
 	//},
-	//User{
+	//UserView{
 	//	UserName: "Hosin22",
 	//	FirstName: "حسین ",
 	//	LastName: "کریمی",
@@ -131,7 +131,7 @@ func FactRealUser(c *Action) {
 	//	Phone: "+989125472641",
 	//	AvatarUrl: "public/avatars/106.jpg",
 	//},
-	//User{
+	//UserView{
 	//	UserName: "Motahareh",
 	//	FirstName: "Mot",
 	//	LastName: "Moti",
@@ -139,7 +139,7 @@ func FactRealUser(c *Action) {
 	//	Phone: "+989361556536",
 	//	AvatarUrl: "public/avatars/107.jpg",
 	//},
-	//User{
+	//UserView{
 	//	UserName: "Aazam",
 	//	FirstName: "Azam",
 	//	LastName: "کریمی",
@@ -147,7 +147,7 @@ func FactRealUser(c *Action) {
 	//	Phone: "+989178541520",
 	//	AvatarUrl: "public/avatars/108.jpg",
 	//},
-	//User{
+	//UserView{
 	//	UserName: "KarimiJAVAd",
 	//	FirstName: "جواد",
 	//	LastName: "کرمی",

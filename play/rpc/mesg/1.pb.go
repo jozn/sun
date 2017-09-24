@@ -9,7 +9,7 @@ It is generated from these files:
 	1.proto
 
 It has these top-level messages:
-	User
+	UserView
 	AddressBook
 	Post
 	UserReq
@@ -224,8 +224,8 @@ func (m *UserRes) GetUsers() []*User {
 }
 
 func init() {
-	proto.RegisterType((*User)(nil), "tutorial.User")
-	proto.RegisterType((*User_Phone)(nil), "tutorial.User.Phone")
+	proto.RegisterType((*User)(nil), "tutorial.UserView")
+	proto.RegisterType((*User_Phone)(nil), "tutorial.UserView.Phone")
 	proto.RegisterType((*AddressBook)(nil), "tutorial.AddressBook")
 	proto.RegisterType((*Post)(nil), "tutorial.Post")
 	proto.RegisterType((*UserReq)(nil), "tutorial.UserReq")

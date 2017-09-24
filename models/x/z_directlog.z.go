@@ -19,6 +19,7 @@ type DirectLog__ struct {
 	Id            int    `json:"Id"`            // Id -
 	ToUserId      int    `json:"ToUserId"`      // ToUserId -
 	MessageId     int    `json:"MessageId"`     // MessageId -
+	MessageFileId int    `json:"MessageFileId"` // MessageFileId -
 	ChatId        int    `json:"ChatId"`        // ChatId -
 	PeerUserId    int    `json:"PeerUserId"`    // PeerUserId -
 	EventType     int    `json:"EventType"`     // EventType -
@@ -54,14 +55,14 @@ func (dl *DirectLog) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.direct_log (` +
-		`ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs` +
+		`ToUserId, MessageId, MessageFileId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
-	res, err := db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
+	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.MessageFileId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
+	res, err := db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.MessageFileId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -90,14 +91,14 @@ func (dl *DirectLog) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.direct_log (` +
-		`ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs` +
+		`ToUserId, MessageId, MessageFileId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
-	res, err := db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
+	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.MessageFileId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
+	res, err := db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.MessageFileId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -135,12 +136,12 @@ func (dl *DirectLog) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.direct_log SET ` +
-		`ToUserId = ?, MessageId = ?, ChatId = ?, PeerUserId = ?, EventType = ?, RoomLogTypeId = ?, FromSeq = ?, ToSeq = ?, ExtraPB = ?, ExtraJson = ?, AtTimeMs = ?` +
+		`ToUserId = ?, MessageId = ?, MessageFileId = ?, ChatId = ?, PeerUserId = ?, EventType = ?, RoomLogTypeId = ?, FromSeq = ?, ToSeq = ?, ExtraPB = ?, ExtraJson = ?, AtTimeMs = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs, dl.Id)
-	_, err = db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs, dl.Id)
+	XOLog(sqlstr, dl.ToUserId, dl.MessageId, dl.MessageFileId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs, dl.Id)
+	_, err = db.Exec(sqlstr, dl.ToUserId, dl.MessageId, dl.MessageFileId, dl.ChatId, dl.PeerUserId, dl.EventType, dl.RoomLogTypeId, dl.FromSeq, dl.ToSeq, dl.ExtraPB, dl.ExtraJson, dl.AtTimeMs, dl.Id)
 
 	XOLogErr(err)
 	OnDirectLog_AfterUpdate(dl)
@@ -551,6 +552,111 @@ func (d *__DirectLog_Deleter) MessageId_GE(val int) *__DirectLog_Deleter {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MessageId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectLog_Deleter) MessageFileId_In(ins []int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Deleter) MessageFileId_Ins(ins ...int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Deleter) MessageFileId_NotIn(ins []int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectLog_Deleter) MessageFileId_Eq(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) MessageFileId_NotEq(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) MessageFileId_LT(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) MessageFileId_LE(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) MessageFileId_GT(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Deleter) MessageFileId_GE(val int) *__DirectLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1612,6 +1718,111 @@ func (d *__DirectLog_Updater) MessageId_GE(val int) *__DirectLog_Updater {
 	return d
 }
 
+func (u *__DirectLog_Updater) MessageFileId_In(ins []int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Updater) MessageFileId_Ins(ins ...int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Updater) MessageFileId_NotIn(ins []int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectLog_Updater) MessageFileId_Eq(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) MessageFileId_NotEq(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) MessageFileId_LT(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) MessageFileId_LE(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) MessageFileId_GT(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Updater) MessageFileId_GE(val int) *__DirectLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__DirectLog_Updater) ChatId_In(ins []int) *__DirectLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2668,6 +2879,111 @@ func (d *__DirectLog_Selector) MessageId_GE(val int) *__DirectLog_Selector {
 	return d
 }
 
+func (u *__DirectLog_Selector) MessageFileId_In(ins []int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Selector) MessageFileId_Ins(ins ...int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectLog_Selector) MessageFileId_NotIn(ins []int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectLog_Selector) MessageFileId_Eq(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) MessageFileId_NotEq(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) MessageFileId_LT(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) MessageFileId_LE(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) MessageFileId_GT(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectLog_Selector) MessageFileId_GE(val int) *__DirectLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__DirectLog_Selector) ChatId_In(ins []int) *__DirectLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3660,6 +3976,27 @@ func (u *__DirectLog_Updater) MessageId_Increment(count int) *__DirectLog_Update
 
 //ints
 
+func (u *__DirectLog_Updater) MessageFileId(newVal int) *__DirectLog_Updater {
+	u.updates[" MessageFileId = ? "] = newVal
+	return u
+}
+
+func (u *__DirectLog_Updater) MessageFileId_Increment(count int) *__DirectLog_Updater {
+	if count > 0 {
+		u.updates[" MessageFileId = MessageFileId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" MessageFileId = MessageFileId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
 func (u *__DirectLog_Updater) ChatId(newVal int) *__DirectLog_Updater {
 	u.updates[" ChatId = ? "] = newVal
 	return u
@@ -3864,6 +4201,21 @@ func (u *__DirectLog_Selector) OrderBy_MessageId_Asc() *__DirectLog_Selector {
 
 func (u *__DirectLog_Selector) Select_MessageId() *__DirectLog_Selector {
 	u.selectCol = "MessageId"
+	return u
+}
+
+func (u *__DirectLog_Selector) OrderBy_MessageFileId_Desc() *__DirectLog_Selector {
+	u.orderBy = " ORDER BY MessageFileId DESC "
+	return u
+}
+
+func (u *__DirectLog_Selector) OrderBy_MessageFileId_Asc() *__DirectLog_Selector {
+	u.orderBy = " ORDER BY MessageFileId ASC "
+	return u
+}
+
+func (u *__DirectLog_Selector) Select_MessageFileId() *__DirectLog_Selector {
+	u.selectCol = "MessageFileId"
 	return u
 }
 
@@ -4273,12 +4625,12 @@ func MassInsert_DirectLog(rows []DirectLog, db XODB) error {
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_log (" +
-		"ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs" +
+		"ToUserId, MessageId, MessageFileId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -4288,6 +4640,7 @@ func MassInsert_DirectLog(rows []DirectLog, db XODB) error {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.ToUserId)
 		vals = append(vals, row.MessageId)
+		vals = append(vals, row.MessageFileId)
 		vals = append(vals, row.ChatId)
 		vals = append(vals, row.PeerUserId)
 		vals = append(vals, row.EventType)
@@ -4314,12 +4667,12 @@ func MassInsert_DirectLog(rows []DirectLog, db XODB) error {
 func MassReplace_DirectLog(rows []DirectLog, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_log (" +
-		"ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs" +
+		"ToUserId, MessageId, MessageFileId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -4329,6 +4682,7 @@ func MassReplace_DirectLog(rows []DirectLog, db XODB) error {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.ToUserId)
 		vals = append(vals, row.MessageId)
+		vals = append(vals, row.MessageFileId)
 		vals = append(vals, row.ChatId)
 		vals = append(vals, row.PeerUserId)
 		vals = append(vals, row.EventType)
@@ -4378,6 +4732,8 @@ func MassReplace_DirectLog(rows []DirectLog, db XODB) error {
 
 //
 
+//
+
 // DirectLogsByToUserId retrieves a row from 'ms.direct_log' as a DirectLog.
 //
 // Generated from index 'ToUserId'.
@@ -4386,7 +4742,7 @@ func DirectLogsByToUserId(db XODB, toUserId int) ([]*DirectLog, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
+		`Id, ToUserId, MessageId, MessageFileId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
 		`FROM ms.direct_log ` +
 		`WHERE ToUserId = ?`
 
@@ -4407,7 +4763,7 @@ func DirectLogsByToUserId(db XODB, toUserId int) ([]*DirectLog, error) {
 		}
 
 		// scan
-		err = q.Scan(&dl.Id, &dl.ToUserId, &dl.MessageId, &dl.ChatId, &dl.PeerUserId, &dl.EventType, &dl.RoomLogTypeId, &dl.FromSeq, &dl.ToSeq, &dl.ExtraPB, &dl.ExtraJson, &dl.AtTimeMs)
+		err = q.Scan(&dl.Id, &dl.ToUserId, &dl.MessageId, &dl.MessageFileId, &dl.ChatId, &dl.PeerUserId, &dl.EventType, &dl.RoomLogTypeId, &dl.FromSeq, &dl.ToSeq, &dl.ExtraPB, &dl.ExtraJson, &dl.AtTimeMs)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -4429,7 +4785,7 @@ func DirectLogById(db XODB, id int) (*DirectLog, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MessageId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
+		`Id, ToUserId, MessageId, MessageFileId, ChatId, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
 		`FROM ms.direct_log ` +
 		`WHERE Id = ?`
 
@@ -4439,7 +4795,7 @@ func DirectLogById(db XODB, id int) (*DirectLog, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&dl.Id, &dl.ToUserId, &dl.MessageId, &dl.ChatId, &dl.PeerUserId, &dl.EventType, &dl.RoomLogTypeId, &dl.FromSeq, &dl.ToSeq, &dl.ExtraPB, &dl.ExtraJson, &dl.AtTimeMs)
+	err = db.QueryRow(sqlstr, id).Scan(&dl.Id, &dl.ToUserId, &dl.MessageId, &dl.MessageFileId, &dl.ChatId, &dl.PeerUserId, &dl.EventType, &dl.RoomLogTypeId, &dl.FromSeq, &dl.ToSeq, &dl.ExtraPB, &dl.ExtraJson, &dl.AtTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

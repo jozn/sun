@@ -3212,7 +3212,7 @@ type PB_ChatView_Flat struct {
 	LastSeqSeen          int
 	LastSeqDelete        int
 	CurrentSeq           int
-	User                 PB_UserView
+	UserView             PB_UserView
 	SharedMediaCount     int
 	UnseenCount          int
 	FirstUnreadMessage   PB_MessageView
@@ -3302,8 +3302,8 @@ type PB_MessageView_Flat struct {
 	ChatId               int
 	RoomTypeEnumId       int
 	IsByMe               bool
-	RemoteId             bool
-	File                 PB_MessageFileView
+	RemoteId             int
+	MessageFileView      PB_MessageFileView
 }
 
 //ToPB
@@ -3322,7 +3322,7 @@ func (m *PB_MessageView) ToFlat() *PB_MessageView_Flat {
 		ChatId:               int(m.ChatId),
 		RoomTypeEnumId:       int(m.RoomTypeEnumId),
 		IsByMe:               m.IsByMe,
-		RemoteId:             m.RemoteId,
+		RemoteId:             int(m.RemoteId),
 	}
 	return r
 }
@@ -3343,7 +3343,7 @@ func (m *PB_MessageView_Flat) ToPB() *PB_MessageView {
 		ChatId:               int64(m.ChatId),
 		RoomTypeEnumId:       int32(m.RoomTypeEnumId),
 		IsByMe:               m.IsByMe,
-		RemoteId:             m.RemoteId,
+		RemoteId:             int64(m.RemoteId),
 	}
 	return r
 }
@@ -3363,7 +3363,7 @@ var PB_MessageView__FOlD = &PB_MessageView{
 	ChatId:               0,
 	RoomTypeEnumId:       0,
 	IsByMe:               false,
-	RemoteId:             false,
+	RemoteId:             0,
 }
 
 type PB_MessageFileView_Flat struct {
@@ -4554,7 +4554,7 @@ r := &PB_MessageView_Flat{
     ChatId:  int(m.ChatId) ,
     RoomTypeEnumId:  int(m.RoomTypeEnumId) ,
     IsByMe:  m.IsByMe ,
-    RemoteId:  m.RemoteId ,
+    RemoteId:  int(m.RemoteId) ,
 
 }
 return r
@@ -5602,7 +5602,7 @@ r := &PB_MessageView{
     ChatId:  int64(m.ChatId) ,
     RoomTypeEnumId:  int32(m.RoomTypeEnumId) ,
     IsByMe:  m.IsByMe ,
-    RemoteId:  m.RemoteId ,
+    RemoteId:  int64(m.RemoteId) ,
 
 }
 return r
@@ -6441,7 +6441,7 @@ var PB_MessageView__FOlD = &PB_MessageView{
         ChatId:  0 ,
         RoomTypeEnumId:  0 ,
         IsByMe:  false ,
-        RemoteId:  false ,
+        RemoteId:  0 ,
 
 }
 

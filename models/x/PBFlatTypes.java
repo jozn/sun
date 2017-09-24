@@ -2878,7 +2878,7 @@ public class PBFlatTypes {
 	   public int LastSeqSeen;
 	   public int LastSeqDelete;
 	   public int CurrentSeq;
-	   public PB_UserView User;
+	   public PB_UserView UserView;
 	   public int SharedMediaCount;
 	   public int UnseenCount;
 	   public PB_MessageView FirstUnreadMessage;
@@ -2901,7 +2901,7 @@ public class PBFlatTypes {
     t.setLastSeqSeen();
     t.setLastSeqDelete();
     t.setCurrentSeq();
-    t.setUser();
+    t.setUserView();
     t.setSharedMediaCount();
     t.setUnseenCount();
     t.setFirstUnreadMessage();
@@ -2924,7 +2924,7 @@ public class PBFlatTypes {
 	t.LastSeqSeen = ;
 	t.LastSeqDelete = ;
 	t.CurrentSeq = ;
-	t.User = ;
+	t.UserView = ;
 	t.SharedMediaCount = ;
 	t.UnseenCount = ;
 	t.FirstUnreadMessage = ;
@@ -2947,7 +2947,7 @@ public class PBFlatTypes {
 	t.LastSeqSeen = m.getLastSeqSeen() ;
 	t.LastSeqDelete = m.getLastSeqDelete() ;
 	t.CurrentSeq = m.getCurrentSeq() ;
-	t.User = m.getUser() ;
+	t.UserView = m.getUserView() ;
 	t.SharedMediaCount = m.getSharedMediaCount() ;
 	t.UnseenCount = m.getUnseenCount() ;
 	t.FirstUnreadMessage = m.getFirstUnreadMessage() ;
@@ -2968,8 +2968,8 @@ public class PBFlatTypes {
 	   public long ChatId;
 	   public int RoomTypeEnumId;
 	   public boolean IsByMe;
-	   public boolean RemoteId;
-	   public PB_MessageFileView File;
+	   public long RemoteId;
+	   public PB_MessageFileView MessageFileView;
 	}
 	/*
 	folding
@@ -2988,7 +2988,7 @@ public class PBFlatTypes {
     t.setRoomTypeEnumId();
     t.setIsByMe();
     t.setRemoteId();
-    t.setFile();
+    t.setMessageFileView();
 	*/
 
 	/*
@@ -3007,7 +3007,7 @@ public class PBFlatTypes {
 	t.RoomTypeEnumId = ;
 	t.IsByMe = ;
 	t.RemoteId = ;
-	t.File = ;
+	t.MessageFileView = ;
 	*/
 
 	/*
@@ -3026,7 +3026,7 @@ public class PBFlatTypes {
 	t.RoomTypeEnumId = m.getRoomTypeEnumId() ;
 	t.IsByMe = m.getIsByMe() ;
 	t.RemoteId = m.getRemoteId() ;
-	t.File = m.getFile() ;
+	t.MessageFileView = m.getMessageFileView() ;
 	*/
 
 	public class PB_MessageFileView {
