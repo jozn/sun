@@ -10,32 +10,33 @@ option go_package = "x";
 import "pb_enums.proto";
 import "pb_chat.proto";
 import "pb_views.proto";
-
+import "pb_updates.proto";
 
 ///////////////////////////////
 message PB_SyncParam_GetDirectUpdates {
-
+    int64 LastId = 1;
 }
 
 message PB_SyncResponse_GetDirectUpdates{
-
+    PB_GeneralUpdatesView Updates = 1;
 }
+
 //////////////////////////////
 message PB_SyncParam_GetGeneralUpdates {
-
+    int64 LastId = 1;
 }
 
 message PB_SyncResponse_GetGeneralUpdates{
-
+    PB_GeneralUpdatesView Updates = 1;
 }
+
 //////////////////////////////
-
 message PB_SyncParam_GetNotifyUpdates {
-
+    int64 LastId = 1;
 }
 
 message PB_SyncResponse_GetNotifyUpdates{
-
+    PB_NotifyUpdatesView Updates = 1;
 }
 //////////////////////////////
 
