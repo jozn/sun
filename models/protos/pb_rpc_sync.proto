@@ -38,12 +38,43 @@ message PB_SyncParam_GetNotifyUpdates {
 message PB_SyncResponse_GetNotifyUpdates{
     PB_NotifyUpdatesView Updates = 1;
 }
-//////////////////////////////
 
+//////////// SetLastSync... //////////////////
+message PB_SyncParam_SetLastSyncDirectUpdateId {
+    int64 LastId = 1;
+}
+
+message PB_SyncResponse_SetLastSyncDirectUpdateId{
+
+}
+
+//////////////////////////////
+message PB_SyncParam_SetLastSyncGeneralUpdateId {
+    int64 LastId = 1;
+}
+
+message PB_SyncResponse_SetLastSyncGeneralUpdateId{
+
+}
+
+//////////////////////////////
+message PB_SyncParam_SetLastSyncNotifyUpdateId {
+    int64 LastId = 1;
+}
+
+message PB_SyncResponse_SetLastSyncNotifyUpdateId{
+
+}
+
+//////////////////////////////
 
 service RPC_Sync {
     rpc GetDirectUpdates (PB_SyncParam_GetDirectUpdates) returns (PB_SyncResponse_GetDirectUpdates);
     rpc GetGeneralUpdates (PB_SyncParam_GetGeneralUpdates) returns (PB_SyncResponse_GetGeneralUpdates);
     rpc GetNotifyUpdates (PB_SyncParam_GetNotifyUpdates) returns (PB_SyncResponse_GetNotifyUpdates);
+
+    rpc SetLastSyncDirectUpdateId (PB_SyncParam_SetLastSyncDirectUpdateId) returns (PB_SyncResponse_SetLastSyncDirectUpdateId);
+    rpc SetLastSyncGeneralUpdateId (PB_SyncParam_SetLastSyncGeneralUpdateId) returns (PB_SyncResponse_SetLastSyncGeneralUpdateId);
+    rpc SetLastSyncNotifyUpdateId (PB_SyncParam_SetLastSyncNotifyUpdateId) returns (PB_SyncResponse_SetLastSyncNotifyUpdateId);
 
 }
