@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option java_package = "ir.ms.pb";
+//option java_outer_classname = "PB2";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME; //CODE_SIZE;
+
+option go_package = "x";
+
+import "pb_enums.proto";
+import "pb_chat.proto";
+import "pb_views.proto";
+
+
+///////////////////////////////
+message PB_SyncParam_GetDirectUpdates {
+
+}
+
+message PB_SyncResponse_GetDirectUpdates{
+
+}
+//////////////////////////////
+message PB_SyncParam_GetGeneralUpdates {
+
+}
+
+message PB_SyncResponse_GetGeneralUpdates{
+
+}
+//////////////////////////////
+
+message PB_SyncParam_GetNotifyUpdates {
+
+}
+
+message PB_SyncResponse_GetNotifyUpdates{
+
+}
+//////////////////////////////
+
+
+service RPC_Sync {
+    rpc GetDirectUpdates (PB_SyncParam_GetDirectUpdates) returns (PB_SyncResponse_GetDirectUpdates);
+    rpc GetGeneralUpdates (PB_SyncParam_GetGeneralUpdates) returns (PB_SyncResponse_GetGeneralUpdates);
+    rpc GetNotifyUpdates (PB_SyncParam_GetNotifyUpdates) returns (PB_SyncResponse_GetNotifyUpdates);
+
+}

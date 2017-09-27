@@ -148,6 +148,24 @@ message PB_MsgResponse_BroadcastNewMessage {
 
 ////////////////////////////////////////////////////////
 
+message PB_MsgParam_GetFreshChatList {
+
+}
+message PB_MsgResponse_GetFreshChatList {
+
+}
+
+////////////////////////////////////////////////////////
+
+message PB_MsgParam_GetFreshRoomMessagesList {
+
+}
+message PB_MsgResponse_GetFreshRoomMessagesList {
+
+}
+
+////////////////////////////////////////////////////////
+
 service RPC_Msg {
     rpc AddNewTextMessage (PB_MsgParam_AddNewTextMessage) returns (PB_MsgResponse_AddNewTextMessage);
     rpc AddNewMessage (PB_MsgParam_AddNewMessage) returns (PB_MsgResponse_AddNewMessage);
@@ -161,6 +179,9 @@ service RPC_Msg {
     rpc ForwardMessages (PB_MsgParam_ForwardMessages) returns (PB_MsgResponse_ForwardMessages);
     rpc EditMessage (PB_MsgParam_EditMessage) returns (PB_MsgResponse_EditMessage);
     rpc BroadcastNewMessage (PB_MsgParam_BroadcastNewMessage) returns (PB_MsgResponse_BroadcastNewMessage);
+
+    rpc GetFreshChatList (PB_MsgPaaram_GetFreshChatList) returns (PB_MsgResponse_GetFreshChatList);
+    rpc GetFreshRoomMessagesList (PB_MsgPaaram_GetFreshRoomMessagesList) returns (PB_MsgResponse_GetFreshRoomMessagesList);
 
     rpc Echo (PB_MsgParam_Echo) returns (PB_MsgResponse_PB_MsgParam_Echo);
 }
