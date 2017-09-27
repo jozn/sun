@@ -152,16 +152,19 @@ message PB_MsgParam_GetFreshChatList {
 
 }
 message PB_MsgResponse_GetFreshChatList {
-
+    repeated PB_ChatView Chats = 1;
 }
 
 ////////////////////////////////////////////////////////
 
 message PB_MsgParam_GetFreshRoomMessagesList {
-
+    int64 ChatId = 1;
+    string RoomKey = 2;//use this
+    int64 Last = 3;
 }
 message PB_MsgResponse_GetFreshRoomMessagesList {
-
+    repeated PB_MessageView Chats = 1;
+    bool HasMore = 2;
 }
 
 ////////////////////////////////////////////////////////
