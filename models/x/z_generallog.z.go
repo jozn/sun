@@ -12,155 +12,157 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// DirectToMessage represents a row from 'ms.direct_to_message'.
+// GeneralLog represents a row from 'ms.general_log'.
 
 // Manualy copy this to project
-type DirectToMessage__ struct {
-	Id           int `json:"Id"`           // Id -
-	ChatId       int `json:"ChatId"`       // ChatId -
-	MessageId    int `json:"MessageId"`    // MessageId -
-	Seq          int `json:"Seq"`          // Seq -
-	SourceEnumId int `json:"SourceEnumId"` // SourceEnumId -
+type GeneralLog__ struct {
+	Id        int    `json:"Id"`        // Id -
+	ToUserId  int    `json:"ToUserId"`  // ToUserId -
+	TargetId  int    `json:"TargetId"`  // TargetId -
+	LogTypeId int    `json:"LogTypeId"` // LogTypeId -
+	ExtraPB   []byte `json:"ExtraPB"`   // ExtraPB -
+	ExtraJson string `json:"ExtraJson"` // ExtraJson -
+	CreatedMs int    `json:"CreatedMs"` // CreatedMs -
 
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists determines if the DirectToMessage exists in the database.
-func (dtm *DirectToMessage) Exists() bool {
-	return dtm._exists
+// Exists determines if the GeneralLog exists in the database.
+func (gl *GeneralLog) Exists() bool {
+	return gl._exists
 }
 
-// Deleted provides information if the DirectToMessage has been deleted from the database.
-func (dtm *DirectToMessage) Deleted() bool {
-	return dtm._deleted
+// Deleted provides information if the GeneralLog has been deleted from the database.
+func (gl *GeneralLog) Deleted() bool {
+	return gl._deleted
 }
 
-// Insert inserts the DirectToMessage to the database.
-func (dtm *DirectToMessage) Insert(db XODB) error {
+// Insert inserts the GeneralLog to the database.
+func (gl *GeneralLog) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
-	if dtm._exists {
+	if gl._exists {
 		return errors.New("insert failed: already exists")
 	}
 
 	// sql insert query, primary key must be provided
-	const sqlstr = `INSERT INTO ms.direct_to_message (` +
-		`Id, ChatId, MessageId, Seq, SourceEnumId` +
+	const sqlstr = `INSERT INTO ms.general_log (` +
+		`Id, ToUserId, TargetId, LogTypeId, ExtraPB, ExtraJson, CreatedMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
-	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
+	XOLog(sqlstr, gl.Id, gl.ToUserId, gl.TargetId, gl.LogTypeId, gl.ExtraPB, gl.ExtraJson, gl.CreatedMs)
+	_, err = db.Exec(sqlstr, gl.Id, gl.ToUserId, gl.TargetId, gl.LogTypeId, gl.ExtraPB, gl.ExtraJson, gl.CreatedMs)
 	if err != nil {
 		return err
 	}
 
 	// set existence
-	dtm._exists = true
+	gl._exists = true
 
-	OnDirectToMessage_AfterInsert(dtm)
+	OnGeneralLog_AfterInsert(gl)
 
 	return nil
 }
 
-// Insert inserts the DirectToMessage to the database.
-func (dtm *DirectToMessage) Replace(db XODB) error {
+// Insert inserts the GeneralLog to the database.
+func (gl *GeneralLog) Replace(db XODB) error {
 	var err error
 
 	// sql query
 
-	const sqlstr = `REPLACE INTO ms.direct_to_message (` +
-		`Id, ChatId, MessageId, Seq, SourceEnumId` +
+	const sqlstr = `REPLACE INTO ms.general_log (` +
+		`Id, ToUserId, TargetId, LogTypeId, ExtraPB, ExtraJson, CreatedMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
-	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
+	XOLog(sqlstr, gl.Id, gl.ToUserId, gl.TargetId, gl.LogTypeId, gl.ExtraPB, gl.ExtraJson, gl.CreatedMs)
+	_, err = db.Exec(sqlstr, gl.Id, gl.ToUserId, gl.TargetId, gl.LogTypeId, gl.ExtraPB, gl.ExtraJson, gl.CreatedMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	dtm._exists = true
+	gl._exists = true
 
-	OnDirectToMessage_AfterInsert(dtm)
+	OnGeneralLog_AfterInsert(gl)
 
 	return nil
 }
 
-// Update updates the DirectToMessage in the database.
-func (dtm *DirectToMessage) Update(db XODB) error {
+// Update updates the GeneralLog in the database.
+func (gl *GeneralLog) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !dtm._exists {
+	if !gl._exists {
 		return errors.New("update failed: does not exist")
 	}
 
 	// if deleted, bail
-	if dtm._deleted {
+	if gl._deleted {
 		return errors.New("update failed: marked for deletion")
 	}
 
 	// sql query
-	const sqlstr = `UPDATE ms.direct_to_message SET ` +
-		`Id = ?, ChatId = ?, Seq = ?, SourceEnumId = ?` +
-		` WHERE MessageId = ?`
+	const sqlstr = `UPDATE ms.general_log SET ` +
+		`ToUserId = ?, TargetId = ?, LogTypeId = ?, ExtraPB = ?, ExtraJson = ?, CreatedMs = ?` +
+		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.Seq, dtm.SourceEnumId, dtm.MessageId)
-	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.Seq, dtm.SourceEnumId, dtm.MessageId)
+	XOLog(sqlstr, gl.ToUserId, gl.TargetId, gl.LogTypeId, gl.ExtraPB, gl.ExtraJson, gl.CreatedMs, gl.Id)
+	_, err = db.Exec(sqlstr, gl.ToUserId, gl.TargetId, gl.LogTypeId, gl.ExtraPB, gl.ExtraJson, gl.CreatedMs, gl.Id)
 
 	XOLogErr(err)
-	OnDirectToMessage_AfterUpdate(dtm)
+	OnGeneralLog_AfterUpdate(gl)
 
 	return err
 }
 
-// Save saves the DirectToMessage to the database.
-func (dtm *DirectToMessage) Save(db XODB) error {
-	if dtm.Exists() {
-		return dtm.Update(db)
+// Save saves the GeneralLog to the database.
+func (gl *GeneralLog) Save(db XODB) error {
+	if gl.Exists() {
+		return gl.Update(db)
 	}
 
-	return dtm.Replace(db)
+	return gl.Replace(db)
 }
 
-// Delete deletes the DirectToMessage from the database.
-func (dtm *DirectToMessage) Delete(db XODB) error {
+// Delete deletes the GeneralLog from the database.
+func (gl *GeneralLog) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !dtm._exists {
+	if !gl._exists {
 		return nil
 	}
 
 	// if deleted, bail
-	if dtm._deleted {
+	if gl._deleted {
 		return nil
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.direct_to_message WHERE MessageId = ?`
+	const sqlstr = `DELETE FROM ms.general_log WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, dtm.MessageId)
-	_, err = db.Exec(sqlstr, dtm.MessageId)
+	XOLog(sqlstr, gl.Id)
+	_, err = db.Exec(sqlstr, gl.Id)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
 	// set deleted
-	dtm._deleted = true
+	gl._deleted = true
 
-	OnDirectToMessage_AfterDelete(dtm)
+	OnGeneralLog_AfterDelete(gl)
 
 	return nil
 }
@@ -171,18 +173,18 @@ func (dtm *DirectToMessage) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __DirectToMessage_Deleter struct {
+type __GeneralLog_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __DirectToMessage_Updater struct {
+type __GeneralLog_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __DirectToMessage_Selector struct {
+type __GeneralLog_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -191,19 +193,19 @@ type __DirectToMessage_Selector struct {
 	offset    int
 }
 
-func NewDirectToMessage_Deleter() *__DirectToMessage_Deleter {
-	d := __DirectToMessage_Deleter{whereSep: " AND "}
+func NewGeneralLog_Deleter() *__GeneralLog_Deleter {
+	d := __GeneralLog_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewDirectToMessage_Updater() *__DirectToMessage_Updater {
-	u := __DirectToMessage_Updater{whereSep: " AND "}
+func NewGeneralLog_Updater() *__GeneralLog_Updater {
+	u := __GeneralLog_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewDirectToMessage_Selector() *__DirectToMessage_Selector {
-	u := __DirectToMessage_Selector{whereSep: " AND ", selectCol: "*"}
+func NewGeneralLog_Selector() *__GeneralLog_Selector {
+	u := __GeneralLog_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -211,12 +213,12 @@ func NewDirectToMessage_Selector() *__DirectToMessage_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__DirectToMessage_Deleter) Or() *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) Or() *__GeneralLog_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) Id_In(ins []int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) Id_In(ins []int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -229,7 +231,7 @@ func (u *__DirectToMessage_Deleter) Id_In(ins []int) *__DirectToMessage_Deleter 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) Id_Ins(ins ...int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) Id_Ins(ins ...int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -242,7 +244,7 @@ func (u *__DirectToMessage_Deleter) Id_Ins(ins ...int) *__DirectToMessage_Delete
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) Id_NotIn(ins []int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) Id_NotIn(ins []int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -255,7 +257,7 @@ func (u *__DirectToMessage_Deleter) Id_NotIn(ins []int) *__DirectToMessage_Delet
 	return u
 }
 
-func (d *__DirectToMessage_Deleter) Id_Eq(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) Id_Eq(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -266,7 +268,7 @@ func (d *__DirectToMessage_Deleter) Id_Eq(val int) *__DirectToMessage_Deleter {
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) Id_NotEq(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) Id_NotEq(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -277,7 +279,7 @@ func (d *__DirectToMessage_Deleter) Id_NotEq(val int) *__DirectToMessage_Deleter
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) Id_LT(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) Id_LT(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -288,7 +290,7 @@ func (d *__DirectToMessage_Deleter) Id_LT(val int) *__DirectToMessage_Deleter {
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) Id_LE(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) Id_LE(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -299,7 +301,7 @@ func (d *__DirectToMessage_Deleter) Id_LE(val int) *__DirectToMessage_Deleter {
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) Id_GT(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) Id_GT(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -310,7 +312,7 @@ func (d *__DirectToMessage_Deleter) Id_GT(val int) *__DirectToMessage_Deleter {
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) Id_GE(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) Id_GE(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -321,433 +323,433 @@ func (d *__DirectToMessage_Deleter) Id_GE(val int) *__DirectToMessage_Deleter {
 	return d
 }
 
-func (u *__DirectToMessage_Deleter) ChatId_In(ins []int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) ToUserId_In(ins []int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) ChatId_Ins(ins ...int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) ToUserId_Ins(ins ...int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) ChatId_NotIn(ins []int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) ToUserId_NotIn(ins []int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ChatId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Deleter) ChatId_Eq(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) ToUserId_Eq(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId = ? "
+	w.condition = " ToUserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) ChatId_NotEq(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) ToUserId_NotEq(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId != ? "
+	w.condition = " ToUserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) ChatId_LT(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) ToUserId_LT(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId < ? "
+	w.condition = " ToUserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) ChatId_LE(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) ToUserId_LE(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId <= ? "
+	w.condition = " ToUserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) ChatId_GT(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) ToUserId_GT(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId > ? "
+	w.condition = " ToUserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) ChatId_GE(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) ToUserId_GE(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId >= ? "
+	w.condition = " ToUserId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__DirectToMessage_Deleter) MessageId_In(ins []int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) TargetId_In(ins []int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) MessageId_Ins(ins ...int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) TargetId_Ins(ins ...int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) MessageId_NotIn(ins []int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) TargetId_NotIn(ins []int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Deleter) MessageId_Eq(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) TargetId_Eq(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId = ? "
+	w.condition = " TargetId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) MessageId_NotEq(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) TargetId_NotEq(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId != ? "
+	w.condition = " TargetId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) MessageId_LT(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) TargetId_LT(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId < ? "
+	w.condition = " TargetId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) MessageId_LE(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) TargetId_LE(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId <= ? "
+	w.condition = " TargetId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) MessageId_GT(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) TargetId_GT(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId > ? "
+	w.condition = " TargetId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) MessageId_GE(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) TargetId_GE(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId >= ? "
+	w.condition = " TargetId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__DirectToMessage_Deleter) Seq_In(ins []int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) LogTypeId_In(ins []int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " LogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) Seq_Ins(ins ...int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) LogTypeId_Ins(ins ...int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " LogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) Seq_NotIn(ins []int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) LogTypeId_NotIn(ins []int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Seq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " LogTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Deleter) Seq_Eq(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) LogTypeId_Eq(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq = ? "
+	w.condition = " LogTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) Seq_NotEq(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) LogTypeId_NotEq(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq != ? "
+	w.condition = " LogTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) Seq_LT(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) LogTypeId_LT(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq < ? "
+	w.condition = " LogTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) Seq_LE(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) LogTypeId_LE(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq <= ? "
+	w.condition = " LogTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) Seq_GT(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) LogTypeId_GT(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq > ? "
+	w.condition = " LogTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) Seq_GE(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) LogTypeId_GE(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq >= ? "
+	w.condition = " LogTypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__DirectToMessage_Deleter) SourceEnumId_In(ins []int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) CreatedMs_In(ins []int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) SourceEnumId_Ins(ins ...int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) CreatedMs_Ins(ins ...int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Deleter) SourceEnumId_NotIn(ins []int) *__DirectToMessage_Deleter {
+func (u *__GeneralLog_Deleter) CreatedMs_NotIn(ins []int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnumId_Eq(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) CreatedMs_Eq(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId = ? "
+	w.condition = " CreatedMs = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnumId_NotEq(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) CreatedMs_NotEq(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId != ? "
+	w.condition = " CreatedMs != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnumId_LT(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) CreatedMs_LT(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId < ? "
+	w.condition = " CreatedMs < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnumId_LE(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) CreatedMs_LE(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId <= ? "
+	w.condition = " CreatedMs <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnumId_GT(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) CreatedMs_GT(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId > ? "
+	w.condition = " CreatedMs > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Deleter) SourceEnumId_GE(val int) *__DirectToMessage_Deleter {
+func (d *__GeneralLog_Deleter) CreatedMs_GE(val int) *__GeneralLog_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId >= ? "
+	w.condition = " CreatedMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
 ////////ints
-func (u *__DirectToMessage_Updater) Or() *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) Or() *__GeneralLog_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__DirectToMessage_Updater) Id_In(ins []int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) Id_In(ins []int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -760,7 +762,7 @@ func (u *__DirectToMessage_Updater) Id_In(ins []int) *__DirectToMessage_Updater 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) Id_Ins(ins ...int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) Id_Ins(ins ...int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -773,7 +775,7 @@ func (u *__DirectToMessage_Updater) Id_Ins(ins ...int) *__DirectToMessage_Update
 	return u
 }
 
-func (u *__DirectToMessage_Updater) Id_NotIn(ins []int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) Id_NotIn(ins []int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -786,7 +788,7 @@ func (u *__DirectToMessage_Updater) Id_NotIn(ins []int) *__DirectToMessage_Updat
 	return u
 }
 
-func (d *__DirectToMessage_Updater) Id_Eq(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) Id_Eq(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -797,7 +799,7 @@ func (d *__DirectToMessage_Updater) Id_Eq(val int) *__DirectToMessage_Updater {
 	return d
 }
 
-func (d *__DirectToMessage_Updater) Id_NotEq(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) Id_NotEq(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -808,7 +810,7 @@ func (d *__DirectToMessage_Updater) Id_NotEq(val int) *__DirectToMessage_Updater
 	return d
 }
 
-func (d *__DirectToMessage_Updater) Id_LT(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) Id_LT(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -819,7 +821,7 @@ func (d *__DirectToMessage_Updater) Id_LT(val int) *__DirectToMessage_Updater {
 	return d
 }
 
-func (d *__DirectToMessage_Updater) Id_LE(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) Id_LE(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -830,7 +832,7 @@ func (d *__DirectToMessage_Updater) Id_LE(val int) *__DirectToMessage_Updater {
 	return d
 }
 
-func (d *__DirectToMessage_Updater) Id_GT(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) Id_GT(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -841,7 +843,7 @@ func (d *__DirectToMessage_Updater) Id_GT(val int) *__DirectToMessage_Updater {
 	return d
 }
 
-func (d *__DirectToMessage_Updater) Id_GE(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) Id_GE(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -852,433 +854,433 @@ func (d *__DirectToMessage_Updater) Id_GE(val int) *__DirectToMessage_Updater {
 	return d
 }
 
-func (u *__DirectToMessage_Updater) ChatId_In(ins []int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) ToUserId_In(ins []int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) ChatId_Ins(ins ...int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) ToUserId_Ins(ins ...int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) ChatId_NotIn(ins []int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) ToUserId_NotIn(ins []int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ChatId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Updater) ChatId_Eq(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) ToUserId_Eq(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId = ? "
+	w.condition = " ToUserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) ChatId_NotEq(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) ToUserId_NotEq(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId != ? "
+	w.condition = " ToUserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) ChatId_LT(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) ToUserId_LT(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId < ? "
+	w.condition = " ToUserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) ChatId_LE(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) ToUserId_LE(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId <= ? "
+	w.condition = " ToUserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) ChatId_GT(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) ToUserId_GT(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId > ? "
+	w.condition = " ToUserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) ChatId_GE(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) ToUserId_GE(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId >= ? "
+	w.condition = " ToUserId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__DirectToMessage_Updater) MessageId_In(ins []int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) TargetId_In(ins []int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) MessageId_Ins(ins ...int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) TargetId_Ins(ins ...int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) MessageId_NotIn(ins []int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) TargetId_NotIn(ins []int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Updater) MessageId_Eq(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) TargetId_Eq(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId = ? "
+	w.condition = " TargetId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) MessageId_NotEq(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) TargetId_NotEq(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId != ? "
+	w.condition = " TargetId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) MessageId_LT(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) TargetId_LT(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId < ? "
+	w.condition = " TargetId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) MessageId_LE(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) TargetId_LE(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId <= ? "
+	w.condition = " TargetId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) MessageId_GT(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) TargetId_GT(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId > ? "
+	w.condition = " TargetId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) MessageId_GE(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) TargetId_GE(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId >= ? "
+	w.condition = " TargetId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__DirectToMessage_Updater) Seq_In(ins []int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) LogTypeId_In(ins []int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " LogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) Seq_Ins(ins ...int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) LogTypeId_Ins(ins ...int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " LogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) Seq_NotIn(ins []int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) LogTypeId_NotIn(ins []int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Seq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " LogTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Updater) Seq_Eq(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) LogTypeId_Eq(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq = ? "
+	w.condition = " LogTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) Seq_NotEq(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) LogTypeId_NotEq(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq != ? "
+	w.condition = " LogTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) Seq_LT(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) LogTypeId_LT(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq < ? "
+	w.condition = " LogTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) Seq_LE(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) LogTypeId_LE(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq <= ? "
+	w.condition = " LogTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) Seq_GT(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) LogTypeId_GT(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq > ? "
+	w.condition = " LogTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) Seq_GE(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) LogTypeId_GE(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq >= ? "
+	w.condition = " LogTypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__DirectToMessage_Updater) SourceEnumId_In(ins []int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) CreatedMs_In(ins []int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) SourceEnumId_Ins(ins ...int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) CreatedMs_Ins(ins ...int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Updater) SourceEnumId_NotIn(ins []int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) CreatedMs_NotIn(ins []int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Updater) SourceEnumId_Eq(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) CreatedMs_Eq(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId = ? "
+	w.condition = " CreatedMs = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) SourceEnumId_NotEq(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) CreatedMs_NotEq(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId != ? "
+	w.condition = " CreatedMs != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) SourceEnumId_LT(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) CreatedMs_LT(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId < ? "
+	w.condition = " CreatedMs < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) SourceEnumId_LE(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) CreatedMs_LE(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId <= ? "
+	w.condition = " CreatedMs <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) SourceEnumId_GT(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) CreatedMs_GT(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId > ? "
+	w.condition = " CreatedMs > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Updater) SourceEnumId_GE(val int) *__DirectToMessage_Updater {
+func (d *__GeneralLog_Updater) CreatedMs_GE(val int) *__GeneralLog_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId >= ? "
+	w.condition = " CreatedMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
 ////////ints
-func (u *__DirectToMessage_Selector) Or() *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) Or() *__GeneralLog_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Id_In(ins []int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) Id_In(ins []int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1291,7 +1293,7 @@ func (u *__DirectToMessage_Selector) Id_In(ins []int) *__DirectToMessage_Selecto
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Id_Ins(ins ...int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) Id_Ins(ins ...int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1304,7 +1306,7 @@ func (u *__DirectToMessage_Selector) Id_Ins(ins ...int) *__DirectToMessage_Selec
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Id_NotIn(ins []int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) Id_NotIn(ins []int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1317,7 +1319,7 @@ func (u *__DirectToMessage_Selector) Id_NotIn(ins []int) *__DirectToMessage_Sele
 	return u
 }
 
-func (d *__DirectToMessage_Selector) Id_Eq(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) Id_Eq(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1328,7 +1330,7 @@ func (d *__DirectToMessage_Selector) Id_Eq(val int) *__DirectToMessage_Selector 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) Id_NotEq(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) Id_NotEq(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1339,7 +1341,7 @@ func (d *__DirectToMessage_Selector) Id_NotEq(val int) *__DirectToMessage_Select
 	return d
 }
 
-func (d *__DirectToMessage_Selector) Id_LT(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) Id_LT(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1350,7 +1352,7 @@ func (d *__DirectToMessage_Selector) Id_LT(val int) *__DirectToMessage_Selector 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) Id_LE(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) Id_LE(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1361,7 +1363,7 @@ func (d *__DirectToMessage_Selector) Id_LE(val int) *__DirectToMessage_Selector 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) Id_GT(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) Id_GT(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1372,7 +1374,7 @@ func (d *__DirectToMessage_Selector) Id_GT(val int) *__DirectToMessage_Selector 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) Id_GE(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) Id_GE(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1383,421 +1385,421 @@ func (d *__DirectToMessage_Selector) Id_GE(val int) *__DirectToMessage_Selector 
 	return d
 }
 
-func (u *__DirectToMessage_Selector) ChatId_In(ins []int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) ToUserId_In(ins []int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Selector) ChatId_Ins(ins ...int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) ToUserId_Ins(ins ...int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Selector) ChatId_NotIn(ins []int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) ToUserId_NotIn(ins []int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " ChatId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Selector) ChatId_Eq(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) ToUserId_Eq(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId = ? "
+	w.condition = " ToUserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) ChatId_NotEq(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) ToUserId_NotEq(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId != ? "
+	w.condition = " ToUserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) ChatId_LT(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) ToUserId_LT(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId < ? "
+	w.condition = " ToUserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) ChatId_LE(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) ToUserId_LE(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId <= ? "
+	w.condition = " ToUserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) ChatId_GT(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) ToUserId_GT(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId > ? "
+	w.condition = " ToUserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) ChatId_GE(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) ToUserId_GE(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " ChatId >= ? "
+	w.condition = " ToUserId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__DirectToMessage_Selector) MessageId_In(ins []int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) TargetId_In(ins []int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Selector) MessageId_Ins(ins ...int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) TargetId_Ins(ins ...int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Selector) MessageId_NotIn(ins []int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) TargetId_NotIn(ins []int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " MessageId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Selector) MessageId_Eq(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) TargetId_Eq(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId = ? "
+	w.condition = " TargetId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) MessageId_NotEq(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) TargetId_NotEq(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId != ? "
+	w.condition = " TargetId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) MessageId_LT(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) TargetId_LT(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId < ? "
+	w.condition = " TargetId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) MessageId_LE(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) TargetId_LE(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId <= ? "
+	w.condition = " TargetId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) MessageId_GT(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) TargetId_GT(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId > ? "
+	w.condition = " TargetId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) MessageId_GE(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) TargetId_GE(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " MessageId >= ? "
+	w.condition = " TargetId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__DirectToMessage_Selector) Seq_In(ins []int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) LogTypeId_In(ins []int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " LogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Seq_Ins(ins ...int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) LogTypeId_Ins(ins ...int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " LogTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Seq_NotIn(ins []int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) LogTypeId_NotIn(ins []int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Seq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " LogTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Selector) Seq_Eq(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) LogTypeId_Eq(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq = ? "
+	w.condition = " LogTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) Seq_NotEq(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) LogTypeId_NotEq(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq != ? "
+	w.condition = " LogTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) Seq_LT(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) LogTypeId_LT(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq < ? "
+	w.condition = " LogTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) Seq_LE(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) LogTypeId_LE(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq <= ? "
+	w.condition = " LogTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) Seq_GT(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) LogTypeId_GT(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq > ? "
+	w.condition = " LogTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) Seq_GE(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) LogTypeId_GE(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Seq >= ? "
+	w.condition = " LogTypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__DirectToMessage_Selector) SourceEnumId_In(ins []int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) CreatedMs_In(ins []int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Selector) SourceEnumId_Ins(ins ...int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) CreatedMs_Ins(ins ...int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectToMessage_Selector) SourceEnumId_NotIn(ins []int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) CreatedMs_NotIn(ins []int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " SourceEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectToMessage_Selector) SourceEnumId_Eq(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) CreatedMs_Eq(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId = ? "
+	w.condition = " CreatedMs = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) SourceEnumId_NotEq(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) CreatedMs_NotEq(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId != ? "
+	w.condition = " CreatedMs != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) SourceEnumId_LT(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) CreatedMs_LT(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId < ? "
+	w.condition = " CreatedMs < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) SourceEnumId_LE(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) CreatedMs_LE(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId <= ? "
+	w.condition = " CreatedMs <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) SourceEnumId_GT(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) CreatedMs_GT(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId > ? "
+	w.condition = " CreatedMs > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectToMessage_Selector) SourceEnumId_GE(val int) *__DirectToMessage_Selector {
+func (d *__GeneralLog_Selector) CreatedMs_GE(val int) *__GeneralLog_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " SourceEnumId >= ? "
+	w.condition = " CreatedMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1807,9 +1809,189 @@ func (d *__DirectToMessage_Selector) SourceEnumId_GE(val int) *__DirectToMessage
 
 ////////ints
 
-////////ints
+func (u *__GeneralLog_Deleter) ExtraJson_In(ins []string) *__GeneralLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__GeneralLog_Deleter) ExtraJson_NotIn(ins []string) *__GeneralLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__GeneralLog_Deleter) ExtraJson_Like(val string) *__GeneralLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__GeneralLog_Deleter) ExtraJson_Eq(val string) *__GeneralLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__GeneralLog_Deleter) ExtraJson_NotEq(val string) *__GeneralLog_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 ////////ints
+
+func (u *__GeneralLog_Updater) ExtraJson_In(ins []string) *__GeneralLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__GeneralLog_Updater) ExtraJson_NotIn(ins []string) *__GeneralLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__GeneralLog_Updater) ExtraJson_Like(val string) *__GeneralLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__GeneralLog_Updater) ExtraJson_Eq(val string) *__GeneralLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__GeneralLog_Updater) ExtraJson_NotEq(val string) *__GeneralLog_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__GeneralLog_Selector) ExtraJson_In(ins []string) *__GeneralLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__GeneralLog_Selector) ExtraJson_NotIn(ins []string) *__GeneralLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__GeneralLog_Selector) ExtraJson_Like(val string) *__GeneralLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__GeneralLog_Selector) ExtraJson_Eq(val string) *__GeneralLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__GeneralLog_Selector) ExtraJson_NotEq(val string) *__GeneralLog_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 /// End of wheres for selectors , updators, deletor
 
@@ -1817,12 +1999,12 @@ func (d *__DirectToMessage_Selector) SourceEnumId_GE(val int) *__DirectToMessage
 
 //ints
 
-func (u *__DirectToMessage_Updater) Id(newVal int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) Id(newVal int) *__GeneralLog_Updater {
 	u.updates[" Id = ? "] = newVal
 	return u
 }
 
-func (u *__DirectToMessage_Updater) Id_Increment(count int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) Id_Increment(count int) *__GeneralLog_Updater {
 	if count > 0 {
 		u.updates[" Id = Id+? "] = count
 	}
@@ -1838,18 +2020,18 @@ func (u *__DirectToMessage_Updater) Id_Increment(count int) *__DirectToMessage_U
 
 //ints
 
-func (u *__DirectToMessage_Updater) ChatId(newVal int) *__DirectToMessage_Updater {
-	u.updates[" ChatId = ? "] = newVal
+func (u *__GeneralLog_Updater) ToUserId(newVal int) *__GeneralLog_Updater {
+	u.updates[" ToUserId = ? "] = newVal
 	return u
 }
 
-func (u *__DirectToMessage_Updater) ChatId_Increment(count int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) ToUserId_Increment(count int) *__GeneralLog_Updater {
 	if count > 0 {
-		u.updates[" ChatId = ChatId+? "] = count
+		u.updates[" ToUserId = ToUserId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" ChatId = ChatId-? "] = -(count) //make it positive
+		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1859,18 +2041,18 @@ func (u *__DirectToMessage_Updater) ChatId_Increment(count int) *__DirectToMessa
 
 //ints
 
-func (u *__DirectToMessage_Updater) MessageId(newVal int) *__DirectToMessage_Updater {
-	u.updates[" MessageId = ? "] = newVal
+func (u *__GeneralLog_Updater) TargetId(newVal int) *__GeneralLog_Updater {
+	u.updates[" TargetId = ? "] = newVal
 	return u
 }
 
-func (u *__DirectToMessage_Updater) MessageId_Increment(count int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) TargetId_Increment(count int) *__GeneralLog_Updater {
 	if count > 0 {
-		u.updates[" MessageId = MessageId+? "] = count
+		u.updates[" TargetId = TargetId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" MessageId = MessageId-? "] = -(count) //make it positive
+		u.updates[" TargetId = TargetId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1880,18 +2062,18 @@ func (u *__DirectToMessage_Updater) MessageId_Increment(count int) *__DirectToMe
 
 //ints
 
-func (u *__DirectToMessage_Updater) Seq(newVal int) *__DirectToMessage_Updater {
-	u.updates[" Seq = ? "] = newVal
+func (u *__GeneralLog_Updater) LogTypeId(newVal int) *__GeneralLog_Updater {
+	u.updates[" LogTypeId = ? "] = newVal
 	return u
 }
 
-func (u *__DirectToMessage_Updater) Seq_Increment(count int) *__DirectToMessage_Updater {
+func (u *__GeneralLog_Updater) LogTypeId_Increment(count int) *__GeneralLog_Updater {
 	if count > 0 {
-		u.updates[" Seq = Seq+? "] = count
+		u.updates[" LogTypeId = LogTypeId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" Seq = Seq-? "] = -(count) //make it positive
+		u.updates[" LogTypeId = LogTypeId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1901,18 +2083,30 @@ func (u *__DirectToMessage_Updater) Seq_Increment(count int) *__DirectToMessage_
 
 //ints
 
-func (u *__DirectToMessage_Updater) SourceEnumId(newVal int) *__DirectToMessage_Updater {
-	u.updates[" SourceEnumId = ? "] = newVal
+//string
+
+//ints
+
+//string
+func (u *__GeneralLog_Updater) ExtraJson(newVal string) *__GeneralLog_Updater {
+	u.updates[" ExtraJson = ? "] = newVal
 	return u
 }
 
-func (u *__DirectToMessage_Updater) SourceEnumId_Increment(count int) *__DirectToMessage_Updater {
+//ints
+
+func (u *__GeneralLog_Updater) CreatedMs(newVal int) *__GeneralLog_Updater {
+	u.updates[" CreatedMs = ? "] = newVal
+	return u
+}
+
+func (u *__GeneralLog_Updater) CreatedMs_Increment(count int) *__GeneralLog_Updater {
 	if count > 0 {
-		u.updates[" SourceEnumId = SourceEnumId+? "] = count
+		u.updates[" CreatedMs = CreatedMs+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" SourceEnumId = SourceEnumId-? "] = -(count) //make it positive
+		u.updates[" CreatedMs = CreatedMs-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1925,96 +2119,126 @@ func (u *__DirectToMessage_Updater) SourceEnumId_Increment(count int) *__DirectT
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__DirectToMessage_Selector) OrderBy_Id_Desc() *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) OrderBy_Id_Desc() *__GeneralLog_Selector {
 	u.orderBy = " ORDER BY Id DESC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_Id_Asc() *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) OrderBy_Id_Asc() *__GeneralLog_Selector {
 	u.orderBy = " ORDER BY Id ASC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Select_Id() *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) Select_Id() *__GeneralLog_Selector {
 	u.selectCol = "Id"
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_ChatId_Desc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY ChatId DESC "
+func (u *__GeneralLog_Selector) OrderBy_ToUserId_Desc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY ToUserId DESC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_ChatId_Asc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY ChatId ASC "
+func (u *__GeneralLog_Selector) OrderBy_ToUserId_Asc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY ToUserId ASC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Select_ChatId() *__DirectToMessage_Selector {
-	u.selectCol = "ChatId"
+func (u *__GeneralLog_Selector) Select_ToUserId() *__GeneralLog_Selector {
+	u.selectCol = "ToUserId"
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_MessageId_Desc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY MessageId DESC "
+func (u *__GeneralLog_Selector) OrderBy_TargetId_Desc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY TargetId DESC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_MessageId_Asc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY MessageId ASC "
+func (u *__GeneralLog_Selector) OrderBy_TargetId_Asc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY TargetId ASC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Select_MessageId() *__DirectToMessage_Selector {
-	u.selectCol = "MessageId"
+func (u *__GeneralLog_Selector) Select_TargetId() *__GeneralLog_Selector {
+	u.selectCol = "TargetId"
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_Seq_Desc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY Seq DESC "
+func (u *__GeneralLog_Selector) OrderBy_LogTypeId_Desc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY LogTypeId DESC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_Seq_Asc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY Seq ASC "
+func (u *__GeneralLog_Selector) OrderBy_LogTypeId_Asc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY LogTypeId ASC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Select_Seq() *__DirectToMessage_Selector {
-	u.selectCol = "Seq"
+func (u *__GeneralLog_Selector) Select_LogTypeId() *__GeneralLog_Selector {
+	u.selectCol = "LogTypeId"
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_SourceEnumId_Desc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY SourceEnumId DESC "
+func (u *__GeneralLog_Selector) OrderBy_ExtraPB_Desc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY ExtraPB DESC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_SourceEnumId_Asc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY SourceEnumId ASC "
+func (u *__GeneralLog_Selector) OrderBy_ExtraPB_Asc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY ExtraPB ASC "
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Select_SourceEnumId() *__DirectToMessage_Selector {
-	u.selectCol = "SourceEnumId"
+func (u *__GeneralLog_Selector) Select_ExtraPB() *__GeneralLog_Selector {
+	u.selectCol = "ExtraPB"
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Limit(num int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) OrderBy_ExtraJson_Desc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY ExtraJson DESC "
+	return u
+}
+
+func (u *__GeneralLog_Selector) OrderBy_ExtraJson_Asc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY ExtraJson ASC "
+	return u
+}
+
+func (u *__GeneralLog_Selector) Select_ExtraJson() *__GeneralLog_Selector {
+	u.selectCol = "ExtraJson"
+	return u
+}
+
+func (u *__GeneralLog_Selector) OrderBy_CreatedMs_Desc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY CreatedMs DESC "
+	return u
+}
+
+func (u *__GeneralLog_Selector) OrderBy_CreatedMs_Asc() *__GeneralLog_Selector {
+	u.orderBy = " ORDER BY CreatedMs ASC "
+	return u
+}
+
+func (u *__GeneralLog_Selector) Select_CreatedMs() *__GeneralLog_Selector {
+	u.selectCol = "CreatedMs"
+	return u
+}
+
+func (u *__GeneralLog_Selector) Limit(num int) *__GeneralLog_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__DirectToMessage_Selector) Offset(num int) *__DirectToMessage_Selector {
+func (u *__GeneralLog_Selector) Offset(num int) *__GeneralLog_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__DirectToMessage_Selector) _stoSql() (string, []interface{}) {
+func (u *__GeneralLog_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
-	sqlstr := "SELECT " + u.selectCol + " FROM ms.direct_to_message"
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.general_log"
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -2034,14 +2258,14 @@ func (u *__DirectToMessage_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__DirectToMessage_Selector) GetRow(db *sqlx.DB) (*DirectToMessage, error) {
+func (u *__GeneralLog_Selector) GetRow(db *sqlx.DB) (*GeneralLog, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &DirectToMessage{}
+	row := &GeneralLog{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -2051,19 +2275,19 @@ func (u *__DirectToMessage_Selector) GetRow(db *sqlx.DB) (*DirectToMessage, erro
 
 	row._exists = true
 
-	OnDirectToMessage_LoadOne(row)
+	OnGeneralLog_LoadOne(row)
 
 	return row, nil
 }
 
-func (u *__DirectToMessage_Selector) GetRows(db *sqlx.DB) ([]*DirectToMessage, error) {
+func (u *__GeneralLog_Selector) GetRows(db *sqlx.DB) ([]*GeneralLog, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*DirectToMessage
+	var rows []*GeneralLog
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -2079,20 +2303,20 @@ func (u *__DirectToMessage_Selector) GetRows(db *sqlx.DB) ([]*DirectToMessage, e
 		rows[i]._exists = true
 	}
 
-	OnDirectToMessage_LoadMany(rows)
+	OnGeneralLog_LoadMany(rows)
 
 	return rows, nil
 }
 
 //dep use GetRows()
-func (u *__DirectToMessage_Selector) GetRows2(db *sqlx.DB) ([]DirectToMessage, error) {
+func (u *__GeneralLog_Selector) GetRows2(db *sqlx.DB) ([]GeneralLog, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*DirectToMessage
+	var rows []*GeneralLog
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -2108,9 +2332,9 @@ func (u *__DirectToMessage_Selector) GetRows2(db *sqlx.DB) ([]DirectToMessage, e
 		rows[i]._exists = true
 	}
 
-	OnDirectToMessage_LoadMany(rows)
+	OnGeneralLog_LoadMany(rows)
 
-	rows2 := make([]DirectToMessage, len(rows))
+	rows2 := make([]GeneralLog, len(rows))
 	for i := 0; i < len(rows); i++ {
 		cp := *rows[i]
 		rows2[i] = cp
@@ -2119,7 +2343,7 @@ func (u *__DirectToMessage_Selector) GetRows2(db *sqlx.DB) ([]DirectToMessage, e
 	return rows2, nil
 }
 
-func (u *__DirectToMessage_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__GeneralLog_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2137,7 +2361,7 @@ func (u *__DirectToMessage_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__DirectToMessage_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__GeneralLog_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2155,7 +2379,7 @@ func (u *__DirectToMessage_Selector) GetStringSlice(db *sqlx.DB) ([]string, erro
 	return rows, nil
 }
 
-func (u *__DirectToMessage_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__GeneralLog_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2173,7 +2397,7 @@ func (u *__DirectToMessage_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__DirectToMessage_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__GeneralLog_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2192,7 +2416,7 @@ func (u *__DirectToMessage_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__DirectToMessage_Updater) Update(db XODB) (int, error) {
+func (u *__GeneralLog_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -2209,7 +2433,7 @@ func (u *__DirectToMessage_Updater) Update(db XODB) (int, error) {
 	allArgs = append(allArgs, updateArgs...)
 	allArgs = append(allArgs, whereArgs...)
 
-	sqlstr := `UPDATE ms.direct_to_message SET ` + sqlUpdate
+	sqlstr := `UPDATE ms.general_log SET ` + sqlUpdate
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -2231,7 +2455,7 @@ func (u *__DirectToMessage_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__DirectToMessage_Deleter) Delete(db XODB) (int, error) {
+func (d *__GeneralLog_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -2244,7 +2468,7 @@ func (d *__DirectToMessage_Deleter) Delete(db XODB) (int, error) {
 		args = append(args, w.args...)
 	}
 
-	sqlstr := "DELETE FROM ms.direct_to_message WHERE " + wheresStr
+	sqlstr := "DELETE FROM ms.general_log WHERE " + wheresStr
 
 	// run query
 	XOLog(sqlstr, args)
@@ -2264,19 +2488,19 @@ func (d *__DirectToMessage_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  DirectToMessage ////////////////
-func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
+///////////////////////// Mass insert - replace for  GeneralLog ////////////////
+func MassInsert_GeneralLog(rows []GeneralLog, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "INSERT INTO ms.direct_to_message (" +
-		"Id, ChatId, Seq, SourceEnumId" +
+	sqlstr := "INSERT INTO ms.general_log (" +
+		"ToUserId, TargetId, LogTypeId, ExtraPB, ExtraJson, CreatedMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2284,10 +2508,12 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.Id)
-		vals = append(vals, row.ChatId)
-		vals = append(vals, row.Seq)
-		vals = append(vals, row.SourceEnumId)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.LogTypeId)
+		vals = append(vals, row.ExtraPB)
+		vals = append(vals, row.ExtraJson)
+		vals = append(vals, row.CreatedMs)
 
 	}
 
@@ -2302,15 +2528,15 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	return nil
 }
 
-func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
+func MassReplace_GeneralLog(rows []GeneralLog, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "REPLACE INTO ms.direct_to_message (" +
-		"Id, ChatId, Seq, SourceEnumId" +
+	sqlstr := "REPLACE INTO ms.general_log (" +
+		"ToUserId, TargetId, LogTypeId, ExtraPB, ExtraJson, CreatedMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2318,10 +2544,12 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.Id)
-		vals = append(vals, row.ChatId)
-		vals = append(vals, row.Seq)
-		vals = append(vals, row.SourceEnumId)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.LogTypeId)
+		vals = append(vals, row.ExtraPB)
+		vals = append(vals, row.ExtraJson)
+		vals = append(vals, row.CreatedMs)
 
 	}
 
@@ -2348,103 +2576,35 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 //
 
-// DirectToMessageById retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
 //
-// Generated from index 'Id'.
-func DirectToMessageById(db XODB, id int) (*DirectToMessage, error) {
+
+//
+
+// GeneralLogById retrieves a row from 'ms.general_log' as a GeneralLog.
+//
+// Generated from index 'general_log_Id_pkey'.
+func GeneralLogById(db XODB, id int) (*GeneralLog, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ChatId, MessageId, Seq, SourceEnumId ` +
-		`FROM ms.direct_to_message ` +
+		`Id, ToUserId, TargetId, LogTypeId, ExtraPB, ExtraJson, CreatedMs ` +
+		`FROM ms.general_log ` +
 		`WHERE Id = ?`
 
 	// run query
 	XOLog(sqlstr, id)
-	dtm := DirectToMessage{
+	gl := GeneralLog{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
+	err = db.QueryRow(sqlstr, id).Scan(&gl.Id, &gl.ToUserId, &gl.TargetId, &gl.LogTypeId, &gl.ExtraPB, &gl.ExtraJson, &gl.CreatedMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
 	}
 
-	OnDirectToMessage_LoadOne(&dtm)
+	OnGeneralLog_LoadOne(&gl)
 
-	return &dtm, nil
-}
-
-// DirectToMessagesBySeq retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
-//
-// Generated from index 'Seq'.
-func DirectToMessagesBySeq(db XODB, seq int) ([]*DirectToMessage, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ChatId, MessageId, Seq, SourceEnumId ` +
-		`FROM ms.direct_to_message ` +
-		`WHERE Seq = ?`
-
-	// run query
-	XOLog(sqlstr, seq)
-	q, err := db.Query(sqlstr, seq)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*DirectToMessage{}
-	for q.Next() {
-		dtm := DirectToMessage{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &dtm)
-	}
-
-	OnDirectToMessage_LoadMany(res)
-
-	return res, nil
-}
-
-// DirectToMessageByMessageId retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
-//
-// Generated from index 'direct_to_message_MessageId_pkey'.
-func DirectToMessageByMessageId(db XODB, messageId int) (*DirectToMessage, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ChatId, MessageId, Seq, SourceEnumId ` +
-		`FROM ms.direct_to_message ` +
-		`WHERE MessageId = ?`
-
-	// run query
-	XOLog(sqlstr, messageId)
-	dtm := DirectToMessage{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, messageId).Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnDirectToMessage_LoadOne(&dtm)
-
-	return &dtm, nil
+	return &gl, nil
 }

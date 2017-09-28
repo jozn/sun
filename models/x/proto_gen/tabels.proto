@@ -105,6 +105,15 @@ message PB_FollowingListMemberHistory {
     int64 UpdatedTimeMs = 11;
     int32 FollowId = 13;
 }
+message PB_GeneralLog {
+    int64 Id = 1;
+    int32 ToUserId = 3;
+    int32 TargetId = 5;
+    int32 LogTypeId = 7;
+    ???? ExtraPB = 9;
+    string ExtraJson = 11;
+    int64 CreatedMs = 13;
+}
 message PB_Group {
     int64 GroupId = 1;
     string GroupName = 3;
@@ -121,7 +130,7 @@ message PB_GroupMember {
     string GroupKey = 5;
     int32 UserId = 7;
     int32 ByUserId = 9;
-    int32 GroupRoleEnum = 11;
+    int32 GroupRoleEnumId = 11;
     int32 CreatedTime = 13;
 }
 message PB_GroupMessage {
@@ -357,6 +366,9 @@ message PB_Session {
     int32 AppVersion = 21;
     int32 UpdatedTime = 23;
     int32 CreatedTime = 25;
+    int64 LastSyncDirectUpdateId = 27;
+    int64 LastSyncGeneralUpdateId = 29;
+    int64 LastSyncNotifyUpdateId = 31;
 }
 message PB_Tag {
     int32 Id = 1;

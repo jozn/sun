@@ -269,6 +269,30 @@ type FollowingListMemberHistory struct {
 	FollowId: 0,
 */
 
+// GeneralLog 'ms.general_log'.
+type GeneralLog struct {
+	Id        int
+	ToUserId  int
+	TargetId  int
+	LogTypeId int
+	ExtraPB   []byte
+	ExtraJson string
+	CreatedMs int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &GeneralLog {
+	Id: 0,
+	ToUserId: 0,
+	TargetId: 0,
+	LogTypeId: 0,
+	ExtraPB: UNKNOWN,
+	ExtraJson: "",
+	CreatedMs: 0,
+*/
+
 // Group 'ms.group'.
 type Group struct {
 	GroupId          int
@@ -297,13 +321,13 @@ type Group struct {
 
 // GroupMember 'ms.group_member'.
 type GroupMember struct {
-	Id            int
-	GroupId       int
-	GroupKey      string
-	UserId        int
-	ByUserId      int
-	GroupRoleEnum int
-	CreatedTime   int
+	Id              int
+	GroupId         int
+	GroupKey        string
+	UserId          int
+	ByUserId        int
+	GroupRoleEnumId int
+	CreatedTime     int
 
 	_exists, _deleted bool
 }
@@ -315,7 +339,7 @@ type GroupMember struct {
 	GroupKey: "",
 	UserId: 0,
 	ByUserId: 0,
-	GroupRoleEnum: 0,
+	GroupRoleEnumId: 0,
 	CreatedTime: 0,
 */
 
@@ -879,19 +903,22 @@ type SearchClicked struct {
 
 // Session 'ms.session'.
 type Session struct {
-	Id                 int
-	UserId             int
-	SessionUuid        string
-	ClientUuid         string
-	DeviceUuid         string
-	LastActivityTime   int
-	LastIpAddress      string
-	LastWifiMacAddress string
-	LastNetworkType    string
-	LastNetworkTypeId  int
-	AppVersion         int
-	UpdatedTime        int
-	CreatedTime        int
+	Id                      int
+	UserId                  int
+	SessionUuid             string
+	ClientUuid              string
+	DeviceUuid              string
+	LastActivityTime        int
+	LastIpAddress           string
+	LastWifiMacAddress      string
+	LastNetworkType         string
+	LastNetworkTypeId       int
+	AppVersion              int
+	UpdatedTime             int
+	CreatedTime             int
+	LastSyncDirectUpdateId  int
+	LastSyncGeneralUpdateId int
+	LastSyncNotifyUpdateId  int
 
 	_exists, _deleted bool
 }
@@ -911,6 +938,9 @@ type Session struct {
 	AppVersion: 0,
 	UpdatedTime: 0,
 	CreatedTime: 0,
+	LastSyncDirectUpdateId: 0,
+	LastSyncGeneralUpdateId: 0,
+	LastSyncNotifyUpdateId: 0,
 */
 
 // Tag 'ms.tags'.

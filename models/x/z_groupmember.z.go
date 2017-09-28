@@ -16,13 +16,13 @@ import (
 
 // Manualy copy this to project
 type GroupMember__ struct {
-	Id            int    `json:"Id"`            // Id -
-	GroupId       int    `json:"GroupId"`       // GroupId -
-	GroupKey      string `json:"GroupKey"`      // GroupKey -
-	UserId        int    `json:"UserId"`        // UserId -
-	ByUserId      int    `json:"ByUserId"`      // ByUserId -
-	GroupRoleEnum int    `json:"GroupRoleEnum"` // GroupRoleEnum -
-	CreatedTime   int    `json:"CreatedTime"`   // CreatedTime -
+	Id              int    `json:"Id"`              // Id -
+	GroupId         int    `json:"GroupId"`         // GroupId -
+	GroupKey        string `json:"GroupKey"`        // GroupKey -
+	UserId          int    `json:"UserId"`          // UserId -
+	ByUserId        int    `json:"ByUserId"`        // ByUserId -
+	GroupRoleEnumId int    `json:"GroupRoleEnumId"` // GroupRoleEnumId -
+	CreatedTime     int    `json:"CreatedTime"`     // CreatedTime -
 
 	// xo fields
 	_exists, _deleted bool
@@ -49,14 +49,14 @@ func (gm *GroupMember) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.group_member (` +
-		`GroupId, GroupKey, UserId, ByUserId, GroupRoleEnum, CreatedTime` +
+		`GroupId, GroupKey, UserId, ByUserId, GroupRoleEnumId, CreatedTime` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnum, gm.CreatedTime)
-	res, err := db.Exec(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnum, gm.CreatedTime)
+	XOLog(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnumId, gm.CreatedTime)
+	res, err := db.Exec(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnumId, gm.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -85,14 +85,14 @@ func (gm *GroupMember) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.group_member (` +
-		`GroupId, GroupKey, UserId, ByUserId, GroupRoleEnum, CreatedTime` +
+		`GroupId, GroupKey, UserId, ByUserId, GroupRoleEnumId, CreatedTime` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnum, gm.CreatedTime)
-	res, err := db.Exec(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnum, gm.CreatedTime)
+	XOLog(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnumId, gm.CreatedTime)
+	res, err := db.Exec(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnumId, gm.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -130,12 +130,12 @@ func (gm *GroupMember) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.group_member SET ` +
-		`GroupId = ?, GroupKey = ?, UserId = ?, ByUserId = ?, GroupRoleEnum = ?, CreatedTime = ?` +
+		`GroupId = ?, GroupKey = ?, UserId = ?, ByUserId = ?, GroupRoleEnumId = ?, CreatedTime = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnum, gm.CreatedTime, gm.Id)
-	_, err = db.Exec(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnum, gm.CreatedTime, gm.Id)
+	XOLog(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnumId, gm.CreatedTime, gm.Id)
+	_, err = db.Exec(sqlstr, gm.GroupId, gm.GroupKey, gm.UserId, gm.ByUserId, gm.GroupRoleEnumId, gm.CreatedTime, gm.Id)
 
 	XOLogErr(err)
 	OnGroupMember_AfterUpdate(gm)
@@ -656,106 +656,106 @@ func (d *__GroupMember_Deleter) ByUserId_GE(val int) *__GroupMember_Deleter {
 	return d
 }
 
-func (u *__GroupMember_Deleter) GroupRoleEnum_In(ins []int) *__GroupMember_Deleter {
+func (u *__GroupMember_Deleter) GroupRoleEnumId_In(ins []int) *__GroupMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " GroupRoleEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GroupRoleEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__GroupMember_Deleter) GroupRoleEnum_Ins(ins ...int) *__GroupMember_Deleter {
+func (u *__GroupMember_Deleter) GroupRoleEnumId_Ins(ins ...int) *__GroupMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " GroupRoleEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GroupRoleEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__GroupMember_Deleter) GroupRoleEnum_NotIn(ins []int) *__GroupMember_Deleter {
+func (u *__GroupMember_Deleter) GroupRoleEnumId_NotIn(ins []int) *__GroupMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " GroupRoleEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GroupRoleEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__GroupMember_Deleter) GroupRoleEnum_Eq(val int) *__GroupMember_Deleter {
+func (d *__GroupMember_Deleter) GroupRoleEnumId_Eq(val int) *__GroupMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum = ? "
+	w.condition = " GroupRoleEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Deleter) GroupRoleEnum_NotEq(val int) *__GroupMember_Deleter {
+func (d *__GroupMember_Deleter) GroupRoleEnumId_NotEq(val int) *__GroupMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum != ? "
+	w.condition = " GroupRoleEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Deleter) GroupRoleEnum_LT(val int) *__GroupMember_Deleter {
+func (d *__GroupMember_Deleter) GroupRoleEnumId_LT(val int) *__GroupMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum < ? "
+	w.condition = " GroupRoleEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Deleter) GroupRoleEnum_LE(val int) *__GroupMember_Deleter {
+func (d *__GroupMember_Deleter) GroupRoleEnumId_LE(val int) *__GroupMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum <= ? "
+	w.condition = " GroupRoleEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Deleter) GroupRoleEnum_GT(val int) *__GroupMember_Deleter {
+func (d *__GroupMember_Deleter) GroupRoleEnumId_GT(val int) *__GroupMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum > ? "
+	w.condition = " GroupRoleEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Deleter) GroupRoleEnum_GE(val int) *__GroupMember_Deleter {
+func (d *__GroupMember_Deleter) GroupRoleEnumId_GE(val int) *__GroupMember_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum >= ? "
+	w.condition = " GroupRoleEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1292,106 +1292,106 @@ func (d *__GroupMember_Updater) ByUserId_GE(val int) *__GroupMember_Updater {
 	return d
 }
 
-func (u *__GroupMember_Updater) GroupRoleEnum_In(ins []int) *__GroupMember_Updater {
+func (u *__GroupMember_Updater) GroupRoleEnumId_In(ins []int) *__GroupMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " GroupRoleEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GroupRoleEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__GroupMember_Updater) GroupRoleEnum_Ins(ins ...int) *__GroupMember_Updater {
+func (u *__GroupMember_Updater) GroupRoleEnumId_Ins(ins ...int) *__GroupMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " GroupRoleEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GroupRoleEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__GroupMember_Updater) GroupRoleEnum_NotIn(ins []int) *__GroupMember_Updater {
+func (u *__GroupMember_Updater) GroupRoleEnumId_NotIn(ins []int) *__GroupMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " GroupRoleEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GroupRoleEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__GroupMember_Updater) GroupRoleEnum_Eq(val int) *__GroupMember_Updater {
+func (d *__GroupMember_Updater) GroupRoleEnumId_Eq(val int) *__GroupMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum = ? "
+	w.condition = " GroupRoleEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Updater) GroupRoleEnum_NotEq(val int) *__GroupMember_Updater {
+func (d *__GroupMember_Updater) GroupRoleEnumId_NotEq(val int) *__GroupMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum != ? "
+	w.condition = " GroupRoleEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Updater) GroupRoleEnum_LT(val int) *__GroupMember_Updater {
+func (d *__GroupMember_Updater) GroupRoleEnumId_LT(val int) *__GroupMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum < ? "
+	w.condition = " GroupRoleEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Updater) GroupRoleEnum_LE(val int) *__GroupMember_Updater {
+func (d *__GroupMember_Updater) GroupRoleEnumId_LE(val int) *__GroupMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum <= ? "
+	w.condition = " GroupRoleEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Updater) GroupRoleEnum_GT(val int) *__GroupMember_Updater {
+func (d *__GroupMember_Updater) GroupRoleEnumId_GT(val int) *__GroupMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum > ? "
+	w.condition = " GroupRoleEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Updater) GroupRoleEnum_GE(val int) *__GroupMember_Updater {
+func (d *__GroupMember_Updater) GroupRoleEnumId_GE(val int) *__GroupMember_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum >= ? "
+	w.condition = " GroupRoleEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1928,106 +1928,106 @@ func (d *__GroupMember_Selector) ByUserId_GE(val int) *__GroupMember_Selector {
 	return d
 }
 
-func (u *__GroupMember_Selector) GroupRoleEnum_In(ins []int) *__GroupMember_Selector {
+func (u *__GroupMember_Selector) GroupRoleEnumId_In(ins []int) *__GroupMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " GroupRoleEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GroupRoleEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__GroupMember_Selector) GroupRoleEnum_Ins(ins ...int) *__GroupMember_Selector {
+func (u *__GroupMember_Selector) GroupRoleEnumId_Ins(ins ...int) *__GroupMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " GroupRoleEnum IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GroupRoleEnumId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__GroupMember_Selector) GroupRoleEnum_NotIn(ins []int) *__GroupMember_Selector {
+func (u *__GroupMember_Selector) GroupRoleEnumId_NotIn(ins []int) *__GroupMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " GroupRoleEnum NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GroupRoleEnumId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__GroupMember_Selector) GroupRoleEnum_Eq(val int) *__GroupMember_Selector {
+func (d *__GroupMember_Selector) GroupRoleEnumId_Eq(val int) *__GroupMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum = ? "
+	w.condition = " GroupRoleEnumId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Selector) GroupRoleEnum_NotEq(val int) *__GroupMember_Selector {
+func (d *__GroupMember_Selector) GroupRoleEnumId_NotEq(val int) *__GroupMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum != ? "
+	w.condition = " GroupRoleEnumId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Selector) GroupRoleEnum_LT(val int) *__GroupMember_Selector {
+func (d *__GroupMember_Selector) GroupRoleEnumId_LT(val int) *__GroupMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum < ? "
+	w.condition = " GroupRoleEnumId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Selector) GroupRoleEnum_LE(val int) *__GroupMember_Selector {
+func (d *__GroupMember_Selector) GroupRoleEnumId_LE(val int) *__GroupMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum <= ? "
+	w.condition = " GroupRoleEnumId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Selector) GroupRoleEnum_GT(val int) *__GroupMember_Selector {
+func (d *__GroupMember_Selector) GroupRoleEnumId_GT(val int) *__GroupMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum > ? "
+	w.condition = " GroupRoleEnumId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__GroupMember_Selector) GroupRoleEnum_GE(val int) *__GroupMember_Selector {
+func (d *__GroupMember_Selector) GroupRoleEnumId_GE(val int) *__GroupMember_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " GroupRoleEnum >= ? "
+	w.condition = " GroupRoleEnumId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2424,18 +2424,18 @@ func (u *__GroupMember_Updater) ByUserId_Increment(count int) *__GroupMember_Upd
 
 //ints
 
-func (u *__GroupMember_Updater) GroupRoleEnum(newVal int) *__GroupMember_Updater {
-	u.updates[" GroupRoleEnum = ? "] = newVal
+func (u *__GroupMember_Updater) GroupRoleEnumId(newVal int) *__GroupMember_Updater {
+	u.updates[" GroupRoleEnumId = ? "] = newVal
 	return u
 }
 
-func (u *__GroupMember_Updater) GroupRoleEnum_Increment(count int) *__GroupMember_Updater {
+func (u *__GroupMember_Updater) GroupRoleEnumId_Increment(count int) *__GroupMember_Updater {
 	if count > 0 {
-		u.updates[" GroupRoleEnum = GroupRoleEnum+? "] = count
+		u.updates[" GroupRoleEnumId = GroupRoleEnumId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" GroupRoleEnum = GroupRoleEnum-? "] = -(count) //make it positive
+		u.updates[" GroupRoleEnumId = GroupRoleEnumId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -2544,18 +2544,18 @@ func (u *__GroupMember_Selector) Select_ByUserId() *__GroupMember_Selector {
 	return u
 }
 
-func (u *__GroupMember_Selector) OrderBy_GroupRoleEnum_Desc() *__GroupMember_Selector {
-	u.orderBy = " ORDER BY GroupRoleEnum DESC "
+func (u *__GroupMember_Selector) OrderBy_GroupRoleEnumId_Desc() *__GroupMember_Selector {
+	u.orderBy = " ORDER BY GroupRoleEnumId DESC "
 	return u
 }
 
-func (u *__GroupMember_Selector) OrderBy_GroupRoleEnum_Asc() *__GroupMember_Selector {
-	u.orderBy = " ORDER BY GroupRoleEnum ASC "
+func (u *__GroupMember_Selector) OrderBy_GroupRoleEnumId_Asc() *__GroupMember_Selector {
+	u.orderBy = " ORDER BY GroupRoleEnumId ASC "
 	return u
 }
 
-func (u *__GroupMember_Selector) Select_GroupRoleEnum() *__GroupMember_Selector {
-	u.selectCol = "GroupRoleEnum"
+func (u *__GroupMember_Selector) Select_GroupRoleEnumId() *__GroupMember_Selector {
+	u.selectCol = "GroupRoleEnumId"
 	return u
 }
 
@@ -2850,7 +2850,7 @@ func MassInsert_GroupMember(rows []GroupMember, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.group_member (" +
-		"GroupId, GroupKey, UserId, ByUserId, GroupRoleEnum, CreatedTime" +
+		"GroupId, GroupKey, UserId, ByUserId, GroupRoleEnumId, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -2862,7 +2862,7 @@ func MassInsert_GroupMember(rows []GroupMember, db XODB) error {
 		vals = append(vals, row.GroupKey)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.ByUserId)
-		vals = append(vals, row.GroupRoleEnum)
+		vals = append(vals, row.GroupRoleEnumId)
 		vals = append(vals, row.CreatedTime)
 
 	}
@@ -2886,7 +2886,7 @@ func MassReplace_GroupMember(rows []GroupMember, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.group_member (" +
-		"GroupId, GroupKey, UserId, ByUserId, GroupRoleEnum, CreatedTime" +
+		"GroupId, GroupKey, UserId, ByUserId, GroupRoleEnumId, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -2898,7 +2898,7 @@ func MassReplace_GroupMember(rows []GroupMember, db XODB) error {
 		vals = append(vals, row.GroupKey)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.ByUserId)
-		vals = append(vals, row.GroupRoleEnum)
+		vals = append(vals, row.GroupRoleEnumId)
 		vals = append(vals, row.CreatedTime)
 
 	}
@@ -2938,7 +2938,7 @@ func GroupMemberById(db XODB, id int) (*GroupMember, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, GroupId, GroupKey, UserId, ByUserId, GroupRoleEnum, CreatedTime ` +
+		`Id, GroupId, GroupKey, UserId, ByUserId, GroupRoleEnumId, CreatedTime ` +
 		`FROM ms.group_member ` +
 		`WHERE Id = ?`
 
@@ -2948,7 +2948,7 @@ func GroupMemberById(db XODB, id int) (*GroupMember, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&gm.Id, &gm.GroupId, &gm.GroupKey, &gm.UserId, &gm.ByUserId, &gm.GroupRoleEnum, &gm.CreatedTime)
+	err = db.QueryRow(sqlstr, id).Scan(&gm.Id, &gm.GroupId, &gm.GroupKey, &gm.UserId, &gm.ByUserId, &gm.GroupRoleEnumId, &gm.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

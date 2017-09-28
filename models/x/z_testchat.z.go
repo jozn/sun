@@ -3850,49 +3850,6 @@ func MassReplace_TestChat(rows []TestChat, db XODB) error {
 
 //
 
-// TestChatsByUserIdTimeMs retrieves a row from 'ms.test_chat' as a TestChat.
-//
-// Generated from index 'UserId'.
-func TestChatsByUserIdTimeMs(db XODB, userId int, timeMs int) ([]*TestChat, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, Id4, TimeMs, Text, Name, UserId, C2, C3, C4, C5 ` +
-		`FROM ms.test_chat ` +
-		`WHERE UserId = ? AND TimeMs = ?`
-
-	// run query
-	XOLog(sqlstr, userId, timeMs)
-	q, err := db.Query(sqlstr, userId, timeMs)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*TestChat{}
-	for q.Next() {
-		tc := TestChat{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&tc.Id, &tc.Id4, &tc.TimeMs, &tc.Text, &tc.Name, &tc.UserId, &tc.C2, &tc.C3, &tc.C4, &tc.C5)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &tc)
-	}
-
-	OnTestChat_LoadMany(res)
-
-	return res, nil
-}
-
 // TestChatById4 retrieves a row from 'ms.test_chat' as a TestChat.
 //
 // Generated from index 'test_chat_Id4_pkey'.

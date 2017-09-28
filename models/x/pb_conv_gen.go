@@ -1,4 +1,6 @@
+
 package x
+
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -297,6 +299,33 @@ func PBConvPB_FollowingListMemberHistory_To_FollowingListMemberHistory ( o *Foll
 }
 */
 /*
+func PBConvPB__GeneralLog_To_GeneralLog( o *PB_GeneralLog) *GeneralLog {
+     n := &GeneralLog{
+      Id: int ( o.Id ),
+      ToUserId: int ( o.ToUserId ),
+      TargetId: int ( o.TargetId ),
+      LogTypeId: int ( o.LogTypeId ),
+      ExtraPB: []byte ( o.ExtraPB ),
+      ExtraJson: string ( o.ExtraJson ),
+      CreatedMs: int ( o.CreatedMs ),
+    }
+    return n
+}
+
+func PBConvPB_GeneralLog_To_GeneralLog ( o *GeneralLog) *PB_GeneralLog {
+     n := &PB_GeneralLog{
+      Id: int64 ( o.Id ),
+      ToUserId: int32 ( o.ToUserId ),
+      TargetId: int32 ( o.TargetId ),
+      LogTypeId: int32 ( o.LogTypeId ),
+      ExtraPB: []byte ( o.ExtraPB ),
+      ExtraJson: string ( o.ExtraJson ),
+      CreatedMs: int64 ( o.CreatedMs ),
+    }
+    return n
+}
+*/
+/*
 func PBConvPB__Group_To_Group( o *PB_Group) *Group {
      n := &Group{
       GroupId: int ( o.GroupId ),
@@ -333,7 +362,7 @@ func PBConvPB__GroupMember_To_GroupMember( o *PB_GroupMember) *GroupMember {
       GroupKey: string ( o.GroupKey ),
       UserId: int ( o.UserId ),
       ByUserId: int ( o.ByUserId ),
-      GroupRoleEnum: int ( o.GroupRoleEnum ),
+      GroupRoleEnumId: int ( o.GroupRoleEnumId ),
       CreatedTime: int ( o.CreatedTime ),
     }
     return n
@@ -346,7 +375,7 @@ func PBConvPB_GroupMember_To_GroupMember ( o *GroupMember) *PB_GroupMember {
       GroupKey: string ( o.GroupKey ),
       UserId: int32 ( o.UserId ),
       ByUserId: int32 ( o.ByUserId ),
-      GroupRoleEnum: int32 ( o.GroupRoleEnum ),
+      GroupRoleEnumId: int32 ( o.GroupRoleEnumId ),
       CreatedTime: int32 ( o.CreatedTime ),
     }
     return n
@@ -986,6 +1015,9 @@ func PBConvPB__Session_To_Session( o *PB_Session) *Session {
       AppVersion: int ( o.AppVersion ),
       UpdatedTime: int ( o.UpdatedTime ),
       CreatedTime: int ( o.CreatedTime ),
+      LastSyncDirectUpdateId: int ( o.LastSyncDirectUpdateId ),
+      LastSyncGeneralUpdateId: int ( o.LastSyncGeneralUpdateId ),
+      LastSyncNotifyUpdateId: int ( o.LastSyncNotifyUpdateId ),
     }
     return n
 }
@@ -1005,6 +1037,9 @@ func PBConvPB_Session_To_Session ( o *Session) *PB_Session {
       AppVersion: int32 ( o.AppVersion ),
       UpdatedTime: int32 ( o.UpdatedTime ),
       CreatedTime: int32 ( o.CreatedTime ),
+      LastSyncDirectUpdateId: int64 ( o.LastSyncDirectUpdateId ),
+      LastSyncGeneralUpdateId: int64 ( o.LastSyncGeneralUpdateId ),
+      LastSyncNotifyUpdateId: int64 ( o.LastSyncNotifyUpdateId ),
     }
     return n
 }
@@ -1089,7 +1124,7 @@ func PBConvPB_TestChat_To_TestChat ( o *TestChat) *PB_TestChat {
 }
 */
 /*
-func PBConvPB__User_To_User( o *PB_User) *UserView {n := &UserView{}
+func PBConvPB__User_To_User( o *PB_User) *User {n := &User{}
    n.Id = int ( o.Id )
    n.UserName = string ( o.UserName )
    n.UserNameLower = string ( o.UserNameLower )
@@ -1126,7 +1161,7 @@ func PBConvPB__User_To_User( o *PB_User) *UserView {n := &UserView{}
     return n
 }
 
-func PBConvPB_User_To_User ( o *UserView) *PB_User {n := &PB_User{}
+func PBConvPB_User_To_User ( o *User) *PB_User {n := &PB_User{}
    n.Id = int32 ( o.Id )
    n.UserName = string ( o.UserName )
    n.UserNameLower = string ( o.UserNameLower )

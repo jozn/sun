@@ -16,19 +16,22 @@ import (
 
 // Manualy copy this to project
 type Session__ struct {
-	Id                 int    `json:"Id"`                 // Id -
-	UserId             int    `json:"UserId"`             // UserId -
-	SessionUuid        string `json:"SessionUuid"`        // SessionUuid -
-	ClientUuid         string `json:"ClientUuid"`         // ClientUuid -
-	DeviceUuid         string `json:"DeviceUuid"`         // DeviceUuid -
-	LastActivityTime   int    `json:"LastActivityTime"`   // LastActivityTime -
-	LastIpAddress      string `json:"LastIpAddress"`      // LastIpAddress -
-	LastWifiMacAddress string `json:"LastWifiMacAddress"` // LastWifiMacAddress -
-	LastNetworkType    string `json:"LastNetworkType"`    // LastNetworkType -
-	LastNetworkTypeId  int    `json:"LastNetworkTypeId"`  // LastNetworkTypeId -
-	AppVersion         int    `json:"AppVersion"`         // AppVersion -
-	UpdatedTime        int    `json:"UpdatedTime"`        // UpdatedTime -
-	CreatedTime        int    `json:"CreatedTime"`        // CreatedTime -
+	Id                      int    `json:"Id"`                      // Id -
+	UserId                  int    `json:"UserId"`                  // UserId -
+	SessionUuid             string `json:"SessionUuid"`             // SessionUuid -
+	ClientUuid              string `json:"ClientUuid"`              // ClientUuid -
+	DeviceUuid              string `json:"DeviceUuid"`              // DeviceUuid -
+	LastActivityTime        int    `json:"LastActivityTime"`        // LastActivityTime -
+	LastIpAddress           string `json:"LastIpAddress"`           // LastIpAddress -
+	LastWifiMacAddress      string `json:"LastWifiMacAddress"`      // LastWifiMacAddress -
+	LastNetworkType         string `json:"LastNetworkType"`         // LastNetworkType -
+	LastNetworkTypeId       int    `json:"LastNetworkTypeId"`       // LastNetworkTypeId -
+	AppVersion              int    `json:"AppVersion"`              // AppVersion -
+	UpdatedTime             int    `json:"UpdatedTime"`             // UpdatedTime -
+	CreatedTime             int    `json:"CreatedTime"`             // CreatedTime -
+	LastSyncDirectUpdateId  int    `json:"LastSyncDirectUpdateId"`  // LastSyncDirectUpdateId -
+	LastSyncGeneralUpdateId int    `json:"LastSyncGeneralUpdateId"` // LastSyncGeneralUpdateId -
+	LastSyncNotifyUpdateId  int    `json:"LastSyncNotifyUpdateId"`  // LastSyncNotifyUpdateId -
 
 	// xo fields
 	_exists, _deleted bool
@@ -55,14 +58,14 @@ func (s *Session) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.session (` +
-		`UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime` +
+		`UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime, LastSyncDirectUpdateId, LastSyncGeneralUpdateId, LastSyncNotifyUpdateId` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime)
-	res, err := db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime)
+	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime, s.LastSyncDirectUpdateId, s.LastSyncGeneralUpdateId, s.LastSyncNotifyUpdateId)
+	res, err := db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime, s.LastSyncDirectUpdateId, s.LastSyncGeneralUpdateId, s.LastSyncNotifyUpdateId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -91,14 +94,14 @@ func (s *Session) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.session (` +
-		`UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime` +
+		`UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime, LastSyncDirectUpdateId, LastSyncGeneralUpdateId, LastSyncNotifyUpdateId` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime)
-	res, err := db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime)
+	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime, s.LastSyncDirectUpdateId, s.LastSyncGeneralUpdateId, s.LastSyncNotifyUpdateId)
+	res, err := db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime, s.LastSyncDirectUpdateId, s.LastSyncGeneralUpdateId, s.LastSyncNotifyUpdateId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -136,12 +139,12 @@ func (s *Session) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.session SET ` +
-		`UserId = ?, SessionUuid = ?, ClientUuid = ?, DeviceUuid = ?, LastActivityTime = ?, LastIpAddress = ?, LastWifiMacAddress = ?, LastNetworkType = ?, LastNetworkTypeId = ?, AppVersion = ?, UpdatedTime = ?, CreatedTime = ?` +
+		`UserId = ?, SessionUuid = ?, ClientUuid = ?, DeviceUuid = ?, LastActivityTime = ?, LastIpAddress = ?, LastWifiMacAddress = ?, LastNetworkType = ?, LastNetworkTypeId = ?, AppVersion = ?, UpdatedTime = ?, CreatedTime = ?, LastSyncDirectUpdateId = ?, LastSyncGeneralUpdateId = ?, LastSyncNotifyUpdateId = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime, s.Id)
-	_, err = db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime, s.Id)
+	XOLog(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime, s.LastSyncDirectUpdateId, s.LastSyncGeneralUpdateId, s.LastSyncNotifyUpdateId, s.Id)
+	_, err = db.Exec(sqlstr, s.UserId, s.SessionUuid, s.ClientUuid, s.DeviceUuid, s.LastActivityTime, s.LastIpAddress, s.LastWifiMacAddress, s.LastNetworkType, s.LastNetworkTypeId, s.AppVersion, s.UpdatedTime, s.CreatedTime, s.LastSyncDirectUpdateId, s.LastSyncGeneralUpdateId, s.LastSyncNotifyUpdateId, s.Id)
 
 	XOLogErr(err)
 	OnSession_AfterUpdate(s)
@@ -977,6 +980,321 @@ func (d *__Session_Deleter) CreatedTime_GE(val int) *__Session_Deleter {
 	return d
 }
 
+func (u *__Session_Deleter) LastSyncDirectUpdateId_In(ins []int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Deleter) LastSyncDirectUpdateId_Ins(ins ...int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Deleter) LastSyncDirectUpdateId_NotIn(ins []int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Session_Deleter) LastSyncDirectUpdateId_Eq(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncDirectUpdateId_NotEq(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncDirectUpdateId_LT(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncDirectUpdateId_LE(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncDirectUpdateId_GT(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncDirectUpdateId_GE(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Session_Deleter) LastSyncGeneralUpdateId_In(ins []int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Deleter) LastSyncGeneralUpdateId_Ins(ins ...int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Deleter) LastSyncGeneralUpdateId_NotIn(ins []int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Session_Deleter) LastSyncGeneralUpdateId_Eq(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncGeneralUpdateId_NotEq(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncGeneralUpdateId_LT(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncGeneralUpdateId_LE(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncGeneralUpdateId_GT(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncGeneralUpdateId_GE(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Session_Deleter) LastSyncNotifyUpdateId_In(ins []int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Deleter) LastSyncNotifyUpdateId_Ins(ins ...int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Deleter) LastSyncNotifyUpdateId_NotIn(ins []int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Session_Deleter) LastSyncNotifyUpdateId_Eq(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncNotifyUpdateId_NotEq(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncNotifyUpdateId_LT(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncNotifyUpdateId_LE(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncNotifyUpdateId_GT(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Deleter) LastSyncNotifyUpdateId_GE(val int) *__Session_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 func (u *__Session_Updater) Or() *__Session_Updater {
 	u.whereSep = " OR "
@@ -1718,6 +2036,321 @@ func (d *__Session_Updater) CreatedTime_GE(val int) *__Session_Updater {
 	return d
 }
 
+func (u *__Session_Updater) LastSyncDirectUpdateId_In(ins []int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Updater) LastSyncDirectUpdateId_Ins(ins ...int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Updater) LastSyncDirectUpdateId_NotIn(ins []int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Session_Updater) LastSyncDirectUpdateId_Eq(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncDirectUpdateId_NotEq(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncDirectUpdateId_LT(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncDirectUpdateId_LE(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncDirectUpdateId_GT(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncDirectUpdateId_GE(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Session_Updater) LastSyncGeneralUpdateId_In(ins []int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Updater) LastSyncGeneralUpdateId_Ins(ins ...int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Updater) LastSyncGeneralUpdateId_NotIn(ins []int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Session_Updater) LastSyncGeneralUpdateId_Eq(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncGeneralUpdateId_NotEq(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncGeneralUpdateId_LT(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncGeneralUpdateId_LE(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncGeneralUpdateId_GT(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncGeneralUpdateId_GE(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Session_Updater) LastSyncNotifyUpdateId_In(ins []int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Updater) LastSyncNotifyUpdateId_Ins(ins ...int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Updater) LastSyncNotifyUpdateId_NotIn(ins []int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Session_Updater) LastSyncNotifyUpdateId_Eq(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncNotifyUpdateId_NotEq(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncNotifyUpdateId_LT(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncNotifyUpdateId_LE(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncNotifyUpdateId_GT(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Updater) LastSyncNotifyUpdateId_GE(val int) *__Session_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 func (u *__Session_Selector) Or() *__Session_Selector {
 	u.whereSep = " OR "
@@ -2454,6 +3087,321 @@ func (d *__Session_Selector) CreatedTime_GE(val int) *__Session_Selector {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " CreatedTime >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Session_Selector) LastSyncDirectUpdateId_In(ins []int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Selector) LastSyncDirectUpdateId_Ins(ins ...int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Selector) LastSyncDirectUpdateId_NotIn(ins []int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Session_Selector) LastSyncDirectUpdateId_Eq(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncDirectUpdateId_NotEq(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncDirectUpdateId_LT(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncDirectUpdateId_LE(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncDirectUpdateId_GT(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncDirectUpdateId_GE(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncDirectUpdateId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Session_Selector) LastSyncGeneralUpdateId_In(ins []int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Selector) LastSyncGeneralUpdateId_Ins(ins ...int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Selector) LastSyncGeneralUpdateId_NotIn(ins []int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Session_Selector) LastSyncGeneralUpdateId_Eq(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncGeneralUpdateId_NotEq(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncGeneralUpdateId_LT(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncGeneralUpdateId_LE(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncGeneralUpdateId_GT(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncGeneralUpdateId_GE(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncGeneralUpdateId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Session_Selector) LastSyncNotifyUpdateId_In(ins []int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Selector) LastSyncNotifyUpdateId_Ins(ins ...int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Session_Selector) LastSyncNotifyUpdateId_NotIn(ins []int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Session_Selector) LastSyncNotifyUpdateId_Eq(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncNotifyUpdateId_NotEq(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncNotifyUpdateId_LT(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncNotifyUpdateId_LE(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncNotifyUpdateId_GT(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Session_Selector) LastSyncNotifyUpdateId_GE(val int) *__Session_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " LastSyncNotifyUpdateId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3746,6 +4694,69 @@ func (u *__Session_Updater) CreatedTime_Increment(count int) *__Session_Updater 
 
 //string
 
+//ints
+
+func (u *__Session_Updater) LastSyncDirectUpdateId(newVal int) *__Session_Updater {
+	u.updates[" LastSyncDirectUpdateId = ? "] = newVal
+	return u
+}
+
+func (u *__Session_Updater) LastSyncDirectUpdateId_Increment(count int) *__Session_Updater {
+	if count > 0 {
+		u.updates[" LastSyncDirectUpdateId = LastSyncDirectUpdateId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LastSyncDirectUpdateId = LastSyncDirectUpdateId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__Session_Updater) LastSyncGeneralUpdateId(newVal int) *__Session_Updater {
+	u.updates[" LastSyncGeneralUpdateId = ? "] = newVal
+	return u
+}
+
+func (u *__Session_Updater) LastSyncGeneralUpdateId_Increment(count int) *__Session_Updater {
+	if count > 0 {
+		u.updates[" LastSyncGeneralUpdateId = LastSyncGeneralUpdateId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LastSyncGeneralUpdateId = LastSyncGeneralUpdateId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__Session_Updater) LastSyncNotifyUpdateId(newVal int) *__Session_Updater {
+	u.updates[" LastSyncNotifyUpdateId = ? "] = newVal
+	return u
+}
+
+func (u *__Session_Updater) LastSyncNotifyUpdateId_Increment(count int) *__Session_Updater {
+	if count > 0 {
+		u.updates[" LastSyncNotifyUpdateId = LastSyncNotifyUpdateId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" LastSyncNotifyUpdateId = LastSyncNotifyUpdateId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
 /////////////////////////////////////////////////////////////////////
 /////////////////////// Selector ///////////////////////////////////
 
@@ -3943,6 +4954,51 @@ func (u *__Session_Selector) OrderBy_CreatedTime_Asc() *__Session_Selector {
 
 func (u *__Session_Selector) Select_CreatedTime() *__Session_Selector {
 	u.selectCol = "CreatedTime"
+	return u
+}
+
+func (u *__Session_Selector) OrderBy_LastSyncDirectUpdateId_Desc() *__Session_Selector {
+	u.orderBy = " ORDER BY LastSyncDirectUpdateId DESC "
+	return u
+}
+
+func (u *__Session_Selector) OrderBy_LastSyncDirectUpdateId_Asc() *__Session_Selector {
+	u.orderBy = " ORDER BY LastSyncDirectUpdateId ASC "
+	return u
+}
+
+func (u *__Session_Selector) Select_LastSyncDirectUpdateId() *__Session_Selector {
+	u.selectCol = "LastSyncDirectUpdateId"
+	return u
+}
+
+func (u *__Session_Selector) OrderBy_LastSyncGeneralUpdateId_Desc() *__Session_Selector {
+	u.orderBy = " ORDER BY LastSyncGeneralUpdateId DESC "
+	return u
+}
+
+func (u *__Session_Selector) OrderBy_LastSyncGeneralUpdateId_Asc() *__Session_Selector {
+	u.orderBy = " ORDER BY LastSyncGeneralUpdateId ASC "
+	return u
+}
+
+func (u *__Session_Selector) Select_LastSyncGeneralUpdateId() *__Session_Selector {
+	u.selectCol = "LastSyncGeneralUpdateId"
+	return u
+}
+
+func (u *__Session_Selector) OrderBy_LastSyncNotifyUpdateId_Desc() *__Session_Selector {
+	u.orderBy = " ORDER BY LastSyncNotifyUpdateId DESC "
+	return u
+}
+
+func (u *__Session_Selector) OrderBy_LastSyncNotifyUpdateId_Asc() *__Session_Selector {
+	u.orderBy = " ORDER BY LastSyncNotifyUpdateId ASC "
+	return u
+}
+
+func (u *__Session_Selector) Select_LastSyncNotifyUpdateId() *__Session_Selector {
+	u.selectCol = "LastSyncNotifyUpdateId"
 	return u
 }
 
@@ -4217,12 +5273,12 @@ func MassInsert_Session(rows []Session, db XODB) error {
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.session (" +
-		"UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime" +
+		"UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime, LastSyncDirectUpdateId, LastSyncGeneralUpdateId, LastSyncNotifyUpdateId" +
 		") VALUES " + insVals
 
 	// run query
@@ -4242,6 +5298,9 @@ func MassInsert_Session(rows []Session, db XODB) error {
 		vals = append(vals, row.AppVersion)
 		vals = append(vals, row.UpdatedTime)
 		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.LastSyncDirectUpdateId)
+		vals = append(vals, row.LastSyncGeneralUpdateId)
+		vals = append(vals, row.LastSyncNotifyUpdateId)
 
 	}
 
@@ -4259,12 +5318,12 @@ func MassInsert_Session(rows []Session, db XODB) error {
 func MassReplace_Session(rows []Session, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.session (" +
-		"UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime" +
+		"UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime, LastSyncDirectUpdateId, LastSyncGeneralUpdateId, LastSyncNotifyUpdateId" +
 		") VALUES " + insVals
 
 	// run query
@@ -4284,6 +5343,9 @@ func MassReplace_Session(rows []Session, db XODB) error {
 		vals = append(vals, row.AppVersion)
 		vals = append(vals, row.UpdatedTime)
 		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.LastSyncDirectUpdateId)
+		vals = append(vals, row.LastSyncGeneralUpdateId)
+		vals = append(vals, row.LastSyncNotifyUpdateId)
 
 	}
 
@@ -4326,48 +5388,11 @@ func MassReplace_Session(rows []Session, db XODB) error {
 
 //
 
-// SessionsById retrieves a row from 'ms.session' as a Session.
 //
-// Generated from index 'Id'.
-func SessionsById(db XODB, id int) ([]*Session, error) {
-	var err error
 
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime ` +
-		`FROM ms.session ` +
-		`WHERE Id = ?`
+//
 
-	// run query
-	XOLog(sqlstr, id)
-	q, err := db.Query(sqlstr, id)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Session{}
-	for q.Next() {
-		s := Session{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.LastNetworkTypeId, &s.AppVersion, &s.UpdatedTime, &s.CreatedTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &s)
-	}
-
-	OnSession_LoadMany(res)
-
-	return res, nil
-}
+//
 
 // SessionBySessionUuid retrieves a row from 'ms.session' as a Session.
 //
@@ -4377,7 +5402,7 @@ func SessionBySessionUuid(db XODB, sessionUuid string) (*Session, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime ` +
+		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime, LastSyncDirectUpdateId, LastSyncGeneralUpdateId, LastSyncNotifyUpdateId ` +
 		`FROM ms.session ` +
 		`WHERE SessionUuid = ?`
 
@@ -4387,7 +5412,7 @@ func SessionBySessionUuid(db XODB, sessionUuid string) (*Session, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, sessionUuid).Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.LastNetworkTypeId, &s.AppVersion, &s.UpdatedTime, &s.CreatedTime)
+	err = db.QueryRow(sqlstr, sessionUuid).Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.LastNetworkTypeId, &s.AppVersion, &s.UpdatedTime, &s.CreatedTime, &s.LastSyncDirectUpdateId, &s.LastSyncGeneralUpdateId, &s.LastSyncNotifyUpdateId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
@@ -4406,7 +5431,7 @@ func SessionById(db XODB, id int) (*Session, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime ` +
+		`Id, UserId, SessionUuid, ClientUuid, DeviceUuid, LastActivityTime, LastIpAddress, LastWifiMacAddress, LastNetworkType, LastNetworkTypeId, AppVersion, UpdatedTime, CreatedTime, LastSyncDirectUpdateId, LastSyncGeneralUpdateId, LastSyncNotifyUpdateId ` +
 		`FROM ms.session ` +
 		`WHERE Id = ?`
 
@@ -4416,7 +5441,7 @@ func SessionById(db XODB, id int) (*Session, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.LastNetworkTypeId, &s.AppVersion, &s.UpdatedTime, &s.CreatedTime)
+	err = db.QueryRow(sqlstr, id).Scan(&s.Id, &s.UserId, &s.SessionUuid, &s.ClientUuid, &s.DeviceUuid, &s.LastActivityTime, &s.LastIpAddress, &s.LastWifiMacAddress, &s.LastNetworkType, &s.LastNetworkTypeId, &s.AppVersion, &s.UpdatedTime, &s.CreatedTime, &s.LastSyncDirectUpdateId, &s.LastSyncGeneralUpdateId, &s.LastSyncNotifyUpdateId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

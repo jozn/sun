@@ -114,6 +114,16 @@ public class J {
 		public Integer FollowId;
 	}
 
+	public static class GeneralLog {
+		public Integer Id;
+		public Integer ToUserId;
+		public Integer TargetId;
+		public Integer LogTypeId;
+		public UNKNOWN ExtraPB;
+		public String ExtraJson;
+		public Integer CreatedMs;
+	}
+
 	public static class Group {
 		public Integer GroupId;
 		public String GroupName;
@@ -131,7 +141,7 @@ public class J {
 		public String GroupKey;
 		public Integer UserId;
 		public Integer ByUserId;
-		public Integer GroupRoleEnum;
+		public Integer GroupRoleEnumId;
 		public Integer CreatedTime;
 	}
 
@@ -388,6 +398,9 @@ public class J {
 		public Integer AppVersion;
 		public Integer UpdatedTime;
 		public Integer CreatedTime;
+		public Integer LastSyncDirectUpdateId;
+		public Integer LastSyncGeneralUpdateId;
+		public Integer LastSyncNotifyUpdateId;
 	}
 
 	public static class Tag {

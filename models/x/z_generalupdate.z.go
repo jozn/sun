@@ -12,174 +12,157 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// Like represents a row from 'ms.likes'.
+// GeneralUpdate represents a row from 'ms.general_update'.
 
 // Manualy copy this to project
-type Like__ struct {
-	Id          int `json:"Id"`          // Id -
-	PostId      int `json:"PostId"`      // PostId -
-	PostTypeId  int `json:"PostTypeId"`  // PostTypeId -
-	UserId      int `json:"UserId"`      // UserId -
-	TypeId      int `json:"TypeId"`      // TypeId -
-	CreatedTime int `json:"CreatedTime"` // CreatedTime -
+type GeneralUpdate__ struct {
+	Id                  int    `json:"Id"`                  // Id -
+	ToUserId            int    `json:"ToUserId"`            // ToUserId -
+	TargetId            int    `json:"TargetId"`            // TargetId -
+	GeneralUpdateTypeId int    `json:"GeneralUpdateTypeId"` // GeneralUpdateTypeId -
+	ExtraPB             []byte `json:"ExtraPB"`             // ExtraPB -
+	ExtraJson           string `json:"ExtraJson"`           // ExtraJson -
+	CreatedMs           int    `json:"CreatedMs"`           // CreatedMs -
 
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists determines if the Like exists in the database.
-func (l *Like) Exists() bool {
-	return l._exists
+// Exists determines if the GeneralUpdate exists in the database.
+func (gu *GeneralUpdate) Exists() bool {
+	return gu._exists
 }
 
-// Deleted provides information if the Like has been deleted from the database.
-func (l *Like) Deleted() bool {
-	return l._deleted
+// Deleted provides information if the GeneralUpdate has been deleted from the database.
+func (gu *GeneralUpdate) Deleted() bool {
+	return gu._deleted
 }
 
-// Insert inserts the Like to the database.
-func (l *Like) Insert(db XODB) error {
+// Insert inserts the GeneralUpdate to the database.
+func (gu *GeneralUpdate) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
-	if l._exists {
+	if gu._exists {
 		return errors.New("insert failed: already exists")
 	}
 
-	// sql insert query, primary key provided by autoincrement
-	const sqlstr = `INSERT INTO ms.likes (` +
-		`PostId, PostTypeId, UserId, TypeId, CreatedTime` +
+	// sql insert query, primary key must be provided
+	const sqlstr = `INSERT INTO ms.general_update (` +
+		`Id, ToUserId, TargetId, GeneralUpdateTypeId, ExtraPB, ExtraJson, CreatedMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime)
-	res, err := db.Exec(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime)
+	XOLog(sqlstr, gu.Id, gu.ToUserId, gu.TargetId, gu.GeneralUpdateTypeId, gu.ExtraPB, gu.ExtraJson, gu.CreatedMs)
+	_, err = db.Exec(sqlstr, gu.Id, gu.ToUserId, gu.TargetId, gu.GeneralUpdateTypeId, gu.ExtraPB, gu.ExtraJson, gu.CreatedMs)
 	if err != nil {
-		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
+	// set existence
+	gu._exists = true
 
-	// set primary key and existence
-	l.Id = int(id)
-	l._exists = true
-
-	OnLike_AfterInsert(l)
+	OnGeneralUpdate_AfterInsert(gu)
 
 	return nil
 }
 
-// Insert inserts the Like to the database.
-func (l *Like) Replace(db XODB) error {
+// Insert inserts the GeneralUpdate to the database.
+func (gu *GeneralUpdate) Replace(db XODB) error {
 	var err error
 
 	// sql query
 
-	const sqlstr = `REPLACE INTO ms.likes (` +
-		`PostId, PostTypeId, UserId, TypeId, CreatedTime` +
+	const sqlstr = `REPLACE INTO ms.general_update (` +
+		`Id, ToUserId, TargetId, GeneralUpdateTypeId, ExtraPB, ExtraJson, CreatedMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime)
-	res, err := db.Exec(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime)
+	XOLog(sqlstr, gu.Id, gu.ToUserId, gu.TargetId, gu.GeneralUpdateTypeId, gu.ExtraPB, gu.ExtraJson, gu.CreatedMs)
+	_, err = db.Exec(sqlstr, gu.Id, gu.ToUserId, gu.TargetId, gu.GeneralUpdateTypeId, gu.ExtraPB, gu.ExtraJson, gu.CreatedMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
+	gu._exists = true
 
-	// set primary key and existence
-	l.Id = int(id)
-	l._exists = true
-
-	OnLike_AfterInsert(l)
+	OnGeneralUpdate_AfterInsert(gu)
 
 	return nil
 }
 
-// Update updates the Like in the database.
-func (l *Like) Update(db XODB) error {
+// Update updates the GeneralUpdate in the database.
+func (gu *GeneralUpdate) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !l._exists {
+	if !gu._exists {
 		return errors.New("update failed: does not exist")
 	}
 
 	// if deleted, bail
-	if l._deleted {
+	if gu._deleted {
 		return errors.New("update failed: marked for deletion")
 	}
 
 	// sql query
-	const sqlstr = `UPDATE ms.likes SET ` +
-		`PostId = ?, PostTypeId = ?, UserId = ?, TypeId = ?, CreatedTime = ?` +
+	const sqlstr = `UPDATE ms.general_update SET ` +
+		`ToUserId = ?, TargetId = ?, GeneralUpdateTypeId = ?, ExtraPB = ?, ExtraJson = ?, CreatedMs = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
-	_, err = db.Exec(sqlstr, l.PostId, l.PostTypeId, l.UserId, l.TypeId, l.CreatedTime, l.Id)
+	XOLog(sqlstr, gu.ToUserId, gu.TargetId, gu.GeneralUpdateTypeId, gu.ExtraPB, gu.ExtraJson, gu.CreatedMs, gu.Id)
+	_, err = db.Exec(sqlstr, gu.ToUserId, gu.TargetId, gu.GeneralUpdateTypeId, gu.ExtraPB, gu.ExtraJson, gu.CreatedMs, gu.Id)
 
 	XOLogErr(err)
-	OnLike_AfterUpdate(l)
+	OnGeneralUpdate_AfterUpdate(gu)
 
 	return err
 }
 
-// Save saves the Like to the database.
-func (l *Like) Save(db XODB) error {
-	if l.Exists() {
-		return l.Update(db)
+// Save saves the GeneralUpdate to the database.
+func (gu *GeneralUpdate) Save(db XODB) error {
+	if gu.Exists() {
+		return gu.Update(db)
 	}
 
-	return l.Replace(db)
+	return gu.Replace(db)
 }
 
-// Delete deletes the Like from the database.
-func (l *Like) Delete(db XODB) error {
+// Delete deletes the GeneralUpdate from the database.
+func (gu *GeneralUpdate) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !l._exists {
+	if !gu._exists {
 		return nil
 	}
 
 	// if deleted, bail
-	if l._deleted {
+	if gu._deleted {
 		return nil
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.likes WHERE Id = ?`
+	const sqlstr = `DELETE FROM ms.general_update WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, l.Id)
-	_, err = db.Exec(sqlstr, l.Id)
+	XOLog(sqlstr, gu.Id)
+	_, err = db.Exec(sqlstr, gu.Id)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
 	// set deleted
-	l._deleted = true
+	gu._deleted = true
 
-	OnLike_AfterDelete(l)
+	OnGeneralUpdate_AfterDelete(gu)
 
 	return nil
 }
@@ -190,18 +173,18 @@ func (l *Like) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __Like_Deleter struct {
+type __GeneralUpdate_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __Like_Updater struct {
+type __GeneralUpdate_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __Like_Selector struct {
+type __GeneralUpdate_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -210,19 +193,19 @@ type __Like_Selector struct {
 	offset    int
 }
 
-func NewLike_Deleter() *__Like_Deleter {
-	d := __Like_Deleter{whereSep: " AND "}
+func NewGeneralUpdate_Deleter() *__GeneralUpdate_Deleter {
+	d := __GeneralUpdate_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewLike_Updater() *__Like_Updater {
-	u := __Like_Updater{whereSep: " AND "}
+func NewGeneralUpdate_Updater() *__GeneralUpdate_Updater {
+	u := __GeneralUpdate_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewLike_Selector() *__Like_Selector {
-	u := __Like_Selector{whereSep: " AND ", selectCol: "*"}
+func NewGeneralUpdate_Selector() *__GeneralUpdate_Selector {
+	u := __GeneralUpdate_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -230,12 +213,12 @@ func NewLike_Selector() *__Like_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Like_Deleter) Or() *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) Or() *__GeneralUpdate_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Like_Deleter) Id_In(ins []int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) Id_In(ins []int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -248,7 +231,7 @@ func (u *__Like_Deleter) Id_In(ins []int) *__Like_Deleter {
 	return u
 }
 
-func (u *__Like_Deleter) Id_Ins(ins ...int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) Id_Ins(ins ...int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -261,7 +244,7 @@ func (u *__Like_Deleter) Id_Ins(ins ...int) *__Like_Deleter {
 	return u
 }
 
-func (u *__Like_Deleter) Id_NotIn(ins []int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) Id_NotIn(ins []int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -274,7 +257,7 @@ func (u *__Like_Deleter) Id_NotIn(ins []int) *__Like_Deleter {
 	return u
 }
 
-func (d *__Like_Deleter) Id_Eq(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) Id_Eq(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -285,7 +268,7 @@ func (d *__Like_Deleter) Id_Eq(val int) *__Like_Deleter {
 	return d
 }
 
-func (d *__Like_Deleter) Id_NotEq(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) Id_NotEq(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -296,7 +279,7 @@ func (d *__Like_Deleter) Id_NotEq(val int) *__Like_Deleter {
 	return d
 }
 
-func (d *__Like_Deleter) Id_LT(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) Id_LT(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -307,7 +290,7 @@ func (d *__Like_Deleter) Id_LT(val int) *__Like_Deleter {
 	return d
 }
 
-func (d *__Like_Deleter) Id_LE(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) Id_LE(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -318,7 +301,7 @@ func (d *__Like_Deleter) Id_LE(val int) *__Like_Deleter {
 	return d
 }
 
-func (d *__Like_Deleter) Id_GT(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) Id_GT(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -329,7 +312,7 @@ func (d *__Like_Deleter) Id_GT(val int) *__Like_Deleter {
 	return d
 }
 
-func (d *__Like_Deleter) Id_GE(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) Id_GE(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -340,538 +323,433 @@ func (d *__Like_Deleter) Id_GE(val int) *__Like_Deleter {
 	return d
 }
 
-func (u *__Like_Deleter) PostId_In(ins []int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) ToUserId_In(ins []int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Deleter) PostId_Ins(ins ...int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) ToUserId_Ins(ins ...int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Deleter) PostId_NotIn(ins []int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) ToUserId_NotIn(ins []int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Deleter) PostId_Eq(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) ToUserId_Eq(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId = ? "
+	w.condition = " ToUserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) PostId_NotEq(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) ToUserId_NotEq(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId != ? "
+	w.condition = " ToUserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) PostId_LT(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) ToUserId_LT(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId < ? "
+	w.condition = " ToUserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) PostId_LE(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) ToUserId_LE(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId <= ? "
+	w.condition = " ToUserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) PostId_GT(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) ToUserId_GT(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId > ? "
+	w.condition = " ToUserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) PostId_GE(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) ToUserId_GE(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId >= ? "
+	w.condition = " ToUserId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Like_Deleter) PostTypeId_In(ins []int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) TargetId_In(ins []int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Deleter) PostTypeId_Ins(ins ...int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) TargetId_Ins(ins ...int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Deleter) PostTypeId_NotIn(ins []int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) TargetId_NotIn(ins []int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Deleter) PostTypeId_Eq(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) TargetId_Eq(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId = ? "
+	w.condition = " TargetId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) PostTypeId_NotEq(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) TargetId_NotEq(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId != ? "
+	w.condition = " TargetId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) PostTypeId_LT(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) TargetId_LT(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId < ? "
+	w.condition = " TargetId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) PostTypeId_LE(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) TargetId_LE(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId <= ? "
+	w.condition = " TargetId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) PostTypeId_GT(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) TargetId_GT(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId > ? "
+	w.condition = " TargetId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) PostTypeId_GE(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) TargetId_GE(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId >= ? "
+	w.condition = " TargetId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Like_Deleter) UserId_In(ins []int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) GeneralUpdateTypeId_In(ins []int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GeneralUpdateTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Deleter) UserId_Ins(ins ...int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) GeneralUpdateTypeId_Ins(ins ...int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GeneralUpdateTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Deleter) UserId_NotIn(ins []int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) GeneralUpdateTypeId_NotIn(ins []int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GeneralUpdateTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Deleter) UserId_Eq(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) GeneralUpdateTypeId_Eq(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId = ? "
+	w.condition = " GeneralUpdateTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) UserId_NotEq(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) GeneralUpdateTypeId_NotEq(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId != ? "
+	w.condition = " GeneralUpdateTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) UserId_LT(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) GeneralUpdateTypeId_LT(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId < ? "
+	w.condition = " GeneralUpdateTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) UserId_LE(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) GeneralUpdateTypeId_LE(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId <= ? "
+	w.condition = " GeneralUpdateTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) UserId_GT(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) GeneralUpdateTypeId_GT(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId > ? "
+	w.condition = " GeneralUpdateTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) UserId_GE(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) GeneralUpdateTypeId_GE(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId >= ? "
+	w.condition = " GeneralUpdateTypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Like_Deleter) TypeId_In(ins []int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) CreatedMs_In(ins []int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Deleter) TypeId_Ins(ins ...int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) CreatedMs_Ins(ins ...int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Deleter) TypeId_NotIn(ins []int) *__Like_Deleter {
+func (u *__GeneralUpdate_Deleter) CreatedMs_NotIn(ins []int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Deleter) TypeId_Eq(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) CreatedMs_Eq(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId = ? "
+	w.condition = " CreatedMs = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) TypeId_NotEq(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) CreatedMs_NotEq(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId != ? "
+	w.condition = " CreatedMs != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) TypeId_LT(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) CreatedMs_LT(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId < ? "
+	w.condition = " CreatedMs < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) TypeId_LE(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) CreatedMs_LE(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId <= ? "
+	w.condition = " CreatedMs <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) TypeId_GT(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) CreatedMs_GT(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId > ? "
+	w.condition = " CreatedMs > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Deleter) TypeId_GE(val int) *__Like_Deleter {
+func (d *__GeneralUpdate_Deleter) CreatedMs_GE(val int) *__GeneralUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Like_Deleter) CreatedTime_In(ins []int) *__Like_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Like_Deleter) CreatedTime_Ins(ins ...int) *__Like_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Like_Deleter) CreatedTime_NotIn(ins []int) *__Like_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Like_Deleter) CreatedTime_Eq(val int) *__Like_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Deleter) CreatedTime_NotEq(val int) *__Like_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Deleter) CreatedTime_LT(val int) *__Like_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Deleter) CreatedTime_LE(val int) *__Like_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Deleter) CreatedTime_GT(val int) *__Like_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Deleter) CreatedTime_GE(val int) *__Like_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
+	w.condition = " CreatedMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
 ////////ints
-func (u *__Like_Updater) Or() *__Like_Updater {
+func (u *__GeneralUpdate_Updater) Or() *__GeneralUpdate_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Like_Updater) Id_In(ins []int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) Id_In(ins []int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -884,7 +762,7 @@ func (u *__Like_Updater) Id_In(ins []int) *__Like_Updater {
 	return u
 }
 
-func (u *__Like_Updater) Id_Ins(ins ...int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) Id_Ins(ins ...int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -897,7 +775,7 @@ func (u *__Like_Updater) Id_Ins(ins ...int) *__Like_Updater {
 	return u
 }
 
-func (u *__Like_Updater) Id_NotIn(ins []int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) Id_NotIn(ins []int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -910,7 +788,7 @@ func (u *__Like_Updater) Id_NotIn(ins []int) *__Like_Updater {
 	return u
 }
 
-func (d *__Like_Updater) Id_Eq(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) Id_Eq(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -921,7 +799,7 @@ func (d *__Like_Updater) Id_Eq(val int) *__Like_Updater {
 	return d
 }
 
-func (d *__Like_Updater) Id_NotEq(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) Id_NotEq(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -932,7 +810,7 @@ func (d *__Like_Updater) Id_NotEq(val int) *__Like_Updater {
 	return d
 }
 
-func (d *__Like_Updater) Id_LT(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) Id_LT(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -943,7 +821,7 @@ func (d *__Like_Updater) Id_LT(val int) *__Like_Updater {
 	return d
 }
 
-func (d *__Like_Updater) Id_LE(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) Id_LE(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -954,7 +832,7 @@ func (d *__Like_Updater) Id_LE(val int) *__Like_Updater {
 	return d
 }
 
-func (d *__Like_Updater) Id_GT(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) Id_GT(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -965,7 +843,7 @@ func (d *__Like_Updater) Id_GT(val int) *__Like_Updater {
 	return d
 }
 
-func (d *__Like_Updater) Id_GE(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) Id_GE(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -976,538 +854,433 @@ func (d *__Like_Updater) Id_GE(val int) *__Like_Updater {
 	return d
 }
 
-func (u *__Like_Updater) PostId_In(ins []int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) ToUserId_In(ins []int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Updater) PostId_Ins(ins ...int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) ToUserId_Ins(ins ...int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Updater) PostId_NotIn(ins []int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) ToUserId_NotIn(ins []int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Updater) PostId_Eq(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) ToUserId_Eq(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId = ? "
+	w.condition = " ToUserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) PostId_NotEq(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) ToUserId_NotEq(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId != ? "
+	w.condition = " ToUserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) PostId_LT(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) ToUserId_LT(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId < ? "
+	w.condition = " ToUserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) PostId_LE(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) ToUserId_LE(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId <= ? "
+	w.condition = " ToUserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) PostId_GT(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) ToUserId_GT(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId > ? "
+	w.condition = " ToUserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) PostId_GE(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) ToUserId_GE(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId >= ? "
+	w.condition = " ToUserId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Like_Updater) PostTypeId_In(ins []int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) TargetId_In(ins []int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Updater) PostTypeId_Ins(ins ...int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) TargetId_Ins(ins ...int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Updater) PostTypeId_NotIn(ins []int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) TargetId_NotIn(ins []int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Updater) PostTypeId_Eq(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) TargetId_Eq(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId = ? "
+	w.condition = " TargetId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) PostTypeId_NotEq(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) TargetId_NotEq(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId != ? "
+	w.condition = " TargetId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) PostTypeId_LT(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) TargetId_LT(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId < ? "
+	w.condition = " TargetId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) PostTypeId_LE(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) TargetId_LE(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId <= ? "
+	w.condition = " TargetId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) PostTypeId_GT(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) TargetId_GT(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId > ? "
+	w.condition = " TargetId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) PostTypeId_GE(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) TargetId_GE(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId >= ? "
+	w.condition = " TargetId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Like_Updater) UserId_In(ins []int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) GeneralUpdateTypeId_In(ins []int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GeneralUpdateTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Updater) UserId_Ins(ins ...int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) GeneralUpdateTypeId_Ins(ins ...int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GeneralUpdateTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Updater) UserId_NotIn(ins []int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) GeneralUpdateTypeId_NotIn(ins []int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GeneralUpdateTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Updater) UserId_Eq(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) GeneralUpdateTypeId_Eq(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId = ? "
+	w.condition = " GeneralUpdateTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) UserId_NotEq(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) GeneralUpdateTypeId_NotEq(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId != ? "
+	w.condition = " GeneralUpdateTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) UserId_LT(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) GeneralUpdateTypeId_LT(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId < ? "
+	w.condition = " GeneralUpdateTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) UserId_LE(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) GeneralUpdateTypeId_LE(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId <= ? "
+	w.condition = " GeneralUpdateTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) UserId_GT(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) GeneralUpdateTypeId_GT(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId > ? "
+	w.condition = " GeneralUpdateTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) UserId_GE(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) GeneralUpdateTypeId_GE(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId >= ? "
+	w.condition = " GeneralUpdateTypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Like_Updater) TypeId_In(ins []int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) CreatedMs_In(ins []int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Updater) TypeId_Ins(ins ...int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) CreatedMs_Ins(ins ...int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Updater) TypeId_NotIn(ins []int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) CreatedMs_NotIn(ins []int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Updater) TypeId_Eq(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) CreatedMs_Eq(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId = ? "
+	w.condition = " CreatedMs = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) TypeId_NotEq(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) CreatedMs_NotEq(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId != ? "
+	w.condition = " CreatedMs != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) TypeId_LT(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) CreatedMs_LT(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId < ? "
+	w.condition = " CreatedMs < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) TypeId_LE(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) CreatedMs_LE(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId <= ? "
+	w.condition = " CreatedMs <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) TypeId_GT(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) CreatedMs_GT(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId > ? "
+	w.condition = " CreatedMs > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Updater) TypeId_GE(val int) *__Like_Updater {
+func (d *__GeneralUpdate_Updater) CreatedMs_GE(val int) *__GeneralUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Like_Updater) CreatedTime_In(ins []int) *__Like_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Like_Updater) CreatedTime_Ins(ins ...int) *__Like_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Like_Updater) CreatedTime_NotIn(ins []int) *__Like_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Like_Updater) CreatedTime_Eq(val int) *__Like_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Updater) CreatedTime_NotEq(val int) *__Like_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Updater) CreatedTime_LT(val int) *__Like_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Updater) CreatedTime_LE(val int) *__Like_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Updater) CreatedTime_GT(val int) *__Like_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Updater) CreatedTime_GE(val int) *__Like_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
+	w.condition = " CreatedMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
 ////////ints
-func (u *__Like_Selector) Or() *__Like_Selector {
+func (u *__GeneralUpdate_Selector) Or() *__GeneralUpdate_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Like_Selector) Id_In(ins []int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) Id_In(ins []int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1520,7 +1293,7 @@ func (u *__Like_Selector) Id_In(ins []int) *__Like_Selector {
 	return u
 }
 
-func (u *__Like_Selector) Id_Ins(ins ...int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) Id_Ins(ins ...int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1533,7 +1306,7 @@ func (u *__Like_Selector) Id_Ins(ins ...int) *__Like_Selector {
 	return u
 }
 
-func (u *__Like_Selector) Id_NotIn(ins []int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) Id_NotIn(ins []int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1546,7 +1319,7 @@ func (u *__Like_Selector) Id_NotIn(ins []int) *__Like_Selector {
 	return u
 }
 
-func (d *__Like_Selector) Id_Eq(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) Id_Eq(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1557,7 +1330,7 @@ func (d *__Like_Selector) Id_Eq(val int) *__Like_Selector {
 	return d
 }
 
-func (d *__Like_Selector) Id_NotEq(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) Id_NotEq(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1568,7 +1341,7 @@ func (d *__Like_Selector) Id_NotEq(val int) *__Like_Selector {
 	return d
 }
 
-func (d *__Like_Selector) Id_LT(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) Id_LT(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1579,7 +1352,7 @@ func (d *__Like_Selector) Id_LT(val int) *__Like_Selector {
 	return d
 }
 
-func (d *__Like_Selector) Id_LE(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) Id_LE(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1590,7 +1363,7 @@ func (d *__Like_Selector) Id_LE(val int) *__Like_Selector {
 	return d
 }
 
-func (d *__Like_Selector) Id_GT(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) Id_GT(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1601,7 +1374,7 @@ func (d *__Like_Selector) Id_GT(val int) *__Like_Selector {
 	return d
 }
 
-func (d *__Like_Selector) Id_GE(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) Id_GE(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1612,526 +1385,421 @@ func (d *__Like_Selector) Id_GE(val int) *__Like_Selector {
 	return d
 }
 
-func (u *__Like_Selector) PostId_In(ins []int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) ToUserId_In(ins []int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Selector) PostId_Ins(ins ...int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) ToUserId_Ins(ins ...int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Selector) PostId_NotIn(ins []int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) ToUserId_NotIn(ins []int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " ToUserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Selector) PostId_Eq(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) ToUserId_Eq(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId = ? "
+	w.condition = " ToUserId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) PostId_NotEq(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) ToUserId_NotEq(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId != ? "
+	w.condition = " ToUserId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) PostId_LT(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) ToUserId_LT(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId < ? "
+	w.condition = " ToUserId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) PostId_LE(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) ToUserId_LE(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId <= ? "
+	w.condition = " ToUserId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) PostId_GT(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) ToUserId_GT(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId > ? "
+	w.condition = " ToUserId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) PostId_GE(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) ToUserId_GE(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId >= ? "
+	w.condition = " ToUserId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Like_Selector) PostTypeId_In(ins []int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) TargetId_In(ins []int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Selector) PostTypeId_Ins(ins ...int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) TargetId_Ins(ins ...int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Selector) PostTypeId_NotIn(ins []int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) TargetId_NotIn(ins []int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " TargetId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Selector) PostTypeId_Eq(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) TargetId_Eq(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId = ? "
+	w.condition = " TargetId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) PostTypeId_NotEq(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) TargetId_NotEq(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId != ? "
+	w.condition = " TargetId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) PostTypeId_LT(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) TargetId_LT(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId < ? "
+	w.condition = " TargetId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) PostTypeId_LE(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) TargetId_LE(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId <= ? "
+	w.condition = " TargetId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) PostTypeId_GT(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) TargetId_GT(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId > ? "
+	w.condition = " TargetId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) PostTypeId_GE(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) TargetId_GE(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostTypeId >= ? "
+	w.condition = " TargetId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Like_Selector) UserId_In(ins []int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) GeneralUpdateTypeId_In(ins []int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GeneralUpdateTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Selector) UserId_Ins(ins ...int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) GeneralUpdateTypeId_Ins(ins ...int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GeneralUpdateTypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Selector) UserId_NotIn(ins []int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) GeneralUpdateTypeId_NotIn(ins []int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " GeneralUpdateTypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Selector) UserId_Eq(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) GeneralUpdateTypeId_Eq(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId = ? "
+	w.condition = " GeneralUpdateTypeId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) UserId_NotEq(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) GeneralUpdateTypeId_NotEq(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId != ? "
+	w.condition = " GeneralUpdateTypeId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) UserId_LT(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) GeneralUpdateTypeId_LT(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId < ? "
+	w.condition = " GeneralUpdateTypeId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) UserId_LE(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) GeneralUpdateTypeId_LE(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId <= ? "
+	w.condition = " GeneralUpdateTypeId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) UserId_GT(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) GeneralUpdateTypeId_GT(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId > ? "
+	w.condition = " GeneralUpdateTypeId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) UserId_GE(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) GeneralUpdateTypeId_GE(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId >= ? "
+	w.condition = " GeneralUpdateTypeId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Like_Selector) TypeId_In(ins []int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) CreatedMs_In(ins []int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Selector) TypeId_Ins(ins ...int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) CreatedMs_Ins(ins ...int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Like_Selector) TypeId_NotIn(ins []int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) CreatedMs_NotIn(ins []int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " TypeId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedMs NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Like_Selector) TypeId_Eq(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) CreatedMs_Eq(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId = ? "
+	w.condition = " CreatedMs = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) TypeId_NotEq(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) CreatedMs_NotEq(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId != ? "
+	w.condition = " CreatedMs != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) TypeId_LT(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) CreatedMs_LT(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId < ? "
+	w.condition = " CreatedMs < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) TypeId_LE(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) CreatedMs_LE(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId <= ? "
+	w.condition = " CreatedMs <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) TypeId_GT(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) CreatedMs_GT(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId > ? "
+	w.condition = " CreatedMs > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Like_Selector) TypeId_GE(val int) *__Like_Selector {
+func (d *__GeneralUpdate_Selector) CreatedMs_GE(val int) *__GeneralUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " TypeId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__Like_Selector) CreatedTime_In(ins []int) *__Like_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Like_Selector) CreatedTime_Ins(ins ...int) *__Like_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Like_Selector) CreatedTime_NotIn(ins []int) *__Like_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__Like_Selector) CreatedTime_Eq(val int) *__Like_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Selector) CreatedTime_NotEq(val int) *__Like_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Selector) CreatedTime_LT(val int) *__Like_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Selector) CreatedTime_LE(val int) *__Like_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Selector) CreatedTime_GT(val int) *__Like_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__Like_Selector) CreatedTime_GE(val int) *__Like_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " CreatedTime >= ? "
+	w.condition = " CreatedMs >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2141,9 +1809,189 @@ func (d *__Like_Selector) CreatedTime_GE(val int) *__Like_Selector {
 
 ////////ints
 
-////////ints
+func (u *__GeneralUpdate_Deleter) ExtraJson_In(ins []string) *__GeneralUpdate_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__GeneralUpdate_Deleter) ExtraJson_NotIn(ins []string) *__GeneralUpdate_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__GeneralUpdate_Deleter) ExtraJson_Like(val string) *__GeneralUpdate_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__GeneralUpdate_Deleter) ExtraJson_Eq(val string) *__GeneralUpdate_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__GeneralUpdate_Deleter) ExtraJson_NotEq(val string) *__GeneralUpdate_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 ////////ints
+
+func (u *__GeneralUpdate_Updater) ExtraJson_In(ins []string) *__GeneralUpdate_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__GeneralUpdate_Updater) ExtraJson_NotIn(ins []string) *__GeneralUpdate_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__GeneralUpdate_Updater) ExtraJson_Like(val string) *__GeneralUpdate_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__GeneralUpdate_Updater) ExtraJson_Eq(val string) *__GeneralUpdate_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__GeneralUpdate_Updater) ExtraJson_NotEq(val string) *__GeneralUpdate_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__GeneralUpdate_Selector) ExtraJson_In(ins []string) *__GeneralUpdate_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__GeneralUpdate_Selector) ExtraJson_NotIn(ins []string) *__GeneralUpdate_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ExtraJson NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__GeneralUpdate_Selector) ExtraJson_Like(val string) *__GeneralUpdate_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__GeneralUpdate_Selector) ExtraJson_Eq(val string) *__GeneralUpdate_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__GeneralUpdate_Selector) ExtraJson_NotEq(val string) *__GeneralUpdate_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ExtraJson != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 /// End of wheres for selectors , updators, deletor
 
@@ -2151,12 +1999,12 @@ func (d *__Like_Selector) CreatedTime_GE(val int) *__Like_Selector {
 
 //ints
 
-func (u *__Like_Updater) Id(newVal int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) Id(newVal int) *__GeneralUpdate_Updater {
 	u.updates[" Id = ? "] = newVal
 	return u
 }
 
-func (u *__Like_Updater) Id_Increment(count int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) Id_Increment(count int) *__GeneralUpdate_Updater {
 	if count > 0 {
 		u.updates[" Id = Id+? "] = count
 	}
@@ -2172,18 +2020,18 @@ func (u *__Like_Updater) Id_Increment(count int) *__Like_Updater {
 
 //ints
 
-func (u *__Like_Updater) PostId(newVal int) *__Like_Updater {
-	u.updates[" PostId = ? "] = newVal
+func (u *__GeneralUpdate_Updater) ToUserId(newVal int) *__GeneralUpdate_Updater {
+	u.updates[" ToUserId = ? "] = newVal
 	return u
 }
 
-func (u *__Like_Updater) PostId_Increment(count int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) ToUserId_Increment(count int) *__GeneralUpdate_Updater {
 	if count > 0 {
-		u.updates[" PostId = PostId+? "] = count
+		u.updates[" ToUserId = ToUserId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" PostId = PostId-? "] = -(count) //make it positive
+		u.updates[" ToUserId = ToUserId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -2193,18 +2041,18 @@ func (u *__Like_Updater) PostId_Increment(count int) *__Like_Updater {
 
 //ints
 
-func (u *__Like_Updater) PostTypeId(newVal int) *__Like_Updater {
-	u.updates[" PostTypeId = ? "] = newVal
+func (u *__GeneralUpdate_Updater) TargetId(newVal int) *__GeneralUpdate_Updater {
+	u.updates[" TargetId = ? "] = newVal
 	return u
 }
 
-func (u *__Like_Updater) PostTypeId_Increment(count int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) TargetId_Increment(count int) *__GeneralUpdate_Updater {
 	if count > 0 {
-		u.updates[" PostTypeId = PostTypeId+? "] = count
+		u.updates[" TargetId = TargetId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" PostTypeId = PostTypeId-? "] = -(count) //make it positive
+		u.updates[" TargetId = TargetId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -2214,18 +2062,18 @@ func (u *__Like_Updater) PostTypeId_Increment(count int) *__Like_Updater {
 
 //ints
 
-func (u *__Like_Updater) UserId(newVal int) *__Like_Updater {
-	u.updates[" UserId = ? "] = newVal
+func (u *__GeneralUpdate_Updater) GeneralUpdateTypeId(newVal int) *__GeneralUpdate_Updater {
+	u.updates[" GeneralUpdateTypeId = ? "] = newVal
 	return u
 }
 
-func (u *__Like_Updater) UserId_Increment(count int) *__Like_Updater {
+func (u *__GeneralUpdate_Updater) GeneralUpdateTypeId_Increment(count int) *__GeneralUpdate_Updater {
 	if count > 0 {
-		u.updates[" UserId = UserId+? "] = count
+		u.updates[" GeneralUpdateTypeId = GeneralUpdateTypeId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it positive
+		u.updates[" GeneralUpdateTypeId = GeneralUpdateTypeId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -2235,39 +2083,30 @@ func (u *__Like_Updater) UserId_Increment(count int) *__Like_Updater {
 
 //ints
 
-func (u *__Like_Updater) TypeId(newVal int) *__Like_Updater {
-	u.updates[" TypeId = ? "] = newVal
-	return u
-}
-
-func (u *__Like_Updater) TypeId_Increment(count int) *__Like_Updater {
-	if count > 0 {
-		u.updates[" TypeId = TypeId+? "] = count
-	}
-
-	if count < 0 {
-		u.updates[" TypeId = TypeId-? "] = -(count) //make it positive
-	}
-
-	return u
-}
-
 //string
 
 //ints
 
-func (u *__Like_Updater) CreatedTime(newVal int) *__Like_Updater {
-	u.updates[" CreatedTime = ? "] = newVal
+//string
+func (u *__GeneralUpdate_Updater) ExtraJson(newVal string) *__GeneralUpdate_Updater {
+	u.updates[" ExtraJson = ? "] = newVal
 	return u
 }
 
-func (u *__Like_Updater) CreatedTime_Increment(count int) *__Like_Updater {
+//ints
+
+func (u *__GeneralUpdate_Updater) CreatedMs(newVal int) *__GeneralUpdate_Updater {
+	u.updates[" CreatedMs = ? "] = newVal
+	return u
+}
+
+func (u *__GeneralUpdate_Updater) CreatedMs_Increment(count int) *__GeneralUpdate_Updater {
 	if count > 0 {
-		u.updates[" CreatedTime = CreatedTime+? "] = count
+		u.updates[" CreatedMs = CreatedMs+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" CreatedTime = CreatedTime-? "] = -(count) //make it positive
+		u.updates[" CreatedMs = CreatedMs-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -2280,111 +2119,126 @@ func (u *__Like_Updater) CreatedTime_Increment(count int) *__Like_Updater {
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__Like_Selector) OrderBy_Id_Desc() *__Like_Selector {
+func (u *__GeneralUpdate_Selector) OrderBy_Id_Desc() *__GeneralUpdate_Selector {
 	u.orderBy = " ORDER BY Id DESC "
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_Id_Asc() *__Like_Selector {
+func (u *__GeneralUpdate_Selector) OrderBy_Id_Asc() *__GeneralUpdate_Selector {
 	u.orderBy = " ORDER BY Id ASC "
 	return u
 }
 
-func (u *__Like_Selector) Select_Id() *__Like_Selector {
+func (u *__GeneralUpdate_Selector) Select_Id() *__GeneralUpdate_Selector {
 	u.selectCol = "Id"
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_PostId_Desc() *__Like_Selector {
-	u.orderBy = " ORDER BY PostId DESC "
+func (u *__GeneralUpdate_Selector) OrderBy_ToUserId_Desc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY ToUserId DESC "
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_PostId_Asc() *__Like_Selector {
-	u.orderBy = " ORDER BY PostId ASC "
+func (u *__GeneralUpdate_Selector) OrderBy_ToUserId_Asc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY ToUserId ASC "
 	return u
 }
 
-func (u *__Like_Selector) Select_PostId() *__Like_Selector {
-	u.selectCol = "PostId"
+func (u *__GeneralUpdate_Selector) Select_ToUserId() *__GeneralUpdate_Selector {
+	u.selectCol = "ToUserId"
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_PostTypeId_Desc() *__Like_Selector {
-	u.orderBy = " ORDER BY PostTypeId DESC "
+func (u *__GeneralUpdate_Selector) OrderBy_TargetId_Desc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY TargetId DESC "
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_PostTypeId_Asc() *__Like_Selector {
-	u.orderBy = " ORDER BY PostTypeId ASC "
+func (u *__GeneralUpdate_Selector) OrderBy_TargetId_Asc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY TargetId ASC "
 	return u
 }
 
-func (u *__Like_Selector) Select_PostTypeId() *__Like_Selector {
-	u.selectCol = "PostTypeId"
+func (u *__GeneralUpdate_Selector) Select_TargetId() *__GeneralUpdate_Selector {
+	u.selectCol = "TargetId"
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_UserId_Desc() *__Like_Selector {
-	u.orderBy = " ORDER BY UserId DESC "
+func (u *__GeneralUpdate_Selector) OrderBy_GeneralUpdateTypeId_Desc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY GeneralUpdateTypeId DESC "
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_UserId_Asc() *__Like_Selector {
-	u.orderBy = " ORDER BY UserId ASC "
+func (u *__GeneralUpdate_Selector) OrderBy_GeneralUpdateTypeId_Asc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY GeneralUpdateTypeId ASC "
 	return u
 }
 
-func (u *__Like_Selector) Select_UserId() *__Like_Selector {
-	u.selectCol = "UserId"
+func (u *__GeneralUpdate_Selector) Select_GeneralUpdateTypeId() *__GeneralUpdate_Selector {
+	u.selectCol = "GeneralUpdateTypeId"
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_TypeId_Desc() *__Like_Selector {
-	u.orderBy = " ORDER BY TypeId DESC "
+func (u *__GeneralUpdate_Selector) OrderBy_ExtraPB_Desc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY ExtraPB DESC "
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_TypeId_Asc() *__Like_Selector {
-	u.orderBy = " ORDER BY TypeId ASC "
+func (u *__GeneralUpdate_Selector) OrderBy_ExtraPB_Asc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY ExtraPB ASC "
 	return u
 }
 
-func (u *__Like_Selector) Select_TypeId() *__Like_Selector {
-	u.selectCol = "TypeId"
+func (u *__GeneralUpdate_Selector) Select_ExtraPB() *__GeneralUpdate_Selector {
+	u.selectCol = "ExtraPB"
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_CreatedTime_Desc() *__Like_Selector {
-	u.orderBy = " ORDER BY CreatedTime DESC "
+func (u *__GeneralUpdate_Selector) OrderBy_ExtraJson_Desc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY ExtraJson DESC "
 	return u
 }
 
-func (u *__Like_Selector) OrderBy_CreatedTime_Asc() *__Like_Selector {
-	u.orderBy = " ORDER BY CreatedTime ASC "
+func (u *__GeneralUpdate_Selector) OrderBy_ExtraJson_Asc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY ExtraJson ASC "
 	return u
 }
 
-func (u *__Like_Selector) Select_CreatedTime() *__Like_Selector {
-	u.selectCol = "CreatedTime"
+func (u *__GeneralUpdate_Selector) Select_ExtraJson() *__GeneralUpdate_Selector {
+	u.selectCol = "ExtraJson"
 	return u
 }
 
-func (u *__Like_Selector) Limit(num int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) OrderBy_CreatedMs_Desc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY CreatedMs DESC "
+	return u
+}
+
+func (u *__GeneralUpdate_Selector) OrderBy_CreatedMs_Asc() *__GeneralUpdate_Selector {
+	u.orderBy = " ORDER BY CreatedMs ASC "
+	return u
+}
+
+func (u *__GeneralUpdate_Selector) Select_CreatedMs() *__GeneralUpdate_Selector {
+	u.selectCol = "CreatedMs"
+	return u
+}
+
+func (u *__GeneralUpdate_Selector) Limit(num int) *__GeneralUpdate_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__Like_Selector) Offset(num int) *__Like_Selector {
+func (u *__GeneralUpdate_Selector) Offset(num int) *__GeneralUpdate_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__Like_Selector) _stoSql() (string, []interface{}) {
+func (u *__GeneralUpdate_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
-	sqlstr := "SELECT " + u.selectCol + " FROM ms.likes"
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.general_update"
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -2404,14 +2258,14 @@ func (u *__Like_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__Like_Selector) GetRow(db *sqlx.DB) (*Like, error) {
+func (u *__GeneralUpdate_Selector) GetRow(db *sqlx.DB) (*GeneralUpdate, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &Like{}
+	row := &GeneralUpdate{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -2421,19 +2275,19 @@ func (u *__Like_Selector) GetRow(db *sqlx.DB) (*Like, error) {
 
 	row._exists = true
 
-	OnLike_LoadOne(row)
+	OnGeneralUpdate_LoadOne(row)
 
 	return row, nil
 }
 
-func (u *__Like_Selector) GetRows(db *sqlx.DB) ([]*Like, error) {
+func (u *__GeneralUpdate_Selector) GetRows(db *sqlx.DB) ([]*GeneralUpdate, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*Like
+	var rows []*GeneralUpdate
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -2449,20 +2303,20 @@ func (u *__Like_Selector) GetRows(db *sqlx.DB) ([]*Like, error) {
 		rows[i]._exists = true
 	}
 
-	OnLike_LoadMany(rows)
+	OnGeneralUpdate_LoadMany(rows)
 
 	return rows, nil
 }
 
 //dep use GetRows()
-func (u *__Like_Selector) GetRows2(db *sqlx.DB) ([]Like, error) {
+func (u *__GeneralUpdate_Selector) GetRows2(db *sqlx.DB) ([]GeneralUpdate, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*Like
+	var rows []*GeneralUpdate
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -2478,9 +2332,9 @@ func (u *__Like_Selector) GetRows2(db *sqlx.DB) ([]Like, error) {
 		rows[i]._exists = true
 	}
 
-	OnLike_LoadMany(rows)
+	OnGeneralUpdate_LoadMany(rows)
 
-	rows2 := make([]Like, len(rows))
+	rows2 := make([]GeneralUpdate, len(rows))
 	for i := 0; i < len(rows); i++ {
 		cp := *rows[i]
 		rows2[i] = cp
@@ -2489,7 +2343,7 @@ func (u *__Like_Selector) GetRows2(db *sqlx.DB) ([]Like, error) {
 	return rows2, nil
 }
 
-func (u *__Like_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__GeneralUpdate_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2507,7 +2361,7 @@ func (u *__Like_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__Like_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__GeneralUpdate_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2525,7 +2379,7 @@ func (u *__Like_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	return rows, nil
 }
 
-func (u *__Like_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__GeneralUpdate_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2543,7 +2397,7 @@ func (u *__Like_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__Like_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__GeneralUpdate_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2562,7 +2416,7 @@ func (u *__Like_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__Like_Updater) Update(db XODB) (int, error) {
+func (u *__GeneralUpdate_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -2579,7 +2433,7 @@ func (u *__Like_Updater) Update(db XODB) (int, error) {
 	allArgs = append(allArgs, updateArgs...)
 	allArgs = append(allArgs, whereArgs...)
 
-	sqlstr := `UPDATE ms.likes SET ` + sqlUpdate
+	sqlstr := `UPDATE ms.general_update SET ` + sqlUpdate
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -2601,7 +2455,7 @@ func (u *__Like_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__Like_Deleter) Delete(db XODB) (int, error) {
+func (d *__GeneralUpdate_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -2614,7 +2468,7 @@ func (d *__Like_Deleter) Delete(db XODB) (int, error) {
 		args = append(args, w.args...)
 	}
 
-	sqlstr := "DELETE FROM ms.likes WHERE " + wheresStr
+	sqlstr := "DELETE FROM ms.general_update WHERE " + wheresStr
 
 	// run query
 	XOLog(sqlstr, args)
@@ -2634,19 +2488,19 @@ func (d *__Like_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  Like ////////////////
-func MassInsert_Like(rows []Like, db XODB) error {
+///////////////////////// Mass insert - replace for  GeneralUpdate ////////////////
+func MassInsert_GeneralUpdate(rows []GeneralUpdate, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "INSERT INTO ms.likes (" +
-		"PostId, PostTypeId, UserId, TypeId, CreatedTime" +
+	sqlstr := "INSERT INTO ms.general_update (" +
+		"ToUserId, TargetId, GeneralUpdateTypeId, ExtraPB, ExtraJson, CreatedMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2654,11 +2508,12 @@ func MassInsert_Like(rows []Like, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.PostId)
-		vals = append(vals, row.PostTypeId)
-		vals = append(vals, row.UserId)
-		vals = append(vals, row.TypeId)
-		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.GeneralUpdateTypeId)
+		vals = append(vals, row.ExtraPB)
+		vals = append(vals, row.ExtraJson)
+		vals = append(vals, row.CreatedMs)
 
 	}
 
@@ -2673,15 +2528,15 @@ func MassInsert_Like(rows []Like, db XODB) error {
 	return nil
 }
 
-func MassReplace_Like(rows []Like, db XODB) error {
+func MassReplace_GeneralUpdate(rows []GeneralUpdate, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "REPLACE INTO ms.likes (" +
-		"PostId, PostTypeId, UserId, TypeId, CreatedTime" +
+	sqlstr := "REPLACE INTO ms.general_update (" +
+		"ToUserId, TargetId, GeneralUpdateTypeId, ExtraPB, ExtraJson, CreatedMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2689,11 +2544,12 @@ func MassReplace_Like(rows []Like, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.PostId)
-		vals = append(vals, row.PostTypeId)
-		vals = append(vals, row.UserId)
-		vals = append(vals, row.TypeId)
-		vals = append(vals, row.CreatedTime)
+		vals = append(vals, row.ToUserId)
+		vals = append(vals, row.TargetId)
+		vals = append(vals, row.GeneralUpdateTypeId)
+		vals = append(vals, row.ExtraPB)
+		vals = append(vals, row.ExtraJson)
+		vals = append(vals, row.CreatedMs)
 
 	}
 
@@ -2722,74 +2578,33 @@ func MassReplace_Like(rows []Like, db XODB) error {
 
 //
 
-// LikesByPostId retrieves a row from 'ms.likes' as a Like.
 //
-// Generated from index 'PostId_2'.
-func LikesByPostId(db XODB, postId int) ([]*Like, error) {
+
+// GeneralUpdateById retrieves a row from 'ms.general_update' as a GeneralUpdate.
+//
+// Generated from index 'general_update_Id_pkey'.
+func GeneralUpdateById(db XODB, id int) (*GeneralUpdate, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, PostId, PostTypeId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
-		`WHERE PostId = ?`
-
-	// run query
-	XOLog(sqlstr, postId)
-	q, err := db.Query(sqlstr, postId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Like{}
-	for q.Next() {
-		l := Like{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&l.Id, &l.PostId, &l.PostTypeId, &l.UserId, &l.TypeId, &l.CreatedTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &l)
-	}
-
-	OnLike_LoadMany(res)
-
-	return res, nil
-}
-
-// LikeById retrieves a row from 'ms.likes' as a Like.
-//
-// Generated from index 'likes_Id_pkey'.
-func LikeById(db XODB, id int) (*Like, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, PostId, PostTypeId, UserId, TypeId, CreatedTime ` +
-		`FROM ms.likes ` +
+		`Id, ToUserId, TargetId, GeneralUpdateTypeId, ExtraPB, ExtraJson, CreatedMs ` +
+		`FROM ms.general_update ` +
 		`WHERE Id = ?`
 
 	// run query
 	XOLog(sqlstr, id)
-	l := Like{
+	gu := GeneralUpdate{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&l.Id, &l.PostId, &l.PostTypeId, &l.UserId, &l.TypeId, &l.CreatedTime)
+	err = db.QueryRow(sqlstr, id).Scan(&gu.Id, &gu.ToUserId, &gu.TargetId, &gu.GeneralUpdateTypeId, &gu.ExtraPB, &gu.ExtraJson, &gu.CreatedMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err
 	}
 
-	OnLike_LoadOne(&l)
+	OnGeneralUpdate_LoadOne(&gu)
 
-	return &l, nil
+	return &gu, nil
 }
