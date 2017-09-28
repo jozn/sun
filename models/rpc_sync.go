@@ -1,6 +1,9 @@
 package models
 
-import "ms/sun/models/x"
+import (
+	"ms/sun/base"
+	"ms/sun/models/x"
+)
 
 type rpcSync int
 
@@ -17,13 +20,16 @@ func (rpcSync) GetNotifyUpdates(i *x.PB_SyncParam_GetNotifyUpdates, p x.RPC_User
 }
 
 func (rpcSync) SetLastSyncDirectUpdateId(i *x.PB_SyncParam_SetLastSyncDirectUpdateId, p x.RPC_UserParam) (*x.PB_SyncResponse_SetLastSyncDirectUpdateId, error) {
-	panic("implement me")
+	x.NewSession_Updater().LastSyncDirectUpdateId(int(i.LastId)).UserId_Eq(p.GetUserId()).Update(base.DB)
+	return &x.PB_SyncResponse_SetLastSyncDirectUpdateId{}, nil
 }
 
 func (rpcSync) SetLastSyncGeneralUpdateId(i *x.PB_SyncParam_SetLastSyncGeneralUpdateId, p x.RPC_UserParam) (*x.PB_SyncResponse_SetLastSyncGeneralUpdateId, error) {
-	panic("implement me")
+	x.NewSession_Updater().LastSyncGeneralUpdateId(int(i.LastId)).UserId_Eq(p.GetUserId()).Update(base.DB)
+	return &x.PB_SyncResponse_SetLastSyncGeneralUpdateId{}, nil
 }
 
 func (rpcSync) SetLastSyncNotifyUpdateId(i *x.PB_SyncParam_SetLastSyncNotifyUpdateId, p x.RPC_UserParam) (*x.PB_SyncResponse_SetLastSyncNotifyUpdateId, error) {
-	panic("implement me")
+	x.NewSession_Updater().LastSyncNotifyUpdateId(int(i.LastId)).UserId_Eq(p.GetUserId()).Update(base.DB)
+	return &x.PB_SyncResponse_SetLastSyncNotifyUpdateId{}, nil
 }

@@ -2178,8 +2178,8 @@ var PB_MsgParam_GetFreshRoomMessagesList__FOlD = &PB_MsgParam_GetFreshRoomMessag
 }
 
 type PB_MsgResponse_GetFreshRoomMessagesList_Flat struct {
-	Chats   []PB_MessageView
-	HasMore bool
+	Messages []PB_MessageView
+	HasMore  bool
 }
 
 //ToPB

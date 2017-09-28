@@ -1,6 +1,7 @@
 package models
 
 import (
+	"ms/Console2/dev5/m"
 	"ms/sun/models/x"
 )
 
@@ -107,6 +108,29 @@ func PBConvPB_MessageFile_To_MessageFile(o *x.MessageFile) *x.PB_MessageFileView
 		CanDel:          int32(o.CanDel),
 	}
 	return n
+}
+
+func PBConv_Chat_To_PB_ChatView(m *x.Chat) *x.PB_ChatView {
+	r := &x.PB_ChatView{
+		ChatKey:              m.ChatKey,
+		ChatId:               int64(m.ChatId),
+		RoomTypeEnumId:       int32(m.RoomTypeEnumId),
+		UserId:               int32(m.UserId),
+		PeerUserId:           int32(m.PeerUserId),
+		GroupId:              int64(m.GroupId),
+		CreatedTime:          int32(m.CreatedTime),
+		UpdatedMs:            int64(m.UpdatedMs),
+		LastMessageId:        int64(m.LastMessageId),
+		LastDeletedMessageId: int64(m.LastDeletedMessageId),
+		LastSeenMessageId:    int64(m.LastSeenMessageId),
+		LastSeqSeen:          int32(m.LastSeqSeen),
+		LastSeqDelete:        int32(m.LastSeqDelete),
+		CurrentSeq:           int32(m.CurrentSeq),
+
+		//SharedMediaCount: int32(m.SharedMediaCount),
+		//UnseenCount:      int32(m.UnseenCount),
+	}
+	return r
 }
 
 /*func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {

@@ -1946,25 +1946,25 @@ public class PBFlatTypes {
 	*/
 
 	public class PB_MsgResponse_GetFreshRoomMessagesList {
-	   public PB_MessageView Chats;
+	   public PB_MessageView Messages;
 	   public boolean HasMore;
 	}
 	/*
 	folding
 	PBFlatTypes.PB_MsgResponse_GetFreshRoomMessagesList t = new PBFlatTypes.PB_MsgResponse_GetFreshRoomMessagesList();
-    t.setChats();
+    t.setMessages();
     t.setHasMore();
 	*/
 
 	/*
 	PBFlatTypes.PB_MsgResponse_GetFreshRoomMessagesList t = new PBFlatTypes.PB_MsgResponse_GetFreshRoomMessagesList();
-	t.Chats = ;
+	t.Messages = ;
 	t.HasMore = ;
 	*/
 
 	/*
 	PB_MsgResponse_GetFreshRoomMessagesList t = new PB_MsgResponse_GetFreshRoomMessagesList();
-	t.Chats = m.getChats() ;
+	t.Messages = m.getMessages() ;
 	t.HasMore = m.getHasMore() ;
 	*/
 

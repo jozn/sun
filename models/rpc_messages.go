@@ -9,18 +9,19 @@ import (
 
 type rpcMsg int
 
-func (rpcMsg) UploadNewMsg(i *x.PB_Message, p x.RPC_UserParam) (*x.PB_ResRpcAddMsg, error) {
-    panic("implement me")
-}
-
 func (rpcMsg) GetFreshChatList(i *x.PB_MsgParam_GetFreshChatList, p x.RPC_UserParam) (*x.PB_MsgResponse_GetFreshChatList, error) {
-    panic("implement me")
+	chats, err := Chat_GetChatListForUser(p.GetUserId())
+	return &x.PB_MsgResponse_GetFreshChatList{
+		Chats: chats,
+	}, err
 }
 
 func (rpcMsg) GetFreshRoomMessagesList(i *x.PB_MsgParam_GetFreshRoomMessagesList, p x.RPC_UserParam) (*x.PB_MsgResponse_GetFreshRoomMessagesList, error) {
-    panic("implement me")
+	chats, err := Chat_GetMessageListForRoom(i.RoomKey, p.GetUserId())
+	return &x.PB_MsgResponse_GetFreshRoomMessagesList{
+		Messages: chats,
+	}, err
 }
-
 
 func (rpcMsg) Echo(i *x.PB_MsgParam_Echo, p x.RPC_UserParam) (*x.PB_MsgResponse_PB_MsgParam_Echo, error) {
 	//fmt.Println("in Echo --> ", i.Text)
@@ -71,7 +72,7 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 		f := i.MessageView.MessageFileView
 		igPb := &x.MessageFile{
 			MessageFileId:   (helper.NextRowsSeqId()),
-			OriginalUserId: p.GetUserId(),
+			OriginalUserId:  p.GetUserId(),
 			Name:            f.Name,
 			Size:            int(f.Size),
 			FileTypeEnumId:  1,

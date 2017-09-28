@@ -163,7 +163,7 @@ message PB_MsgParam_GetFreshRoomMessagesList {
     int64 Last = 3;
 }
 message PB_MsgResponse_GetFreshRoomMessagesList {
-    repeated PB_MessageView Chats = 1;
+    repeated PB_MessageView Messages = 1;
     bool HasMore = 2;
 }
 
