@@ -81,6 +81,7 @@ message PB_PushHolderView {
 }
 
 //////////////////// updates used in rpc_sync //////////////////////
+//dep
 message PB_DirectUpdatesView {
     //new mssages
     repeated PB_MessageView NewMessages = 1;
@@ -102,6 +103,7 @@ message PB_DirectUpdatesView {
     repeated PB_UpdateRoomActionDoing RoomActionDoing = 30;
 }
 
+//dep
 message PB_GeneralUpdatesView {
     //users
     repeated PB_UpdateUserBlocked UserBlockedByMe = 50;
@@ -113,6 +115,7 @@ message PB_GeneralUpdatesView {
     //settings
 }
 
+//dep
 message PB_NotifyUpdatesView {
     //users
     repeated PB_UpdateUserBlocked UserBlockedByMe = 50;

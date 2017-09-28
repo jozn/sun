@@ -14,16 +14,18 @@ type rpcAll struct {
 	//x.EmptyRPC_RPC_Msg
 	x.EmptyRPC_RPC_UserOffline
 	x.EmptyRPC_RPC_User
-	x.EmptyRPC_RpcMsgs
+	//x.EmptyRPC_RpcMsgs
 
 	/// ouer imple
 	rpcMsg
+	rpcSync
 }
 
 var RpcAll = rpcAll{}
 
 func init() {
 	RpcAll.rpcMsg = rpcMsg(0)
+	RpcAll.rpcSync = rpcSync(0)
 }
 
 ///////////////////////////////

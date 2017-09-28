@@ -29,7 +29,7 @@ type PB_Chat struct {
 func (m *PB_Chat) Reset()                    { *m = PB_Chat{} }
 func (m *PB_Chat) String() string            { return proto.CompactTextString(m) }
 func (*PB_Chat) ProtoMessage()               {}
-func (*PB_Chat) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{0} }
+func (*PB_Chat) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
 
 func (m *PB_Chat) GetChatId() int64 {
 	if m != nil {
@@ -124,7 +124,7 @@ type PB_DirectMessage struct {
 func (m *PB_DirectMessage) Reset()                    { *m = PB_DirectMessage{} }
 func (m *PB_DirectMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_DirectMessage) ProtoMessage()               {}
-func (*PB_DirectMessage) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{1} }
+func (*PB_DirectMessage) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
 
 func (m *PB_DirectMessage) GetMessageId() int64 {
 	if m != nil {
@@ -219,7 +219,7 @@ type PB_MessageFile struct {
 func (m *PB_MessageFile) Reset()                    { *m = PB_MessageFile{} }
 func (m *PB_MessageFile) String() string            { return proto.CompactTextString(m) }
 func (*PB_MessageFile) ProtoMessage()               {}
-func (*PB_MessageFile) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{2} }
+func (*PB_MessageFile) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{2} }
 
 func (m *PB_MessageFile) GetMessageFileId() int64 {
 	if m != nil {
@@ -379,7 +379,7 @@ type PB_User struct {
 func (m *PB_User) Reset()                    { *m = PB_User{} }
 func (m *PB_User) String() string            { return proto.CompactTextString(m) }
 func (*PB_User) ProtoMessage()               {}
-func (*PB_User) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{3} }
+func (*PB_User) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{3} }
 
 func (m *PB_User) GetId() int32 {
 	if m != nil {
@@ -619,9 +619,9 @@ func init() {
 	proto.RegisterType((*PB_User)(nil), "PB_User")
 }
 
-func init() { proto.RegisterFile("pb_table.proto", fileDescriptor7) }
+func init() { proto.RegisterFile("pb_table.proto", fileDescriptor8) }
 
-var fileDescriptor7 = []byte{
+var fileDescriptor8 = []byte{
 	// 1013 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x96, 0x6d, 0x6f, 0x1b, 0x45,
 	0x10, 0xc7, 0xe5, 0xb8, 0x6e, 0xe2, 0x0d, 0x49, 0xda, 0xa5, 0xc0, 0xf2, 0x58, 0xd7, 0x14, 0x08,

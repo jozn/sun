@@ -168,7 +168,8 @@ message PB_ResRpcAddMsg {
     string ServerSrc = 2;
 }
 
+/*
 service RpcMsgs {
     // Sends a greeting
     rpc UploadNewMsg (PB_Message) returns (PB_ResRpcAddMsg);
-}
+}*/

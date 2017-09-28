@@ -18,7 +18,24 @@ message PB_SyncParam_GetDirectUpdates {
 }
 
 message PB_SyncResponse_GetDirectUpdates{
-    PB_GeneralUpdatesView Updates = 1;
+    //new mssages
+    repeated PB_MessageView NewMessages = 1;
+    repeated PB_MessageFileView ChatFiles = 2;
+    repeated PB_ChatView Chats = 3;
+    repeated PB_UserView Users = 6;
+
+    repeated PB_UpdateMessageId MessagesChangeIds = 10;
+    repeated PB_UpdateMessageToEdit MessagesToUpdate = 11;
+    repeated PB_UpdateMessageToDelete MessagesToDelete = 12;
+
+    //messages meta info
+    repeated PB_UpdateMessageMeta MessagesDelivierdToServer = 20;
+    repeated PB_UpdateMessageMeta MessagesDelivierdToPeer = 21;
+    repeated PB_UpdateMessageMeta MessagesSeenByPeer = 22;
+    repeated PB_UpdateMessageMeta MessagesDeletedFromServer = 23;
+
+    //room updates
+    repeated PB_UpdateRoomActionDoing RoomActionDoing = 30;
 }
 
 //////////////////////////////
@@ -27,7 +44,9 @@ message PB_SyncParam_GetGeneralUpdates {
 }
 
 message PB_SyncResponse_GetGeneralUpdates{
-    PB_GeneralUpdatesView Updates = 1;
+    //PB_GeneralUpdatesView Updates = 1;
+    repeated PB_UpdateUserBlocked UserBlockedByMe = 50;
+    repeated PB_UpdateUserBlocked UserBlockedMe = 51;
 }
 
 //////////////////////////////
@@ -37,6 +56,7 @@ message PB_SyncParam_GetNotifyUpdates {
 
 message PB_SyncResponse_GetNotifyUpdates{
     PB_NotifyUpdatesView Updates = 1;
+
 }
 
 //////////// SetLastSync... //////////////////

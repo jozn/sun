@@ -2722,6 +2722,92 @@ func MassReplace_PushMessage(rows []PushMessage, db XODB) error {
 
 //
 
+// PushMessagesByToUserIdCreatedMs retrieves a row from 'ms.push_message' as a PushMessage.
+//
+// Generated from index 'ToUser'.
+func PushMessagesByToUserIdCreatedMs(db XODB, toUserId int, createdMs int) ([]*PushMessage, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`PushMessageId, ToUserId, ToDeviceId, MessageId, RoomTypeEnum, CreatedMs ` +
+		`FROM ms.push_message ` +
+		`WHERE ToUserId = ? AND CreatedMs = ?`
+
+	// run query
+	XOLog(sqlstr, toUserId, createdMs)
+	q, err := db.Query(sqlstr, toUserId, createdMs)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*PushMessage{}
+	for q.Next() {
+		pm := PushMessage{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&pm.PushMessageId, &pm.ToUserId, &pm.ToDeviceId, &pm.MessageId, &pm.RoomTypeEnum, &pm.CreatedMs)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &pm)
+	}
+
+	OnPushMessage_LoadMany(res)
+
+	return res, nil
+}
+
+// PushMessagesByPushMessageId retrieves a row from 'ms.push_message' as a PushMessage.
+//
+// Generated from index 'Uid'.
+func PushMessagesByPushMessageId(db XODB, pushMessageId int) ([]*PushMessage, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`PushMessageId, ToUserId, ToDeviceId, MessageId, RoomTypeEnum, CreatedMs ` +
+		`FROM ms.push_message ` +
+		`WHERE PushMessageId = ?`
+
+	// run query
+	XOLog(sqlstr, pushMessageId)
+	q, err := db.Query(sqlstr, pushMessageId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*PushMessage{}
+	for q.Next() {
+		pm := PushMessage{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&pm.PushMessageId, &pm.ToUserId, &pm.ToDeviceId, &pm.MessageId, &pm.RoomTypeEnum, &pm.CreatedMs)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &pm)
+	}
+
+	OnPushMessage_LoadMany(res)
+
+	return res, nil
+}
+
 // PushMessageByPushMessageId retrieves a row from 'ms.push_message' as a PushMessage.
 //
 // Generated from index 'push_message_PushMessageId_pkey'.

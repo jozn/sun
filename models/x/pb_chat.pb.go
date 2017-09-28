@@ -11,6 +11,7 @@ It is generated from these files:
 	pb_global.proto
 	pb_rpc_auth2.proto
 	pb_rpc_msg.proto
+	pb_rpc_sync.proto
 	pb_rpc_user.proto
 	pb_table.proto
 	pb_updates.proto
@@ -87,8 +88,24 @@ It has these top-level messages:
 	PB_MsgResponse_EditMessage
 	PB_MsgParam_BroadcastNewMessage
 	PB_MsgResponse_BroadcastNewMessage
+	PB_MsgParam_GetFreshChatList
+	PB_MsgResponse_GetFreshChatList
+	PB_MsgParam_GetFreshRoomMessagesList
+	PB_MsgResponse_GetFreshRoomMessagesList
 	PB_MsgParam_Echo
 	PB_MsgResponse_PB_MsgParam_Echo
+	PB_SyncParam_GetDirectUpdates
+	PB_SyncResponse_GetDirectUpdates
+	PB_SyncParam_GetGeneralUpdates
+	PB_SyncResponse_GetGeneralUpdates
+	PB_SyncParam_GetNotifyUpdates
+	PB_SyncResponse_GetNotifyUpdates
+	PB_SyncParam_SetLastSyncDirectUpdateId
+	PB_SyncResponse_SetLastSyncDirectUpdateId
+	PB_SyncParam_SetLastSyncGeneralUpdateId
+	PB_SyncResponse_SetLastSyncGeneralUpdateId
+	PB_SyncParam_SetLastSyncNotifyUpdateId
+	PB_SyncResponse_SetLastSyncNotifyUpdateId
 	PB_UserParam_BlockUser
 	PB_UserOfflineResponse_BlockUser
 	PB_UserParam_UnBlockUser
@@ -120,6 +137,9 @@ It has these top-level messages:
 	PB_UpdateRoomActionDoing
 	PB_UpdateUserBlocked
 	PB_PushHolderView
+	PB_DirectUpdatesView
+	PB_GeneralUpdatesView
+	PB_NotifyUpdatesView
 	PB_ChatView
 	PB_MessageView
 	PB_MessageFileView
