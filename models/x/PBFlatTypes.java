@@ -1306,6 +1306,7 @@ public class PBFlatTypes {
 	public class PB_ResponseToClient {
 	   public long ClientCallId;
 	   public String PBClass;
+	   public String RpcFullName;
 	   public byte[] Data;
 	}
 	/*
@@ -1313,6 +1314,7 @@ public class PBFlatTypes {
 	PBFlatTypes.PB_ResponseToClient t = new PBFlatTypes.PB_ResponseToClient();
     t.setClientCallId();
     t.setPBClass();
+    t.setRpcFullName();
     t.setData();
 	*/
 
@@ -1320,6 +1322,7 @@ public class PBFlatTypes {
 	PBFlatTypes.PB_ResponseToClient t = new PBFlatTypes.PB_ResponseToClient();
 	t.ClientCallId = ;
 	t.PBClass = ;
+	t.RpcFullName = ;
 	t.Data = ;
 	*/
 
@@ -1327,6 +1330,7 @@ public class PBFlatTypes {
 	PB_ResponseToClient t = new PB_ResponseToClient();
 	t.ClientCallId = m.getClientCallId() ;
 	t.PBClass = m.getPBClass() ;
+	t.RpcFullName = m.getRpcFullName() ;
 	t.Data = m.getData() ;
 	*/
 

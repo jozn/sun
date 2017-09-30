@@ -35,5 +35,6 @@ message PB_CommandReachedToClient {
 message PB_ResponseToClient {
     int64 ClientCallId = 1;
     string PBClass = 2;
-    bytes Data = 3;
+    string RpcFullName = 3;
+    bytes Data = 4;
 }
