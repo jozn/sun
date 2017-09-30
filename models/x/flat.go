@@ -2294,22 +2294,32 @@ type PB_SyncResponse_GetDirectUpdates_Flat struct {
 	MessagesSeenByPeer        []PB_UpdateMessageMeta
 	MessagesDeletedFromServer []PB_UpdateMessageMeta
 	RoomActionDoing           []PB_UpdateRoomActionDoing
+	LastId                    int
 }
 
 //ToPB
 func (m *PB_SyncResponse_GetDirectUpdates) ToFlat() *PB_SyncResponse_GetDirectUpdates_Flat {
-	r := &PB_SyncResponse_GetDirectUpdates_Flat{}
+	r := &PB_SyncResponse_GetDirectUpdates_Flat{
+
+		LastId: int(m.LastId),
+	}
 	return r
 }
 
 //ToPB
 func (m *PB_SyncResponse_GetDirectUpdates_Flat) ToPB() *PB_SyncResponse_GetDirectUpdates {
-	r := &PB_SyncResponse_GetDirectUpdates{}
+	r := &PB_SyncResponse_GetDirectUpdates{
+
+		LastId: int64(m.LastId),
+	}
 	return r
 }
 
 //folding
-var PB_SyncResponse_GetDirectUpdates__FOlD = &PB_SyncResponse_GetDirectUpdates{}
+var PB_SyncResponse_GetDirectUpdates__FOlD = &PB_SyncResponse_GetDirectUpdates{
+
+	LastId: 0,
+}
 
 type PB_SyncParam_GetGeneralUpdates_Flat struct {
 	LastId int
@@ -2339,22 +2349,32 @@ var PB_SyncParam_GetGeneralUpdates__FOlD = &PB_SyncParam_GetGeneralUpdates{
 type PB_SyncResponse_GetGeneralUpdates_Flat struct {
 	UserBlockedByMe []PB_UpdateUserBlocked
 	UserBlockedMe   []PB_UpdateUserBlocked
+	LastId          int
 }
 
 //ToPB
 func (m *PB_SyncResponse_GetGeneralUpdates) ToFlat() *PB_SyncResponse_GetGeneralUpdates_Flat {
-	r := &PB_SyncResponse_GetGeneralUpdates_Flat{}
+	r := &PB_SyncResponse_GetGeneralUpdates_Flat{
+
+		LastId: int(m.LastId),
+	}
 	return r
 }
 
 //ToPB
 func (m *PB_SyncResponse_GetGeneralUpdates_Flat) ToPB() *PB_SyncResponse_GetGeneralUpdates {
-	r := &PB_SyncResponse_GetGeneralUpdates{}
+	r := &PB_SyncResponse_GetGeneralUpdates{
+
+		LastId: int64(m.LastId),
+	}
 	return r
 }
 
 //folding
-var PB_SyncResponse_GetGeneralUpdates__FOlD = &PB_SyncResponse_GetGeneralUpdates{}
+var PB_SyncResponse_GetGeneralUpdates__FOlD = &PB_SyncResponse_GetGeneralUpdates{
+
+	LastId: 0,
+}
 
 type PB_SyncParam_GetNotifyUpdates_Flat struct {
 	LastId int
@@ -2383,22 +2403,32 @@ var PB_SyncParam_GetNotifyUpdates__FOlD = &PB_SyncParam_GetNotifyUpdates{
 
 type PB_SyncResponse_GetNotifyUpdates_Flat struct {
 	Updates PB_NotifyUpdatesView
+	LastId  int
 }
 
 //ToPB
 func (m *PB_SyncResponse_GetNotifyUpdates) ToFlat() *PB_SyncResponse_GetNotifyUpdates_Flat {
-	r := &PB_SyncResponse_GetNotifyUpdates_Flat{}
+	r := &PB_SyncResponse_GetNotifyUpdates_Flat{
+
+		LastId: int(m.LastId),
+	}
 	return r
 }
 
 //ToPB
 func (m *PB_SyncResponse_GetNotifyUpdates_Flat) ToPB() *PB_SyncResponse_GetNotifyUpdates {
-	r := &PB_SyncResponse_GetNotifyUpdates{}
+	r := &PB_SyncResponse_GetNotifyUpdates{
+
+		LastId: int64(m.LastId),
+	}
 	return r
 }
 
 //folding
-var PB_SyncResponse_GetNotifyUpdates__FOlD = &PB_SyncResponse_GetNotifyUpdates{}
+var PB_SyncResponse_GetNotifyUpdates__FOlD = &PB_SyncResponse_GetNotifyUpdates{
+
+	LastId: 0,
+}
 
 type PB_SyncParam_SetLastSyncDirectUpdateId_Flat struct {
 	LastId int
@@ -4702,6 +4732,7 @@ r := &PB_SyncResponse_GetDirectUpdates_Flat{
 
 
 
+    LastId:  int(m.LastId) ,
 }
 return r
 }
@@ -4717,6 +4748,7 @@ func(m *PB_SyncResponse_GetGeneralUpdates)ToFlat() *PB_SyncResponse_GetGeneralUp
 r := &PB_SyncResponse_GetGeneralUpdates_Flat{
 
 
+    LastId:  int(m.LastId) ,
 }
 return r
 }
@@ -4731,6 +4763,7 @@ return r
 func(m *PB_SyncResponse_GetNotifyUpdates)ToFlat() *PB_SyncResponse_GetNotifyUpdates_Flat {
 r := &PB_SyncResponse_GetNotifyUpdates_Flat{
 
+    LastId:  int(m.LastId) ,
 }
 return r
 }
@@ -5907,6 +5940,7 @@ r := &PB_SyncResponse_GetDirectUpdates{
 
 
 
+    LastId:  int64(m.LastId) ,
 }
 return r
 }
@@ -5922,6 +5956,7 @@ func(m *PB_SyncResponse_GetGeneralUpdates_Flat)ToPB() *PB_SyncResponse_GetGenera
 r := &PB_SyncResponse_GetGeneralUpdates{
 
 
+    LastId:  int64(m.LastId) ,
 }
 return r
 }
@@ -5936,6 +5971,7 @@ return r
 func(m *PB_SyncResponse_GetNotifyUpdates_Flat)ToPB() *PB_SyncResponse_GetNotifyUpdates {
 r := &PB_SyncResponse_GetNotifyUpdates{
 
+    LastId:  int64(m.LastId) ,
 }
 return r
 }
@@ -6957,6 +6993,7 @@ var PB_SyncResponse_GetDirectUpdates__FOlD = &PB_SyncResponse_GetDirectUpdates{
 
 
 
+        LastId:  0 ,
 }
 
 
@@ -6968,6 +7005,7 @@ var PB_SyncParam_GetGeneralUpdates__FOlD = &PB_SyncParam_GetGeneralUpdates{
 var PB_SyncResponse_GetGeneralUpdates__FOlD = &PB_SyncResponse_GetGeneralUpdates{
 
 
+        LastId:  0 ,
 }
 
 
@@ -6978,6 +7016,7 @@ var PB_SyncParam_GetNotifyUpdates__FOlD = &PB_SyncParam_GetNotifyUpdates{
 
 var PB_SyncResponse_GetNotifyUpdates__FOlD = &PB_SyncResponse_GetNotifyUpdates{
 
+        LastId:  0 ,
 }
 
 

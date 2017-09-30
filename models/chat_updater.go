@@ -22,7 +22,7 @@ const (
 )
 
 func DirectLog_GetSync(me, last int) (*x.PB_SyncResponse_GetDirectUpdates, error) {
-	rows, err := x.NewDirectLog_Selector().ToUserId_Eq(me).Id_GT(last).GetRows(base.DB)
+	rows, err := x.NewDirectLog_Selector().ToUserId_Eq(me).Id_GT(last).OrderBy_Id_Asc().GetRows(base.DB)
 	if err != nil {
 		return nil, err
 	}
@@ -156,6 +156,9 @@ func PushView_directLogsTo_PB_SyncResponse_GetDirectUpdates(meId int, logs []*x.
 		res.Chats = pushView_chatView(meId, chatIdsToLoad)
 	}
 
+	if len(logs) > 0 {
+		res.LastId = int64(logs[len(logs)-1].Id)
+	}
 	//TODO: add messages files id
 
 	return res

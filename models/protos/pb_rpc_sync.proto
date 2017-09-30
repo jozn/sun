@@ -36,6 +36,8 @@ message PB_SyncResponse_GetDirectUpdates{
 
     //room updates
     repeated PB_UpdateRoomActionDoing RoomActionDoing = 30;
+
+    int64 LastId = 50;
 }
 
 //////////////////////////////
@@ -47,6 +49,8 @@ message PB_SyncResponse_GetGeneralUpdates{
     //PB_GeneralUpdatesView Updates = 1;
     repeated PB_UpdateUserBlocked UserBlockedByMe = 50;
     repeated PB_UpdateUserBlocked UserBlockedMe = 51;
+
+    int64 LastId = 60;
 }
 
 //////////////////////////////
@@ -57,6 +61,7 @@ message PB_SyncParam_GetNotifyUpdates {
 message PB_SyncResponse_GetNotifyUpdates{
     PB_NotifyUpdatesView Updates = 1;
 
+    int64 LastId = 50;
 }
 
 //////////// SetLastSync... //////////////////
