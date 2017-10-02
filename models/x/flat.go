@@ -2190,10 +2190,12 @@ var PB_MsgParam_GetFreshChatList__FOlD = &PB_MsgParam_GetFreshChatList{
 
 type PB_MsgResponse_GetFreshChatList_Flat struct {
     Chats []PB_ChatView
+    Users []PB_UserView
 }
 //ToPB
 func(m *PB_MsgResponse_GetFreshChatList)ToFlat() *PB_MsgResponse_GetFreshChatList_Flat {
 r := &PB_MsgResponse_GetFreshChatList_Flat{
+    
     
 }
 return r
@@ -2202,11 +2204,13 @@ return r
 func(m *PB_MsgResponse_GetFreshChatList_Flat)ToPB() *PB_MsgResponse_GetFreshChatList {
 r := &PB_MsgResponse_GetFreshChatList{
     
+    
 }
 return r
 }
 //folding
 var PB_MsgResponse_GetFreshChatList__FOlD = &PB_MsgResponse_GetFreshChatList{
+    
     
 }
 
@@ -4835,6 +4839,7 @@ return r
 func(m *PB_MsgResponse_GetFreshChatList)ToFlat() *PB_MsgResponse_GetFreshChatList_Flat {
 r := &PB_MsgResponse_GetFreshChatList_Flat{
     
+    
 }
 return r
 }
@@ -6044,6 +6049,7 @@ return r
 func(m *PB_MsgResponse_GetFreshChatList_Flat)ToPB() *PB_MsgResponse_GetFreshChatList {
 r := &PB_MsgResponse_GetFreshChatList{
     
+    
 }
 return r
 }
@@ -7109,6 +7115,7 @@ var PB_MsgParam_GetFreshChatList__FOlD = &PB_MsgParam_GetFreshChatList{
 
 
 var PB_MsgResponse_GetFreshChatList__FOlD = &PB_MsgResponse_GetFreshChatList{
+        
         
 }
 

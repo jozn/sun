@@ -102,6 +102,9 @@ func ToJsonPerety(structoo interface{}) string {
 	bts, _ := prettyjson.Marshal(structoo)
 	return string(bts)
 }
+func ToJsonPerety2(structoo interface{}) string {
+    return fmt.Sprintf("%# v", pretty.Formatter(structoo))
+}
 
 func PertyPrint(a interface{}) {
 	fmt.Printf("%# v", pretty.Formatter(a))

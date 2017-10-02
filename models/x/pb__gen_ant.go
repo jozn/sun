@@ -14,7 +14,7 @@ type RPC_UserParam interface {
 }
 
 type RPC_ResponseHandlerInterface interface {
-    HandleOfflineResult(dataPB interface{},PBClass string,RpcName string,cmd PB_CommandToServer,p RPC_UserParam)
+    HandleOfflineResult(dataPB interface{},PBClass string,RpcName string,cmd PB_CommandToServer,p RPC_UserParam, paramParsed interface{})
     IsUserOnlineResult(interface{}, error)
     HandelError(error)
 }
@@ -131,7 +131,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.GetLastChnagesForRoom(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_ResponseLastChangesForTheRoom",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_ResponseLastChangesForTheRoom","RPC_MessageReq.GetLastChnagesForRoom",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_ResponseLastChangesForTheRoom","RPC_MessageReq.GetLastChnagesForRoom",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -159,7 +159,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SetLastSeen(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_ResponseSetLastSeenMessages",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_ResponseSetLastSeenMessages","RPC_MessageReqOffline.SetLastSeen",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_ResponseSetLastSeenMessages","RPC_MessageReqOffline.SetLastSeen",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -187,7 +187,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.CheckPhone(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.CheckPhone",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.CheckPhone",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -201,7 +201,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SendCode(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.SendCode",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.SendCode",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -215,7 +215,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SendCodeToSms(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.SendCodeToSms",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.SendCodeToSms",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -229,7 +229,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SendCodeToTelgram(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.SendCodeToTelgram",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.SendCodeToTelgram",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -243,7 +243,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SingUp(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.SingUp",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.SingUp",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -257,7 +257,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SingIn(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.SingIn",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.SingIn",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -271,7 +271,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.LogOut(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.LogOut",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName2","RPC_Auth.LogOut",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -299,7 +299,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.AddNewTextMessage(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_AddNewTextMessage",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_AddNewTextMessage","RPC_Msg.AddNewTextMessage",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_AddNewTextMessage","RPC_Msg.AddNewTextMessage",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -313,7 +313,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.AddNewMessage(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_AddNewMessage",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_AddNewMessage","RPC_Msg.AddNewMessage",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_AddNewMessage","RPC_Msg.AddNewMessage",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -327,7 +327,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SetRoomActionDoing(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_SetRoomActionDoing",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_SetRoomActionDoing","RPC_Msg.SetRoomActionDoing",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_SetRoomActionDoing","RPC_Msg.SetRoomActionDoing",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -341,7 +341,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.GetMessagesByIds(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetMessagesByIds",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetMessagesByIds","RPC_Msg.GetMessagesByIds",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetMessagesByIds","RPC_Msg.GetMessagesByIds",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -355,7 +355,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.GetMessagesHistory(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetMessagesHistory",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetMessagesHistory","RPC_Msg.GetMessagesHistory",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetMessagesHistory","RPC_Msg.GetMessagesHistory",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -369,7 +369,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SetMessagesRangeAsSeen(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_SetChatMessagesRangeAsSeen",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_SetChatMessagesRangeAsSeen","RPC_Msg.SetMessagesRangeAsSeen",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_SetChatMessagesRangeAsSeen","RPC_Msg.SetMessagesRangeAsSeen",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -383,7 +383,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.DeleteChatHistory(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_DeleteChatHistory",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_DeleteChatHistory","RPC_Msg.DeleteChatHistory",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_DeleteChatHistory","RPC_Msg.DeleteChatHistory",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -397,7 +397,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.DeleteMessagesByIds(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_DeleteMessagesByIds",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_DeleteMessagesByIds","RPC_Msg.DeleteMessagesByIds",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_DeleteMessagesByIds","RPC_Msg.DeleteMessagesByIds",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -411,7 +411,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SetMessagesAsReceived(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_SetMessagesAsReceived",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_SetMessagesAsReceived","RPC_Msg.SetMessagesAsReceived",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_SetMessagesAsReceived","RPC_Msg.SetMessagesAsReceived",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -425,7 +425,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.ForwardMessages(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_ForwardMessages",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_ForwardMessages","RPC_Msg.ForwardMessages",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_ForwardMessages","RPC_Msg.ForwardMessages",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -439,7 +439,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.EditMessage(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_EditMessage",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_EditMessage","RPC_Msg.EditMessage",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_EditMessage","RPC_Msg.EditMessage",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -453,7 +453,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.BroadcastNewMessage(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_BroadcastNewMessage",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_BroadcastNewMessage","RPC_Msg.BroadcastNewMessage",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_BroadcastNewMessage","RPC_Msg.BroadcastNewMessage",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -467,7 +467,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.GetFreshChatList(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetFreshChatList",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetFreshChatList","RPC_Msg.GetFreshChatList",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetFreshChatList","RPC_Msg.GetFreshChatList",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -481,7 +481,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.GetFreshRoomMessagesList(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetFreshRoomMessagesList",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetFreshRoomMessagesList","RPC_Msg.GetFreshRoomMessagesList",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetFreshRoomMessagesList","RPC_Msg.GetFreshRoomMessagesList",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -495,7 +495,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.Echo(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_PB_MsgParam_Echo",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_PB_MsgParam_Echo","RPC_Msg.Echo",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_PB_MsgParam_Echo","RPC_Msg.Echo",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -523,7 +523,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.GetDirectUpdates(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetDirectUpdates",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetDirectUpdates","RPC_Sync.GetDirectUpdates",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetDirectUpdates","RPC_Sync.GetDirectUpdates",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -537,7 +537,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.GetGeneralUpdates(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetGeneralUpdates",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetGeneralUpdates","RPC_Sync.GetGeneralUpdates",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetGeneralUpdates","RPC_Sync.GetGeneralUpdates",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -551,7 +551,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.GetNotifyUpdates(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetNotifyUpdates",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetNotifyUpdates","RPC_Sync.GetNotifyUpdates",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetNotifyUpdates","RPC_Sync.GetNotifyUpdates",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -565,7 +565,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SetLastSyncDirectUpdateId(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_SetLastSyncDirectUpdateId",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_SetLastSyncDirectUpdateId","RPC_Sync.SetLastSyncDirectUpdateId",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_SetLastSyncDirectUpdateId","RPC_Sync.SetLastSyncDirectUpdateId",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -579,7 +579,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SetLastSyncGeneralUpdateId(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_SetLastSyncGeneralUpdateId",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_SetLastSyncGeneralUpdateId","RPC_Sync.SetLastSyncGeneralUpdateId",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_SetLastSyncGeneralUpdateId","RPC_Sync.SetLastSyncGeneralUpdateId",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -593,7 +593,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.SetLastSyncNotifyUpdateId(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_SetLastSyncNotifyUpdateId",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_SetLastSyncNotifyUpdateId","RPC_Sync.SetLastSyncNotifyUpdateId",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_SetLastSyncNotifyUpdateId","RPC_Sync.SetLastSyncNotifyUpdateId",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -621,7 +621,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.BlockUser(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_BlockUser",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_BlockUser","RPC_UserOffline.BlockUser",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_BlockUser","RPC_UserOffline.BlockUser",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -635,7 +635,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.UnBlockUser(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_UnBlockUser",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_UnBlockUser","RPC_UserOffline.UnBlockUser",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_UnBlockUser","RPC_UserOffline.UnBlockUser",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -649,7 +649,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.UpdateAbout(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_UpdateAbout",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_UpdateAbout","RPC_UserOffline.UpdateAbout",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_UpdateAbout","RPC_UserOffline.UpdateAbout",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -663,7 +663,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.UpdateUserName(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_UpdateUserName",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_UpdateUserName","RPC_UserOffline.UpdateUserName",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_UpdateUserName","RPC_UserOffline.UpdateUserName",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -677,7 +677,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.ChangePrivacy(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponseOffline_ChangePrivacy",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponseOffline_ChangePrivacy","RPC_UserOffline.ChangePrivacy",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponseOffline_ChangePrivacy","RPC_UserOffline.ChangePrivacy",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -691,7 +691,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.ChangeAvatar(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_ChangeAvatar",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_ChangeAvatar","RPC_UserOffline.ChangeAvatar",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserOfflineResponse_ChangeAvatar","RPC_UserOffline.ChangeAvatar",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -719,7 +719,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.CheckUserName(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName","RPC_User.CheckUserName",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_CheckUserName","RPC_User.CheckUserName",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }
@@ -733,7 +733,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
                         res, err := rpc.GetBlockedList(load,params)
                         if err == nil {
                             //RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_BlockedList",cmd, params)
-                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_BlockedList","RPC_User.GetBlockedList",cmd, params)
+                            RPC_ResponseHandler.HandleOfflineResult(res,"PB_UserResponse_BlockedList","RPC_User.GetBlockedList",cmd, params , load)
                         }else{
                             RPC_ResponseHandler.HandelError(err)
                         }

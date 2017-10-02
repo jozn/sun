@@ -11,10 +11,17 @@ func Chat_GetChatListForUser(me int) (res []*x.PB_ChatView, err error) {
 		return
 	}
 
-	for _, r := range rows {
+	chatIds := make(map[int]bool)
+    for _, r := range rows {
+        chatIds[r.ChatId] = true
+    }
+
+    res = pushView_chatView(me, chatIds)
+
+	/*for _, r := range rows {
 		chat := PBConv_Chat_To_PB_ChatView(r)
 		res = append(res, chat)
-	}
+	}*/
 
 	return
 }

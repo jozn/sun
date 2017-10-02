@@ -11,8 +11,18 @@ type rpcMsg int
 
 func (rpcMsg) GetFreshChatList(i *x.PB_MsgParam_GetFreshChatList, p x.RPC_UserParam) (*x.PB_MsgResponse_GetFreshChatList, error) {
 	chats, err := Chat_GetChatListForUser(p.GetUserId())
+	/*uids := make(map[int]bool)
+
+	if err == nil {
+		for _, c := range chats {
+			uids[int(c.UserId)] = true
+		}
+	}*/
+
+    //users := pushView_userView(p.GetUserId(), uids)
 	return &x.PB_MsgResponse_GetFreshChatList{
 		Chats: chats,
+        //Users: users,
 	}, err
 }
 
