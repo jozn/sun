@@ -59,37 +59,39 @@ func (rpcResHandeler) HandleOfflineResult(i interface{}, PBClass string, RpcName
 	if ok {
 		data, err := proto.Marshal(resOfRpcFunc)
 
+        //todo: if response has error we must call the clint with and error: like: SERVER_ERR
+        if err != nil {
+            return
+        }
+        resToClient := &x.PB_ResponseToClient{
+            ClientCallId: int64(c.ClientCallId),
+            PBClass:      PBClass,
+            RpcFullName:  RpcName,
+            Data:         data,
+        }
+
 		if config.IS_DEBUG || true {
 			//logRpc.Println("debuging loggin " + RpcName)
 			param2, _ := paramParsed.(proto.Message)
 			t := time.Now()
-			s := "==============================================================================="
-			s = "////////////////////////////////////////////////////////////////////////////////////"
+			s := "//======================================================================================================================="
+			//s = "////////////////////////////////////////////////////////////////////////////////////"
 			//logRpc.Println(s)
-			oT :=
-`"%s - %s"
-Param = %s
-Result = %s
-`
-			logRpc.Printf(oT, RpcName, t.Format("3:04:04"), helper.ToJsonPerety2(param2), helper.ToJsonPerety2(resOfRpcFunc))
+			/*oT :=
+							`"%s - %s"
+			Param = %s
+			Result = %s
+			`*/
+			//logRpc.Printf(oT, RpcName, t.Format("3:04:04"), helper.ToJsonPerety2(param2), helper.ToJsonPerety2(resOfRpcFunc))
+			//logRpc.Println(s)
+
+			logRpc.Printf(`"%s - %s"`, RpcName, t.Format("3:04:04"))
+			logRpc.Println("Param = ", helper.ToJsonPerety2(param2))
+			logRpc.Println("Result = ", helper.ToJsonPerety2(resOfRpcFunc))
+			logRpc.Println("PB_ResponseToClient = ", helper.ToJsonPerety2(resToClient))
+			logRpc.Println("ResponseDataSize = ", helper.ToJsonPerety2(len(resToClient.Data)))
 			logRpc.Println(s)
 
-			/*logRpc.Printf("{Name: %s - %s ",RpcName , t.Format("3:04:04") )
-						logRpc.Println("param: ", helper.ToJsonPerety2(param2))
-						logRpc.Println("result: ",helper.ToJsonPerety2(resOfRpcFunc))
-			            logRpc.Println(s)*/
-
-		}
-
-		//todo: if response has error we must call the clint with and error: like: SERVER_ERR
-		if err != nil {
-			return
-		}
-		resToClient := &x.PB_ResponseToClient{
-			ClientCallId: int64(c.ClientCallId),
-			PBClass:      PBClass,
-			RpcFullName:  RpcName,
-			Data:         data,
 		}
 
 		//wsDebugLog(fmt.Sprintf("%s %s", "HandleOfflineResult: "+PBClass+" ", i))
