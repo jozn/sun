@@ -47,6 +47,7 @@ func (m *chatUpdater) StartLoops() {
 	go m.loopDirectToUser()
 }
 
+//can causes panic
 func (m *chatUpdater) loopHereDirect() {
 	const siz = 50000
 	arr := make([]logDelayer, 0, siz)
@@ -65,6 +66,7 @@ func (m *chatUpdater) loopHereDirect() {
 				pre := arr
 				arr = make([]logDelayer, 0, siz)
 				go m.saveNewChatDirectBuffer(pre)
+				logChat.Printf(".HereDirectDelayer is saving for %v", pre)
 			}
 		}
 	}
@@ -82,7 +84,12 @@ func (m *chatUpdater) saveNewChatDirectBuffer(msgsDelays []logDelayer) {
 		logs = append(logs, md.directLog)
 	}
 	err := x.MassInsert_DirectLog(logs, base.DB)
-	helper.NoErr(err)
+	helper.DebugErr(err)
+
+	if err != nil {
+		logChat.Printf(".saveNewChatDirectBuffer() has error for saving mass DirectLog - Err: %s", err)
+	}
+
 	//fixme: is it better to use just use anotehr mechanism - this has data racing??
 	for _, md := range msgsDelays {
 		m.StoredDirect <- md.directLog
@@ -139,42 +146,10 @@ func chatLogger_sendToUsersUpdates(logs []x.DirectLog) {
 			cmd := NewPB_CommandToClient_WithData(PB_PushHolderView, res)
 			AllPipesMap.SendToUser(UserId, cmd)
 			if config.IS_DEBUG {
+				logChat.Printf("chatLogger_sendToUsersUpdates() is sending to user: %s", cmd)
+
 				fmt.Printf("send to user: %d PushViews : %s", UserId, helper.ToJson(res))
 			}
 		}
 	}
 }
-
-/*for UserId, lgs := range mp { //each user
-	    if AllPipesMap.IsPipeOpen(UserId) && len(lgs) > 0 {
-	        rowsView := directLogsToView(lgs)
-	        push := &x.PB_PushDirectLogViewsMany{Rows: rowsView}
-	        cmd := NewPB_CommandToClient_WithData("PB_PushDirectLogsMany", push)
-	        AllPipesMap.SendToUser(UserId, cmd)
-	    }
-	}
-}
-
-///////////// all below deprecated ///////////////
-func directLogsToView(logs []x.DirectLog) (res []*x.PB_DirectLogView) {
-	for _, log := range logs { //each user
-		res = append(res, directLogToView(log))
-	}
-	return
-}
-
-func directLogToView(log x.DirectLog) *x.PB_DirectLogView {
-	v := &x.PB_DirectLogView{
-		Row: PBConv_DirectLog_To_DirectLog(&log),
-	}
-	switch x.RoomLogTypeEnum(log.RoomLogTypeId) {
-	case x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE:
-		msg, ok := x.Store.GetDirectMessageByMessageId(log.MessageId)
-		if ok {
-			_ = msg
-			v.NewMessage = &x.PB_MessageView{}
-		}
-	}
-	return v
-}
-*/

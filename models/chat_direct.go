@@ -2,6 +2,7 @@ package models
 
 import (
 	"ms/sun/base"
+	"ms/sun/config"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 )
@@ -14,17 +15,17 @@ type chatDirect struct {
 	Err        error
 }
 
-func NewDirectMessagingByUsers(me, peer int) *chatDirect {
+func NewDirectMessagingByUsers(meUserId, peerUserId int) *chatDirect {
 	res := &chatDirect{
-		MeUserId:   me,
-		PeerUserId: peer,
+		MeUserId:   meUserId,
+		PeerUserId: peerUserId,
 	}
 	res.LoadOrCreateRooms()
 	return res
 }
 
-func NewDirectMessagingByChatId(me, chatId int) (*chatDirect, error) {
-	/* if me <=  0 {
+func NewDirectMessagingByChatId(meUserId, chatId int) (*chatDirect, error) {
+	/* if meUserId <=  0 {
 	       return  nil,errors.New("not user")
 	   }
 	   if chatId > 0 {
@@ -33,13 +34,13 @@ func NewDirectMessagingByChatId(me, chatId int) (*chatDirect, error) {
 
 	       }
 	   }*/
-	ch, err := x.NewChat_Selector().ChatId_Eq(chatId).UserId_Eq(me).GetRow(base.DB)
+	ch, err := x.NewChat_Selector().ChatId_Eq(chatId).UserId_Eq(meUserId).GetRow(base.DB)
 	if err != nil {
 		return nil, err
 	}
 
 	s := &chatDirect{
-		MeUserId:   me,
+		MeUserId:   meUserId,
 		PeerUserId: ch.PeerUserId,
 	}
 	s.MeChat = ch
@@ -63,6 +64,10 @@ func (s *chatDirect) LoadOrCreateRooms() error {
 
 	if e2 != nil {
 		s.Err = e2
+	}
+
+	if config.IS_DEBUG && s.Err != nil {
+		logChat.Printf("%s - Err: %s - %v", "LoadOrCreateRooms() has error: ", s.Err, s)
 	}
 	return s.Err
 }
@@ -100,6 +105,9 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 
 	tx, err := base.DB.Begin()
 	if err != nil {
+        if config.IS_DEBUG {
+            logChat.Printf(".AddMessage() transextion start has error: %s - %v", err, s)
+        }
 		return
 	}
 
@@ -109,6 +117,9 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 	d2mPeer.Insert(tx)
 	err = tx.Commit()
 	if err != nil {
+        if config.IS_DEBUG {
+            logChat.Printf(".AddMessage() transextion commit has error: %s - %v", err, s)
+        }
 		return
 	}
 

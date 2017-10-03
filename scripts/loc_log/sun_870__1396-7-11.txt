@@ -1,17 +1,17 @@
 =================================== Sun ===================================
-     100 files     157 text files.
-classified 157 filesDuplicate file check 157 files (117 known unique)Unique:      100 files                                               157 unique files.                              
-Counting:  100      54 files ignored.
+     100 files     159 text files.
+classified 159 filesDuplicate file check 159 files (118 known unique)Unique:      100 files                                               159 unique files.                              
+Counting:  100      55 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.45 s (251.6 files/s, 23461.5 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.37 s (305.7 files/s, 28295.4 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Go                             101           1520            971           6568
+Go                             102           1521            972           6582
 Protocol Buffers                11            269            216            981
 Bourne Shell                     1              1              1             10
 -------------------------------------------------------------------------------
-SUM:                           113           1790           1188           7559
+SUM:                           114           1791           1189           7573
 -------------------------------------------------------------------------------
 =================================== End Sun ===================================
 
@@ -22,7 +22,7 @@ SUM:                           113           1790           1188           7559
 classified 484 filesDuplicate file check 484 files (461 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                          Unique:      400 files                                               484 unique files.                              
 Counting:  100Counting:  200Counting:  300Counting:  400     128 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=1.57 s (303.9 files/s, 39185.3 lines/s)
+http://cloc.sourceforge.net v 1.64  T=1.39 s (343.1 files/s, 44236.5 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ SUM:                           477           9234           9411          42854
 classified 366 filesDuplicate file check 366 files (352 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                               366 unique files.                              
 Counting:  100Counting:  200Counting:  300     100 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=1.12 s (321.7 files/s, 38251.8 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.99 s (364.3 files/s, 43319.7 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ SUM:                           359           7270           6184          29234
 classified 32 files      32 unique files.                              
       14 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.13 s (207.3 files/s, 18272.5 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.10 s (267.9 files/s, 23613.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
