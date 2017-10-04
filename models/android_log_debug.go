@@ -57,11 +57,11 @@ func ServeHttpAndroidLogger(w http.ResponseWriter, r *http.Request) {
 			if adl.Time < 1 {
 				adl.Time = helper.TimeNow()
 			}
-			t := time.Unix(int64(adl.Time), 0)
+			t := time.Unix(int64(adl.Version), 0)
 			if err == nil {
-				//logFileName := fmt.Sprintf("%s_%d_%d_%d.javal", adl.Module, t.Year(), t.Day(), t.Hour())
+				logFileName := fmt.Sprintf("%s_%d_%d_%d_%d.javal", adl.Module, t.Day(), t.Hour(), t.Minute(), adl.Version)
 				//logFileName := fmt.Sprintf("%s_%d.javal", adl.Module, startTime.Unix())
-				logFileName := fmt.Sprintf("%s_%d.javal", adl.Module, adl.Version)
+				//logFileName := fmt.Sprintf("%s_%d.javal", adl.Module, adl.Version)
 				file, ok := androidLoggerMapper[logFileName]
 				if !ok {
 					os.MkdirAll("./logs/android/", os.ModeDir)
