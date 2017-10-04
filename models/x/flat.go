@@ -1524,6 +1524,7 @@ var PB_UserResponse_CheckUserName2__FOlD = &PB_UserResponse_CheckUserName2{}
 
 type PB_MsgParam_AddNewTextMessage_Flat struct {
 	Text             string
+	MessageKey       string
 	PeerId           int
 	Time             int
 	ReplyToMessageId int
@@ -1534,6 +1535,7 @@ type PB_MsgParam_AddNewTextMessage_Flat struct {
 func (m *PB_MsgParam_AddNewTextMessage) ToFlat() *PB_MsgParam_AddNewTextMessage_Flat {
 	r := &PB_MsgParam_AddNewTextMessage_Flat{
 		Text:             m.Text,
+		MessageKey:       m.MessageKey,
 		PeerId:           int(m.PeerId),
 		Time:             int(m.Time),
 		ReplyToMessageId: int(m.ReplyToMessageId),
@@ -1545,6 +1547,7 @@ func (m *PB_MsgParam_AddNewTextMessage) ToFlat() *PB_MsgParam_AddNewTextMessage_
 func (m *PB_MsgParam_AddNewTextMessage_Flat) ToPB() *PB_MsgParam_AddNewTextMessage {
 	r := &PB_MsgParam_AddNewTextMessage{
 		Text:             m.Text,
+		MessageKey:       m.MessageKey,
 		PeerId:           int32(m.PeerId),
 		Time:             int32(m.Time),
 		ReplyToMessageId: int64(m.ReplyToMessageId),
@@ -1555,6 +1558,7 @@ func (m *PB_MsgParam_AddNewTextMessage_Flat) ToPB() *PB_MsgParam_AddNewTextMessa
 //folding
 var PB_MsgParam_AddNewTextMessage__FOlD = &PB_MsgParam_AddNewTextMessage{
 	Text:             "",
+	MessageKey:       "",
 	PeerId:           0,
 	Time:             0,
 	ReplyToMessageId: 0,
@@ -1580,6 +1584,7 @@ var PB_MsgResponse_AddNewTextMessage__FOlD = &PB_MsgResponse_AddNewTextMessage{}
 
 type PB_MsgParam_AddNewMessage_Flat struct {
 	Text             string
+	MessageKey       string
 	PeerId           int
 	Time             int
 	ReplyToMessageId int
@@ -1593,6 +1598,7 @@ type PB_MsgParam_AddNewMessage_Flat struct {
 func (m *PB_MsgParam_AddNewMessage) ToFlat() *PB_MsgParam_AddNewMessage_Flat {
 	r := &PB_MsgParam_AddNewMessage_Flat{
 		Text:             m.Text,
+		MessageKey:       m.MessageKey,
 		PeerId:           int(m.PeerId),
 		Time:             int(m.Time),
 		ReplyToMessageId: int(m.ReplyToMessageId),
@@ -1606,6 +1612,7 @@ func (m *PB_MsgParam_AddNewMessage) ToFlat() *PB_MsgParam_AddNewMessage_Flat {
 func (m *PB_MsgParam_AddNewMessage_Flat) ToPB() *PB_MsgParam_AddNewMessage {
 	r := &PB_MsgParam_AddNewMessage{
 		Text:             m.Text,
+		MessageKey:       m.MessageKey,
 		PeerId:           int32(m.PeerId),
 		Time:             int32(m.Time),
 		ReplyToMessageId: int64(m.ReplyToMessageId),
@@ -1618,6 +1625,7 @@ func (m *PB_MsgParam_AddNewMessage_Flat) ToPB() *PB_MsgParam_AddNewMessage {
 //folding
 var PB_MsgParam_AddNewMessage__FOlD = &PB_MsgParam_AddNewMessage{
 	Text:             "",
+	MessageKey:       "",
 	PeerId:           0,
 	Time:             0,
 	ReplyToMessageId: 0,
@@ -3849,6 +3857,7 @@ var PB_MessageView__FOlD = &PB_MessageView{
 
 type PB_MessageFileView_Flat struct {
 	MessageFileId       int
+	MessageFileKey      string
 	OriginalUserId      int
 	Name                string
 	Size                int
@@ -3877,6 +3886,7 @@ type PB_MessageFileView_Flat struct {
 func (m *PB_MessageFileView) ToFlat() *PB_MessageFileView_Flat {
 	r := &PB_MessageFileView_Flat{
 		MessageFileId:       int(m.MessageFileId),
+		MessageFileKey:      m.MessageFileKey,
 		OriginalUserId:      int(m.OriginalUserId),
 		Name:                m.Name,
 		Size:                int(m.Size),
@@ -3907,6 +3917,7 @@ func (m *PB_MessageFileView) ToFlat() *PB_MessageFileView_Flat {
 func (m *PB_MessageFileView_Flat) ToPB() *PB_MessageFileView {
 	r := &PB_MessageFileView{
 		MessageFileId:       int64(m.MessageFileId),
+		MessageFileKey:      m.MessageFileKey,
 		OriginalUserId:      int32(m.OriginalUserId),
 		Name:                m.Name,
 		Size:                int32(m.Size),
@@ -3936,6 +3947,7 @@ func (m *PB_MessageFileView_Flat) ToPB() *PB_MessageFileView {
 //folding
 var PB_MessageFileView__FOlD = &PB_MessageFileView{
 	MessageFileId:       0,
+	MessageFileKey:      "",
 	OriginalUserId:      0,
 	Name:                "",
 	Size:                0,
@@ -4495,6 +4507,7 @@ return r
 func(m *PB_MsgParam_AddNewTextMessage)ToFlat() *PB_MsgParam_AddNewTextMessage_Flat {
 r := &PB_MsgParam_AddNewTextMessage_Flat{
     Text:  m.Text ,
+    MessageKey:  m.MessageKey ,
     PeerId:  int(m.PeerId) ,
     Time:  int(m.Time) ,
     ReplyToMessageId:  int(m.ReplyToMessageId) ,
@@ -4512,6 +4525,7 @@ return r
 func(m *PB_MsgParam_AddNewMessage)ToFlat() *PB_MsgParam_AddNewMessage_Flat {
 r := &PB_MsgParam_AddNewMessage_Flat{
     Text:  m.Text ,
+    MessageKey:  m.MessageKey ,
     PeerId:  int(m.PeerId) ,
     Time:  int(m.Time) ,
     ReplyToMessageId:  int(m.ReplyToMessageId) ,
@@ -5207,6 +5221,7 @@ return r
 func(m *PB_MessageFileView)ToFlat() *PB_MessageFileView_Flat {
 r := &PB_MessageFileView_Flat{
     MessageFileId:  int(m.MessageFileId) ,
+    MessageFileKey:  m.MessageFileKey ,
     OriginalUserId:  int(m.OriginalUserId) ,
     Name:  m.Name ,
     Size:  int(m.Size) ,
@@ -5706,6 +5721,7 @@ return r
 func(m *PB_MsgParam_AddNewTextMessage_Flat)ToPB() *PB_MsgParam_AddNewTextMessage {
 r := &PB_MsgParam_AddNewTextMessage{
     Text:  m.Text ,
+    MessageKey:  m.MessageKey ,
     PeerId:  int32(m.PeerId) ,
     Time:  int32(m.Time) ,
     ReplyToMessageId:  int64(m.ReplyToMessageId) ,
@@ -5723,6 +5739,7 @@ return r
 func(m *PB_MsgParam_AddNewMessage_Flat)ToPB() *PB_MsgParam_AddNewMessage {
 r := &PB_MsgParam_AddNewMessage{
     Text:  m.Text ,
+    MessageKey:  m.MessageKey ,
     PeerId:  int32(m.PeerId) ,
     Time:  int32(m.Time) ,
     ReplyToMessageId:  int64(m.ReplyToMessageId) ,
@@ -6418,6 +6435,7 @@ return r
 func(m *PB_MessageFileView_Flat)ToPB() *PB_MessageFileView {
 r := &PB_MessageFileView{
     MessageFileId:  int64(m.MessageFileId) ,
+    MessageFileKey:  m.MessageFileKey ,
     OriginalUserId:  int32(m.OriginalUserId) ,
     Name:  m.Name ,
     Size:  int32(m.Size) ,
@@ -6824,6 +6842,7 @@ var PB_UserResponse_CheckUserName2__FOlD = &PB_UserResponse_CheckUserName2{
 
 var PB_MsgParam_AddNewTextMessage__FOlD = &PB_MsgParam_AddNewTextMessage{
         Text:  "" ,
+        MessageKey:  "" ,
         PeerId:  0 ,
         Time:  0 ,
         ReplyToMessageId:  0 ,
@@ -6837,6 +6856,7 @@ var PB_MsgResponse_AddNewTextMessage__FOlD = &PB_MsgResponse_AddNewTextMessage{
 
 var PB_MsgParam_AddNewMessage__FOlD = &PB_MsgParam_AddNewMessage{
         Text:  "" ,
+        MessageKey:  "" ,
         PeerId:  0 ,
         Time:  0 ,
         ReplyToMessageId:  0 ,
@@ -7380,6 +7400,7 @@ var PB_MessageView__FOlD = &PB_MessageView{
 
 var PB_MessageFileView__FOlD = &PB_MessageFileView{
         MessageFileId:  0 ,
+        MessageFileKey:  "" ,
         OriginalUserId:  0 ,
         Name:  "" ,
         Size:  0 ,

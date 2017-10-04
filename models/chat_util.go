@@ -7,6 +7,10 @@ import (
 	"ms/sun/models/x"
 )
 
+func KeyNewMessageKey(UserId int) string {
+	return fmt.Sprintf("%d_%d_%s", UserId, helper.TimeNow(), helper.RandString(4)) //todo extrac this to client
+}
+
 //d(lower userId)_(HigherUserId)
 func UsersToRoomKey(me int, peer int) string {
 	if me > peer {
@@ -16,7 +20,7 @@ func UsersToRoomKey(me int, peer int) string {
 }
 
 func UsersToChatKey(me int, peer int) string {
-    return fmt.Sprintf("d%d:%d", me, peer)
+	return fmt.Sprintf("d%d:%d", me, peer)
 }
 
 func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {
@@ -38,7 +42,7 @@ func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {
 			LastSeqDelete:  0,
 			PeerUserId:     peer,
 			GroupId:        0,
-			CreatedSe:    helper.TimeNow(),
+			CreatedSe:      helper.TimeNow(),
 			CurrentSeq:     0,
 		}
 		err = chatMe.Save(base.DB)
@@ -54,6 +58,7 @@ func Chat_IncermentForNewMessage(c *x.Chat) {
 	c.CurrentSeq += 1 //todo dep - remove this
 	c.UpdatedMs = helper.TimeNowMs()
 }
+
 /*
 
 func Chat_GetChatByIdAndUserId(chatId, userId int) (*x.Chat, error) {

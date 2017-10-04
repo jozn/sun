@@ -14,6 +14,7 @@ import "pb_views.proto";
 // AddNewTextMessage
 message PB_MsgParam_AddNewTextMessage {
     string Text = 1;
+    string MessageKey = 2;
     int32 PeerId = 5;
     int32 Time = 6;
     int64 ReplyToMessageId = 10;
@@ -27,6 +28,7 @@ message PB_MsgResponse_AddNewTextMessage {
 // AddNewMessage
 message PB_MsgParam_AddNewMessage {
     string Text = 1;
+    string MessageKey = 2;
     int32 PeerId = 5;
     int32 Time = 6;
     int64 ReplyToMessageId = 10;

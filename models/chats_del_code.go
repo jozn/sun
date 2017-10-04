@@ -13,7 +13,7 @@ func PushView_directLogsTo_PB_ChangesHolderView(meId int, logs []*x.DirectUpdate
     for _, log := range logs { //each user
         if log.RoomLogTypeId == int(Push_NEW_DIRECT_MESSAGE) {
             usersToLoad[log.PeerUserId] = true
-            chatIdsToLoad[log.ChatId] = true
+            //chatIdsToLoad[log.ChatId] = true
             msgIdsToLoad = append(msgIdsToLoad, log.MessageId)
             if log.MessageFileId > 0 {
                 msgFileIdsToLoad = append(msgFileIdsToLoad, log.MessageFileId)
@@ -60,7 +60,7 @@ func PushView_directLogsTo_PB_ChangesHolderView(meId int, logs []*x.DirectUpdate
     }
 
     if len(chatIdsToLoad) > 0 {
-        res.Chats = ViewChat_GetChatViewList(meId, chatIdsToLoad)
+        //res.Chats = ViewChat_GetChatViewList(meId, chatIdsToLoad)
     }
 
     //TODO: add messages files id

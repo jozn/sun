@@ -85,6 +85,7 @@ message PB_MessageView {
 message PB_MessageFileView {
 //    option realm = "1";
     int64 MessageFileId = 1;
+    string MessageFileKey = 32;
     int32 OriginalUserId = 2;
     string Name = 3;
     int32 Size = 5;

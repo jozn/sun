@@ -2765,35 +2765,6 @@ func FollowingListMembersByFollowedUserIdUserId(db XODB, followedUserId int, use
 	return res, nil
 }
 
-// FollowingListMemberByUserIdFollowedUserId retrieves a row from 'ms.following_list_member' as a FollowingListMember.
-//
-// Generated from index 'UserId'.
-func FollowingListMemberByUserIdFollowedUserId(db XODB, userId int, followedUserId int) (*FollowingListMember, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs ` +
-		`FROM ms.following_list_member ` +
-		`WHERE UserId = ? AND FollowedUserId = ?`
-
-	// run query
-	XOLog(sqlstr, userId, followedUserId)
-	flm := FollowingListMember{
-		_exists: true,
-	}
-
-	err = db.QueryRow(sqlstr, userId, followedUserId).Scan(&flm.Id, &flm.ListId, &flm.UserId, &flm.FollowedUserId, &flm.FollowType, &flm.UpdatedTimeMs)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnFollowingListMember_LoadOne(&flm)
-
-	return &flm, nil
-}
-
 // FollowingListMembersByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member' as a FollowingListMember.
 //
 // Generated from index 'UserId_2'.

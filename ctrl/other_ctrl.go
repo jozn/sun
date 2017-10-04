@@ -13,7 +13,7 @@ func PingAction(c *base.Action) base.AppErr {
 }
 
 func PushViewAction(c *base.Action) base.AppErr {
-    rows,err := x.NewDirectLog_Selector().ToUserId_Eq(6).GetRows(base.DB)
+    rows,err := x.NewDirectUpdate_Selector().ToUserId_Eq(6).GetRows(base.DB)
     helper.NoErr(err)
     res := models.PushView_directLogsTo_PB_ChangesHolderView(3,rows)
     c.SendJson(res)

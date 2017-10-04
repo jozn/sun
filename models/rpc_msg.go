@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"math/rand"
 	"ms/sun/base"
 	"ms/sun/helper"
@@ -19,10 +20,10 @@ func (rpcMsg) GetFreshChatList(i *x.PB_MsgParam_GetFreshChatList, p x.RPC_UserPa
 		}
 	}*/
 
-    //users := ViewUser_GetUserViewList(p.GetUserId(), uids)
+	//users := ViewUser_GetUserViewList(p.GetUserId(), uids)
 	return &x.PB_MsgResponse_GetFreshChatList{
 		Chats: chats,
-        //Users: users,
+		//Users: users,
 	}, err
 }
 
@@ -44,12 +45,13 @@ func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_User
 	pid := int(i.PeerId)
 	msg := &x.DirectMessage{
 		MessageId:            helper.NextRowsSeqId(),
+		MessageKey:           KeyNewMessageKey(p.GetUserId()),
 		RoomKey:              UsersToRoomKey(p.GetUserId(), int(i.GetPeerId())),
 		UserId:               p.GetUserId(),
 		MessageFileId:        0,
 		MessageTypeEnumId:    int(x.RoomMessageTypeEnum_TEXT),
 		Text:                 i.Text,
-		Time:                 int(i.Time),
+		CreatedSe:            int(i.Time),
 		PeerReceivedTime:     0,
 		PeerSeenTime:         0,
 		DeliviryStatusEnumId: int(x.RoomMessageDeliviryStatusEnum_SENT),
@@ -67,12 +69,13 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 	pid := int(i.PeerId)
 	msg := &x.DirectMessage{
 		MessageId:            helper.NextRowsSeqId(),
+		MessageKey:           fmt.Sprintf("%d_%d_%s", p.GetUserId(), helper.TimeNow(), helper.RandString(4)), //todo extrac this to client
 		RoomKey:              UsersToRoomKey(p.GetUserId(), int(i.GetPeerId())),
 		UserId:               p.GetUserId(),
 		MessageFileId:        0,
 		MessageTypeEnumId:    int(x.RoomMessageTypeEnum_TEXT),
 		Text:                 i.Text,
-		Time:                 int(i.Time),
+		CreatedSe:            int(i.Time),
 		PeerReceivedTime:     0,
 		PeerSeenTime:         0,
 		DeliviryStatusEnumId: int(x.RoomMessageDeliviryStatusEnum_SENT),
@@ -82,6 +85,7 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 		f := i.MessageView.MessageFileView
 		igPb := &x.MessageFile{
 			MessageFileId:   (helper.NextRowsSeqId()),
+			MessageFileKey:  KeyNewMessageKey(p.GetUserId()), //todo must set at client
 			OriginalUserId:  p.GetUserId(),
 			Name:            f.Name,
 			Size:            int(f.Size),
@@ -134,13 +138,13 @@ func (rpcMsg) GetMessagesByIds(i *x.PB_MsgParam_GetMessagesByIds, p x.RPC_UserPa
 }
 
 func (rpcMsg) GetMessagesHistory(i *x.PB_MsgParam_GetMessagesHistory, p x.RPC_UserParam) (*x.PB_MsgResponse_GetMessagesHistory, error) {
-	sel := x.NewDirectToMessage_Selector().Select_MessageId().ChatId_Eq(int(i.ChatId))
-	if i.FromSeq > 0 {
+	sel := x.NewDirectToMessage_Selector().Select_MessageId().ChatKey_Eq(i.ChatKey)
+	/*if i.FromSeq > 0 {
 		sel.Seq_GE(int(i.FromSeq))
 	}
 	if i.FromSeq > 0 {
 		sel.Seq_GE(int(i.FromSeq))
-	}
+	}*/
 
 	msgIds, err := sel.OrderBy_Id_Desc().GetIntSlice(base.DB)
 

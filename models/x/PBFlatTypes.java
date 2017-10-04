@@ -1366,6 +1366,7 @@ public class PBFlatTypes {
 
 	public class PB_MsgParam_AddNewTextMessage {
 	   public String Text;
+	   public String MessageKey;
 	   public int PeerId;
 	   public int Time;
 	   public long ReplyToMessageId;
@@ -1375,6 +1376,7 @@ public class PBFlatTypes {
 	folding
 	PBFlatTypes.PB_MsgParam_AddNewTextMessage t = new PBFlatTypes.PB_MsgParam_AddNewTextMessage();
     t.setText();
+    t.setMessageKey();
     t.setPeerId();
     t.setTime();
     t.setReplyToMessageId();
@@ -1384,6 +1386,7 @@ public class PBFlatTypes {
 	/*
 	PBFlatTypes.PB_MsgParam_AddNewTextMessage t = new PBFlatTypes.PB_MsgParam_AddNewTextMessage();
 	t.Text = ;
+	t.MessageKey = ;
 	t.PeerId = ;
 	t.Time = ;
 	t.ReplyToMessageId = ;
@@ -1393,6 +1396,7 @@ public class PBFlatTypes {
 	/*
 	PB_MsgParam_AddNewTextMessage t = new PB_MsgParam_AddNewTextMessage();
 	t.Text = m.getText() ;
+	t.MessageKey = m.getMessageKey() ;
 	t.PeerId = m.getPeerId() ;
 	t.Time = m.getTime() ;
 	t.ReplyToMessageId = m.getReplyToMessageId() ;
@@ -1416,6 +1420,7 @@ public class PBFlatTypes {
 
 	public class PB_MsgParam_AddNewMessage {
 	   public String Text;
+	   public String MessageKey;
 	   public int PeerId;
 	   public int Time;
 	   public long ReplyToMessageId;
@@ -1428,6 +1433,7 @@ public class PBFlatTypes {
 	folding
 	PBFlatTypes.PB_MsgParam_AddNewMessage t = new PBFlatTypes.PB_MsgParam_AddNewMessage();
     t.setText();
+    t.setMessageKey();
     t.setPeerId();
     t.setTime();
     t.setReplyToMessageId();
@@ -1440,6 +1446,7 @@ public class PBFlatTypes {
 	/*
 	PBFlatTypes.PB_MsgParam_AddNewMessage t = new PBFlatTypes.PB_MsgParam_AddNewMessage();
 	t.Text = ;
+	t.MessageKey = ;
 	t.PeerId = ;
 	t.Time = ;
 	t.ReplyToMessageId = ;
@@ -1452,6 +1459,7 @@ public class PBFlatTypes {
 	/*
 	PB_MsgParam_AddNewMessage t = new PB_MsgParam_AddNewMessage();
 	t.Text = m.getText() ;
+	t.MessageKey = m.getMessageKey() ;
 	t.PeerId = m.getPeerId() ;
 	t.Time = m.getTime() ;
 	t.ReplyToMessageId = m.getReplyToMessageId() ;
@@ -3512,6 +3520,7 @@ public class PBFlatTypes {
 
 	public class PB_MessageFileView {
 	   public long MessageFileId;
+	   public String MessageFileKey;
 	   public int OriginalUserId;
 	   public String Name;
 	   public int Size;
@@ -3539,6 +3548,7 @@ public class PBFlatTypes {
 	folding
 	PBFlatTypes.PB_MessageFileView t = new PBFlatTypes.PB_MessageFileView();
     t.setMessageFileId();
+    t.setMessageFileKey();
     t.setOriginalUserId();
     t.setName();
     t.setSize();
@@ -3566,6 +3576,7 @@ public class PBFlatTypes {
 	/*
 	PBFlatTypes.PB_MessageFileView t = new PBFlatTypes.PB_MessageFileView();
 	t.MessageFileId = ;
+	t.MessageFileKey = ;
 	t.OriginalUserId = ;
 	t.Name = ;
 	t.Size = ;
@@ -3593,6 +3604,7 @@ public class PBFlatTypes {
 	/*
 	PB_MessageFileView t = new PB_MessageFileView();
 	t.MessageFileId = m.getMessageFileId() ;
+	t.MessageFileKey = m.getMessageFileKey() ;
 	t.OriginalUserId = m.getOriginalUserId() ;
 	t.Name = m.getName() ;
 	t.Size = m.getSize() ;

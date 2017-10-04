@@ -96,9 +96,10 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				bs, _ := ioutil.ReadAll(igFile)
 				//bs64, _ := helper.FromBase64ToBin(thumb64)
 
-
 				igPb := &x.PB_MessageFileView{
 					MessageFileId:   int64(helper.NextRowsSeqId()),
+					OriginalUserId:  int32(fromUserId),
+					MessageFileKey:  models.KeyNewMessageKey(fromUserId),
 					Name:            imgRnd,
 					Size:            int32(st.Size()),
 					FileTypeEnumId:  1,
