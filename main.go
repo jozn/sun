@@ -216,6 +216,7 @@ func registerRoutes() *httptreemux.TreeMux {
 
 	//http.HandleFunc("/ws_call", models.ServeHttpWs)
 	http.HandleFunc("/ws_pb_call", models.ServeHttpWsPB)
+	http.HandleFunc("/ws_log", models.ServeHttpAndroidLogger)
 	///// v0.4 Msgs
 	http.HandleFunc("/msgs/v1/add_one", ctrl.MsgUploadV1)
 
