@@ -19,7 +19,7 @@ func (rpcMsg) GetFreshChatList(i *x.PB_MsgParam_GetFreshChatList, p x.RPC_UserPa
 		}
 	}*/
 
-    //users := pushView_userView(p.GetUserId(), uids)
+    //users := ViewUser_GetUserViewList(p.GetUserId(), uids)
 	return &x.PB_MsgResponse_GetFreshChatList{
 		Chats: chats,
         //Users: users,

@@ -7,10 +7,7 @@ import (
 	"ms/sun/models/x"
 )
 
-func UsersToRoomKey32(me, peer int32) string {
-	return fmt.Sprintf("%d_%d", me, peer)
-}
-
+//d(lower userId)_(HigherUserId)
 func UsersToRoomKey(me int, peer int) string {
 	if me > peer {
 		me, peer = peer, me
@@ -49,7 +46,7 @@ func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {
 }
 
 func Chat_IncermentForNewMessage(c *x.Chat) {
-	c.CurrentSeq += 1//todo dep - remove this
+	c.CurrentSeq += 1 //todo dep - remove this
 	c.UpdatedMs = helper.TimeNowMs()
 }
 

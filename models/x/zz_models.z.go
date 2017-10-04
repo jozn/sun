@@ -111,8 +111,8 @@ type Comment struct {
 	CreatedTime: 0,
 */
 
-// DirectLog 'ms.direct_log'.
-type DirectLog struct {
+// DirectUpdate 'ms.direct_log'.
+type DirectUpdate struct {
 	Id            int
 	ToUserId      int
 	MessageId     int
@@ -131,7 +131,7 @@ type DirectLog struct {
 }
 
 /*
-:= &DirectLog {
+:= &DirectUpdate {
 	Id: 0,
 	ToUserId: 0,
 	MessageId: 0,

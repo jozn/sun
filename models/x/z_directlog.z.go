@@ -12,7 +12,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// DirectLog represents a row from 'ms.direct_log'.
+// DirectUpdate represents a row from 'ms.direct_log'.
 
 // Manualy copy this to project
 type DirectLog__ struct {
@@ -34,18 +34,18 @@ type DirectLog__ struct {
 	_exists, _deleted bool
 }
 
-// Exists determines if the DirectLog exists in the database.
-func (dl *DirectLog) Exists() bool {
+// Exists determines if the DirectUpdate exists in the database.
+func (dl *DirectUpdate) Exists() bool {
 	return dl._exists
 }
 
-// Deleted provides information if the DirectLog has been deleted from the database.
-func (dl *DirectLog) Deleted() bool {
+// Deleted provides information if the DirectUpdate has been deleted from the database.
+func (dl *DirectUpdate) Deleted() bool {
 	return dl._deleted
 }
 
-// Insert inserts the DirectLog to the database.
-func (dl *DirectLog) Insert(db XODB) error {
+// Insert inserts the DirectUpdate to the database.
+func (dl *DirectUpdate) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
@@ -84,8 +84,8 @@ func (dl *DirectLog) Insert(db XODB) error {
 	return nil
 }
 
-// Insert inserts the DirectLog to the database.
-func (dl *DirectLog) Replace(db XODB) error {
+// Insert inserts the DirectUpdate to the database.
+func (dl *DirectUpdate) Replace(db XODB) error {
 	var err error
 
 	// sql query
@@ -120,8 +120,8 @@ func (dl *DirectLog) Replace(db XODB) error {
 	return nil
 }
 
-// Update updates the DirectLog in the database.
-func (dl *DirectLog) Update(db XODB) error {
+// Update updates the DirectUpdate in the database.
+func (dl *DirectUpdate) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
@@ -149,8 +149,8 @@ func (dl *DirectLog) Update(db XODB) error {
 	return err
 }
 
-// Save saves the DirectLog to the database.
-func (dl *DirectLog) Save(db XODB) error {
+// Save saves the DirectUpdate to the database.
+func (dl *DirectUpdate) Save(db XODB) error {
 	if dl.Exists() {
 		return dl.Update(db)
 	}
@@ -158,8 +158,8 @@ func (dl *DirectLog) Save(db XODB) error {
 	return dl.Replace(db)
 }
 
-// Delete deletes the DirectLog from the database.
-func (dl *DirectLog) Delete(db XODB) error {
+// Delete deletes the DirectUpdate from the database.
+func (dl *DirectUpdate) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
@@ -4388,14 +4388,14 @@ func (u *__DirectLog_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__DirectLog_Selector) GetRow(db *sqlx.DB) (*DirectLog, error) {
+func (u *__DirectLog_Selector) GetRow(db *sqlx.DB) (*DirectUpdate, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &DirectLog{}
+	row := &DirectUpdate{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -4410,14 +4410,14 @@ func (u *__DirectLog_Selector) GetRow(db *sqlx.DB) (*DirectLog, error) {
 	return row, nil
 }
 
-func (u *__DirectLog_Selector) GetRows(db *sqlx.DB) ([]*DirectLog, error) {
+func (u *__DirectLog_Selector) GetRows(db *sqlx.DB) ([]*DirectUpdate, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*DirectLog
+	var rows []*DirectUpdate
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -4439,14 +4439,14 @@ func (u *__DirectLog_Selector) GetRows(db *sqlx.DB) ([]*DirectLog, error) {
 }
 
 //dep use GetRows()
-func (u *__DirectLog_Selector) GetRows2(db *sqlx.DB) ([]DirectLog, error) {
+func (u *__DirectLog_Selector) GetRows2(db *sqlx.DB) ([]DirectUpdate, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*DirectLog
+	var rows []*DirectUpdate
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -4464,7 +4464,7 @@ func (u *__DirectLog_Selector) GetRows2(db *sqlx.DB) ([]DirectLog, error) {
 
 	OnDirectLog_LoadMany(rows)
 
-	rows2 := make([]DirectLog, len(rows))
+	rows2 := make([]DirectUpdate, len(rows))
 	for i := 0; i < len(rows); i++ {
 		cp := *rows[i]
 		rows2[i] = cp
@@ -4618,8 +4618,8 @@ func (d *__DirectLog_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  DirectLog ////////////////
-func MassInsert_DirectLog(rows []DirectLog, db XODB) error {
+///////////////////////// Mass insert - replace for  DirectUpdate ////////////////
+func MassInsert_DirectLog(rows []DirectUpdate, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
@@ -4664,7 +4664,7 @@ func MassInsert_DirectLog(rows []DirectLog, db XODB) error {
 	return nil
 }
 
-func MassReplace_DirectLog(rows []DirectLog, db XODB) error {
+func MassReplace_DirectLog(rows []DirectUpdate, db XODB) error {
 	var err error
 	ln := len(rows)
 	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
@@ -4734,10 +4734,10 @@ func MassReplace_DirectLog(rows []DirectLog, db XODB) error {
 
 //
 
-// DirectLogById retrieves a row from 'ms.direct_log' as a DirectLog.
+// DirectLogById retrieves a row from 'ms.direct_log' as a DirectUpdate.
 //
 // Generated from index 'direct_log_Id_pkey'.
-func DirectLogById(db XODB, id int) (*DirectLog, error) {
+func DirectLogById(db XODB, id int) (*DirectUpdate, error) {
 	var err error
 
 	// sql query
@@ -4748,7 +4748,7 @@ func DirectLogById(db XODB, id int) (*DirectLog, error) {
 
 	// run query
 	XOLog(sqlstr, id)
-	dl := DirectLog{
+	dl := DirectUpdate{
 		_exists: true,
 	}
 

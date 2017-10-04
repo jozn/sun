@@ -6,3 +6,6 @@ ffmpeg -i 1.mp4 -profile:v baseline -start_number 0 -hls_time 10 -hls_list_size 
 ffmpeg -i 1.mp4 -codec: copy -start_number 0 -hls_time 10 -hls_list_size 0 -f hls vid@cp.m3u8
 
 ffmpeg -i 1.mp4 -codec: copy -start_number 0 -hls_time 20 -hls_list_size 0 -f hls v.m3u8u
+
+====
+ffmpeg -i o2.mp4 -bsf:v h264_mp4toannexb -codec: copy -start_number 0 -hls_time 6 -hls_list_size 0 -f hls v.m3u8u

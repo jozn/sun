@@ -123,7 +123,7 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		return
 	}
 
-	dlNew := x.DirectLog{
+	dlNew := x.DirectUpdate{
 		Id:            helper.NextRowsSeqId(),
 		ToUserId:      s.PeerChat.UserId,
 		MessageId:     msg.MessageId,
@@ -138,7 +138,7 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		AtTimeMs:      helper.TimeNowMs(),
 	}
 
-	dlRec := x.DirectLog{
+	dlRec := x.DirectUpdate{
 		Id:            helper.NextRowsSeqId(),
 		ToUserId:      s.MeChat.UserId,
 		MessageId:     msg.MessageId,
@@ -153,8 +153,8 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		AtTimeMs:      helper.TimeNowMs(),
 	}
 
-	LogUpdater.HereDirectDelayer <- logDelayer{directLog: dlNew}
-	LogUpdater.HereDirectDelayer <- logDelayer{directLog: dlRec}
+	ChatUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlNew}
+	ChatUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlRec}
 }
 
 func (s *chatDirect) DeleteMessageFromMe() {
@@ -188,7 +188,7 @@ func (s *chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 
 	s.MeChat.LastSeqSeen = toSeq
 
-	/*dlRec := x.DirectLog{
+	/*dlRec := x.DirectUpdate{
 	      Id:            helper.NextRowsSeqId(),
 	      ToUserId:      s.MeChat.UserId,
 	      MessageId:     msg.MessageId,
@@ -202,7 +202,7 @@ func (s *chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 	      AtTimeMs:      helper.TimeNowMs(),
 	  }
 
-	  LogUpdater.HereDirectDelayer <- logDelayer{directLog: dlNew}*/
+	  ChatUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlNew}*/
 }
 
 func (s *chatDirect) SetMessagesStatus() {

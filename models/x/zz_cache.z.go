@@ -428,10 +428,10 @@ func (c _StoreImpl) PreLoadChatByChatIds(ids []int) {
 	}
 }
 
-func (c _StoreImpl) GetDirectLogById(Id int) (*DirectLog, bool) {
-	o, ok := RowCache.Get("DirectLog:" + strconv.Itoa(Id))
+func (c _StoreImpl) GetDirectLogById(Id int) (*DirectUpdate, bool) {
+	o, ok := RowCache.Get("DirectUpdate:" + strconv.Itoa(Id))
 	if ok {
-		if obj, ok := o.(*DirectLog); ok {
+		if obj, ok := o.(*DirectUpdate); ok {
 			return obj, true
 		}
 	}
@@ -447,7 +447,7 @@ func (c _StoreImpl) PreLoadDirectLogByIds(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
-		_, ok := RowCache.Get("DirectLog:" + strconv.Itoa(id))
+		_, ok := RowCache.Get("DirectUpdate:" + strconv.Itoa(id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}

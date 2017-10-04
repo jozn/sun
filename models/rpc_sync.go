@@ -8,7 +8,7 @@ import (
 type rpcSync int
 
 func (rpcSync) GetDirectUpdates(i *x.PB_SyncParam_GetDirectUpdates, p x.RPC_UserParam) (*x.PB_SyncResponse_GetDirectUpdates, error) {
-	return DirectLog_GetSync(p.GetUserId(), int(i.LastId))
+	return DirectSync_GetSync(p.GetUserId(), int(i.LastId))
 }
 
 func (rpcSync) GetGeneralUpdates(i *x.PB_SyncParam_GetGeneralUpdates, p x.RPC_UserParam) (*x.PB_SyncResponse_GetGeneralUpdates, error) {

@@ -699,23 +699,23 @@ func OnChat_LoadMany(rows []*Chat) {
 }
 
 //DirectLog Events
-func OnDirectLog_AfterInsert(row *DirectLog) {
+func OnDirectLog_AfterInsert(row *DirectUpdate) {
 	RowCache.Set("DirectLog:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnDirectLog_AfterUpdate(row *DirectLog) {
+func OnDirectLog_AfterUpdate(row *DirectUpdate) {
 	RowCache.Set("DirectLog:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnDirectLog_AfterDelete(row *DirectLog) {
+func OnDirectLog_AfterDelete(row *DirectUpdate) {
 	RowCache.Delete("DirectLog:" + strconv.Itoa(row.Id))
 }
 
-func OnDirectLog_LoadOne(row *DirectLog) {
+func OnDirectLog_LoadOne(row *DirectUpdate) {
 	RowCache.Set("DirectLog:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnDirectLog_LoadMany(rows []*DirectLog) {
+func OnDirectLog_LoadMany(rows []*DirectUpdate) {
 	for _, row := range rows {
 		RowCache.Set("DirectLog:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}

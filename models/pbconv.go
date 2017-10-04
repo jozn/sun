@@ -6,8 +6,8 @@ import (
 
 //just return the by value
 
-func PBConv_PB_DirectLog_To_DirectLog(o *x.PB_DirectLog) *x.DirectLog {
-	n := &x.DirectLog{
+func PBConv_PB_DirectLog_To_DirectLog(o *x.PB_DirectLog) *x.DirectUpdate {
+	n := &x.DirectUpdate{
 		Id:            int(o.Id),
 		ToUserId:      int(o.ToUserId),
 		MessageId:     int(o.MessageId),
@@ -24,7 +24,7 @@ func PBConv_PB_DirectLog_To_DirectLog(o *x.PB_DirectLog) *x.DirectLog {
 	return n
 }
 
-func PBConv_DirectLog_To_DirectLog(o *x.DirectLog) *x.PB_DirectLog {
+func PBConv_DirectLog_To_DirectLog(o *x.DirectUpdate) *x.PB_DirectLog {
 	n := &x.PB_DirectLog{
 		Id:            int64(o.Id),
 		ToUserId:      int32(o.ToUserId),

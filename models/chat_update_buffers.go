@@ -9,17 +9,17 @@ import (
 	"time"
 )
 
-type chatUpdater struct {
-	//HereDirect        chan x.DirectLog
-	HereDirectDelayer chan logDelayer
-	StoredDirect      chan x.DirectLog
+type chatUpdaterBuffer struct {
+	//HereDirect        chan x.DirectUpdate
+	HereDirectDelayer chan UpdateDelayer
+	StoredDirect      chan x.DirectUpdate
 
-	HereGroup   chan x.DirectLog
-	StoredGroup chan x.DirectLog
+	HereGroup   chan x.DirectUpdate
+	StoredGroup chan x.DirectUpdate
 }
 
-type logDelayer struct {
-	directLog    x.DirectLog
+type UpdateDelayer struct {
+	directUpdate x.DirectUpdate
 	fromUserId   int
 	toUserId     int
 	roomKey      string
@@ -30,27 +30,27 @@ type logDelayer struct {
 
 ///////////////////////////////
 
-var LogUpdater = chatUpdater{
-	//HereDirect:        make(chan x.DirectLog, 10000),//dep?? use HereDirectDelayer
-	HereDirectDelayer: make(chan logDelayer, 10000),
-	StoredDirect:      make(chan x.DirectLog, 10000),
-	HereGroup:         make(chan x.DirectLog, 10000),
-	StoredGroup:       make(chan x.DirectLog, 10000),
+var ChatUpdateFramer = chatUpdaterBuffer{
+	//HereDirect:        make(chan x.DirectUpdate, 10000),//dep?? use HereDirectDelayer
+	HereDirectDelayer: make(chan UpdateDelayer, 10000),
+	StoredDirect:      make(chan x.DirectUpdate, 10000),
+	HereGroup:         make(chan x.DirectUpdate, 10000),
+	StoredGroup:       make(chan x.DirectUpdate, 10000),
 }
 
 func init() {
-	LogUpdater.StartLoops()
+	ChatUpdateFramer.StartLoops()
 }
 
-func (m *chatUpdater) StartLoops() {
+func (m *chatUpdaterBuffer) StartLoops() {
 	go m.loopHereDirect()
 	go m.loopDirectToUser()
 }
 
 //can causes panic
-func (m *chatUpdater) loopHereDirect() {
+func (m *chatUpdaterBuffer) loopHereDirect() {
 	const siz = 50000
-	arr := make([]logDelayer, 0, siz)
+	arr := make([]UpdateDelayer, 0, siz)
 	cnt := 0
 
 	ticker := time.NewTicker(10 * time.Millisecond)
@@ -64,7 +64,7 @@ func (m *chatUpdater) loopHereDirect() {
 				cnt++
 				fmt.Printf("batch of chanNewChatMsgsBuffer - cnt:%d - len:%d \n", cnt, len(arr))
 				pre := arr
-				arr = make([]logDelayer, 0, siz)
+				arr = make([]UpdateDelayer, 0, siz)
 				go m.saveNewChatDirectBuffer(pre)
 				logChat.Printf(".HereDirectDelayer is saving for %v", pre)
 			}
@@ -72,33 +72,33 @@ func (m *chatUpdater) loopHereDirect() {
 	}
 }
 
-func (m *chatUpdater) saveNewChatDirectBuffer(msgsDelays []logDelayer) {
+func (m *chatUpdaterBuffer) saveNewChatDirectBuffer(msgsDelays []UpdateDelayer) {
 	defer helper.JustRecover()
 
 	if len(msgsDelays) == 0 {
 		return
 	}
 
-	logs := make([]x.DirectLog, 0, len(msgsDelays))
+	logs := make([]x.DirectUpdate, 0, len(msgsDelays))
 	for _, md := range msgsDelays {
-		logs = append(logs, md.directLog)
+		logs = append(logs, md.directUpdate)
 	}
 	err := x.MassInsert_DirectLog(logs, base.DB)
 	helper.DebugErr(err)
 
 	if err != nil {
-		logChat.Printf(".saveNewChatDirectBuffer() has error for saving mass DirectLog - Err: %s", err)
+		logChat.Printf(".saveNewChatDirectBuffer() has error for saving mass DirectUpdate - Err: %s", err)
 	}
 
 	//fixme: is it better to use just use anotehr mechanism - this has data racing??
 	for _, md := range msgsDelays {
-		m.StoredDirect <- md.directLog
+		m.StoredDirect <- md.directUpdate
 	}
 }
 
-func (m *chatUpdater) loopDirectToUser() {
+func (m *chatUpdaterBuffer) loopDirectToUser() {
 	const siz = 50000
-	arr := make([]x.DirectLog, 0, siz)
+	arr := make([]x.DirectUpdate, 0, siz)
 	cnt := 0
 
 	ticker := time.NewTicker(10 * time.Millisecond)
@@ -114,21 +114,21 @@ func (m *chatUpdater) loopDirectToUser() {
 				cnt++
 				fmt.Printf("batch of loopDirectToUser - cnt:%d - len:%d \n", cnt, len(arr))
 				pre := arr
-				arr = make([]x.DirectLog, 0, siz)
-				go chatLogger_sendToUsersUpdates(pre)
+				arr = make([]x.DirectUpdate, 0, siz)
+				go chatUpdates_sendToUsersUpdatesFrame(pre)
 			}
 		}
 	}
 }
 
-func chatLogger_sendToUsersUpdates(logs []x.DirectLog) {
+func chatUpdates_sendToUsersUpdatesFrame(logs []x.DirectUpdate) {
 	defer helper.JustRecover()
 
 	if len(logs) == 0 {
 		return
 	}
 
-	mp := make(map[int][]*x.DirectLog, len(logs))
+	mp := make(map[int][]*x.DirectUpdate, len(logs))
 	msgIds := make([]int, 0, len(logs))
 	for _, l := range logs {
 		l2 := l
@@ -146,7 +146,7 @@ func chatLogger_sendToUsersUpdates(logs []x.DirectLog) {
 			cmd := NewPB_CommandToClient_WithData(PB_PushHolderView, res)
 			AllPipesMap.SendToUser(UserId, cmd)
 			if config.IS_DEBUG {
-				logChat.Printf("chatLogger_sendToUsersUpdates() is sending to user: %s", cmd)
+				logChat.Printf("chatUpdates_sendToUsersUpdatesFrame() is sending to user: %s", cmd)
 
 				fmt.Printf("send to user: %d PushViews : %s", UserId, helper.ToJson(res))
 			}
