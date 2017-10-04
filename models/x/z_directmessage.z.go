@@ -17,6 +17,7 @@ import (
 // Manualy copy this to project
 type DirectMessage__ struct {
 	MessageId            int    `json:"MessageId"`            // MessageId -
+	MessageKey           string `json:"MessageKey"`           // MessageKey -
 	RoomKey              string `json:"RoomKey"`              // RoomKey -
 	UserId               int    `json:"UserId"`               // UserId -
 	MessageFileId        int    `json:"MessageFileId"`        // MessageFileId -
@@ -52,14 +53,14 @@ func (dm *DirectMessage) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.direct_message (` +
-		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId` +
+		`MessageId, MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
-	_, err = db.Exec(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
+	XOLog(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
+	_, err = db.Exec(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
 	if err != nil {
 		return err
 	}
@@ -79,14 +80,14 @@ func (dm *DirectMessage) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.direct_message (` +
-		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId` +
+		`MessageId, MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
-	_, err = db.Exec(sqlstr, dm.MessageId, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
+	XOLog(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
+	_, err = db.Exec(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -115,12 +116,12 @@ func (dm *DirectMessage) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.direct_message SET ` +
-		`RoomKey = ?, UserId = ?, MessageFileId = ?, MessageTypeEnumId = ?, Text = ?, Time = ?, PeerReceivedTime = ?, PeerSeenTime = ?, DeliviryStatusEnumId = ?` +
+		`MessageKey = ?, RoomKey = ?, UserId = ?, MessageFileId = ?, MessageTypeEnumId = ?, Text = ?, Time = ?, PeerReceivedTime = ?, PeerSeenTime = ?, DeliviryStatusEnumId = ?` +
 		` WHERE MessageId = ?`
 
 	// run query
-	XOLog(sqlstr, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId, dm.MessageId)
-	_, err = db.Exec(sqlstr, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId, dm.MessageId)
+	XOLog(sqlstr, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId, dm.MessageId)
+	_, err = db.Exec(sqlstr, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId, dm.MessageId)
 
 	XOLogErr(err)
 	OnDirectMessage_AfterUpdate(dm)
@@ -2757,6 +2758,66 @@ func (d *__DirectMessage_Selector) DeliviryStatusEnumId_GE(val int) *__DirectMes
 
 ////////ints
 
+func (u *__DirectMessage_Deleter) MessageKey_In(ins []string) *__DirectMessage_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectMessage_Deleter) MessageKey_NotIn(ins []string) *__DirectMessage_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__DirectMessage_Deleter) MessageKey_Like(val string) *__DirectMessage_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectMessage_Deleter) MessageKey_Eq(val string) *__DirectMessage_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectMessage_Deleter) MessageKey_NotEq(val string) *__DirectMessage_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__DirectMessage_Deleter) RoomKey_In(ins []string) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -2879,6 +2940,66 @@ func (d *__DirectMessage_Deleter) Text_NotEq(val string) *__DirectMessage_Delete
 
 ////////ints
 
+func (u *__DirectMessage_Updater) MessageKey_In(ins []string) *__DirectMessage_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectMessage_Updater) MessageKey_NotIn(ins []string) *__DirectMessage_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__DirectMessage_Updater) MessageKey_Like(val string) *__DirectMessage_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectMessage_Updater) MessageKey_Eq(val string) *__DirectMessage_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectMessage_Updater) MessageKey_NotEq(val string) *__DirectMessage_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__DirectMessage_Updater) RoomKey_In(ins []string) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -3000,6 +3121,66 @@ func (d *__DirectMessage_Updater) Text_NotEq(val string) *__DirectMessage_Update
 }
 
 ////////ints
+
+func (u *__DirectMessage_Selector) MessageKey_In(ins []string) *__DirectMessage_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectMessage_Selector) MessageKey_NotIn(ins []string) *__DirectMessage_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__DirectMessage_Selector) MessageKey_Like(val string) *__DirectMessage_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectMessage_Selector) MessageKey_Eq(val string) *__DirectMessage_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectMessage_Selector) MessageKey_NotEq(val string) *__DirectMessage_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 func (u *__DirectMessage_Selector) RoomKey_In(ins []string) *__DirectMessage_Selector {
 	w := whereClause{}
@@ -3145,6 +3326,14 @@ func (u *__DirectMessage_Updater) MessageId_Increment(count int) *__DirectMessag
 }
 
 //string
+
+//ints
+
+//string
+func (u *__DirectMessage_Updater) MessageKey(newVal string) *__DirectMessage_Updater {
+	u.updates[" MessageKey = ? "] = newVal
+	return u
+}
 
 //ints
 
@@ -3326,6 +3515,21 @@ func (u *__DirectMessage_Selector) OrderBy_MessageId_Asc() *__DirectMessage_Sele
 
 func (u *__DirectMessage_Selector) Select_MessageId() *__DirectMessage_Selector {
 	u.selectCol = "MessageId"
+	return u
+}
+
+func (u *__DirectMessage_Selector) OrderBy_MessageKey_Desc() *__DirectMessage_Selector {
+	u.orderBy = " ORDER BY MessageKey DESC "
+	return u
+}
+
+func (u *__DirectMessage_Selector) OrderBy_MessageKey_Asc() *__DirectMessage_Selector {
+	u.orderBy = " ORDER BY MessageKey ASC "
+	return u
+}
+
+func (u *__DirectMessage_Selector) Select_MessageKey() *__DirectMessage_Selector {
+	u.selectCol = "MessageKey"
 	return u
 }
 
@@ -3735,12 +3939,12 @@ func MassInsert_DirectMessage(rows []DirectMessage, db XODB) error {
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_message (" +
-		"RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId" +
+		"MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -3748,6 +3952,7 @@ func MassInsert_DirectMessage(rows []DirectMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.MessageKey)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.MessageFileId)
@@ -3774,12 +3979,12 @@ func MassInsert_DirectMessage(rows []DirectMessage, db XODB) error {
 func MassReplace_DirectMessage(rows []DirectMessage, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_message (" +
-		"RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId" +
+		"MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -3787,6 +3992,7 @@ func MassReplace_DirectMessage(rows []DirectMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.MessageKey)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.MessageFileId)
@@ -3832,6 +4038,8 @@ func MassReplace_DirectMessage(rows []DirectMessage, db XODB) error {
 
 //
 
+//
+
 // DirectMessageByMessageId retrieves a row from 'ms.direct_message' as a DirectMessage.
 //
 // Generated from index 'direct_message_MessageId_pkey'.
@@ -3840,7 +4048,7 @@ func DirectMessageByMessageId(db XODB, messageId int) (*DirectMessage, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId ` +
+		`MessageId, MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId ` +
 		`FROM ms.direct_message ` +
 		`WHERE MessageId = ?`
 
@@ -3850,7 +4058,7 @@ func DirectMessageByMessageId(db XODB, messageId int) (*DirectMessage, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, messageId).Scan(&dm.MessageId, &dm.RoomKey, &dm.UserId, &dm.MessageFileId, &dm.MessageTypeEnumId, &dm.Text, &dm.Time, &dm.PeerReceivedTime, &dm.PeerSeenTime, &dm.DeliviryStatusEnumId)
+	err = db.QueryRow(sqlstr, messageId).Scan(&dm.MessageId, &dm.MessageKey, &dm.RoomKey, &dm.UserId, &dm.MessageFileId, &dm.MessageTypeEnumId, &dm.Text, &dm.Time, &dm.PeerReceivedTime, &dm.PeerSeenTime, &dm.DeliviryStatusEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

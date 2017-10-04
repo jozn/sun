@@ -17,6 +17,7 @@ import (
 // Manualy copy this to project
 type MessageFile__ struct {
 	MessageFileId   int    `json:"MessageFileId"`   // MessageFileId -
+	MessageFileKey  string `json:"MessageFileKey"`  // MessageFileKey -
 	OriginalUserId  int    `json:"OriginalUserId"`  // OriginalUserId -
 	Name            string `json:"Name"`            // Name -
 	Size            int    `json:"Size"`            // Size -
@@ -60,14 +61,14 @@ func (mf *MessageFile) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO ms.message_file (` +
-		`OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel` +
+		`MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
-	res, err := db.Exec(sqlstr, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
+	XOLog(sqlstr, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
+	res, err := db.Exec(sqlstr, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -96,14 +97,14 @@ func (mf *MessageFile) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.message_file (` +
-		`OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel` +
+		`MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
-	res, err := db.Exec(sqlstr, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
+	XOLog(sqlstr, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
+	res, err := db.Exec(sqlstr, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -141,12 +142,12 @@ func (mf *MessageFile) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.message_file SET ` +
-		`OriginalUserId = ?, Name = ?, Size = ?, FileTypeEnumId = ?, Width = ?, Height = ?, Duration = ?, Extension = ?, HashMd5 = ?, HashAccess = ?, CreatedSe = ?, ServerSrc = ?, ServerPath = ?, ServerThumbPath = ?, BucketId = ?, ServerId = ?, CanDel = ?` +
+		`MessageFileKey = ?, OriginalUserId = ?, Name = ?, Size = ?, FileTypeEnumId = ?, Width = ?, Height = ?, Duration = ?, Extension = ?, HashMd5 = ?, HashAccess = ?, CreatedSe = ?, ServerSrc = ?, ServerPath = ?, ServerThumbPath = ?, BucketId = ?, ServerId = ?, CanDel = ?` +
 		` WHERE MessageFileId = ?`
 
 	// run query
-	XOLog(sqlstr, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.MessageFileId)
-	_, err = db.Exec(sqlstr, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.MessageFileId)
+	XOLog(sqlstr, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.MessageFileId)
+	_, err = db.Exec(sqlstr, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel, mf.MessageFileId)
 
 	XOLogErr(err)
 	OnMessageFile_AfterUpdate(mf)
@@ -3728,6 +3729,66 @@ func (d *__MessageFile_Selector) CanDel_GE(val int) *__MessageFile_Selector {
 
 ////////ints
 
+func (u *__MessageFile_Deleter) MessageFileKey_In(ins []string) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Deleter) MessageFileKey_NotIn(ins []string) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MessageFile_Deleter) MessageFileKey_Like(val string) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MessageFile_Deleter) MessageFileKey_Eq(val string) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Deleter) MessageFileKey_NotEq(val string) *__MessageFile_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__MessageFile_Deleter) Name_In(ins []string) *__MessageFile_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4150,6 +4211,66 @@ func (d *__MessageFile_Deleter) BucketId_NotEq(val string) *__MessageFile_Delete
 
 ////////ints
 
+func (u *__MessageFile_Updater) MessageFileKey_In(ins []string) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Updater) MessageFileKey_NotIn(ins []string) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MessageFile_Updater) MessageFileKey_Like(val string) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MessageFile_Updater) MessageFileKey_Eq(val string) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Updater) MessageFileKey_NotEq(val string) *__MessageFile_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__MessageFile_Updater) Name_In(ins []string) *__MessageFile_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -4571,6 +4692,66 @@ func (d *__MessageFile_Updater) BucketId_NotEq(val string) *__MessageFile_Update
 }
 
 ////////ints
+
+func (u *__MessageFile_Selector) MessageFileKey_In(ins []string) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__MessageFile_Selector) MessageFileKey_NotIn(ins []string) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__MessageFile_Selector) MessageFileKey_Like(val string) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__MessageFile_Selector) MessageFileKey_Eq(val string) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__MessageFile_Selector) MessageFileKey_NotEq(val string) *__MessageFile_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 func (u *__MessageFile_Selector) Name_In(ins []string) *__MessageFile_Selector {
 	w := whereClause{}
@@ -5019,6 +5200,14 @@ func (u *__MessageFile_Updater) MessageFileId_Increment(count int) *__MessageFil
 
 //ints
 
+//string
+func (u *__MessageFile_Updater) MessageFileKey(newVal string) *__MessageFile_Updater {
+	u.updates[" MessageFileKey = ? "] = newVal
+	return u
+}
+
+//ints
+
 func (u *__MessageFile_Updater) OriginalUserId(newVal int) *__MessageFile_Updater {
 	u.updates[" OriginalUserId = ? "] = newVal
 	return u
@@ -5300,6 +5489,21 @@ func (u *__MessageFile_Selector) OrderBy_MessageFileId_Asc() *__MessageFile_Sele
 
 func (u *__MessageFile_Selector) Select_MessageFileId() *__MessageFile_Selector {
 	u.selectCol = "MessageFileId"
+	return u
+}
+
+func (u *__MessageFile_Selector) OrderBy_MessageFileKey_Desc() *__MessageFile_Selector {
+	u.orderBy = " ORDER BY MessageFileKey DESC "
+	return u
+}
+
+func (u *__MessageFile_Selector) OrderBy_MessageFileKey_Asc() *__MessageFile_Selector {
+	u.orderBy = " ORDER BY MessageFileKey ASC "
+	return u
+}
+
+func (u *__MessageFile_Selector) Select_MessageFileKey() *__MessageFile_Selector {
+	u.selectCol = "MessageFileKey"
 	return u
 }
 
@@ -5829,12 +6033,12 @@ func MassInsert_MessageFile(rows []MessageFile, db XODB) error {
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.message_file (" +
-		"OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel" +
+		"MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel" +
 		") VALUES " + insVals
 
 	// run query
@@ -5842,6 +6046,7 @@ func MassInsert_MessageFile(rows []MessageFile, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.MessageFileKey)
 		vals = append(vals, row.OriginalUserId)
 		vals = append(vals, row.Name)
 		vals = append(vals, row.Size)
@@ -5876,12 +6081,12 @@ func MassInsert_MessageFile(rows []MessageFile, db XODB) error {
 func MassReplace_MessageFile(rows []MessageFile, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.message_file (" +
-		"OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel" +
+		"MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel" +
 		") VALUES " + insVals
 
 	// run query
@@ -5889,6 +6094,7 @@ func MassReplace_MessageFile(rows []MessageFile, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.MessageFileKey)
 		vals = append(vals, row.OriginalUserId)
 		vals = append(vals, row.Name)
 		vals = append(vals, row.Size)
@@ -5958,6 +6164,8 @@ func MassReplace_MessageFile(rows []MessageFile, db XODB) error {
 
 //
 
+//
+
 // MessageFileByMessageFileId retrieves a row from 'ms.message_file' as a MessageFile.
 //
 // Generated from index 'message_file_MessageFileId_pkey'.
@@ -5966,7 +6174,7 @@ func MessageFileByMessageFileId(db XODB, messageFileId int) (*MessageFile, error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`MessageFileId, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel ` +
+		`MessageFileId, MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel ` +
 		`FROM ms.message_file ` +
 		`WHERE MessageFileId = ?`
 
@@ -5976,7 +6184,7 @@ func MessageFileByMessageFileId(db XODB, messageFileId int) (*MessageFile, error
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, messageFileId).Scan(&mf.MessageFileId, &mf.OriginalUserId, &mf.Name, &mf.Size, &mf.FileTypeEnumId, &mf.Width, &mf.Height, &mf.Duration, &mf.Extension, &mf.HashMd5, &mf.HashAccess, &mf.CreatedSe, &mf.ServerSrc, &mf.ServerPath, &mf.ServerThumbPath, &mf.BucketId, &mf.ServerId, &mf.CanDel)
+	err = db.QueryRow(sqlstr, messageFileId).Scan(&mf.MessageFileId, &mf.MessageFileKey, &mf.OriginalUserId, &mf.Name, &mf.Size, &mf.FileTypeEnumId, &mf.Width, &mf.Height, &mf.Duration, &mf.Extension, &mf.HashMd5, &mf.HashAccess, &mf.CreatedSe, &mf.ServerSrc, &mf.ServerPath, &mf.ServerThumbPath, &mf.BucketId, &mf.ServerId, &mf.CanDel)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

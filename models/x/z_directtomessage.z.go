@@ -16,11 +16,12 @@ import (
 
 // Manualy copy this to project
 type DirectToMessage__ struct {
-	Id           int `json:"Id"`           // Id -
-	ChatId       int `json:"ChatId"`       // ChatId -
-	MessageId    int `json:"MessageId"`    // MessageId -
-	Seq          int `json:"Seq"`          // Seq -
-	SourceEnumId int `json:"SourceEnumId"` // SourceEnumId -
+	Id           int    `json:"Id"`           // Id -
+	ChatId       int    `json:"ChatId"`       // ChatId -
+	ChatKey      string `json:"ChatKey"`      // ChatKey -
+	MessageId    int    `json:"MessageId"`    // MessageId -
+	Seq          int    `json:"Seq"`          // Seq -
+	SourceEnumId int    `json:"SourceEnumId"` // SourceEnumId -
 
 	// xo fields
 	_exists, _deleted bool
@@ -47,14 +48,14 @@ func (dtm *DirectToMessage) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.direct_to_message (` +
-		`Id, ChatId, MessageId, Seq, SourceEnumId` +
+		`Id, ChatId, ChatKey, MessageId, Seq, SourceEnumId` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
-	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
+	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
+	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
 	if err != nil {
 		return err
 	}
@@ -74,14 +75,14 @@ func (dtm *DirectToMessage) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.direct_to_message (` +
-		`Id, ChatId, MessageId, Seq, SourceEnumId` +
+		`Id, ChatId, ChatKey, MessageId, Seq, SourceEnumId` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
-	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
+	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
+	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -110,12 +111,12 @@ func (dtm *DirectToMessage) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.direct_to_message SET ` +
-		`Id = ?, ChatId = ?, Seq = ?, SourceEnumId = ?` +
-		` WHERE MessageId = ?`
+		`ChatId = ?, ChatKey = ?, MessageId = ?, Seq = ?, SourceEnumId = ?` +
+		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.Seq, dtm.SourceEnumId, dtm.MessageId)
-	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.Seq, dtm.SourceEnumId, dtm.MessageId)
+	XOLog(sqlstr, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId, dtm.Id)
+	_, err = db.Exec(sqlstr, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId, dtm.Id)
 
 	XOLogErr(err)
 	OnDirectToMessage_AfterUpdate(dtm)
@@ -147,11 +148,11 @@ func (dtm *DirectToMessage) Delete(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.direct_to_message WHERE MessageId = ?`
+	const sqlstr = `DELETE FROM ms.direct_to_message WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, dtm.MessageId)
-	_, err = db.Exec(sqlstr, dtm.MessageId)
+	XOLog(sqlstr, dtm.Id)
+	_, err = db.Exec(sqlstr, dtm.Id)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -1807,9 +1808,189 @@ func (d *__DirectToMessage_Selector) SourceEnumId_GE(val int) *__DirectToMessage
 
 ////////ints
 
-////////ints
+func (u *__DirectToMessage_Deleter) ChatKey_In(ins []string) *__DirectToMessage_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ChatKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectToMessage_Deleter) ChatKey_NotIn(ins []string) *__DirectToMessage_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ChatKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__DirectToMessage_Deleter) ChatKey_Like(val string) *__DirectToMessage_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ChatKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectToMessage_Deleter) ChatKey_Eq(val string) *__DirectToMessage_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ChatKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectToMessage_Deleter) ChatKey_NotEq(val string) *__DirectToMessage_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ChatKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 ////////ints
+
+func (u *__DirectToMessage_Updater) ChatKey_In(ins []string) *__DirectToMessage_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ChatKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectToMessage_Updater) ChatKey_NotIn(ins []string) *__DirectToMessage_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ChatKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__DirectToMessage_Updater) ChatKey_Like(val string) *__DirectToMessage_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ChatKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectToMessage_Updater) ChatKey_Eq(val string) *__DirectToMessage_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ChatKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectToMessage_Updater) ChatKey_NotEq(val string) *__DirectToMessage_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ChatKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+////////ints
+
+func (u *__DirectToMessage_Selector) ChatKey_In(ins []string) *__DirectToMessage_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ChatKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectToMessage_Selector) ChatKey_NotIn(ins []string) *__DirectToMessage_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " ChatKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__DirectToMessage_Selector) ChatKey_Like(val string) *__DirectToMessage_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ChatKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectToMessage_Selector) ChatKey_Eq(val string) *__DirectToMessage_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ChatKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectToMessage_Selector) ChatKey_NotEq(val string) *__DirectToMessage_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " ChatKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
 
 /// End of wheres for selectors , updators, deletor
 
@@ -1856,6 +2037,14 @@ func (u *__DirectToMessage_Updater) ChatId_Increment(count int) *__DirectToMessa
 }
 
 //string
+
+//ints
+
+//string
+func (u *__DirectToMessage_Updater) ChatKey(newVal string) *__DirectToMessage_Updater {
+	u.updates[" ChatKey = ? "] = newVal
+	return u
+}
 
 //ints
 
@@ -1952,6 +2141,21 @@ func (u *__DirectToMessage_Selector) OrderBy_ChatId_Asc() *__DirectToMessage_Sel
 
 func (u *__DirectToMessage_Selector) Select_ChatId() *__DirectToMessage_Selector {
 	u.selectCol = "ChatId"
+	return u
+}
+
+func (u *__DirectToMessage_Selector) OrderBy_ChatKey_Desc() *__DirectToMessage_Selector {
+	u.orderBy = " ORDER BY ChatKey DESC "
+	return u
+}
+
+func (u *__DirectToMessage_Selector) OrderBy_ChatKey_Asc() *__DirectToMessage_Selector {
+	u.orderBy = " ORDER BY ChatKey ASC "
+	return u
+}
+
+func (u *__DirectToMessage_Selector) Select_ChatKey() *__DirectToMessage_Selector {
+	u.selectCol = "ChatKey"
 	return u
 }
 
@@ -2271,12 +2475,12 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_to_message (" +
-		"Id, ChatId, Seq, SourceEnumId" +
+		"ChatId, ChatKey, MessageId, Seq, SourceEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -2284,8 +2488,9 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.Id)
 		vals = append(vals, row.ChatId)
+		vals = append(vals, row.ChatKey)
+		vals = append(vals, row.MessageId)
 		vals = append(vals, row.Seq)
 		vals = append(vals, row.SourceEnumId)
 
@@ -2305,12 +2510,12 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_to_message (" +
-		"Id, ChatId, Seq, SourceEnumId" +
+		"ChatId, ChatKey, MessageId, Seq, SourceEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -2318,8 +2523,9 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.Id)
 		vals = append(vals, row.ChatId)
+		vals = append(vals, row.ChatKey)
+		vals = append(vals, row.MessageId)
 		vals = append(vals, row.Seq)
 		vals = append(vals, row.SourceEnumId)
 
@@ -2348,6 +2554,8 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 //
 
+//
+
 // DirectToMessagesBySeq retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
 //
 // Generated from index 'Seq'.
@@ -2356,7 +2564,7 @@ func DirectToMessagesBySeq(db XODB, seq int) ([]*DirectToMessage, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ChatId, MessageId, Seq, SourceEnumId ` +
+		`Id, ChatId, ChatKey, MessageId, Seq, SourceEnumId ` +
 		`FROM ms.direct_to_message ` +
 		`WHERE Seq = ?`
 
@@ -2377,7 +2585,7 @@ func DirectToMessagesBySeq(db XODB, seq int) ([]*DirectToMessage, error) {
 		}
 
 		// scan
-		err = q.Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
+		err = q.Scan(&dtm.Id, &dtm.ChatId, &dtm.ChatKey, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -2391,25 +2599,25 @@ func DirectToMessagesBySeq(db XODB, seq int) ([]*DirectToMessage, error) {
 	return res, nil
 }
 
-// DirectToMessageByMessageId retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
+// DirectToMessageById retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
 //
-// Generated from index 'direct_to_message_MessageId_pkey'.
-func DirectToMessageByMessageId(db XODB, messageId int) (*DirectToMessage, error) {
+// Generated from index 'direct_to_message_Id_pkey'.
+func DirectToMessageById(db XODB, id int) (*DirectToMessage, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ChatId, MessageId, Seq, SourceEnumId ` +
+		`Id, ChatId, ChatKey, MessageId, Seq, SourceEnumId ` +
 		`FROM ms.direct_to_message ` +
-		`WHERE MessageId = ?`
+		`WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, messageId)
+	XOLog(sqlstr, id)
 	dtm := DirectToMessage{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, messageId).Scan(&dtm.Id, &dtm.ChatId, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
+	err = db.QueryRow(sqlstr, id).Scan(&dtm.Id, &dtm.ChatId, &dtm.ChatKey, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

@@ -18,6 +18,7 @@ import (
 type Chat__ struct {
 	ChatId               int    `json:"ChatId"`               // ChatId -
 	ChatKey              string `json:"ChatKey"`              // ChatKey -
+	RoomKey              string `json:"RoomKey"`              // RoomKey -
 	RoomTypeEnumId       int    `json:"RoomTypeEnumId"`       // RoomTypeEnumId -
 	UserId               int    `json:"UserId"`               // UserId -
 	PeerUserId           int    `json:"PeerUserId"`           // PeerUserId -
@@ -56,14 +57,14 @@ func (c *Chat) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.chat (` +
-		`ChatId, ChatKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedTime, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq` +
+		`ChatId, ChatKey, RoomKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedTime, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, c.ChatId, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq)
-	_, err = db.Exec(sqlstr, c.ChatId, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq)
+	XOLog(sqlstr, c.ChatId, c.ChatKey, c.RoomKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq)
+	_, err = db.Exec(sqlstr, c.ChatId, c.ChatKey, c.RoomKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq)
 	if err != nil {
 		return err
 	}
@@ -83,14 +84,14 @@ func (c *Chat) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.chat (` +
-		`ChatId, ChatKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedTime, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq` +
+		`ChatId, ChatKey, RoomKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedTime, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, c.ChatId, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq)
-	_, err = db.Exec(sqlstr, c.ChatId, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq)
+	XOLog(sqlstr, c.ChatId, c.ChatKey, c.RoomKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq)
+	_, err = db.Exec(sqlstr, c.ChatId, c.ChatKey, c.RoomKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -119,12 +120,12 @@ func (c *Chat) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.chat SET ` +
-		`ChatKey = ?, RoomTypeEnumId = ?, UserId = ?, PeerUserId = ?, GroupId = ?, CreatedTime = ?, UpdatedMs = ?, LastMessageId = ?, LastDeletedMessageId = ?, LastSeenMessageId = ?, LastSeqSeen = ?, LastSeqDelete = ?, CurrentSeq = ?` +
+		`ChatKey = ?, RoomKey = ?, RoomTypeEnumId = ?, UserId = ?, PeerUserId = ?, GroupId = ?, CreatedTime = ?, UpdatedMs = ?, LastMessageId = ?, LastDeletedMessageId = ?, LastSeenMessageId = ?, LastSeqSeen = ?, LastSeqDelete = ?, CurrentSeq = ?` +
 		` WHERE ChatId = ?`
 
 	// run query
-	XOLog(sqlstr, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq, c.ChatId)
-	_, err = db.Exec(sqlstr, c.ChatKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq, c.ChatId)
+	XOLog(sqlstr, c.ChatKey, c.RoomKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq, c.ChatId)
+	_, err = db.Exec(sqlstr, c.ChatKey, c.RoomKey, c.RoomTypeEnumId, c.UserId, c.PeerUserId, c.GroupId, c.CreatedTime, c.UpdatedMs, c.LastMessageId, c.LastDeletedMessageId, c.LastSeenMessageId, c.LastSeqSeen, c.LastSeqDelete, c.CurrentSeq, c.ChatId)
 
 	XOLogErr(err)
 	OnChat_AfterUpdate(c)
@@ -4396,6 +4397,66 @@ func (d *__Chat_Deleter) ChatKey_NotEq(val string) *__Chat_Deleter {
 	return d
 }
 
+func (u *__Chat_Deleter) RoomKey_In(ins []string) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Deleter) RoomKey_NotIn(ins []string) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Chat_Deleter) RoomKey_Like(val string) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Chat_Deleter) RoomKey_Eq(val string) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Deleter) RoomKey_NotEq(val string) *__Chat_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 ////////ints
 
 func (u *__Chat_Updater) ChatKey_In(ins []string) *__Chat_Updater {
@@ -4453,6 +4514,66 @@ func (d *__Chat_Updater) ChatKey_NotEq(val string) *__Chat_Updater {
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " ChatKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__Chat_Updater) RoomKey_In(ins []string) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Updater) RoomKey_NotIn(ins []string) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Chat_Updater) RoomKey_Like(val string) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Chat_Updater) RoomKey_Eq(val string) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Updater) RoomKey_NotEq(val string) *__Chat_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -4520,6 +4641,66 @@ func (d *__Chat_Selector) ChatKey_NotEq(val string) *__Chat_Selector {
 	return d
 }
 
+func (u *__Chat_Selector) RoomKey_In(ins []string) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Chat_Selector) RoomKey_NotIn(ins []string) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " RoomKey NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+//must be used like: UserName_like("hamid%")
+func (u *__Chat_Selector) RoomKey_Like(val string) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey LIKE ? "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__Chat_Selector) RoomKey_Eq(val string) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__Chat_Selector) RoomKey_NotEq(val string) *__Chat_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " RoomKey != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 /// End of wheres for selectors , updators, deletor
 
 /////////////////////////////// Updater /////////////////////////////
@@ -4550,6 +4731,14 @@ func (u *__Chat_Updater) ChatId_Increment(count int) *__Chat_Updater {
 //string
 func (u *__Chat_Updater) ChatKey(newVal string) *__Chat_Updater {
 	u.updates[" ChatKey = ? "] = newVal
+	return u
+}
+
+//ints
+
+//string
+func (u *__Chat_Updater) RoomKey(newVal string) *__Chat_Updater {
+	u.updates[" RoomKey = ? "] = newVal
 	return u
 }
 
@@ -4837,6 +5026,21 @@ func (u *__Chat_Selector) OrderBy_ChatKey_Asc() *__Chat_Selector {
 
 func (u *__Chat_Selector) Select_ChatKey() *__Chat_Selector {
 	u.selectCol = "ChatKey"
+	return u
+}
+
+func (u *__Chat_Selector) OrderBy_RoomKey_Desc() *__Chat_Selector {
+	u.orderBy = " ORDER BY RoomKey DESC "
+	return u
+}
+
+func (u *__Chat_Selector) OrderBy_RoomKey_Asc() *__Chat_Selector {
+	u.orderBy = " ORDER BY RoomKey ASC "
+	return u
+}
+
+func (u *__Chat_Selector) Select_RoomKey() *__Chat_Selector {
+	u.selectCol = "RoomKey"
 	return u
 }
 
@@ -5291,12 +5495,12 @@ func MassInsert_Chat(rows []Chat, db XODB) error {
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.chat (" +
-		"ChatKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedTime, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq" +
+		"ChatKey, RoomKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedTime, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq" +
 		") VALUES " + insVals
 
 	// run query
@@ -5305,6 +5509,7 @@ func MassInsert_Chat(rows []Chat, db XODB) error {
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.ChatKey)
+		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.RoomTypeEnumId)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.PeerUserId)
@@ -5334,12 +5539,12 @@ func MassInsert_Chat(rows []Chat, db XODB) error {
 func MassReplace_Chat(rows []Chat, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.chat (" +
-		"ChatKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedTime, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq" +
+		"ChatKey, RoomKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedTime, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq" +
 		") VALUES " + insVals
 
 	// run query
@@ -5348,6 +5553,7 @@ func MassReplace_Chat(rows []Chat, db XODB) error {
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
 		vals = append(vals, row.ChatKey)
+		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.RoomTypeEnumId)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.PeerUserId)
@@ -5404,6 +5610,8 @@ func MassReplace_Chat(rows []Chat, db XODB) error {
 
 //
 
+//
+
 // ChatByChatId retrieves a row from 'ms.chat' as a Chat.
 //
 // Generated from index 'chat_ChatId_pkey'.
@@ -5412,7 +5620,7 @@ func ChatByChatId(db XODB, chatId int) (*Chat, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`ChatId, ChatKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedTime, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq ` +
+		`ChatId, ChatKey, RoomKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedTime, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq ` +
 		`FROM ms.chat ` +
 		`WHERE ChatId = ?`
 
@@ -5422,7 +5630,7 @@ func ChatByChatId(db XODB, chatId int) (*Chat, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, chatId).Scan(&c.ChatId, &c.ChatKey, &c.RoomTypeEnumId, &c.UserId, &c.PeerUserId, &c.GroupId, &c.CreatedTime, &c.UpdatedMs, &c.LastMessageId, &c.LastDeletedMessageId, &c.LastSeenMessageId, &c.LastSeqSeen, &c.LastSeqDelete, &c.CurrentSeq)
+	err = db.QueryRow(sqlstr, chatId).Scan(&c.ChatId, &c.ChatKey, &c.RoomKey, &c.RoomTypeEnumId, &c.UserId, &c.PeerUserId, &c.GroupId, &c.CreatedTime, &c.UpdatedMs, &c.LastMessageId, &c.LastDeletedMessageId, &c.LastSeenMessageId, &c.LastSeqSeen, &c.LastSeqDelete, &c.CurrentSeq)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

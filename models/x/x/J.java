@@ -25,6 +25,7 @@ public class J {
 	public static class Chat {
 		public Integer ChatId;
 		public String ChatKey;
+		public String RoomKey;
 		public Integer RoomTypeEnumId;
 		public Integer UserId;
 		public Integer PeerUserId;
@@ -47,24 +48,9 @@ public class J {
 		public Integer CreatedTime;
 	}
 
-	public static class DirectLog {
-		public Integer Id;
-		public Integer ToUserId;
-		public Integer MessageId;
-		public Integer MessageFileId;
-		public Integer ChatId;
-		public Integer PeerUserId;
-		public Integer EventType;
-		public Integer RoomLogTypeId;
-		public Integer FromSeq;
-		public Integer ToSeq;
-		public UNKNOWN ExtraPB;
-		public String ExtraJson;
-		public Integer AtTimeMs;
-	}
-
 	public static class DirectMessage {
 		public Integer MessageId;
+		public String MessageKey;
 		public String RoomKey;
 		public Integer UserId;
 		public Integer MessageFileId;
@@ -79,9 +65,27 @@ public class J {
 	public static class DirectToMessage {
 		public Integer Id;
 		public Integer ChatId;
+		public String ChatKey;
 		public Integer MessageId;
 		public Integer Seq;
 		public Integer SourceEnumId;
+	}
+
+	public static class DirectUpdate {
+		public Integer Id;
+		public Integer ToUserId;
+		public Integer MessageId;
+		public Integer MessageFileId;
+		public Integer ChatId;
+		public String ChatKey;
+		public Integer PeerUserId;
+		public Integer EventType;
+		public Integer RoomLogTypeId;
+		public Integer FromSeq;
+		public Integer ToSeq;
+		public UNKNOWN ExtraPB;
+		public String ExtraJson;
+		public Integer AtTimeMs;
 	}
 
 	public static class FollowingList {
@@ -190,6 +194,7 @@ public class J {
 
 	public static class MessageFile {
 		public Integer MessageFileId;
+		public String MessageFileKey;
 		public Integer OriginalUserId;
 		public String Name;
 		public Integer Size;

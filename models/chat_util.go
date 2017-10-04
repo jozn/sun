@@ -15,6 +15,10 @@ func UsersToRoomKey(me int, peer int) string {
 	return fmt.Sprintf("d%d_%d", me, peer)
 }
 
+func UsersToChatKey(me int, peer int) string {
+    return fmt.Sprintf("d%d:%d", me, peer)
+}
+
 func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {
 	keyChach := fmt.Sprintf("chat_%d_%d", me, peer)
 	ch, ok := RowCache.GetChatByChatId(keyChach)

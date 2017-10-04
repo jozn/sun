@@ -88,26 +88,28 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 	Chat_IncermentForNewMessage(s.PeerChat)
 
 	d2mMe := x.DirectToMessage{
-		Id:           helper.NextRowsSeqId(),
-		ChatId:       s.MeChat.ChatId,
-		MessageId:    msg.MessageId,
-		Seq:          s.MeChat.CurrentSeq,
+		Id: helper.NextRowsSeqId(),
+		//ChatId:       s.MeChat.ChatId,
+		MessageId: msg.MessageId,
+		ChatKey:   UsersToChatKey(s.MeUserId, s.PeerUserId),
+		//Seq:          s.MeChat.CurrentSeq,
 		SourceEnumId: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
 	}
 
 	d2mPeer := x.DirectToMessage{
-		Id:           helper.NextRowsSeqId(),
-		ChatId:       s.PeerChat.ChatId,
-		MessageId:    msg.MessageId,
-		Seq:          s.PeerChat.CurrentSeq,
+		Id: helper.NextRowsSeqId(),
+		//ChatId:       s.PeerChat.ChatId,
+		ChatKey:   UsersToChatKey(s.PeerUserId, s.MeUserId),
+		MessageId: msg.MessageId,
+		//Seq:          s.PeerChat.CurrentSeq,
 		SourceEnumId: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
 	}
 
 	tx, err := base.DB.Begin()
 	if err != nil {
-        if config.IS_DEBUG {
-            logChat.Printf(".AddMessage() transextion start has error: %s - %v", err, s)
-        }
+		if config.IS_DEBUG {
+			logChat.Printf(".AddMessage() transextion start has error: %s - %v", err, s)
+		}
 		return
 	}
 
@@ -117,9 +119,9 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 	d2mPeer.Insert(tx)
 	err = tx.Commit()
 	if err != nil {
-        if config.IS_DEBUG {
-            logChat.Printf(".AddMessage() transextion commit has error: %s - %v", err, s)
-        }
+		if config.IS_DEBUG {
+			logChat.Printf(".AddMessage() transextion commit has error: %s - %v", err, s)
+		}
 		return
 	}
 
@@ -128,7 +130,8 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		ToUserId:      s.PeerChat.UserId,
 		MessageId:     msg.MessageId,
 		MessageFileId: msg.MessageFileId,
-		ChatId:        s.PeerChat.ChatId,
+		//ChatId:        s.PeerChat.ChatId,
+		ChatKey:       UsersToChatKey(s.MeUserId, s.PeerUserId),
 		PeerUserId:    s.MeChat.UserId,
 		RoomLogTypeId: int(Push_NEW_DIRECT_MESSAGE), //x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE),
 		FromSeq:       -1,

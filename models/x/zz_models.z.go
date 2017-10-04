@@ -57,6 +57,7 @@ type Bucket struct {
 type Chat struct {
 	ChatId               int
 	ChatKey              string
+	RoomKey              string
 	RoomTypeEnumId       int
 	UserId               int
 	PeerUserId           int
@@ -77,6 +78,7 @@ type Chat struct {
 := &Chat {
 	ChatId: 0,
 	ChatKey: "",
+	RoomKey: "",
 	RoomTypeEnumId: 0,
 	UserId: 0,
 	PeerUserId: 0,
@@ -111,13 +113,68 @@ type Comment struct {
 	CreatedTime: 0,
 */
 
-// DirectUpdate 'ms.direct_log'.
+// DirectMessage 'ms.direct_message'.
+type DirectMessage struct {
+	MessageId            int
+	MessageKey           string
+	RoomKey              string
+	UserId               int
+	MessageFileId        int
+	MessageTypeEnumId    int
+	Text                 string
+	Time                 int
+	PeerReceivedTime     int
+	PeerSeenTime         int
+	DeliviryStatusEnumId int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &DirectMessage {
+	MessageId: 0,
+	MessageKey: "",
+	RoomKey: "",
+	UserId: 0,
+	MessageFileId: 0,
+	MessageTypeEnumId: 0,
+	Text: "",
+	Time: 0,
+	PeerReceivedTime: 0,
+	PeerSeenTime: 0,
+	DeliviryStatusEnumId: 0,
+*/
+
+// DirectToMessage 'ms.direct_to_message'.
+type DirectToMessage struct {
+	Id           int
+	ChatId       int
+	ChatKey      string
+	MessageId    int
+	Seq          int
+	SourceEnumId int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &DirectToMessage {
+	Id: 0,
+	ChatId: 0,
+	ChatKey: "",
+	MessageId: 0,
+	Seq: 0,
+	SourceEnumId: 0,
+*/
+
+// DirectUpdate 'ms.direct_update'.
 type DirectUpdate struct {
 	Id            int
 	ToUserId      int
 	MessageId     int
 	MessageFileId int
 	ChatId        int
+	ChatKey       string
 	PeerUserId    int
 	EventType     int
 	RoomLogTypeId int
@@ -137,6 +194,7 @@ type DirectUpdate struct {
 	MessageId: 0,
 	MessageFileId: 0,
 	ChatId: 0,
+	ChatKey: "",
 	PeerUserId: 0,
 	EventType: 0,
 	RoomLogTypeId: 0,
@@ -145,56 +203,6 @@ type DirectUpdate struct {
 	ExtraPB: UNKNOWN,
 	ExtraJson: "",
 	AtTimeMs: 0,
-*/
-
-// DirectMessage 'ms.direct_message'.
-type DirectMessage struct {
-	MessageId            int
-	RoomKey              string
-	UserId               int
-	MessageFileId        int
-	MessageTypeEnumId    int
-	Text                 string
-	Time                 int
-	PeerReceivedTime     int
-	PeerSeenTime         int
-	DeliviryStatusEnumId int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &DirectMessage {
-	MessageId: 0,
-	RoomKey: "",
-	UserId: 0,
-	MessageFileId: 0,
-	MessageTypeEnumId: 0,
-	Text: "",
-	Time: 0,
-	PeerReceivedTime: 0,
-	PeerSeenTime: 0,
-	DeliviryStatusEnumId: 0,
-*/
-
-// DirectToMessage 'ms.direct_to_message'.
-type DirectToMessage struct {
-	Id           int
-	ChatId       int
-	MessageId    int
-	Seq          int
-	SourceEnumId int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &DirectToMessage {
-	Id: 0,
-	ChatId: 0,
-	MessageId: 0,
-	Seq: 0,
-	SourceEnumId: 0,
 */
 
 // FollowingList 'ms.following_list'.
@@ -452,6 +460,7 @@ type Media struct {
 // MessageFile 'ms.message_file'.
 type MessageFile struct {
 	MessageFileId   int
+	MessageFileKey  string
 	OriginalUserId  int
 	Name            string
 	Size            int
@@ -476,6 +485,7 @@ type MessageFile struct {
 /*
 := &MessageFile {
 	MessageFileId: 0,
+	MessageFileKey: "",
 	OriginalUserId: 0,
 	Name: "",
 	Size: 0,

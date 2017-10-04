@@ -2,3 +2,4 @@
 For add fields of texts use this format:
  ALTER TABLE `ms5`.`user` ADD COLUMN `About2` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_persian_ci DEFAULT '' NULL; // AFTER `LastName`;
  //////////////////////////////////////
+UPDATE `direct_message` SET MessageKey = CONCAT((UserId) , "_" , `Time` * 1000 , "_", ROUND(RAND(152)*1000)) WHERE 1;
