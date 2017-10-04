@@ -26,12 +26,12 @@ func DirectSync_GetSync(me, last int) (*x.PB_SyncResponse_GetDirectUpdates, erro
 	if err != nil {
 		return nil, err
 	}
-	return DirectSync_directLogsTo_PB_SyncResponse_GetDirectUpdates(me, rows), nil
+	return DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(me, rows), nil
 
 }
 
 
-func DirectSync_directLogsTo_PB_SyncResponse_GetDirectUpdates(meId int, logs []*x.DirectUpdate) *x.PB_SyncResponse_GetDirectUpdates {
+func DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(meId int, logs []*x.DirectUpdate) *x.PB_SyncResponse_GetDirectUpdates {
 
 	//preload in here
 	usersToLoad := make(map[int]bool)

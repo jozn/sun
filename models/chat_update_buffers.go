@@ -142,7 +142,7 @@ func chatUpdates_sendToUsersUpdatesFrame(logs []x.DirectUpdate) {
 
 	for UserId, lgs := range mp { //each user
 		if AllPipesMap.IsPipeOpen(UserId) && len(lgs) > 0 {
-			res := PushView_directLogsTo_PB_ChangesHolderView(UserId, lgs)
+			res := DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(UserId, lgs)
 			cmd := NewPB_CommandToClient_WithData(PB_PushHolderView, res)
 			AllPipesMap.SendToUser(UserId, cmd)
 			if config.IS_DEBUG {
