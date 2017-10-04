@@ -17,10 +17,8 @@ import (
 // Manualy copy this to project
 type DirectToMessage__ struct {
 	Id           int    `json:"Id"`           // Id -
-	ChatId       int    `json:"ChatId"`       // ChatId -
 	ChatKey      string `json:"ChatKey"`      // ChatKey -
 	MessageId    int    `json:"MessageId"`    // MessageId -
-	Seq          int    `json:"Seq"`          // Seq -
 	SourceEnumId int    `json:"SourceEnumId"` // SourceEnumId -
 
 	// xo fields
@@ -48,14 +46,14 @@ func (dtm *DirectToMessage) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.direct_to_message (` +
-		`Id, ChatId, ChatKey, MessageId, Seq, SourceEnumId` +
+		`Id, ChatKey, MessageId, SourceEnumId` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
-	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
+	XOLog(sqlstr, dtm.Id, dtm.ChatKey, dtm.MessageId, dtm.SourceEnumId)
+	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatKey, dtm.MessageId, dtm.SourceEnumId)
 	if err != nil {
 		return err
 	}
@@ -75,14 +73,14 @@ func (dtm *DirectToMessage) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.direct_to_message (` +
-		`Id, ChatId, ChatKey, MessageId, Seq, SourceEnumId` +
+		`Id, ChatKey, MessageId, SourceEnumId` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dtm.Id, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
-	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId)
+	XOLog(sqlstr, dtm.Id, dtm.ChatKey, dtm.MessageId, dtm.SourceEnumId)
+	_, err = db.Exec(sqlstr, dtm.Id, dtm.ChatKey, dtm.MessageId, dtm.SourceEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -111,12 +109,12 @@ func (dtm *DirectToMessage) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.direct_to_message SET ` +
-		`ChatId = ?, ChatKey = ?, MessageId = ?, Seq = ?, SourceEnumId = ?` +
+		`ChatKey = ?, MessageId = ?, SourceEnumId = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId, dtm.Id)
-	_, err = db.Exec(sqlstr, dtm.ChatId, dtm.ChatKey, dtm.MessageId, dtm.Seq, dtm.SourceEnumId, dtm.Id)
+	XOLog(sqlstr, dtm.ChatKey, dtm.MessageId, dtm.SourceEnumId, dtm.Id)
+	_, err = db.Exec(sqlstr, dtm.ChatKey, dtm.MessageId, dtm.SourceEnumId, dtm.Id)
 
 	XOLogErr(err)
 	OnDirectToMessage_AfterUpdate(dtm)
@@ -322,111 +320,6 @@ func (d *__DirectToMessage_Deleter) Id_GE(val int) *__DirectToMessage_Deleter {
 	return d
 }
 
-func (u *__DirectToMessage_Deleter) ChatId_In(ins []int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Deleter) ChatId_Ins(ins ...int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Deleter) ChatId_NotIn(ins []int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " ChatId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__DirectToMessage_Deleter) ChatId_Eq(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Deleter) ChatId_NotEq(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Deleter) ChatId_LT(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Deleter) ChatId_LE(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Deleter) ChatId_GT(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Deleter) ChatId_GE(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__DirectToMessage_Deleter) MessageId_In(ins []int) *__DirectToMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -527,111 +420,6 @@ func (d *__DirectToMessage_Deleter) MessageId_GE(val int) *__DirectToMessage_Del
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MessageId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__DirectToMessage_Deleter) Seq_In(ins []int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Deleter) Seq_Ins(ins ...int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Deleter) Seq_NotIn(ins []int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Seq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__DirectToMessage_Deleter) Seq_Eq(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Deleter) Seq_NotEq(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Deleter) Seq_LT(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Deleter) Seq_LE(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Deleter) Seq_GT(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Deleter) Seq_GE(val int) *__DirectToMessage_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -853,111 +641,6 @@ func (d *__DirectToMessage_Updater) Id_GE(val int) *__DirectToMessage_Updater {
 	return d
 }
 
-func (u *__DirectToMessage_Updater) ChatId_In(ins []int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Updater) ChatId_Ins(ins ...int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Updater) ChatId_NotIn(ins []int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " ChatId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__DirectToMessage_Updater) ChatId_Eq(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Updater) ChatId_NotEq(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Updater) ChatId_LT(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Updater) ChatId_LE(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Updater) ChatId_GT(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Updater) ChatId_GE(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__DirectToMessage_Updater) MessageId_In(ins []int) *__DirectToMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1058,111 +741,6 @@ func (d *__DirectToMessage_Updater) MessageId_GE(val int) *__DirectToMessage_Upd
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MessageId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__DirectToMessage_Updater) Seq_In(ins []int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Updater) Seq_Ins(ins ...int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Updater) Seq_NotIn(ins []int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Seq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__DirectToMessage_Updater) Seq_Eq(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Updater) Seq_NotEq(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Updater) Seq_LT(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Updater) Seq_LE(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Updater) Seq_GT(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Updater) Seq_GE(val int) *__DirectToMessage_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1384,111 +962,6 @@ func (d *__DirectToMessage_Selector) Id_GE(val int) *__DirectToMessage_Selector 
 	return d
 }
 
-func (u *__DirectToMessage_Selector) ChatId_In(ins []int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Selector) ChatId_Ins(ins ...int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " ChatId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Selector) ChatId_NotIn(ins []int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " ChatId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__DirectToMessage_Selector) ChatId_Eq(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Selector) ChatId_NotEq(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Selector) ChatId_LT(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Selector) ChatId_LE(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Selector) ChatId_GT(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Selector) ChatId_GE(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " ChatId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
 func (u *__DirectToMessage_Selector) MessageId_In(ins []int) *__DirectToMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1589,111 +1062,6 @@ func (d *__DirectToMessage_Selector) MessageId_GE(val int) *__DirectToMessage_Se
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " MessageId >= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (u *__DirectToMessage_Selector) Seq_In(ins []int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Selector) Seq_Ins(ins ...int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Seq IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__DirectToMessage_Selector) Seq_NotIn(ins []int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " Seq NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (d *__DirectToMessage_Selector) Seq_Eq(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq = ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Selector) Seq_NotEq(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq != ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Selector) Seq_LT(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq < ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Selector) Seq_LE(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq <= ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Selector) Seq_GT(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq > ? "
-	d.wheres = append(d.wheres, w)
-
-	return d
-}
-
-func (d *__DirectToMessage_Selector) Seq_GE(val int) *__DirectToMessage_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	insWhere = append(insWhere, val)
-	w.args = insWhere
-	w.condition = " Seq >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2019,27 +1387,6 @@ func (u *__DirectToMessage_Updater) Id_Increment(count int) *__DirectToMessage_U
 
 //ints
 
-func (u *__DirectToMessage_Updater) ChatId(newVal int) *__DirectToMessage_Updater {
-	u.updates[" ChatId = ? "] = newVal
-	return u
-}
-
-func (u *__DirectToMessage_Updater) ChatId_Increment(count int) *__DirectToMessage_Updater {
-	if count > 0 {
-		u.updates[" ChatId = ChatId+? "] = count
-	}
-
-	if count < 0 {
-		u.updates[" ChatId = ChatId-? "] = -(count) //make it positive
-	}
-
-	return u
-}
-
-//string
-
-//ints
-
 //string
 func (u *__DirectToMessage_Updater) ChatKey(newVal string) *__DirectToMessage_Updater {
 	u.updates[" ChatKey = ? "] = newVal
@@ -2060,27 +1407,6 @@ func (u *__DirectToMessage_Updater) MessageId_Increment(count int) *__DirectToMe
 
 	if count < 0 {
 		u.updates[" MessageId = MessageId-? "] = -(count) //make it positive
-	}
-
-	return u
-}
-
-//string
-
-//ints
-
-func (u *__DirectToMessage_Updater) Seq(newVal int) *__DirectToMessage_Updater {
-	u.updates[" Seq = ? "] = newVal
-	return u
-}
-
-func (u *__DirectToMessage_Updater) Seq_Increment(count int) *__DirectToMessage_Updater {
-	if count > 0 {
-		u.updates[" Seq = Seq+? "] = count
-	}
-
-	if count < 0 {
-		u.updates[" Seq = Seq-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -2129,21 +1455,6 @@ func (u *__DirectToMessage_Selector) Select_Id() *__DirectToMessage_Selector {
 	return u
 }
 
-func (u *__DirectToMessage_Selector) OrderBy_ChatId_Desc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY ChatId DESC "
-	return u
-}
-
-func (u *__DirectToMessage_Selector) OrderBy_ChatId_Asc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY ChatId ASC "
-	return u
-}
-
-func (u *__DirectToMessage_Selector) Select_ChatId() *__DirectToMessage_Selector {
-	u.selectCol = "ChatId"
-	return u
-}
-
 func (u *__DirectToMessage_Selector) OrderBy_ChatKey_Desc() *__DirectToMessage_Selector {
 	u.orderBy = " ORDER BY ChatKey DESC "
 	return u
@@ -2171,21 +1482,6 @@ func (u *__DirectToMessage_Selector) OrderBy_MessageId_Asc() *__DirectToMessage_
 
 func (u *__DirectToMessage_Selector) Select_MessageId() *__DirectToMessage_Selector {
 	u.selectCol = "MessageId"
-	return u
-}
-
-func (u *__DirectToMessage_Selector) OrderBy_Seq_Desc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY Seq DESC "
-	return u
-}
-
-func (u *__DirectToMessage_Selector) OrderBy_Seq_Asc() *__DirectToMessage_Selector {
-	u.orderBy = " ORDER BY Seq ASC "
-	return u
-}
-
-func (u *__DirectToMessage_Selector) Select_Seq() *__DirectToMessage_Selector {
-	u.selectCol = "Seq"
 	return u
 }
 
@@ -2475,12 +1771,12 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_to_message (" +
-		"ChatId, ChatKey, MessageId, Seq, SourceEnumId" +
+		"ChatKey, MessageId, SourceEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -2488,10 +1784,8 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.ChatId)
 		vals = append(vals, row.ChatKey)
 		vals = append(vals, row.MessageId)
-		vals = append(vals, row.Seq)
 		vals = append(vals, row.SourceEnumId)
 
 	}
@@ -2510,12 +1804,12 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_to_message (" +
-		"ChatId, ChatKey, MessageId, Seq, SourceEnumId" +
+		"ChatKey, MessageId, SourceEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -2523,10 +1817,8 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.ChatId)
 		vals = append(vals, row.ChatKey)
 		vals = append(vals, row.MessageId)
-		vals = append(vals, row.Seq)
 		vals = append(vals, row.SourceEnumId)
 
 	}
@@ -2552,53 +1844,6 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 //
 
-//
-
-//
-
-// DirectToMessagesBySeq retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
-//
-// Generated from index 'Seq'.
-func DirectToMessagesBySeq(db XODB, seq int) ([]*DirectToMessage, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, ChatId, ChatKey, MessageId, Seq, SourceEnumId ` +
-		`FROM ms.direct_to_message ` +
-		`WHERE Seq = ?`
-
-	// run query
-	XOLog(sqlstr, seq)
-	q, err := db.Query(sqlstr, seq)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*DirectToMessage{}
-	for q.Next() {
-		dtm := DirectToMessage{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&dtm.Id, &dtm.ChatId, &dtm.ChatKey, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &dtm)
-	}
-
-	OnDirectToMessage_LoadMany(res)
-
-	return res, nil
-}
-
 // DirectToMessageById retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
 //
 // Generated from index 'direct_to_message_Id_pkey'.
@@ -2607,7 +1852,7 @@ func DirectToMessageById(db XODB, id int) (*DirectToMessage, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ChatId, ChatKey, MessageId, Seq, SourceEnumId ` +
+		`Id, ChatKey, MessageId, SourceEnumId ` +
 		`FROM ms.direct_to_message ` +
 		`WHERE Id = ?`
 
@@ -2617,7 +1862,7 @@ func DirectToMessageById(db XODB, id int) (*DirectToMessage, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&dtm.Id, &dtm.ChatId, &dtm.ChatKey, &dtm.MessageId, &dtm.Seq, &dtm.SourceEnumId)
+	err = db.QueryRow(sqlstr, id).Scan(&dtm.Id, &dtm.ChatKey, &dtm.MessageId, &dtm.SourceEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

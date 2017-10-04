@@ -23,14 +23,13 @@ public class J {
 	}
 
 	public static class Chat {
-		public Integer ChatId;
 		public String ChatKey;
 		public String RoomKey;
 		public Integer RoomTypeEnumId;
 		public Integer UserId;
 		public Integer PeerUserId;
 		public Integer GroupId;
-		public Integer CreatedTime;
+		public Integer CreatedSe;
 		public Integer UpdatedMs;
 		public Integer LastMessageId;
 		public Integer LastDeletedMessageId;
@@ -56,7 +55,7 @@ public class J {
 		public Integer MessageFileId;
 		public Integer MessageTypeEnumId;
 		public String Text;
-		public Integer Time;
+		public Integer CreatedSe;
 		public Integer PeerReceivedTime;
 		public Integer PeerSeenTime;
 		public Integer DeliviryStatusEnumId;
@@ -64,10 +63,8 @@ public class J {
 
 	public static class DirectToMessage {
 		public Integer Id;
-		public Integer ChatId;
 		public String ChatKey;
 		public Integer MessageId;
-		public Integer Seq;
 		public Integer SourceEnumId;
 	}
 
@@ -76,7 +73,6 @@ public class J {
 		public Integer ToUserId;
 		public Integer MessageId;
 		public Integer MessageFileId;
-		public Integer ChatId;
 		public String ChatKey;
 		public Integer PeerUserId;
 		public Integer EventType;

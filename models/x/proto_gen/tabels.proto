@@ -22,21 +22,20 @@ message PB_Bucket {
     int32 CreatedTime = 15;
 }
 message PB_Chat {
-    int64 ChatId = 1;
-    string ChatKey = 3;
-    string RoomKey = 5;
-    int32 RoomTypeEnumId = 7;
-    int32 UserId = 9;
-    int32 PeerUserId = 11;
-    int64 GroupId = 13;
-    int32 CreatedTime = 15;
-    int64 UpdatedMs = 17;
-    int64 LastMessageId = 19;
-    int64 LastDeletedMessageId = 21;
-    int64 LastSeenMessageId = 23;
-    int32 LastSeqSeen = 25;
-    int32 LastSeqDelete = 27;
-    int32 CurrentSeq = 29;
+    string ChatKey = 1;
+    string RoomKey = 3;
+    int32 RoomTypeEnumId = 5;
+    int32 UserId = 7;
+    int32 PeerUserId = 9;
+    int64 GroupId = 11;
+    int32 CreatedSe = 13;
+    int64 UpdatedMs = 15;
+    int64 LastMessageId = 17;
+    int64 LastDeletedMessageId = 19;
+    int64 LastSeenMessageId = 21;
+    int32 LastSeqSeen = 23;
+    int32 LastSeqDelete = 25;
+    int32 CurrentSeq = 27;
 }
 message PB_Comment {
     int32 Id = 1;
@@ -53,34 +52,31 @@ message PB_DirectMessage {
     int64 MessageFileId = 9;
     int32 MessageTypeEnumId = 11;
     string Text = 13;
-    int32 Time = 15;
+    int32 CreatedSe = 15;
     int32 PeerReceivedTime = 17;
     int32 PeerSeenTime = 19;
     int32 DeliviryStatusEnumId = 21;
 }
 message PB_DirectToMessage {
     int64 Id = 1;
-    int64 ChatId = 3;
-    string ChatKey = 5;
-    int64 MessageId = 7;
-    int32 Seq = 9;
-    int32 SourceEnumId = 11;
+    string ChatKey = 3;
+    int64 MessageId = 5;
+    int32 SourceEnumId = 7;
 }
 message PB_DirectUpdate {
     int64 Id = 1;
     int32 ToUserId = 3;
     int64 MessageId = 5;
     int64 MessageFileId = 7;
-    int64 ChatId = 9;
-    string ChatKey = 11;
-    int32 PeerUserId = 13;
-    int32 EventType = 15;
-    int32 RoomLogTypeId = 17;
-    int32 FromSeq = 19;
-    int32 ToSeq = 21;
-    ???? ExtraPB = 23;
-    string ExtraJson = 25;
-    int64 AtTimeMs = 27;
+    string ChatKey = 9;
+    int32 PeerUserId = 11;
+    int32 EventType = 13;
+    int32 RoomLogTypeId = 15;
+    int32 FromSeq = 17;
+    int32 ToSeq = 19;
+    ???? ExtraPB = 21;
+    string ExtraJson = 23;
+    int64 AtTimeMs = 25;
 }
 message PB_FollowingList {
     int32 Id = 1;

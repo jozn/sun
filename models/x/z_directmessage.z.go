@@ -23,7 +23,7 @@ type DirectMessage__ struct {
 	MessageFileId        int    `json:"MessageFileId"`        // MessageFileId -
 	MessageTypeEnumId    int    `json:"MessageTypeEnumId"`    // MessageTypeEnumId -
 	Text                 string `json:"Text"`                 // Text -
-	Time                 int    `json:"Time"`                 // Time -
+	CreatedSe            int    `json:"CreatedSe"`            // CreatedSe -
 	PeerReceivedTime     int    `json:"PeerReceivedTime"`     // PeerReceivedTime -
 	PeerSeenTime         int    `json:"PeerSeenTime"`         // PeerSeenTime -
 	DeliviryStatusEnumId int    `json:"DeliviryStatusEnumId"` // DeliviryStatusEnumId -
@@ -53,14 +53,14 @@ func (dm *DirectMessage) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.direct_message (` +
-		`MessageId, MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId` +
+		`MessageId, MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, CreatedSe, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
-	_, err = db.Exec(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
+	XOLog(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.CreatedSe, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
+	_, err = db.Exec(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.CreatedSe, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
 	if err != nil {
 		return err
 	}
@@ -80,14 +80,14 @@ func (dm *DirectMessage) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.direct_message (` +
-		`MessageId, MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId` +
+		`MessageId, MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, CreatedSe, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
-	_, err = db.Exec(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
+	XOLog(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.CreatedSe, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
+	_, err = db.Exec(sqlstr, dm.MessageId, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.CreatedSe, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -116,12 +116,12 @@ func (dm *DirectMessage) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.direct_message SET ` +
-		`MessageKey = ?, RoomKey = ?, UserId = ?, MessageFileId = ?, MessageTypeEnumId = ?, Text = ?, Time = ?, PeerReceivedTime = ?, PeerSeenTime = ?, DeliviryStatusEnumId = ?` +
+		`MessageKey = ?, RoomKey = ?, UserId = ?, MessageFileId = ?, MessageTypeEnumId = ?, Text = ?, CreatedSe = ?, PeerReceivedTime = ?, PeerSeenTime = ?, DeliviryStatusEnumId = ?` +
 		` WHERE MessageId = ?`
 
 	// run query
-	XOLog(sqlstr, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId, dm.MessageId)
-	_, err = db.Exec(sqlstr, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.Time, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId, dm.MessageId)
+	XOLog(sqlstr, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.CreatedSe, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId, dm.MessageId)
+	_, err = db.Exec(sqlstr, dm.MessageKey, dm.RoomKey, dm.UserId, dm.MessageFileId, dm.MessageTypeEnumId, dm.Text, dm.CreatedSe, dm.PeerReceivedTime, dm.PeerSeenTime, dm.DeliviryStatusEnumId, dm.MessageId)
 
 	XOLogErr(err)
 	OnDirectMessage_AfterUpdate(dm)
@@ -642,106 +642,106 @@ func (d *__DirectMessage_Deleter) MessageTypeEnumId_GE(val int) *__DirectMessage
 	return d
 }
 
-func (u *__DirectMessage_Deleter) Time_In(ins []int) *__DirectMessage_Deleter {
+func (u *__DirectMessage_Deleter) CreatedSe_In(ins []int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Deleter) Time_Ins(ins ...int) *__DirectMessage_Deleter {
+func (u *__DirectMessage_Deleter) CreatedSe_Ins(ins ...int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Deleter) Time_NotIn(ins []int) *__DirectMessage_Deleter {
+func (u *__DirectMessage_Deleter) CreatedSe_NotIn(ins []int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedSe NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectMessage_Deleter) Time_Eq(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) CreatedSe_Eq(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " CreatedSe = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) Time_NotEq(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) CreatedSe_NotEq(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " CreatedSe != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) Time_LT(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) CreatedSe_LT(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " CreatedSe < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) Time_LE(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) CreatedSe_LE(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " CreatedSe <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) Time_GT(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) CreatedSe_GT(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " CreatedSe > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Deleter) Time_GE(val int) *__DirectMessage_Deleter {
+func (d *__DirectMessage_Deleter) CreatedSe_GE(val int) *__DirectMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " CreatedSe >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1488,106 +1488,106 @@ func (d *__DirectMessage_Updater) MessageTypeEnumId_GE(val int) *__DirectMessage
 	return d
 }
 
-func (u *__DirectMessage_Updater) Time_In(ins []int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) CreatedSe_In(ins []int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Updater) Time_Ins(ins ...int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) CreatedSe_Ins(ins ...int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Updater) Time_NotIn(ins []int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) CreatedSe_NotIn(ins []int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedSe NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectMessage_Updater) Time_Eq(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) CreatedSe_Eq(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " CreatedSe = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) Time_NotEq(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) CreatedSe_NotEq(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " CreatedSe != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) Time_LT(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) CreatedSe_LT(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " CreatedSe < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) Time_LE(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) CreatedSe_LE(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " CreatedSe <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) Time_GT(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) CreatedSe_GT(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " CreatedSe > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Updater) Time_GE(val int) *__DirectMessage_Updater {
+func (d *__DirectMessage_Updater) CreatedSe_GE(val int) *__DirectMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " CreatedSe >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2334,106 +2334,106 @@ func (d *__DirectMessage_Selector) MessageTypeEnumId_GE(val int) *__DirectMessag
 	return d
 }
 
-func (u *__DirectMessage_Selector) Time_In(ins []int) *__DirectMessage_Selector {
+func (u *__DirectMessage_Selector) CreatedSe_In(ins []int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Selector) Time_Ins(ins ...int) *__DirectMessage_Selector {
+func (u *__DirectMessage_Selector) CreatedSe_Ins(ins ...int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedSe IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectMessage_Selector) Time_NotIn(ins []int) *__DirectMessage_Selector {
+func (u *__DirectMessage_Selector) CreatedSe_NotIn(ins []int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Time NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " CreatedSe NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectMessage_Selector) Time_Eq(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) CreatedSe_Eq(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time = ? "
+	w.condition = " CreatedSe = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) Time_NotEq(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) CreatedSe_NotEq(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time != ? "
+	w.condition = " CreatedSe != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) Time_LT(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) CreatedSe_LT(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time < ? "
+	w.condition = " CreatedSe < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) Time_LE(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) CreatedSe_LE(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time <= ? "
+	w.condition = " CreatedSe <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) Time_GT(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) CreatedSe_GT(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time > ? "
+	w.condition = " CreatedSe > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectMessage_Selector) Time_GE(val int) *__DirectMessage_Selector {
+func (d *__DirectMessage_Selector) CreatedSe_GE(val int) *__DirectMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Time >= ? "
+	w.condition = " CreatedSe >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3416,18 +3416,18 @@ func (u *__DirectMessage_Updater) Text(newVal string) *__DirectMessage_Updater {
 
 //ints
 
-func (u *__DirectMessage_Updater) Time(newVal int) *__DirectMessage_Updater {
-	u.updates[" Time = ? "] = newVal
+func (u *__DirectMessage_Updater) CreatedSe(newVal int) *__DirectMessage_Updater {
+	u.updates[" CreatedSe = ? "] = newVal
 	return u
 }
 
-func (u *__DirectMessage_Updater) Time_Increment(count int) *__DirectMessage_Updater {
+func (u *__DirectMessage_Updater) CreatedSe_Increment(count int) *__DirectMessage_Updater {
 	if count > 0 {
-		u.updates[" Time = Time+? "] = count
+		u.updates[" CreatedSe = CreatedSe+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" Time = Time-? "] = -(count) //make it positive
+		u.updates[" CreatedSe = CreatedSe-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3608,18 +3608,18 @@ func (u *__DirectMessage_Selector) Select_Text() *__DirectMessage_Selector {
 	return u
 }
 
-func (u *__DirectMessage_Selector) OrderBy_Time_Desc() *__DirectMessage_Selector {
-	u.orderBy = " ORDER BY Time DESC "
+func (u *__DirectMessage_Selector) OrderBy_CreatedSe_Desc() *__DirectMessage_Selector {
+	u.orderBy = " ORDER BY CreatedSe DESC "
 	return u
 }
 
-func (u *__DirectMessage_Selector) OrderBy_Time_Asc() *__DirectMessage_Selector {
-	u.orderBy = " ORDER BY Time ASC "
+func (u *__DirectMessage_Selector) OrderBy_CreatedSe_Asc() *__DirectMessage_Selector {
+	u.orderBy = " ORDER BY CreatedSe ASC "
 	return u
 }
 
-func (u *__DirectMessage_Selector) Select_Time() *__DirectMessage_Selector {
-	u.selectCol = "Time"
+func (u *__DirectMessage_Selector) Select_CreatedSe() *__DirectMessage_Selector {
+	u.selectCol = "CreatedSe"
 	return u
 }
 
@@ -3944,7 +3944,7 @@ func MassInsert_DirectMessage(rows []DirectMessage, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_message (" +
-		"MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId" +
+		"MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, CreatedSe, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -3958,7 +3958,7 @@ func MassInsert_DirectMessage(rows []DirectMessage, db XODB) error {
 		vals = append(vals, row.MessageFileId)
 		vals = append(vals, row.MessageTypeEnumId)
 		vals = append(vals, row.Text)
-		vals = append(vals, row.Time)
+		vals = append(vals, row.CreatedSe)
 		vals = append(vals, row.PeerReceivedTime)
 		vals = append(vals, row.PeerSeenTime)
 		vals = append(vals, row.DeliviryStatusEnumId)
@@ -3984,7 +3984,7 @@ func MassReplace_DirectMessage(rows []DirectMessage, db XODB) error {
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_message (" +
-		"MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId" +
+		"MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, CreatedSe, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -3998,7 +3998,7 @@ func MassReplace_DirectMessage(rows []DirectMessage, db XODB) error {
 		vals = append(vals, row.MessageFileId)
 		vals = append(vals, row.MessageTypeEnumId)
 		vals = append(vals, row.Text)
-		vals = append(vals, row.Time)
+		vals = append(vals, row.CreatedSe)
 		vals = append(vals, row.PeerReceivedTime)
 		vals = append(vals, row.PeerSeenTime)
 		vals = append(vals, row.DeliviryStatusEnumId)
@@ -4048,7 +4048,7 @@ func DirectMessageByMessageId(db XODB, messageId int) (*DirectMessage, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`MessageId, MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, Time, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId ` +
+		`MessageId, MessageKey, RoomKey, UserId, MessageFileId, MessageTypeEnumId, Text, CreatedSe, PeerReceivedTime, PeerSeenTime, DeliviryStatusEnumId ` +
 		`FROM ms.direct_message ` +
 		`WHERE MessageId = ?`
 
@@ -4058,7 +4058,7 @@ func DirectMessageByMessageId(db XODB, messageId int) (*DirectMessage, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, messageId).Scan(&dm.MessageId, &dm.MessageKey, &dm.RoomKey, &dm.UserId, &dm.MessageFileId, &dm.MessageTypeEnumId, &dm.Text, &dm.Time, &dm.PeerReceivedTime, &dm.PeerSeenTime, &dm.DeliviryStatusEnumId)
+	err = db.QueryRow(sqlstr, messageId).Scan(&dm.MessageId, &dm.MessageKey, &dm.RoomKey, &dm.UserId, &dm.MessageFileId, &dm.MessageTypeEnumId, &dm.Text, &dm.CreatedSe, &dm.PeerReceivedTime, &dm.PeerSeenTime, &dm.DeliviryStatusEnumId)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

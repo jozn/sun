@@ -6,7 +6,7 @@ import (
 
 //just return the by value
 
-func PBConv_PB_DirectLog_To_DirectLog(o *x.PB_DirectLog) *x.DirectUpdate {
+/*func PBConv_PB_DirectLog_To_DirectLog(o *x.PB_DirectLog) *x.DirectUpdate {
 	n := &x.DirectUpdate{
 		Id:            int(o.Id),
 		ToUserId:      int(o.ToUserId),
@@ -22,8 +22,9 @@ func PBConv_PB_DirectLog_To_DirectLog(o *x.PB_DirectLog) *x.DirectUpdate {
 		AtTimeMs:      int(o.AtTimeMs),
 	}
 	return n
-}
+}*/
 
+/*
 func PBConv_DirectLog_To_DirectLog(o *x.DirectUpdate) *x.PB_DirectLog {
 	n := &x.PB_DirectLog{
 		Id:            int64(o.Id),
@@ -41,20 +42,22 @@ func PBConv_DirectLog_To_DirectLog(o *x.DirectUpdate) *x.PB_DirectLog {
 	}
 	return n
 }
+*/
 
-func PBConv_DirectMessage_to_PB_MessageView(m *x.DirectMessage, chatId int) *x.PB_MessageView {
+func PBConv_DirectMessage_to_PB_MessageView(m *x.DirectMessage, chatKey string) *x.PB_MessageView {
 	r := &x.PB_MessageView{
-		MessageId:            uint64(m.MessageId),
+		MessageId:            int64(m.MessageId),
+		MessageKey:           m.MessageKey,
 		RoomKey:              m.RoomKey,
 		UserId:               int32(m.UserId),
 		MessageFileId:        int64(m.MessageFileId),
 		MessageTypeEnumId:    int32(m.MessageTypeEnumId),
 		Text:                 m.Text,
-		Time:                 int32(m.Time),
+		CreatedSe:            int32(m.CreatedSe),
 		PeerReceivedTime:     int32(m.PeerReceivedTime),
 		PeerSeenTime:         int32(m.PeerSeenTime),
 		DeliviryStatusEnumId: int32(m.DeliviryStatusEnumId),
-		ChatId:               int64(chatId), //int32(m.PeerUserId),
+		ChatKey:              chatKey, //int32(m.PeerUserId),
 		RemoteId:             int64(m.MessageId),
 	}
 
@@ -109,6 +112,7 @@ func PBConvPB_MessageFile_To_MessageFile(o *x.MessageFile) *x.PB_MessageFileView
 	return n
 }
 
+/*
 func PBConv_Chat_To_PB_ChatView(m *x.Chat) *x.PB_ChatView {
 	r := &x.PB_ChatView{
 		ChatKey:              m.ChatKey,
@@ -131,6 +135,7 @@ func PBConv_Chat_To_PB_ChatView(m *x.Chat) *x.PB_ChatView {
 	}
 	return r
 }
+*/
 
 /*func PBConv_PB_Message_toNew_Message(pb *x.PB_Message) x.Message {
 bytes, _ := proto.Marshal(pb)

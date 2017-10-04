@@ -55,14 +55,13 @@ type Bucket struct {
 
 // Chat 'ms.chat'.
 type Chat struct {
-	ChatId               int
 	ChatKey              string
 	RoomKey              string
 	RoomTypeEnumId       int
 	UserId               int
 	PeerUserId           int
 	GroupId              int
-	CreatedTime          int
+	CreatedSe            int
 	UpdatedMs            int
 	LastMessageId        int //just direct
 	LastDeletedMessageId int
@@ -76,14 +75,13 @@ type Chat struct {
 
 /*
 := &Chat {
-	ChatId: 0,
 	ChatKey: "",
 	RoomKey: "",
 	RoomTypeEnumId: 0,
 	UserId: 0,
 	PeerUserId: 0,
 	GroupId: 0,
-	CreatedTime: 0,
+	CreatedSe: 0,
 	UpdatedMs: 0,
 	LastMessageId: 0,
 	LastDeletedMessageId: 0,
@@ -122,7 +120,7 @@ type DirectMessage struct {
 	MessageFileId        int
 	MessageTypeEnumId    int
 	Text                 string
-	Time                 int
+	CreatedSe            int
 	PeerReceivedTime     int
 	PeerSeenTime         int
 	DeliviryStatusEnumId int
@@ -139,7 +137,7 @@ type DirectMessage struct {
 	MessageFileId: 0,
 	MessageTypeEnumId: 0,
 	Text: "",
-	Time: 0,
+	CreatedSe: 0,
 	PeerReceivedTime: 0,
 	PeerSeenTime: 0,
 	DeliviryStatusEnumId: 0,
@@ -148,10 +146,8 @@ type DirectMessage struct {
 // DirectToMessage 'ms.direct_to_message'.
 type DirectToMessage struct {
 	Id           int
-	ChatId       int
 	ChatKey      string
 	MessageId    int
-	Seq          int
 	SourceEnumId int
 
 	_exists, _deleted bool
@@ -160,10 +156,8 @@ type DirectToMessage struct {
 /*
 := &DirectToMessage {
 	Id: 0,
-	ChatId: 0,
 	ChatKey: "",
 	MessageId: 0,
-	Seq: 0,
 	SourceEnumId: 0,
 */
 
@@ -173,7 +167,6 @@ type DirectUpdate struct {
 	ToUserId      int
 	MessageId     int
 	MessageFileId int
-	ChatId        int
 	ChatKey       string
 	PeerUserId    int
 	EventType     int
@@ -193,7 +186,6 @@ type DirectUpdate struct {
 	ToUserId: 0,
 	MessageId: 0,
 	MessageFileId: 0,
-	ChatId: 0,
 	ChatKey: "",
 	PeerUserId: 0,
 	EventType: 0,

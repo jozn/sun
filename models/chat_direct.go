@@ -8,23 +8,27 @@ import (
 )
 
 type chatDirect struct {
-	MeUserId   int
-	PeerUserId int
-	MeChat     *x.Chat
-	PeerChat   *x.Chat
-	Err        error
+	MeUserId    int
+	PeerUserId  int
+	MeChat      *x.Chat
+	PeerChat    *x.Chat
+	Err         error
+	MeChatKey   string
+	PeerChatKey string
 }
 
 func NewDirectMessagingByUsers(meUserId, peerUserId int) *chatDirect {
 	res := &chatDirect{
 		MeUserId:   meUserId,
 		PeerUserId: peerUserId,
+		MeChatKey:  UsersToChatKey(meUserId, peerUserId),
+        PeerChatKey: UsersToChatKey(peerUserId, meUserId),
 	}
 	res.LoadOrCreateRooms()
 	return res
 }
 
-func NewDirectMessagingByChatId(meUserId, chatId int) (*chatDirect, error) {
+func NewDirectMessagingByChatId(meUserId int, chatId string) (*chatDirect, error) {
 	/* if meUserId <=  0 {
 	       return  nil,errors.New("not user")
 	   }
@@ -34,7 +38,7 @@ func NewDirectMessagingByChatId(meUserId, chatId int) (*chatDirect, error) {
 
 	       }
 	   }*/
-	ch, err := x.NewChat_Selector().ChatId_Eq(chatId).UserId_Eq(meUserId).GetRow(base.DB)
+	ch, err := x.NewChat_Selector().ChatKey_Eq(chatId).UserId_Eq(meUserId).GetRow(base.DB)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +150,7 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		ToUserId:      s.MeChat.UserId,
 		MessageId:     msg.MessageId,
 		MessageFileId: 0,
-		ChatId:        s.MeChat.ChatId,
+		ChatKey:       UsersToChatKey(s.MeUserId, s.PeerUserId),
 		PeerUserId:    s.PeerChat.UserId,
 		RoomLogTypeId: int(Push_MESSAGE_RECIVED_TO_SERVER), //int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
 		FromSeq:       -1,
@@ -171,13 +175,13 @@ func (s *chatDirect) EditMessageFromMe() {
 //todo: make this more performant with MsgIds passing
 func (s *chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 	sel := x.NewDirectToMessage_Selector().Select_MessageId().
-		ChatId_Eq(s.MeChat.ChatId)
-	if fromSeq > 0 {
+		ChatKey_Eq(s.MeChatKey)
+	/*if fromSeq > 0 {
 		sel.Seq_GE(fromSeq)
 	}
 	if toSeq > 0 {
 		sel.Seq_GE(toSeq)
-	}
+	}*/
 
 	msgIds, err := sel.OrderBy_Id_Desc().GetIntSlice(base.DB)
 	if err != nil {

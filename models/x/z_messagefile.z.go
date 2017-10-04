@@ -59,30 +59,21 @@ func (mf *MessageFile) Insert(db XODB) error {
 		return errors.New("insert failed: already exists")
 	}
 
-	// sql insert query, primary key provided by autoincrement
+	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.message_file (` +
-		`MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel` +
+		`MessageFileId, MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
-	res, err := db.Exec(sqlstr, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
+	XOLog(sqlstr, mf.MessageFileId, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
+	_, err = db.Exec(sqlstr, mf.MessageFileId, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
 	if err != nil {
-		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	mf.MessageFileId = int(id)
+	// set existence
 	mf._exists = true
 
 	OnMessageFile_AfterInsert(mf)
@@ -97,28 +88,19 @@ func (mf *MessageFile) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.message_file (` +
-		`MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel` +
+		`MessageFileId, MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
-	res, err := db.Exec(sqlstr, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
+	XOLog(sqlstr, mf.MessageFileId, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
+	_, err = db.Exec(sqlstr, mf.MessageFileId, mf.MessageFileKey, mf.OriginalUserId, mf.Name, mf.Size, mf.FileTypeEnumId, mf.Width, mf.Height, mf.Duration, mf.Extension, mf.HashMd5, mf.HashAccess, mf.CreatedSe, mf.ServerSrc, mf.ServerPath, mf.ServerThumbPath, mf.BucketId, mf.ServerId, mf.CanDel)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
-	// retrieve id
-	id, err := res.LastInsertId()
-	if err != nil {
-		XOLogErr(err)
-		return err
-	}
-
-	// set primary key and existence
-	mf.MessageFileId = int(id)
 	mf._exists = true
 
 	OnMessageFile_AfterInsert(mf)

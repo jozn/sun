@@ -30,21 +30,20 @@ import "pb_enums.proto";
 // {realm} ,
 message PB_ChatView {
     //option realm = "1";
-
-    string ChatKey = 3;//use as RemoteId
-    int64 ChatId = 1;
+    string ChatKey = 1;
+    string RoomKey = 3;
     int32 RoomTypeEnumId = 5;
     int32 UserId = 7;
     int32 PeerUserId = 9;
     int64 GroupId = 11;
-    int32 CreatedTime = 13;
+    int32 CreatedSe = 13;
     int64 UpdatedMs = 15;
     int64 LastMessageId = 17;
-    int64 LastDeletedMessageId = 18;
-    int64 LastSeenMessageId = 19;
-    int32 LastSeqSeen = 21;
-    int32 LastSeqDelete = 23;
-    int32 CurrentSeq = 25;
+    int64 LastDeletedMessageId = 19;
+    int64 LastSeenMessageId = 21;
+    int32 LastSeqSeen = 23;
+    int32 LastSeqDelete = 25;
+    int32 CurrentSeq = 27;
 
     PB_UserView UserView = 100;
 
@@ -61,18 +60,19 @@ message PB_ChatView {
 message PB_MessageView {
 //    option realm = "1";
 
-    uint64 MessageId = 1;
-    string RoomKey = 3;
-    int32 UserId = 5;
-    int64 MessageFileId = 7;
-    int32 MessageTypeEnumId = 9;
-    string Text = 11;
-    int32 Time = 13;
-    int32 PeerReceivedTime = 15;
-    int32 PeerSeenTime = 17;
-    int32 DeliviryStatusEnumId = 19;
+    int64 MessageId = 1;
+    string MessageKey = 3;
+    string RoomKey = 5;
+    int32 UserId = 7;
+    int64 MessageFileId = 9;
+    int32 MessageTypeEnumId = 11;
+    string Text = 13;
+    int32 CreatedSe = 15;
+    int32 PeerReceivedTime = 17;
+    int32 PeerSeenTime = 19;
+    int32 DeliviryStatusEnumId = 21;
 
-    int64 ChatId = 30;
+    string ChatKey = 30;
     int32 RoomTypeEnumId = 31;
     bool IsByMe = 33;
 

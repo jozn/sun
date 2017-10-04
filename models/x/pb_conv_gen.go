@@ -59,14 +59,13 @@ func PBConvPB_Bucket_To_Bucket ( o *Bucket) *PB_Bucket {
 /*
 func PBConvPB__Chat_To_Chat( o *PB_Chat) *Chat {
      n := &Chat{
-      ChatId: int ( o.ChatId ),
       ChatKey: string ( o.ChatKey ),
       RoomKey: string ( o.RoomKey ),
       RoomTypeEnumId: int ( o.RoomTypeEnumId ),
       UserId: int ( o.UserId ),
       PeerUserId: int ( o.PeerUserId ),
       GroupId: int ( o.GroupId ),
-      CreatedTime: int ( o.CreatedTime ),
+      CreatedSe: int ( o.CreatedSe ),
       UpdatedMs: int ( o.UpdatedMs ),
       LastMessageId: int ( o.LastMessageId ),
       LastDeletedMessageId: int ( o.LastDeletedMessageId ),
@@ -80,14 +79,13 @@ func PBConvPB__Chat_To_Chat( o *PB_Chat) *Chat {
 
 func PBConvPB_Chat_To_Chat ( o *Chat) *PB_Chat {
      n := &PB_Chat{
-      ChatId: int64 ( o.ChatId ),
       ChatKey: string ( o.ChatKey ),
       RoomKey: string ( o.RoomKey ),
       RoomTypeEnumId: int32 ( o.RoomTypeEnumId ),
       UserId: int32 ( o.UserId ),
       PeerUserId: int32 ( o.PeerUserId ),
       GroupId: int64 ( o.GroupId ),
-      CreatedTime: int32 ( o.CreatedTime ),
+      CreatedSe: int32 ( o.CreatedSe ),
       UpdatedMs: int64 ( o.UpdatedMs ),
       LastMessageId: int64 ( o.LastMessageId ),
       LastDeletedMessageId: int64 ( o.LastDeletedMessageId ),
@@ -132,7 +130,7 @@ func PBConvPB__DirectMessage_To_DirectMessage( o *PB_DirectMessage) *DirectMessa
       MessageFileId: int ( o.MessageFileId ),
       MessageTypeEnumId: int ( o.MessageTypeEnumId ),
       Text: string ( o.Text ),
-      Time: int ( o.Time ),
+      CreatedSe: int ( o.CreatedSe ),
       PeerReceivedTime: int ( o.PeerReceivedTime ),
       PeerSeenTime: int ( o.PeerSeenTime ),
       DeliviryStatusEnumId: int ( o.DeliviryStatusEnumId ),
@@ -149,7 +147,7 @@ func PBConvPB_DirectMessage_To_DirectMessage ( o *DirectMessage) *PB_DirectMessa
       MessageFileId: int64 ( o.MessageFileId ),
       MessageTypeEnumId: int32 ( o.MessageTypeEnumId ),
       Text: string ( o.Text ),
-      Time: int32 ( o.Time ),
+      CreatedSe: int32 ( o.CreatedSe ),
       PeerReceivedTime: int32 ( o.PeerReceivedTime ),
       PeerSeenTime: int32 ( o.PeerSeenTime ),
       DeliviryStatusEnumId: int32 ( o.DeliviryStatusEnumId ),
@@ -161,10 +159,8 @@ func PBConvPB_DirectMessage_To_DirectMessage ( o *DirectMessage) *PB_DirectMessa
 func PBConvPB__DirectToMessage_To_DirectToMessage( o *PB_DirectToMessage) *DirectToMessage {
      n := &DirectToMessage{
       Id: int ( o.Id ),
-      ChatId: int ( o.ChatId ),
       ChatKey: string ( o.ChatKey ),
       MessageId: int ( o.MessageId ),
-      Seq: int ( o.Seq ),
       SourceEnumId: int ( o.SourceEnumId ),
     }
     return n
@@ -173,10 +169,8 @@ func PBConvPB__DirectToMessage_To_DirectToMessage( o *PB_DirectToMessage) *Direc
 func PBConvPB_DirectToMessage_To_DirectToMessage ( o *DirectToMessage) *PB_DirectToMessage {
      n := &PB_DirectToMessage{
       Id: int64 ( o.Id ),
-      ChatId: int64 ( o.ChatId ),
       ChatKey: string ( o.ChatKey ),
       MessageId: int64 ( o.MessageId ),
-      Seq: int32 ( o.Seq ),
       SourceEnumId: int32 ( o.SourceEnumId ),
     }
     return n
@@ -189,7 +183,6 @@ func PBConvPB__DirectUpdate_To_DirectUpdate( o *PB_DirectUpdate) *DirectUpdate {
       ToUserId: int ( o.ToUserId ),
       MessageId: int ( o.MessageId ),
       MessageFileId: int ( o.MessageFileId ),
-      ChatId: int ( o.ChatId ),
       ChatKey: string ( o.ChatKey ),
       PeerUserId: int ( o.PeerUserId ),
       EventType: int ( o.EventType ),
@@ -209,7 +202,6 @@ func PBConvPB_DirectUpdate_To_DirectUpdate ( o *DirectUpdate) *PB_DirectUpdate {
       ToUserId: int32 ( o.ToUserId ),
       MessageId: int64 ( o.MessageId ),
       MessageFileId: int64 ( o.MessageFileId ),
-      ChatId: int64 ( o.ChatId ),
       ChatKey: string ( o.ChatKey ),
       PeerUserId: int32 ( o.PeerUserId ),
       EventType: int32 ( o.EventType ),

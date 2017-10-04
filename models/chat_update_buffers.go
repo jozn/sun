@@ -83,7 +83,7 @@ func (m *chatUpdaterBuffer) saveNewChatDirectBuffer(msgsDelays []UpdateDelayer) 
 	for _, md := range msgsDelays {
 		logs = append(logs, md.directUpdate)
 	}
-	err := x.MassInsert_DirectLog(logs, base.DB)
+	err := x.MassInsert_DirectUpdate(logs, base.DB)
 	helper.DebugErr(err)
 
 	if err != nil {

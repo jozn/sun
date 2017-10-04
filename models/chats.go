@@ -11,9 +11,9 @@ func Chat_GetChatListForUser(me int) (res []*x.PB_ChatView, err error) {
 		return
 	}
 
-	chatIds := make(map[int]bool)
+	chatIds := make(map[string]bool)
     for _, r := range rows {
-        chatIds[r.ChatId] = true
+        chatIds[r.ChatKey] = true
     }
 
     res = ViewChat_GetChatViewList(me, chatIds)
@@ -34,7 +34,7 @@ func Chat_GetMessageListForRoom(roomkey string, lastId int) (res []*x.PB_Message
 	}
 
 	for _, r := range rows {
-		chat := PBConv_DirectMessage_to_PB_MessageView(r,-1)
+		chat := PBConv_DirectMessage_to_PB_MessageView(r,"")
 		res = append(res, chat)
 	}
 

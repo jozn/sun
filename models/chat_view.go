@@ -2,17 +2,17 @@ package models
 
 import "ms/sun/models/x"
 
-func ViewChat_GetChatViewList(meId int, chatIds map[int]bool) (res []*x.PB_ChatView) {
+func ViewChat_GetChatViewList(meId int, chatIds map[string]bool) (res []*x.PB_ChatView) {
 	for chatId, _ := range chatIds {
-		if chat, ok := x.Store.GetChatByChatId(chatId); ok {
+		if chat, ok := x.Store.GetChatByChatKey(chatId); ok {
 			chatView := &x.PB_ChatView{
 				ChatKey:              chat.ChatKey,
-				ChatId:               int64(chat.ChatId),
+				RoomKey:              chat.RoomKey,
 				RoomTypeEnumId:       int32(chat.RoomTypeEnumId),
 				UserId:               int32(chat.UserId),
 				PeerUserId:           int32(chat.PeerUserId),
 				GroupId:              int64(chat.GroupId),
-				CreatedTime:          int32(chat.CreatedTime),
+				CreatedSe:            int32(chat.CreatedSe),
 				UpdatedMs:            int64(chat.UpdatedMs),
 				LastMessageId:        int64(chat.LastMessageId),
 				LastDeletedMessageId: int64(chat.LastDeletedMessageId),

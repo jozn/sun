@@ -3676,12 +3676,12 @@ var PB_NotifyUpdatesView__FOlD = &PB_NotifyUpdatesView{}
 
 type PB_ChatView_Flat struct {
 	ChatKey              string
-	ChatId               int
+	RoomKey              string
 	RoomTypeEnumId       int
 	UserId               int
 	PeerUserId           int
 	GroupId              int
-	CreatedTime          int
+	CreatedSe            int
 	UpdatedMs            int
 	LastMessageId        int
 	LastDeletedMessageId int
@@ -3700,12 +3700,12 @@ type PB_ChatView_Flat struct {
 func (m *PB_ChatView) ToFlat() *PB_ChatView_Flat {
 	r := &PB_ChatView_Flat{
 		ChatKey:              m.ChatKey,
-		ChatId:               int(m.ChatId),
+		RoomKey:              m.RoomKey,
 		RoomTypeEnumId:       int(m.RoomTypeEnumId),
 		UserId:               int(m.UserId),
 		PeerUserId:           int(m.PeerUserId),
 		GroupId:              int(m.GroupId),
-		CreatedTime:          int(m.CreatedTime),
+		CreatedSe:            int(m.CreatedSe),
 		UpdatedMs:            int(m.UpdatedMs),
 		LastMessageId:        int(m.LastMessageId),
 		LastDeletedMessageId: int(m.LastDeletedMessageId),
@@ -3724,12 +3724,12 @@ func (m *PB_ChatView) ToFlat() *PB_ChatView_Flat {
 func (m *PB_ChatView_Flat) ToPB() *PB_ChatView {
 	r := &PB_ChatView{
 		ChatKey:              m.ChatKey,
-		ChatId:               int64(m.ChatId),
+		RoomKey:              m.RoomKey,
 		RoomTypeEnumId:       int32(m.RoomTypeEnumId),
 		UserId:               int32(m.UserId),
 		PeerUserId:           int32(m.PeerUserId),
 		GroupId:              int64(m.GroupId),
-		CreatedTime:          int32(m.CreatedTime),
+		CreatedSe:            int32(m.CreatedSe),
 		UpdatedMs:            int64(m.UpdatedMs),
 		LastMessageId:        int64(m.LastMessageId),
 		LastDeletedMessageId: int64(m.LastDeletedMessageId),
@@ -3747,12 +3747,12 @@ func (m *PB_ChatView_Flat) ToPB() *PB_ChatView {
 //folding
 var PB_ChatView__FOlD = &PB_ChatView{
 	ChatKey:              "",
-	ChatId:               0,
+	RoomKey:              "",
 	RoomTypeEnumId:       0,
 	UserId:               0,
 	PeerUserId:           0,
 	GroupId:              0,
-	CreatedTime:          0,
+	CreatedSe:            0,
 	UpdatedMs:            0,
 	LastMessageId:        0,
 	LastDeletedMessageId: 0,
@@ -3767,16 +3767,17 @@ var PB_ChatView__FOlD = &PB_ChatView{
 
 type PB_MessageView_Flat struct {
 	MessageId            int
+	MessageKey           string
 	RoomKey              string
 	UserId               int
 	MessageFileId        int
 	MessageTypeEnumId    int
 	Text                 string
-	Time                 int
+	CreatedSe            int
 	PeerReceivedTime     int
 	PeerSeenTime         int
 	DeliviryStatusEnumId int
-	ChatId               int
+	ChatKey              string
 	RoomTypeEnumId       int
 	IsByMe               bool
 	RemoteId             int
@@ -3787,16 +3788,17 @@ type PB_MessageView_Flat struct {
 func (m *PB_MessageView) ToFlat() *PB_MessageView_Flat {
 	r := &PB_MessageView_Flat{
 		MessageId:            int(m.MessageId),
+		MessageKey:           m.MessageKey,
 		RoomKey:              m.RoomKey,
 		UserId:               int(m.UserId),
 		MessageFileId:        int(m.MessageFileId),
 		MessageTypeEnumId:    int(m.MessageTypeEnumId),
 		Text:                 m.Text,
-		Time:                 int(m.Time),
+		CreatedSe:            int(m.CreatedSe),
 		PeerReceivedTime:     int(m.PeerReceivedTime),
 		PeerSeenTime:         int(m.PeerSeenTime),
 		DeliviryStatusEnumId: int(m.DeliviryStatusEnumId),
-		ChatId:               int(m.ChatId),
+		ChatKey:              m.ChatKey,
 		RoomTypeEnumId:       int(m.RoomTypeEnumId),
 		IsByMe:               m.IsByMe,
 		RemoteId:             int(m.RemoteId),
@@ -3807,17 +3809,18 @@ func (m *PB_MessageView) ToFlat() *PB_MessageView_Flat {
 //ToPB
 func (m *PB_MessageView_Flat) ToPB() *PB_MessageView {
 	r := &PB_MessageView{
-		MessageId:            uint64(m.MessageId),
+		MessageId:            int64(m.MessageId),
+		MessageKey:           m.MessageKey,
 		RoomKey:              m.RoomKey,
 		UserId:               int32(m.UserId),
 		MessageFileId:        int64(m.MessageFileId),
 		MessageTypeEnumId:    int32(m.MessageTypeEnumId),
 		Text:                 m.Text,
-		Time:                 int32(m.Time),
+		CreatedSe:            int32(m.CreatedSe),
 		PeerReceivedTime:     int32(m.PeerReceivedTime),
 		PeerSeenTime:         int32(m.PeerSeenTime),
 		DeliviryStatusEnumId: int32(m.DeliviryStatusEnumId),
-		ChatId:               int64(m.ChatId),
+		ChatKey:              m.ChatKey,
 		RoomTypeEnumId:       int32(m.RoomTypeEnumId),
 		IsByMe:               m.IsByMe,
 		RemoteId:             int64(m.RemoteId),
@@ -3828,16 +3831,17 @@ func (m *PB_MessageView_Flat) ToPB() *PB_MessageView {
 //folding
 var PB_MessageView__FOlD = &PB_MessageView{
 	MessageId:            0,
+	MessageKey:           "",
 	RoomKey:              "",
 	UserId:               0,
 	MessageFileId:        0,
 	MessageTypeEnumId:    0,
 	Text:                 "",
-	Time:                 0,
+	CreatedSe:            0,
 	PeerReceivedTime:     0,
 	PeerSeenTime:         0,
 	DeliviryStatusEnumId: 0,
-	ChatId:               0,
+	ChatKey:              "",
 	RoomTypeEnumId:       0,
 	IsByMe:               false,
 	RemoteId:             0,
@@ -5156,12 +5160,12 @@ return r
 func(m *PB_ChatView)ToFlat() *PB_ChatView_Flat {
 r := &PB_ChatView_Flat{
     ChatKey:  m.ChatKey ,
-    ChatId:  int(m.ChatId) ,
+    RoomKey:  m.RoomKey ,
     RoomTypeEnumId:  int(m.RoomTypeEnumId) ,
     UserId:  int(m.UserId) ,
     PeerUserId:  int(m.PeerUserId) ,
     GroupId:  int(m.GroupId) ,
-    CreatedTime:  int(m.CreatedTime) ,
+    CreatedSe:  int(m.CreatedSe) ,
     UpdatedMs:  int(m.UpdatedMs) ,
     LastMessageId:  int(m.LastMessageId) ,
     LastDeletedMessageId:  int(m.LastDeletedMessageId) ,
@@ -5181,16 +5185,17 @@ return r
 func(m *PB_MessageView)ToFlat() *PB_MessageView_Flat {
 r := &PB_MessageView_Flat{
     MessageId:  int(m.MessageId) ,
+    MessageKey:  m.MessageKey ,
     RoomKey:  m.RoomKey ,
     UserId:  int(m.UserId) ,
     MessageFileId:  int(m.MessageFileId) ,
     MessageTypeEnumId:  int(m.MessageTypeEnumId) ,
     Text:  m.Text ,
-    Time:  int(m.Time) ,
+    CreatedSe:  int(m.CreatedSe) ,
     PeerReceivedTime:  int(m.PeerReceivedTime) ,
     PeerSeenTime:  int(m.PeerSeenTime) ,
     DeliviryStatusEnumId:  int(m.DeliviryStatusEnumId) ,
-    ChatId:  int(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
     RoomTypeEnumId:  int(m.RoomTypeEnumId) ,
     IsByMe:  m.IsByMe ,
     RemoteId:  int(m.RemoteId) ,
@@ -6366,12 +6371,12 @@ return r
 func(m *PB_ChatView_Flat)ToPB() *PB_ChatView {
 r := &PB_ChatView{
     ChatKey:  m.ChatKey ,
-    ChatId:  int64(m.ChatId) ,
+    RoomKey:  m.RoomKey ,
     RoomTypeEnumId:  int32(m.RoomTypeEnumId) ,
     UserId:  int32(m.UserId) ,
     PeerUserId:  int32(m.PeerUserId) ,
     GroupId:  int64(m.GroupId) ,
-    CreatedTime:  int32(m.CreatedTime) ,
+    CreatedSe:  int32(m.CreatedSe) ,
     UpdatedMs:  int64(m.UpdatedMs) ,
     LastMessageId:  int64(m.LastMessageId) ,
     LastDeletedMessageId:  int64(m.LastDeletedMessageId) ,
@@ -6390,17 +6395,18 @@ return r
 
 func(m *PB_MessageView_Flat)ToPB() *PB_MessageView {
 r := &PB_MessageView{
-    MessageId:  uint64(m.MessageId) ,
+    MessageId:  int64(m.MessageId) ,
+    MessageKey:  m.MessageKey ,
     RoomKey:  m.RoomKey ,
     UserId:  int32(m.UserId) ,
     MessageFileId:  int64(m.MessageFileId) ,
     MessageTypeEnumId:  int32(m.MessageTypeEnumId) ,
     Text:  m.Text ,
-    Time:  int32(m.Time) ,
+    CreatedSe:  int32(m.CreatedSe) ,
     PeerReceivedTime:  int32(m.PeerReceivedTime) ,
     PeerSeenTime:  int32(m.PeerSeenTime) ,
     DeliviryStatusEnumId:  int32(m.DeliviryStatusEnumId) ,
-    ChatId:  int64(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
     RoomTypeEnumId:  int32(m.RoomTypeEnumId) ,
     IsByMe:  m.IsByMe ,
     RemoteId:  int64(m.RemoteId) ,
@@ -7331,12 +7337,12 @@ var PB_NotifyUpdatesView__FOlD = &PB_NotifyUpdatesView{
 
 var PB_ChatView__FOlD = &PB_ChatView{
         ChatKey:  "" ,
-        ChatId:  0 ,
+        RoomKey:  "" ,
         RoomTypeEnumId:  0 ,
         UserId:  0 ,
         PeerUserId:  0 ,
         GroupId:  0 ,
-        CreatedTime:  0 ,
+        CreatedSe:  0 ,
         UpdatedMs:  0 ,
         LastMessageId:  0 ,
         LastDeletedMessageId:  0 ,
@@ -7354,16 +7360,17 @@ var PB_ChatView__FOlD = &PB_ChatView{
 
 var PB_MessageView__FOlD = &PB_MessageView{
         MessageId:  0 ,
+        MessageKey:  "" ,
         RoomKey:  "" ,
         UserId:  0 ,
         MessageFileId:  0 ,
         MessageTypeEnumId:  0 ,
         Text:  "" ,
-        Time:  0 ,
+        CreatedSe:  0 ,
         PeerReceivedTime:  0 ,
         PeerSeenTime:  0 ,
         DeliviryStatusEnumId:  0 ,
-        ChatId:  0 ,
+        ChatKey:  "" ,
         RoomTypeEnumId:  0 ,
         IsByMe:  false ,
         RemoteId:  0 ,

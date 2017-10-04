@@ -3342,12 +3342,12 @@ public class PBFlatTypes {
 
 	public class PB_ChatView {
 	   public String ChatKey;
-	   public long ChatId;
+	   public String RoomKey;
 	   public int RoomTypeEnumId;
 	   public int UserId;
 	   public int PeerUserId;
 	   public long GroupId;
-	   public int CreatedTime;
+	   public int CreatedSe;
 	   public long UpdatedMs;
 	   public long LastMessageId;
 	   public long LastDeletedMessageId;
@@ -3365,12 +3365,12 @@ public class PBFlatTypes {
 	folding
 	PBFlatTypes.PB_ChatView t = new PBFlatTypes.PB_ChatView();
     t.setChatKey();
-    t.setChatId();
+    t.setRoomKey();
     t.setRoomTypeEnumId();
     t.setUserId();
     t.setPeerUserId();
     t.setGroupId();
-    t.setCreatedTime();
+    t.setCreatedSe();
     t.setUpdatedMs();
     t.setLastMessageId();
     t.setLastDeletedMessageId();
@@ -3388,12 +3388,12 @@ public class PBFlatTypes {
 	/*
 	PBFlatTypes.PB_ChatView t = new PBFlatTypes.PB_ChatView();
 	t.ChatKey = ;
-	t.ChatId = ;
+	t.RoomKey = ;
 	t.RoomTypeEnumId = ;
 	t.UserId = ;
 	t.PeerUserId = ;
 	t.GroupId = ;
-	t.CreatedTime = ;
+	t.CreatedSe = ;
 	t.UpdatedMs = ;
 	t.LastMessageId = ;
 	t.LastDeletedMessageId = ;
@@ -3411,12 +3411,12 @@ public class PBFlatTypes {
 	/*
 	PB_ChatView t = new PB_ChatView();
 	t.ChatKey = m.getChatKey() ;
-	t.ChatId = m.getChatId() ;
+	t.RoomKey = m.getRoomKey() ;
 	t.RoomTypeEnumId = m.getRoomTypeEnumId() ;
 	t.UserId = m.getUserId() ;
 	t.PeerUserId = m.getPeerUserId() ;
 	t.GroupId = m.getGroupId() ;
-	t.CreatedTime = m.getCreatedTime() ;
+	t.CreatedSe = m.getCreatedSe() ;
 	t.UpdatedMs = m.getUpdatedMs() ;
 	t.LastMessageId = m.getLastMessageId() ;
 	t.LastDeletedMessageId = m.getLastDeletedMessageId() ;
@@ -3433,16 +3433,17 @@ public class PBFlatTypes {
 
 	public class PB_MessageView {
 	   public long MessageId;
+	   public String MessageKey;
 	   public String RoomKey;
 	   public int UserId;
 	   public long MessageFileId;
 	   public int MessageTypeEnumId;
 	   public String Text;
-	   public int Time;
+	   public int CreatedSe;
 	   public int PeerReceivedTime;
 	   public int PeerSeenTime;
 	   public int DeliviryStatusEnumId;
-	   public long ChatId;
+	   public String ChatKey;
 	   public int RoomTypeEnumId;
 	   public boolean IsByMe;
 	   public long RemoteId;
@@ -3452,16 +3453,17 @@ public class PBFlatTypes {
 	folding
 	PBFlatTypes.PB_MessageView t = new PBFlatTypes.PB_MessageView();
     t.setMessageId();
+    t.setMessageKey();
     t.setRoomKey();
     t.setUserId();
     t.setMessageFileId();
     t.setMessageTypeEnumId();
     t.setText();
-    t.setTime();
+    t.setCreatedSe();
     t.setPeerReceivedTime();
     t.setPeerSeenTime();
     t.setDeliviryStatusEnumId();
-    t.setChatId();
+    t.setChatKey();
     t.setRoomTypeEnumId();
     t.setIsByMe();
     t.setRemoteId();
@@ -3471,16 +3473,17 @@ public class PBFlatTypes {
 	/*
 	PBFlatTypes.PB_MessageView t = new PBFlatTypes.PB_MessageView();
 	t.MessageId = ;
+	t.MessageKey = ;
 	t.RoomKey = ;
 	t.UserId = ;
 	t.MessageFileId = ;
 	t.MessageTypeEnumId = ;
 	t.Text = ;
-	t.Time = ;
+	t.CreatedSe = ;
 	t.PeerReceivedTime = ;
 	t.PeerSeenTime = ;
 	t.DeliviryStatusEnumId = ;
-	t.ChatId = ;
+	t.ChatKey = ;
 	t.RoomTypeEnumId = ;
 	t.IsByMe = ;
 	t.RemoteId = ;
@@ -3490,16 +3493,17 @@ public class PBFlatTypes {
 	/*
 	PB_MessageView t = new PB_MessageView();
 	t.MessageId = m.getMessageId() ;
+	t.MessageKey = m.getMessageKey() ;
 	t.RoomKey = m.getRoomKey() ;
 	t.UserId = m.getUserId() ;
 	t.MessageFileId = m.getMessageFileId() ;
 	t.MessageTypeEnumId = m.getMessageTypeEnumId() ;
 	t.Text = m.getText() ;
-	t.Time = m.getTime() ;
+	t.CreatedSe = m.getCreatedSe() ;
 	t.PeerReceivedTime = m.getPeerReceivedTime() ;
 	t.PeerSeenTime = m.getPeerSeenTime() ;
 	t.DeliviryStatusEnumId = m.getDeliviryStatusEnumId() ;
-	t.ChatId = m.getChatId() ;
+	t.ChatKey = m.getChatKey() ;
 	t.RoomTypeEnumId = m.getRoomTypeEnumId() ;
 	t.IsByMe = m.getIsByMe() ;
 	t.RemoteId = m.getRemoteId() ;

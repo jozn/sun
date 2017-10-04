@@ -22,7 +22,7 @@ const (
 )
 
 func DirectSync_GetSync(me, last int) (*x.PB_SyncResponse_GetDirectUpdates, error) {
-	rows, err := x.NewDirectLog_Selector().ToUserId_Eq(me).Id_GT(last).OrderBy_Id_Asc().GetRows(base.DB)
+	rows, err := x.NewDirectUpdate_Selector().ToUserId_Eq(me).Id_GT(last).OrderBy_Id_Asc().GetRows(base.DB)
 	if err != nil {
 		return nil, err
 	}
@@ -35,13 +35,13 @@ func DirectSync_directLogsTo_PB_SyncResponse_GetDirectUpdates(meId int, logs []*
 
 	//preload in here
 	usersToLoad := make(map[int]bool)
-	chatIdsToLoad := make(map[int]bool)
+	chatIdsToLoad := make(map[string]bool)
 	msgIdsToLoad := []int{}
 	msgFileIdsToLoad := []int{}
 	for _, log := range logs { //each user
 		if log.RoomLogTypeId == int(Push_NEW_DIRECT_MESSAGE) {
 			usersToLoad[log.PeerUserId] = true
-			chatIdsToLoad[log.ChatId] = true
+			chatIdsToLoad[log.ChatKey] = true
 			msgIdsToLoad = append(msgIdsToLoad, log.MessageId)
 			if log.MessageFileId > 0 {
 				msgFileIdsToLoad = append(msgFileIdsToLoad, log.MessageFileId)
@@ -101,7 +101,7 @@ func DirectSync_directLogsTo_PB_SyncResponse_GetDirectUpdates(meId int, logs []*
 
 func _pushView_newDirectMessage(log *x.DirectUpdate) (*x.PB_MessageView, bool) {
 	if directMsg, ok := x.Store.GetDirectMessageByMessageId(log.MessageId); ok {
-		v := PBConv_DirectMessage_to_PB_MessageView(directMsg, log.ChatId)
+		v := PBConv_DirectMessage_to_PB_MessageView(directMsg, log.ChatKey)
 		if log.MessageFileId > 0 {
 			fmt.Println("log.MessageFileId ", log.MessageFileId)
 			msgFile, ok := x.Store.GetMessageFileByMessageFileId(log.MessageFileId)

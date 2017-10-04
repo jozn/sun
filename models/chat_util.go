@@ -29,15 +29,16 @@ func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {
 	chatMe, err := x.NewChat_Selector().UserId_Eq(me).PeerUserId_Eq(peer).GetRow(base.DB)
 	if err != nil {
 		chatMe = &x.Chat{
-			ChatId:         helper.NextRowsSeqId(),
-			ChatKey:        UsersToRoomKey(me, peer),
+			//ChatId:         helper.NextRowsSeqId(),
+			ChatKey:        UsersToChatKey(me, peer),
+			RoomKey:        UsersToRoomKey(me, peer),
 			RoomTypeEnumId: int(x.RoomTypeEnum_DIRECT),
 			UserId:         me,
 			LastSeqSeen:    0,
 			LastSeqDelete:  0,
 			PeerUserId:     peer,
 			GroupId:        0,
-			CreatedTime:    helper.TimeNow(),
+			CreatedSe:    helper.TimeNow(),
 			CurrentSeq:     0,
 		}
 		err = chatMe.Save(base.DB)
@@ -53,7 +54,9 @@ func Chat_IncermentForNewMessage(c *x.Chat) {
 	c.CurrentSeq += 1 //todo dep - remove this
 	c.UpdatedMs = helper.TimeNowMs()
 }
+/*
 
 func Chat_GetChatByIdAndUserId(chatId, userId int) (*x.Chat, error) {
 	return x.NewChat_Selector().ChatId_Eq(chatId).UserId_Eq(userId).GetRow(base.DB)
 }
+*/

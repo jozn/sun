@@ -158,7 +158,7 @@ func (rpcMsg) GetMessagesHistory(i *x.PB_MsgParam_GetMessagesHistory, p x.RPC_Us
 }
 
 func (rpcMsg) SetMessagesRangeAsSeen(i *x.PB_MsgParam_SetChatMessagesRangeAsSeen, p x.RPC_UserParam) (*x.PB_MsgResponse_SetChatMessagesRangeAsSeen, error) {
-	dm, err := NewDirectMessagingByChatId(p.GetUserId(), int(i.ChatId))
+	dm, err := NewDirectMessagingByChatId(p.GetUserId(), i.ChatKey)
 	if err != nil {
 		return nil, err
 	}
