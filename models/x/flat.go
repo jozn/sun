@@ -1730,7 +1730,7 @@ func (m *PB_MsgResponse_GetMessagesByIds_Flat) ToPB() *PB_MsgResponse_GetMessage
 var PB_MsgResponse_GetMessagesByIds__FOlD = &PB_MsgResponse_GetMessagesByIds{}
 
 type PB_MsgParam_GetMessagesHistory_Flat struct {
-	ChatId  int
+	ChatKey string
 	FromSeq int
 	EndSeq  int
 }
@@ -1738,7 +1738,7 @@ type PB_MsgParam_GetMessagesHistory_Flat struct {
 //ToPB
 func (m *PB_MsgParam_GetMessagesHistory) ToFlat() *PB_MsgParam_GetMessagesHistory_Flat {
 	r := &PB_MsgParam_GetMessagesHistory_Flat{
-		ChatId:  int(m.ChatId),
+		ChatKey: m.ChatKey,
 		FromSeq: int(m.FromSeq),
 		EndSeq:  int(m.EndSeq),
 	}
@@ -1748,7 +1748,7 @@ func (m *PB_MsgParam_GetMessagesHistory) ToFlat() *PB_MsgParam_GetMessagesHistor
 //ToPB
 func (m *PB_MsgParam_GetMessagesHistory_Flat) ToPB() *PB_MsgParam_GetMessagesHistory {
 	r := &PB_MsgParam_GetMessagesHistory{
-		ChatId:  int64(m.ChatId),
+		ChatKey: m.ChatKey,
 		FromSeq: int32(m.FromSeq),
 		EndSeq:  int32(m.EndSeq),
 	}
@@ -1757,7 +1757,7 @@ func (m *PB_MsgParam_GetMessagesHistory_Flat) ToPB() *PB_MsgParam_GetMessagesHis
 
 //folding
 var PB_MsgParam_GetMessagesHistory__FOlD = &PB_MsgParam_GetMessagesHistory{
-	ChatId:  0,
+	ChatKey: "",
 	FromSeq: 0,
 	EndSeq:  0,
 }
@@ -1782,7 +1782,7 @@ func (m *PB_MsgResponse_GetMessagesHistory_Flat) ToPB() *PB_MsgResponse_GetMessa
 var PB_MsgResponse_GetMessagesHistory__FOlD = &PB_MsgResponse_GetMessagesHistory{}
 
 type PB_MsgParam_SetChatMessagesRangeAsSeen_Flat struct {
-	ChatId     int
+	ChatKey    string
 	FromSeq    int
 	EndSeq     int
 	SeenTimeMs int
@@ -1791,7 +1791,7 @@ type PB_MsgParam_SetChatMessagesRangeAsSeen_Flat struct {
 //ToPB
 func (m *PB_MsgParam_SetChatMessagesRangeAsSeen) ToFlat() *PB_MsgParam_SetChatMessagesRangeAsSeen_Flat {
 	r := &PB_MsgParam_SetChatMessagesRangeAsSeen_Flat{
-		ChatId:     int(m.ChatId),
+		ChatKey:    m.ChatKey,
 		FromSeq:    int(m.FromSeq),
 		EndSeq:     int(m.EndSeq),
 		SeenTimeMs: int(m.SeenTimeMs),
@@ -1802,7 +1802,7 @@ func (m *PB_MsgParam_SetChatMessagesRangeAsSeen) ToFlat() *PB_MsgParam_SetChatMe
 //ToPB
 func (m *PB_MsgParam_SetChatMessagesRangeAsSeen_Flat) ToPB() *PB_MsgParam_SetChatMessagesRangeAsSeen {
 	r := &PB_MsgParam_SetChatMessagesRangeAsSeen{
-		ChatId:     int64(m.ChatId),
+		ChatKey:    m.ChatKey,
 		FromSeq:    int32(m.FromSeq),
 		EndSeq:     int32(m.EndSeq),
 		SeenTimeMs: int64(m.SeenTimeMs),
@@ -1812,7 +1812,7 @@ func (m *PB_MsgParam_SetChatMessagesRangeAsSeen_Flat) ToPB() *PB_MsgParam_SetCha
 
 //folding
 var PB_MsgParam_SetChatMessagesRangeAsSeen__FOlD = &PB_MsgParam_SetChatMessagesRangeAsSeen{
-	ChatId:     0,
+	ChatKey:    "",
 	FromSeq:    0,
 	EndSeq:     0,
 	SeenTimeMs: 0,
@@ -1837,15 +1837,15 @@ func (m *PB_MsgResponse_SetChatMessagesRangeAsSeen_Flat) ToPB() *PB_MsgResponse_
 var PB_MsgResponse_SetChatMessagesRangeAsSeen__FOlD = &PB_MsgResponse_SetChatMessagesRangeAsSeen{}
 
 type PB_MsgParam_DeleteChatHistory_Flat struct {
-	ChatId int
-	ToSeq  int
+	ChatKey string
+	ToSeq   int
 }
 
 //ToPB
 func (m *PB_MsgParam_DeleteChatHistory) ToFlat() *PB_MsgParam_DeleteChatHistory_Flat {
 	r := &PB_MsgParam_DeleteChatHistory_Flat{
-		ChatId: int(m.ChatId),
-		ToSeq:  int(m.ToSeq),
+		ChatKey: m.ChatKey,
+		ToSeq:   int(m.ToSeq),
 	}
 	return r
 }
@@ -1853,16 +1853,16 @@ func (m *PB_MsgParam_DeleteChatHistory) ToFlat() *PB_MsgParam_DeleteChatHistory_
 //ToPB
 func (m *PB_MsgParam_DeleteChatHistory_Flat) ToPB() *PB_MsgParam_DeleteChatHistory {
 	r := &PB_MsgParam_DeleteChatHistory{
-		ChatId: int64(m.ChatId),
-		ToSeq:  int32(m.ToSeq),
+		ChatKey: m.ChatKey,
+		ToSeq:   int32(m.ToSeq),
 	}
 	return r
 }
 
 //folding
 var PB_MsgParam_DeleteChatHistory__FOlD = &PB_MsgParam_DeleteChatHistory{
-	ChatId: 0,
-	ToSeq:  0,
+	ChatKey: "",
+	ToSeq:   0,
 }
 
 type PB_MsgResponse_DeleteChatHistory_Flat struct {
@@ -1959,7 +1959,7 @@ var PB_MsgResponse_SetMessagesAsReceived__FOlD = &PB_MsgResponse_SetMessagesAsRe
 
 type PB_MsgParam_ForwardMessages_Flat struct {
 	MessagesCollections PB_MessagesCollections
-	ToDirectChatIds     []int
+	ToDirectChatKeys    []string
 	ToGroupChatIds      []int
 }
 
@@ -1967,8 +1967,8 @@ type PB_MsgParam_ForwardMessages_Flat struct {
 func (m *PB_MsgParam_ForwardMessages) ToFlat() *PB_MsgParam_ForwardMessages_Flat {
 	r := &PB_MsgParam_ForwardMessages_Flat{
 
-		ToDirectChatIds: helper.SliceInt64ToInt(m.ToDirectChatIds),
-		ToGroupChatIds:  helper.SliceInt64ToInt(m.ToGroupChatIds),
+		ToDirectChatKeys: m.ToDirectChatKeys,
+		ToGroupChatIds:   helper.SliceInt64ToInt(m.ToGroupChatIds),
 	}
 	return r
 }
@@ -1977,8 +1977,8 @@ func (m *PB_MsgParam_ForwardMessages) ToFlat() *PB_MsgParam_ForwardMessages_Flat
 func (m *PB_MsgParam_ForwardMessages_Flat) ToPB() *PB_MsgParam_ForwardMessages {
 	r := &PB_MsgParam_ForwardMessages{
 
-		ToDirectChatIds: helper.SliceIntToInt64(m.ToDirectChatIds),
-		ToGroupChatIds:  helper.SliceIntToInt64(m.ToGroupChatIds),
+		ToDirectChatKeys: m.ToDirectChatKeys,
+		ToGroupChatIds:   helper.SliceIntToInt64(m.ToGroupChatIds),
 	}
 	return r
 }
@@ -2005,7 +2005,7 @@ func (m *PB_MsgResponse_ForwardMessages_Flat) ToPB() *PB_MsgResponse_ForwardMess
 var PB_MsgResponse_ForwardMessages__FOlD = &PB_MsgResponse_ForwardMessages{}
 
 type PB_MsgParam_EditMessage_Flat struct {
-	ChatId    int
+	ChatKey   string
 	RoomType  RoomTypeEnum
 	MessageId int
 	NewText   string
@@ -2014,7 +2014,7 @@ type PB_MsgParam_EditMessage_Flat struct {
 //ToPB
 func (m *PB_MsgParam_EditMessage) ToFlat() *PB_MsgParam_EditMessage_Flat {
 	r := &PB_MsgParam_EditMessage_Flat{
-		ChatId: int(m.ChatId),
+		ChatKey: m.ChatKey,
 
 		MessageId: int(m.MessageId),
 		NewText:   m.NewText,
@@ -2025,7 +2025,7 @@ func (m *PB_MsgParam_EditMessage) ToFlat() *PB_MsgParam_EditMessage_Flat {
 //ToPB
 func (m *PB_MsgParam_EditMessage_Flat) ToPB() *PB_MsgParam_EditMessage {
 	r := &PB_MsgParam_EditMessage{
-		ChatId: int64(m.ChatId),
+		ChatKey: m.ChatKey,
 
 		MessageId: int64(m.MessageId),
 		NewText:   m.NewText,
@@ -2035,7 +2035,7 @@ func (m *PB_MsgParam_EditMessage_Flat) ToPB() *PB_MsgParam_EditMessage {
 
 //folding
 var PB_MsgParam_EditMessage__FOlD = &PB_MsgParam_EditMessage{
-	ChatId: 0,
+	ChatKey: "",
 
 	MessageId: 0,
 	NewText:   "",
@@ -2150,7 +2150,7 @@ func (m *PB_MsgResponse_GetFreshChatList_Flat) ToPB() *PB_MsgResponse_GetFreshCh
 var PB_MsgResponse_GetFreshChatList__FOlD = &PB_MsgResponse_GetFreshChatList{}
 
 type PB_MsgParam_GetFreshRoomMessagesList_Flat struct {
-	ChatId  int
+	ChatKey string
 	RoomKey string
 	Last    int
 }
@@ -2158,7 +2158,7 @@ type PB_MsgParam_GetFreshRoomMessagesList_Flat struct {
 //ToPB
 func (m *PB_MsgParam_GetFreshRoomMessagesList) ToFlat() *PB_MsgParam_GetFreshRoomMessagesList_Flat {
 	r := &PB_MsgParam_GetFreshRoomMessagesList_Flat{
-		ChatId:  int(m.ChatId),
+		ChatKey: m.ChatKey,
 		RoomKey: m.RoomKey,
 		Last:    int(m.Last),
 	}
@@ -2168,7 +2168,7 @@ func (m *PB_MsgParam_GetFreshRoomMessagesList) ToFlat() *PB_MsgParam_GetFreshRoo
 //ToPB
 func (m *PB_MsgParam_GetFreshRoomMessagesList_Flat) ToPB() *PB_MsgParam_GetFreshRoomMessagesList {
 	r := &PB_MsgParam_GetFreshRoomMessagesList{
-		ChatId:  int64(m.ChatId),
+		ChatKey: m.ChatKey,
 		RoomKey: m.RoomKey,
 		Last:    int64(m.Last),
 	}
@@ -2177,7 +2177,7 @@ func (m *PB_MsgParam_GetFreshRoomMessagesList_Flat) ToPB() *PB_MsgParam_GetFresh
 
 //folding
 var PB_MsgParam_GetFreshRoomMessagesList__FOlD = &PB_MsgParam_GetFreshRoomMessagesList{
-	ChatId:  0,
+	ChatKey: "",
 	RoomKey: "",
 	Last:    0,
 }
@@ -4556,7 +4556,7 @@ return r
 
 func(m *PB_MsgParam_GetMessagesHistory)ToFlat() *PB_MsgParam_GetMessagesHistory_Flat {
 r := &PB_MsgParam_GetMessagesHistory_Flat{
-    ChatId:  int(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
     FromSeq:  int(m.FromSeq) ,
     EndSeq:  int(m.EndSeq) ,
 }
@@ -4572,7 +4572,7 @@ return r
 
 func(m *PB_MsgParam_SetChatMessagesRangeAsSeen)ToFlat() *PB_MsgParam_SetChatMessagesRangeAsSeen_Flat {
 r := &PB_MsgParam_SetChatMessagesRangeAsSeen_Flat{
-    ChatId:  int(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
     FromSeq:  int(m.FromSeq) ,
     EndSeq:  int(m.EndSeq) ,
     SeenTimeMs:  int(m.SeenTimeMs) ,
@@ -4588,7 +4588,7 @@ return r
 
 func(m *PB_MsgParam_DeleteChatHistory)ToFlat() *PB_MsgParam_DeleteChatHistory_Flat {
 r := &PB_MsgParam_DeleteChatHistory_Flat{
-    ChatId:  int(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
     ToSeq:  int(m.ToSeq) ,
 }
 return r
@@ -4629,7 +4629,7 @@ return r
 func(m *PB_MsgParam_ForwardMessages)ToFlat() *PB_MsgParam_ForwardMessages_Flat {
 r := &PB_MsgParam_ForwardMessages_Flat{
 
-    ToDirectChatIds:  helper.SliceInt64ToInt(m.ToDirectChatIds) ,
+    ToDirectChatKeys:  m.ToDirectChatKeys ,
     ToGroupChatIds:  helper.SliceInt64ToInt(m.ToGroupChatIds) ,
 }
 return r
@@ -4643,7 +4643,7 @@ return r
 
 func(m *PB_MsgParam_EditMessage)ToFlat() *PB_MsgParam_EditMessage_Flat {
 r := &PB_MsgParam_EditMessage_Flat{
-    ChatId:  int(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
 
     MessageId:  int(m.MessageId) ,
     NewText:  m.NewText ,
@@ -4689,7 +4689,7 @@ return r
 
 func(m *PB_MsgParam_GetFreshRoomMessagesList)ToFlat() *PB_MsgParam_GetFreshRoomMessagesList_Flat {
 r := &PB_MsgParam_GetFreshRoomMessagesList_Flat{
-    ChatId:  int(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
     RoomKey:  m.RoomKey ,
     Last:  int(m.Last) ,
 }
@@ -5766,7 +5766,7 @@ return r
 
 func(m *PB_MsgParam_GetMessagesHistory_Flat)ToPB() *PB_MsgParam_GetMessagesHistory {
 r := &PB_MsgParam_GetMessagesHistory{
-    ChatId:  int64(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
     FromSeq:  int32(m.FromSeq) ,
     EndSeq:  int32(m.EndSeq) ,
 }
@@ -5782,7 +5782,7 @@ return r
 
 func(m *PB_MsgParam_SetChatMessagesRangeAsSeen_Flat)ToPB() *PB_MsgParam_SetChatMessagesRangeAsSeen {
 r := &PB_MsgParam_SetChatMessagesRangeAsSeen{
-    ChatId:  int64(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
     FromSeq:  int32(m.FromSeq) ,
     EndSeq:  int32(m.EndSeq) ,
     SeenTimeMs:  int64(m.SeenTimeMs) ,
@@ -5798,7 +5798,7 @@ return r
 
 func(m *PB_MsgParam_DeleteChatHistory_Flat)ToPB() *PB_MsgParam_DeleteChatHistory {
 r := &PB_MsgParam_DeleteChatHistory{
-    ChatId:  int64(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
     ToSeq:  int32(m.ToSeq) ,
 }
 return r
@@ -5839,7 +5839,7 @@ return r
 func(m *PB_MsgParam_ForwardMessages_Flat)ToPB() *PB_MsgParam_ForwardMessages {
 r := &PB_MsgParam_ForwardMessages{
 
-    ToDirectChatIds:  helper.SliceIntToInt64(m.ToDirectChatIds) ,
+    ToDirectChatKeys:  m.ToDirectChatKeys ,
     ToGroupChatIds:  helper.SliceIntToInt64(m.ToGroupChatIds) ,
 }
 return r
@@ -5853,7 +5853,7 @@ return r
 
 func(m *PB_MsgParam_EditMessage_Flat)ToPB() *PB_MsgParam_EditMessage {
 r := &PB_MsgParam_EditMessage{
-    ChatId:  int64(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
 
     MessageId:  int64(m.MessageId) ,
     NewText:  m.NewText ,
@@ -5899,7 +5899,7 @@ return r
 
 func(m *PB_MsgParam_GetFreshRoomMessagesList_Flat)ToPB() *PB_MsgParam_GetFreshRoomMessagesList {
 r := &PB_MsgParam_GetFreshRoomMessagesList{
-    ChatId:  int64(m.ChatId) ,
+    ChatKey:  m.ChatKey ,
     RoomKey:  m.RoomKey ,
     Last:  int64(m.Last) ,
 }
@@ -6867,7 +6867,7 @@ var PB_MsgResponse_GetMessagesByIds__FOlD = &PB_MsgResponse_GetMessagesByIds{
 
 
 var PB_MsgParam_GetMessagesHistory__FOlD = &PB_MsgParam_GetMessagesHistory{
-        ChatId:  0 ,
+        ChatKey:  "" ,
         FromSeq:  0 ,
         EndSeq:  0 ,
 }
@@ -6879,7 +6879,7 @@ var PB_MsgResponse_GetMessagesHistory__FOlD = &PB_MsgResponse_GetMessagesHistory
 
 
 var PB_MsgParam_SetChatMessagesRangeAsSeen__FOlD = &PB_MsgParam_SetChatMessagesRangeAsSeen{
-        ChatId:  0 ,
+        ChatKey:  "" ,
         FromSeq:  0 ,
         EndSeq:  0 ,
         SeenTimeMs:  0 ,
@@ -6891,7 +6891,7 @@ var PB_MsgResponse_SetChatMessagesRangeAsSeen__FOlD = &PB_MsgResponse_SetChatMes
 
 
 var PB_MsgParam_DeleteChatHistory__FOlD = &PB_MsgParam_DeleteChatHistory{
-        ChatId:  0 ,
+        ChatKey:  "" ,
         ToSeq:  0 ,
 }
 
@@ -6920,7 +6920,7 @@ var PB_MsgResponse_SetMessagesAsReceived__FOlD = &PB_MsgResponse_SetMessagesAsRe
 
 var PB_MsgParam_ForwardMessages__FOlD = &PB_MsgParam_ForwardMessages{
 
-        ToDirectChatIds:  0 ,
+        ToDirectChatKeys:  "" ,
         ToGroupChatIds:  0 ,
 }
 
@@ -6930,7 +6930,7 @@ var PB_MsgResponse_ForwardMessages__FOlD = &PB_MsgResponse_ForwardMessages{
 
 
 var PB_MsgParam_EditMessage__FOlD = &PB_MsgParam_EditMessage{
-        ChatId:  0 ,
+        ChatKey:  "" ,
 
         MessageId:  0 ,
         NewText:  "" ,
@@ -6964,7 +6964,7 @@ var PB_MsgResponse_GetFreshChatList__FOlD = &PB_MsgResponse_GetFreshChatList{
 
 
 var PB_MsgParam_GetFreshRoomMessagesList__FOlD = &PB_MsgParam_GetFreshRoomMessagesList{
-        ChatId:  0 ,
+        ChatKey:  "" ,
         RoomKey:  "" ,
         Last:  0 ,
 }

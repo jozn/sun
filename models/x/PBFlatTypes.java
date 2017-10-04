@@ -1557,28 +1557,28 @@ public class PBFlatTypes {
 	*/
 
 	public class PB_MsgParam_GetMessagesHistory {
-	   public long ChatId;
+	   public String ChatKey;
 	   public int FromSeq;
 	   public int EndSeq;
 	}
 	/*
 	folding
 	PBFlatTypes.PB_MsgParam_GetMessagesHistory t = new PBFlatTypes.PB_MsgParam_GetMessagesHistory();
-    t.setChatId();
+    t.setChatKey();
     t.setFromSeq();
     t.setEndSeq();
 	*/
 
 	/*
 	PBFlatTypes.PB_MsgParam_GetMessagesHistory t = new PBFlatTypes.PB_MsgParam_GetMessagesHistory();
-	t.ChatId = ;
+	t.ChatKey = ;
 	t.FromSeq = ;
 	t.EndSeq = ;
 	*/
 
 	/*
 	PB_MsgParam_GetMessagesHistory t = new PB_MsgParam_GetMessagesHistory();
-	t.ChatId = m.getChatId() ;
+	t.ChatKey = m.getChatKey() ;
 	t.FromSeq = m.getFromSeq() ;
 	t.EndSeq = m.getEndSeq() ;
 	*/
@@ -1603,7 +1603,7 @@ public class PBFlatTypes {
 	*/
 
 	public class PB_MsgParam_SetChatMessagesRangeAsSeen {
-	   public long ChatId;
+	   public String ChatKey;
 	   public int FromSeq;
 	   public int EndSeq;
 	   public long SeenTimeMs;
@@ -1611,7 +1611,7 @@ public class PBFlatTypes {
 	/*
 	folding
 	PBFlatTypes.PB_MsgParam_SetChatMessagesRangeAsSeen t = new PBFlatTypes.PB_MsgParam_SetChatMessagesRangeAsSeen();
-    t.setChatId();
+    t.setChatKey();
     t.setFromSeq();
     t.setEndSeq();
     t.setSeenTimeMs();
@@ -1619,7 +1619,7 @@ public class PBFlatTypes {
 
 	/*
 	PBFlatTypes.PB_MsgParam_SetChatMessagesRangeAsSeen t = new PBFlatTypes.PB_MsgParam_SetChatMessagesRangeAsSeen();
-	t.ChatId = ;
+	t.ChatKey = ;
 	t.FromSeq = ;
 	t.EndSeq = ;
 	t.SeenTimeMs = ;
@@ -1627,7 +1627,7 @@ public class PBFlatTypes {
 
 	/*
 	PB_MsgParam_SetChatMessagesRangeAsSeen t = new PB_MsgParam_SetChatMessagesRangeAsSeen();
-	t.ChatId = m.getChatId() ;
+	t.ChatKey = m.getChatKey() ;
 	t.FromSeq = m.getFromSeq() ;
 	t.EndSeq = m.getEndSeq() ;
 	t.SeenTimeMs = m.getSeenTimeMs() ;
@@ -1649,25 +1649,25 @@ public class PBFlatTypes {
 	*/
 
 	public class PB_MsgParam_DeleteChatHistory {
-	   public long ChatId;
+	   public String ChatKey;
 	   public int ToSeq;
 	}
 	/*
 	folding
 	PBFlatTypes.PB_MsgParam_DeleteChatHistory t = new PBFlatTypes.PB_MsgParam_DeleteChatHistory();
-    t.setChatId();
+    t.setChatKey();
     t.setToSeq();
 	*/
 
 	/*
 	PBFlatTypes.PB_MsgParam_DeleteChatHistory t = new PBFlatTypes.PB_MsgParam_DeleteChatHistory();
-	t.ChatId = ;
+	t.ChatKey = ;
 	t.ToSeq = ;
 	*/
 
 	/*
 	PB_MsgParam_DeleteChatHistory t = new PB_MsgParam_DeleteChatHistory();
-	t.ChatId = m.getChatId() ;
+	t.ChatKey = m.getChatKey() ;
 	t.ToSeq = m.getToSeq() ;
 	*/
 
@@ -1756,28 +1756,28 @@ public class PBFlatTypes {
 
 	public class PB_MsgParam_ForwardMessages {
 	   public PB_MessagesCollections MessagesCollections;
-	   public long ToDirectChatIds;
+	   public String ToDirectChatKeys;
 	   public long ToGroupChatIds;
 	}
 	/*
 	folding
 	PBFlatTypes.PB_MsgParam_ForwardMessages t = new PBFlatTypes.PB_MsgParam_ForwardMessages();
     t.setMessagesCollections();
-    t.setToDirectChatIds();
+    t.setToDirectChatKeys();
     t.setToGroupChatIds();
 	*/
 
 	/*
 	PBFlatTypes.PB_MsgParam_ForwardMessages t = new PBFlatTypes.PB_MsgParam_ForwardMessages();
 	t.MessagesCollections = ;
-	t.ToDirectChatIds = ;
+	t.ToDirectChatKeys = ;
 	t.ToGroupChatIds = ;
 	*/
 
 	/*
 	PB_MsgParam_ForwardMessages t = new PB_MsgParam_ForwardMessages();
 	t.MessagesCollections = m.getMessagesCollections() ;
-	t.ToDirectChatIds = m.getToDirectChatIds() ;
+	t.ToDirectChatKeys = m.getToDirectChatKeys() ;
 	t.ToGroupChatIds = m.getToGroupChatIds() ;
 	*/
 
@@ -1797,7 +1797,7 @@ public class PBFlatTypes {
 	*/
 
 	public class PB_MsgParam_EditMessage {
-	   public long ChatId;
+	   public String ChatKey;
 	   public RoomTypeEnum RoomType;
 	   public long MessageId;
 	   public String NewText;
@@ -1805,7 +1805,7 @@ public class PBFlatTypes {
 	/*
 	folding
 	PBFlatTypes.PB_MsgParam_EditMessage t = new PBFlatTypes.PB_MsgParam_EditMessage();
-    t.setChatId();
+    t.setChatKey();
     t.setRoomType();
     t.setMessageId();
     t.setNewText();
@@ -1813,7 +1813,7 @@ public class PBFlatTypes {
 
 	/*
 	PBFlatTypes.PB_MsgParam_EditMessage t = new PBFlatTypes.PB_MsgParam_EditMessage();
-	t.ChatId = ;
+	t.ChatKey = ;
 	t.RoomType = ;
 	t.MessageId = ;
 	t.NewText = ;
@@ -1821,7 +1821,7 @@ public class PBFlatTypes {
 
 	/*
 	PB_MsgParam_EditMessage t = new PB_MsgParam_EditMessage();
-	t.ChatId = m.getChatId() ;
+	t.ChatKey = m.getChatKey() ;
 	t.RoomType = m.getRoomType() ;
 	t.MessageId = m.getMessageId() ;
 	t.NewText = m.getNewText() ;
@@ -1927,28 +1927,28 @@ public class PBFlatTypes {
 	*/
 
 	public class PB_MsgParam_GetFreshRoomMessagesList {
-	   public long ChatId;
+	   public String ChatKey;
 	   public String RoomKey;
 	   public long Last;
 	}
 	/*
 	folding
 	PBFlatTypes.PB_MsgParam_GetFreshRoomMessagesList t = new PBFlatTypes.PB_MsgParam_GetFreshRoomMessagesList();
-    t.setChatId();
+    t.setChatKey();
     t.setRoomKey();
     t.setLast();
 	*/
 
 	/*
 	PBFlatTypes.PB_MsgParam_GetFreshRoomMessagesList t = new PBFlatTypes.PB_MsgParam_GetFreshRoomMessagesList();
-	t.ChatId = ;
+	t.ChatKey = ;
 	t.RoomKey = ;
 	t.Last = ;
 	*/
 
 	/*
 	PB_MsgParam_GetFreshRoomMessagesList t = new PB_MsgParam_GetFreshRoomMessagesList();
-	t.ChatId = m.getChatId() ;
+	t.ChatKey = m.getChatKey() ;
 	t.RoomKey = m.getRoomKey() ;
 	t.Last = m.getLast() ;
 	*/

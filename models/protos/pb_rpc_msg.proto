@@ -61,7 +61,8 @@ message PB_MsgResponse_GetMessagesByIds {
 
 // GetMessagesHistory
 message PB_MsgParam_GetMessagesHistory {
-    int64 ChatId = 1;
+    //int64 ChatId = 1;
+    string ChatKey = 1;
     sint32 FromSeq = 2;
     sint32 EndSeq = 3;
 }
@@ -71,7 +72,8 @@ message PB_MsgResponse_GetMessagesHistory {
 
 /////////
 message PB_MsgParam_SetChatMessagesRangeAsSeen {
-    int64 ChatId = 1 ;
+    //int64 ChatId = 1 ;
+    string ChatKey = 1;
     sint32 FromSeq = 2;//must persent 
     sint32 EndSeq = 3;// must persent
     int64 SeenTimeMs = 4;
@@ -83,7 +85,8 @@ message PB_MsgResponse_SetChatMessagesRangeAsSeen {
 
 /////////////////////////////////////
 message PB_MsgParam_DeleteChatHistory {//d+g
-    int64 ChatId = 1 ;
+    //int64 ChatId = 1 ;sint32 ChatKey = 21;
+    string ChatKey = 1;
     sint32 ToSeq = 2;//must persent
 }
 message PB_MsgResponse_DeleteChatHistory {
@@ -118,7 +121,8 @@ message PB_MsgParam_ForwardMessages {
 //    /*repeated int64 DirectMessagesIds = 1;
 //    repeated int64 GroupMessagesIds = 2;*/
     PB_MessagesCollections MessagesCollections = 1;
-    repeated int64 ToDirectChatIds = 3;
+//    repeated int64 ToDirectChatIds = 3;
+    repeated string ToDirectChatKeys = 3;
     repeated int64 ToGroupChatIds = 4;
 }
 message PB_MsgResponse_ForwardMessages {
@@ -126,7 +130,8 @@ message PB_MsgResponse_ForwardMessages {
 
 /////////////////////////////////////
 message PB_MsgParam_EditMessage {
-    int64 ChatId = 1;
+    //int64 ChatId = 1;
+    string ChatKey = 1;
     RoomTypeEnum RoomType = 2;
     int64 MessageId = 3;
     string NewText = 4;
@@ -159,7 +164,8 @@ message PB_MsgResponse_GetFreshChatList {
 ////////////////////////////////////////////////////////
 
 message PB_MsgParam_GetFreshRoomMessagesList {
-    int64 ChatId = 1;
+//    int64 ChatId = 1;
+    string ChatKey = 1;
     string RoomKey = 2;//use this
     int64 Last = 3;
 }
