@@ -6,16 +6,16 @@ import (
     "ms/sun/config"
 )
 
-func ViewChat_GetChatViewList_map(meId int, chatkeysMap map[string]bool) (res []*x.PB_ChatView) {
-	chatKeys2 := make([]string, 0, len(chatkeysMap))
-	for chatId, _ := range chatkeysMap {
-		chatKeys2 = append(chatKeys2, chatId)
+func ViewChat_GetChatViewList_ByChatKeys_map(meId int, chatKeysMap map[string]bool) (res []*x.PB_ChatView) {
+	chatKeys := make([]string, 0, len(chatKeysMap))
+	for chatId, _ := range chatKeysMap {
+		chatKeys = append(chatKeys, chatId)
 	}
 
-	return ViewChat_GetChatViewList(meId, chatKeys2)
+	return ViewChat_GetChatViewList_ByChatKeys(meId, chatKeys)
 }
 
-func ViewChat_GetChatViewList(meId int, chatKeys []string) (res []*x.PB_ChatView) {
+func ViewChat_GetChatViewList_ByChatKeys(meId int, chatKeys []string) (res []*x.PB_ChatView) {
 	for _, chatId := range chatKeys {
 		if chat, ok := x.Store.GetChatByChatKey(chatId); ok {
 			chatView := &x.PB_ChatView{

@@ -35,13 +35,13 @@ func DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(meId int, logs 
 
 	//preload in here
 	usersToLoad := make(map[int]bool)
-	chatIdsToLoad := make(map[string]bool)
+	chatKeysToLoad := make(map[string]bool)
 	msgIdsToLoad := []int{}
 	msgFileIdsToLoad := []int{}
 	for _, log := range logs { //each user
 		if log.RoomLogTypeId == int(Push_NEW_DIRECT_MESSAGE) {
 			usersToLoad[log.PeerUserId] = true
-			chatIdsToLoad[log.ChatKey] = true
+			chatKeysToLoad[log.ChatKey] = true
 			msgIdsToLoad = append(msgIdsToLoad, log.MessageId)
 			if log.MessageFileId > 0 {
 				msgFileIdsToLoad = append(msgFileIdsToLoad, log.MessageFileId)
@@ -87,8 +87,8 @@ func DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(meId int, logs 
 		res.Users = ViewUser_GetUserViewList(meId, usersToLoad)
 	}
 
-	if len(chatIdsToLoad) > 0 {
-		res.Chats = ViewChat_GetChatViewList_map(meId, chatIdsToLoad)
+	if len(chatKeysToLoad) > 0 {
+		res.Chats = ViewChat_GetChatViewList_ByChatKeys_map(meId, chatKeysToLoad)
 	}
 
 	if len(logs) > 0 {

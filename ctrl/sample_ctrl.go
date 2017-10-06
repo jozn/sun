@@ -90,6 +90,7 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				igFile, err := os.Open(imgRnd)
 				if err != nil {
 					log.Println("fact of msg igFile is cannot be opend", err)
+					continue
 				}
 				st, _ := igFile.Stat()
 				st.Size()
