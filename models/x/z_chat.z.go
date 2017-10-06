@@ -5137,18 +5137,20 @@ func (d *__Chat_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  Chat ////////////////
+
 func MassInsert_Chat(rows []Chat, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.chat (" +
-		"RoomKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedSe, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq" +
+		"ChatKey, RoomKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedSe, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq" +
 		") VALUES " + insVals
 
 	// run query
@@ -5156,6 +5158,7 @@ func MassInsert_Chat(rows []Chat, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ChatKey)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.RoomTypeEnumId)
 		vals = append(vals, row.UserId)
@@ -5186,12 +5189,12 @@ func MassInsert_Chat(rows []Chat, db XODB) error {
 func MassReplace_Chat(rows []Chat, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.chat (" +
-		"RoomKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedSe, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq" +
+		"ChatKey, RoomKey, RoomTypeEnumId, UserId, PeerUserId, GroupId, CreatedSe, UpdatedMs, LastMessageId, LastDeletedMessageId, LastSeenMessageId, LastSeqSeen, LastSeqDelete, CurrentSeq" +
 		") VALUES " + insVals
 
 	// run query
@@ -5199,6 +5202,7 @@ func MassReplace_Chat(rows []Chat, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.ChatKey)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.RoomTypeEnumId)
 		vals = append(vals, row.UserId)

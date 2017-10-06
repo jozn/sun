@@ -1209,18 +1209,20 @@ func (d *__NotificationRemoved_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  NotificationRemoved ////////////////
+
 func MassInsert_NotificationRemoved(rows []NotificationRemoved, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.notification_removed (" +
-		"ForUserId" +
+		"NotificationId, ForUserId" +
 		") VALUES " + insVals
 
 	// run query
@@ -1228,6 +1230,7 @@ func MassInsert_NotificationRemoved(rows []NotificationRemoved, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.NotificationId)
 		vals = append(vals, row.ForUserId)
 
 	}
@@ -1246,12 +1249,12 @@ func MassInsert_NotificationRemoved(rows []NotificationRemoved, db XODB) error {
 func MassReplace_NotificationRemoved(rows []NotificationRemoved, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?)," //`(?, ?, ?, ?),`
+	s := "(?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.notification_removed (" +
-		"ForUserId" +
+		"NotificationId, ForUserId" +
 		") VALUES " + insVals
 
 	// run query
@@ -1259,6 +1262,7 @@ func MassReplace_NotificationRemoved(rows []NotificationRemoved, db XODB) error 
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.NotificationId)
 		vals = append(vals, row.ForUserId)
 
 	}

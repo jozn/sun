@@ -22,7 +22,7 @@ const (
 )
 
 func DirectSync_GetSync(me, last int) (*x.PB_SyncResponse_GetDirectUpdates, error) {
-	rows, err := x.NewDirectUpdate_Selector().ToUserId_Eq(me).Id_GT(last).OrderBy_Id_Asc().GetRows(base.DB)
+	rows, err := x.NewDirectUpdate_Selector().ToUserId_Eq(me).DirectUpdateId_GT(last).OrderBy_DirectUpdateId_Asc().GetRows(base.DB)
 	if err != nil {
 		return nil, err
 	}
@@ -88,11 +88,11 @@ func DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(meId int, logs 
 	}
 
 	if len(chatIdsToLoad) > 0 {
-		res.Chats = ViewChat_GetChatViewList(meId, chatIdsToLoad)
+		res.Chats = ViewChat_GetChatViewList_map(meId, chatIdsToLoad)
 	}
 
 	if len(logs) > 0 {
-		res.LastId = int64(logs[len(logs)-1].Id)
+		res.LastId = int64(logs[len(logs)-1].DirectUpdateId)
 	}
 	//TODO: add messages files id
 

@@ -16,7 +16,7 @@ func Chat_GetChatListForUser(me int) (res []*x.PB_ChatView, err error) {
         chatIds[r.ChatKey] = true
     }
 
-    res = ViewChat_GetChatViewList(me, chatIds)
+    res = ViewChat_GetChatViewList_map(me, chatIds)
 
 	/*for _, r := range rows {
 		chat := PBConv_Chat_To_PB_ChatView(r)

@@ -3395,12 +3395,14 @@ func (d *__OldMsgPushEvent_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  OldMsgPushEvent ////////////////
+
 func MassInsert_OldMsgPushEvent(rows []OldMsgPushEvent, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
+	//s:= "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
@@ -3493,49 +3495,6 @@ func MassReplace_OldMsgPushEvent(rows []OldMsgPushEvent, db XODB) error {
 //
 
 //
-
-// OldMsgPushEventsByUid retrieves a row from 'ms.old_msg_push_event' as a OldMsgPushEvent.
-//
-// Generated from index 'Uid'.
-func OldMsgPushEventsByUid(db XODB, uid int) ([]*OldMsgPushEvent, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, Uid, ToUserId, MsgUid, MsgKey, RoomKey, PeerUserId, EventType, AtTime ` +
-		`FROM ms.old_msg_push_event ` +
-		`WHERE Uid = ?`
-
-	// run query
-	XOLog(sqlstr, uid)
-	q, err := db.Query(sqlstr, uid)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*OldMsgPushEvent{}
-	for q.Next() {
-		ompe := OldMsgPushEvent{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&ompe.Id, &ompe.Uid, &ompe.ToUserId, &ompe.MsgUid, &ompe.MsgKey, &ompe.RoomKey, &ompe.PeerUserId, &ompe.EventType, &ompe.AtTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &ompe)
-	}
-
-	OnOldMsgPushEvent_LoadMany(res)
-
-	return res, nil
-}
 
 // OldMsgPushEventById retrieves a row from 'ms.old_msg_push_event' as a OldMsgPushEvent.
 //

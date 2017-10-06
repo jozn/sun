@@ -19,10 +19,10 @@ type chatDirect struct {
 
 func NewDirectMessagingByUsers(meUserId, peerUserId int) *chatDirect {
 	res := &chatDirect{
-		MeUserId:   meUserId,
-		PeerUserId: peerUserId,
-		MeChatKey:  UsersToChatKey(meUserId, peerUserId),
-        PeerChatKey: UsersToChatKey(peerUserId, meUserId),
+		MeUserId:    meUserId,
+		PeerUserId:  peerUserId,
+		MeChatKey:   UsersToChatKey(meUserId, peerUserId),
+		PeerChatKey: UsersToChatKey(peerUserId, meUserId),
 	}
 	res.LoadOrCreateRooms()
 	return res
@@ -130,10 +130,10 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 	}
 
 	dlNew := x.DirectUpdate{
-		Id:            helper.NextRowsSeqId(),
-		ToUserId:      s.PeerChat.UserId,
-		MessageId:     msg.MessageId,
-		MessageFileId: msg.MessageFileId,
+		DirectUpdateId: helper.NextRowsSeqId(),
+		ToUserId:       s.PeerChat.UserId,
+		MessageId:      msg.MessageId,
+		MessageFileId:  msg.MessageFileId,
 		//ChatId:        s.PeerChat.ChatId,
 		ChatKey:       UsersToChatKey(s.MeUserId, s.PeerUserId),
 		PeerUserId:    s.MeChat.UserId,
@@ -146,18 +146,18 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 	}
 
 	dlRec := x.DirectUpdate{
-		Id:            helper.NextRowsSeqId(),
-		ToUserId:      s.MeChat.UserId,
-		MessageId:     msg.MessageId,
-		MessageFileId: 0,
-		ChatKey:       UsersToChatKey(s.MeUserId, s.PeerUserId),
-		PeerUserId:    s.PeerChat.UserId,
-		RoomLogTypeId: int(Push_MESSAGE_RECIVED_TO_SERVER), //int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
-		FromSeq:       -1,
-		ToSeq:         -1,
-		ExtraPB:       []byte{},
-		ExtraJson:     "",
-		AtTimeMs:      helper.TimeNowMs(),
+		DirectUpdateId: helper.NextRowsSeqId(),
+		ToUserId:       s.MeChat.UserId,
+		MessageId:      msg.MessageId,
+		MessageFileId:  0,
+		ChatKey:        UsersToChatKey(s.MeUserId, s.PeerUserId),
+		PeerUserId:     s.PeerChat.UserId,
+		RoomLogTypeId:  int(Push_MESSAGE_RECIVED_TO_SERVER), //int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
+		FromSeq:        -1,
+		ToSeq:          -1,
+		ExtraPB:        []byte{},
+		ExtraJson:      "",
+		AtTimeMs:       helper.TimeNowMs(),
 	}
 
 	ChatUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlNew}

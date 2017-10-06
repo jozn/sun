@@ -37,6 +37,9 @@ func ServeHttpAndroidLogger(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = os.MkdirAll("./logs/android/", os.ModeDir)
+	helper.NoErrDebug(err)
+
 	for {
 		messageType, bytes, err := ws.ReadMessage() //blocking
 
@@ -57,9 +60,12 @@ func ServeHttpAndroidLogger(w http.ResponseWriter, r *http.Request) {
 			if adl.Time < 1 {
 				adl.Time = helper.TimeNow()
 			}
-			t := time.Unix(int64(adl.Version), 0)
+			//wd, _ := os.Getwd()
+			//fmt.Println("->", wd)
+			tVer := time.Unix(int64(adl.Version), 0)
+			tNow := time.Now()
 			if err == nil {
-				logFileName := fmt.Sprintf("%s_%d_%d_%d_%d.javal", adl.Module, t.Day(), t.Hour(), t.Minute(), adl.Version)
+				logFileName := fmt.Sprintf("%s_%d.%d.%d_%d.javal", adl.Module, tVer.Day(), tVer.Hour(), tVer.Minute(), adl.Version)
 				//logFileName := fmt.Sprintf("%s_%d.javal", adl.Module, startTime.Unix())
 				//logFileName := fmt.Sprintf("%s_%d.javal", adl.Module, adl.Version)
 				file, ok := androidLoggerMapper[logFileName]
@@ -74,7 +80,7 @@ func ServeHttpAndroidLogger(w http.ResponseWriter, r *http.Request) {
 					androidLoggerMapper[logFileName] = file
 				}
 
-				_, err = file.WriteString(fmt.Sprintf("%d:%d:%d - %s\n", t.Hour(), t.Minute(), t.Second(), adl.Text))
+				_, err = file.WriteString(fmt.Sprintf("%d:%d:%d - %s\n", tNow.Hour(), tNow.Minute(), tNow.Second(), adl.Text))
 				file.Sync()
 				helper.NoErr(err)
 			} else {

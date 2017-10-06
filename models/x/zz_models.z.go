@@ -163,26 +163,26 @@ type DirectToMessage struct {
 
 // DirectUpdate 'ms.direct_update'.
 type DirectUpdate struct {
-	Id            int
-	ToUserId      int
-	MessageId     int
-	MessageFileId int
-	ChatKey       string
-	PeerUserId    int
-	EventType     int
-	RoomLogTypeId int
-	FromSeq       int
-	ToSeq         int
-	ExtraPB       []byte
-	ExtraJson     string
-	AtTimeMs      int
+	DirectUpdateId int
+	ToUserId       int
+	MessageId      int
+	MessageFileId  int
+	ChatKey        string
+	PeerUserId     int
+	EventType      int
+	RoomLogTypeId  int
+	FromSeq        int
+	ToSeq          int
+	ExtraPB        []byte
+	ExtraJson      string
+	AtTimeMs       int
 
 	_exists, _deleted bool
 }
 
 /*
 := &DirectUpdate {
-	Id: 0,
+	DirectUpdateId: 0,
 	ToUserId: 0,
 	MessageId: 0,
 	MessageFileId: 0,

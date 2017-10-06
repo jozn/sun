@@ -75,6 +75,7 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 			if img < 1 { //just text
 				paramAdd := &x.PB_MsgParam_AddNewTextMessage{
 					Text:             txt,
+					MessageKey:       helper.RandString(9),
 					PeerId:           int32(toUserId),
 					Time:             int32(helper.TimeNow()),
 					ReplyToMessageId: 0,
@@ -88,7 +89,7 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				imgRnd, w, h := fact.RandImage()
 				igFile, err := os.Open(imgRnd)
 				if err != nil {
-					log.Fatal(err)
+					log.Println("fact of msg igFile is cannot be opend", err)
 				}
 				st, _ := igFile.Stat()
 				st.Size()

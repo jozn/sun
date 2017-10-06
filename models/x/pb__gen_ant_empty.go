@@ -94,6 +94,9 @@ func (EmptyRPC_RPC_Msg) GetFreshChatList(i *PB_MsgParam_GetFreshChatList, p RPC_
 func (EmptyRPC_RPC_Msg) GetFreshRoomMessagesList(i *PB_MsgParam_GetFreshRoomMessagesList, p RPC_UserParam) (*PB_MsgResponse_GetFreshRoomMessagesList, error) {
 	return nil, nil
 }
+func (EmptyRPC_RPC_Msg) GetFreshAllDirectMessagesList(i *PB_MsgParam_GetFreshAllDirectMessagesList, p RPC_UserParam) (*PB_MsgResponse_GetFreshAllDirectMessagesList, error) {
+	return nil, nil
+}
 func (EmptyRPC_RPC_Msg) Echo(i *PB_MsgParam_Echo, p RPC_UserParam) (*PB_MsgResponse_PB_MsgParam_Echo, error) {
 	return nil, nil
 }

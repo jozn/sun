@@ -3025,18 +3025,20 @@ func (d *__GroupMessage_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  GroupMessage ////////////////
+
 func MassInsert_GroupMessage(rows []GroupMessage, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.group_message (" +
-		"RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, CreatedMs, DeliveryStatusEnum" +
+		"MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, CreatedMs, DeliveryStatusEnum" +
 		") VALUES " + insVals
 
 	// run query
@@ -3044,6 +3046,7 @@ func MassInsert_GroupMessage(rows []GroupMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.MessageId)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.MessageFileId)
@@ -3068,12 +3071,12 @@ func MassInsert_GroupMessage(rows []GroupMessage, db XODB) error {
 func MassReplace_GroupMessage(rows []GroupMessage, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.group_message (" +
-		"RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, CreatedMs, DeliveryStatusEnum" +
+		"MessageId, RoomKey, UserId, MessageFileId, MessageTypeEnum, Text, CreatedMs, DeliveryStatusEnum" +
 		") VALUES " + insVals
 
 	// run query
@@ -3081,6 +3084,7 @@ func MassReplace_GroupMessage(rows []GroupMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.MessageId)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.UserId)
 		vals = append(vals, row.MessageFileId)

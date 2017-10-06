@@ -64,7 +64,7 @@ message PB_DirectToMessage {
     int32 SourceEnumId = 7;
 }
 message PB_DirectUpdate {
-    int64 Id = 1;
+    int64 DirectUpdateId = 1;
     int32 ToUserId = 3;
     int64 MessageId = 5;
     int64 MessageFileId = 7;

@@ -1,51 +1,51 @@
 =================================== Sun ===================================
-     100 files     162 text files.
-classified 162 filesDuplicate file check 162 files (120 known unique)Unique:      100 files                                               162 unique files.                              
-Counting:  100      56 files ignored.
+     100 files     163 text files.
+classified 163 filesDuplicate file check 163 files (120 known unique)Unique:      100 files                                               163 unique files.                              
+Counting:  100      57 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.45 s (257.0 files/s, 23606.2 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.39 s (300.6 files/s, 27794.8 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Go                             104           1540           1028           6598
-Protocol Buffers                11            268            222            985
+Go                             104           1552           1030           6648
+Protocol Buffers                11            266            223            994
 Bourne Shell                     1              1              1             10
 -------------------------------------------------------------------------------
-SUM:                           116           1809           1251           7593
+SUM:                           116           1819           1254           7652
 -------------------------------------------------------------------------------
 =================================== End Sun ===================================
 
 
 
 =================================== Android ===================================
-     100 files     200 files     300 files     400 files     485 text files.
-classified 485 filesDuplicate file check 485 files (462 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                          Unique:      400 files                                               485 unique files.                              
+     100 files     200 files     300 files     400 files     486 text files.
+classified 486 filesDuplicate file check 486 files (470 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                          Unique:      400 files                                               486 unique files.                              
 Counting:  100Counting:  200Counting:  300Counting:  400     128 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=1.78 s (269.2 files/s, 34759.1 lines/s)
+http://cloc.sourceforge.net v 1.64  T=1.38 s (346.9 files/s, 44768.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                           478           9275           9437          43002
+Java                           479           9299           9469          43051
 -------------------------------------------------------------------------------
-SUM:                           478           9275           9437          43002
+SUM:                           479           9299           9469          43051
 -------------------------------------------------------------------------------
 =================================== End Android ===================================
 
 
 
 =================================== Android Social ===================================
-     100 files     200 files     300 files     367 text files.
-classified 367 filesDuplicate file check 367 files (353 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                               367 unique files.                              
+     100 files     200 files     300 files     368 text files.
+classified 368 filesDuplicate file check 368 files (361 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                               368 unique files.                              
 Counting:  100Counting:  200Counting:  300     100 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=1.12 s (321.9 files/s, 38360.1 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.95 s (382.0 files/s, 45510.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                           360           7311           6210          29382
+Java                           361           7335           6242          29431
 -------------------------------------------------------------------------------
-SUM:                           360           7311           6210          29382
+SUM:                           361           7335           6242          29431
 -------------------------------------------------------------------------------
 =================================== End Android Social ===================================
 
@@ -56,7 +56,7 @@ SUM:                           360           7311           6210          29382
 classified 32 files      32 unique files.                              
       14 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.12 s (210.1 files/s, 18517.8 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.10 s (256.0 files/s, 22563.3 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------

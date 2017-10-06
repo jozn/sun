@@ -16,19 +16,19 @@ import (
 
 // Manualy copy this to project
 type DirectUpdate__ struct {
-	Id            int    `json:"Id"`            // Id -
-	ToUserId      int    `json:"ToUserId"`      // ToUserId -
-	MessageId     int    `json:"MessageId"`     // MessageId -
-	MessageFileId int    `json:"MessageFileId"` // MessageFileId -
-	ChatKey       string `json:"ChatKey"`       // ChatKey -
-	PeerUserId    int    `json:"PeerUserId"`    // PeerUserId -
-	EventType     int    `json:"EventType"`     // EventType -
-	RoomLogTypeId int    `json:"RoomLogTypeId"` // RoomLogTypeId -
-	FromSeq       int    `json:"FromSeq"`       // FromSeq -
-	ToSeq         int    `json:"ToSeq"`         // ToSeq -
-	ExtraPB       []byte `json:"ExtraPB"`       // ExtraPB -
-	ExtraJson     string `json:"ExtraJson"`     // ExtraJson -
-	AtTimeMs      int    `json:"AtTimeMs"`      // AtTimeMs -
+	DirectUpdateId int    `json:"DirectUpdateId"` // DirectUpdateId -
+	ToUserId       int    `json:"ToUserId"`       // ToUserId -
+	MessageId      int    `json:"MessageId"`      // MessageId -
+	MessageFileId  int    `json:"MessageFileId"`  // MessageFileId -
+	ChatKey        string `json:"ChatKey"`        // ChatKey -
+	PeerUserId     int    `json:"PeerUserId"`     // PeerUserId -
+	EventType      int    `json:"EventType"`      // EventType -
+	RoomLogTypeId  int    `json:"RoomLogTypeId"`  // RoomLogTypeId -
+	FromSeq        int    `json:"FromSeq"`        // FromSeq -
+	ToSeq          int    `json:"ToSeq"`          // ToSeq -
+	ExtraPB        []byte `json:"ExtraPB"`        // ExtraPB -
+	ExtraJson      string `json:"ExtraJson"`      // ExtraJson -
+	AtTimeMs       int    `json:"AtTimeMs"`       // AtTimeMs -
 
 	// xo fields
 	_exists, _deleted bool
@@ -55,14 +55,14 @@ func (du *DirectUpdate) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.direct_update (` +
-		`Id, ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs` +
+		`DirectUpdateId, ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, du.Id, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs)
-	_, err = db.Exec(sqlstr, du.Id, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs)
+	XOLog(sqlstr, du.DirectUpdateId, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs)
+	_, err = db.Exec(sqlstr, du.DirectUpdateId, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs)
 	if err != nil {
 		return err
 	}
@@ -82,14 +82,14 @@ func (du *DirectUpdate) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.direct_update (` +
-		`Id, ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs` +
+		`DirectUpdateId, ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs` +
 		`) VALUES (` +
 		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, du.Id, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs)
-	_, err = db.Exec(sqlstr, du.Id, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs)
+	XOLog(sqlstr, du.DirectUpdateId, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs)
+	_, err = db.Exec(sqlstr, du.DirectUpdateId, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -119,11 +119,11 @@ func (du *DirectUpdate) Update(db XODB) error {
 	// sql query
 	const sqlstr = `UPDATE ms.direct_update SET ` +
 		`ToUserId = ?, MessageId = ?, MessageFileId = ?, ChatKey = ?, PeerUserId = ?, EventType = ?, RoomLogTypeId = ?, FromSeq = ?, ToSeq = ?, ExtraPB = ?, ExtraJson = ?, AtTimeMs = ?` +
-		` WHERE Id = ?`
+		` WHERE DirectUpdateId = ?`
 
 	// run query
-	XOLog(sqlstr, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs, du.Id)
-	_, err = db.Exec(sqlstr, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs, du.Id)
+	XOLog(sqlstr, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs, du.DirectUpdateId)
+	_, err = db.Exec(sqlstr, du.ToUserId, du.MessageId, du.MessageFileId, du.ChatKey, du.PeerUserId, du.EventType, du.RoomLogTypeId, du.FromSeq, du.ToSeq, du.ExtraPB, du.ExtraJson, du.AtTimeMs, du.DirectUpdateId)
 
 	XOLogErr(err)
 	OnDirectUpdate_AfterUpdate(du)
@@ -155,11 +155,11 @@ func (du *DirectUpdate) Delete(db XODB) error {
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.direct_update WHERE Id = ?`
+	const sqlstr = `DELETE FROM ms.direct_update WHERE DirectUpdateId = ?`
 
 	// run query
-	XOLog(sqlstr, du.Id)
-	_, err = db.Exec(sqlstr, du.Id)
+	XOLog(sqlstr, du.DirectUpdateId)
+	_, err = db.Exec(sqlstr, du.DirectUpdateId)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -224,106 +224,106 @@ func (u *__DirectUpdate_Deleter) Or() *__DirectUpdate_Deleter {
 	return u
 }
 
-func (u *__DirectUpdate_Deleter) Id_In(ins []int) *__DirectUpdate_Deleter {
+func (u *__DirectUpdate_Deleter) DirectUpdateId_In(ins []int) *__DirectUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectUpdate_Deleter) Id_Ins(ins ...int) *__DirectUpdate_Deleter {
+func (u *__DirectUpdate_Deleter) DirectUpdateId_Ins(ins ...int) *__DirectUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectUpdate_Deleter) Id_NotIn(ins []int) *__DirectUpdate_Deleter {
+func (u *__DirectUpdate_Deleter) DirectUpdateId_NotIn(ins []int) *__DirectUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DirectUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectUpdate_Deleter) Id_Eq(val int) *__DirectUpdate_Deleter {
+func (d *__DirectUpdate_Deleter) DirectUpdateId_Eq(val int) *__DirectUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id = ? "
+	w.condition = " DirectUpdateId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Deleter) Id_NotEq(val int) *__DirectUpdate_Deleter {
+func (d *__DirectUpdate_Deleter) DirectUpdateId_NotEq(val int) *__DirectUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id != ? "
+	w.condition = " DirectUpdateId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Deleter) Id_LT(val int) *__DirectUpdate_Deleter {
+func (d *__DirectUpdate_Deleter) DirectUpdateId_LT(val int) *__DirectUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id < ? "
+	w.condition = " DirectUpdateId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Deleter) Id_LE(val int) *__DirectUpdate_Deleter {
+func (d *__DirectUpdate_Deleter) DirectUpdateId_LE(val int) *__DirectUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id <= ? "
+	w.condition = " DirectUpdateId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Deleter) Id_GT(val int) *__DirectUpdate_Deleter {
+func (d *__DirectUpdate_Deleter) DirectUpdateId_GT(val int) *__DirectUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id > ? "
+	w.condition = " DirectUpdateId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Deleter) Id_GE(val int) *__DirectUpdate_Deleter {
+func (d *__DirectUpdate_Deleter) DirectUpdateId_GE(val int) *__DirectUpdate_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id >= ? "
+	w.condition = " DirectUpdateId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1280,106 +1280,106 @@ func (u *__DirectUpdate_Updater) Or() *__DirectUpdate_Updater {
 	return u
 }
 
-func (u *__DirectUpdate_Updater) Id_In(ins []int) *__DirectUpdate_Updater {
+func (u *__DirectUpdate_Updater) DirectUpdateId_In(ins []int) *__DirectUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectUpdate_Updater) Id_Ins(ins ...int) *__DirectUpdate_Updater {
+func (u *__DirectUpdate_Updater) DirectUpdateId_Ins(ins ...int) *__DirectUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectUpdate_Updater) Id_NotIn(ins []int) *__DirectUpdate_Updater {
+func (u *__DirectUpdate_Updater) DirectUpdateId_NotIn(ins []int) *__DirectUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DirectUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectUpdate_Updater) Id_Eq(val int) *__DirectUpdate_Updater {
+func (d *__DirectUpdate_Updater) DirectUpdateId_Eq(val int) *__DirectUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id = ? "
+	w.condition = " DirectUpdateId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Updater) Id_NotEq(val int) *__DirectUpdate_Updater {
+func (d *__DirectUpdate_Updater) DirectUpdateId_NotEq(val int) *__DirectUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id != ? "
+	w.condition = " DirectUpdateId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Updater) Id_LT(val int) *__DirectUpdate_Updater {
+func (d *__DirectUpdate_Updater) DirectUpdateId_LT(val int) *__DirectUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id < ? "
+	w.condition = " DirectUpdateId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Updater) Id_LE(val int) *__DirectUpdate_Updater {
+func (d *__DirectUpdate_Updater) DirectUpdateId_LE(val int) *__DirectUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id <= ? "
+	w.condition = " DirectUpdateId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Updater) Id_GT(val int) *__DirectUpdate_Updater {
+func (d *__DirectUpdate_Updater) DirectUpdateId_GT(val int) *__DirectUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id > ? "
+	w.condition = " DirectUpdateId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Updater) Id_GE(val int) *__DirectUpdate_Updater {
+func (d *__DirectUpdate_Updater) DirectUpdateId_GE(val int) *__DirectUpdate_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id >= ? "
+	w.condition = " DirectUpdateId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -2336,106 +2336,106 @@ func (u *__DirectUpdate_Selector) Or() *__DirectUpdate_Selector {
 	return u
 }
 
-func (u *__DirectUpdate_Selector) Id_In(ins []int) *__DirectUpdate_Selector {
+func (u *__DirectUpdate_Selector) DirectUpdateId_In(ins []int) *__DirectUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectUpdate_Selector) Id_Ins(ins ...int) *__DirectUpdate_Selector {
+func (u *__DirectUpdate_Selector) DirectUpdateId_Ins(ins ...int) *__DirectUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DirectUpdateId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__DirectUpdate_Selector) Id_NotIn(ins []int) *__DirectUpdate_Selector {
+func (u *__DirectUpdate_Selector) DirectUpdateId_NotIn(ins []int) *__DirectUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Id NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " DirectUpdateId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__DirectUpdate_Selector) Id_Eq(val int) *__DirectUpdate_Selector {
+func (d *__DirectUpdate_Selector) DirectUpdateId_Eq(val int) *__DirectUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id = ? "
+	w.condition = " DirectUpdateId = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Selector) Id_NotEq(val int) *__DirectUpdate_Selector {
+func (d *__DirectUpdate_Selector) DirectUpdateId_NotEq(val int) *__DirectUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id != ? "
+	w.condition = " DirectUpdateId != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Selector) Id_LT(val int) *__DirectUpdate_Selector {
+func (d *__DirectUpdate_Selector) DirectUpdateId_LT(val int) *__DirectUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id < ? "
+	w.condition = " DirectUpdateId < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Selector) Id_LE(val int) *__DirectUpdate_Selector {
+func (d *__DirectUpdate_Selector) DirectUpdateId_LE(val int) *__DirectUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id <= ? "
+	w.condition = " DirectUpdateId <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Selector) Id_GT(val int) *__DirectUpdate_Selector {
+func (d *__DirectUpdate_Selector) DirectUpdateId_GT(val int) *__DirectUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id > ? "
+	w.condition = " DirectUpdateId > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__DirectUpdate_Selector) Id_GE(val int) *__DirectUpdate_Selector {
+func (d *__DirectUpdate_Selector) DirectUpdateId_GE(val int) *__DirectUpdate_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Id >= ? "
+	w.condition = " DirectUpdateId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -3760,18 +3760,18 @@ func (d *__DirectUpdate_Selector) ExtraJson_NotEq(val string) *__DirectUpdate_Se
 
 //ints
 
-func (u *__DirectUpdate_Updater) Id(newVal int) *__DirectUpdate_Updater {
-	u.updates[" Id = ? "] = newVal
+func (u *__DirectUpdate_Updater) DirectUpdateId(newVal int) *__DirectUpdate_Updater {
+	u.updates[" DirectUpdateId = ? "] = newVal
 	return u
 }
 
-func (u *__DirectUpdate_Updater) Id_Increment(count int) *__DirectUpdate_Updater {
+func (u *__DirectUpdate_Updater) DirectUpdateId_Increment(count int) *__DirectUpdate_Updater {
 	if count > 0 {
-		u.updates[" Id = Id+? "] = count
+		u.updates[" DirectUpdateId = DirectUpdateId+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" Id = Id-? "] = -(count) //make it positive
+		u.updates[" DirectUpdateId = DirectUpdateId-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -3993,18 +3993,18 @@ func (u *__DirectUpdate_Updater) AtTimeMs_Increment(count int) *__DirectUpdate_U
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__DirectUpdate_Selector) OrderBy_Id_Desc() *__DirectUpdate_Selector {
-	u.orderBy = " ORDER BY Id DESC "
+func (u *__DirectUpdate_Selector) OrderBy_DirectUpdateId_Desc() *__DirectUpdate_Selector {
+	u.orderBy = " ORDER BY DirectUpdateId DESC "
 	return u
 }
 
-func (u *__DirectUpdate_Selector) OrderBy_Id_Asc() *__DirectUpdate_Selector {
-	u.orderBy = " ORDER BY Id ASC "
+func (u *__DirectUpdate_Selector) OrderBy_DirectUpdateId_Asc() *__DirectUpdate_Selector {
+	u.orderBy = " ORDER BY DirectUpdateId ASC "
 	return u
 }
 
-func (u *__DirectUpdate_Selector) Select_Id() *__DirectUpdate_Selector {
-	u.selectCol = "Id"
+func (u *__DirectUpdate_Selector) Select_DirectUpdateId() *__DirectUpdate_Selector {
+	u.selectCol = "DirectUpdateId"
 	return u
 }
 
@@ -4453,18 +4453,20 @@ func (d *__DirectUpdate_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  DirectUpdate ////////////////
+
 func MassInsert_DirectUpdate(rows []DirectUpdate, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_update (" +
-		"ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs" +
+		"DirectUpdateId, ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -4472,6 +4474,7 @@ func MassInsert_DirectUpdate(rows []DirectUpdate, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.DirectUpdateId)
 		vals = append(vals, row.ToUserId)
 		vals = append(vals, row.MessageId)
 		vals = append(vals, row.MessageFileId)
@@ -4501,12 +4504,12 @@ func MassInsert_DirectUpdate(rows []DirectUpdate, db XODB) error {
 func MassReplace_DirectUpdate(rows []DirectUpdate, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_update (" +
-		"ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs" +
+		"DirectUpdateId, ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -4514,6 +4517,7 @@ func MassReplace_DirectUpdate(rows []DirectUpdate, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.DirectUpdateId)
 		vals = append(vals, row.ToUserId)
 		vals = append(vals, row.MessageId)
 		vals = append(vals, row.MessageFileId)
@@ -4576,7 +4580,7 @@ func DirectUpdatesByToUserId(db XODB, toUserId int) ([]*DirectUpdate, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
+		`DirectUpdateId, ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
 		`FROM ms.direct_update ` +
 		`WHERE ToUserId = ?`
 
@@ -4597,7 +4601,7 @@ func DirectUpdatesByToUserId(db XODB, toUserId int) ([]*DirectUpdate, error) {
 		}
 
 		// scan
-		err = q.Scan(&du.Id, &du.ToUserId, &du.MessageId, &du.MessageFileId, &du.ChatKey, &du.PeerUserId, &du.EventType, &du.RoomLogTypeId, &du.FromSeq, &du.ToSeq, &du.ExtraPB, &du.ExtraJson, &du.AtTimeMs)
+		err = q.Scan(&du.DirectUpdateId, &du.ToUserId, &du.MessageId, &du.MessageFileId, &du.ChatKey, &du.PeerUserId, &du.EventType, &du.RoomLogTypeId, &du.FromSeq, &du.ToSeq, &du.ExtraPB, &du.ExtraJson, &du.AtTimeMs)
 		if err != nil {
 			XOLogErr(err)
 			return nil, err
@@ -4611,25 +4615,25 @@ func DirectUpdatesByToUserId(db XODB, toUserId int) ([]*DirectUpdate, error) {
 	return res, nil
 }
 
-// DirectUpdateById retrieves a row from 'ms.direct_update' as a DirectUpdate.
+// DirectUpdateByDirectUpdateId retrieves a row from 'ms.direct_update' as a DirectUpdate.
 //
-// Generated from index 'direct_update_Id_pkey'.
-func DirectUpdateById(db XODB, id int) (*DirectUpdate, error) {
+// Generated from index 'direct_update_DirectUpdateId_pkey'.
+func DirectUpdateByDirectUpdateId(db XODB, directUpdateId int) (*DirectUpdate, error) {
 	var err error
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`Id, ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
+		`DirectUpdateId, ToUserId, MessageId, MessageFileId, ChatKey, PeerUserId, EventType, RoomLogTypeId, FromSeq, ToSeq, ExtraPB, ExtraJson, AtTimeMs ` +
 		`FROM ms.direct_update ` +
-		`WHERE Id = ?`
+		`WHERE DirectUpdateId = ?`
 
 	// run query
-	XOLog(sqlstr, id)
+	XOLog(sqlstr, directUpdateId)
 	du := DirectUpdate{
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&du.Id, &du.ToUserId, &du.MessageId, &du.MessageFileId, &du.ChatKey, &du.PeerUserId, &du.EventType, &du.RoomLogTypeId, &du.FromSeq, &du.ToSeq, &du.ExtraPB, &du.ExtraJson, &du.AtTimeMs)
+	err = db.QueryRow(sqlstr, directUpdateId).Scan(&du.DirectUpdateId, &du.ToUserId, &du.MessageId, &du.MessageFileId, &du.ChatKey, &du.PeerUserId, &du.EventType, &du.RoomLogTypeId, &du.FromSeq, &du.ToSeq, &du.ExtraPB, &du.ExtraJson, &du.AtTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return nil, err

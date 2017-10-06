@@ -164,7 +164,6 @@ message PB_MsgResponse_GetFreshChatList {
 }
 
 ////////////////////////////////////////////////////////
-
 message PB_MsgParam_GetFreshRoomMessagesList {
 //    int64 ChatId = 1;
     string ChatKey = 1;
@@ -175,7 +174,15 @@ message PB_MsgResponse_GetFreshRoomMessagesList {
     repeated PB_MessageView Messages = 1;
     bool HasMore = 2;
 }
-
+////////////////////////////////////////////////////////
+message PB_MsgParam_GetFreshAllDirectMessagesList {
+    int64 LowMessageId = 1;
+    int64 HighMessageId = 3;
+}
+message PB_MsgResponse_GetFreshAllDirectMessagesList {
+    repeated PB_MessageView Messages = 1;
+    bool HasMore = 2;
+}
 ////////////////////////////////////////////////////////
 
 service RPC_Msg {
@@ -194,6 +201,7 @@ service RPC_Msg {
 
     rpc GetFreshChatList (PB_MsgParam_GetFreshChatList) returns (PB_MsgResponse_GetFreshChatList);
     rpc GetFreshRoomMessagesList (PB_MsgParam_GetFreshRoomMessagesList) returns (PB_MsgResponse_GetFreshRoomMessagesList);
+    rpc GetFreshAllDirectMessagesList (PB_MsgParam_GetFreshAllDirectMessagesList) returns (PB_MsgResponse_GetFreshAllDirectMessagesList);
 
     rpc Echo (PB_MsgParam_Echo) returns (PB_MsgResponse_PB_MsgParam_Echo);
 }

@@ -68,6 +68,7 @@ type RPC_Msg interface {
 	BroadcastNewMessage(i *PB_MsgParam_BroadcastNewMessage, p RPC_UserParam) (*PB_MsgResponse_BroadcastNewMessage, error)
 	GetFreshChatList(i *PB_MsgParam_GetFreshChatList, p RPC_UserParam) (*PB_MsgResponse_GetFreshChatList, error)
 	GetFreshRoomMessagesList(i *PB_MsgParam_GetFreshRoomMessagesList, p RPC_UserParam) (*PB_MsgResponse_GetFreshRoomMessagesList, error)
+	GetFreshAllDirectMessagesList(i *PB_MsgParam_GetFreshAllDirectMessagesList, p RPC_UserParam) (*PB_MsgResponse_GetFreshAllDirectMessagesList, error)
 	Echo(i *PB_MsgParam_Echo, p RPC_UserParam) (*PB_MsgResponse_PB_MsgParam_Echo, error)
 }
 
@@ -487,6 +488,20 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 			} else {
 				RPC_ResponseHandler.HandelError(err)
 			}
+		case "GetFreshAllDirectMessagesList": //each pb_service_method
+			load := &PB_MsgParam_GetFreshAllDirectMessagesList{}
+			err := proto.Unmarshal(cmd.Data, load)
+			if err == nil {
+				res, err := rpc.GetFreshAllDirectMessagesList(load, params)
+				if err == nil {
+					//RPC_ResponseHandler.HandleOfflineResult(res,"PB_MsgResponse_GetFreshAllDirectMessagesList",cmd, params)
+					RPC_ResponseHandler.HandleOfflineResult(res, "PB_MsgResponse_GetFreshAllDirectMessagesList", "RPC_Msg.GetFreshAllDirectMessagesList", cmd, params, load)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
+				}
+			} else {
+				RPC_ResponseHandler.HandelError(err)
+			}
 		case "Echo": //each pb_service_method
 			load := &PB_MsgParam_Echo{}
 			err := proto.Unmarshal(cmd.Data, load)
@@ -783,6 +798,7 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
  RPC_Msg.BroadcastNewMessage
  RPC_Msg.GetFreshChatList
  RPC_Msg.GetFreshRoomMessagesList
+ RPC_Msg.GetFreshAllDirectMessagesList
  RPC_Msg.Echo
 
 

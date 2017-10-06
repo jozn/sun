@@ -2135,12 +2135,14 @@ func (d *__Comment_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  Comment ////////////////
+
 func MassInsert_Comment(rows []Comment, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
+	//s:= "(?,?,?,?)," //`(?, ?, ?, ?),`
 	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
@@ -2217,49 +2219,6 @@ func MassReplace_Comment(rows []Comment, db XODB) error {
 //
 
 //
-
-// CommentsByPostId retrieves a row from 'ms.comments' as a Comment.
-//
-// Generated from index 'PostId'.
-func CommentsByPostId(db XODB, postId int) ([]*Comment, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, UserId, PostId, Text, CreatedTime ` +
-		`FROM ms.comments ` +
-		`WHERE PostId = ?`
-
-	// run query
-	XOLog(sqlstr, postId)
-	q, err := db.Query(sqlstr, postId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*Comment{}
-	for q.Next() {
-		c := Comment{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&c.Id, &c.UserId, &c.PostId, &c.Text, &c.CreatedTime)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &c)
-	}
-
-	OnComment_LoadMany(res)
-
-	return res, nil
-}
 
 // CommentById retrieves a row from 'ms.comments' as a Comment.
 //

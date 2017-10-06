@@ -2219,6 +2219,64 @@ var PB_MsgResponse_GetFreshRoomMessagesList__FOlD = &PB_MsgResponse_GetFreshRoom
 	HasMore: false,
 }
 
+type PB_MsgParam_GetFreshAllDirectMessagesList_Flat struct {
+	LowMessageId  int
+	HighMessageId int
+}
+
+//ToPB
+func (m *PB_MsgParam_GetFreshAllDirectMessagesList) ToFlat() *PB_MsgParam_GetFreshAllDirectMessagesList_Flat {
+	r := &PB_MsgParam_GetFreshAllDirectMessagesList_Flat{
+		LowMessageId:  int(m.LowMessageId),
+		HighMessageId: int(m.HighMessageId),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_MsgParam_GetFreshAllDirectMessagesList_Flat) ToPB() *PB_MsgParam_GetFreshAllDirectMessagesList {
+	r := &PB_MsgParam_GetFreshAllDirectMessagesList{
+		LowMessageId:  int64(m.LowMessageId),
+		HighMessageId: int64(m.HighMessageId),
+	}
+	return r
+}
+
+//folding
+var PB_MsgParam_GetFreshAllDirectMessagesList__FOlD = &PB_MsgParam_GetFreshAllDirectMessagesList{
+	LowMessageId:  0,
+	HighMessageId: 0,
+}
+
+type PB_MsgResponse_GetFreshAllDirectMessagesList_Flat struct {
+	Messages []PB_MessageView
+	HasMore  bool
+}
+
+//ToPB
+func (m *PB_MsgResponse_GetFreshAllDirectMessagesList) ToFlat() *PB_MsgResponse_GetFreshAllDirectMessagesList_Flat {
+	r := &PB_MsgResponse_GetFreshAllDirectMessagesList_Flat{
+
+		HasMore: m.HasMore,
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_MsgResponse_GetFreshAllDirectMessagesList_Flat) ToPB() *PB_MsgResponse_GetFreshAllDirectMessagesList {
+	r := &PB_MsgResponse_GetFreshAllDirectMessagesList{
+
+		HasMore: m.HasMore,
+	}
+	return r
+}
+
+//folding
+var PB_MsgResponse_GetFreshAllDirectMessagesList__FOlD = &PB_MsgResponse_GetFreshAllDirectMessagesList{
+
+	HasMore: false,
+}
+
 type PB_MsgParam_Echo_Flat struct {
 	Text string
 }
@@ -4722,6 +4780,22 @@ r := &PB_MsgResponse_GetFreshRoomMessagesList_Flat{
 return r
 }
 
+func(m *PB_MsgParam_GetFreshAllDirectMessagesList)ToFlat() *PB_MsgParam_GetFreshAllDirectMessagesList_Flat {
+r := &PB_MsgParam_GetFreshAllDirectMessagesList_Flat{
+    LowMessageId:  int(m.LowMessageId) ,
+    HighMessageId:  int(m.HighMessageId) ,
+}
+return r
+}
+
+func(m *PB_MsgResponse_GetFreshAllDirectMessagesList)ToFlat() *PB_MsgResponse_GetFreshAllDirectMessagesList_Flat {
+r := &PB_MsgResponse_GetFreshAllDirectMessagesList_Flat{
+
+    HasMore:  m.HasMore ,
+}
+return r
+}
+
 func(m *PB_MsgParam_Echo)ToFlat() *PB_MsgParam_Echo_Flat {
 r := &PB_MsgParam_Echo_Flat{
     Text:  m.Text ,
@@ -5936,6 +6010,22 @@ r := &PB_MsgResponse_GetFreshRoomMessagesList{
 return r
 }
 
+func(m *PB_MsgParam_GetFreshAllDirectMessagesList_Flat)ToPB() *PB_MsgParam_GetFreshAllDirectMessagesList {
+r := &PB_MsgParam_GetFreshAllDirectMessagesList{
+    LowMessageId:  int64(m.LowMessageId) ,
+    HighMessageId:  int64(m.HighMessageId) ,
+}
+return r
+}
+
+func(m *PB_MsgResponse_GetFreshAllDirectMessagesList_Flat)ToPB() *PB_MsgResponse_GetFreshAllDirectMessagesList {
+r := &PB_MsgResponse_GetFreshAllDirectMessagesList{
+
+    HasMore:  m.HasMore ,
+}
+return r
+}
+
 func(m *PB_MsgParam_Echo_Flat)ToPB() *PB_MsgParam_Echo {
 r := &PB_MsgParam_Echo{
     Text:  m.Text ,
@@ -6997,6 +7087,18 @@ var PB_MsgParam_GetFreshRoomMessagesList__FOlD = &PB_MsgParam_GetFreshRoomMessag
 
 
 var PB_MsgResponse_GetFreshRoomMessagesList__FOlD = &PB_MsgResponse_GetFreshRoomMessagesList{
+
+        HasMore:  false ,
+}
+
+
+var PB_MsgParam_GetFreshAllDirectMessagesList__FOlD = &PB_MsgParam_GetFreshAllDirectMessagesList{
+        LowMessageId:  0 ,
+        HighMessageId:  0 ,
+}
+
+
+var PB_MsgResponse_GetFreshAllDirectMessagesList__FOlD = &PB_MsgResponse_GetFreshAllDirectMessagesList{
 
         HasMore:  false ,
 }

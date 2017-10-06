@@ -2283,12 +2283,14 @@ func (d *__OldMsgPush_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  OldMsgPush ////////////////
+
 func MassInsert_OldMsgPush(rows []OldMsgPush, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
+	//s:= "(?,?,?,?)," //`(?, ?, ?, ?),`
 	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
@@ -2365,49 +2367,6 @@ func MassReplace_OldMsgPush(rows []OldMsgPush, db XODB) error {
 //
 
 //
-
-// OldMsgPushesByToUserCreatedTimeMs retrieves a row from 'ms.old_msg_push' as a OldMsgPush.
-//
-// Generated from index 'ToUser'.
-func OldMsgPushesByToUserCreatedTimeMs(db XODB, toUser int, createdTimeMs int) ([]*OldMsgPush, error) {
-	var err error
-
-	// sql query
-	const sqlstr = `SELECT ` +
-		`Id, Uid, ToUser, MsgUid, CreatedTimeMs ` +
-		`FROM ms.old_msg_push ` +
-		`WHERE ToUser = ? AND CreatedTimeMs = ?`
-
-	// run query
-	XOLog(sqlstr, toUser, createdTimeMs)
-	q, err := db.Query(sqlstr, toUser, createdTimeMs)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-	defer q.Close()
-
-	// load results
-	res := []*OldMsgPush{}
-	for q.Next() {
-		omp := OldMsgPush{
-			_exists: true,
-		}
-
-		// scan
-		err = q.Scan(&omp.Id, &omp.Uid, &omp.ToUser, &omp.MsgUid, &omp.CreatedTimeMs)
-		if err != nil {
-			XOLogErr(err)
-			return nil, err
-		}
-
-		res = append(res, &omp)
-	}
-
-	OnOldMsgPush_LoadMany(res)
-
-	return res, nil
-}
 
 // OldMsgPushById retrieves a row from 'ms.old_msg_push' as a OldMsgPush.
 //

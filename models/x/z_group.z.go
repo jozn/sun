@@ -3173,18 +3173,20 @@ func (d *__Group_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  Group ////////////////
+
 func MassInsert_Group(rows []Group, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.group (" +
-		"GroupName, MembersCount, GroupPrivacyEnum, CreatorUserId, CreatedTime, UpdatedMs, CurrentSeq" +
+		"GroupId, GroupName, MembersCount, GroupPrivacyEnum, CreatorUserId, CreatedTime, UpdatedMs, CurrentSeq" +
 		") VALUES " + insVals
 
 	// run query
@@ -3192,6 +3194,7 @@ func MassInsert_Group(rows []Group, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.GroupId)
 		vals = append(vals, row.GroupName)
 		vals = append(vals, row.MembersCount)
 		vals = append(vals, row.GroupPrivacyEnum)
@@ -3216,12 +3219,12 @@ func MassInsert_Group(rows []Group, db XODB) error {
 func MassReplace_Group(rows []Group, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.group (" +
-		"GroupName, MembersCount, GroupPrivacyEnum, CreatorUserId, CreatedTime, UpdatedMs, CurrentSeq" +
+		"GroupId, GroupName, MembersCount, GroupPrivacyEnum, CreatorUserId, CreatedTime, UpdatedMs, CurrentSeq" +
 		") VALUES " + insVals
 
 	// run query
@@ -3229,6 +3232,7 @@ func MassReplace_Group(rows []Group, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.GroupId)
 		vals = append(vals, row.GroupName)
 		vals = append(vals, row.MembersCount)
 		vals = append(vals, row.GroupPrivacyEnum)

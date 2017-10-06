@@ -42,6 +42,7 @@ enum RPC_Msg_Enum {
     BroadcastNewMessage = 7558;
     GetFreshChatList = 4759;
     GetFreshRoomMessagesList = 4972;
+    GetFreshAllDirectMessagesList = 1094;
     Echo = 7265;
 }
 enum RPC_Sync_Enum {

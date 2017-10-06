@@ -2987,12 +2987,14 @@ func (d *__FollowingListMemberHistory_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  FollowingListMemberHistory ////////////////
+
 func MassInsert_FollowingListMemberHistory(rows []FollowingListMemberHistory, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
+	//s:= "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
@@ -3077,6 +3079,49 @@ func MassReplace_FollowingListMemberHistory(rows []FollowingListMemberHistory, d
 //
 
 //
+
+// FollowingListMemberHistoriesByUserIdUpdatedTimeMs retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
+//
+// Generated from index 'UserId'.
+func FollowingListMemberHistoriesByUserIdUpdatedTimeMs(db XODB, userId int, updatedTimeMs int) ([]*FollowingListMemberHistory, error) {
+	var err error
+
+	// sql query
+	const sqlstr = `SELECT ` +
+		`Id, ListId, UserId, FollowedUserId, FollowType, UpdatedTimeMs, FollowId ` +
+		`FROM ms.following_list_member_history ` +
+		`WHERE UserId = ? AND UpdatedTimeMs = ?`
+
+	// run query
+	XOLog(sqlstr, userId, updatedTimeMs)
+	q, err := db.Query(sqlstr, userId, updatedTimeMs)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+	defer q.Close()
+
+	// load results
+	res := []*FollowingListMemberHistory{}
+	for q.Next() {
+		flmh := FollowingListMemberHistory{
+			_exists: true,
+		}
+
+		// scan
+		err = q.Scan(&flmh.Id, &flmh.ListId, &flmh.UserId, &flmh.FollowedUserId, &flmh.FollowType, &flmh.UpdatedTimeMs, &flmh.FollowId)
+		if err != nil {
+			XOLogErr(err)
+			return nil, err
+		}
+
+		res = append(res, &flmh)
+	}
+
+	OnFollowingListMemberHistory_LoadMany(res)
+
+	return res, nil
+}
 
 // FollowingListMemberHistoryById retrieves a row from 'ms.following_list_member_history' as a FollowingListMemberHistory.
 //

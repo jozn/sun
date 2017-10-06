@@ -2489,18 +2489,20 @@ func (d *__GeneralLog_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  GeneralLog ////////////////
+
 func MassInsert_GeneralLog(rows []GeneralLog, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.general_log (" +
-		"ToUserId, TargetId, LogTypeId, ExtraPB, ExtraJson, CreatedMs" +
+		"Id, ToUserId, TargetId, LogTypeId, ExtraPB, ExtraJson, CreatedMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2508,6 +2510,7 @@ func MassInsert_GeneralLog(rows []GeneralLog, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
 		vals = append(vals, row.ToUserId)
 		vals = append(vals, row.TargetId)
 		vals = append(vals, row.LogTypeId)
@@ -2531,12 +2534,12 @@ func MassInsert_GeneralLog(rows []GeneralLog, db XODB) error {
 func MassReplace_GeneralLog(rows []GeneralLog, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.general_log (" +
-		"ToUserId, TargetId, LogTypeId, ExtraPB, ExtraJson, CreatedMs" +
+		"Id, ToUserId, TargetId, LogTypeId, ExtraPB, ExtraJson, CreatedMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2544,6 +2547,7 @@ func MassReplace_GeneralLog(rows []GeneralLog, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
 		vals = append(vals, row.ToUserId)
 		vals = append(vals, row.TargetId)
 		vals = append(vals, row.LogTypeId)

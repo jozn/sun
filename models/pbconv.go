@@ -57,7 +57,7 @@ func PBConv_DirectMessage_to_PB_MessageView(m *x.DirectMessage, chatKey string) 
 		PeerReceivedTime:     int32(m.PeerReceivedTime),
 		PeerSeenTime:         int32(m.PeerSeenTime),
 		DeliviryStatusEnumId: int32(m.DeliviryStatusEnumId),
-		ChatKey:              chatKey, //int32(m.PeerUserId),
+		ChatKey:              chatKey, //int32(m.PeerUserId),//todo delete this
 		RemoteId:             int64(m.MessageId),
 	}
 

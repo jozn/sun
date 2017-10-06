@@ -1061,18 +1061,20 @@ func (d *__LogChange_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  LogChange ////////////////
+
 func MassInsert_LogChange(rows []LogChange, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.log_changes (" +
-		"T" +
+		"Id, T" +
 		") VALUES " + insVals
 
 	// run query
@@ -1080,6 +1082,7 @@ func MassInsert_LogChange(rows []LogChange, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
 		vals = append(vals, row.T)
 
 	}
@@ -1098,12 +1101,12 @@ func MassInsert_LogChange(rows []LogChange, db XODB) error {
 func MassReplace_LogChange(rows []LogChange, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?)," //`(?, ?, ?, ?),`
+	s := "(?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.log_changes (" +
-		"T" +
+		"Id, T" +
 		") VALUES " + insVals
 
 	// run query
@@ -1111,6 +1114,7 @@ func MassReplace_LogChange(rows []LogChange, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
 		vals = append(vals, row.T)
 
 	}

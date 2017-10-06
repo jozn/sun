@@ -1,9 +1,22 @@
 package models
 
-import "ms/sun/models/x"
+import (
+	"ms/sun/base"
+	"ms/sun/models/x"
+    "ms/sun/config"
+)
 
-func ViewChat_GetChatViewList(meId int, chatIds map[string]bool) (res []*x.PB_ChatView) {
-	for chatId, _ := range chatIds {
+func ViewChat_GetChatViewList_map(meId int, chatkeysMap map[string]bool) (res []*x.PB_ChatView) {
+	chatKeys2 := make([]string, 0, len(chatkeysMap))
+	for chatId, _ := range chatkeysMap {
+		chatKeys2 = append(chatKeys2, chatId)
+	}
+
+	return ViewChat_GetChatViewList(meId, chatKeys2)
+}
+
+func ViewChat_GetChatViewList(meId int, chatKeys []string) (res []*x.PB_ChatView) {
+	for _, chatId := range chatKeys {
 		if chat, ok := x.Store.GetChatByChatKey(chatId); ok {
 			chatView := &x.PB_ChatView{
 				ChatKey:              chat.ChatKey,
@@ -27,6 +40,39 @@ func ViewChat_GetChatViewList(meId int, chatIds map[string]bool) (res []*x.PB_Ch
 			res = append(res, chatView)
 		}
 	}
+
+	return
+}
+
+func ViewChat_GetDirectMessageViewList_ByMsgIds(meId int, msgIds []int) (res []*x.PB_MessageView) {
+
+	msgs, err := x.NewDirectMessage_Selector().MessageId_In(msgIds).GetRows(base.DB)
+	if err != nil {
+		return
+	}
+	msgFileIdsToLoad := []int{}
+
+	for _, msg := range msgs {
+		if msg.MessageFileId > 0 {
+			msgFileIdsToLoad = append(msgFileIdsToLoad, msg.MessageFileId)
+		}
+	}
+
+	x.Store.PreLoadMessageFileByMessageFileIds(msgFileIdsToLoad)
+
+    for _, msg := range msgs {
+        v := PBConv_DirectMessage_to_PB_MessageView(msg, "not_implemented" )
+        if msg.MessageFileId > 0 {
+            //fmt.Println("log.MessageFileId ", log.MessageFileId)
+            msgFile, ok := x.Store.GetMessageFileByMessageFileId(msg.MessageFileId)
+            if ok {
+                v.MessageFileView = PBConvPB_MessageFile_To_MessageFile(msgFile)
+                v.MessageFileView.ServerSrc = config.CDN_CHAT_MSG_UPLOAD_URL + v.MessageFileView.Name
+                //fmt.Println("v.MessageFileView ", v.MessageFileView)
+            }
+        }
+        res =append(res,v)
+    }
 
 	return
 }

@@ -1,4 +1,6 @@
+
 package x
+
 
 /*
 func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
@@ -179,7 +181,7 @@ func PBConvPB_DirectToMessage_To_DirectToMessage ( o *DirectToMessage) *PB_Direc
 /*
 func PBConvPB__DirectUpdate_To_DirectUpdate( o *PB_DirectUpdate) *DirectUpdate {
      n := &DirectUpdate{
-      Id: int ( o.Id ),
+      DirectUpdateId: int ( o.DirectUpdateId ),
       ToUserId: int ( o.ToUserId ),
       MessageId: int ( o.MessageId ),
       MessageFileId: int ( o.MessageFileId ),
@@ -198,7 +200,7 @@ func PBConvPB__DirectUpdate_To_DirectUpdate( o *PB_DirectUpdate) *DirectUpdate {
 
 func PBConvPB_DirectUpdate_To_DirectUpdate ( o *DirectUpdate) *PB_DirectUpdate {
      n := &PB_DirectUpdate{
-      Id: int64 ( o.Id ),
+      DirectUpdateId: int64 ( o.DirectUpdateId ),
       ToUserId: int32 ( o.ToUserId ),
       MessageId: int64 ( o.MessageId ),
       MessageFileId: int64 ( o.MessageFileId ),

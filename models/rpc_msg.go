@@ -10,6 +10,24 @@ import (
 
 type rpcMsg int
 
+func (rpcMsg) GetFreshAllDirectMessagesList(i *x.PB_MsgParam_GetFreshAllDirectMessagesList, p x.RPC_UserParam) (*x.PB_MsgResponse_GetFreshAllDirectMessagesList, error) {
+	chatKeys, err := x.NewChat_Selector().Select_ChatKey().UserId_Eq(p.GetUserId()).GetStringSlice(base.DB)
+	if err != nil {
+		return nil, err
+	}
+
+	msgIds, err := x.NewDirectToMessage_Selector().Select_MessageId().ChatKey_In(chatKeys).GetIntSlice(base.DB)
+	if err != nil {
+		return nil, err
+	}
+
+	msgsViews := ViewChat_GetDirectMessageViewList_ByMsgIds(p.GetUserId(), msgIds)
+
+	return &x.PB_MsgResponse_GetFreshAllDirectMessagesList{
+		Messages: msgsViews,
+	}, nil
+}
+
 func (rpcMsg) GetFreshChatList(i *x.PB_MsgParam_GetFreshChatList, p x.RPC_UserParam) (*x.PB_MsgResponse_GetFreshChatList, error) {
 	chats, err := Chat_GetChatListForUser(p.GetUserId())
 	/*uids := make(map[int]bool)

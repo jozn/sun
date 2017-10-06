@@ -69,7 +69,7 @@ public class J {
 	}
 
 	public static class DirectUpdate {
-		public Integer Id;
+		public Integer DirectUpdateId;
 		public Integer ToUserId;
 		public Integer MessageId;
 		public Integer MessageFileId;

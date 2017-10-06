@@ -92,6 +92,8 @@ It has these top-level messages:
 	PB_MsgResponse_GetFreshChatList
 	PB_MsgParam_GetFreshRoomMessagesList
 	PB_MsgResponse_GetFreshRoomMessagesList
+	PB_MsgParam_GetFreshAllDirectMessagesList
+	PB_MsgResponse_GetFreshAllDirectMessagesList
 	PB_MsgParam_Echo
 	PB_MsgResponse_PB_MsgParam_Echo
 	PB_SyncParam_GetDirectUpdates

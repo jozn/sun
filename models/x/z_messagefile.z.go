@@ -6009,18 +6009,20 @@ func (d *__MessageFile_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  MessageFile ////////////////
+
 func MassInsert_MessageFile(rows []MessageFile, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.message_file (" +
-		"MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel" +
+		"MessageFileId, MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel" +
 		") VALUES " + insVals
 
 	// run query
@@ -6028,6 +6030,7 @@ func MassInsert_MessageFile(rows []MessageFile, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.MessageFileId)
 		vals = append(vals, row.MessageFileKey)
 		vals = append(vals, row.OriginalUserId)
 		vals = append(vals, row.Name)
@@ -6063,12 +6066,12 @@ func MassInsert_MessageFile(rows []MessageFile, db XODB) error {
 func MassReplace_MessageFile(rows []MessageFile, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.message_file (" +
-		"MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel" +
+		"MessageFileId, MessageFileKey, OriginalUserId, Name, Size, FileTypeEnumId, Width, Height, Duration, Extension, HashMd5, HashAccess, CreatedSe, ServerSrc, ServerPath, ServerThumbPath, BucketId, ServerId, CanDel" +
 		") VALUES " + insVals
 
 	// run query
@@ -6076,6 +6079,7 @@ func MassReplace_MessageFile(rows []MessageFile, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.MessageFileId)
 		vals = append(vals, row.MessageFileKey)
 		vals = append(vals, row.OriginalUserId)
 		vals = append(vals, row.Name)

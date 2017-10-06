@@ -1765,18 +1765,20 @@ func (d *__DirectToMessage_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  DirectToMessage ////////////////
+
 func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_to_message (" +
-		"ChatKey, MessageId, SourceEnumId" +
+		"Id, ChatKey, MessageId, SourceEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -1784,6 +1786,7 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
 		vals = append(vals, row.ChatKey)
 		vals = append(vals, row.MessageId)
 		vals = append(vals, row.SourceEnumId)
@@ -1804,12 +1807,12 @@ func MassInsert_DirectToMessage(rows []DirectToMessage, db XODB) error {
 func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_to_message (" +
-		"ChatKey, MessageId, SourceEnumId" +
+		"Id, ChatKey, MessageId, SourceEnumId" +
 		") VALUES " + insVals
 
 	// run query
@@ -1817,6 +1820,7 @@ func MassReplace_DirectToMessage(rows []DirectToMessage, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.Id)
 		vals = append(vals, row.ChatKey)
 		vals = append(vals, row.MessageId)
 		vals = append(vals, row.SourceEnumId)

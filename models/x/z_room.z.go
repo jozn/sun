@@ -3877,18 +3877,20 @@ func (d *__Room_Deleter) Delete(db XODB) (int, error) {
 }
 
 ///////////////////////// Mass insert - replace for  Room ////////////////
+
 func MassInsert_Room(rows []Room, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.room (" +
-		"RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq" +
+		"RoomId, RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq" +
 		") VALUES " + insVals
 
 	// run query
@@ -3896,6 +3898,7 @@ func MassInsert_Room(rows []Room, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.RoomId)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.RoomTypeEnum)
 		vals = append(vals, row.UserId)
@@ -3922,12 +3925,12 @@ func MassInsert_Room(rows []Room, db XODB) error {
 func MassReplace_Room(rows []Room, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.room (" +
-		"RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq" +
+		"RoomId, RoomKey, RoomTypeEnum, UserId, LastSeqSeen, LastSeqDelete, PeerUserId, GroupId, CreatedTime, CurrentSeq" +
 		") VALUES " + insVals
 
 	// run query
@@ -3935,6 +3938,7 @@ func MassReplace_Room(rows []Room, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
+		vals = append(vals, row.RoomId)
 		vals = append(vals, row.RoomKey)
 		vals = append(vals, row.RoomTypeEnum)
 		vals = append(vals, row.UserId)

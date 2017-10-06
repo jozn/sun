@@ -60,7 +60,7 @@ func PushView_directLogsTo_PB_ChangesHolderView(meId int, logs []*x.DirectUpdate
     }
 
     if len(chatIdsToLoad) > 0 {
-        //res.Chats = ViewChat_GetChatViewList(meId, chatIdsToLoad)
+        //res.Chats = ViewChat_GetChatViewList_map(meId, chatIdsToLoad)
     }
 
     //TODO: add messages files id
