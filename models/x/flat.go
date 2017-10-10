@@ -1525,7 +1525,7 @@ var PB_UserResponse_CheckUserName2__FOlD = &PB_UserResponse_CheckUserName2{}
 type PB_MsgParam_AddNewTextMessage_Flat struct {
 	Text             string
 	MessageKey       string
-	ToChatRoom       string
+	ToRoomKey        string
 	PeerId           int
 	Time             int
 	ReplyToMessageId int
@@ -1537,7 +1537,7 @@ func (m *PB_MsgParam_AddNewTextMessage) ToFlat() *PB_MsgParam_AddNewTextMessage_
 	r := &PB_MsgParam_AddNewTextMessage_Flat{
 		Text:             m.Text,
 		MessageKey:       m.MessageKey,
-		ToChatRoom:       m.ToChatRoom,
+		ToRoomKey:        m.ToRoomKey,
 		PeerId:           int(m.PeerId),
 		Time:             int(m.Time),
 		ReplyToMessageId: int(m.ReplyToMessageId),
@@ -1550,7 +1550,7 @@ func (m *PB_MsgParam_AddNewTextMessage_Flat) ToPB() *PB_MsgParam_AddNewTextMessa
 	r := &PB_MsgParam_AddNewTextMessage{
 		Text:             m.Text,
 		MessageKey:       m.MessageKey,
-		ToChatRoom:       m.ToChatRoom,
+		ToRoomKey:        m.ToRoomKey,
 		PeerId:           int32(m.PeerId),
 		Time:             int32(m.Time),
 		ReplyToMessageId: int64(m.ReplyToMessageId),
@@ -1562,7 +1562,7 @@ func (m *PB_MsgParam_AddNewTextMessage_Flat) ToPB() *PB_MsgParam_AddNewTextMessa
 var PB_MsgParam_AddNewTextMessage__FOlD = &PB_MsgParam_AddNewTextMessage{
 	Text:             "",
 	MessageKey:       "",
-	ToChatRoom:       "",
+	ToRoomKey:        "",
 	PeerId:           0,
 	Time:             0,
 	ReplyToMessageId: 0,
@@ -1589,7 +1589,7 @@ var PB_MsgResponse_AddNewTextMessage__FOlD = &PB_MsgResponse_AddNewTextMessage{}
 type PB_MsgParam_AddNewMessage_Flat struct {
 	Text             string
 	MessageKey       string
-	ToChatRoom       string
+	ToRoomKey        string
 	PeerId           int
 	Time             int
 	ReplyToMessageId int
@@ -1604,7 +1604,7 @@ func (m *PB_MsgParam_AddNewMessage) ToFlat() *PB_MsgParam_AddNewMessage_Flat {
 	r := &PB_MsgParam_AddNewMessage_Flat{
 		Text:             m.Text,
 		MessageKey:       m.MessageKey,
-		ToChatRoom:       m.ToChatRoom,
+		ToRoomKey:        m.ToRoomKey,
 		PeerId:           int(m.PeerId),
 		Time:             int(m.Time),
 		ReplyToMessageId: int(m.ReplyToMessageId),
@@ -1619,7 +1619,7 @@ func (m *PB_MsgParam_AddNewMessage_Flat) ToPB() *PB_MsgParam_AddNewMessage {
 	r := &PB_MsgParam_AddNewMessage{
 		Text:             m.Text,
 		MessageKey:       m.MessageKey,
-		ToChatRoom:       m.ToChatRoom,
+		ToRoomKey:        m.ToRoomKey,
 		PeerId:           int32(m.PeerId),
 		Time:             int32(m.Time),
 		ReplyToMessageId: int64(m.ReplyToMessageId),
@@ -1633,7 +1633,7 @@ func (m *PB_MsgParam_AddNewMessage_Flat) ToPB() *PB_MsgParam_AddNewMessage {
 var PB_MsgParam_AddNewMessage__FOlD = &PB_MsgParam_AddNewMessage{
 	Text:             "",
 	MessageKey:       "",
-	ToChatRoom:       "",
+	ToRoomKey:        "",
 	PeerId:           0,
 	Time:             0,
 	ReplyToMessageId: 0,
@@ -4594,7 +4594,7 @@ func(m *PB_MsgParam_AddNewTextMessage)ToFlat() *PB_MsgParam_AddNewTextMessage_Fl
 r := &PB_MsgParam_AddNewTextMessage_Flat{
     Text:  m.Text ,
     MessageKey:  m.MessageKey ,
-    ToChatRoom:  m.ToChatRoom ,
+    ToRoomKey:  m.ToRoomKey ,
     PeerId:  int(m.PeerId) ,
     Time:  int(m.Time) ,
     ReplyToMessageId:  int(m.ReplyToMessageId) ,
@@ -4613,7 +4613,7 @@ func(m *PB_MsgParam_AddNewMessage)ToFlat() *PB_MsgParam_AddNewMessage_Flat {
 r := &PB_MsgParam_AddNewMessage_Flat{
     Text:  m.Text ,
     MessageKey:  m.MessageKey ,
-    ToChatRoom:  m.ToChatRoom ,
+    ToRoomKey:  m.ToRoomKey ,
     PeerId:  int(m.PeerId) ,
     Time:  int(m.Time) ,
     ReplyToMessageId:  int(m.ReplyToMessageId) ,
@@ -5834,7 +5834,7 @@ func(m *PB_MsgParam_AddNewTextMessage_Flat)ToPB() *PB_MsgParam_AddNewTextMessage
 r := &PB_MsgParam_AddNewTextMessage{
     Text:  m.Text ,
     MessageKey:  m.MessageKey ,
-    ToChatRoom:  m.ToChatRoom ,
+    ToRoomKey:  m.ToRoomKey ,
     PeerId:  int32(m.PeerId) ,
     Time:  int32(m.Time) ,
     ReplyToMessageId:  int64(m.ReplyToMessageId) ,
@@ -5853,7 +5853,7 @@ func(m *PB_MsgParam_AddNewMessage_Flat)ToPB() *PB_MsgParam_AddNewMessage {
 r := &PB_MsgParam_AddNewMessage{
     Text:  m.Text ,
     MessageKey:  m.MessageKey ,
-    ToChatRoom:  m.ToChatRoom ,
+    ToRoomKey:  m.ToRoomKey ,
     PeerId:  int32(m.PeerId) ,
     Time:  int32(m.Time) ,
     ReplyToMessageId:  int64(m.ReplyToMessageId) ,
@@ -6981,7 +6981,7 @@ var PB_UserResponse_CheckUserName2__FOlD = &PB_UserResponse_CheckUserName2{
 var PB_MsgParam_AddNewTextMessage__FOlD = &PB_MsgParam_AddNewTextMessage{
         Text:  "" ,
         MessageKey:  "" ,
-        ToChatRoom:  "" ,
+        ToRoomKey:  "" ,
         PeerId:  0 ,
         Time:  0 ,
         ReplyToMessageId:  0 ,
@@ -6996,7 +6996,7 @@ var PB_MsgResponse_AddNewTextMessage__FOlD = &PB_MsgResponse_AddNewTextMessage{
 var PB_MsgParam_AddNewMessage__FOlD = &PB_MsgParam_AddNewMessage{
         Text:  "" ,
         MessageKey:  "" ,
-        ToChatRoom:  "" ,
+        ToRoomKey:  "" ,
         PeerId:  0 ,
         Time:  0 ,
         ReplyToMessageId:  0 ,

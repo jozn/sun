@@ -220,6 +220,9 @@ func registerRoutes() *httptreemux.TreeMux {
 	///// v0.4 Msgs
 	http.HandleFunc("/msgs/v1/add_one", ctrl.MsgUploadV1)
 
+	//rpc
+	http.HandleFunc("/v1/rpc_call", models.HttpRpcHandler)
+
 	http.Handle("/", v1Tree)
 
 	if config.IS_DEBUG || true {

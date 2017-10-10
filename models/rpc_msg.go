@@ -6,6 +6,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
+	"os"
 )
 
 type rpcMsg int
@@ -64,7 +65,7 @@ func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_User
 	msg := &x.DirectMessage{
 		MessageId:            helper.NextRowsSeqId(),
 		MessageKey:           KeyNewMessageKey(p.GetUserId()),
-		RoomKey:              UsersToRoomKey(p.GetUserId(), int(i.GetPeerId())),
+		RoomKey:              i.ToRoomKey, //,UsersToRoomKey(p.GetUserId(), int(i.GetPeerId())),
 		UserId:               p.GetUserId(),
 		MessageFileId:        0,
 		MessageTypeEnumId:    int(x.RoomMessageTypeEnum_TEXT),
@@ -103,7 +104,7 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 		f := i.MessageView.MessageFileView
 		igPb := &x.MessageFile{
 			MessageFileId:   (helper.NextRowsSeqId()),
-			MessageFileKey:  KeyNewMessageKey(p.GetUserId()), //todo must set at client
+			MessageFileKey:  f.MessageFileKey, //,KeyNewMessageKey(p.GetUserId()), //todo must set at client
 			OriginalUserId:  p.GetUserId(),
 			Name:            f.Name,
 			Size:            int(f.Size),
@@ -111,7 +112,7 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 			Width:           int(f.Width),
 			Height:          int(f.Height),
 			Duration:        0,
-			Extension:       ".jpg",
+			Extension:       f.Extension,
 			HashMd5:         helper.MD5BytesToString(i.Blob),
 			HashAccess:      int(rand.Int63n(9e12)),
 			CreatedSe:       int(helper.TimeNow()),
@@ -121,6 +122,20 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 			BucketId:        "",
 			ServerId:        0,
 			CanDel:          0,
+		}
+
+		if len(i.Blob) > 0 {
+			dirName := fmt.Sprintf("./upload/message_files/")
+			os.MkdirAll(dirName, 0666)
+
+			fileName := fmt.Sprintf("%s%d%s", dirName, igPb.MessageFileId, igPb.Extension)
+			newFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
+			if err != nil {
+			    println("add message file : creating file failed")
+				return nil, err
+			}
+			defer newFile.Close()
+			newFile.Write(i.Blob)
 		}
 
 		err := igPb.Save(base.DB)

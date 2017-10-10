@@ -15,7 +15,7 @@ import "pb_views.proto";
 message PB_MsgParam_AddNewTextMessage {
     string Text = 1;
     string MessageKey = 2;
-    string ToChatRoom = 5;
+    string ToRoomKey = 5;
     int32 PeerId = 15;//dep -remove
     int32 Time = 6;
     int64 ReplyToMessageId = 10;
@@ -30,7 +30,7 @@ message PB_MsgResponse_AddNewTextMessage {
 message PB_MsgParam_AddNewMessage {
     string Text = 1;
     string MessageKey = 2;
-    string ToChatRoom = 5;
+    string ToRoomKey = 5;
     int32 PeerId = 165;//dep -remove
     int32 Time = 6;
     int64 ReplyToMessageId = 10;
