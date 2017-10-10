@@ -59,18 +59,18 @@ func (rpcResHandeler) HandleOfflineResult(i interface{}, PBClass string, RpcName
 	if ok {
 		data, err := proto.Marshal(resOfRpcFunc)
 
-        //todo: if response has error we must call the clint with and error: like: SERVER_ERR
-        if err != nil {
-            return
-        }
-        resToClient := &x.PB_ResponseToClient{
-            ClientCallId: int64(c.ClientCallId),
-            PBClass:      PBClass,
-            RpcFullName:  RpcName,
-            Data:         data,
-        }
+		//todo: if response has error we must call the clint with and error: like: SERVER_ERR
+		if err != nil {
+			return
+		}
+		resToClient := &x.PB_ResponseToClient{
+			ClientCallId: int64(c.ClientCallId),
+			PBClass:      PBClass,
+			RpcFullName:  RpcName,
+			Data:         data,
+		}
 
-		if config.IS_DEBUG || true {
+		if config.IS_DEBUG {
 			//logRpc.Println("debuging loggin " + RpcName)
 			param2, _ := paramParsed.(proto.Message)
 			t := time.Now()
@@ -108,4 +108,17 @@ func (rpcResHandeler) IsUserOnlineResult(i interface{}, erro error) {
 
 func (rpcResHandeler) HandelError(erro error) {
 	fmt.Println("===============", erro)
+}
+
+func PushToUserLiveData(UserId int, pbAllLivePush x.PB_AllLivePushes) {
+	if config.IS_DEBUG {
+		t := time.Now()
+		s := "//======================================================================================================================="
+		logLivePush.Printf(`"%s"`, t.Format("3:04:04"))
+		logLivePush.Println("LivePushes = ", helper.ToJsonPerety2(pbAllLivePush))
+		logLivePush.Println(s)
+	}
+
+	cmd := NewPB_CommandToClient_WithData("PB_AllLivePushes", &pbAllLivePush)
+	AllPipesMap.SendToUser(UserId, cmd)
 }

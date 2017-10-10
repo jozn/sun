@@ -1525,6 +1525,7 @@ var PB_UserResponse_CheckUserName2__FOlD = &PB_UserResponse_CheckUserName2{}
 type PB_MsgParam_AddNewTextMessage_Flat struct {
 	Text             string
 	MessageKey       string
+	ToChatRoom       string
 	PeerId           int
 	Time             int
 	ReplyToMessageId int
@@ -1536,6 +1537,7 @@ func (m *PB_MsgParam_AddNewTextMessage) ToFlat() *PB_MsgParam_AddNewTextMessage_
 	r := &PB_MsgParam_AddNewTextMessage_Flat{
 		Text:             m.Text,
 		MessageKey:       m.MessageKey,
+		ToChatRoom:       m.ToChatRoom,
 		PeerId:           int(m.PeerId),
 		Time:             int(m.Time),
 		ReplyToMessageId: int(m.ReplyToMessageId),
@@ -1548,6 +1550,7 @@ func (m *PB_MsgParam_AddNewTextMessage_Flat) ToPB() *PB_MsgParam_AddNewTextMessa
 	r := &PB_MsgParam_AddNewTextMessage{
 		Text:             m.Text,
 		MessageKey:       m.MessageKey,
+		ToChatRoom:       m.ToChatRoom,
 		PeerId:           int32(m.PeerId),
 		Time:             int32(m.Time),
 		ReplyToMessageId: int64(m.ReplyToMessageId),
@@ -1559,6 +1562,7 @@ func (m *PB_MsgParam_AddNewTextMessage_Flat) ToPB() *PB_MsgParam_AddNewTextMessa
 var PB_MsgParam_AddNewTextMessage__FOlD = &PB_MsgParam_AddNewTextMessage{
 	Text:             "",
 	MessageKey:       "",
+	ToChatRoom:       "",
 	PeerId:           0,
 	Time:             0,
 	ReplyToMessageId: 0,
@@ -1585,6 +1589,7 @@ var PB_MsgResponse_AddNewTextMessage__FOlD = &PB_MsgResponse_AddNewTextMessage{}
 type PB_MsgParam_AddNewMessage_Flat struct {
 	Text             string
 	MessageKey       string
+	ToChatRoom       string
 	PeerId           int
 	Time             int
 	ReplyToMessageId int
@@ -1599,6 +1604,7 @@ func (m *PB_MsgParam_AddNewMessage) ToFlat() *PB_MsgParam_AddNewMessage_Flat {
 	r := &PB_MsgParam_AddNewMessage_Flat{
 		Text:             m.Text,
 		MessageKey:       m.MessageKey,
+		ToChatRoom:       m.ToChatRoom,
 		PeerId:           int(m.PeerId),
 		Time:             int(m.Time),
 		ReplyToMessageId: int(m.ReplyToMessageId),
@@ -1613,6 +1619,7 @@ func (m *PB_MsgParam_AddNewMessage_Flat) ToPB() *PB_MsgParam_AddNewMessage {
 	r := &PB_MsgParam_AddNewMessage{
 		Text:             m.Text,
 		MessageKey:       m.MessageKey,
+		ToChatRoom:       m.ToChatRoom,
 		PeerId:           int32(m.PeerId),
 		Time:             int32(m.Time),
 		ReplyToMessageId: int64(m.ReplyToMessageId),
@@ -1626,6 +1633,7 @@ func (m *PB_MsgParam_AddNewMessage_Flat) ToPB() *PB_MsgParam_AddNewMessage {
 var PB_MsgParam_AddNewMessage__FOlD = &PB_MsgParam_AddNewMessage{
 	Text:             "",
 	MessageKey:       "",
+	ToChatRoom:       "",
 	PeerId:           0,
 	Time:             0,
 	ReplyToMessageId: 0,
@@ -2629,6 +2637,26 @@ func (m *PB_SyncResponse_SetLastSyncNotifyUpdateId_Flat) ToPB() *PB_SyncResponse
 
 //folding
 var PB_SyncResponse_SetLastSyncNotifyUpdateId__FOlD = &PB_SyncResponse_SetLastSyncNotifyUpdateId{}
+
+type PB_AllLivePushes_Flat struct {
+	DirectUpdates  PB_SyncResponse_GetDirectUpdates
+	GeneralUpdates PB_SyncResponse_GetGeneralUpdates
+}
+
+//ToPB
+func (m *PB_AllLivePushes) ToFlat() *PB_AllLivePushes_Flat {
+	r := &PB_AllLivePushes_Flat{}
+	return r
+}
+
+//ToPB
+func (m *PB_AllLivePushes_Flat) ToPB() *PB_AllLivePushes {
+	r := &PB_AllLivePushes{}
+	return r
+}
+
+//folding
+var PB_AllLivePushes__FOlD = &PB_AllLivePushes{}
 
 type PB_UserParam_BlockUser_Flat struct {
 	UserId   int
@@ -4566,6 +4594,7 @@ func(m *PB_MsgParam_AddNewTextMessage)ToFlat() *PB_MsgParam_AddNewTextMessage_Fl
 r := &PB_MsgParam_AddNewTextMessage_Flat{
     Text:  m.Text ,
     MessageKey:  m.MessageKey ,
+    ToChatRoom:  m.ToChatRoom ,
     PeerId:  int(m.PeerId) ,
     Time:  int(m.Time) ,
     ReplyToMessageId:  int(m.ReplyToMessageId) ,
@@ -4584,6 +4613,7 @@ func(m *PB_MsgParam_AddNewMessage)ToFlat() *PB_MsgParam_AddNewMessage_Flat {
 r := &PB_MsgParam_AddNewMessage_Flat{
     Text:  m.Text ,
     MessageKey:  m.MessageKey ,
+    ToChatRoom:  m.ToChatRoom ,
     PeerId:  int(m.PeerId) ,
     Time:  int(m.Time) ,
     ReplyToMessageId:  int(m.ReplyToMessageId) ,
@@ -4902,6 +4932,14 @@ return r
 
 func(m *PB_SyncResponse_SetLastSyncNotifyUpdateId)ToFlat() *PB_SyncResponse_SetLastSyncNotifyUpdateId_Flat {
 r := &PB_SyncResponse_SetLastSyncNotifyUpdateId_Flat{
+}
+return r
+}
+
+func(m *PB_AllLivePushes)ToFlat() *PB_AllLivePushes_Flat {
+r := &PB_AllLivePushes_Flat{
+
+
 }
 return r
 }
@@ -5796,6 +5834,7 @@ func(m *PB_MsgParam_AddNewTextMessage_Flat)ToPB() *PB_MsgParam_AddNewTextMessage
 r := &PB_MsgParam_AddNewTextMessage{
     Text:  m.Text ,
     MessageKey:  m.MessageKey ,
+    ToChatRoom:  m.ToChatRoom ,
     PeerId:  int32(m.PeerId) ,
     Time:  int32(m.Time) ,
     ReplyToMessageId:  int64(m.ReplyToMessageId) ,
@@ -5814,6 +5853,7 @@ func(m *PB_MsgParam_AddNewMessage_Flat)ToPB() *PB_MsgParam_AddNewMessage {
 r := &PB_MsgParam_AddNewMessage{
     Text:  m.Text ,
     MessageKey:  m.MessageKey ,
+    ToChatRoom:  m.ToChatRoom ,
     PeerId:  int32(m.PeerId) ,
     Time:  int32(m.Time) ,
     ReplyToMessageId:  int64(m.ReplyToMessageId) ,
@@ -6132,6 +6172,14 @@ return r
 
 func(m *PB_SyncResponse_SetLastSyncNotifyUpdateId_Flat)ToPB() *PB_SyncResponse_SetLastSyncNotifyUpdateId {
 r := &PB_SyncResponse_SetLastSyncNotifyUpdateId{
+}
+return r
+}
+
+func(m *PB_AllLivePushes_Flat)ToPB() *PB_AllLivePushes {
+r := &PB_AllLivePushes{
+
+
 }
 return r
 }
@@ -6933,6 +6981,7 @@ var PB_UserResponse_CheckUserName2__FOlD = &PB_UserResponse_CheckUserName2{
 var PB_MsgParam_AddNewTextMessage__FOlD = &PB_MsgParam_AddNewTextMessage{
         Text:  "" ,
         MessageKey:  "" ,
+        ToChatRoom:  "" ,
         PeerId:  0 ,
         Time:  0 ,
         ReplyToMessageId:  0 ,
@@ -6947,6 +6996,7 @@ var PB_MsgResponse_AddNewTextMessage__FOlD = &PB_MsgResponse_AddNewTextMessage{
 var PB_MsgParam_AddNewMessage__FOlD = &PB_MsgParam_AddNewMessage{
         Text:  "" ,
         MessageKey:  "" ,
+        ToChatRoom:  "" ,
         PeerId:  0 ,
         Time:  0 ,
         ReplyToMessageId:  0 ,
@@ -7183,6 +7233,12 @@ var PB_SyncParam_SetLastSyncNotifyUpdateId__FOlD = &PB_SyncParam_SetLastSyncNoti
 
 
 var PB_SyncResponse_SetLastSyncNotifyUpdateId__FOlD = &PB_SyncResponse_SetLastSyncNotifyUpdateId{
+}
+
+
+var PB_AllLivePushes__FOlD = &PB_AllLivePushes{
+
+
 }
 
 

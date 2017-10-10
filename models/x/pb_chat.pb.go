@@ -108,6 +108,7 @@ It has these top-level messages:
 	PB_SyncResponse_SetLastSyncGeneralUpdateId
 	PB_SyncParam_SetLastSyncNotifyUpdateId
 	PB_SyncResponse_SetLastSyncNotifyUpdateId
+	PB_AllLivePushes
 	PB_UserParam_BlockUser
 	PB_UserOfflineResponse_BlockUser
 	PB_UserParam_UnBlockUser

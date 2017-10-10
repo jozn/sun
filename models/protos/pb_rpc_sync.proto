@@ -93,6 +93,13 @@ message PB_SyncResponse_SetLastSyncNotifyUpdateId{
 
 //////////////////////////////
 
+/////////// Pushes /////////////
+//use this for pushing live data - instead of hacking rpc *yResponse* types
+message PB_AllLivePushes{
+    PB_SyncResponse_GetDirectUpdates DirectUpdates = 1;
+    PB_SyncResponse_GetGeneralUpdates GeneralUpdates = 2;
+}
+
 service RPC_Sync {
     rpc GetDirectUpdates (PB_SyncParam_GetDirectUpdates) returns (PB_SyncResponse_GetDirectUpdates);
     rpc GetGeneralUpdates (PB_SyncParam_GetGeneralUpdates) returns (PB_SyncResponse_GetGeneralUpdates);
