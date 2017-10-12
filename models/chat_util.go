@@ -5,10 +5,36 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
+	"strings"
 )
 
 func KeyNewMessageKey(UserId int) string {
 	return fmt.Sprintf("%d_%d_%s", UserId, helper.TimeNow(), helper.RandString(4)) //todo extrac this to client
+}
+
+//"d25_56" "d56:24" ////not yet "g6_15646548_cdc" "g6:6_15646548_cdc"
+func RoomKeyToOtherUser(roomKey string, userId int) int {
+	key := strings.Replace(roomKey, "d", "", -1)
+	key = strings.Replace(key, "g", "", -1)
+	key = strings.Replace(key, ":", "_", -1)
+
+	parts := strings.Split(key, "_")
+	if len(parts) != 2 {
+		return 0
+	}
+
+	i1 := helper.StrToInt(parts[0], 0)
+	i2 := helper.StrToInt(parts[1], 0)
+
+	if i1 == userId {
+		return i2
+	}
+
+	if i2 == userId {
+		return i1
+	}
+
+	return 0
 }
 
 //d(lower userId)_(HigherUserId)

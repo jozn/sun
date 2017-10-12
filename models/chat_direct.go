@@ -160,8 +160,8 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		AtTimeMs:       helper.TimeNowMs(),
 	}
 
-	ChatUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlNew}
-	ChatUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlRec}
+	LiveUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlNew}
+	LiveUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlRec}
 }
 
 func (s *chatDirect) DeleteMessageFromMe() {
@@ -209,7 +209,7 @@ func (s *chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 	      AtTimeMs:      helper.TimeNowMs(),
 	  }
 
-	  ChatUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlNew}*/
+	  LiveUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlNew}*/
 }
 
 func (s *chatDirect) SetMessagesStatus() {

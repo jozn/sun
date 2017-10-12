@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-type chatUpdaterBuffer struct {
+type liveUpdaterBuffer struct {
 	//HereDirect        chan x.DirectUpdate
 	HereDirectDelayer chan UpdateDelayer
 	StoredDirect      chan x.DirectUpdate
@@ -30,7 +30,7 @@ type UpdateDelayer struct {
 
 ///////////////////////////////
 
-var ChatUpdateFramer = chatUpdaterBuffer{
+var LiveUpdateFramer = liveUpdaterBuffer{
 	//HereDirect:        make(chan x.DirectUpdate, 10000),//dep?? use HereDirectDelayer
 	HereDirectDelayer: make(chan UpdateDelayer, 10000),
 	StoredDirect:      make(chan x.DirectUpdate, 10000),
@@ -39,16 +39,16 @@ var ChatUpdateFramer = chatUpdaterBuffer{
 }
 
 func init() {
-	ChatUpdateFramer.StartLoops()
+	LiveUpdateFramer.StartLoops()
 }
 
-func (m *chatUpdaterBuffer) StartLoops() {
+func (m *liveUpdaterBuffer) StartLoops() {
 	go m.loopHereDirect()
 	go m.loopDirectToUser()
 }
 
 //can causes panic
-func (m *chatUpdaterBuffer) loopHereDirect() {
+func (m *liveUpdaterBuffer) loopHereDirect() {
 	const siz = 50000
 	arr := make([]UpdateDelayer, 0, siz)
 	cnt := 0
@@ -72,7 +72,7 @@ func (m *chatUpdaterBuffer) loopHereDirect() {
 	}
 }
 
-func (m *chatUpdaterBuffer) saveNewChatDirectBuffer(msgsDelays []UpdateDelayer) {
+func (m *liveUpdaterBuffer) saveNewChatDirectBuffer(msgsDelays []UpdateDelayer) {
 	defer helper.JustRecover()
 
 	if len(msgsDelays) == 0 {
@@ -96,7 +96,7 @@ func (m *chatUpdaterBuffer) saveNewChatDirectBuffer(msgsDelays []UpdateDelayer) 
 	}
 }
 
-func (m *chatUpdaterBuffer) loopDirectToUser() {
+func (m *liveUpdaterBuffer) loopDirectToUser() {
 	const siz = 50000
 	arr := make([]x.DirectUpdate, 0, siz)
 	cnt := 0
@@ -115,13 +115,13 @@ func (m *chatUpdaterBuffer) loopDirectToUser() {
 				fmt.Printf("batch of loopDirectToUser - cnt:%d - len:%d \n", cnt, len(arr))
 				pre := arr
 				arr = make([]x.DirectUpdate, 0, siz)
-				go chatUpdates_sendToUsersUpdatesFrame(pre)
+				go _livePush_sendToUsersUpdatesFrame(pre)
 			}
 		}
 	}
 }
 
-func chatUpdates_sendToUsersUpdatesFrame(logs []x.DirectUpdate) {
+func _livePush_sendToUsersUpdatesFrame(logs []x.DirectUpdate) {
 	defer helper.JustRecover()
 
 	if len(logs) == 0 {
@@ -142,14 +142,26 @@ func chatUpdates_sendToUsersUpdatesFrame(logs []x.DirectUpdate) {
 
 	for UserId, lgs := range mp { //each user
 		if AllPipesMap.IsPipeOpen(UserId) && len(lgs) > 0 {
-			res := DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(UserId, lgs)
-			cmd := NewPB_CommandToClient_WithData(PB_PushHolderView, res)
-			AllPipesMap.SendToUser(UserId, cmd)
+			res := ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(UserId, lgs)
+
+			pb_res := x.PB_AllLivePushes{
+				DirectUpdates: res,
+			}
+			PushToUserLiveData(UserId, pb_res)
 			if config.IS_DEBUG {
-				logChat.Printf("chatUpdates_sendToUsersUpdatesFrame() is sending to user: %s", cmd)
+				logChat.Printf("_livePush_sendToUsersUpdatesFrame() is sending to user: %s", pb_res)
+				//logLivePush.Printf("to user: %d - Data: %s\n", UserId, helper.ToJsonPerety(&pb_res))
 
 				fmt.Printf("send to user: %d PushViews : %s", UserId, helper.ToJson(res))
 			}
+
+			/*cmd := NewPB_CommandToClient_WithData(PB_PushHolderView, res)
+			AllPipesMap.SendToUser(UserId, cmd)
+			if config.IS_DEBUG {
+				logChat.Printf("_livePush_sendToUsersUpdatesFrame() is sending to user: %s", cmd)
+
+				fmt.Printf("send to user: %d PushViews : %s", UserId, helper.ToJson(res))
+			}*/
 		}
 	}
 }

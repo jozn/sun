@@ -1,17 +1,17 @@
 =================================== Sun ===================================
-     100 files     170 text files.
-classified 170 filesDuplicate file check 170 files (120 known unique)Unique:      100 files                                               170 unique files.                              
-Counting:  100      63 files ignored.
+     100 files     171 text files.
+classified 171 filesDuplicate file check 171 files (120 known unique)Unique:      100 files                                               171 unique files.                              
+Counting:  100      64 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.46 s (254.0 files/s, 23532.0 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.74 s (158.9 files/s, 14786.1 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Go                             105           1568           1041           6727
+Go                             105           1577           1060           6744
 Protocol Buffers                11            267            225           1000
 Bourne Shell                     1              1              1             10
 -------------------------------------------------------------------------------
-SUM:                           117           1836           1267           7737
+SUM:                           117           1845           1286           7754
 -------------------------------------------------------------------------------
 =================================== End Sun ===================================
 
@@ -22,13 +22,13 @@ SUM:                           117           1836           1267           7737
 classified 490 filesDuplicate file check 490 files (473 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                          Unique:      400 files                                               490 unique files.                              
 Counting:  100Counting:  200Counting:  300Counting:  400     128 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=1.70 s (284.1 files/s, 36801.4 lines/s)
+http://cloc.sourceforge.net v 1.64  T=2.95 s (163.5 files/s, 21223.5 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                           483           9435           9623          43512
+Java                           483           9453           9633          43601
 -------------------------------------------------------------------------------
-SUM:                           483           9435           9623          43512
+SUM:                           483           9453           9633          43601
 -------------------------------------------------------------------------------
 =================================== End Android ===================================
 
@@ -39,13 +39,13 @@ SUM:                           483           9435           9623          43512
 classified 372 filesDuplicate file check 372 files (363 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                               372 unique files.                              
 Counting:  100Counting:  200Counting:  300     100 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=1.35 s (271.2 files/s, 32517.4 lines/s)
+http://cloc.sourceforge.net v 1.64  T=3.45 s (105.7 files/s, 12709.9 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                           365           7471           6396          29892
+Java                           365           7489           6406          29981
 -------------------------------------------------------------------------------
-SUM:                           365           7471           6396          29892
+SUM:                           365           7489           6406          29981
 -------------------------------------------------------------------------------
 =================================== End Android Social ===================================
 
@@ -56,7 +56,7 @@ SUM:                           365           7471           6396          29892
 classified 32 files      32 unique files.                              
       14 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.11 s (244.7 files/s, 21551.3 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.46 s (56.7 files/s, 4992.4 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------

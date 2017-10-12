@@ -61,7 +61,7 @@ func (rpcMsg) Echo(i *x.PB_MsgParam_Echo, p x.RPC_UserParam) (*x.PB_MsgResponse_
 }
 
 func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_UserParam) (*x.PB_MsgResponse_AddNewTextMessage, error) {
-	pid := int(i.PeerId)
+    pid := RoomKeyToOtherUser(i.ToRoomKey, p.GetUserId())
 	msg := &x.DirectMessage{
 		MessageId:            helper.NextRowsSeqId(),
 		MessageKey:           KeyNewMessageKey(p.GetUserId()),
@@ -85,11 +85,12 @@ func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_User
 
 func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (*x.PB_MsgResponse_AddNewMessage, error) {
 
-	pid := int(i.PeerId)
+	//pid := int(i.PeerId)
+	pid := RoomKeyToOtherUser(i.ToRoomKey, p.GetUserId())
 	msg := &x.DirectMessage{
 		MessageId:            helper.NextRowsSeqId(),
 		MessageKey:           fmt.Sprintf("%d_%d_%s", p.GetUserId(), helper.TimeNow(), helper.RandString(4)), //todo extrac this to client
-		RoomKey:              UsersToRoomKey(p.GetUserId(), int(i.GetPeerId())),
+		RoomKey:              UsersToRoomKey(p.GetUserId(), int(pid)),
 		UserId:               p.GetUserId(),
 		MessageFileId:        0,
 		MessageTypeEnumId:    int(x.RoomMessageTypeEnum_TEXT),
@@ -131,7 +132,7 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 			fileName := fmt.Sprintf("%s%d%s", dirName, igPb.MessageFileId, igPb.Extension)
 			newFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
 			if err != nil {
-			    println("add message file : creating file failed")
+				println("add message file : creating file failed")
 				return nil, err
 			}
 			defer newFile.Close()
@@ -139,9 +140,11 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 		}
 
 		err := igPb.Save(base.DB)
-		helper.NoErr(err)
-		msg.MessageFileId = igPb.MessageFileId
-		msg.MessageTypeEnumId = int(x.RoomMessageTypeEnum_IMAGE_TEXT)
+		if err == nil {
+			msg.MessageFileId = igPb.MessageFileId
+			msg.MessageTypeEnumId = int(x.RoomMessageTypeEnum_IMAGE_TEXT)
+		}
+		//helper.NoErr(err)
 	}
 
 	dm := NewDirectMessagingByUsers(p.GetUserId(), pid)

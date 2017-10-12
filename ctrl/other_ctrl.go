@@ -15,7 +15,7 @@ func PingAction(c *base.Action) base.AppErr {
 func PushViewAction(c *base.Action) base.AppErr {
     rows,err := x.NewDirectUpdate_Selector().ToUserId_Eq(6).GetRows(base.DB)
     helper.NoErr(err)
-    res := models.DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(3,rows)
+    res := models.ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(3,rows)
     c.SendJson(res)
     return nil
 }

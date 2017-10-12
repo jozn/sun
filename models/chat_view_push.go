@@ -2,7 +2,6 @@ package models
 
 import (
 	"fmt"
-	"ms/sun/base"
 	"ms/sun/config"
 	"ms/sun/models/x"
 )
@@ -21,17 +20,19 @@ const (
 	Push_ROOM_ACTION_DOING           Push = 10
 )
 
+/*
 func DirectSync_GetSync(me, last int) (*x.PB_SyncResponse_GetDirectUpdates, error) {
 	rows, err := x.NewDirectUpdate_Selector().ToUserId_Eq(me).DirectUpdateId_GT(last).OrderBy_DirectUpdateId_Asc().GetRows(base.DB)
 	if err != nil {
 		return nil, err
 	}
-	return DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(me, rows), nil
+	return ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(me, rows), nil
 
 }
+*/
 
 
-func DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(meId int, logs []*x.DirectUpdate) *x.PB_SyncResponse_GetDirectUpdates {
+func ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(meId int, logs []*x.DirectUpdate) *x.PB_SyncResponse_GetDirectUpdates {
 
 	//preload in here
 	usersToLoad := make(map[int]bool)
@@ -52,6 +53,7 @@ func DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(meId int, logs 
 	//
 	res := &x.PB_SyncResponse_GetDirectUpdates{}
 
+	//todo add perloadings
 	for _, logRow := range logs { //each user
 		switch Push(logRow.RoomLogTypeId) {
 		case Push_NEW_DIRECT_MESSAGE:

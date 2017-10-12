@@ -17,13 +17,13 @@ func BenchmarkPushView_directLogsTo_PB_ChangesHolderView(b *testing.B) {
 	rows, err := x.NewDirectUpdate_Selector().ToUserId_Eq(6).GetRows(base.DB)
 	helper.NoErr(err)
 
-	v := models.DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(6, rows)
+	v := models.ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(6, rows)
 	bs, _ := proto.Marshal(v)
 	fmt.Println("size :", len(bs))
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		models.DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(6, rows)
+		models.ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(6, rows)
 	}
 }
 
@@ -33,11 +33,11 @@ func BenchmarkPushView_directLogsTo_PB_ChangesHolderView2(b *testing.B) {
 	rows, err := x.NewDirectUpdate_Selector().ToUserId_Eq(6).GetRows(base.DB)
 	helper.NoErr(err)
 
-	models.DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(6, rows)
+	models.ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(6, rows)
 
 	b.ResetTimer()
 
-	view := models.DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(6, rows)
+	view := models.ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(6, rows)
 	for i := 0; i < b.N; i++ {
 		proto.Marshal(view)
 	}
@@ -49,12 +49,12 @@ func BenchmarkPushView_directLogsTo_PB_ChangesHolderView3(b *testing.B) {
 	rows, err := x.NewDirectUpdate_Selector().ToUserId_Eq(6).GetRows(base.DB)
 	helper.NoErr(err)
 
-	models.DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(6, rows)
+	models.ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(6, rows)
 
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		view := models.DirectSync_directUpdatesTo_PB_SyncResponse_GetDirectUpdates(6, rows)
+		view := models.ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(6, rows)
 		proto.Marshal(view)
 	}
 }
