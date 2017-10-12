@@ -73,6 +73,7 @@ public class J {
 		public Integer ToUserId;
 		public Integer MessageId;
 		public Integer MessageFileId;
+		public Integer OtherId;
 		public String ChatKey;
 		public Integer PeerUserId;
 		public Integer EventType;

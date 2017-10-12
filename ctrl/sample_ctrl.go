@@ -128,6 +128,7 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				paramAdd := &x.PB_MsgParam_AddNewMessage{
 					Text:             txt,
 					PeerId:           int32(toUserId),
+					ToRoomKey:        models.UsersToRoomKey(toUserId, fromUserId),
 					Time:             int32(helper.TimeNow()),
 					ReplyToMessageId: 0,
 					Blob:             bs,

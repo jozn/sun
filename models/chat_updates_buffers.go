@@ -20,12 +20,12 @@ type liveUpdaterBuffer struct {
 
 type UpdateDelayer struct {
 	directUpdate x.DirectUpdate
-	fromUserId   int
+	/*fromUserId   int
 	toUserId     int
 	roomKey      string
 	hashId       int
 	uid          int
-	msgFileRowId int
+	msgFileRowId int*/
 }
 
 ///////////////////////////////

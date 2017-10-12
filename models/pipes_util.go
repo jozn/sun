@@ -45,7 +45,7 @@ func UserIdsToRoomKey(UserId1, UserId2 int) string {
 	if UserId2 < UserId1 {
 		UserId1, UserId2 = UserId2, UserId1
 	}
-	return fmt.Sprintf("p%d_%d", UserId1, UserId2)
+	return fmt.Sprintf("d%d_%d", UserId1, UserId2)
 }
 
 //////////////////////////////////////////////////////////////

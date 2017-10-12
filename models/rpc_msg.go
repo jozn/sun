@@ -61,7 +61,7 @@ func (rpcMsg) Echo(i *x.PB_MsgParam_Echo, p x.RPC_UserParam) (*x.PB_MsgResponse_
 }
 
 func (rpcMsg) AddNewTextMessage(i *x.PB_MsgParam_AddNewTextMessage, p x.RPC_UserParam) (*x.PB_MsgResponse_AddNewTextMessage, error) {
-    pid := RoomKeyToOtherUser(i.ToRoomKey, p.GetUserId())
+	pid := RoomKeyToOtherUser(i.ToRoomKey, p.GetUserId())
 	msg := &x.DirectMessage{
 		MessageId:            helper.NextRowsSeqId(),
 		MessageKey:           KeyNewMessageKey(p.GetUserId()),
@@ -101,9 +101,10 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 		DeliviryStatusEnumId: int(x.RoomMessageDeliviryStatusEnum_SENT),
 	}
 
+	var igPb *x.MessageFile
 	if i.MessageView != nil && i.MessageView.MessageFileView != nil {
 		f := i.MessageView.MessageFileView
-		igPb := &x.MessageFile{
+		igPb = &x.MessageFile{
 			MessageFileId:   (helper.NextRowsSeqId()),
 			MessageFileKey:  f.MessageFileKey, //,KeyNewMessageKey(p.GetUserId()), //todo must set at client
 			OriginalUserId:  p.GetUserId(),
@@ -148,6 +149,14 @@ func (rpcMsg) AddNewMessage(i *x.PB_MsgParam_AddNewMessage, p x.RPC_UserParam) (
 	}
 
 	dm := NewDirectMessagingByUsers(p.GetUserId(), pid)
+
+	//if i.MessageView != nil { //should not hapens
+	ChatPush_PushChnageMessageId(msg, int(i.MessageView.MessageId), dm.MeChatKey)
+	if i.MessageView.MessageFileView != nil {
+		ChatPush_PushChnageMessageFileId(igPb, p.GetUserId(), int(i.MessageView.MessageId), dm.MeChatKey)
+	}
+	//}
+
 	dm.AddMessage(msg)
 
 	res := &x.PB_MsgResponse_AddNewMessage{}

@@ -18,6 +18,9 @@ const (
 	Push_MESSAGE_UPDATE_BY_USER      Push = 7
 	Push_MESSAGE_DELETE_BY_USER      Push = 8
 	Push_ROOM_ACTION_DOING           Push = 10
+
+	Push_MESSAGE_ID_CHANGE      Push = 15
+	Push_MESSAGE_FILE_ID_CHANGE Push = 16
 )
 
 /*
@@ -30,7 +33,6 @@ func DirectSync_GetSync(me, last int) (*x.PB_SyncResponse_GetDirectUpdates, erro
 
 }
 */
-
 
 func ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(meId int, logs []*x.DirectUpdate) *x.PB_SyncResponse_GetDirectUpdates {
 
@@ -82,7 +84,22 @@ func ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(meId int, logs []*x.Dire
 				res.MessagesDeletedFromServer = append(res.MessagesDeletedFromServer, v)
 			}
 
+		case Push_MESSAGE_ID_CHANGE:
+			v := &x.PB_UpdateMessageId{
+				NewMessageId: int64(logRow.MessageId),
+				OldMessageId: int64(logRow.OtherId),
+			}
+			res.MessagesChangeIds = append(res.MessagesChangeIds, v)
+
+		case Push_MESSAGE_FILE_ID_CHANGE:
+			v := &x.PB_UpdateMessageId{
+				NewMessageId: int64(logRow.MessageFileIds),
+				OldMessageId: int64(logRow.OtherId),
+			}
+			res.MessagesFileChangeIds = append(res.MessagesFileChangeIds, v)
+
 		}
+
 	}
 
 	if len(usersToLoad) > 0 {

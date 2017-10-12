@@ -167,6 +167,7 @@ type DirectUpdate struct {
 	ToUserId       int
 	MessageId      int
 	MessageFileId  int
+	OtherId        int
 	ChatKey        string
 	PeerUserId     int
 	EventType      int
@@ -186,6 +187,7 @@ type DirectUpdate struct {
 	ToUserId: 0,
 	MessageId: 0,
 	MessageFileId: 0,
+	OtherId: 0,
 	ChatKey: "",
 	PeerUserId: 0,
 	EventType: 0,

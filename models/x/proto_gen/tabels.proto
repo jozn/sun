@@ -68,15 +68,16 @@ message PB_DirectUpdate {
     int32 ToUserId = 3;
     int64 MessageId = 5;
     int64 MessageFileId = 7;
-    string ChatKey = 9;
-    int32 PeerUserId = 11;
-    int32 EventType = 13;
-    int32 RoomLogTypeId = 15;
-    int32 FromSeq = 17;
-    int32 ToSeq = 19;
-    ???? ExtraPB = 21;
-    string ExtraJson = 23;
-    int64 AtTimeMs = 25;
+    int64 OtherId = 9;
+    string ChatKey = 11;
+    int32 PeerUserId = 13;
+    int32 EventType = 15;
+    int32 RoomLogTypeId = 17;
+    int32 FromSeq = 19;
+    int32 ToSeq = 21;
+    ???? ExtraPB = 23;
+    string ExtraJson = 25;
+    int64 AtTimeMs = 27;
 }
 message PB_FollowingList {
     int32 Id = 1;
