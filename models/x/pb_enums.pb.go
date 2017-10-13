@@ -35,7 +35,7 @@ var GenderEnum_value = map[string]int32{
 func (x GenderEnum) String() string {
 	return proto.EnumName(GenderEnum_name, int32(x))
 }
-func (GenderEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
+func (GenderEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
 
 type DeviceEnum int32
 
@@ -62,7 +62,7 @@ var DeviceEnum_value = map[string]int32{
 func (x DeviceEnum) String() string {
 	return proto.EnumName(DeviceEnum_name, int32(x))
 }
-func (DeviceEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
+func (DeviceEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
 
 type PlatformEnum int32
 
@@ -98,7 +98,7 @@ var PlatformEnum_value = map[string]int32{
 func (x PlatformEnum) String() string {
 	return proto.EnumName(PlatformEnum_name, int32(x))
 }
-func (PlatformEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{2} }
+func (PlatformEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{2} }
 
 type RoomMessageTypeEnum int32
 
@@ -164,7 +164,7 @@ var RoomMessageTypeEnum_value = map[string]int32{
 func (x RoomMessageTypeEnum) String() string {
 	return proto.EnumName(RoomMessageTypeEnum_name, int32(x))
 }
-func (RoomMessageTypeEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{3} }
+func (RoomMessageTypeEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{3} }
 
 type RoomMessageDeliviryStatusEnum int32
 
@@ -201,7 +201,7 @@ func (x RoomMessageDeliviryStatusEnum) String() string {
 	return proto.EnumName(RoomMessageDeliviryStatusEnum_name, int32(x))
 }
 func (RoomMessageDeliviryStatusEnum) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor2, []int{4}
+	return fileDescriptor1, []int{4}
 }
 
 type RoomMessageLogEnum int32
@@ -250,7 +250,7 @@ var RoomMessageLogEnum_value = map[string]int32{
 func (x RoomMessageLogEnum) String() string {
 	return proto.EnumName(RoomMessageLogEnum_name, int32(x))
 }
-func (RoomMessageLogEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{5} }
+func (RoomMessageLogEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{5} }
 
 type UserOnlineStatusEnum int32
 
@@ -289,7 +289,7 @@ var UserOnlineStatusEnum_value = map[string]int32{
 func (x UserOnlineStatusEnum) String() string {
 	return proto.EnumName(UserOnlineStatusEnum_name, int32(x))
 }
-func (UserOnlineStatusEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{6} }
+func (UserOnlineStatusEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{6} }
 
 type RoomActionDoingEnum int32
 
@@ -352,7 +352,7 @@ var RoomActionDoingEnum_value = map[string]int32{
 func (x RoomActionDoingEnum) String() string {
 	return proto.EnumName(RoomActionDoingEnum_name, int32(x))
 }
-func (RoomActionDoingEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{7} }
+func (RoomActionDoingEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{7} }
 
 type RoomTypeEnum int32
 
@@ -382,7 +382,7 @@ var RoomTypeEnum_value = map[string]int32{
 func (x RoomTypeEnum) String() string {
 	return proto.EnumName(RoomTypeEnum_name, int32(x))
 }
-func (RoomTypeEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{8} }
+func (RoomTypeEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{8} }
 
 type RoomMultiPrivacyEnum int32
 
@@ -406,7 +406,7 @@ var RoomMultiPrivacyEnum_value = map[string]int32{
 func (x RoomMultiPrivacyEnum) String() string {
 	return proto.EnumName(RoomMultiPrivacyEnum_name, int32(x))
 }
-func (RoomMultiPrivacyEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{9} }
+func (RoomMultiPrivacyEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{9} }
 
 type RoomMultiRoleEnum int32
 
@@ -436,7 +436,7 @@ var RoomMultiRoleEnum_value = map[string]int32{
 func (x RoomMultiRoleEnum) String() string {
 	return proto.EnumName(RoomMultiRoleEnum_name, int32(x))
 }
-func (RoomMultiRoleEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{10} }
+func (RoomMultiRoleEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{10} }
 
 type PrivacyGeneralLevelEnum int32
 
@@ -472,7 +472,7 @@ var PrivacyGeneralLevelEnum_value = map[string]int32{
 func (x PrivacyGeneralLevelEnum) String() string {
 	return proto.EnumName(PrivacyGeneralLevelEnum_name, int32(x))
 }
-func (PrivacyGeneralLevelEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{11} }
+func (PrivacyGeneralLevelEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{11} }
 
 type ProfilePrivacyLevelEnum int32
 
@@ -490,7 +490,7 @@ var ProfilePrivacyLevelEnum_value = map[string]int32{
 func (x ProfilePrivacyLevelEnum) String() string {
 	return proto.EnumName(ProfilePrivacyLevelEnum_name, int32(x))
 }
-func (ProfilePrivacyLevelEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{12} }
+func (ProfilePrivacyLevelEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{12} }
 
 type MessageMetaUpdatesTypesEnum int32
 
@@ -520,7 +520,7 @@ var MessageMetaUpdatesTypesEnum_value = map[string]int32{
 func (x MessageMetaUpdatesTypesEnum) String() string {
 	return proto.EnumName(MessageMetaUpdatesTypesEnum_name, int32(x))
 }
-func (MessageMetaUpdatesTypesEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{13} }
+func (MessageMetaUpdatesTypesEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{13} }
 
 type DirectMessageSourceEnum int32
 
@@ -547,7 +547,7 @@ var DirectMessageSourceEnum_value = map[string]int32{
 func (x DirectMessageSourceEnum) String() string {
 	return proto.EnumName(DirectMessageSourceEnum_name, int32(x))
 }
-func (DirectMessageSourceEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor2, []int{14} }
+func (DirectMessageSourceEnum) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{14} }
 
 type GeoLocation struct {
 	Lat float64 `protobuf:"fixed64,1,opt,name=Lat" json:"Lat,omitempty"`
@@ -557,7 +557,7 @@ type GeoLocation struct {
 func (m *GeoLocation) Reset()                    { *m = GeoLocation{} }
 func (m *GeoLocation) String() string            { return proto.CompactTextString(m) }
 func (*GeoLocation) ProtoMessage()               {}
-func (*GeoLocation) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
+func (*GeoLocation) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
 
 func (m *GeoLocation) GetLat() float64 {
 	if m != nil {
@@ -582,7 +582,7 @@ type RoomMessageLog struct {
 func (m *RoomMessageLog) Reset()                    { *m = RoomMessageLog{} }
 func (m *RoomMessageLog) String() string            { return proto.CompactTextString(m) }
 func (*RoomMessageLog) ProtoMessage()               {}
-func (*RoomMessageLog) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
+func (*RoomMessageLog) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
 
 func (m *RoomMessageLog) GetTyp() RoomMessageLogEnum {
 	if m != nil {
@@ -614,7 +614,7 @@ type RoomMessageForwardFrom struct {
 func (m *RoomMessageForwardFrom) Reset()                    { *m = RoomMessageForwardFrom{} }
 func (m *RoomMessageForwardFrom) String() string            { return proto.CompactTextString(m) }
 func (*RoomMessageForwardFrom) ProtoMessage()               {}
-func (*RoomMessageForwardFrom) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{2} }
+func (*RoomMessageForwardFrom) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{2} }
 
 func (m *RoomMessageForwardFrom) GetRoomId() uint64 {
 	if m != nil {
@@ -645,7 +645,7 @@ type RoomDraft struct {
 func (m *RoomDraft) Reset()                    { *m = RoomDraft{} }
 func (m *RoomDraft) String() string            { return proto.CompactTextString(m) }
 func (*RoomDraft) ProtoMessage()               {}
-func (*RoomDraft) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{3} }
+func (*RoomDraft) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{3} }
 
 func (m *RoomDraft) GetMessage() string {
 	if m != nil {
@@ -667,7 +667,7 @@ type ChatRoom struct {
 func (m *ChatRoom) Reset()                    { *m = ChatRoom{} }
 func (m *ChatRoom) String() string            { return proto.CompactTextString(m) }
 func (*ChatRoom) ProtoMessage()               {}
-func (*ChatRoom) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{4} }
+func (*ChatRoom) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{4} }
 
 type Pagination struct {
 	Offset uint32 `protobuf:"varint,1,opt,name=Offset" json:"Offset,omitempty"`
@@ -677,7 +677,7 @@ type Pagination struct {
 func (m *Pagination) Reset()                    { *m = Pagination{} }
 func (m *Pagination) String() string            { return proto.CompactTextString(m) }
 func (*Pagination) ProtoMessage()               {}
-func (*Pagination) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{5} }
+func (*Pagination) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{5} }
 
 func (m *Pagination) GetOffset() uint32 {
 	if m != nil {
@@ -717,9 +717,9 @@ func init() {
 	proto.RegisterEnum("DirectMessageSourceEnum", DirectMessageSourceEnum_name, DirectMessageSourceEnum_value)
 }
 
-func init() { proto.RegisterFile("pb_enums.proto", fileDescriptor2) }
+func init() { proto.RegisterFile("pb_enums.proto", fileDescriptor1) }
 
-var fileDescriptor2 = []byte{
+var fileDescriptor1 = []byte{
 	// 1395 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x56, 0xdd, 0x6e, 0xe3, 0x36,
 	0x16, 0xf6, 0x5f, 0x1c, 0xfb, 0xc4, 0x76, 0x18, 0x4d, 0x26, 0x93, 0xcc, 0x0f, 0x76, 0x90, 0xc5,

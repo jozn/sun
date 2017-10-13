@@ -16,7 +16,7 @@ import (
 )
 
 var Cnt3 = int64(0)
-
+var Cnt2 = int64(0)
 type userParamSample int
 
 func (m userParamSample) GetUserId() int {

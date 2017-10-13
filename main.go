@@ -246,7 +246,7 @@ func registerRoutes() *httptreemux.TreeMux {
 
 		//http.Handle("/i/msg", actionToFunc(ctrl.SendSampleMesgTable3_v04))
 		http.Handle("/i/msg", actionToFunc(ctrl.SendSampleMesgNew))
-		http.Handle("/i/msg2", actionToFunc(ctrl.SendSampleMesg))
+		//http.Handle("/i/msg2", actionToFunc(ctrl.SendSampleMesg))
 		http.Handle("/i/redis", actionToFunc(RedisSavePlay))
 		http.Handle("/i/play", actionToFunc(PlaySomething))
 		http.Handle("/i/cache", actionToFunc(ShowCached))

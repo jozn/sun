@@ -6,14 +6,12 @@ Package x is a generated protocol buffer package.
 
 It is generated from these files:
 	pb_chat.proto
-	pb_del.proto
 	pb_enums.proto
 	pb_global.proto
 	pb_rpc_auth2.proto
 	pb_rpc_msg.proto
 	pb_rpc_sync.proto
 	pb_rpc_user.proto
-	pb_table.proto
 	pb_updates.proto
 	pb_views.proto
 
@@ -31,26 +29,6 @@ It has these top-level messages:
 	PB_DirectLogView
 	PB_DirectLog
 	PB_PushDirectLogViewsMany
-	PB_UserWithMe
-	PB_Message
-	PB_MsgFile
-	PB_Response
-	PB_Request
-	PB_RequestMsgAddMany
-	PB_ResponseMsgAddMany
-	PB_Push
-	PB_Result
-	PB_PushMsgAddMany
-	PB_ResultMsgAddMany
-	PB_MsgEvent
-	PB_PushMsgEvents
-	PB_ResultMsgEvents
-	PB_MsgsSeenFromClient
-	PB_MsgSeen
-	PB_RequestMsgsSeen
-	PB_ResponseMsgsSeen
-	PB_ReqRpcAddMsg
-	PB_ResRpcAddMsg
 	GeoLocation
 	RoomMessageLog
 	RoomMessageForwardFrom
@@ -108,6 +86,7 @@ It has these top-level messages:
 	PB_SyncResponse_SetLastSyncGeneralUpdateId
 	PB_SyncParam_SetLastSyncNotifyUpdateId
 	PB_SyncResponse_SetLastSyncNotifyUpdateId
+	PB_NotifyUpdatesView
 	PB_AllLivePushes
 	PB_UserParam_BlockUser
 	PB_UserOfflineResponse_BlockUser
@@ -126,10 +105,6 @@ It has these top-level messages:
 	PB_UserParam_CheckUserName
 	PB_UserResponse_CheckUserName
 	UserView
-	PB_Chat
-	PB_DirectMessage
-	PB_MessageFile
-	PB_User
 	PB_UpdateGroupParticipants
 	PB_UpdateNotifySettings
 	PB_UpdateServiceNotification
@@ -139,10 +114,6 @@ It has these top-level messages:
 	PB_UpdateMessageToDelete
 	PB_UpdateRoomActionDoing
 	PB_UpdateUserBlocked
-	PB_PushHolderView
-	PB_DirectUpdatesView
-	PB_GeneralUpdatesView
-	PB_NotifyUpdatesView
 	PB_ChatView
 	PB_MessageView
 	PB_MessageFileView

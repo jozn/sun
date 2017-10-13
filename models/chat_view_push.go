@@ -93,7 +93,7 @@ func ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(meId int, logs []*x.Dire
 
 		case Push_MESSAGE_FILE_ID_CHANGE:
 			v := &x.PB_UpdateMessageId{
-				NewMessageId: int64(logRow.MessageFileIds),
+				NewMessageId: int64(logRow.MessageFileId),
 				OldMessageId: int64(logRow.OtherId),
 			}
 			res.MessagesFileChangeIds = append(res.MessagesFileChangeIds, v)

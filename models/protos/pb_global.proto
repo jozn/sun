@@ -7,7 +7,7 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 
 option go_package = "x";
 
-import public "pb_table.proto";
+//import public "pb_table.proto";
 
 message PB_CommandToServer {
 	int64 ClientCallId = 1;

@@ -96,6 +96,18 @@ message PB_SyncResponse_SetLastSyncNotifyUpdateId{
 
 //////////////////////////////
 
+message PB_NotifyUpdatesView {
+    //users
+    repeated PB_UpdateUserBlocked UserBlockedByMe = 50;
+    repeated PB_UpdateUserBlocked UserBlockedMe = 51;
+
+    //groups 60-100
+
+    //notifications
+    //settings
+}
+
+
 /////////// Pushes /////////////
 //use this for pushing live data - instead of hacking rpc *yResponse* types
 message PB_AllLivePushes{

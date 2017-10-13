@@ -195,6 +195,7 @@ if err == nil {
 
 	return msg
 }*/
+/*
 
 func PBConv_User_toNew_PB_UserWithMe(p *x.User, meId int) x.PB_UserWithMe {
 	u := x.PB_UserWithMe{
@@ -230,6 +231,7 @@ func PBNew_PB_UserWithMe(UserId, meId int) *x.PB_UserWithMe {
 
 	return msg
 }
+*/
 
 /*func PBConv_MsgPushEvent_toNew_PB_MsgEvent(m *x.MsgPushEvent) x.PB_MsgEvent {
 	pbEv := x.PB_MsgEvent{
