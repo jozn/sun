@@ -24,8 +24,6 @@ var RPC_ResponseHandler RPC_ResponseHandlerInterface
 
 //note: rpc methods cant have equal name they must be different even in different rpc services
 type RPC_AllHandlersInteract interface {
-	RPC_MessageReq
-	RPC_MessageReqOffline
 	RPC_Auth
 	RPC_Msg
 	RPC_Sync
@@ -34,14 +32,6 @@ type RPC_AllHandlersInteract interface {
 }
 
 /////////////// Interfaces ////////////////
-
-type RPC_MessageReq interface {
-	GetLastChnagesForRoom(i *PB_ReqLastChangesForTheRoom, p RPC_UserParam) (*PB_ResponseLastChangesForTheRoom, error)
-}
-
-type RPC_MessageReqOffline interface {
-	SetLastSeen(i *PB_RequestSetLastSeenMessages, p RPC_UserParam) (*PB_ResponseSetLastSeenMessages, error)
-}
 
 type RPC_Auth interface {
 	CheckPhone(i *PB_UserParam_CheckUserName2, p RPC_UserParam) (*PB_UserResponse_CheckUserName2, error)
@@ -113,62 +103,6 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 
 	switch splits[0] {
 
-	case "RPC_MessageReq":
-
-		rpc, ok := rpcHandler.(RPC_MessageReq)
-		if !ok {
-			e := errors.New("rpcHandler could not be cast to : RPC_MessageReq")
-			noDevErr(e)
-			RPC_ResponseHandler.HandelError(e)
-			return
-		}
-
-		switch splits[1] {
-		case "GetLastChnagesForRoom": //each pb_service_method
-			load := &PB_ReqLastChangesForTheRoom{}
-			err := proto.Unmarshal(cmd.Data, load)
-			if err == nil {
-				res, err := rpc.GetLastChnagesForRoom(load, params)
-				if err == nil {
-					//RPC_ResponseHandler.HandleOfflineResult(res,"PB_ResponseLastChangesForTheRoom",cmd, params)
-					RPC_ResponseHandler.HandleOfflineResult(res, "PB_ResponseLastChangesForTheRoom", "RPC_MessageReq.GetLastChnagesForRoom", cmd, params, load)
-				} else {
-					RPC_ResponseHandler.HandelError(err)
-				}
-			} else {
-				RPC_ResponseHandler.HandelError(err)
-			}
-		default:
-			noDevErr(errors.New("rpc method is does not exist: " + cmd.Command))
-		}
-	case "RPC_MessageReqOffline":
-
-		rpc, ok := rpcHandler.(RPC_MessageReqOffline)
-		if !ok {
-			e := errors.New("rpcHandler could not be cast to : RPC_MessageReqOffline")
-			noDevErr(e)
-			RPC_ResponseHandler.HandelError(e)
-			return
-		}
-
-		switch splits[1] {
-		case "SetLastSeen": //each pb_service_method
-			load := &PB_RequestSetLastSeenMessages{}
-			err := proto.Unmarshal(cmd.Data, load)
-			if err == nil {
-				res, err := rpc.SetLastSeen(load, params)
-				if err == nil {
-					//RPC_ResponseHandler.HandleOfflineResult(res,"PB_ResponseSetLastSeenMessages",cmd, params)
-					RPC_ResponseHandler.HandleOfflineResult(res, "PB_ResponseSetLastSeenMessages", "RPC_MessageReqOffline.SetLastSeen", cmd, params, load)
-				} else {
-					RPC_ResponseHandler.HandelError(err)
-				}
-			} else {
-				RPC_ResponseHandler.HandelError(err)
-			}
-		default:
-			noDevErr(errors.New("rpc method is does not exist: " + cmd.Command))
-		}
 	case "RPC_Auth":
 
 		rpc, ok := rpcHandler.(RPC_Auth)
@@ -764,14 +698,6 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 
 /////////////// Direct in PB_CommandToClient /////////////
 /*
-
-
- RPC_MessageReq.GetLastChnagesForRoom
-
-
-
- RPC_MessageReqOffline.SetLastSeen
-
 
 
  RPC_Auth.CheckPhone

@@ -2,24 +2,6 @@ package x
 
 /////////////// Empty Sample RPC - mainly for mocking ////////////////
 
-/////////////////// RPC_MessageReq  -  EmptyRPC_RPC_MessageReq /////////////////////
-type EmptyRPC_RPC_MessageReq int
-
-var Empty_RPC_RPC_MessageReq_Sample = EmptyRPC_RPC_MessageReq(0)
-
-func (EmptyRPC_RPC_MessageReq) GetLastChnagesForRoom(i *PB_ReqLastChangesForTheRoom, p RPC_UserParam) (*PB_ResponseLastChangesForTheRoom, error) {
-	return nil, nil
-}
-
-/////////////////// RPC_MessageReqOffline  -  EmptyRPC_RPC_MessageReqOffline /////////////////////
-type EmptyRPC_RPC_MessageReqOffline int
-
-var Empty_RPC_RPC_MessageReqOffline_Sample = EmptyRPC_RPC_MessageReqOffline(0)
-
-func (EmptyRPC_RPC_MessageReqOffline) SetLastSeen(i *PB_RequestSetLastSeenMessages, p RPC_UserParam) (*PB_ResponseSetLastSeenMessages, error) {
-	return nil, nil
-}
-
 /////////////////// RPC_Auth  -  EmptyRPC_RPC_Auth /////////////////////
 type EmptyRPC_RPC_Auth int
 

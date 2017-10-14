@@ -2,501 +2,6 @@ package x
 
 import "ms/sun/helper"
 
-type PB_RoomInlineView_Flat struct {
-	RoomId       int
-	RoomTypeEnum RoomTypeEnum
-}
-
-//ToPB
-func (m *PB_RoomInlineView) ToFlat() *PB_RoomInlineView_Flat {
-	r := &PB_RoomInlineView_Flat{
-		RoomId: int(m.RoomId),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_RoomInlineView_Flat) ToPB() *PB_RoomInlineView {
-	r := &PB_RoomInlineView{
-		RoomId: int64(m.RoomId),
-	}
-	return r
-}
-
-//folding
-var PB_RoomInlineView__FOlD = &PB_RoomInlineView{
-	RoomId: 0,
-}
-
-type PB_MessageForwardedFrom_Flat struct {
-	RoomId       int
-	RoomTypeEnum RoomTypeEnum
-	MessageId    int
-	MessageSeq   int
-}
-
-//ToPB
-func (m *PB_MessageForwardedFrom) ToFlat() *PB_MessageForwardedFrom_Flat {
-	r := &PB_MessageForwardedFrom_Flat{
-		RoomId: int(m.RoomId),
-
-		MessageId:  int(m.MessageId),
-		MessageSeq: int(m.MessageSeq),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_MessageForwardedFrom_Flat) ToPB() *PB_MessageForwardedFrom {
-	r := &PB_MessageForwardedFrom{
-		RoomId: int64(m.RoomId),
-
-		MessageId:  int64(m.MessageId),
-		MessageSeq: int32(m.MessageSeq),
-	}
-	return r
-}
-
-//folding
-var PB_MessageForwardedFrom__FOlD = &PB_MessageForwardedFrom{
-	RoomId: 0,
-
-	MessageId:  0,
-	MessageSeq: 0,
-}
-
-type PB_GroupView_Flat struct {
-	GroupId          int
-	GroupName        string
-	MembersCount     int
-	GroupPrivacyEnum int
-	CreatorUserId    int
-	CreatedTime      int
-	UpdatedMs        int
-	CurrentSeq       int
-}
-
-//ToPB
-func (m *PB_GroupView) ToFlat() *PB_GroupView_Flat {
-	r := &PB_GroupView_Flat{
-		GroupId:          int(m.GroupId),
-		GroupName:        m.GroupName,
-		MembersCount:     int(m.MembersCount),
-		GroupPrivacyEnum: int(m.GroupPrivacyEnum),
-		CreatorUserId:    int(m.CreatorUserId),
-		CreatedTime:      int(m.CreatedTime),
-		UpdatedMs:        int(m.UpdatedMs),
-		CurrentSeq:       int(m.CurrentSeq),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_GroupView_Flat) ToPB() *PB_GroupView {
-	r := &PB_GroupView{
-		GroupId:          int64(m.GroupId),
-		GroupName:        m.GroupName,
-		MembersCount:     int32(m.MembersCount),
-		GroupPrivacyEnum: int32(m.GroupPrivacyEnum),
-		CreatorUserId:    int32(m.CreatorUserId),
-		CreatedTime:      int32(m.CreatedTime),
-		UpdatedMs:        int64(m.UpdatedMs),
-		CurrentSeq:       int32(m.CurrentSeq),
-	}
-	return r
-}
-
-//folding
-var PB_GroupView__FOlD = &PB_GroupView{
-	GroupId:          0,
-	GroupName:        "",
-	MembersCount:     0,
-	GroupPrivacyEnum: 0,
-	CreatorUserId:    0,
-	CreatedTime:      0,
-	UpdatedMs:        0,
-	CurrentSeq:       0,
-}
-
-type PB_GroupMemberView_Flat struct {
-	Id            int
-	GroupId       int
-	UserId        int
-	ByUserId      int
-	GroupRoleEnum int
-	CreatedTime   int
-}
-
-//ToPB
-func (m *PB_GroupMemberView) ToFlat() *PB_GroupMemberView_Flat {
-	r := &PB_GroupMemberView_Flat{
-		Id:            int(m.Id),
-		GroupId:       int(m.GroupId),
-		UserId:        int(m.UserId),
-		ByUserId:      int(m.ByUserId),
-		GroupRoleEnum: int(m.GroupRoleEnum),
-		CreatedTime:   int(m.CreatedTime),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_GroupMemberView_Flat) ToPB() *PB_GroupMemberView {
-	r := &PB_GroupMemberView{
-		Id:            int64(m.Id),
-		GroupId:       int64(m.GroupId),
-		UserId:        int32(m.UserId),
-		ByUserId:      int32(m.ByUserId),
-		GroupRoleEnum: int32(m.GroupRoleEnum),
-		CreatedTime:   int32(m.CreatedTime),
-	}
-	return r
-}
-
-//folding
-var PB_GroupMemberView__FOlD = &PB_GroupMemberView{
-	Id:            0,
-	GroupId:       0,
-	UserId:        0,
-	ByUserId:      0,
-	GroupRoleEnum: 0,
-	CreatedTime:   0,
-}
-
-type PB_MessageFileView__DEp_Flat struct {
-	MessageFileId   int
-	Name            string
-	Size            int
-	FileTypeEnum    int
-	MimeType        string
-	Width           int
-	Height          int
-	Duration        int
-	Extension       string
-	ThumbData64     string
-	ServerSrc       string
-	ServerPath      string
-	ServerThumbPath string
-	BucketId        string
-	ServerId        int
-	CanDel          int
-	CreatedTime     int
-}
-
-//ToPB
-func (m *PB_MessageFileView__DEp) ToFlat() *PB_MessageFileView__DEp_Flat {
-	r := &PB_MessageFileView__DEp_Flat{
-		MessageFileId:   int(m.MessageFileId),
-		Name:            m.Name,
-		Size:            int(m.Size),
-		FileTypeEnum:    int(m.FileTypeEnum),
-		MimeType:        m.MimeType,
-		Width:           int(m.Width),
-		Height:          int(m.Height),
-		Duration:        int(m.Duration),
-		Extension:       m.Extension,
-		ThumbData64:     m.ThumbData64,
-		ServerSrc:       m.ServerSrc,
-		ServerPath:      m.ServerPath,
-		ServerThumbPath: m.ServerThumbPath,
-		BucketId:        m.BucketId,
-		ServerId:        int(m.ServerId),
-		CanDel:          int(m.CanDel),
-		CreatedTime:     int(m.CreatedTime),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_MessageFileView__DEp_Flat) ToPB() *PB_MessageFileView__DEp {
-	r := &PB_MessageFileView__DEp{
-		MessageFileId:   int64(m.MessageFileId),
-		Name:            m.Name,
-		Size:            int32(m.Size),
-		FileTypeEnum:    int32(m.FileTypeEnum),
-		MimeType:        m.MimeType,
-		Width:           int32(m.Width),
-		Height:          int32(m.Height),
-		Duration:        int32(m.Duration),
-		Extension:       m.Extension,
-		ThumbData64:     m.ThumbData64,
-		ServerSrc:       m.ServerSrc,
-		ServerPath:      m.ServerPath,
-		ServerThumbPath: m.ServerThumbPath,
-		BucketId:        m.BucketId,
-		ServerId:        int32(m.ServerId),
-		CanDel:          int32(m.CanDel),
-		CreatedTime:     int32(m.CreatedTime),
-	}
-	return r
-}
-
-//folding
-var PB_MessageFileView__DEp__FOlD = &PB_MessageFileView__DEp{
-	MessageFileId:   0,
-	Name:            "",
-	Size:            0,
-	FileTypeEnum:    0,
-	MimeType:        "",
-	Width:           0,
-	Height:          0,
-	Duration:        0,
-	Extension:       "",
-	ThumbData64:     "",
-	ServerSrc:       "",
-	ServerPath:      "",
-	ServerThumbPath: "",
-	BucketId:        "",
-	ServerId:        0,
-	CanDel:          0,
-	CreatedTime:     0,
-}
-
-type PB_ReqLastChangesForTheRoom_Flat struct {
-	RoomId      int
-	LastLogId   int
-	LastHaveSeq int
-}
-
-//ToPB
-func (m *PB_ReqLastChangesForTheRoom) ToFlat() *PB_ReqLastChangesForTheRoom_Flat {
-	r := &PB_ReqLastChangesForTheRoom_Flat{
-		RoomId:      int(m.RoomId),
-		LastLogId:   int(m.LastLogId),
-		LastHaveSeq: int(m.LastHaveSeq),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_ReqLastChangesForTheRoom_Flat) ToPB() *PB_ReqLastChangesForTheRoom {
-	r := &PB_ReqLastChangesForTheRoom{
-		RoomId:      int64(m.RoomId),
-		LastLogId:   int64(m.LastLogId),
-		LastHaveSeq: int32(m.LastHaveSeq),
-	}
-	return r
-}
-
-//folding
-var PB_ReqLastChangesForTheRoom__FOlD = &PB_ReqLastChangesForTheRoom{
-	RoomId:      0,
-	LastLogId:   0,
-	LastHaveSeq: 0,
-}
-
-type PB_ResponseLastChangesForTheRoom_Flat struct {
-	Messages []PB_MessageView
-}
-
-//ToPB
-func (m *PB_ResponseLastChangesForTheRoom) ToFlat() *PB_ResponseLastChangesForTheRoom_Flat {
-	r := &PB_ResponseLastChangesForTheRoom_Flat{}
-	return r
-}
-
-//ToPB
-func (m *PB_ResponseLastChangesForTheRoom_Flat) ToPB() *PB_ResponseLastChangesForTheRoom {
-	r := &PB_ResponseLastChangesForTheRoom{}
-	return r
-}
-
-//folding
-var PB_ResponseLastChangesForTheRoom__FOlD = &PB_ResponseLastChangesForTheRoom{}
-
-type PB_RequestSetLastSeenMessages_Flat struct {
-	RoomId        int
-	FromMessageId int
-	ToMessageId   int
-	AtTimeMs      int
-}
-
-//ToPB
-func (m *PB_RequestSetLastSeenMessages) ToFlat() *PB_RequestSetLastSeenMessages_Flat {
-	r := &PB_RequestSetLastSeenMessages_Flat{
-		RoomId:        int(m.RoomId),
-		FromMessageId: int(m.FromMessageId),
-		ToMessageId:   int(m.ToMessageId),
-		AtTimeMs:      int(m.AtTimeMs),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_RequestSetLastSeenMessages_Flat) ToPB() *PB_RequestSetLastSeenMessages {
-	r := &PB_RequestSetLastSeenMessages{
-		RoomId:        int64(m.RoomId),
-		FromMessageId: int64(m.FromMessageId),
-		ToMessageId:   int32(m.ToMessageId),
-		AtTimeMs:      int64(m.AtTimeMs),
-	}
-	return r
-}
-
-//folding
-var PB_RequestSetLastSeenMessages__FOlD = &PB_RequestSetLastSeenMessages{
-	RoomId:        0,
-	FromMessageId: 0,
-	ToMessageId:   0,
-	AtTimeMs:      0,
-}
-
-type PB_ResponseSetLastSeenMessages_Flat struct {
-	Messages []PB_MessageView
-}
-
-//ToPB
-func (m *PB_ResponseSetLastSeenMessages) ToFlat() *PB_ResponseSetLastSeenMessages_Flat {
-	r := &PB_ResponseSetLastSeenMessages_Flat{}
-	return r
-}
-
-//ToPB
-func (m *PB_ResponseSetLastSeenMessages_Flat) ToPB() *PB_ResponseSetLastSeenMessages {
-	r := &PB_ResponseSetLastSeenMessages{}
-	return r
-}
-
-//folding
-var PB_ResponseSetLastSeenMessages__FOlD = &PB_ResponseSetLastSeenMessages{}
-
-type PB_MessagesCollections_Flat struct {
-	DirectMessagesIds   []int
-	GroupMessagesIds    []int
-	BroadCatMessagesIds []int
-}
-
-//ToPB
-func (m *PB_MessagesCollections) ToFlat() *PB_MessagesCollections_Flat {
-	r := &PB_MessagesCollections_Flat{
-		DirectMessagesIds:   helper.SliceInt64ToInt(m.DirectMessagesIds),
-		GroupMessagesIds:    helper.SliceInt64ToInt(m.GroupMessagesIds),
-		BroadCatMessagesIds: helper.SliceInt64ToInt(m.BroadCatMessagesIds),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_MessagesCollections_Flat) ToPB() *PB_MessagesCollections {
-	r := &PB_MessagesCollections{
-		DirectMessagesIds:   helper.SliceIntToInt64(m.DirectMessagesIds),
-		GroupMessagesIds:    helper.SliceIntToInt64(m.GroupMessagesIds),
-		BroadCatMessagesIds: helper.SliceIntToInt64(m.BroadCatMessagesIds),
-	}
-	return r
-}
-
-//folding
-var PB_MessagesCollections__FOlD = &PB_MessagesCollections{}
-
-type PB_DirectLogView_Flat struct {
-	Row        PB_DirectLog
-	NewMessage PB_MessageView
-}
-
-//ToPB
-func (m *PB_DirectLogView) ToFlat() *PB_DirectLogView_Flat {
-	r := &PB_DirectLogView_Flat{}
-	return r
-}
-
-//ToPB
-func (m *PB_DirectLogView_Flat) ToPB() *PB_DirectLogView {
-	r := &PB_DirectLogView{}
-	return r
-}
-
-//folding
-var PB_DirectLogView__FOlD = &PB_DirectLogView{}
-
-type PB_DirectLog_Flat struct {
-	Id            int
-	ToUserId      int
-	MessageId     int
-	ChatId        int
-	PeerUserId    int
-	EventType     int
-	RoomLogTypeId int
-	FromSeq       int
-	ToSeq         int
-	ExtraPB       []byte
-	ExtraJson     string
-	AtTimeMs      int
-}
-
-//ToPB
-func (m *PB_DirectLog) ToFlat() *PB_DirectLog_Flat {
-	r := &PB_DirectLog_Flat{
-		Id:            int(m.Id),
-		ToUserId:      int(m.ToUserId),
-		MessageId:     int(m.MessageId),
-		ChatId:        int(m.ChatId),
-		PeerUserId:    int(m.PeerUserId),
-		EventType:     int(m.EventType),
-		RoomLogTypeId: int(m.RoomLogTypeId),
-		FromSeq:       int(m.FromSeq),
-		ToSeq:         int(m.ToSeq),
-		ExtraPB:       []byte(m.ExtraPB),
-		ExtraJson:     m.ExtraJson,
-		AtTimeMs:      int(m.AtTimeMs),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_DirectLog_Flat) ToPB() *PB_DirectLog {
-	r := &PB_DirectLog{
-		Id:            int64(m.Id),
-		ToUserId:      int32(m.ToUserId),
-		MessageId:     int64(m.MessageId),
-		ChatId:        int64(m.ChatId),
-		PeerUserId:    int32(m.PeerUserId),
-		EventType:     int32(m.EventType),
-		RoomLogTypeId: int32(m.RoomLogTypeId),
-		FromSeq:       int32(m.FromSeq),
-		ToSeq:         int32(m.ToSeq),
-		ExtraPB:       m.ExtraPB,
-		ExtraJson:     m.ExtraJson,
-		AtTimeMs:      int64(m.AtTimeMs),
-	}
-	return r
-}
-
-//folding
-var PB_DirectLog__FOlD = &PB_DirectLog{
-	Id:            0,
-	ToUserId:      0,
-	MessageId:     0,
-	ChatId:        0,
-	PeerUserId:    0,
-	EventType:     0,
-	RoomLogTypeId: 0,
-	FromSeq:       0,
-	ToSeq:         0,
-	ExtraPB:       []byte{},
-	ExtraJson:     "",
-	AtTimeMs:      0,
-}
-
-type PB_PushDirectLogViewsMany_Flat struct {
-	Rows []PB_DirectLogView
-}
-
-//ToPB
-func (m *PB_PushDirectLogViewsMany) ToFlat() *PB_PushDirectLogViewsMany_Flat {
-	r := &PB_PushDirectLogViewsMany_Flat{}
-	return r
-}
-
-//ToPB
-func (m *PB_PushDirectLogViewsMany_Flat) ToPB() *PB_PushDirectLogViewsMany {
-	r := &PB_PushDirectLogViewsMany{}
-	return r
-}
-
-//folding
-var PB_PushDirectLogViewsMany__FOlD = &PB_PushDirectLogViewsMany{}
-
 type GeoLocation_Flat struct {
 	Lat float64
 	Lon float64
@@ -1627,6 +1132,72 @@ var PB_MsgResponse_GetFreshAllDirectMessagesList__FOlD = &PB_MsgResponse_GetFres
 
 	HasMore: false,
 }
+
+type PB_MessageForwardedFrom_Flat struct {
+	RoomId       int
+	RoomTypeEnum RoomTypeEnum
+	MessageId    int
+	MessageSeq   int
+}
+
+//ToPB
+func (m *PB_MessageForwardedFrom) ToFlat() *PB_MessageForwardedFrom_Flat {
+	r := &PB_MessageForwardedFrom_Flat{
+		RoomId: int(m.RoomId),
+
+		MessageId:  int(m.MessageId),
+		MessageSeq: int(m.MessageSeq),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_MessageForwardedFrom_Flat) ToPB() *PB_MessageForwardedFrom {
+	r := &PB_MessageForwardedFrom{
+		RoomId: int64(m.RoomId),
+
+		MessageId:  int64(m.MessageId),
+		MessageSeq: int32(m.MessageSeq),
+	}
+	return r
+}
+
+//folding
+var PB_MessageForwardedFrom__FOlD = &PB_MessageForwardedFrom{
+	RoomId: 0,
+
+	MessageId:  0,
+	MessageSeq: 0,
+}
+
+type PB_MessagesCollections_Flat struct {
+	DirectMessagesIds   []int
+	GroupMessagesIds    []int
+	BroadCatMessagesIds []int
+}
+
+//ToPB
+func (m *PB_MessagesCollections) ToFlat() *PB_MessagesCollections_Flat {
+	r := &PB_MessagesCollections_Flat{
+		DirectMessagesIds:   helper.SliceInt64ToInt(m.DirectMessagesIds),
+		GroupMessagesIds:    helper.SliceInt64ToInt(m.GroupMessagesIds),
+		BroadCatMessagesIds: helper.SliceInt64ToInt(m.BroadCatMessagesIds),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_MessagesCollections_Flat) ToPB() *PB_MessagesCollections {
+	r := &PB_MessagesCollections{
+		DirectMessagesIds:   helper.SliceIntToInt64(m.DirectMessagesIds),
+		GroupMessagesIds:    helper.SliceIntToInt64(m.GroupMessagesIds),
+		BroadCatMessagesIds: helper.SliceIntToInt64(m.BroadCatMessagesIds),
+	}
+	return r
+}
+
+//folding
+var PB_MessagesCollections__FOlD = &PB_MessagesCollections{}
 
 type PB_MsgParam_Echo_Flat struct {
 	Text string
@@ -3040,148 +2611,6 @@ var PB_UserView__FOlD = &PB_UserView{
 /*
 ///// to_flat ///
 
-func(m *PB_RoomInlineView)ToFlat() *PB_RoomInlineView_Flat {
-r := &PB_RoomInlineView_Flat{
-    RoomId:  int(m.RoomId) ,
-
-}
-return r
-}
-
-func(m *PB_MessageForwardedFrom)ToFlat() *PB_MessageForwardedFrom_Flat {
-r := &PB_MessageForwardedFrom_Flat{
-    RoomId:  int(m.RoomId) ,
-
-    MessageId:  int(m.MessageId) ,
-    MessageSeq:  int(m.MessageSeq) ,
-}
-return r
-}
-
-func(m *PB_GroupView)ToFlat() *PB_GroupView_Flat {
-r := &PB_GroupView_Flat{
-    GroupId:  int(m.GroupId) ,
-    GroupName:  m.GroupName ,
-    MembersCount:  int(m.MembersCount) ,
-    GroupPrivacyEnum:  int(m.GroupPrivacyEnum) ,
-    CreatorUserId:  int(m.CreatorUserId) ,
-    CreatedTime:  int(m.CreatedTime) ,
-    UpdatedMs:  int(m.UpdatedMs) ,
-    CurrentSeq:  int(m.CurrentSeq) ,
-}
-return r
-}
-
-func(m *PB_GroupMemberView)ToFlat() *PB_GroupMemberView_Flat {
-r := &PB_GroupMemberView_Flat{
-    Id:  int(m.Id) ,
-    GroupId:  int(m.GroupId) ,
-    UserId:  int(m.UserId) ,
-    ByUserId:  int(m.ByUserId) ,
-    GroupRoleEnum:  int(m.GroupRoleEnum) ,
-    CreatedTime:  int(m.CreatedTime) ,
-}
-return r
-}
-
-func(m *PB_MessageFileView__DEp)ToFlat() *PB_MessageFileView__DEp_Flat {
-r := &PB_MessageFileView__DEp_Flat{
-    MessageFileId:  int(m.MessageFileId) ,
-    Name:  m.Name ,
-    Size:  int(m.Size) ,
-    FileTypeEnum:  int(m.FileTypeEnum) ,
-    MimeType:  m.MimeType ,
-    Width:  int(m.Width) ,
-    Height:  int(m.Height) ,
-    Duration:  int(m.Duration) ,
-    Extension:  m.Extension ,
-    ThumbData64:  m.ThumbData64 ,
-    ServerSrc:  m.ServerSrc ,
-    ServerPath:  m.ServerPath ,
-    ServerThumbPath:  m.ServerThumbPath ,
-    BucketId:  m.BucketId ,
-    ServerId:  int(m.ServerId) ,
-    CanDel:  int(m.CanDel) ,
-    CreatedTime:  int(m.CreatedTime) ,
-}
-return r
-}
-
-func(m *PB_ReqLastChangesForTheRoom)ToFlat() *PB_ReqLastChangesForTheRoom_Flat {
-r := &PB_ReqLastChangesForTheRoom_Flat{
-    RoomId:  int(m.RoomId) ,
-    LastLogId:  int(m.LastLogId) ,
-    LastHaveSeq:  int(m.LastHaveSeq) ,
-}
-return r
-}
-
-func(m *PB_ResponseLastChangesForTheRoom)ToFlat() *PB_ResponseLastChangesForTheRoom_Flat {
-r := &PB_ResponseLastChangesForTheRoom_Flat{
-
-}
-return r
-}
-
-func(m *PB_RequestSetLastSeenMessages)ToFlat() *PB_RequestSetLastSeenMessages_Flat {
-r := &PB_RequestSetLastSeenMessages_Flat{
-    RoomId:  int(m.RoomId) ,
-    FromMessageId:  int(m.FromMessageId) ,
-    ToMessageId:  int(m.ToMessageId) ,
-    AtTimeMs:  int(m.AtTimeMs) ,
-}
-return r
-}
-
-func(m *PB_ResponseSetLastSeenMessages)ToFlat() *PB_ResponseSetLastSeenMessages_Flat {
-r := &PB_ResponseSetLastSeenMessages_Flat{
-
-}
-return r
-}
-
-func(m *PB_MessagesCollections)ToFlat() *PB_MessagesCollections_Flat {
-r := &PB_MessagesCollections_Flat{
-    DirectMessagesIds:  helper.SliceInt64ToInt(m.DirectMessagesIds) ,
-    GroupMessagesIds:  helper.SliceInt64ToInt(m.GroupMessagesIds) ,
-    BroadCatMessagesIds:  helper.SliceInt64ToInt(m.BroadCatMessagesIds) ,
-}
-return r
-}
-
-func(m *PB_DirectLogView)ToFlat() *PB_DirectLogView_Flat {
-r := &PB_DirectLogView_Flat{
-
-
-}
-return r
-}
-
-func(m *PB_DirectLog)ToFlat() *PB_DirectLog_Flat {
-r := &PB_DirectLog_Flat{
-    Id:  int(m.Id) ,
-    ToUserId:  int(m.ToUserId) ,
-    MessageId:  int(m.MessageId) ,
-    ChatId:  int(m.ChatId) ,
-    PeerUserId:  int(m.PeerUserId) ,
-    EventType:  int(m.EventType) ,
-    RoomLogTypeId:  int(m.RoomLogTypeId) ,
-    FromSeq:  int(m.FromSeq) ,
-    ToSeq:  int(m.ToSeq) ,
-    ExtraPB:  []byte(m.ExtraPB) ,
-    ExtraJson:  m.ExtraJson ,
-    AtTimeMs:  int(m.AtTimeMs) ,
-}
-return r
-}
-
-func(m *PB_PushDirectLogViewsMany)ToFlat() *PB_PushDirectLogViewsMany_Flat {
-r := &PB_PushDirectLogViewsMany_Flat{
-
-}
-return r
-}
-
 func(m *GeoLocation)ToFlat() *GeoLocation_Flat {
 r := &GeoLocation_Flat{
     Lat:  float64(m.Lat) ,
@@ -3518,6 +2947,25 @@ func(m *PB_MsgResponse_GetFreshAllDirectMessagesList)ToFlat() *PB_MsgResponse_Ge
 r := &PB_MsgResponse_GetFreshAllDirectMessagesList_Flat{
 
     HasMore:  m.HasMore ,
+}
+return r
+}
+
+func(m *PB_MessageForwardedFrom)ToFlat() *PB_MessageForwardedFrom_Flat {
+r := &PB_MessageForwardedFrom_Flat{
+    RoomId:  int(m.RoomId) ,
+
+    MessageId:  int(m.MessageId) ,
+    MessageSeq:  int(m.MessageSeq) ,
+}
+return r
+}
+
+func(m *PB_MessagesCollections)ToFlat() *PB_MessagesCollections_Flat {
+r := &PB_MessagesCollections_Flat{
+    DirectMessagesIds:  helper.SliceInt64ToInt(m.DirectMessagesIds) ,
+    GroupMessagesIds:  helper.SliceInt64ToInt(m.GroupMessagesIds) ,
+    BroadCatMessagesIds:  helper.SliceInt64ToInt(m.BroadCatMessagesIds) ,
 }
 return r
 }
@@ -3942,148 +3390,6 @@ return r
 
 ///// from_flat ///
 
-func(m *PB_RoomInlineView_Flat)ToPB() *PB_RoomInlineView {
-r := &PB_RoomInlineView{
-    RoomId:  int64(m.RoomId) ,
-
-}
-return r
-}
-
-func(m *PB_MessageForwardedFrom_Flat)ToPB() *PB_MessageForwardedFrom {
-r := &PB_MessageForwardedFrom{
-    RoomId:  int64(m.RoomId) ,
-
-    MessageId:  int64(m.MessageId) ,
-    MessageSeq:  int32(m.MessageSeq) ,
-}
-return r
-}
-
-func(m *PB_GroupView_Flat)ToPB() *PB_GroupView {
-r := &PB_GroupView{
-    GroupId:  int64(m.GroupId) ,
-    GroupName:  m.GroupName ,
-    MembersCount:  int32(m.MembersCount) ,
-    GroupPrivacyEnum:  int32(m.GroupPrivacyEnum) ,
-    CreatorUserId:  int32(m.CreatorUserId) ,
-    CreatedTime:  int32(m.CreatedTime) ,
-    UpdatedMs:  int64(m.UpdatedMs) ,
-    CurrentSeq:  int32(m.CurrentSeq) ,
-}
-return r
-}
-
-func(m *PB_GroupMemberView_Flat)ToPB() *PB_GroupMemberView {
-r := &PB_GroupMemberView{
-    Id:  int64(m.Id) ,
-    GroupId:  int64(m.GroupId) ,
-    UserId:  int32(m.UserId) ,
-    ByUserId:  int32(m.ByUserId) ,
-    GroupRoleEnum:  int32(m.GroupRoleEnum) ,
-    CreatedTime:  int32(m.CreatedTime) ,
-}
-return r
-}
-
-func(m *PB_MessageFileView__DEp_Flat)ToPB() *PB_MessageFileView__DEp {
-r := &PB_MessageFileView__DEp{
-    MessageFileId:  int64(m.MessageFileId) ,
-    Name:  m.Name ,
-    Size:  int32(m.Size) ,
-    FileTypeEnum:  int32(m.FileTypeEnum) ,
-    MimeType:  m.MimeType ,
-    Width:  int32(m.Width) ,
-    Height:  int32(m.Height) ,
-    Duration:  int32(m.Duration) ,
-    Extension:  m.Extension ,
-    ThumbData64:  m.ThumbData64 ,
-    ServerSrc:  m.ServerSrc ,
-    ServerPath:  m.ServerPath ,
-    ServerThumbPath:  m.ServerThumbPath ,
-    BucketId:  m.BucketId ,
-    ServerId:  int32(m.ServerId) ,
-    CanDel:  int32(m.CanDel) ,
-    CreatedTime:  int32(m.CreatedTime) ,
-}
-return r
-}
-
-func(m *PB_ReqLastChangesForTheRoom_Flat)ToPB() *PB_ReqLastChangesForTheRoom {
-r := &PB_ReqLastChangesForTheRoom{
-    RoomId:  int64(m.RoomId) ,
-    LastLogId:  int64(m.LastLogId) ,
-    LastHaveSeq:  int32(m.LastHaveSeq) ,
-}
-return r
-}
-
-func(m *PB_ResponseLastChangesForTheRoom_Flat)ToPB() *PB_ResponseLastChangesForTheRoom {
-r := &PB_ResponseLastChangesForTheRoom{
-
-}
-return r
-}
-
-func(m *PB_RequestSetLastSeenMessages_Flat)ToPB() *PB_RequestSetLastSeenMessages {
-r := &PB_RequestSetLastSeenMessages{
-    RoomId:  int64(m.RoomId) ,
-    FromMessageId:  int64(m.FromMessageId) ,
-    ToMessageId:  int32(m.ToMessageId) ,
-    AtTimeMs:  int64(m.AtTimeMs) ,
-}
-return r
-}
-
-func(m *PB_ResponseSetLastSeenMessages_Flat)ToPB() *PB_ResponseSetLastSeenMessages {
-r := &PB_ResponseSetLastSeenMessages{
-
-}
-return r
-}
-
-func(m *PB_MessagesCollections_Flat)ToPB() *PB_MessagesCollections {
-r := &PB_MessagesCollections{
-    DirectMessagesIds:  helper.SliceIntToInt64(m.DirectMessagesIds) ,
-    GroupMessagesIds:  helper.SliceIntToInt64(m.GroupMessagesIds) ,
-    BroadCatMessagesIds:  helper.SliceIntToInt64(m.BroadCatMessagesIds) ,
-}
-return r
-}
-
-func(m *PB_DirectLogView_Flat)ToPB() *PB_DirectLogView {
-r := &PB_DirectLogView{
-
-
-}
-return r
-}
-
-func(m *PB_DirectLog_Flat)ToPB() *PB_DirectLog {
-r := &PB_DirectLog{
-    Id:  int64(m.Id) ,
-    ToUserId:  int32(m.ToUserId) ,
-    MessageId:  int64(m.MessageId) ,
-    ChatId:  int64(m.ChatId) ,
-    PeerUserId:  int32(m.PeerUserId) ,
-    EventType:  int32(m.EventType) ,
-    RoomLogTypeId:  int32(m.RoomLogTypeId) ,
-    FromSeq:  int32(m.FromSeq) ,
-    ToSeq:  int32(m.ToSeq) ,
-    ExtraPB:  m.ExtraPB ,
-    ExtraJson:  m.ExtraJson ,
-    AtTimeMs:  int64(m.AtTimeMs) ,
-}
-return r
-}
-
-func(m *PB_PushDirectLogViewsMany_Flat)ToPB() *PB_PushDirectLogViewsMany {
-r := &PB_PushDirectLogViewsMany{
-
-}
-return r
-}
-
 func(m *GeoLocation_Flat)ToPB() *GeoLocation {
 r := &GeoLocation{
     Lat:  m.Lat ,
@@ -4420,6 +3726,25 @@ func(m *PB_MsgResponse_GetFreshAllDirectMessagesList_Flat)ToPB() *PB_MsgResponse
 r := &PB_MsgResponse_GetFreshAllDirectMessagesList{
 
     HasMore:  m.HasMore ,
+}
+return r
+}
+
+func(m *PB_MessageForwardedFrom_Flat)ToPB() *PB_MessageForwardedFrom {
+r := &PB_MessageForwardedFrom{
+    RoomId:  int64(m.RoomId) ,
+
+    MessageId:  int64(m.MessageId) ,
+    MessageSeq:  int32(m.MessageSeq) ,
+}
+return r
+}
+
+func(m *PB_MessagesCollections_Flat)ToPB() *PB_MessagesCollections {
+r := &PB_MessagesCollections{
+    DirectMessagesIds:  helper.SliceIntToInt64(m.DirectMessagesIds) ,
+    GroupMessagesIds:  helper.SliceIntToInt64(m.GroupMessagesIds) ,
+    BroadCatMessagesIds:  helper.SliceIntToInt64(m.BroadCatMessagesIds) ,
 }
 return r
 }
@@ -4844,122 +4169,6 @@ return r
 
 ///// folding ///
 
-var PB_RoomInlineView__FOlD = &PB_RoomInlineView{
-        RoomId:  0 ,
-
-}
-
-
-var PB_MessageForwardedFrom__FOlD = &PB_MessageForwardedFrom{
-        RoomId:  0 ,
-
-        MessageId:  0 ,
-        MessageSeq:  0 ,
-}
-
-
-var PB_GroupView__FOlD = &PB_GroupView{
-        GroupId:  0 ,
-        GroupName:  "" ,
-        MembersCount:  0 ,
-        GroupPrivacyEnum:  0 ,
-        CreatorUserId:  0 ,
-        CreatedTime:  0 ,
-        UpdatedMs:  0 ,
-        CurrentSeq:  0 ,
-}
-
-
-var PB_GroupMemberView__FOlD = &PB_GroupMemberView{
-        Id:  0 ,
-        GroupId:  0 ,
-        UserId:  0 ,
-        ByUserId:  0 ,
-        GroupRoleEnum:  0 ,
-        CreatedTime:  0 ,
-}
-
-
-var PB_MessageFileView__DEp__FOlD = &PB_MessageFileView__DEp{
-        MessageFileId:  0 ,
-        Name:  "" ,
-        Size:  0 ,
-        FileTypeEnum:  0 ,
-        MimeType:  "" ,
-        Width:  0 ,
-        Height:  0 ,
-        Duration:  0 ,
-        Extension:  "" ,
-        ThumbData64:  "" ,
-        ServerSrc:  "" ,
-        ServerPath:  "" ,
-        ServerThumbPath:  "" ,
-        BucketId:  "" ,
-        ServerId:  0 ,
-        CanDel:  0 ,
-        CreatedTime:  0 ,
-}
-
-
-var PB_ReqLastChangesForTheRoom__FOlD = &PB_ReqLastChangesForTheRoom{
-        RoomId:  0 ,
-        LastLogId:  0 ,
-        LastHaveSeq:  0 ,
-}
-
-
-var PB_ResponseLastChangesForTheRoom__FOlD = &PB_ResponseLastChangesForTheRoom{
-
-}
-
-
-var PB_RequestSetLastSeenMessages__FOlD = &PB_RequestSetLastSeenMessages{
-        RoomId:  0 ,
-        FromMessageId:  0 ,
-        ToMessageId:  0 ,
-        AtTimeMs:  0 ,
-}
-
-
-var PB_ResponseSetLastSeenMessages__FOlD = &PB_ResponseSetLastSeenMessages{
-
-}
-
-
-var PB_MessagesCollections__FOlD = &PB_MessagesCollections{
-        DirectMessagesIds:  0 ,
-        GroupMessagesIds:  0 ,
-        BroadCatMessagesIds:  0 ,
-}
-
-
-var PB_DirectLogView__FOlD = &PB_DirectLogView{
-
-
-}
-
-
-var PB_DirectLog__FOlD = &PB_DirectLog{
-        Id:  0 ,
-        ToUserId:  0 ,
-        MessageId:  0 ,
-        ChatId:  0 ,
-        PeerUserId:  0 ,
-        EventType:  0 ,
-        RoomLogTypeId:  0 ,
-        FromSeq:  0 ,
-        ToSeq:  0 ,
-        ExtraPB:  []byte{} ,
-        ExtraJson:  "" ,
-        AtTimeMs:  0 ,
-}
-
-
-var PB_PushDirectLogViewsMany__FOlD = &PB_PushDirectLogViewsMany{
-
-}
-
-
 var GeoLocation__FOlD = &GeoLocation{
         Lat:  0.0 ,
         Lon:  0.0 ,
@@ -5211,6 +4420,21 @@ var PB_MsgParam_GetFreshAllDirectMessagesList__FOlD = &PB_MsgParam_GetFreshAllDi
 var PB_MsgResponse_GetFreshAllDirectMessagesList__FOlD = &PB_MsgResponse_GetFreshAllDirectMessagesList{
 
         HasMore:  false ,
+}
+
+
+var PB_MessageForwardedFrom__FOlD = &PB_MessageForwardedFrom{
+        RoomId:  0 ,
+
+        MessageId:  0 ,
+        MessageSeq:  0 ,
+}
+
+
+var PB_MessagesCollections__FOlD = &PB_MessagesCollections{
+        DirectMessagesIds:  0 ,
+        GroupMessagesIds:  0 ,
+        BroadCatMessagesIds:  0 ,
 }
 
 

@@ -8,14 +8,6 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 option go_package = "x";
 
 
-enum RPC_MessageReq_Enum {
-    EMPTY = 0;
-    GetLastChnagesForRoom = 7919;
-}
-enum RPC_MessageReqOffline_Enum {
-    EMPTY = 0;
-    SetLastSeen = 2402;
-}
 enum RPC_Auth_Enum {
     EMPTY = 0;
     CheckPhone = 9452;

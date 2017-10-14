@@ -23,7 +23,7 @@ type PB_UserParam_CheckUserName2 struct {
 func (m *PB_UserParam_CheckUserName2) Reset()                    { *m = PB_UserParam_CheckUserName2{} }
 func (m *PB_UserParam_CheckUserName2) String() string            { return proto.CompactTextString(m) }
 func (*PB_UserParam_CheckUserName2) ProtoMessage()               {}
-func (*PB_UserParam_CheckUserName2) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{0} }
+func (*PB_UserParam_CheckUserName2) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
 
 type PB_UserResponse_CheckUserName2 struct {
 }
@@ -31,7 +31,7 @@ type PB_UserResponse_CheckUserName2 struct {
 func (m *PB_UserResponse_CheckUserName2) Reset()                    { *m = PB_UserResponse_CheckUserName2{} }
 func (m *PB_UserResponse_CheckUserName2) String() string            { return proto.CompactTextString(m) }
 func (*PB_UserResponse_CheckUserName2) ProtoMessage()               {}
-func (*PB_UserResponse_CheckUserName2) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{1} }
+func (*PB_UserResponse_CheckUserName2) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
 
 func init() {
 	proto.RegisterType((*PB_UserParam_CheckUserName2)(nil), "PB_UserParam_CheckUserName2")
@@ -308,9 +308,9 @@ var _RPC_Auth_serviceDesc = grpc.ServiceDesc{
 	Metadata: "pb_rpc_auth2.proto",
 }
 
-func init() { proto.RegisterFile("pb_rpc_auth2.proto", fileDescriptor3) }
+func init() { proto.RegisterFile("pb_rpc_auth2.proto", fileDescriptor2) }
 
-var fileDescriptor3 = []byte{
+var fileDescriptor2 = []byte{
 	// 224 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x2a, 0x48, 0x8a, 0x2f,
 	0x2a, 0x48, 0x8e, 0x4f, 0x2c, 0x2d, 0xc9, 0x30, 0xd2, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x97, 0xe2,

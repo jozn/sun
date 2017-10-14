@@ -8,7 +8,7 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 option go_package = "x";
 
 import "pb_enums.proto";
-import "pb_chat.proto";
+//import "pb_chat.proto";
 import "pb_views.proto";
 
 // AddNewTextMessage
@@ -186,6 +186,20 @@ message PB_MsgResponse_GetFreshAllDirectMessagesList {
     bool HasMore = 2;
 }
 ////////////////////////////////////////////////////////
+message PB_MessageForwardedFrom {
+    int64 RoomId = 1;
+    RoomTypeEnum RoomTypeEnum = 2;
+    int64 MessageId = 3;
+    int32 MessageSeq = 4;
+}
+
+message PB_MessagesCollections {
+    repeated int64 DirectMessagesIds = 10;
+    repeated int64 GroupMessagesIds = 20;
+    repeated int64 BroadCatMessagesIds = 21;
+}
+
+
 
 service RPC_Msg {
     rpc AddNewTextMessage (PB_MsgParam_AddNewTextMessage) returns (PB_MsgResponse_AddNewTextMessage);
