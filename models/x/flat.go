@@ -2012,6 +2012,2500 @@ func (m *UserView_Flat) ToPB() *UserView {
 //folding
 var UserView__FOlD = &UserView{}
 
+type PB_Activity_Flat struct {
+	Id           int
+	ActorUserId  int
+	ActionTypeId int
+	RowId        int
+	RootId       int
+	RefId        int
+	CreatedAt    int
+}
+
+//ToPB
+func (m *PB_Activity) ToFlat() *PB_Activity_Flat {
+	r := &PB_Activity_Flat{
+		Id:           int(m.Id),
+		ActorUserId:  int(m.ActorUserId),
+		ActionTypeId: int(m.ActionTypeId),
+		RowId:        int(m.RowId),
+		RootId:       int(m.RootId),
+		RefId:        int(m.RefId),
+		CreatedAt:    int(m.CreatedAt),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Activity_Flat) ToPB() *PB_Activity {
+	r := &PB_Activity{
+		Id:           int64(m.Id),
+		ActorUserId:  int32(m.ActorUserId),
+		ActionTypeId: int32(m.ActionTypeId),
+		RowId:        int32(m.RowId),
+		RootId:       int32(m.RootId),
+		RefId:        int64(m.RefId),
+		CreatedAt:    int32(m.CreatedAt),
+	}
+	return r
+}
+
+//folding
+var PB_Activity__FOlD = &PB_Activity{
+	Id:           0,
+	ActorUserId:  0,
+	ActionTypeId: 0,
+	RowId:        0,
+	RootId:       0,
+	RefId:        0,
+	CreatedAt:    0,
+}
+
+type PB_Bucket_Flat struct {
+	BucketId            int
+	BucketName          string
+	Server1Id           int
+	Server2Id           int
+	BackupServerId      int
+	ContentObjectTypeId int
+	ContentObjectCount  int
+	CreatedTime         int
+}
+
+//ToPB
+func (m *PB_Bucket) ToFlat() *PB_Bucket_Flat {
+	r := &PB_Bucket_Flat{
+		BucketId:            int(m.BucketId),
+		BucketName:          m.BucketName,
+		Server1Id:           int(m.Server1Id),
+		Server2Id:           int(m.Server2Id),
+		BackupServerId:      int(m.BackupServerId),
+		ContentObjectTypeId: int(m.ContentObjectTypeId),
+		ContentObjectCount:  int(m.ContentObjectCount),
+		CreatedTime:         int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Bucket_Flat) ToPB() *PB_Bucket {
+	r := &PB_Bucket{
+		BucketId:            int32(m.BucketId),
+		BucketName:          m.BucketName,
+		Server1Id:           int32(m.Server1Id),
+		Server2Id:           int32(m.Server2Id),
+		BackupServerId:      int32(m.BackupServerId),
+		ContentObjectTypeId: int32(m.ContentObjectTypeId),
+		ContentObjectCount:  int32(m.ContentObjectCount),
+		CreatedTime:         int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_Bucket__FOlD = &PB_Bucket{
+	BucketId:            0,
+	BucketName:          "",
+	Server1Id:           0,
+	Server2Id:           0,
+	BackupServerId:      0,
+	ContentObjectTypeId: 0,
+	ContentObjectCount:  0,
+	CreatedTime:         0,
+}
+
+type PB_Chat_Flat struct {
+	ChatKey              string
+	RoomKey              string
+	RoomTypeEnumId       int
+	UserId               int
+	PeerUserId           int
+	GroupId              int
+	CreatedSe            int
+	StartMessageIdFrom   int
+	LastSeenMessageId    int
+	UpdatedMs            int
+	LastMessageId        int
+	LastDeletedMessageId int
+	LastSeqSeen          int
+	LastSeqDelete        int
+	CurrentSeq           int
+}
+
+//ToPB
+func (m *PB_Chat) ToFlat() *PB_Chat_Flat {
+	r := &PB_Chat_Flat{
+		ChatKey:              m.ChatKey,
+		RoomKey:              m.RoomKey,
+		RoomTypeEnumId:       int(m.RoomTypeEnumId),
+		UserId:               int(m.UserId),
+		PeerUserId:           int(m.PeerUserId),
+		GroupId:              int(m.GroupId),
+		CreatedSe:            int(m.CreatedSe),
+		StartMessageIdFrom:   int(m.StartMessageIdFrom),
+		LastSeenMessageId:    int(m.LastSeenMessageId),
+		UpdatedMs:            int(m.UpdatedMs),
+		LastMessageId:        int(m.LastMessageId),
+		LastDeletedMessageId: int(m.LastDeletedMessageId),
+		LastSeqSeen:          int(m.LastSeqSeen),
+		LastSeqDelete:        int(m.LastSeqDelete),
+		CurrentSeq:           int(m.CurrentSeq),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Chat_Flat) ToPB() *PB_Chat {
+	r := &PB_Chat{
+		ChatKey:              m.ChatKey,
+		RoomKey:              m.RoomKey,
+		RoomTypeEnumId:       int32(m.RoomTypeEnumId),
+		UserId:               int32(m.UserId),
+		PeerUserId:           int32(m.PeerUserId),
+		GroupId:              int64(m.GroupId),
+		CreatedSe:            int32(m.CreatedSe),
+		StartMessageIdFrom:   int64(m.StartMessageIdFrom),
+		LastSeenMessageId:    int64(m.LastSeenMessageId),
+		UpdatedMs:            int64(m.UpdatedMs),
+		LastMessageId:        int64(m.LastMessageId),
+		LastDeletedMessageId: int64(m.LastDeletedMessageId),
+		LastSeqSeen:          int32(m.LastSeqSeen),
+		LastSeqDelete:        int32(m.LastSeqDelete),
+		CurrentSeq:           int32(m.CurrentSeq),
+	}
+	return r
+}
+
+//folding
+var PB_Chat__FOlD = &PB_Chat{
+	ChatKey:              "",
+	RoomKey:              "",
+	RoomTypeEnumId:       0,
+	UserId:               0,
+	PeerUserId:           0,
+	GroupId:              0,
+	CreatedSe:            0,
+	StartMessageIdFrom:   0,
+	LastSeenMessageId:    0,
+	UpdatedMs:            0,
+	LastMessageId:        0,
+	LastDeletedMessageId: 0,
+	LastSeqSeen:          0,
+	LastSeqDelete:        0,
+	CurrentSeq:           0,
+}
+
+type PB_Comment_Flat struct {
+	Id          int
+	UserId      int
+	PostId      int
+	Text        string
+	CreatedTime int
+}
+
+//ToPB
+func (m *PB_Comment) ToFlat() *PB_Comment_Flat {
+	r := &PB_Comment_Flat{
+		Id:          int(m.Id),
+		UserId:      int(m.UserId),
+		PostId:      int(m.PostId),
+		Text:        m.Text,
+		CreatedTime: int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Comment_Flat) ToPB() *PB_Comment {
+	r := &PB_Comment{
+		Id:          int32(m.Id),
+		UserId:      int32(m.UserId),
+		PostId:      int32(m.PostId),
+		Text:        m.Text,
+		CreatedTime: int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_Comment__FOlD = &PB_Comment{
+	Id:          0,
+	UserId:      0,
+	PostId:      0,
+	Text:        "",
+	CreatedTime: 0,
+}
+
+type PB_DirectMessage_Flat struct {
+	MessageId            int
+	MessageKey           string
+	RoomKey              string
+	UserId               int
+	MessageFileId        int
+	MessageTypeEnumId    int
+	Text                 string
+	CreatedSe            int
+	PeerReceivedTime     int
+	PeerSeenTime         int
+	DeliviryStatusEnumId int
+}
+
+//ToPB
+func (m *PB_DirectMessage) ToFlat() *PB_DirectMessage_Flat {
+	r := &PB_DirectMessage_Flat{
+		MessageId:            int(m.MessageId),
+		MessageKey:           m.MessageKey,
+		RoomKey:              m.RoomKey,
+		UserId:               int(m.UserId),
+		MessageFileId:        int(m.MessageFileId),
+		MessageTypeEnumId:    int(m.MessageTypeEnumId),
+		Text:                 m.Text,
+		CreatedSe:            int(m.CreatedSe),
+		PeerReceivedTime:     int(m.PeerReceivedTime),
+		PeerSeenTime:         int(m.PeerSeenTime),
+		DeliviryStatusEnumId: int(m.DeliviryStatusEnumId),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_DirectMessage_Flat) ToPB() *PB_DirectMessage {
+	r := &PB_DirectMessage{
+		MessageId:            int64(m.MessageId),
+		MessageKey:           m.MessageKey,
+		RoomKey:              m.RoomKey,
+		UserId:               int32(m.UserId),
+		MessageFileId:        int64(m.MessageFileId),
+		MessageTypeEnumId:    int32(m.MessageTypeEnumId),
+		Text:                 m.Text,
+		CreatedSe:            int32(m.CreatedSe),
+		PeerReceivedTime:     int32(m.PeerReceivedTime),
+		PeerSeenTime:         int32(m.PeerSeenTime),
+		DeliviryStatusEnumId: int32(m.DeliviryStatusEnumId),
+	}
+	return r
+}
+
+//folding
+var PB_DirectMessage__FOlD = &PB_DirectMessage{
+	MessageId:            0,
+	MessageKey:           "",
+	RoomKey:              "",
+	UserId:               0,
+	MessageFileId:        0,
+	MessageTypeEnumId:    0,
+	Text:                 "",
+	CreatedSe:            0,
+	PeerReceivedTime:     0,
+	PeerSeenTime:         0,
+	DeliviryStatusEnumId: 0,
+}
+
+type PB_DirectToMessage_Flat struct {
+	Id           int
+	ChatKey      string
+	MessageId    int
+	SourceEnumId int
+}
+
+//ToPB
+func (m *PB_DirectToMessage) ToFlat() *PB_DirectToMessage_Flat {
+	r := &PB_DirectToMessage_Flat{
+		Id:           int(m.Id),
+		ChatKey:      m.ChatKey,
+		MessageId:    int(m.MessageId),
+		SourceEnumId: int(m.SourceEnumId),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_DirectToMessage_Flat) ToPB() *PB_DirectToMessage {
+	r := &PB_DirectToMessage{
+		Id:           int64(m.Id),
+		ChatKey:      m.ChatKey,
+		MessageId:    int64(m.MessageId),
+		SourceEnumId: int32(m.SourceEnumId),
+	}
+	return r
+}
+
+//folding
+var PB_DirectToMessage__FOlD = &PB_DirectToMessage{
+	Id:           0,
+	ChatKey:      "",
+	MessageId:    0,
+	SourceEnumId: 0,
+}
+
+type PB_DirectUpdate_Flat struct {
+	DirectUpdateId int
+	ToUserId       int
+	MessageId      int
+	MessageFileId  int
+	OtherId        int
+	ChatKey        string
+	PeerUserId     int
+	EventType      int
+	RoomLogTypeId  int
+	FromSeq        int
+	ToSeq          int
+	ExtraPB        []byte
+	ExtraJson      string
+	AtTimeMs       int
+}
+
+//ToPB
+func (m *PB_DirectUpdate) ToFlat() *PB_DirectUpdate_Flat {
+	r := &PB_DirectUpdate_Flat{
+		DirectUpdateId: int(m.DirectUpdateId),
+		ToUserId:       int(m.ToUserId),
+		MessageId:      int(m.MessageId),
+		MessageFileId:  int(m.MessageFileId),
+		OtherId:        int(m.OtherId),
+		ChatKey:        m.ChatKey,
+		PeerUserId:     int(m.PeerUserId),
+		EventType:      int(m.EventType),
+		RoomLogTypeId:  int(m.RoomLogTypeId),
+		FromSeq:        int(m.FromSeq),
+		ToSeq:          int(m.ToSeq),
+		ExtraPB:        []byte(m.ExtraPB),
+		ExtraJson:      m.ExtraJson,
+		AtTimeMs:       int(m.AtTimeMs),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_DirectUpdate_Flat) ToPB() *PB_DirectUpdate {
+	r := &PB_DirectUpdate{
+		DirectUpdateId: int64(m.DirectUpdateId),
+		ToUserId:       int32(m.ToUserId),
+		MessageId:      int64(m.MessageId),
+		MessageFileId:  int64(m.MessageFileId),
+		OtherId:        int64(m.OtherId),
+		ChatKey:        m.ChatKey,
+		PeerUserId:     int32(m.PeerUserId),
+		EventType:      int32(m.EventType),
+		RoomLogTypeId:  int32(m.RoomLogTypeId),
+		FromSeq:        int32(m.FromSeq),
+		ToSeq:          int32(m.ToSeq),
+		ExtraPB:        m.ExtraPB,
+		ExtraJson:      m.ExtraJson,
+		AtTimeMs:       int64(m.AtTimeMs),
+	}
+	return r
+}
+
+//folding
+var PB_DirectUpdate__FOlD = &PB_DirectUpdate{
+	DirectUpdateId: 0,
+	ToUserId:       0,
+	MessageId:      0,
+	MessageFileId:  0,
+	OtherId:        0,
+	ChatKey:        "",
+	PeerUserId:     0,
+	EventType:      0,
+	RoomLogTypeId:  0,
+	FromSeq:        0,
+	ToSeq:          0,
+	ExtraPB:        []byte{},
+	ExtraJson:      "",
+	AtTimeMs:       0,
+}
+
+type PB_FollowingList_Flat struct {
+	Id          int
+	UserId      int
+	ListType    int
+	Name        string
+	Count       int
+	IsAuto      int
+	IsPimiry    int
+	CreatedTime int
+}
+
+//ToPB
+func (m *PB_FollowingList) ToFlat() *PB_FollowingList_Flat {
+	r := &PB_FollowingList_Flat{
+		Id:          int(m.Id),
+		UserId:      int(m.UserId),
+		ListType:    int(m.ListType),
+		Name:        m.Name,
+		Count:       int(m.Count),
+		IsAuto:      int(m.IsAuto),
+		IsPimiry:    int(m.IsPimiry),
+		CreatedTime: int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_FollowingList_Flat) ToPB() *PB_FollowingList {
+	r := &PB_FollowingList{
+		Id:          int32(m.Id),
+		UserId:      int32(m.UserId),
+		ListType:    int32(m.ListType),
+		Name:        m.Name,
+		Count:       int32(m.Count),
+		IsAuto:      int32(m.IsAuto),
+		IsPimiry:    int32(m.IsPimiry),
+		CreatedTime: int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_FollowingList__FOlD = &PB_FollowingList{
+	Id:          0,
+	UserId:      0,
+	ListType:    0,
+	Name:        "",
+	Count:       0,
+	IsAuto:      0,
+	IsPimiry:    0,
+	CreatedTime: 0,
+}
+
+type PB_FollowingListMember_Flat struct {
+	Id             int
+	ListId         int
+	UserId         int
+	FollowedUserId int
+	FollowType     int
+	UpdatedTimeMs  int
+}
+
+//ToPB
+func (m *PB_FollowingListMember) ToFlat() *PB_FollowingListMember_Flat {
+	r := &PB_FollowingListMember_Flat{
+		Id:             int(m.Id),
+		ListId:         int(m.ListId),
+		UserId:         int(m.UserId),
+		FollowedUserId: int(m.FollowedUserId),
+		FollowType:     int(m.FollowType),
+		UpdatedTimeMs:  int(m.UpdatedTimeMs),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_FollowingListMember_Flat) ToPB() *PB_FollowingListMember {
+	r := &PB_FollowingListMember{
+		Id:             int64(m.Id),
+		ListId:         int32(m.ListId),
+		UserId:         int32(m.UserId),
+		FollowedUserId: int32(m.FollowedUserId),
+		FollowType:     int32(m.FollowType),
+		UpdatedTimeMs:  int64(m.UpdatedTimeMs),
+	}
+	return r
+}
+
+//folding
+var PB_FollowingListMember__FOlD = &PB_FollowingListMember{
+	Id:             0,
+	ListId:         0,
+	UserId:         0,
+	FollowedUserId: 0,
+	FollowType:     0,
+	UpdatedTimeMs:  0,
+}
+
+type PB_FollowingListMemberHistory_Flat struct {
+	Id             int
+	ListId         int
+	UserId         int
+	FollowedUserId int
+	FollowType     int
+	UpdatedTimeMs  int
+	FollowId       int
+}
+
+//ToPB
+func (m *PB_FollowingListMemberHistory) ToFlat() *PB_FollowingListMemberHistory_Flat {
+	r := &PB_FollowingListMemberHistory_Flat{
+		Id:             int(m.Id),
+		ListId:         int(m.ListId),
+		UserId:         int(m.UserId),
+		FollowedUserId: int(m.FollowedUserId),
+		FollowType:     int(m.FollowType),
+		UpdatedTimeMs:  int(m.UpdatedTimeMs),
+		FollowId:       int(m.FollowId),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_FollowingListMemberHistory_Flat) ToPB() *PB_FollowingListMemberHistory {
+	r := &PB_FollowingListMemberHistory{
+		Id:             int64(m.Id),
+		ListId:         int32(m.ListId),
+		UserId:         int32(m.UserId),
+		FollowedUserId: int32(m.FollowedUserId),
+		FollowType:     int32(m.FollowType),
+		UpdatedTimeMs:  int64(m.UpdatedTimeMs),
+		FollowId:       int32(m.FollowId),
+	}
+	return r
+}
+
+//folding
+var PB_FollowingListMemberHistory__FOlD = &PB_FollowingListMemberHistory{
+	Id:             0,
+	ListId:         0,
+	UserId:         0,
+	FollowedUserId: 0,
+	FollowType:     0,
+	UpdatedTimeMs:  0,
+	FollowId:       0,
+}
+
+type PB_GeneralLog_Flat struct {
+	Id        int
+	ToUserId  int
+	TargetId  int
+	LogTypeId int
+	ExtraPB   []byte
+	ExtraJson string
+	CreatedMs int
+}
+
+//ToPB
+func (m *PB_GeneralLog) ToFlat() *PB_GeneralLog_Flat {
+	r := &PB_GeneralLog_Flat{
+		Id:        int(m.Id),
+		ToUserId:  int(m.ToUserId),
+		TargetId:  int(m.TargetId),
+		LogTypeId: int(m.LogTypeId),
+		ExtraPB:   []byte(m.ExtraPB),
+		ExtraJson: m.ExtraJson,
+		CreatedMs: int(m.CreatedMs),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_GeneralLog_Flat) ToPB() *PB_GeneralLog {
+	r := &PB_GeneralLog{
+		Id:        int64(m.Id),
+		ToUserId:  int32(m.ToUserId),
+		TargetId:  int32(m.TargetId),
+		LogTypeId: int32(m.LogTypeId),
+		ExtraPB:   m.ExtraPB,
+		ExtraJson: m.ExtraJson,
+		CreatedMs: int64(m.CreatedMs),
+	}
+	return r
+}
+
+//folding
+var PB_GeneralLog__FOlD = &PB_GeneralLog{
+	Id:        0,
+	ToUserId:  0,
+	TargetId:  0,
+	LogTypeId: 0,
+	ExtraPB:   []byte{},
+	ExtraJson: "",
+	CreatedMs: 0,
+}
+
+type PB_Group_Flat struct {
+	GroupId          int
+	GroupName        string
+	MembersCount     int
+	GroupPrivacyEnum int
+	CreatorUserId    int
+	CreatedTime      int
+	UpdatedMs        int
+	CurrentSeq       int
+}
+
+//ToPB
+func (m *PB_Group) ToFlat() *PB_Group_Flat {
+	r := &PB_Group_Flat{
+		GroupId:          int(m.GroupId),
+		GroupName:        m.GroupName,
+		MembersCount:     int(m.MembersCount),
+		GroupPrivacyEnum: int(m.GroupPrivacyEnum),
+		CreatorUserId:    int(m.CreatorUserId),
+		CreatedTime:      int(m.CreatedTime),
+		UpdatedMs:        int(m.UpdatedMs),
+		CurrentSeq:       int(m.CurrentSeq),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Group_Flat) ToPB() *PB_Group {
+	r := &PB_Group{
+		GroupId:          int64(m.GroupId),
+		GroupName:        m.GroupName,
+		MembersCount:     int32(m.MembersCount),
+		GroupPrivacyEnum: int32(m.GroupPrivacyEnum),
+		CreatorUserId:    int32(m.CreatorUserId),
+		CreatedTime:      int32(m.CreatedTime),
+		UpdatedMs:        int64(m.UpdatedMs),
+		CurrentSeq:       int32(m.CurrentSeq),
+	}
+	return r
+}
+
+//folding
+var PB_Group__FOlD = &PB_Group{
+	GroupId:          0,
+	GroupName:        "",
+	MembersCount:     0,
+	GroupPrivacyEnum: 0,
+	CreatorUserId:    0,
+	CreatedTime:      0,
+	UpdatedMs:        0,
+	CurrentSeq:       0,
+}
+
+type PB_GroupMember_Flat struct {
+	Id              int
+	GroupId         int
+	GroupKey        string
+	UserId          int
+	ByUserId        int
+	GroupRoleEnumId int
+	CreatedTime     int
+}
+
+//ToPB
+func (m *PB_GroupMember) ToFlat() *PB_GroupMember_Flat {
+	r := &PB_GroupMember_Flat{
+		Id:              int(m.Id),
+		GroupId:         int(m.GroupId),
+		GroupKey:        m.GroupKey,
+		UserId:          int(m.UserId),
+		ByUserId:        int(m.ByUserId),
+		GroupRoleEnumId: int(m.GroupRoleEnumId),
+		CreatedTime:     int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_GroupMember_Flat) ToPB() *PB_GroupMember {
+	r := &PB_GroupMember{
+		Id:              int64(m.Id),
+		GroupId:         int64(m.GroupId),
+		GroupKey:        m.GroupKey,
+		UserId:          int32(m.UserId),
+		ByUserId:        int32(m.ByUserId),
+		GroupRoleEnumId: int32(m.GroupRoleEnumId),
+		CreatedTime:     int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_GroupMember__FOlD = &PB_GroupMember{
+	Id:              0,
+	GroupId:         0,
+	GroupKey:        "",
+	UserId:          0,
+	ByUserId:        0,
+	GroupRoleEnumId: 0,
+	CreatedTime:     0,
+}
+
+type PB_GroupMessage_Flat struct {
+	MessageId          int
+	RoomKey            string
+	UserId             int
+	MessageFileId      int
+	MessageTypeEnum    int
+	Text               string
+	CreatedMs          int
+	DeliveryStatusEnum int
+}
+
+//ToPB
+func (m *PB_GroupMessage) ToFlat() *PB_GroupMessage_Flat {
+	r := &PB_GroupMessage_Flat{
+		MessageId:          int(m.MessageId),
+		RoomKey:            m.RoomKey,
+		UserId:             int(m.UserId),
+		MessageFileId:      int(m.MessageFileId),
+		MessageTypeEnum:    int(m.MessageTypeEnum),
+		Text:               m.Text,
+		CreatedMs:          int(m.CreatedMs),
+		DeliveryStatusEnum: int(m.DeliveryStatusEnum),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_GroupMessage_Flat) ToPB() *PB_GroupMessage {
+	r := &PB_GroupMessage{
+		MessageId:          int64(m.MessageId),
+		RoomKey:            m.RoomKey,
+		UserId:             int32(m.UserId),
+		MessageFileId:      int64(m.MessageFileId),
+		MessageTypeEnum:    int32(m.MessageTypeEnum),
+		Text:               m.Text,
+		CreatedMs:          int64(m.CreatedMs),
+		DeliveryStatusEnum: int32(m.DeliveryStatusEnum),
+	}
+	return r
+}
+
+//folding
+var PB_GroupMessage__FOlD = &PB_GroupMessage{
+	MessageId:          0,
+	RoomKey:            "",
+	UserId:             0,
+	MessageFileId:      0,
+	MessageTypeEnum:    0,
+	Text:               "",
+	CreatedMs:          0,
+	DeliveryStatusEnum: 0,
+}
+
+type PB_GroupToMessage_Flat struct {
+	Id         int
+	GroupId    int
+	MessageId  int
+	CreatedMs  int
+	StatusEnum int
+}
+
+//ToPB
+func (m *PB_GroupToMessage) ToFlat() *PB_GroupToMessage_Flat {
+	r := &PB_GroupToMessage_Flat{
+		Id:         int(m.Id),
+		GroupId:    int(m.GroupId),
+		MessageId:  int(m.MessageId),
+		CreatedMs:  int(m.CreatedMs),
+		StatusEnum: int(m.StatusEnum),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_GroupToMessage_Flat) ToPB() *PB_GroupToMessage {
+	r := &PB_GroupToMessage{
+		Id:         int64(m.Id),
+		GroupId:    int64(m.GroupId),
+		MessageId:  int64(m.MessageId),
+		CreatedMs:  int64(m.CreatedMs),
+		StatusEnum: int32(m.StatusEnum),
+	}
+	return r
+}
+
+//folding
+var PB_GroupToMessage__FOlD = &PB_GroupToMessage{
+	Id:         0,
+	GroupId:    0,
+	MessageId:  0,
+	CreatedMs:  0,
+	StatusEnum: 0,
+}
+
+type PB_Like_Flat struct {
+	Id          int
+	PostId      int
+	PostTypeId  int
+	UserId      int
+	TypeId      int
+	CreatedTime int
+}
+
+//ToPB
+func (m *PB_Like) ToFlat() *PB_Like_Flat {
+	r := &PB_Like_Flat{
+		Id:          int(m.Id),
+		PostId:      int(m.PostId),
+		PostTypeId:  int(m.PostTypeId),
+		UserId:      int(m.UserId),
+		TypeId:      int(m.TypeId),
+		CreatedTime: int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Like_Flat) ToPB() *PB_Like {
+	r := &PB_Like{
+		Id:          int32(m.Id),
+		PostId:      int32(m.PostId),
+		PostTypeId:  int32(m.PostTypeId),
+		UserId:      int32(m.UserId),
+		TypeId:      int32(m.TypeId),
+		CreatedTime: int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_Like__FOlD = &PB_Like{
+	Id:          0,
+	PostId:      0,
+	PostTypeId:  0,
+	UserId:      0,
+	TypeId:      0,
+	CreatedTime: 0,
+}
+
+type PB_LogChange_Flat struct {
+	Id int
+	T  string
+}
+
+//ToPB
+func (m *PB_LogChange) ToFlat() *PB_LogChange_Flat {
+	r := &PB_LogChange_Flat{
+		Id: int(m.Id),
+		T:  m.T,
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_LogChange_Flat) ToPB() *PB_LogChange {
+	r := &PB_LogChange{
+		Id: int32(m.Id),
+		T:  m.T,
+	}
+	return r
+}
+
+//folding
+var PB_LogChange__FOlD = &PB_LogChange{
+	Id: 0,
+	T:  "",
+}
+
+type PB_Media_Flat struct {
+	Id          int
+	UserId      int
+	PostId      int
+	AlbumId     int
+	TypeId      int
+	CreatedTime int
+	Src         string
+}
+
+//ToPB
+func (m *PB_Media) ToFlat() *PB_Media_Flat {
+	r := &PB_Media_Flat{
+		Id:          int(m.Id),
+		UserId:      int(m.UserId),
+		PostId:      int(m.PostId),
+		AlbumId:     int(m.AlbumId),
+		TypeId:      int(m.TypeId),
+		CreatedTime: int(m.CreatedTime),
+		Src:         m.Src,
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Media_Flat) ToPB() *PB_Media {
+	r := &PB_Media{
+		Id:          int32(m.Id),
+		UserId:      int32(m.UserId),
+		PostId:      int32(m.PostId),
+		AlbumId:     int32(m.AlbumId),
+		TypeId:      int32(m.TypeId),
+		CreatedTime: int32(m.CreatedTime),
+		Src:         m.Src,
+	}
+	return r
+}
+
+//folding
+var PB_Media__FOlD = &PB_Media{
+	Id:          0,
+	UserId:      0,
+	PostId:      0,
+	AlbumId:     0,
+	TypeId:      0,
+	CreatedTime: 0,
+	Src:         "",
+}
+
+type PB_MessageFile_Flat struct {
+	MessageFileId   int
+	MessageFileKey  string
+	OriginalUserId  int
+	Name            string
+	Size            int
+	FileTypeEnumId  int
+	Width           int
+	Height          int
+	Duration        int
+	Extension       string
+	HashMd5         string
+	HashAccess      int
+	CreatedSe       int
+	ServerSrc       string
+	ServerPath      string
+	ServerThumbPath string
+	BucketId        string
+	ServerId        int
+	CanDel          int
+}
+
+//ToPB
+func (m *PB_MessageFile) ToFlat() *PB_MessageFile_Flat {
+	r := &PB_MessageFile_Flat{
+		MessageFileId:   int(m.MessageFileId),
+		MessageFileKey:  m.MessageFileKey,
+		OriginalUserId:  int(m.OriginalUserId),
+		Name:            m.Name,
+		Size:            int(m.Size),
+		FileTypeEnumId:  int(m.FileTypeEnumId),
+		Width:           int(m.Width),
+		Height:          int(m.Height),
+		Duration:        int(m.Duration),
+		Extension:       m.Extension,
+		HashMd5:         m.HashMd5,
+		HashAccess:      int(m.HashAccess),
+		CreatedSe:       int(m.CreatedSe),
+		ServerSrc:       m.ServerSrc,
+		ServerPath:      m.ServerPath,
+		ServerThumbPath: m.ServerThumbPath,
+		BucketId:        m.BucketId,
+		ServerId:        int(m.ServerId),
+		CanDel:          int(m.CanDel),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_MessageFile_Flat) ToPB() *PB_MessageFile {
+	r := &PB_MessageFile{
+		MessageFileId:   int64(m.MessageFileId),
+		MessageFileKey:  m.MessageFileKey,
+		OriginalUserId:  int32(m.OriginalUserId),
+		Name:            m.Name,
+		Size:            int32(m.Size),
+		FileTypeEnumId:  int32(m.FileTypeEnumId),
+		Width:           int32(m.Width),
+		Height:          int32(m.Height),
+		Duration:        int32(m.Duration),
+		Extension:       m.Extension,
+		HashMd5:         m.HashMd5,
+		HashAccess:      int64(m.HashAccess),
+		CreatedSe:       int32(m.CreatedSe),
+		ServerSrc:       m.ServerSrc,
+		ServerPath:      m.ServerPath,
+		ServerThumbPath: m.ServerThumbPath,
+		BucketId:        m.BucketId,
+		ServerId:        int32(m.ServerId),
+		CanDel:          int32(m.CanDel),
+	}
+	return r
+}
+
+//folding
+var PB_MessageFile__FOlD = &PB_MessageFile{
+	MessageFileId:   0,
+	MessageFileKey:  "",
+	OriginalUserId:  0,
+	Name:            "",
+	Size:            0,
+	FileTypeEnumId:  0,
+	Width:           0,
+	Height:          0,
+	Duration:        0,
+	Extension:       "",
+	HashMd5:         "",
+	HashAccess:      0,
+	CreatedSe:       0,
+	ServerSrc:       "",
+	ServerPath:      "",
+	ServerThumbPath: "",
+	BucketId:        "",
+	ServerId:        0,
+	CanDel:          0,
+}
+
+type PB_Notification_Flat struct {
+	Id           int
+	ForUserId    int
+	ActorUserId  int
+	ActionTypeId int
+	ObjectTypeId int
+	RowId        int
+	RootId       int
+	RefId        int
+	SeenStatus   int
+	CreatedTime  int
+}
+
+//ToPB
+func (m *PB_Notification) ToFlat() *PB_Notification_Flat {
+	r := &PB_Notification_Flat{
+		Id:           int(m.Id),
+		ForUserId:    int(m.ForUserId),
+		ActorUserId:  int(m.ActorUserId),
+		ActionTypeId: int(m.ActionTypeId),
+		ObjectTypeId: int(m.ObjectTypeId),
+		RowId:        int(m.RowId),
+		RootId:       int(m.RootId),
+		RefId:        int(m.RefId),
+		SeenStatus:   int(m.SeenStatus),
+		CreatedTime:  int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Notification_Flat) ToPB() *PB_Notification {
+	r := &PB_Notification{
+		Id:           int64(m.Id),
+		ForUserId:    int32(m.ForUserId),
+		ActorUserId:  int32(m.ActorUserId),
+		ActionTypeId: int32(m.ActionTypeId),
+		ObjectTypeId: int32(m.ObjectTypeId),
+		RowId:        int32(m.RowId),
+		RootId:       int32(m.RootId),
+		RefId:        int32(m.RefId),
+		SeenStatus:   int32(m.SeenStatus),
+		CreatedTime:  int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_Notification__FOlD = &PB_Notification{
+	Id:           0,
+	ForUserId:    0,
+	ActorUserId:  0,
+	ActionTypeId: 0,
+	ObjectTypeId: 0,
+	RowId:        0,
+	RootId:       0,
+	RefId:        0,
+	SeenStatus:   0,
+	CreatedTime:  0,
+}
+
+type PB_NotificationRemoved_Flat struct {
+	NotificationId int
+	ForUserId      int
+}
+
+//ToPB
+func (m *PB_NotificationRemoved) ToFlat() *PB_NotificationRemoved_Flat {
+	r := &PB_NotificationRemoved_Flat{
+		NotificationId: int(m.NotificationId),
+		ForUserId:      int(m.ForUserId),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_NotificationRemoved_Flat) ToPB() *PB_NotificationRemoved {
+	r := &PB_NotificationRemoved{
+		NotificationId: int32(m.NotificationId),
+		ForUserId:      int32(m.ForUserId),
+	}
+	return r
+}
+
+//folding
+var PB_NotificationRemoved__FOlD = &PB_NotificationRemoved{
+	NotificationId: 0,
+	ForUserId:      0,
+}
+
+type PB_OldMessage_Flat struct {
+	Id            int
+	Uid           int
+	UserId        int
+	MessageKey    string
+	RoomKey       string
+	MessageType   int
+	RoomType      int
+	MsgFileId     int
+	DataPB        []byte
+	Data64        string
+	DataJson      string
+	CreatedTimeMs int
+}
+
+//ToPB
+func (m *PB_OldMessage) ToFlat() *PB_OldMessage_Flat {
+	r := &PB_OldMessage_Flat{
+		Id:            int(m.Id),
+		Uid:           int(m.Uid),
+		UserId:        int(m.UserId),
+		MessageKey:    m.MessageKey,
+		RoomKey:       m.RoomKey,
+		MessageType:   int(m.MessageType),
+		RoomType:      int(m.RoomType),
+		MsgFileId:     int(m.MsgFileId),
+		DataPB:        []byte(m.DataPB),
+		Data64:        m.Data64,
+		DataJson:      m.DataJson,
+		CreatedTimeMs: int(m.CreatedTimeMs),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_OldMessage_Flat) ToPB() *PB_OldMessage {
+	r := &PB_OldMessage{
+		Id:            int64(m.Id),
+		Uid:           int64(m.Uid),
+		UserId:        int64(m.UserId),
+		MessageKey:    m.MessageKey,
+		RoomKey:       m.RoomKey,
+		MessageType:   int32(m.MessageType),
+		RoomType:      int32(m.RoomType),
+		MsgFileId:     int64(m.MsgFileId),
+		DataPB:        m.DataPB,
+		Data64:        m.Data64,
+		DataJson:      m.DataJson,
+		CreatedTimeMs: int64(m.CreatedTimeMs),
+	}
+	return r
+}
+
+//folding
+var PB_OldMessage__FOlD = &PB_OldMessage{
+	Id:            0,
+	Uid:           0,
+	UserId:        0,
+	MessageKey:    "",
+	RoomKey:       "",
+	MessageType:   0,
+	RoomType:      0,
+	MsgFileId:     0,
+	DataPB:        []byte{},
+	Data64:        "",
+	DataJson:      "",
+	CreatedTimeMs: 0,
+}
+
+type PB_OldMsgFile_Flat struct {
+	Id          int
+	Name        string
+	Size        int
+	FileType    int
+	MimeType    string
+	Width       int
+	Height      int
+	Duration    int
+	Extension   string
+	ThumbData   []byte
+	ThumbData64 string
+	ServerSrc   string
+	ServerPath  string
+	ServerId    int
+	CanDel      int
+}
+
+//ToPB
+func (m *PB_OldMsgFile) ToFlat() *PB_OldMsgFile_Flat {
+	r := &PB_OldMsgFile_Flat{
+		Id:          int(m.Id),
+		Name:        m.Name,
+		Size:        int(m.Size),
+		FileType:    int(m.FileType),
+		MimeType:    m.MimeType,
+		Width:       int(m.Width),
+		Height:      int(m.Height),
+		Duration:    int(m.Duration),
+		Extension:   m.Extension,
+		ThumbData:   []byte(m.ThumbData),
+		ThumbData64: m.ThumbData64,
+		ServerSrc:   m.ServerSrc,
+		ServerPath:  m.ServerPath,
+		ServerId:    int(m.ServerId),
+		CanDel:      int(m.CanDel),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_OldMsgFile_Flat) ToPB() *PB_OldMsgFile {
+	r := &PB_OldMsgFile{
+		Id:          int64(m.Id),
+		Name:        m.Name,
+		Size:        int32(m.Size),
+		FileType:    int32(m.FileType),
+		MimeType:    m.MimeType,
+		Width:       int32(m.Width),
+		Height:      int32(m.Height),
+		Duration:    int32(m.Duration),
+		Extension:   m.Extension,
+		ThumbData:   m.ThumbData,
+		ThumbData64: m.ThumbData64,
+		ServerSrc:   m.ServerSrc,
+		ServerPath:  m.ServerPath,
+		ServerId:    int32(m.ServerId),
+		CanDel:      int32(m.CanDel),
+	}
+	return r
+}
+
+//folding
+var PB_OldMsgFile__FOlD = &PB_OldMsgFile{
+	Id:          0,
+	Name:        "",
+	Size:        0,
+	FileType:    0,
+	MimeType:    "",
+	Width:       0,
+	Height:      0,
+	Duration:    0,
+	Extension:   "",
+	ThumbData:   []byte{},
+	ThumbData64: "",
+	ServerSrc:   "",
+	ServerPath:  "",
+	ServerId:    0,
+	CanDel:      0,
+}
+
+type PB_OldMsgPush_Flat struct {
+	Id            int
+	Uid           int
+	ToUser        int
+	MsgUid        int
+	CreatedTimeMs int
+}
+
+//ToPB
+func (m *PB_OldMsgPush) ToFlat() *PB_OldMsgPush_Flat {
+	r := &PB_OldMsgPush_Flat{
+		Id:            int(m.Id),
+		Uid:           int(m.Uid),
+		ToUser:        int(m.ToUser),
+		MsgUid:        int(m.MsgUid),
+		CreatedTimeMs: int(m.CreatedTimeMs),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_OldMsgPush_Flat) ToPB() *PB_OldMsgPush {
+	r := &PB_OldMsgPush{
+		Id:            int64(m.Id),
+		Uid:           int64(m.Uid),
+		ToUser:        int64(m.ToUser),
+		MsgUid:        int64(m.MsgUid),
+		CreatedTimeMs: int64(m.CreatedTimeMs),
+	}
+	return r
+}
+
+//folding
+var PB_OldMsgPush__FOlD = &PB_OldMsgPush{
+	Id:            0,
+	Uid:           0,
+	ToUser:        0,
+	MsgUid:        0,
+	CreatedTimeMs: 0,
+}
+
+type PB_OldMsgPushEvent_Flat struct {
+	Id         int
+	Uid        int
+	ToUserId   int
+	MsgUid     int
+	MsgKey     string
+	RoomKey    string
+	PeerUserId int
+	EventType  int
+	AtTime     int
+}
+
+//ToPB
+func (m *PB_OldMsgPushEvent) ToFlat() *PB_OldMsgPushEvent_Flat {
+	r := &PB_OldMsgPushEvent_Flat{
+		Id:         int(m.Id),
+		Uid:        int(m.Uid),
+		ToUserId:   int(m.ToUserId),
+		MsgUid:     int(m.MsgUid),
+		MsgKey:     m.MsgKey,
+		RoomKey:    m.RoomKey,
+		PeerUserId: int(m.PeerUserId),
+		EventType:  int(m.EventType),
+		AtTime:     int(m.AtTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_OldMsgPushEvent_Flat) ToPB() *PB_OldMsgPushEvent {
+	r := &PB_OldMsgPushEvent{
+		Id:         int64(m.Id),
+		Uid:        int64(m.Uid),
+		ToUserId:   int32(m.ToUserId),
+		MsgUid:     int64(m.MsgUid),
+		MsgKey:     m.MsgKey,
+		RoomKey:    m.RoomKey,
+		PeerUserId: int32(m.PeerUserId),
+		EventType:  int32(m.EventType),
+		AtTime:     int32(m.AtTime),
+	}
+	return r
+}
+
+//folding
+var PB_OldMsgPushEvent__FOlD = &PB_OldMsgPushEvent{
+	Id:         0,
+	Uid:        0,
+	ToUserId:   0,
+	MsgUid:     0,
+	MsgKey:     "",
+	RoomKey:    "",
+	PeerUserId: 0,
+	EventType:  0,
+	AtTime:     0,
+}
+
+type PB_PhoneContact_Flat struct {
+	Id                    int
+	PhoneDisplayName      string
+	PhoneFamilyName       string
+	PhoneNumber           string
+	PhoneNormalizedNumber string
+	PhoneContactRowId     int
+	UserId                int
+	DeviceUuidId          int
+	CreatedTime           int
+	UpdatedTime           int
+}
+
+//ToPB
+func (m *PB_PhoneContact) ToFlat() *PB_PhoneContact_Flat {
+	r := &PB_PhoneContact_Flat{
+		Id:                    int(m.Id),
+		PhoneDisplayName:      m.PhoneDisplayName,
+		PhoneFamilyName:       m.PhoneFamilyName,
+		PhoneNumber:           m.PhoneNumber,
+		PhoneNormalizedNumber: m.PhoneNormalizedNumber,
+		PhoneContactRowId:     int(m.PhoneContactRowId),
+		UserId:                int(m.UserId),
+		DeviceUuidId:          int(m.DeviceUuidId),
+		CreatedTime:           int(m.CreatedTime),
+		UpdatedTime:           int(m.UpdatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_PhoneContact_Flat) ToPB() *PB_PhoneContact {
+	r := &PB_PhoneContact{
+		Id:                    int32(m.Id),
+		PhoneDisplayName:      m.PhoneDisplayName,
+		PhoneFamilyName:       m.PhoneFamilyName,
+		PhoneNumber:           m.PhoneNumber,
+		PhoneNormalizedNumber: m.PhoneNormalizedNumber,
+		PhoneContactRowId:     int32(m.PhoneContactRowId),
+		UserId:                int32(m.UserId),
+		DeviceUuidId:          int32(m.DeviceUuidId),
+		CreatedTime:           int32(m.CreatedTime),
+		UpdatedTime:           int32(m.UpdatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_PhoneContact__FOlD = &PB_PhoneContact{
+	Id:                    0,
+	PhoneDisplayName:      "",
+	PhoneFamilyName:       "",
+	PhoneNumber:           "",
+	PhoneNormalizedNumber: "",
+	PhoneContactRowId:     0,
+	UserId:                0,
+	DeviceUuidId:          0,
+	CreatedTime:           0,
+	UpdatedTime:           0,
+}
+
+type PB_Photo_Flat struct {
+	PhotoId     int
+	UserId      int
+	PostId      int
+	AlbumId     int
+	ImageTypeId int
+	Title       string
+	Src         string
+	PathSrc     string
+	BucketId    int
+	Width       int
+	Height      int
+	Ratio       float32
+	HashMd5     string
+	Color       string
+	CreatedTime int
+	W1080       int
+	W720        int
+	W480        int
+	W320        int
+	W160        int
+	W80         int
+}
+
+//ToPB
+func (m *PB_Photo) ToFlat() *PB_Photo_Flat {
+	r := &PB_Photo_Flat{
+		PhotoId:     int(m.PhotoId),
+		UserId:      int(m.UserId),
+		PostId:      int(m.PostId),
+		AlbumId:     int(m.AlbumId),
+		ImageTypeId: int(m.ImageTypeId),
+		Title:       m.Title,
+		Src:         m.Src,
+		PathSrc:     m.PathSrc,
+		BucketId:    int(m.BucketId),
+		Width:       int(m.Width),
+		Height:      int(m.Height),
+		Ratio:       float32(m.Ratio),
+		HashMd5:     m.HashMd5,
+		Color:       m.Color,
+		CreatedTime: int(m.CreatedTime),
+		W1080:       int(m.W1080),
+		W720:        int(m.W720),
+		W480:        int(m.W480),
+		W320:        int(m.W320),
+		W160:        int(m.W160),
+		W80:         int(m.W80),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Photo_Flat) ToPB() *PB_Photo {
+	r := &PB_Photo{
+		PhotoId:     int32(m.PhotoId),
+		UserId:      int32(m.UserId),
+		PostId:      int32(m.PostId),
+		AlbumId:     int32(m.AlbumId),
+		ImageTypeId: int32(m.ImageTypeId),
+		Title:       m.Title,
+		Src:         m.Src,
+		PathSrc:     m.PathSrc,
+		BucketId:    int32(m.BucketId),
+		Width:       int32(m.Width),
+		Height:      int32(m.Height),
+		Ratio:       m.Ratio,
+		HashMd5:     m.HashMd5,
+		Color:       m.Color,
+		CreatedTime: int32(m.CreatedTime),
+		W1080:       int32(m.W1080),
+		W720:        int32(m.W720),
+		W480:        int32(m.W480),
+		W320:        int32(m.W320),
+		W160:        int32(m.W160),
+		W80:         int32(m.W80),
+	}
+	return r
+}
+
+//folding
+var PB_Photo__FOlD = &PB_Photo{
+	PhotoId:     0,
+	UserId:      0,
+	PostId:      0,
+	AlbumId:     0,
+	ImageTypeId: 0,
+	Title:       "",
+	Src:         "",
+	PathSrc:     "",
+	BucketId:    0,
+	Width:       0,
+	Height:      0,
+	Ratio:       0.0,
+	HashMd5:     "",
+	Color:       "",
+	CreatedTime: 0,
+	W1080:       0,
+	W720:        0,
+	W480:        0,
+	W320:        0,
+	W160:        0,
+	W80:         0,
+}
+
+type PB_Post_Flat struct {
+	Id             int
+	UserId         int
+	TypeId         int
+	Text           string
+	FormatedText   string
+	MediaCount     int
+	SharedTo       int
+	DisableComment int
+	HasTag         int
+	LikesCount     int
+	CommentsCount  int
+	EditedTime     int
+	CreatedTime    int
+}
+
+//ToPB
+func (m *PB_Post) ToFlat() *PB_Post_Flat {
+	r := &PB_Post_Flat{
+		Id:             int(m.Id),
+		UserId:         int(m.UserId),
+		TypeId:         int(m.TypeId),
+		Text:           m.Text,
+		FormatedText:   m.FormatedText,
+		MediaCount:     int(m.MediaCount),
+		SharedTo:       int(m.SharedTo),
+		DisableComment: int(m.DisableComment),
+		HasTag:         int(m.HasTag),
+		LikesCount:     int(m.LikesCount),
+		CommentsCount:  int(m.CommentsCount),
+		EditedTime:     int(m.EditedTime),
+		CreatedTime:    int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Post_Flat) ToPB() *PB_Post {
+	r := &PB_Post{
+		Id:             int32(m.Id),
+		UserId:         int32(m.UserId),
+		TypeId:         int32(m.TypeId),
+		Text:           m.Text,
+		FormatedText:   m.FormatedText,
+		MediaCount:     int32(m.MediaCount),
+		SharedTo:       int32(m.SharedTo),
+		DisableComment: int32(m.DisableComment),
+		HasTag:         int32(m.HasTag),
+		LikesCount:     int32(m.LikesCount),
+		CommentsCount:  int32(m.CommentsCount),
+		EditedTime:     int32(m.EditedTime),
+		CreatedTime:    int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_Post__FOlD = &PB_Post{
+	Id:             0,
+	UserId:         0,
+	TypeId:         0,
+	Text:           "",
+	FormatedText:   "",
+	MediaCount:     0,
+	SharedTo:       0,
+	DisableComment: 0,
+	HasTag:         0,
+	LikesCount:     0,
+	CommentsCount:  0,
+	EditedTime:     0,
+	CreatedTime:    0,
+}
+
+type PB_PushEvent_Flat struct {
+	PushEventId       int
+	ToUserId          int
+	ToDeviceId        int
+	MessageId         int
+	RoomTypeEnum      int
+	RoomId            int
+	PeerUserId        int
+	PushEventTypeEnum int
+	AtTime            int
+}
+
+//ToPB
+func (m *PB_PushEvent) ToFlat() *PB_PushEvent_Flat {
+	r := &PB_PushEvent_Flat{
+		PushEventId:       int(m.PushEventId),
+		ToUserId:          int(m.ToUserId),
+		ToDeviceId:        int(m.ToDeviceId),
+		MessageId:         int(m.MessageId),
+		RoomTypeEnum:      int(m.RoomTypeEnum),
+		RoomId:            int(m.RoomId),
+		PeerUserId:        int(m.PeerUserId),
+		PushEventTypeEnum: int(m.PushEventTypeEnum),
+		AtTime:            int(m.AtTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_PushEvent_Flat) ToPB() *PB_PushEvent {
+	r := &PB_PushEvent{
+		PushEventId:       int64(m.PushEventId),
+		ToUserId:          int32(m.ToUserId),
+		ToDeviceId:        int64(m.ToDeviceId),
+		MessageId:         int64(m.MessageId),
+		RoomTypeEnum:      int32(m.RoomTypeEnum),
+		RoomId:            int64(m.RoomId),
+		PeerUserId:        int32(m.PeerUserId),
+		PushEventTypeEnum: int32(m.PushEventTypeEnum),
+		AtTime:            int32(m.AtTime),
+	}
+	return r
+}
+
+//folding
+var PB_PushEvent__FOlD = &PB_PushEvent{
+	PushEventId:       0,
+	ToUserId:          0,
+	ToDeviceId:        0,
+	MessageId:         0,
+	RoomTypeEnum:      0,
+	RoomId:            0,
+	PeerUserId:        0,
+	PushEventTypeEnum: 0,
+	AtTime:            0,
+}
+
+type PB_PushMessage_Flat struct {
+	PushMessageId int
+	ToUserId      int
+	ToDeviceId    int
+	MessageId     int
+	RoomTypeEnum  int
+	CreatedMs     int
+}
+
+//ToPB
+func (m *PB_PushMessage) ToFlat() *PB_PushMessage_Flat {
+	r := &PB_PushMessage_Flat{
+		PushMessageId: int(m.PushMessageId),
+		ToUserId:      int(m.ToUserId),
+		ToDeviceId:    int(m.ToDeviceId),
+		MessageId:     int(m.MessageId),
+		RoomTypeEnum:  int(m.RoomTypeEnum),
+		CreatedMs:     int(m.CreatedMs),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_PushMessage_Flat) ToPB() *PB_PushMessage {
+	r := &PB_PushMessage{
+		PushMessageId: int64(m.PushMessageId),
+		ToUserId:      int32(m.ToUserId),
+		ToDeviceId:    int64(m.ToDeviceId),
+		MessageId:     int64(m.MessageId),
+		RoomTypeEnum:  int32(m.RoomTypeEnum),
+		CreatedMs:     int64(m.CreatedMs),
+	}
+	return r
+}
+
+//folding
+var PB_PushMessage__FOlD = &PB_PushMessage{
+	PushMessageId: 0,
+	ToUserId:      0,
+	ToDeviceId:    0,
+	MessageId:     0,
+	RoomTypeEnum:  0,
+	CreatedMs:     0,
+}
+
+type PB_RecommendUser_Flat struct {
+	Id          int
+	UserId      int
+	TargetId    int
+	Weight      float32
+	CreatedTime int
+}
+
+//ToPB
+func (m *PB_RecommendUser) ToFlat() *PB_RecommendUser_Flat {
+	r := &PB_RecommendUser_Flat{
+		Id:          int(m.Id),
+		UserId:      int(m.UserId),
+		TargetId:    int(m.TargetId),
+		Weight:      float32(m.Weight),
+		CreatedTime: int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_RecommendUser_Flat) ToPB() *PB_RecommendUser {
+	r := &PB_RecommendUser{
+		Id:          int32(m.Id),
+		UserId:      int32(m.UserId),
+		TargetId:    int32(m.TargetId),
+		Weight:      m.Weight,
+		CreatedTime: int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_RecommendUser__FOlD = &PB_RecommendUser{
+	Id:          0,
+	UserId:      0,
+	TargetId:    0,
+	Weight:      0.0,
+	CreatedTime: 0,
+}
+
+type PB_Room_Flat struct {
+	RoomId        int
+	RoomKey       string
+	RoomTypeEnum  int
+	UserId        int
+	LastSeqSeen   int
+	LastSeqDelete int
+	PeerUserId    int
+	GroupId       int
+	CreatedTime   int
+	CurrentSeq    int
+}
+
+//ToPB
+func (m *PB_Room) ToFlat() *PB_Room_Flat {
+	r := &PB_Room_Flat{
+		RoomId:        int(m.RoomId),
+		RoomKey:       m.RoomKey,
+		RoomTypeEnum:  int(m.RoomTypeEnum),
+		UserId:        int(m.UserId),
+		LastSeqSeen:   int(m.LastSeqSeen),
+		LastSeqDelete: int(m.LastSeqDelete),
+		PeerUserId:    int(m.PeerUserId),
+		GroupId:       int(m.GroupId),
+		CreatedTime:   int(m.CreatedTime),
+		CurrentSeq:    int(m.CurrentSeq),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Room_Flat) ToPB() *PB_Room {
+	r := &PB_Room{
+		RoomId:        int64(m.RoomId),
+		RoomKey:       m.RoomKey,
+		RoomTypeEnum:  int32(m.RoomTypeEnum),
+		UserId:        int32(m.UserId),
+		LastSeqSeen:   int32(m.LastSeqSeen),
+		LastSeqDelete: int32(m.LastSeqDelete),
+		PeerUserId:    int32(m.PeerUserId),
+		GroupId:       int64(m.GroupId),
+		CreatedTime:   int32(m.CreatedTime),
+		CurrentSeq:    int32(m.CurrentSeq),
+	}
+	return r
+}
+
+//folding
+var PB_Room__FOlD = &PB_Room{
+	RoomId:        0,
+	RoomKey:       "",
+	RoomTypeEnum:  0,
+	UserId:        0,
+	LastSeqSeen:   0,
+	LastSeqDelete: 0,
+	PeerUserId:    0,
+	GroupId:       0,
+	CreatedTime:   0,
+	CurrentSeq:    0,
+}
+
+type PB_SearchClicked_Flat struct {
+	Id        int
+	Query     string
+	ClickType int
+	TargetId  int
+	UserId    int
+	CreatedAt int
+}
+
+//ToPB
+func (m *PB_SearchClicked) ToFlat() *PB_SearchClicked_Flat {
+	r := &PB_SearchClicked_Flat{
+		Id:        int(m.Id),
+		Query:     m.Query,
+		ClickType: int(m.ClickType),
+		TargetId:  int(m.TargetId),
+		UserId:    int(m.UserId),
+		CreatedAt: int(m.CreatedAt),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_SearchClicked_Flat) ToPB() *PB_SearchClicked {
+	r := &PB_SearchClicked{
+		Id:        int64(m.Id),
+		Query:     m.Query,
+		ClickType: int32(m.ClickType),
+		TargetId:  int32(m.TargetId),
+		UserId:    int32(m.UserId),
+		CreatedAt: int32(m.CreatedAt),
+	}
+	return r
+}
+
+//folding
+var PB_SearchClicked__FOlD = &PB_SearchClicked{
+	Id:        0,
+	Query:     "",
+	ClickType: 0,
+	TargetId:  0,
+	UserId:    0,
+	CreatedAt: 0,
+}
+
+type PB_Session_Flat struct {
+	Id                      int
+	UserId                  int
+	SessionUuid             string
+	ClientUuid              string
+	DeviceUuid              string
+	LastActivityTime        int
+	LastIpAddress           string
+	LastWifiMacAddress      string
+	LastNetworkType         string
+	LastNetworkTypeId       int
+	AppVersion              int
+	UpdatedTime             int
+	CreatedTime             int
+	LastSyncDirectUpdateId  int
+	LastSyncGeneralUpdateId int
+	LastSyncNotifyUpdateId  int
+}
+
+//ToPB
+func (m *PB_Session) ToFlat() *PB_Session_Flat {
+	r := &PB_Session_Flat{
+		Id:                      int(m.Id),
+		UserId:                  int(m.UserId),
+		SessionUuid:             m.SessionUuid,
+		ClientUuid:              m.ClientUuid,
+		DeviceUuid:              m.DeviceUuid,
+		LastActivityTime:        int(m.LastActivityTime),
+		LastIpAddress:           m.LastIpAddress,
+		LastWifiMacAddress:      m.LastWifiMacAddress,
+		LastNetworkType:         m.LastNetworkType,
+		LastNetworkTypeId:       int(m.LastNetworkTypeId),
+		AppVersion:              int(m.AppVersion),
+		UpdatedTime:             int(m.UpdatedTime),
+		CreatedTime:             int(m.CreatedTime),
+		LastSyncDirectUpdateId:  int(m.LastSyncDirectUpdateId),
+		LastSyncGeneralUpdateId: int(m.LastSyncGeneralUpdateId),
+		LastSyncNotifyUpdateId:  int(m.LastSyncNotifyUpdateId),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Session_Flat) ToPB() *PB_Session {
+	r := &PB_Session{
+		Id:                      int32(m.Id),
+		UserId:                  int32(m.UserId),
+		SessionUuid:             m.SessionUuid,
+		ClientUuid:              m.ClientUuid,
+		DeviceUuid:              m.DeviceUuid,
+		LastActivityTime:        int32(m.LastActivityTime),
+		LastIpAddress:           m.LastIpAddress,
+		LastWifiMacAddress:      m.LastWifiMacAddress,
+		LastNetworkType:         m.LastNetworkType,
+		LastNetworkTypeId:       int32(m.LastNetworkTypeId),
+		AppVersion:              int32(m.AppVersion),
+		UpdatedTime:             int32(m.UpdatedTime),
+		CreatedTime:             int32(m.CreatedTime),
+		LastSyncDirectUpdateId:  int64(m.LastSyncDirectUpdateId),
+		LastSyncGeneralUpdateId: int64(m.LastSyncGeneralUpdateId),
+		LastSyncNotifyUpdateId:  int64(m.LastSyncNotifyUpdateId),
+	}
+	return r
+}
+
+//folding
+var PB_Session__FOlD = &PB_Session{
+	Id:                      0,
+	UserId:                  0,
+	SessionUuid:             "",
+	ClientUuid:              "",
+	DeviceUuid:              "",
+	LastActivityTime:        0,
+	LastIpAddress:           "",
+	LastWifiMacAddress:      "",
+	LastNetworkType:         "",
+	LastNetworkTypeId:       0,
+	AppVersion:              0,
+	UpdatedTime:             0,
+	CreatedTime:             0,
+	LastSyncDirectUpdateId:  0,
+	LastSyncGeneralUpdateId: 0,
+	LastSyncNotifyUpdateId:  0,
+}
+
+type PB_SettingClient_Flat struct {
+	UserId                    int
+	AutoDownloadWifiVoice     int
+	AutoDownloadWifiImage     int
+	AutoDownloadWifiVideo     int
+	AutoDownloadWifiFile      int
+	AutoDownloadWifiMusic     int
+	AutoDownloadWifiGif       int
+	AutoDownloadCellularVoice int
+	AutoDownloadCellularImage int
+	AutoDownloadCellularVideo int
+	AutoDownloadCellularFile  int
+	AutoDownloadCellularMusic int
+	AutoDownloadCellularGif   int
+	AutoDownloadRoamingVoice  int
+	AutoDownloadRoamingImage  int
+	AutoDownloadRoamingVideo  int
+	AutoDownloadRoamingFile   int
+	AutoDownloadRoamingMusic  int
+	AutoDownloadRoamingGif    int
+	SaveToGallery             int
+}
+
+//ToPB
+func (m *PB_SettingClient) ToFlat() *PB_SettingClient_Flat {
+	r := &PB_SettingClient_Flat{
+		UserId:                    int(m.UserId),
+		AutoDownloadWifiVoice:     int(m.AutoDownloadWifiVoice),
+		AutoDownloadWifiImage:     int(m.AutoDownloadWifiImage),
+		AutoDownloadWifiVideo:     int(m.AutoDownloadWifiVideo),
+		AutoDownloadWifiFile:      int(m.AutoDownloadWifiFile),
+		AutoDownloadWifiMusic:     int(m.AutoDownloadWifiMusic),
+		AutoDownloadWifiGif:       int(m.AutoDownloadWifiGif),
+		AutoDownloadCellularVoice: int(m.AutoDownloadCellularVoice),
+		AutoDownloadCellularImage: int(m.AutoDownloadCellularImage),
+		AutoDownloadCellularVideo: int(m.AutoDownloadCellularVideo),
+		AutoDownloadCellularFile:  int(m.AutoDownloadCellularFile),
+		AutoDownloadCellularMusic: int(m.AutoDownloadCellularMusic),
+		AutoDownloadCellularGif:   int(m.AutoDownloadCellularGif),
+		AutoDownloadRoamingVoice:  int(m.AutoDownloadRoamingVoice),
+		AutoDownloadRoamingImage:  int(m.AutoDownloadRoamingImage),
+		AutoDownloadRoamingVideo:  int(m.AutoDownloadRoamingVideo),
+		AutoDownloadRoamingFile:   int(m.AutoDownloadRoamingFile),
+		AutoDownloadRoamingMusic:  int(m.AutoDownloadRoamingMusic),
+		AutoDownloadRoamingGif:    int(m.AutoDownloadRoamingGif),
+		SaveToGallery:             int(m.SaveToGallery),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_SettingClient_Flat) ToPB() *PB_SettingClient {
+	r := &PB_SettingClient{
+		UserId:                    int32(m.UserId),
+		AutoDownloadWifiVoice:     int32(m.AutoDownloadWifiVoice),
+		AutoDownloadWifiImage:     int32(m.AutoDownloadWifiImage),
+		AutoDownloadWifiVideo:     int32(m.AutoDownloadWifiVideo),
+		AutoDownloadWifiFile:      int32(m.AutoDownloadWifiFile),
+		AutoDownloadWifiMusic:     int32(m.AutoDownloadWifiMusic),
+		AutoDownloadWifiGif:       int32(m.AutoDownloadWifiGif),
+		AutoDownloadCellularVoice: int32(m.AutoDownloadCellularVoice),
+		AutoDownloadCellularImage: int32(m.AutoDownloadCellularImage),
+		AutoDownloadCellularVideo: int32(m.AutoDownloadCellularVideo),
+		AutoDownloadCellularFile:  int32(m.AutoDownloadCellularFile),
+		AutoDownloadCellularMusic: int32(m.AutoDownloadCellularMusic),
+		AutoDownloadCellularGif:   int32(m.AutoDownloadCellularGif),
+		AutoDownloadRoamingVoice:  int32(m.AutoDownloadRoamingVoice),
+		AutoDownloadRoamingImage:  int32(m.AutoDownloadRoamingImage),
+		AutoDownloadRoamingVideo:  int32(m.AutoDownloadRoamingVideo),
+		AutoDownloadRoamingFile:   int32(m.AutoDownloadRoamingFile),
+		AutoDownloadRoamingMusic:  int32(m.AutoDownloadRoamingMusic),
+		AutoDownloadRoamingGif:    int32(m.AutoDownloadRoamingGif),
+		SaveToGallery:             int32(m.SaveToGallery),
+	}
+	return r
+}
+
+//folding
+var PB_SettingClient__FOlD = &PB_SettingClient{
+	UserId:                    0,
+	AutoDownloadWifiVoice:     0,
+	AutoDownloadWifiImage:     0,
+	AutoDownloadWifiVideo:     0,
+	AutoDownloadWifiFile:      0,
+	AutoDownloadWifiMusic:     0,
+	AutoDownloadWifiGif:       0,
+	AutoDownloadCellularVoice: 0,
+	AutoDownloadCellularImage: 0,
+	AutoDownloadCellularVideo: 0,
+	AutoDownloadCellularFile:  0,
+	AutoDownloadCellularMusic: 0,
+	AutoDownloadCellularGif:   0,
+	AutoDownloadRoamingVoice:  0,
+	AutoDownloadRoamingImage:  0,
+	AutoDownloadRoamingVideo:  0,
+	AutoDownloadRoamingFile:   0,
+	AutoDownloadRoamingMusic:  0,
+	AutoDownloadRoamingGif:    0,
+	SaveToGallery:             0,
+}
+
+type PB_SettingNotification_Flat struct {
+	UserId                   int
+	SocialLedOn              int
+	SocialLedColor           string
+	ReqestToFollowYou        int
+	FollowedYou              int
+	AccptedYourFollowRequest int
+	YourPostLiked            int
+	YourPostCommented        int
+	MenthenedYouInPost       int
+	MenthenedYouInComment    int
+	YourContactsJoined       int
+	DirectMessage            int
+	DirectAlert              int
+	DirectPerview            int
+	DirectLedOn              int
+	DirectLedColor           int
+	DirectVibrate            int
+	DirectPopup              int
+	DirectSound              int
+	DirectPriority           int
+}
+
+//ToPB
+func (m *PB_SettingNotification) ToFlat() *PB_SettingNotification_Flat {
+	r := &PB_SettingNotification_Flat{
+		UserId:                   int(m.UserId),
+		SocialLedOn:              int(m.SocialLedOn),
+		SocialLedColor:           m.SocialLedColor,
+		ReqestToFollowYou:        int(m.ReqestToFollowYou),
+		FollowedYou:              int(m.FollowedYou),
+		AccptedYourFollowRequest: int(m.AccptedYourFollowRequest),
+		YourPostLiked:            int(m.YourPostLiked),
+		YourPostCommented:        int(m.YourPostCommented),
+		MenthenedYouInPost:       int(m.MenthenedYouInPost),
+		MenthenedYouInComment:    int(m.MenthenedYouInComment),
+		YourContactsJoined:       int(m.YourContactsJoined),
+		DirectMessage:            int(m.DirectMessage),
+		DirectAlert:              int(m.DirectAlert),
+		DirectPerview:            int(m.DirectPerview),
+		DirectLedOn:              int(m.DirectLedOn),
+		DirectLedColor:           int(m.DirectLedColor),
+		DirectVibrate:            int(m.DirectVibrate),
+		DirectPopup:              int(m.DirectPopup),
+		DirectSound:              int(m.DirectSound),
+		DirectPriority:           int(m.DirectPriority),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_SettingNotification_Flat) ToPB() *PB_SettingNotification {
+	r := &PB_SettingNotification{
+		UserId:                   int32(m.UserId),
+		SocialLedOn:              int32(m.SocialLedOn),
+		SocialLedColor:           m.SocialLedColor,
+		ReqestToFollowYou:        int32(m.ReqestToFollowYou),
+		FollowedYou:              int32(m.FollowedYou),
+		AccptedYourFollowRequest: int32(m.AccptedYourFollowRequest),
+		YourPostLiked:            int32(m.YourPostLiked),
+		YourPostCommented:        int32(m.YourPostCommented),
+		MenthenedYouInPost:       int32(m.MenthenedYouInPost),
+		MenthenedYouInComment:    int32(m.MenthenedYouInComment),
+		YourContactsJoined:       int32(m.YourContactsJoined),
+		DirectMessage:            int32(m.DirectMessage),
+		DirectAlert:              int32(m.DirectAlert),
+		DirectPerview:            int32(m.DirectPerview),
+		DirectLedOn:              int32(m.DirectLedOn),
+		DirectLedColor:           int32(m.DirectLedColor),
+		DirectVibrate:            int32(m.DirectVibrate),
+		DirectPopup:              int32(m.DirectPopup),
+		DirectSound:              int32(m.DirectSound),
+		DirectPriority:           int32(m.DirectPriority),
+	}
+	return r
+}
+
+//folding
+var PB_SettingNotification__FOlD = &PB_SettingNotification{
+	UserId:                   0,
+	SocialLedOn:              0,
+	SocialLedColor:           "",
+	ReqestToFollowYou:        0,
+	FollowedYou:              0,
+	AccptedYourFollowRequest: 0,
+	YourPostLiked:            0,
+	YourPostCommented:        0,
+	MenthenedYouInPost:       0,
+	MenthenedYouInComment:    0,
+	YourContactsJoined:       0,
+	DirectMessage:            0,
+	DirectAlert:              0,
+	DirectPerview:            0,
+	DirectLedOn:              0,
+	DirectLedColor:           0,
+	DirectVibrate:            0,
+	DirectPopup:              0,
+	DirectSound:              0,
+	DirectPriority:           0,
+}
+
+type PB_Tag_Flat struct {
+	Id          int
+	Name        string
+	Count       int
+	IsBlocked   int
+	CreatedTime int
+}
+
+//ToPB
+func (m *PB_Tag) ToFlat() *PB_Tag_Flat {
+	r := &PB_Tag_Flat{
+		Id:          int(m.Id),
+		Name:        m.Name,
+		Count:       int(m.Count),
+		IsBlocked:   int(m.IsBlocked),
+		CreatedTime: int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Tag_Flat) ToPB() *PB_Tag {
+	r := &PB_Tag{
+		Id:          int32(m.Id),
+		Name:        m.Name,
+		Count:       int32(m.Count),
+		IsBlocked:   int32(m.IsBlocked),
+		CreatedTime: int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_Tag__FOlD = &PB_Tag{
+	Id:          0,
+	Name:        "",
+	Count:       0,
+	IsBlocked:   0,
+	CreatedTime: 0,
+}
+
+type PB_TagsPost_Flat struct {
+	Id          int
+	TagId       int
+	PostId      int
+	TypeId      int
+	CreatedTime int
+}
+
+//ToPB
+func (m *PB_TagsPost) ToFlat() *PB_TagsPost_Flat {
+	r := &PB_TagsPost_Flat{
+		Id:          int(m.Id),
+		TagId:       int(m.TagId),
+		PostId:      int(m.PostId),
+		TypeId:      int(m.TypeId),
+		CreatedTime: int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_TagsPost_Flat) ToPB() *PB_TagsPost {
+	r := &PB_TagsPost{
+		Id:          int32(m.Id),
+		TagId:       int32(m.TagId),
+		PostId:      int32(m.PostId),
+		TypeId:      int32(m.TypeId),
+		CreatedTime: int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_TagsPost__FOlD = &PB_TagsPost{
+	Id:          0,
+	TagId:       0,
+	PostId:      0,
+	TypeId:      0,
+	CreatedTime: 0,
+}
+
+type PB_TestChat_Flat struct {
+	Id     int
+	Id4    int
+	TimeMs int
+	Text   string
+	Name   string
+	UserId int
+	C2     int
+	C3     int
+	C4     int
+	C5     int
+}
+
+//ToPB
+func (m *PB_TestChat) ToFlat() *PB_TestChat_Flat {
+	r := &PB_TestChat_Flat{
+		Id:     int(m.Id),
+		Id4:    int(m.Id4),
+		TimeMs: int(m.TimeMs),
+		Text:   m.Text,
+		Name:   m.Name,
+		UserId: int(m.UserId),
+		C2:     int(m.C2),
+		C3:     int(m.C3),
+		C4:     int(m.C4),
+		C5:     int(m.C5),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_TestChat_Flat) ToPB() *PB_TestChat {
+	r := &PB_TestChat{
+		Id:     int64(m.Id),
+		Id4:    int64(m.Id4),
+		TimeMs: int64(m.TimeMs),
+		Text:   m.Text,
+		Name:   m.Name,
+		UserId: int64(m.UserId),
+		C2:     int32(m.C2),
+		C3:     int32(m.C3),
+		C4:     int32(m.C4),
+		C5:     int32(m.C5),
+	}
+	return r
+}
+
+//folding
+var PB_TestChat__FOlD = &PB_TestChat{
+	Id:     0,
+	Id4:    0,
+	TimeMs: 0,
+	Text:   "",
+	Name:   "",
+	UserId: 0,
+	C2:     0,
+	C3:     0,
+	C4:     0,
+	C5:     0,
+}
+
+type PB_User_Flat struct {
+	Id                   int
+	UserName             string
+	UserNameLower        string
+	FirstName            string
+	LastName             string
+	About                string
+	FullName             string
+	AvatarUrl            string
+	PrivacyProfile       int
+	Phone                string
+	Email                string
+	IsDeleted            int
+	PasswordHash         string
+	PasswordSalt         string
+	FollowersCount       int
+	FollowingCount       int
+	PostsCount           int
+	MediaCount           int
+	LikesCount           int
+	ResharedCount        int
+	LastActionTime       int
+	LastPostTime         int
+	PrimaryFollowingList int
+	CreatedTime          int
+	UpdatedTime          int
+	SessionUuid          string
+	DeviceUuid           string
+	LastWifiMacAddress   string
+	LastNetworkType      string
+	AppVersion           int
+	LastActivityTime     int
+	LastLoginTime        int
+	LastIpAddress        string
+}
+
+//ToPB
+func (m *PB_User) ToFlat() *PB_User_Flat {
+	r := &PB_User_Flat{
+		Id:                   int(m.Id),
+		UserName:             m.UserName,
+		UserNameLower:        m.UserNameLower,
+		FirstName:            m.FirstName,
+		LastName:             m.LastName,
+		About:                m.About,
+		FullName:             m.FullName,
+		AvatarUrl:            m.AvatarUrl,
+		PrivacyProfile:       int(m.PrivacyProfile),
+		Phone:                m.Phone,
+		Email:                m.Email,
+		IsDeleted:            int(m.IsDeleted),
+		PasswordHash:         m.PasswordHash,
+		PasswordSalt:         m.PasswordSalt,
+		FollowersCount:       int(m.FollowersCount),
+		FollowingCount:       int(m.FollowingCount),
+		PostsCount:           int(m.PostsCount),
+		MediaCount:           int(m.MediaCount),
+		LikesCount:           int(m.LikesCount),
+		ResharedCount:        int(m.ResharedCount),
+		LastActionTime:       int(m.LastActionTime),
+		LastPostTime:         int(m.LastPostTime),
+		PrimaryFollowingList: int(m.PrimaryFollowingList),
+		CreatedTime:          int(m.CreatedTime),
+		UpdatedTime:          int(m.UpdatedTime),
+		SessionUuid:          m.SessionUuid,
+		DeviceUuid:           m.DeviceUuid,
+		LastWifiMacAddress:   m.LastWifiMacAddress,
+		LastNetworkType:      m.LastNetworkType,
+		AppVersion:           int(m.AppVersion),
+		LastActivityTime:     int(m.LastActivityTime),
+		LastLoginTime:        int(m.LastLoginTime),
+		LastIpAddress:        m.LastIpAddress,
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_User_Flat) ToPB() *PB_User {
+	r := &PB_User{
+		Id:                   int32(m.Id),
+		UserName:             m.UserName,
+		UserNameLower:        m.UserNameLower,
+		FirstName:            m.FirstName,
+		LastName:             m.LastName,
+		About:                m.About,
+		FullName:             m.FullName,
+		AvatarUrl:            m.AvatarUrl,
+		PrivacyProfile:       int32(m.PrivacyProfile),
+		Phone:                m.Phone,
+		Email:                m.Email,
+		IsDeleted:            int32(m.IsDeleted),
+		PasswordHash:         m.PasswordHash,
+		PasswordSalt:         m.PasswordSalt,
+		FollowersCount:       int32(m.FollowersCount),
+		FollowingCount:       int32(m.FollowingCount),
+		PostsCount:           int32(m.PostsCount),
+		MediaCount:           int32(m.MediaCount),
+		LikesCount:           int32(m.LikesCount),
+		ResharedCount:        int32(m.ResharedCount),
+		LastActionTime:       int32(m.LastActionTime),
+		LastPostTime:         int32(m.LastPostTime),
+		PrimaryFollowingList: int32(m.PrimaryFollowingList),
+		CreatedTime:          int32(m.CreatedTime),
+		UpdatedTime:          int32(m.UpdatedTime),
+		SessionUuid:          m.SessionUuid,
+		DeviceUuid:           m.DeviceUuid,
+		LastWifiMacAddress:   m.LastWifiMacAddress,
+		LastNetworkType:      m.LastNetworkType,
+		AppVersion:           int32(m.AppVersion),
+		LastActivityTime:     int32(m.LastActivityTime),
+		LastLoginTime:        int32(m.LastLoginTime),
+		LastIpAddress:        m.LastIpAddress,
+	}
+	return r
+}
+
+//folding
+var PB_User__FOlD = &PB_User{
+	Id:                   0,
+	UserName:             "",
+	UserNameLower:        "",
+	FirstName:            "",
+	LastName:             "",
+	About:                "",
+	FullName:             "",
+	AvatarUrl:            "",
+	PrivacyProfile:       0,
+	Phone:                "",
+	Email:                "",
+	IsDeleted:            0,
+	PasswordHash:         "",
+	PasswordSalt:         "",
+	FollowersCount:       0,
+	FollowingCount:       0,
+	PostsCount:           0,
+	MediaCount:           0,
+	LikesCount:           0,
+	ResharedCount:        0,
+	LastActionTime:       0,
+	LastPostTime:         0,
+	PrimaryFollowingList: 0,
+	CreatedTime:          0,
+	UpdatedTime:          0,
+	SessionUuid:          "",
+	DeviceUuid:           "",
+	LastWifiMacAddress:   "",
+	LastNetworkType:      "",
+	AppVersion:           0,
+	LastActivityTime:     0,
+	LastLoginTime:        0,
+	LastIpAddress:        "",
+}
+
+type PB_UserMetaInfo_Flat struct {
+	Id                  int
+	UserId              int
+	IsNotificationDirty int
+	LastUserRecGen      int
+}
+
+//ToPB
+func (m *PB_UserMetaInfo) ToFlat() *PB_UserMetaInfo_Flat {
+	r := &PB_UserMetaInfo_Flat{
+		Id:                  int(m.Id),
+		UserId:              int(m.UserId),
+		IsNotificationDirty: int(m.IsNotificationDirty),
+		LastUserRecGen:      int(m.LastUserRecGen),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_UserMetaInfo_Flat) ToPB() *PB_UserMetaInfo {
+	r := &PB_UserMetaInfo{
+		Id:                  int32(m.Id),
+		UserId:              int32(m.UserId),
+		IsNotificationDirty: int32(m.IsNotificationDirty),
+		LastUserRecGen:      int32(m.LastUserRecGen),
+	}
+	return r
+}
+
+//folding
+var PB_UserMetaInfo__FOlD = &PB_UserMetaInfo{
+	Id:                  0,
+	UserId:              0,
+	IsNotificationDirty: 0,
+	LastUserRecGen:      0,
+}
+
+type PB_UserPassword_Flat struct {
+	UserId      int
+	Password    string
+	CreatedTime int
+}
+
+//ToPB
+func (m *PB_UserPassword) ToFlat() *PB_UserPassword_Flat {
+	r := &PB_UserPassword_Flat{
+		UserId:      int(m.UserId),
+		Password:    m.Password,
+		CreatedTime: int(m.CreatedTime),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_UserPassword_Flat) ToPB() *PB_UserPassword {
+	r := &PB_UserPassword{
+		UserId:      int32(m.UserId),
+		Password:    m.Password,
+		CreatedTime: int32(m.CreatedTime),
+	}
+	return r
+}
+
+//folding
+var PB_UserPassword__FOlD = &PB_UserPassword{
+	UserId:      0,
+	Password:    "",
+	CreatedTime: 0,
+}
+
 type PB_UpdateGroupParticipants_Flat struct {
 }
 
@@ -3222,6 +5716,661 @@ r := &UserView_Flat{
 return r
 }
 
+func(m *PB_Activity)ToFlat() *PB_Activity_Flat {
+r := &PB_Activity_Flat{
+    Id:  int(m.Id) ,
+    ActorUserId:  int(m.ActorUserId) ,
+    ActionTypeId:  int(m.ActionTypeId) ,
+    RowId:  int(m.RowId) ,
+    RootId:  int(m.RootId) ,
+    RefId:  int(m.RefId) ,
+    CreatedAt:  int(m.CreatedAt) ,
+}
+return r
+}
+
+func(m *PB_Bucket)ToFlat() *PB_Bucket_Flat {
+r := &PB_Bucket_Flat{
+    BucketId:  int(m.BucketId) ,
+    BucketName:  m.BucketName ,
+    Server1Id:  int(m.Server1Id) ,
+    Server2Id:  int(m.Server2Id) ,
+    BackupServerId:  int(m.BackupServerId) ,
+    ContentObjectTypeId:  int(m.ContentObjectTypeId) ,
+    ContentObjectCount:  int(m.ContentObjectCount) ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_Chat)ToFlat() *PB_Chat_Flat {
+r := &PB_Chat_Flat{
+    ChatKey:  m.ChatKey ,
+    RoomKey:  m.RoomKey ,
+    RoomTypeEnumId:  int(m.RoomTypeEnumId) ,
+    UserId:  int(m.UserId) ,
+    PeerUserId:  int(m.PeerUserId) ,
+    GroupId:  int(m.GroupId) ,
+    CreatedSe:  int(m.CreatedSe) ,
+    StartMessageIdFrom:  int(m.StartMessageIdFrom) ,
+    LastSeenMessageId:  int(m.LastSeenMessageId) ,
+    UpdatedMs:  int(m.UpdatedMs) ,
+    LastMessageId:  int(m.LastMessageId) ,
+    LastDeletedMessageId:  int(m.LastDeletedMessageId) ,
+    LastSeqSeen:  int(m.LastSeqSeen) ,
+    LastSeqDelete:  int(m.LastSeqDelete) ,
+    CurrentSeq:  int(m.CurrentSeq) ,
+}
+return r
+}
+
+func(m *PB_Comment)ToFlat() *PB_Comment_Flat {
+r := &PB_Comment_Flat{
+    Id:  int(m.Id) ,
+    UserId:  int(m.UserId) ,
+    PostId:  int(m.PostId) ,
+    Text:  m.Text ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_DirectMessage)ToFlat() *PB_DirectMessage_Flat {
+r := &PB_DirectMessage_Flat{
+    MessageId:  int(m.MessageId) ,
+    MessageKey:  m.MessageKey ,
+    RoomKey:  m.RoomKey ,
+    UserId:  int(m.UserId) ,
+    MessageFileId:  int(m.MessageFileId) ,
+    MessageTypeEnumId:  int(m.MessageTypeEnumId) ,
+    Text:  m.Text ,
+    CreatedSe:  int(m.CreatedSe) ,
+    PeerReceivedTime:  int(m.PeerReceivedTime) ,
+    PeerSeenTime:  int(m.PeerSeenTime) ,
+    DeliviryStatusEnumId:  int(m.DeliviryStatusEnumId) ,
+}
+return r
+}
+
+func(m *PB_DirectToMessage)ToFlat() *PB_DirectToMessage_Flat {
+r := &PB_DirectToMessage_Flat{
+    Id:  int(m.Id) ,
+    ChatKey:  m.ChatKey ,
+    MessageId:  int(m.MessageId) ,
+    SourceEnumId:  int(m.SourceEnumId) ,
+}
+return r
+}
+
+func(m *PB_DirectUpdate)ToFlat() *PB_DirectUpdate_Flat {
+r := &PB_DirectUpdate_Flat{
+    DirectUpdateId:  int(m.DirectUpdateId) ,
+    ToUserId:  int(m.ToUserId) ,
+    MessageId:  int(m.MessageId) ,
+    MessageFileId:  int(m.MessageFileId) ,
+    OtherId:  int(m.OtherId) ,
+    ChatKey:  m.ChatKey ,
+    PeerUserId:  int(m.PeerUserId) ,
+    EventType:  int(m.EventType) ,
+    RoomLogTypeId:  int(m.RoomLogTypeId) ,
+    FromSeq:  int(m.FromSeq) ,
+    ToSeq:  int(m.ToSeq) ,
+    ExtraPB:  []byte(m.ExtraPB) ,
+    ExtraJson:  m.ExtraJson ,
+    AtTimeMs:  int(m.AtTimeMs) ,
+}
+return r
+}
+
+func(m *PB_FollowingList)ToFlat() *PB_FollowingList_Flat {
+r := &PB_FollowingList_Flat{
+    Id:  int(m.Id) ,
+    UserId:  int(m.UserId) ,
+    ListType:  int(m.ListType) ,
+    Name:  m.Name ,
+    Count:  int(m.Count) ,
+    IsAuto:  int(m.IsAuto) ,
+    IsPimiry:  int(m.IsPimiry) ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_FollowingListMember)ToFlat() *PB_FollowingListMember_Flat {
+r := &PB_FollowingListMember_Flat{
+    Id:  int(m.Id) ,
+    ListId:  int(m.ListId) ,
+    UserId:  int(m.UserId) ,
+    FollowedUserId:  int(m.FollowedUserId) ,
+    FollowType:  int(m.FollowType) ,
+    UpdatedTimeMs:  int(m.UpdatedTimeMs) ,
+}
+return r
+}
+
+func(m *PB_FollowingListMemberHistory)ToFlat() *PB_FollowingListMemberHistory_Flat {
+r := &PB_FollowingListMemberHistory_Flat{
+    Id:  int(m.Id) ,
+    ListId:  int(m.ListId) ,
+    UserId:  int(m.UserId) ,
+    FollowedUserId:  int(m.FollowedUserId) ,
+    FollowType:  int(m.FollowType) ,
+    UpdatedTimeMs:  int(m.UpdatedTimeMs) ,
+    FollowId:  int(m.FollowId) ,
+}
+return r
+}
+
+func(m *PB_GeneralLog)ToFlat() *PB_GeneralLog_Flat {
+r := &PB_GeneralLog_Flat{
+    Id:  int(m.Id) ,
+    ToUserId:  int(m.ToUserId) ,
+    TargetId:  int(m.TargetId) ,
+    LogTypeId:  int(m.LogTypeId) ,
+    ExtraPB:  []byte(m.ExtraPB) ,
+    ExtraJson:  m.ExtraJson ,
+    CreatedMs:  int(m.CreatedMs) ,
+}
+return r
+}
+
+func(m *PB_Group)ToFlat() *PB_Group_Flat {
+r := &PB_Group_Flat{
+    GroupId:  int(m.GroupId) ,
+    GroupName:  m.GroupName ,
+    MembersCount:  int(m.MembersCount) ,
+    GroupPrivacyEnum:  int(m.GroupPrivacyEnum) ,
+    CreatorUserId:  int(m.CreatorUserId) ,
+    CreatedTime:  int(m.CreatedTime) ,
+    UpdatedMs:  int(m.UpdatedMs) ,
+    CurrentSeq:  int(m.CurrentSeq) ,
+}
+return r
+}
+
+func(m *PB_GroupMember)ToFlat() *PB_GroupMember_Flat {
+r := &PB_GroupMember_Flat{
+    Id:  int(m.Id) ,
+    GroupId:  int(m.GroupId) ,
+    GroupKey:  m.GroupKey ,
+    UserId:  int(m.UserId) ,
+    ByUserId:  int(m.ByUserId) ,
+    GroupRoleEnumId:  int(m.GroupRoleEnumId) ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_GroupMessage)ToFlat() *PB_GroupMessage_Flat {
+r := &PB_GroupMessage_Flat{
+    MessageId:  int(m.MessageId) ,
+    RoomKey:  m.RoomKey ,
+    UserId:  int(m.UserId) ,
+    MessageFileId:  int(m.MessageFileId) ,
+    MessageTypeEnum:  int(m.MessageTypeEnum) ,
+    Text:  m.Text ,
+    CreatedMs:  int(m.CreatedMs) ,
+    DeliveryStatusEnum:  int(m.DeliveryStatusEnum) ,
+}
+return r
+}
+
+func(m *PB_GroupToMessage)ToFlat() *PB_GroupToMessage_Flat {
+r := &PB_GroupToMessage_Flat{
+    Id:  int(m.Id) ,
+    GroupId:  int(m.GroupId) ,
+    MessageId:  int(m.MessageId) ,
+    CreatedMs:  int(m.CreatedMs) ,
+    StatusEnum:  int(m.StatusEnum) ,
+}
+return r
+}
+
+func(m *PB_Like)ToFlat() *PB_Like_Flat {
+r := &PB_Like_Flat{
+    Id:  int(m.Id) ,
+    PostId:  int(m.PostId) ,
+    PostTypeId:  int(m.PostTypeId) ,
+    UserId:  int(m.UserId) ,
+    TypeId:  int(m.TypeId) ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_LogChange)ToFlat() *PB_LogChange_Flat {
+r := &PB_LogChange_Flat{
+    Id:  int(m.Id) ,
+    T:  m.T ,
+}
+return r
+}
+
+func(m *PB_Media)ToFlat() *PB_Media_Flat {
+r := &PB_Media_Flat{
+    Id:  int(m.Id) ,
+    UserId:  int(m.UserId) ,
+    PostId:  int(m.PostId) ,
+    AlbumId:  int(m.AlbumId) ,
+    TypeId:  int(m.TypeId) ,
+    CreatedTime:  int(m.CreatedTime) ,
+    Src:  m.Src ,
+}
+return r
+}
+
+func(m *PB_MessageFile)ToFlat() *PB_MessageFile_Flat {
+r := &PB_MessageFile_Flat{
+    MessageFileId:  int(m.MessageFileId) ,
+    MessageFileKey:  m.MessageFileKey ,
+    OriginalUserId:  int(m.OriginalUserId) ,
+    Name:  m.Name ,
+    Size:  int(m.Size) ,
+    FileTypeEnumId:  int(m.FileTypeEnumId) ,
+    Width:  int(m.Width) ,
+    Height:  int(m.Height) ,
+    Duration:  int(m.Duration) ,
+    Extension:  m.Extension ,
+    HashMd5:  m.HashMd5 ,
+    HashAccess:  int(m.HashAccess) ,
+    CreatedSe:  int(m.CreatedSe) ,
+    ServerSrc:  m.ServerSrc ,
+    ServerPath:  m.ServerPath ,
+    ServerThumbPath:  m.ServerThumbPath ,
+    BucketId:  m.BucketId ,
+    ServerId:  int(m.ServerId) ,
+    CanDel:  int(m.CanDel) ,
+}
+return r
+}
+
+func(m *PB_Notification)ToFlat() *PB_Notification_Flat {
+r := &PB_Notification_Flat{
+    Id:  int(m.Id) ,
+    ForUserId:  int(m.ForUserId) ,
+    ActorUserId:  int(m.ActorUserId) ,
+    ActionTypeId:  int(m.ActionTypeId) ,
+    ObjectTypeId:  int(m.ObjectTypeId) ,
+    RowId:  int(m.RowId) ,
+    RootId:  int(m.RootId) ,
+    RefId:  int(m.RefId) ,
+    SeenStatus:  int(m.SeenStatus) ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_NotificationRemoved)ToFlat() *PB_NotificationRemoved_Flat {
+r := &PB_NotificationRemoved_Flat{
+    NotificationId:  int(m.NotificationId) ,
+    ForUserId:  int(m.ForUserId) ,
+}
+return r
+}
+
+func(m *PB_OldMessage)ToFlat() *PB_OldMessage_Flat {
+r := &PB_OldMessage_Flat{
+    Id:  int(m.Id) ,
+    Uid:  int(m.Uid) ,
+    UserId:  int(m.UserId) ,
+    MessageKey:  m.MessageKey ,
+    RoomKey:  m.RoomKey ,
+    MessageType:  int(m.MessageType) ,
+    RoomType:  int(m.RoomType) ,
+    MsgFileId:  int(m.MsgFileId) ,
+    DataPB:  []byte(m.DataPB) ,
+    Data64:  m.Data64 ,
+    DataJson:  m.DataJson ,
+    CreatedTimeMs:  int(m.CreatedTimeMs) ,
+}
+return r
+}
+
+func(m *PB_OldMsgFile)ToFlat() *PB_OldMsgFile_Flat {
+r := &PB_OldMsgFile_Flat{
+    Id:  int(m.Id) ,
+    Name:  m.Name ,
+    Size:  int(m.Size) ,
+    FileType:  int(m.FileType) ,
+    MimeType:  m.MimeType ,
+    Width:  int(m.Width) ,
+    Height:  int(m.Height) ,
+    Duration:  int(m.Duration) ,
+    Extension:  m.Extension ,
+    ThumbData:  []byte(m.ThumbData) ,
+    ThumbData64:  m.ThumbData64 ,
+    ServerSrc:  m.ServerSrc ,
+    ServerPath:  m.ServerPath ,
+    ServerId:  int(m.ServerId) ,
+    CanDel:  int(m.CanDel) ,
+}
+return r
+}
+
+func(m *PB_OldMsgPush)ToFlat() *PB_OldMsgPush_Flat {
+r := &PB_OldMsgPush_Flat{
+    Id:  int(m.Id) ,
+    Uid:  int(m.Uid) ,
+    ToUser:  int(m.ToUser) ,
+    MsgUid:  int(m.MsgUid) ,
+    CreatedTimeMs:  int(m.CreatedTimeMs) ,
+}
+return r
+}
+
+func(m *PB_OldMsgPushEvent)ToFlat() *PB_OldMsgPushEvent_Flat {
+r := &PB_OldMsgPushEvent_Flat{
+    Id:  int(m.Id) ,
+    Uid:  int(m.Uid) ,
+    ToUserId:  int(m.ToUserId) ,
+    MsgUid:  int(m.MsgUid) ,
+    MsgKey:  m.MsgKey ,
+    RoomKey:  m.RoomKey ,
+    PeerUserId:  int(m.PeerUserId) ,
+    EventType:  int(m.EventType) ,
+    AtTime:  int(m.AtTime) ,
+}
+return r
+}
+
+func(m *PB_PhoneContact)ToFlat() *PB_PhoneContact_Flat {
+r := &PB_PhoneContact_Flat{
+    Id:  int(m.Id) ,
+    PhoneDisplayName:  m.PhoneDisplayName ,
+    PhoneFamilyName:  m.PhoneFamilyName ,
+    PhoneNumber:  m.PhoneNumber ,
+    PhoneNormalizedNumber:  m.PhoneNormalizedNumber ,
+    PhoneContactRowId:  int(m.PhoneContactRowId) ,
+    UserId:  int(m.UserId) ,
+    DeviceUuidId:  int(m.DeviceUuidId) ,
+    CreatedTime:  int(m.CreatedTime) ,
+    UpdatedTime:  int(m.UpdatedTime) ,
+}
+return r
+}
+
+func(m *PB_Photo)ToFlat() *PB_Photo_Flat {
+r := &PB_Photo_Flat{
+    PhotoId:  int(m.PhotoId) ,
+    UserId:  int(m.UserId) ,
+    PostId:  int(m.PostId) ,
+    AlbumId:  int(m.AlbumId) ,
+    ImageTypeId:  int(m.ImageTypeId) ,
+    Title:  m.Title ,
+    Src:  m.Src ,
+    PathSrc:  m.PathSrc ,
+    BucketId:  int(m.BucketId) ,
+    Width:  int(m.Width) ,
+    Height:  int(m.Height) ,
+    Ratio:  float32(m.Ratio) ,
+    HashMd5:  m.HashMd5 ,
+    Color:  m.Color ,
+    CreatedTime:  int(m.CreatedTime) ,
+    W1080:  int(m.W1080) ,
+    W720:  int(m.W720) ,
+    W480:  int(m.W480) ,
+    W320:  int(m.W320) ,
+    W160:  int(m.W160) ,
+    W80:  int(m.W80) ,
+}
+return r
+}
+
+func(m *PB_Post)ToFlat() *PB_Post_Flat {
+r := &PB_Post_Flat{
+    Id:  int(m.Id) ,
+    UserId:  int(m.UserId) ,
+    TypeId:  int(m.TypeId) ,
+    Text:  m.Text ,
+    FormatedText:  m.FormatedText ,
+    MediaCount:  int(m.MediaCount) ,
+    SharedTo:  int(m.SharedTo) ,
+    DisableComment:  int(m.DisableComment) ,
+    HasTag:  int(m.HasTag) ,
+    LikesCount:  int(m.LikesCount) ,
+    CommentsCount:  int(m.CommentsCount) ,
+    EditedTime:  int(m.EditedTime) ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_PushEvent)ToFlat() *PB_PushEvent_Flat {
+r := &PB_PushEvent_Flat{
+    PushEventId:  int(m.PushEventId) ,
+    ToUserId:  int(m.ToUserId) ,
+    ToDeviceId:  int(m.ToDeviceId) ,
+    MessageId:  int(m.MessageId) ,
+    RoomTypeEnum:  int(m.RoomTypeEnum) ,
+    RoomId:  int(m.RoomId) ,
+    PeerUserId:  int(m.PeerUserId) ,
+    PushEventTypeEnum:  int(m.PushEventTypeEnum) ,
+    AtTime:  int(m.AtTime) ,
+}
+return r
+}
+
+func(m *PB_PushMessage)ToFlat() *PB_PushMessage_Flat {
+r := &PB_PushMessage_Flat{
+    PushMessageId:  int(m.PushMessageId) ,
+    ToUserId:  int(m.ToUserId) ,
+    ToDeviceId:  int(m.ToDeviceId) ,
+    MessageId:  int(m.MessageId) ,
+    RoomTypeEnum:  int(m.RoomTypeEnum) ,
+    CreatedMs:  int(m.CreatedMs) ,
+}
+return r
+}
+
+func(m *PB_RecommendUser)ToFlat() *PB_RecommendUser_Flat {
+r := &PB_RecommendUser_Flat{
+    Id:  int(m.Id) ,
+    UserId:  int(m.UserId) ,
+    TargetId:  int(m.TargetId) ,
+    Weight:  float32(m.Weight) ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_Room)ToFlat() *PB_Room_Flat {
+r := &PB_Room_Flat{
+    RoomId:  int(m.RoomId) ,
+    RoomKey:  m.RoomKey ,
+    RoomTypeEnum:  int(m.RoomTypeEnum) ,
+    UserId:  int(m.UserId) ,
+    LastSeqSeen:  int(m.LastSeqSeen) ,
+    LastSeqDelete:  int(m.LastSeqDelete) ,
+    PeerUserId:  int(m.PeerUserId) ,
+    GroupId:  int(m.GroupId) ,
+    CreatedTime:  int(m.CreatedTime) ,
+    CurrentSeq:  int(m.CurrentSeq) ,
+}
+return r
+}
+
+func(m *PB_SearchClicked)ToFlat() *PB_SearchClicked_Flat {
+r := &PB_SearchClicked_Flat{
+    Id:  int(m.Id) ,
+    Query:  m.Query ,
+    ClickType:  int(m.ClickType) ,
+    TargetId:  int(m.TargetId) ,
+    UserId:  int(m.UserId) ,
+    CreatedAt:  int(m.CreatedAt) ,
+}
+return r
+}
+
+func(m *PB_Session)ToFlat() *PB_Session_Flat {
+r := &PB_Session_Flat{
+    Id:  int(m.Id) ,
+    UserId:  int(m.UserId) ,
+    SessionUuid:  m.SessionUuid ,
+    ClientUuid:  m.ClientUuid ,
+    DeviceUuid:  m.DeviceUuid ,
+    LastActivityTime:  int(m.LastActivityTime) ,
+    LastIpAddress:  m.LastIpAddress ,
+    LastWifiMacAddress:  m.LastWifiMacAddress ,
+    LastNetworkType:  m.LastNetworkType ,
+    LastNetworkTypeId:  int(m.LastNetworkTypeId) ,
+    AppVersion:  int(m.AppVersion) ,
+    UpdatedTime:  int(m.UpdatedTime) ,
+    CreatedTime:  int(m.CreatedTime) ,
+    LastSyncDirectUpdateId:  int(m.LastSyncDirectUpdateId) ,
+    LastSyncGeneralUpdateId:  int(m.LastSyncGeneralUpdateId) ,
+    LastSyncNotifyUpdateId:  int(m.LastSyncNotifyUpdateId) ,
+}
+return r
+}
+
+func(m *PB_SettingClient)ToFlat() *PB_SettingClient_Flat {
+r := &PB_SettingClient_Flat{
+    UserId:  int(m.UserId) ,
+    AutoDownloadWifiVoice:  int(m.AutoDownloadWifiVoice) ,
+    AutoDownloadWifiImage:  int(m.AutoDownloadWifiImage) ,
+    AutoDownloadWifiVideo:  int(m.AutoDownloadWifiVideo) ,
+    AutoDownloadWifiFile:  int(m.AutoDownloadWifiFile) ,
+    AutoDownloadWifiMusic:  int(m.AutoDownloadWifiMusic) ,
+    AutoDownloadWifiGif:  int(m.AutoDownloadWifiGif) ,
+    AutoDownloadCellularVoice:  int(m.AutoDownloadCellularVoice) ,
+    AutoDownloadCellularImage:  int(m.AutoDownloadCellularImage) ,
+    AutoDownloadCellularVideo:  int(m.AutoDownloadCellularVideo) ,
+    AutoDownloadCellularFile:  int(m.AutoDownloadCellularFile) ,
+    AutoDownloadCellularMusic:  int(m.AutoDownloadCellularMusic) ,
+    AutoDownloadCellularGif:  int(m.AutoDownloadCellularGif) ,
+    AutoDownloadRoamingVoice:  int(m.AutoDownloadRoamingVoice) ,
+    AutoDownloadRoamingImage:  int(m.AutoDownloadRoamingImage) ,
+    AutoDownloadRoamingVideo:  int(m.AutoDownloadRoamingVideo) ,
+    AutoDownloadRoamingFile:  int(m.AutoDownloadRoamingFile) ,
+    AutoDownloadRoamingMusic:  int(m.AutoDownloadRoamingMusic) ,
+    AutoDownloadRoamingGif:  int(m.AutoDownloadRoamingGif) ,
+    SaveToGallery:  int(m.SaveToGallery) ,
+}
+return r
+}
+
+func(m *PB_SettingNotification)ToFlat() *PB_SettingNotification_Flat {
+r := &PB_SettingNotification_Flat{
+    UserId:  int(m.UserId) ,
+    SocialLedOn:  int(m.SocialLedOn) ,
+    SocialLedColor:  m.SocialLedColor ,
+    ReqestToFollowYou:  int(m.ReqestToFollowYou) ,
+    FollowedYou:  int(m.FollowedYou) ,
+    AccptedYourFollowRequest:  int(m.AccptedYourFollowRequest) ,
+    YourPostLiked:  int(m.YourPostLiked) ,
+    YourPostCommented:  int(m.YourPostCommented) ,
+    MenthenedYouInPost:  int(m.MenthenedYouInPost) ,
+    MenthenedYouInComment:  int(m.MenthenedYouInComment) ,
+    YourContactsJoined:  int(m.YourContactsJoined) ,
+    DirectMessage:  int(m.DirectMessage) ,
+    DirectAlert:  int(m.DirectAlert) ,
+    DirectPerview:  int(m.DirectPerview) ,
+    DirectLedOn:  int(m.DirectLedOn) ,
+    DirectLedColor:  int(m.DirectLedColor) ,
+    DirectVibrate:  int(m.DirectVibrate) ,
+    DirectPopup:  int(m.DirectPopup) ,
+    DirectSound:  int(m.DirectSound) ,
+    DirectPriority:  int(m.DirectPriority) ,
+}
+return r
+}
+
+func(m *PB_Tag)ToFlat() *PB_Tag_Flat {
+r := &PB_Tag_Flat{
+    Id:  int(m.Id) ,
+    Name:  m.Name ,
+    Count:  int(m.Count) ,
+    IsBlocked:  int(m.IsBlocked) ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_TagsPost)ToFlat() *PB_TagsPost_Flat {
+r := &PB_TagsPost_Flat{
+    Id:  int(m.Id) ,
+    TagId:  int(m.TagId) ,
+    PostId:  int(m.PostId) ,
+    TypeId:  int(m.TypeId) ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_TestChat)ToFlat() *PB_TestChat_Flat {
+r := &PB_TestChat_Flat{
+    Id:  int(m.Id) ,
+    Id4:  int(m.Id4) ,
+    TimeMs:  int(m.TimeMs) ,
+    Text:  m.Text ,
+    Name:  m.Name ,
+    UserId:  int(m.UserId) ,
+    C2:  int(m.C2) ,
+    C3:  int(m.C3) ,
+    C4:  int(m.C4) ,
+    C5:  int(m.C5) ,
+}
+return r
+}
+
+func(m *PB_User)ToFlat() *PB_User_Flat {
+r := &PB_User_Flat{
+    Id:  int(m.Id) ,
+    UserName:  m.UserName ,
+    UserNameLower:  m.UserNameLower ,
+    FirstName:  m.FirstName ,
+    LastName:  m.LastName ,
+    About:  m.About ,
+    FullName:  m.FullName ,
+    AvatarUrl:  m.AvatarUrl ,
+    PrivacyProfile:  int(m.PrivacyProfile) ,
+    Phone:  m.Phone ,
+    Email:  m.Email ,
+    IsDeleted:  int(m.IsDeleted) ,
+    PasswordHash:  m.PasswordHash ,
+    PasswordSalt:  m.PasswordSalt ,
+    FollowersCount:  int(m.FollowersCount) ,
+    FollowingCount:  int(m.FollowingCount) ,
+    PostsCount:  int(m.PostsCount) ,
+    MediaCount:  int(m.MediaCount) ,
+    LikesCount:  int(m.LikesCount) ,
+    ResharedCount:  int(m.ResharedCount) ,
+    LastActionTime:  int(m.LastActionTime) ,
+    LastPostTime:  int(m.LastPostTime) ,
+    PrimaryFollowingList:  int(m.PrimaryFollowingList) ,
+    CreatedTime:  int(m.CreatedTime) ,
+    UpdatedTime:  int(m.UpdatedTime) ,
+    SessionUuid:  m.SessionUuid ,
+    DeviceUuid:  m.DeviceUuid ,
+    LastWifiMacAddress:  m.LastWifiMacAddress ,
+    LastNetworkType:  m.LastNetworkType ,
+    AppVersion:  int(m.AppVersion) ,
+    LastActivityTime:  int(m.LastActivityTime) ,
+    LastLoginTime:  int(m.LastLoginTime) ,
+    LastIpAddress:  m.LastIpAddress ,
+}
+return r
+}
+
+func(m *PB_UserMetaInfo)ToFlat() *PB_UserMetaInfo_Flat {
+r := &PB_UserMetaInfo_Flat{
+    Id:  int(m.Id) ,
+    UserId:  int(m.UserId) ,
+    IsNotificationDirty:  int(m.IsNotificationDirty) ,
+    LastUserRecGen:  int(m.LastUserRecGen) ,
+}
+return r
+}
+
+func(m *PB_UserPassword)ToFlat() *PB_UserPassword_Flat {
+r := &PB_UserPassword_Flat{
+    UserId:  int(m.UserId) ,
+    Password:  m.Password ,
+    CreatedTime:  int(m.CreatedTime) ,
+}
+return r
+}
+
 func(m *PB_UpdateGroupParticipants)ToFlat() *PB_UpdateGroupParticipants_Flat {
 r := &PB_UpdateGroupParticipants_Flat{
 }
@@ -4001,6 +7150,661 @@ r := &UserView{
 return r
 }
 
+func(m *PB_Activity_Flat)ToPB() *PB_Activity {
+r := &PB_Activity{
+    Id:  int64(m.Id) ,
+    ActorUserId:  int32(m.ActorUserId) ,
+    ActionTypeId:  int32(m.ActionTypeId) ,
+    RowId:  int32(m.RowId) ,
+    RootId:  int32(m.RootId) ,
+    RefId:  int64(m.RefId) ,
+    CreatedAt:  int32(m.CreatedAt) ,
+}
+return r
+}
+
+func(m *PB_Bucket_Flat)ToPB() *PB_Bucket {
+r := &PB_Bucket{
+    BucketId:  int32(m.BucketId) ,
+    BucketName:  m.BucketName ,
+    Server1Id:  int32(m.Server1Id) ,
+    Server2Id:  int32(m.Server2Id) ,
+    BackupServerId:  int32(m.BackupServerId) ,
+    ContentObjectTypeId:  int32(m.ContentObjectTypeId) ,
+    ContentObjectCount:  int32(m.ContentObjectCount) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_Chat_Flat)ToPB() *PB_Chat {
+r := &PB_Chat{
+    ChatKey:  m.ChatKey ,
+    RoomKey:  m.RoomKey ,
+    RoomTypeEnumId:  int32(m.RoomTypeEnumId) ,
+    UserId:  int32(m.UserId) ,
+    PeerUserId:  int32(m.PeerUserId) ,
+    GroupId:  int64(m.GroupId) ,
+    CreatedSe:  int32(m.CreatedSe) ,
+    StartMessageIdFrom:  int64(m.StartMessageIdFrom) ,
+    LastSeenMessageId:  int64(m.LastSeenMessageId) ,
+    UpdatedMs:  int64(m.UpdatedMs) ,
+    LastMessageId:  int64(m.LastMessageId) ,
+    LastDeletedMessageId:  int64(m.LastDeletedMessageId) ,
+    LastSeqSeen:  int32(m.LastSeqSeen) ,
+    LastSeqDelete:  int32(m.LastSeqDelete) ,
+    CurrentSeq:  int32(m.CurrentSeq) ,
+}
+return r
+}
+
+func(m *PB_Comment_Flat)ToPB() *PB_Comment {
+r := &PB_Comment{
+    Id:  int32(m.Id) ,
+    UserId:  int32(m.UserId) ,
+    PostId:  int32(m.PostId) ,
+    Text:  m.Text ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_DirectMessage_Flat)ToPB() *PB_DirectMessage {
+r := &PB_DirectMessage{
+    MessageId:  int64(m.MessageId) ,
+    MessageKey:  m.MessageKey ,
+    RoomKey:  m.RoomKey ,
+    UserId:  int32(m.UserId) ,
+    MessageFileId:  int64(m.MessageFileId) ,
+    MessageTypeEnumId:  int32(m.MessageTypeEnumId) ,
+    Text:  m.Text ,
+    CreatedSe:  int32(m.CreatedSe) ,
+    PeerReceivedTime:  int32(m.PeerReceivedTime) ,
+    PeerSeenTime:  int32(m.PeerSeenTime) ,
+    DeliviryStatusEnumId:  int32(m.DeliviryStatusEnumId) ,
+}
+return r
+}
+
+func(m *PB_DirectToMessage_Flat)ToPB() *PB_DirectToMessage {
+r := &PB_DirectToMessage{
+    Id:  int64(m.Id) ,
+    ChatKey:  m.ChatKey ,
+    MessageId:  int64(m.MessageId) ,
+    SourceEnumId:  int32(m.SourceEnumId) ,
+}
+return r
+}
+
+func(m *PB_DirectUpdate_Flat)ToPB() *PB_DirectUpdate {
+r := &PB_DirectUpdate{
+    DirectUpdateId:  int64(m.DirectUpdateId) ,
+    ToUserId:  int32(m.ToUserId) ,
+    MessageId:  int64(m.MessageId) ,
+    MessageFileId:  int64(m.MessageFileId) ,
+    OtherId:  int64(m.OtherId) ,
+    ChatKey:  m.ChatKey ,
+    PeerUserId:  int32(m.PeerUserId) ,
+    EventType:  int32(m.EventType) ,
+    RoomLogTypeId:  int32(m.RoomLogTypeId) ,
+    FromSeq:  int32(m.FromSeq) ,
+    ToSeq:  int32(m.ToSeq) ,
+    ExtraPB:  m.ExtraPB ,
+    ExtraJson:  m.ExtraJson ,
+    AtTimeMs:  int64(m.AtTimeMs) ,
+}
+return r
+}
+
+func(m *PB_FollowingList_Flat)ToPB() *PB_FollowingList {
+r := &PB_FollowingList{
+    Id:  int32(m.Id) ,
+    UserId:  int32(m.UserId) ,
+    ListType:  int32(m.ListType) ,
+    Name:  m.Name ,
+    Count:  int32(m.Count) ,
+    IsAuto:  int32(m.IsAuto) ,
+    IsPimiry:  int32(m.IsPimiry) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_FollowingListMember_Flat)ToPB() *PB_FollowingListMember {
+r := &PB_FollowingListMember{
+    Id:  int64(m.Id) ,
+    ListId:  int32(m.ListId) ,
+    UserId:  int32(m.UserId) ,
+    FollowedUserId:  int32(m.FollowedUserId) ,
+    FollowType:  int32(m.FollowType) ,
+    UpdatedTimeMs:  int64(m.UpdatedTimeMs) ,
+}
+return r
+}
+
+func(m *PB_FollowingListMemberHistory_Flat)ToPB() *PB_FollowingListMemberHistory {
+r := &PB_FollowingListMemberHistory{
+    Id:  int64(m.Id) ,
+    ListId:  int32(m.ListId) ,
+    UserId:  int32(m.UserId) ,
+    FollowedUserId:  int32(m.FollowedUserId) ,
+    FollowType:  int32(m.FollowType) ,
+    UpdatedTimeMs:  int64(m.UpdatedTimeMs) ,
+    FollowId:  int32(m.FollowId) ,
+}
+return r
+}
+
+func(m *PB_GeneralLog_Flat)ToPB() *PB_GeneralLog {
+r := &PB_GeneralLog{
+    Id:  int64(m.Id) ,
+    ToUserId:  int32(m.ToUserId) ,
+    TargetId:  int32(m.TargetId) ,
+    LogTypeId:  int32(m.LogTypeId) ,
+    ExtraPB:  m.ExtraPB ,
+    ExtraJson:  m.ExtraJson ,
+    CreatedMs:  int64(m.CreatedMs) ,
+}
+return r
+}
+
+func(m *PB_Group_Flat)ToPB() *PB_Group {
+r := &PB_Group{
+    GroupId:  int64(m.GroupId) ,
+    GroupName:  m.GroupName ,
+    MembersCount:  int32(m.MembersCount) ,
+    GroupPrivacyEnum:  int32(m.GroupPrivacyEnum) ,
+    CreatorUserId:  int32(m.CreatorUserId) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+    UpdatedMs:  int64(m.UpdatedMs) ,
+    CurrentSeq:  int32(m.CurrentSeq) ,
+}
+return r
+}
+
+func(m *PB_GroupMember_Flat)ToPB() *PB_GroupMember {
+r := &PB_GroupMember{
+    Id:  int64(m.Id) ,
+    GroupId:  int64(m.GroupId) ,
+    GroupKey:  m.GroupKey ,
+    UserId:  int32(m.UserId) ,
+    ByUserId:  int32(m.ByUserId) ,
+    GroupRoleEnumId:  int32(m.GroupRoleEnumId) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_GroupMessage_Flat)ToPB() *PB_GroupMessage {
+r := &PB_GroupMessage{
+    MessageId:  int64(m.MessageId) ,
+    RoomKey:  m.RoomKey ,
+    UserId:  int32(m.UserId) ,
+    MessageFileId:  int64(m.MessageFileId) ,
+    MessageTypeEnum:  int32(m.MessageTypeEnum) ,
+    Text:  m.Text ,
+    CreatedMs:  int64(m.CreatedMs) ,
+    DeliveryStatusEnum:  int32(m.DeliveryStatusEnum) ,
+}
+return r
+}
+
+func(m *PB_GroupToMessage_Flat)ToPB() *PB_GroupToMessage {
+r := &PB_GroupToMessage{
+    Id:  int64(m.Id) ,
+    GroupId:  int64(m.GroupId) ,
+    MessageId:  int64(m.MessageId) ,
+    CreatedMs:  int64(m.CreatedMs) ,
+    StatusEnum:  int32(m.StatusEnum) ,
+}
+return r
+}
+
+func(m *PB_Like_Flat)ToPB() *PB_Like {
+r := &PB_Like{
+    Id:  int32(m.Id) ,
+    PostId:  int32(m.PostId) ,
+    PostTypeId:  int32(m.PostTypeId) ,
+    UserId:  int32(m.UserId) ,
+    TypeId:  int32(m.TypeId) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_LogChange_Flat)ToPB() *PB_LogChange {
+r := &PB_LogChange{
+    Id:  int32(m.Id) ,
+    T:  m.T ,
+}
+return r
+}
+
+func(m *PB_Media_Flat)ToPB() *PB_Media {
+r := &PB_Media{
+    Id:  int32(m.Id) ,
+    UserId:  int32(m.UserId) ,
+    PostId:  int32(m.PostId) ,
+    AlbumId:  int32(m.AlbumId) ,
+    TypeId:  int32(m.TypeId) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+    Src:  m.Src ,
+}
+return r
+}
+
+func(m *PB_MessageFile_Flat)ToPB() *PB_MessageFile {
+r := &PB_MessageFile{
+    MessageFileId:  int64(m.MessageFileId) ,
+    MessageFileKey:  m.MessageFileKey ,
+    OriginalUserId:  int32(m.OriginalUserId) ,
+    Name:  m.Name ,
+    Size:  int32(m.Size) ,
+    FileTypeEnumId:  int32(m.FileTypeEnumId) ,
+    Width:  int32(m.Width) ,
+    Height:  int32(m.Height) ,
+    Duration:  int32(m.Duration) ,
+    Extension:  m.Extension ,
+    HashMd5:  m.HashMd5 ,
+    HashAccess:  int64(m.HashAccess) ,
+    CreatedSe:  int32(m.CreatedSe) ,
+    ServerSrc:  m.ServerSrc ,
+    ServerPath:  m.ServerPath ,
+    ServerThumbPath:  m.ServerThumbPath ,
+    BucketId:  m.BucketId ,
+    ServerId:  int32(m.ServerId) ,
+    CanDel:  int32(m.CanDel) ,
+}
+return r
+}
+
+func(m *PB_Notification_Flat)ToPB() *PB_Notification {
+r := &PB_Notification{
+    Id:  int64(m.Id) ,
+    ForUserId:  int32(m.ForUserId) ,
+    ActorUserId:  int32(m.ActorUserId) ,
+    ActionTypeId:  int32(m.ActionTypeId) ,
+    ObjectTypeId:  int32(m.ObjectTypeId) ,
+    RowId:  int32(m.RowId) ,
+    RootId:  int32(m.RootId) ,
+    RefId:  int32(m.RefId) ,
+    SeenStatus:  int32(m.SeenStatus) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_NotificationRemoved_Flat)ToPB() *PB_NotificationRemoved {
+r := &PB_NotificationRemoved{
+    NotificationId:  int32(m.NotificationId) ,
+    ForUserId:  int32(m.ForUserId) ,
+}
+return r
+}
+
+func(m *PB_OldMessage_Flat)ToPB() *PB_OldMessage {
+r := &PB_OldMessage{
+    Id:  int64(m.Id) ,
+    Uid:  int64(m.Uid) ,
+    UserId:  int64(m.UserId) ,
+    MessageKey:  m.MessageKey ,
+    RoomKey:  m.RoomKey ,
+    MessageType:  int32(m.MessageType) ,
+    RoomType:  int32(m.RoomType) ,
+    MsgFileId:  int64(m.MsgFileId) ,
+    DataPB:  m.DataPB ,
+    Data64:  m.Data64 ,
+    DataJson:  m.DataJson ,
+    CreatedTimeMs:  int64(m.CreatedTimeMs) ,
+}
+return r
+}
+
+func(m *PB_OldMsgFile_Flat)ToPB() *PB_OldMsgFile {
+r := &PB_OldMsgFile{
+    Id:  int64(m.Id) ,
+    Name:  m.Name ,
+    Size:  int32(m.Size) ,
+    FileType:  int32(m.FileType) ,
+    MimeType:  m.MimeType ,
+    Width:  int32(m.Width) ,
+    Height:  int32(m.Height) ,
+    Duration:  int32(m.Duration) ,
+    Extension:  m.Extension ,
+    ThumbData:  m.ThumbData ,
+    ThumbData64:  m.ThumbData64 ,
+    ServerSrc:  m.ServerSrc ,
+    ServerPath:  m.ServerPath ,
+    ServerId:  int32(m.ServerId) ,
+    CanDel:  int32(m.CanDel) ,
+}
+return r
+}
+
+func(m *PB_OldMsgPush_Flat)ToPB() *PB_OldMsgPush {
+r := &PB_OldMsgPush{
+    Id:  int64(m.Id) ,
+    Uid:  int64(m.Uid) ,
+    ToUser:  int64(m.ToUser) ,
+    MsgUid:  int64(m.MsgUid) ,
+    CreatedTimeMs:  int64(m.CreatedTimeMs) ,
+}
+return r
+}
+
+func(m *PB_OldMsgPushEvent_Flat)ToPB() *PB_OldMsgPushEvent {
+r := &PB_OldMsgPushEvent{
+    Id:  int64(m.Id) ,
+    Uid:  int64(m.Uid) ,
+    ToUserId:  int32(m.ToUserId) ,
+    MsgUid:  int64(m.MsgUid) ,
+    MsgKey:  m.MsgKey ,
+    RoomKey:  m.RoomKey ,
+    PeerUserId:  int32(m.PeerUserId) ,
+    EventType:  int32(m.EventType) ,
+    AtTime:  int32(m.AtTime) ,
+}
+return r
+}
+
+func(m *PB_PhoneContact_Flat)ToPB() *PB_PhoneContact {
+r := &PB_PhoneContact{
+    Id:  int32(m.Id) ,
+    PhoneDisplayName:  m.PhoneDisplayName ,
+    PhoneFamilyName:  m.PhoneFamilyName ,
+    PhoneNumber:  m.PhoneNumber ,
+    PhoneNormalizedNumber:  m.PhoneNormalizedNumber ,
+    PhoneContactRowId:  int32(m.PhoneContactRowId) ,
+    UserId:  int32(m.UserId) ,
+    DeviceUuidId:  int32(m.DeviceUuidId) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+    UpdatedTime:  int32(m.UpdatedTime) ,
+}
+return r
+}
+
+func(m *PB_Photo_Flat)ToPB() *PB_Photo {
+r := &PB_Photo{
+    PhotoId:  int32(m.PhotoId) ,
+    UserId:  int32(m.UserId) ,
+    PostId:  int32(m.PostId) ,
+    AlbumId:  int32(m.AlbumId) ,
+    ImageTypeId:  int32(m.ImageTypeId) ,
+    Title:  m.Title ,
+    Src:  m.Src ,
+    PathSrc:  m.PathSrc ,
+    BucketId:  int32(m.BucketId) ,
+    Width:  int32(m.Width) ,
+    Height:  int32(m.Height) ,
+    Ratio:  m.Ratio ,
+    HashMd5:  m.HashMd5 ,
+    Color:  m.Color ,
+    CreatedTime:  int32(m.CreatedTime) ,
+    W1080:  int32(m.W1080) ,
+    W720:  int32(m.W720) ,
+    W480:  int32(m.W480) ,
+    W320:  int32(m.W320) ,
+    W160:  int32(m.W160) ,
+    W80:  int32(m.W80) ,
+}
+return r
+}
+
+func(m *PB_Post_Flat)ToPB() *PB_Post {
+r := &PB_Post{
+    Id:  int32(m.Id) ,
+    UserId:  int32(m.UserId) ,
+    TypeId:  int32(m.TypeId) ,
+    Text:  m.Text ,
+    FormatedText:  m.FormatedText ,
+    MediaCount:  int32(m.MediaCount) ,
+    SharedTo:  int32(m.SharedTo) ,
+    DisableComment:  int32(m.DisableComment) ,
+    HasTag:  int32(m.HasTag) ,
+    LikesCount:  int32(m.LikesCount) ,
+    CommentsCount:  int32(m.CommentsCount) ,
+    EditedTime:  int32(m.EditedTime) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_PushEvent_Flat)ToPB() *PB_PushEvent {
+r := &PB_PushEvent{
+    PushEventId:  int64(m.PushEventId) ,
+    ToUserId:  int32(m.ToUserId) ,
+    ToDeviceId:  int64(m.ToDeviceId) ,
+    MessageId:  int64(m.MessageId) ,
+    RoomTypeEnum:  int32(m.RoomTypeEnum) ,
+    RoomId:  int64(m.RoomId) ,
+    PeerUserId:  int32(m.PeerUserId) ,
+    PushEventTypeEnum:  int32(m.PushEventTypeEnum) ,
+    AtTime:  int32(m.AtTime) ,
+}
+return r
+}
+
+func(m *PB_PushMessage_Flat)ToPB() *PB_PushMessage {
+r := &PB_PushMessage{
+    PushMessageId:  int64(m.PushMessageId) ,
+    ToUserId:  int32(m.ToUserId) ,
+    ToDeviceId:  int64(m.ToDeviceId) ,
+    MessageId:  int64(m.MessageId) ,
+    RoomTypeEnum:  int32(m.RoomTypeEnum) ,
+    CreatedMs:  int64(m.CreatedMs) ,
+}
+return r
+}
+
+func(m *PB_RecommendUser_Flat)ToPB() *PB_RecommendUser {
+r := &PB_RecommendUser{
+    Id:  int32(m.Id) ,
+    UserId:  int32(m.UserId) ,
+    TargetId:  int32(m.TargetId) ,
+    Weight:  m.Weight ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_Room_Flat)ToPB() *PB_Room {
+r := &PB_Room{
+    RoomId:  int64(m.RoomId) ,
+    RoomKey:  m.RoomKey ,
+    RoomTypeEnum:  int32(m.RoomTypeEnum) ,
+    UserId:  int32(m.UserId) ,
+    LastSeqSeen:  int32(m.LastSeqSeen) ,
+    LastSeqDelete:  int32(m.LastSeqDelete) ,
+    PeerUserId:  int32(m.PeerUserId) ,
+    GroupId:  int64(m.GroupId) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+    CurrentSeq:  int32(m.CurrentSeq) ,
+}
+return r
+}
+
+func(m *PB_SearchClicked_Flat)ToPB() *PB_SearchClicked {
+r := &PB_SearchClicked{
+    Id:  int64(m.Id) ,
+    Query:  m.Query ,
+    ClickType:  int32(m.ClickType) ,
+    TargetId:  int32(m.TargetId) ,
+    UserId:  int32(m.UserId) ,
+    CreatedAt:  int32(m.CreatedAt) ,
+}
+return r
+}
+
+func(m *PB_Session_Flat)ToPB() *PB_Session {
+r := &PB_Session{
+    Id:  int32(m.Id) ,
+    UserId:  int32(m.UserId) ,
+    SessionUuid:  m.SessionUuid ,
+    ClientUuid:  m.ClientUuid ,
+    DeviceUuid:  m.DeviceUuid ,
+    LastActivityTime:  int32(m.LastActivityTime) ,
+    LastIpAddress:  m.LastIpAddress ,
+    LastWifiMacAddress:  m.LastWifiMacAddress ,
+    LastNetworkType:  m.LastNetworkType ,
+    LastNetworkTypeId:  int32(m.LastNetworkTypeId) ,
+    AppVersion:  int32(m.AppVersion) ,
+    UpdatedTime:  int32(m.UpdatedTime) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+    LastSyncDirectUpdateId:  int64(m.LastSyncDirectUpdateId) ,
+    LastSyncGeneralUpdateId:  int64(m.LastSyncGeneralUpdateId) ,
+    LastSyncNotifyUpdateId:  int64(m.LastSyncNotifyUpdateId) ,
+}
+return r
+}
+
+func(m *PB_SettingClient_Flat)ToPB() *PB_SettingClient {
+r := &PB_SettingClient{
+    UserId:  int32(m.UserId) ,
+    AutoDownloadWifiVoice:  int32(m.AutoDownloadWifiVoice) ,
+    AutoDownloadWifiImage:  int32(m.AutoDownloadWifiImage) ,
+    AutoDownloadWifiVideo:  int32(m.AutoDownloadWifiVideo) ,
+    AutoDownloadWifiFile:  int32(m.AutoDownloadWifiFile) ,
+    AutoDownloadWifiMusic:  int32(m.AutoDownloadWifiMusic) ,
+    AutoDownloadWifiGif:  int32(m.AutoDownloadWifiGif) ,
+    AutoDownloadCellularVoice:  int32(m.AutoDownloadCellularVoice) ,
+    AutoDownloadCellularImage:  int32(m.AutoDownloadCellularImage) ,
+    AutoDownloadCellularVideo:  int32(m.AutoDownloadCellularVideo) ,
+    AutoDownloadCellularFile:  int32(m.AutoDownloadCellularFile) ,
+    AutoDownloadCellularMusic:  int32(m.AutoDownloadCellularMusic) ,
+    AutoDownloadCellularGif:  int32(m.AutoDownloadCellularGif) ,
+    AutoDownloadRoamingVoice:  int32(m.AutoDownloadRoamingVoice) ,
+    AutoDownloadRoamingImage:  int32(m.AutoDownloadRoamingImage) ,
+    AutoDownloadRoamingVideo:  int32(m.AutoDownloadRoamingVideo) ,
+    AutoDownloadRoamingFile:  int32(m.AutoDownloadRoamingFile) ,
+    AutoDownloadRoamingMusic:  int32(m.AutoDownloadRoamingMusic) ,
+    AutoDownloadRoamingGif:  int32(m.AutoDownloadRoamingGif) ,
+    SaveToGallery:  int32(m.SaveToGallery) ,
+}
+return r
+}
+
+func(m *PB_SettingNotification_Flat)ToPB() *PB_SettingNotification {
+r := &PB_SettingNotification{
+    UserId:  int32(m.UserId) ,
+    SocialLedOn:  int32(m.SocialLedOn) ,
+    SocialLedColor:  m.SocialLedColor ,
+    ReqestToFollowYou:  int32(m.ReqestToFollowYou) ,
+    FollowedYou:  int32(m.FollowedYou) ,
+    AccptedYourFollowRequest:  int32(m.AccptedYourFollowRequest) ,
+    YourPostLiked:  int32(m.YourPostLiked) ,
+    YourPostCommented:  int32(m.YourPostCommented) ,
+    MenthenedYouInPost:  int32(m.MenthenedYouInPost) ,
+    MenthenedYouInComment:  int32(m.MenthenedYouInComment) ,
+    YourContactsJoined:  int32(m.YourContactsJoined) ,
+    DirectMessage:  int32(m.DirectMessage) ,
+    DirectAlert:  int32(m.DirectAlert) ,
+    DirectPerview:  int32(m.DirectPerview) ,
+    DirectLedOn:  int32(m.DirectLedOn) ,
+    DirectLedColor:  int32(m.DirectLedColor) ,
+    DirectVibrate:  int32(m.DirectVibrate) ,
+    DirectPopup:  int32(m.DirectPopup) ,
+    DirectSound:  int32(m.DirectSound) ,
+    DirectPriority:  int32(m.DirectPriority) ,
+}
+return r
+}
+
+func(m *PB_Tag_Flat)ToPB() *PB_Tag {
+r := &PB_Tag{
+    Id:  int32(m.Id) ,
+    Name:  m.Name ,
+    Count:  int32(m.Count) ,
+    IsBlocked:  int32(m.IsBlocked) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_TagsPost_Flat)ToPB() *PB_TagsPost {
+r := &PB_TagsPost{
+    Id:  int32(m.Id) ,
+    TagId:  int32(m.TagId) ,
+    PostId:  int32(m.PostId) ,
+    TypeId:  int32(m.TypeId) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
+func(m *PB_TestChat_Flat)ToPB() *PB_TestChat {
+r := &PB_TestChat{
+    Id:  int64(m.Id) ,
+    Id4:  int64(m.Id4) ,
+    TimeMs:  int64(m.TimeMs) ,
+    Text:  m.Text ,
+    Name:  m.Name ,
+    UserId:  int64(m.UserId) ,
+    C2:  int32(m.C2) ,
+    C3:  int32(m.C3) ,
+    C4:  int32(m.C4) ,
+    C5:  int32(m.C5) ,
+}
+return r
+}
+
+func(m *PB_User_Flat)ToPB() *PB_User {
+r := &PB_User{
+    Id:  int32(m.Id) ,
+    UserName:  m.UserName ,
+    UserNameLower:  m.UserNameLower ,
+    FirstName:  m.FirstName ,
+    LastName:  m.LastName ,
+    About:  m.About ,
+    FullName:  m.FullName ,
+    AvatarUrl:  m.AvatarUrl ,
+    PrivacyProfile:  int32(m.PrivacyProfile) ,
+    Phone:  m.Phone ,
+    Email:  m.Email ,
+    IsDeleted:  int32(m.IsDeleted) ,
+    PasswordHash:  m.PasswordHash ,
+    PasswordSalt:  m.PasswordSalt ,
+    FollowersCount:  int32(m.FollowersCount) ,
+    FollowingCount:  int32(m.FollowingCount) ,
+    PostsCount:  int32(m.PostsCount) ,
+    MediaCount:  int32(m.MediaCount) ,
+    LikesCount:  int32(m.LikesCount) ,
+    ResharedCount:  int32(m.ResharedCount) ,
+    LastActionTime:  int32(m.LastActionTime) ,
+    LastPostTime:  int32(m.LastPostTime) ,
+    PrimaryFollowingList:  int32(m.PrimaryFollowingList) ,
+    CreatedTime:  int32(m.CreatedTime) ,
+    UpdatedTime:  int32(m.UpdatedTime) ,
+    SessionUuid:  m.SessionUuid ,
+    DeviceUuid:  m.DeviceUuid ,
+    LastWifiMacAddress:  m.LastWifiMacAddress ,
+    LastNetworkType:  m.LastNetworkType ,
+    AppVersion:  int32(m.AppVersion) ,
+    LastActivityTime:  int32(m.LastActivityTime) ,
+    LastLoginTime:  int32(m.LastLoginTime) ,
+    LastIpAddress:  m.LastIpAddress ,
+}
+return r
+}
+
+func(m *PB_UserMetaInfo_Flat)ToPB() *PB_UserMetaInfo {
+r := &PB_UserMetaInfo{
+    Id:  int32(m.Id) ,
+    UserId:  int32(m.UserId) ,
+    IsNotificationDirty:  int32(m.IsNotificationDirty) ,
+    LastUserRecGen:  int32(m.LastUserRecGen) ,
+}
+return r
+}
+
+func(m *PB_UserPassword_Flat)ToPB() *PB_UserPassword {
+r := &PB_UserPassword{
+    UserId:  int32(m.UserId) ,
+    Password:  m.Password ,
+    CreatedTime:  int32(m.CreatedTime) ,
+}
+return r
+}
+
 func(m *PB_UpdateGroupParticipants_Flat)ToPB() *PB_UpdateGroupParticipants {
 r := &PB_UpdateGroupParticipants{
 }
@@ -4621,6 +8425,577 @@ var PB_UserResponse_CheckUserName__FOlD = &PB_UserResponse_CheckUserName{
 
 
 var UserView__FOlD = &UserView{
+}
+
+
+var PB_Activity__FOlD = &PB_Activity{
+        Id:  0 ,
+        ActorUserId:  0 ,
+        ActionTypeId:  0 ,
+        RowId:  0 ,
+        RootId:  0 ,
+        RefId:  0 ,
+        CreatedAt:  0 ,
+}
+
+
+var PB_Bucket__FOlD = &PB_Bucket{
+        BucketId:  0 ,
+        BucketName:  "" ,
+        Server1Id:  0 ,
+        Server2Id:  0 ,
+        BackupServerId:  0 ,
+        ContentObjectTypeId:  0 ,
+        ContentObjectCount:  0 ,
+        CreatedTime:  0 ,
+}
+
+
+var PB_Chat__FOlD = &PB_Chat{
+        ChatKey:  "" ,
+        RoomKey:  "" ,
+        RoomTypeEnumId:  0 ,
+        UserId:  0 ,
+        PeerUserId:  0 ,
+        GroupId:  0 ,
+        CreatedSe:  0 ,
+        StartMessageIdFrom:  0 ,
+        LastSeenMessageId:  0 ,
+        UpdatedMs:  0 ,
+        LastMessageId:  0 ,
+        LastDeletedMessageId:  0 ,
+        LastSeqSeen:  0 ,
+        LastSeqDelete:  0 ,
+        CurrentSeq:  0 ,
+}
+
+
+var PB_Comment__FOlD = &PB_Comment{
+        Id:  0 ,
+        UserId:  0 ,
+        PostId:  0 ,
+        Text:  "" ,
+        CreatedTime:  0 ,
+}
+
+
+var PB_DirectMessage__FOlD = &PB_DirectMessage{
+        MessageId:  0 ,
+        MessageKey:  "" ,
+        RoomKey:  "" ,
+        UserId:  0 ,
+        MessageFileId:  0 ,
+        MessageTypeEnumId:  0 ,
+        Text:  "" ,
+        CreatedSe:  0 ,
+        PeerReceivedTime:  0 ,
+        PeerSeenTime:  0 ,
+        DeliviryStatusEnumId:  0 ,
+}
+
+
+var PB_DirectToMessage__FOlD = &PB_DirectToMessage{
+        Id:  0 ,
+        ChatKey:  "" ,
+        MessageId:  0 ,
+        SourceEnumId:  0 ,
+}
+
+
+var PB_DirectUpdate__FOlD = &PB_DirectUpdate{
+        DirectUpdateId:  0 ,
+        ToUserId:  0 ,
+        MessageId:  0 ,
+        MessageFileId:  0 ,
+        OtherId:  0 ,
+        ChatKey:  "" ,
+        PeerUserId:  0 ,
+        EventType:  0 ,
+        RoomLogTypeId:  0 ,
+        FromSeq:  0 ,
+        ToSeq:  0 ,
+        ExtraPB:  []byte{} ,
+        ExtraJson:  "" ,
+        AtTimeMs:  0 ,
+}
+
+
+var PB_FollowingList__FOlD = &PB_FollowingList{
+        Id:  0 ,
+        UserId:  0 ,
+        ListType:  0 ,
+        Name:  "" ,
+        Count:  0 ,
+        IsAuto:  0 ,
+        IsPimiry:  0 ,
+        CreatedTime:  0 ,
+}
+
+
+var PB_FollowingListMember__FOlD = &PB_FollowingListMember{
+        Id:  0 ,
+        ListId:  0 ,
+        UserId:  0 ,
+        FollowedUserId:  0 ,
+        FollowType:  0 ,
+        UpdatedTimeMs:  0 ,
+}
+
+
+var PB_FollowingListMemberHistory__FOlD = &PB_FollowingListMemberHistory{
+        Id:  0 ,
+        ListId:  0 ,
+        UserId:  0 ,
+        FollowedUserId:  0 ,
+        FollowType:  0 ,
+        UpdatedTimeMs:  0 ,
+        FollowId:  0 ,
+}
+
+
+var PB_GeneralLog__FOlD = &PB_GeneralLog{
+        Id:  0 ,
+        ToUserId:  0 ,
+        TargetId:  0 ,
+        LogTypeId:  0 ,
+        ExtraPB:  []byte{} ,
+        ExtraJson:  "" ,
+        CreatedMs:  0 ,
+}
+
+
+var PB_Group__FOlD = &PB_Group{
+        GroupId:  0 ,
+        GroupName:  "" ,
+        MembersCount:  0 ,
+        GroupPrivacyEnum:  0 ,
+        CreatorUserId:  0 ,
+        CreatedTime:  0 ,
+        UpdatedMs:  0 ,
+        CurrentSeq:  0 ,
+}
+
+
+var PB_GroupMember__FOlD = &PB_GroupMember{
+        Id:  0 ,
+        GroupId:  0 ,
+        GroupKey:  "" ,
+        UserId:  0 ,
+        ByUserId:  0 ,
+        GroupRoleEnumId:  0 ,
+        CreatedTime:  0 ,
+}
+
+
+var PB_GroupMessage__FOlD = &PB_GroupMessage{
+        MessageId:  0 ,
+        RoomKey:  "" ,
+        UserId:  0 ,
+        MessageFileId:  0 ,
+        MessageTypeEnum:  0 ,
+        Text:  "" ,
+        CreatedMs:  0 ,
+        DeliveryStatusEnum:  0 ,
+}
+
+
+var PB_GroupToMessage__FOlD = &PB_GroupToMessage{
+        Id:  0 ,
+        GroupId:  0 ,
+        MessageId:  0 ,
+        CreatedMs:  0 ,
+        StatusEnum:  0 ,
+}
+
+
+var PB_Like__FOlD = &PB_Like{
+        Id:  0 ,
+        PostId:  0 ,
+        PostTypeId:  0 ,
+        UserId:  0 ,
+        TypeId:  0 ,
+        CreatedTime:  0 ,
+}
+
+
+var PB_LogChange__FOlD = &PB_LogChange{
+        Id:  0 ,
+        T:  "" ,
+}
+
+
+var PB_Media__FOlD = &PB_Media{
+        Id:  0 ,
+        UserId:  0 ,
+        PostId:  0 ,
+        AlbumId:  0 ,
+        TypeId:  0 ,
+        CreatedTime:  0 ,
+        Src:  "" ,
+}
+
+
+var PB_MessageFile__FOlD = &PB_MessageFile{
+        MessageFileId:  0 ,
+        MessageFileKey:  "" ,
+        OriginalUserId:  0 ,
+        Name:  "" ,
+        Size:  0 ,
+        FileTypeEnumId:  0 ,
+        Width:  0 ,
+        Height:  0 ,
+        Duration:  0 ,
+        Extension:  "" ,
+        HashMd5:  "" ,
+        HashAccess:  0 ,
+        CreatedSe:  0 ,
+        ServerSrc:  "" ,
+        ServerPath:  "" ,
+        ServerThumbPath:  "" ,
+        BucketId:  "" ,
+        ServerId:  0 ,
+        CanDel:  0 ,
+}
+
+
+var PB_Notification__FOlD = &PB_Notification{
+        Id:  0 ,
+        ForUserId:  0 ,
+        ActorUserId:  0 ,
+        ActionTypeId:  0 ,
+        ObjectTypeId:  0 ,
+        RowId:  0 ,
+        RootId:  0 ,
+        RefId:  0 ,
+        SeenStatus:  0 ,
+        CreatedTime:  0 ,
+}
+
+
+var PB_NotificationRemoved__FOlD = &PB_NotificationRemoved{
+        NotificationId:  0 ,
+        ForUserId:  0 ,
+}
+
+
+var PB_OldMessage__FOlD = &PB_OldMessage{
+        Id:  0 ,
+        Uid:  0 ,
+        UserId:  0 ,
+        MessageKey:  "" ,
+        RoomKey:  "" ,
+        MessageType:  0 ,
+        RoomType:  0 ,
+        MsgFileId:  0 ,
+        DataPB:  []byte{} ,
+        Data64:  "" ,
+        DataJson:  "" ,
+        CreatedTimeMs:  0 ,
+}
+
+
+var PB_OldMsgFile__FOlD = &PB_OldMsgFile{
+        Id:  0 ,
+        Name:  "" ,
+        Size:  0 ,
+        FileType:  0 ,
+        MimeType:  "" ,
+        Width:  0 ,
+        Height:  0 ,
+        Duration:  0 ,
+        Extension:  "" ,
+        ThumbData:  []byte{} ,
+        ThumbData64:  "" ,
+        ServerSrc:  "" ,
+        ServerPath:  "" ,
+        ServerId:  0 ,
+        CanDel:  0 ,
+}
+
+
+var PB_OldMsgPush__FOlD = &PB_OldMsgPush{
+        Id:  0 ,
+        Uid:  0 ,
+        ToUser:  0 ,
+        MsgUid:  0 ,
+        CreatedTimeMs:  0 ,
+}
+
+
+var PB_OldMsgPushEvent__FOlD = &PB_OldMsgPushEvent{
+        Id:  0 ,
+        Uid:  0 ,
+        ToUserId:  0 ,
+        MsgUid:  0 ,
+        MsgKey:  "" ,
+        RoomKey:  "" ,
+        PeerUserId:  0 ,
+        EventType:  0 ,
+        AtTime:  0 ,
+}
+
+
+var PB_PhoneContact__FOlD = &PB_PhoneContact{
+        Id:  0 ,
+        PhoneDisplayName:  "" ,
+        PhoneFamilyName:  "" ,
+        PhoneNumber:  "" ,
+        PhoneNormalizedNumber:  "" ,
+        PhoneContactRowId:  0 ,
+        UserId:  0 ,
+        DeviceUuidId:  0 ,
+        CreatedTime:  0 ,
+        UpdatedTime:  0 ,
+}
+
+
+var PB_Photo__FOlD = &PB_Photo{
+        PhotoId:  0 ,
+        UserId:  0 ,
+        PostId:  0 ,
+        AlbumId:  0 ,
+        ImageTypeId:  0 ,
+        Title:  "" ,
+        Src:  "" ,
+        PathSrc:  "" ,
+        BucketId:  0 ,
+        Width:  0 ,
+        Height:  0 ,
+        Ratio:  0.0 ,
+        HashMd5:  "" ,
+        Color:  "" ,
+        CreatedTime:  0 ,
+        W1080:  0 ,
+        W720:  0 ,
+        W480:  0 ,
+        W320:  0 ,
+        W160:  0 ,
+        W80:  0 ,
+}
+
+
+var PB_Post__FOlD = &PB_Post{
+        Id:  0 ,
+        UserId:  0 ,
+        TypeId:  0 ,
+        Text:  "" ,
+        FormatedText:  "" ,
+        MediaCount:  0 ,
+        SharedTo:  0 ,
+        DisableComment:  0 ,
+        HasTag:  0 ,
+        LikesCount:  0 ,
+        CommentsCount:  0 ,
+        EditedTime:  0 ,
+        CreatedTime:  0 ,
+}
+
+
+var PB_PushEvent__FOlD = &PB_PushEvent{
+        PushEventId:  0 ,
+        ToUserId:  0 ,
+        ToDeviceId:  0 ,
+        MessageId:  0 ,
+        RoomTypeEnum:  0 ,
+        RoomId:  0 ,
+        PeerUserId:  0 ,
+        PushEventTypeEnum:  0 ,
+        AtTime:  0 ,
+}
+
+
+var PB_PushMessage__FOlD = &PB_PushMessage{
+        PushMessageId:  0 ,
+        ToUserId:  0 ,
+        ToDeviceId:  0 ,
+        MessageId:  0 ,
+        RoomTypeEnum:  0 ,
+        CreatedMs:  0 ,
+}
+
+
+var PB_RecommendUser__FOlD = &PB_RecommendUser{
+        Id:  0 ,
+        UserId:  0 ,
+        TargetId:  0 ,
+        Weight:  0.0 ,
+        CreatedTime:  0 ,
+}
+
+
+var PB_Room__FOlD = &PB_Room{
+        RoomId:  0 ,
+        RoomKey:  "" ,
+        RoomTypeEnum:  0 ,
+        UserId:  0 ,
+        LastSeqSeen:  0 ,
+        LastSeqDelete:  0 ,
+        PeerUserId:  0 ,
+        GroupId:  0 ,
+        CreatedTime:  0 ,
+        CurrentSeq:  0 ,
+}
+
+
+var PB_SearchClicked__FOlD = &PB_SearchClicked{
+        Id:  0 ,
+        Query:  "" ,
+        ClickType:  0 ,
+        TargetId:  0 ,
+        UserId:  0 ,
+        CreatedAt:  0 ,
+}
+
+
+var PB_Session__FOlD = &PB_Session{
+        Id:  0 ,
+        UserId:  0 ,
+        SessionUuid:  "" ,
+        ClientUuid:  "" ,
+        DeviceUuid:  "" ,
+        LastActivityTime:  0 ,
+        LastIpAddress:  "" ,
+        LastWifiMacAddress:  "" ,
+        LastNetworkType:  "" ,
+        LastNetworkTypeId:  0 ,
+        AppVersion:  0 ,
+        UpdatedTime:  0 ,
+        CreatedTime:  0 ,
+        LastSyncDirectUpdateId:  0 ,
+        LastSyncGeneralUpdateId:  0 ,
+        LastSyncNotifyUpdateId:  0 ,
+}
+
+
+var PB_SettingClient__FOlD = &PB_SettingClient{
+        UserId:  0 ,
+        AutoDownloadWifiVoice:  0 ,
+        AutoDownloadWifiImage:  0 ,
+        AutoDownloadWifiVideo:  0 ,
+        AutoDownloadWifiFile:  0 ,
+        AutoDownloadWifiMusic:  0 ,
+        AutoDownloadWifiGif:  0 ,
+        AutoDownloadCellularVoice:  0 ,
+        AutoDownloadCellularImage:  0 ,
+        AutoDownloadCellularVideo:  0 ,
+        AutoDownloadCellularFile:  0 ,
+        AutoDownloadCellularMusic:  0 ,
+        AutoDownloadCellularGif:  0 ,
+        AutoDownloadRoamingVoice:  0 ,
+        AutoDownloadRoamingImage:  0 ,
+        AutoDownloadRoamingVideo:  0 ,
+        AutoDownloadRoamingFile:  0 ,
+        AutoDownloadRoamingMusic:  0 ,
+        AutoDownloadRoamingGif:  0 ,
+        SaveToGallery:  0 ,
+}
+
+
+var PB_SettingNotification__FOlD = &PB_SettingNotification{
+        UserId:  0 ,
+        SocialLedOn:  0 ,
+        SocialLedColor:  "" ,
+        ReqestToFollowYou:  0 ,
+        FollowedYou:  0 ,
+        AccptedYourFollowRequest:  0 ,
+        YourPostLiked:  0 ,
+        YourPostCommented:  0 ,
+        MenthenedYouInPost:  0 ,
+        MenthenedYouInComment:  0 ,
+        YourContactsJoined:  0 ,
+        DirectMessage:  0 ,
+        DirectAlert:  0 ,
+        DirectPerview:  0 ,
+        DirectLedOn:  0 ,
+        DirectLedColor:  0 ,
+        DirectVibrate:  0 ,
+        DirectPopup:  0 ,
+        DirectSound:  0 ,
+        DirectPriority:  0 ,
+}
+
+
+var PB_Tag__FOlD = &PB_Tag{
+        Id:  0 ,
+        Name:  "" ,
+        Count:  0 ,
+        IsBlocked:  0 ,
+        CreatedTime:  0 ,
+}
+
+
+var PB_TagsPost__FOlD = &PB_TagsPost{
+        Id:  0 ,
+        TagId:  0 ,
+        PostId:  0 ,
+        TypeId:  0 ,
+        CreatedTime:  0 ,
+}
+
+
+var PB_TestChat__FOlD = &PB_TestChat{
+        Id:  0 ,
+        Id4:  0 ,
+        TimeMs:  0 ,
+        Text:  "" ,
+        Name:  "" ,
+        UserId:  0 ,
+        C2:  0 ,
+        C3:  0 ,
+        C4:  0 ,
+        C5:  0 ,
+}
+
+
+var PB_User__FOlD = &PB_User{
+        Id:  0 ,
+        UserName:  "" ,
+        UserNameLower:  "" ,
+        FirstName:  "" ,
+        LastName:  "" ,
+        About:  "" ,
+        FullName:  "" ,
+        AvatarUrl:  "" ,
+        PrivacyProfile:  0 ,
+        Phone:  "" ,
+        Email:  "" ,
+        IsDeleted:  0 ,
+        PasswordHash:  "" ,
+        PasswordSalt:  "" ,
+        FollowersCount:  0 ,
+        FollowingCount:  0 ,
+        PostsCount:  0 ,
+        MediaCount:  0 ,
+        LikesCount:  0 ,
+        ResharedCount:  0 ,
+        LastActionTime:  0 ,
+        LastPostTime:  0 ,
+        PrimaryFollowingList:  0 ,
+        CreatedTime:  0 ,
+        UpdatedTime:  0 ,
+        SessionUuid:  "" ,
+        DeviceUuid:  "" ,
+        LastWifiMacAddress:  "" ,
+        LastNetworkType:  "" ,
+        AppVersion:  0 ,
+        LastActivityTime:  0 ,
+        LastLoginTime:  0 ,
+        LastIpAddress:  "" ,
+}
+
+
+var PB_UserMetaInfo__FOlD = &PB_UserMetaInfo{
+        Id:  0 ,
+        UserId:  0 ,
+        IsNotificationDirty:  0 ,
+        LastUserRecGen:  0 ,
+}
+
+
+var PB_UserPassword__FOlD = &PB_UserPassword{
+        UserId:  0 ,
+        Password:  "" ,
+        CreatedTime:  0 ,
 }
 
 

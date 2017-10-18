@@ -12,13 +12,13 @@ type ActivityView struct {
 type ActivityPayload_DEP struct {
 	Actor   *UserBasicAndMe
 	Post    *x.Post
-	Comment *x.Comment
+	Comment *x.Comments
 }
 
 type ActivityPayload struct {
 	Actor    *UserInlineWithMeView
 	Post     *PostView
-	Comment  *x.Comment
+	Comment  *x.Comments
 	Followed *UserInlineWithMeView
 }
 
@@ -32,14 +32,14 @@ type NotificationView struct {
 type NotifPayload struct {
 	Actor    *UserInlineWithMeView
 	Post     *PostView
-	Comment  *x.Comment
+	Comment  *x.Comments
 	Followed *UserInlineWithMeView
 }
 
 type NotifPayload_DEP struct {
 	Actor   *UserBasicAndMe
 	Post    *x.Post
-	Comment *x.Comment
+	Comment *x.Comments
 }
 
 //////////// Tags /////////////
@@ -80,7 +80,7 @@ type PostView struct {
 	*x.Post
 	TypeName string //for text, photo video
 	//Comments []CommentInlineInfo
-	//Likes    []Like
+	//Likes    []Likes
 	PhotoView *PhotoView
 	//Images   *ImageResHolder
 	//AmIlike bool //dep
@@ -89,7 +89,7 @@ type PostView struct {
 }
 
 type CommentInlineInfoView struct {
-	x.Comment
+	x.Comments
 	Sender UserInlineView
 }
 

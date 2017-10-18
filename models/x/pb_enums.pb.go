@@ -11,6 +11,7 @@ It is generated from these files:
 	pb_rpc_msg.proto
 	pb_rpc_sync.proto
 	pb_rpc_user.proto
+	pb_tables.proto
 	pb_updates.proto
 	pb_views.proto
 
@@ -93,6 +94,48 @@ It has these top-level messages:
 	PB_UserParam_CheckUserName
 	PB_UserResponse_CheckUserName
 	UserView
+	PB_Activity
+	PB_Bucket
+	PB_Chat
+	PB_Comment
+	PB_DirectMessage
+	PB_DirectToMessage
+	PB_DirectUpdate
+	PB_FollowingList
+	PB_FollowingListMember
+	PB_FollowingListMemberHistory
+	PB_GeneralLog
+	PB_Group
+	PB_GroupMember
+	PB_GroupMessage
+	PB_GroupToMessage
+	PB_Like
+	PB_LogChange
+	PB_Media
+	PB_MessageFile
+	PB_Notification
+	PB_NotificationRemoved
+	PB_OldMessage
+	PB_OldMsgFile
+	PB_OldMsgPush
+	PB_OldMsgPushEvent
+	PB_PhoneContact
+	PB_Photo
+	PB_Post
+	PB_PushEvent
+	PB_PushMessage
+	PB_RecommendUser
+	PB_Room
+	PB_SearchClicked
+	PB_Session
+	PB_SettingClient
+	PB_SettingNotification
+	PB_Tag
+	PB_TagsPost
+	PB_TestChat
+	PB_User
+	PB_UserMetaInfo
+	PB_UserPassword
 	PB_UpdateGroupParticipants
 	PB_UpdateNotifySettings
 	PB_UpdateServiceNotification

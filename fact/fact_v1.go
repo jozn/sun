@@ -251,7 +251,7 @@ func _factLastUserId() int {
 func FactLike2(c *base.Action) {
 	print("factoring likes post\n")
 	//COUNT = 50
-	l := x.Like{}
+	l := x.Likes{}
 	l.PostId = rand.Intn(500) + 1
 	l.UserId = rand.Intn(80) + 1
 	l.CreatedTime = now()

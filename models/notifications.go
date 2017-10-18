@@ -7,7 +7,7 @@ import (
 )
 
 //////// For Comments //////////
-func Notification_OnPostCommented(comment *x.Comment, post *x.Post) {
+func Notification_OnPostCommented(comment *x.Comments, post *x.Post) {
 	if comment == nil || post == nil {
 		return
 	}
@@ -34,7 +34,7 @@ func Notification_OnPostCommented(comment *x.Comment, post *x.Post) {
 	Notification_PushToUserPipe(not)
 }
 
-func Notification_OnPostCommentedDeleted(comment *x.Comment, post *x.Post) {
+func Notification_OnPostCommentedDeleted(comment *x.Comments, post *x.Post) {
 	if comment == nil || post == nil {
 		return
 	}
@@ -105,7 +105,7 @@ func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
 }
 
 ////////////// For Likes ///////////////
-func Notification_OnPostLiked(lk *x.Like) {
+func Notification_OnPostLiked(lk *x.Likes) {
 	post, ok := x.Store.GetPostById(lk.PostId)
 	if !ok {
 		return
@@ -132,7 +132,7 @@ func Notification_OnPostLiked(lk *x.Like) {
 	nf.Save(base.DB)
 }
 
-func Notification_OnPostUnLiked(lk *x.Like) {
+func Notification_OnPostUnLiked(lk *x.Likes) {
 	post, ok := x.Store.GetPostById(lk.PostId)
 	if !ok {
 		return

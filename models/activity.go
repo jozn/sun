@@ -6,7 +6,7 @@ import (
 	"ms/sun/models/x"
 )
 
-func Activity_OnPostCommentAdd(comment *x.Comment, post *x.Post) {
+func Activity_OnPostCommentAdd(comment *x.Comments, post *x.Post) {
 	if comment == nil || post == nil {
 		return
 	}
@@ -24,7 +24,7 @@ func Activity_OnPostCommentAdd(comment *x.Comment, post *x.Post) {
 	not.Save(base.DB)
 }
 
-func Activity_OnPostCommentDeleted(comment *x.Comment, post *x.Post) {
+func Activity_OnPostCommentDeleted(comment *x.Comments, post *x.Post) {
 	if comment == nil || post == nil {
 		return
 	}
@@ -63,7 +63,7 @@ func Activity_OnUnFollowed(UserId, FollowedPeerUserId, FLId int) {
 }
 
 ////////////// For Likes ///////////////
-func Activity_OnPostLiked(lk *x.Like) {
+func Activity_OnPostLiked(lk *x.Likes) {
 	if lk == nil {
 		return
 	}
@@ -80,7 +80,7 @@ func Activity_OnPostLiked(lk *x.Like) {
 	not.Save(base.DB)
 }
 
-func Activity_OnPostUnLiked(lk *x.Like) {
+func Activity_OnPostUnLiked(lk *x.Likes) {
 	if lk == nil {
 		return
 	}

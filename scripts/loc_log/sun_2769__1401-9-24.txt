@@ -1,9 +1,9 @@
 =================================== Sun ===================================
-     100 files     171 text files.
-classified 171 filesDuplicate file check 171 files (119 known unique)Unique:      100 files                                               171 unique files.                              
-Counting:  100      68 files ignored.
+     100 files     169 text files.
+classified 169 filesDuplicate file check 169 files (118 known unique)Unique:      100 files                                               169 unique files.                              
+Counting:  100      66 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.57 s (196.9 files/s, 17643.6 lines/s)
+http://cloc.sourceforge.net v 1.64  T=1.03 s (109.7 files/s, 9828.9 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -22,13 +22,13 @@ SUM:                           113           1734           1262           7132
 classified 440 filesDuplicate file check 440 files (428 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                          Unique:      400 files                                               440 unique files.                              
 Counting:  100Counting:  200Counting:  300Counting:  400     117 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=2.31 s (187.6 files/s, 25759.8 lines/s)
+http://cloc.sourceforge.net v 1.64  T=5.37 s (80.7 files/s, 11082.6 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                           433           8848           9282          41338
+Java                           433           8847           9282          41333
 -------------------------------------------------------------------------------
-SUM:                           433           8848           9282          41338
+SUM:                           433           8847           9282          41333
 -------------------------------------------------------------------------------
 =================================== End Android ===================================
 
@@ -39,13 +39,13 @@ SUM:                           433           8848           9282          41338
 classified 322 filesDuplicate file check 322 files (315 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                               322 unique files.                              
 Counting:  100Counting:  200Counting:  300      89 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=1.10 s (285.8 files/s, 36888.0 lines/s)
+http://cloc.sourceforge.net v 1.64  T=3.15 s (100.1 files/s, 12914.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                           315           6884           6055          27718
+Java                           315           6883           6055          27713
 -------------------------------------------------------------------------------
-SUM:                           315           6884           6055          27718
+SUM:                           315           6883           6055          27713
 -------------------------------------------------------------------------------
 =================================== End Android Social ===================================
 
@@ -56,7 +56,7 @@ SUM:                           315           6884           6055          27718
 classified 32 files      32 unique files.                              
       14 files ignored.
 
-http://cloc.sourceforge.net v 1.64  T=0.11 s (246.6 files/s, 21723.1 lines/s)
+http://cloc.sourceforge.net v 1.64  T=0.30 s (87.6 files/s, 7718.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------

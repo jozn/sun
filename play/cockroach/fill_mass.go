@@ -23,7 +23,10 @@ func main() {
 		panic(err)
 	}
 	structure := `
-/*DROP TABLE IF EXISTS users*/;
+	drop database b;
+	create database b;
+	use bench;
+DROP TABLE IF EXISTS users;
 CREATE TABLE if not EXISTS users (id INT PRIMARY KEY, name STRING ,name2 STRING);
 
 DROP TABLE IF EXISTS groups;
