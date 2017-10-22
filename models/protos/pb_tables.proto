@@ -43,7 +43,7 @@ message PB_chat {
     int32 LastSeqDelete = 27;
     int32 CurrentSeq = 29;
 }
-message PB_comments {
+message PB_comment {
     int32 Id = 1;
     int32 UserId = 3;
     int32 PostId = 5;
@@ -447,6 +447,14 @@ message PB_test_chat {
     int32 C3 = 15;
     int32 C4 = 17;
     int32 C5 = 19;
+}
+message PB_trigger_log {
+    int64 Id = 1;
+    string ModelName = 3;
+    string ChangeType = 5;
+    int64 TargetId = 7;
+    string TargetStr = 9;
+    int32 CreatedSe = 11;
 }
 message PB_user {
     int32 Id = 1;

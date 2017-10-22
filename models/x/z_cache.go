@@ -101,14 +101,14 @@ func (c _StoreImpl) PreLoadChatByChatKeys(ids []string) {
 
 // yes 222 string
 
-func (c _StoreImpl) GetCommentsById(Id int) (*Comments, bool) {
-	o, ok := RowCache.Get("Comments:" + strconv.Itoa(Id))
+func (c _StoreImpl) GetCommentById(Id int) (*Comment, bool) {
+	o, ok := RowCache.Get("Comment:" + strconv.Itoa(Id))
 	if ok {
-		if obj, ok := o.(*Comments); ok {
+		if obj, ok := o.(*Comment); ok {
 			return obj, true
 		}
 	}
-	obj2, err := CommentsById(base.DB, Id)
+	obj2, err := CommentById(base.DB, Id)
 	if err == nil {
 		return obj2, true
 	}
@@ -116,18 +116,18 @@ func (c _StoreImpl) GetCommentsById(Id int) (*Comments, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadCommentsByIds(ids []int) {
+func (c _StoreImpl) PreLoadCommentByIds(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
-		_, ok := RowCache.Get("Comments:" + strconv.Itoa(id))
+		_, ok := RowCache.Get("Comment:" + strconv.Itoa(id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		NewComments_Selector().Id_In(not_cached).GetRows(base.DB)
+		NewComment_Selector().Id_In(not_cached).GetRows(base.DB)
 	}
 }
 
@@ -1248,6 +1248,38 @@ func (c _StoreImpl) PreLoadTestChatById4s(ids []int) {
 
 	if len(not_cached) > 0 {
 		NewTestChat_Selector().Id4_In(not_cached).GetRows(base.DB)
+	}
+}
+
+// yes 222 int
+
+func (c _StoreImpl) GetTriggerLogById(Id int) (*TriggerLog, bool) {
+	o, ok := RowCache.Get("TriggerLog:" + strconv.Itoa(Id))
+	if ok {
+		if obj, ok := o.(*TriggerLog); ok {
+			return obj, true
+		}
+	}
+	obj2, err := TriggerLogById(base.DB, Id)
+	if err == nil {
+		return obj2, true
+	}
+	XOLogErr(err)
+	return nil, false
+}
+
+func (c _StoreImpl) PreLoadTriggerLogByIds(ids []int) {
+	not_cached := make([]int, 0, len(ids))
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("TriggerLog:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewTriggerLog_Selector().Id_In(not_cached).GetRows(base.DB)
 	}
 }
 

@@ -100,8 +100,8 @@ func PBConvPB_chat_To_chat ( o *chat) *PB_chat {
 }
 */
 /*
-func PBConvPB__comments_To_comments( o *PB_comments) *comments {
-     n := &comments{
+func PBConvPB__comment_To_comment( o *PB_comment) *comment {
+     n := &comment{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
       PostId: int ( o.PostId ),
@@ -111,8 +111,8 @@ func PBConvPB__comments_To_comments( o *PB_comments) *comments {
     return n
 }
 
-func PBConvPB_comments_To_comments ( o *comments) *PB_comments {
-     n := &PB_comments{
+func PBConvPB_comment_To_comment ( o *comment) *PB_comment {
+     n := &PB_comment{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       PostId: int32 ( o.PostId ),
@@ -1229,6 +1229,31 @@ func PBConvPB_test_chat_To_test_chat ( o *test_chat) *PB_test_chat {
       C3: int32 ( o.C3 ),
       C4: int32 ( o.C4 ),
       C5: int32 ( o.C5 ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__trigger_log_To_trigger_log( o *PB_trigger_log) *trigger_log {
+     n := &trigger_log{
+      Id: int ( o.Id ),
+      ModelName: string ( o.ModelName ),
+      ChangeType: string ( o.ChangeType ),
+      TargetId: int ( o.TargetId ),
+      TargetStr: string ( o.TargetStr ),
+      CreatedSe: int ( o.CreatedSe ),
+    }
+    return n
+}
+
+func PBConvPB_trigger_log_To_trigger_log ( o *trigger_log) *PB_trigger_log {
+     n := &PB_trigger_log{
+      Id: int64 ( o.Id ),
+      ModelName: string ( o.ModelName ),
+      ChangeType: string ( o.ChangeType ),
+      TargetId: int64 ( o.TargetId ),
+      TargetStr: string ( o.TargetStr ),
+      CreatedSe: int32 ( o.CreatedSe ),
     }
     return n
 }

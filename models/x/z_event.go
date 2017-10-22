@@ -77,27 +77,27 @@ func OnChat_LoadMany(rows []*Chat) {
 	}
 }
 
-//Comments Events
+//Comment Events
 
-func OnComments_AfterInsert(row *Comments) {
-	RowCache.Set("Comments:"+strconv.Itoa(row.Id), row, time.Hour*0)
+func OnComment_AfterInsert(row *Comment) {
+	RowCache.Set("Comment:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnComments_AfterUpdate(row *Comments) {
-	RowCache.Set("Comments:"+strconv.Itoa(row.Id), row, time.Hour*0)
+func OnComment_AfterUpdate(row *Comment) {
+	RowCache.Set("Comment:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnComments_AfterDelete(row *Comments) {
-	RowCache.Delete("Comments:" + strconv.Itoa(row.Id))
+func OnComment_AfterDelete(row *Comment) {
+	RowCache.Delete("Comment:" + strconv.Itoa(row.Id))
 }
 
-func OnComments_LoadOne(row *Comments) {
-	RowCache.Set("Comments:"+strconv.Itoa(row.Id), row, time.Hour*0)
+func OnComment_LoadOne(row *Comment) {
+	RowCache.Set("Comment:"+strconv.Itoa(row.Id), row, time.Hour*0)
 }
 
-func OnComments_LoadMany(rows []*Comments) {
+func OnComment_LoadMany(rows []*Comment) {
 	for _, row := range rows {
-		RowCache.Set("Comments:"+strconv.Itoa(row.Id), row, time.Hour*0)
+		RowCache.Set("Comment:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 
@@ -938,6 +938,30 @@ func OnTestChat_LoadOne(row *TestChat) {
 func OnTestChat_LoadMany(rows []*TestChat) {
 	for _, row := range rows {
 		RowCache.Set("TestChat:"+strconv.Itoa(row.Id4), row, time.Hour*0)
+	}
+}
+
+//TriggerLog Events
+
+func OnTriggerLog_AfterInsert(row *TriggerLog) {
+	RowCache.Set("TriggerLog:"+strconv.Itoa(row.Id), row, time.Hour*0)
+}
+
+func OnTriggerLog_AfterUpdate(row *TriggerLog) {
+	RowCache.Set("TriggerLog:"+strconv.Itoa(row.Id), row, time.Hour*0)
+}
+
+func OnTriggerLog_AfterDelete(row *TriggerLog) {
+	RowCache.Delete("TriggerLog:" + strconv.Itoa(row.Id))
+}
+
+func OnTriggerLog_LoadOne(row *TriggerLog) {
+	RowCache.Set("TriggerLog:"+strconv.Itoa(row.Id), row, time.Hour*0)
+}
+
+func OnTriggerLog_LoadMany(rows []*TriggerLog) {
+	for _, row := range rows {
+		RowCache.Set("TriggerLog:"+strconv.Itoa(row.Id), row, time.Hour*0)
 	}
 }
 

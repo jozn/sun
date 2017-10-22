@@ -87,8 +87,8 @@ type Chat struct {
 	LastSeqDelete: 0,
 	CurrentSeq: 0,
 */
-// comments 'Comments'.
-type Comments struct {
+// comment 'Comment'.
+type Comment struct {
 	Id          int
 	UserId      int
 	PostId      int
@@ -99,7 +99,7 @@ type Comments struct {
 }
 
 /*
-:= &Comments {
+:= &Comment {
 	Id: 0,
 	UserId: 0,
 	PostId: 0,
@@ -1076,6 +1076,27 @@ type TestChat struct {
 	C3: 0,
 	C4: 0,
 	C5: 0,
+*/
+// trigger_log 'TriggerLog'.
+type TriggerLog struct {
+	Id         int
+	ModelName  string
+	ChangeType string
+	TargetId   int
+	TargetStr  string
+	CreatedSe  int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &TriggerLog {
+	Id: 0,
+	ModelName: "",
+	ChangeType: "",
+	TargetId: 0,
+	TargetStr: "",
+	CreatedSe: 0,
 */
 // user_meta_info 'UserMetaInfo'.
 type UserMetaInfo struct {

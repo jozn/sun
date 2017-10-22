@@ -76,16 +76,16 @@ func ChatByChatKey(db *sqlx.DB, chatKey string) (*Chat, error) {
 	return &c, nil
 }
 
-// CommentsById Generated from index 'PRIMARY' -- retrieves a row from 'ms.comments' as a Comments.
-func CommentsById(db *sqlx.DB, id int) (*Comments, error) {
+// CommentById Generated from index 'PRIMARY' -- retrieves a row from 'ms.comment' as a Comment.
+func CommentById(db *sqlx.DB, id int) (*Comment, error) {
 	var err error
 
 	const sqlstr = `SELECT * ` +
-		`FROM ms.comments ` +
+		`FROM ms.comment ` +
 		`WHERE Id = ?`
 
 	XOLog(sqlstr, id)
-	c := Comments{
+	c := Comment{
 		_exists: true,
 	}
 
@@ -95,7 +95,7 @@ func CommentsById(db *sqlx.DB, id int) (*Comments, error) {
 		return nil, err
 	}
 
-	OnComments_LoadOne(&c)
+	OnComment_LoadOne(&c)
 
 	return &c, nil
 }
@@ -938,6 +938,30 @@ func TestChatById4(db *sqlx.DB, id4 int) (*TestChat, error) {
 	OnTestChat_LoadOne(&tc)
 
 	return &tc, nil
+}
+
+// TriggerLogById Generated from index 'PRIMARY' -- retrieves a row from 'ms.trigger_log' as a TriggerLog.
+func TriggerLogById(db *sqlx.DB, id int) (*TriggerLog, error) {
+	var err error
+
+	const sqlstr = `SELECT * ` +
+		`FROM ms.trigger_log ` +
+		`WHERE Id = ?`
+
+	XOLog(sqlstr, id)
+	tl := TriggerLog{
+		_exists: true,
+	}
+
+	err = db.Get(&tl, sqlstr, id)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+
+	OnTriggerLog_LoadOne(&tl)
+
+	return &tl, nil
 }
 
 // UserById Generated from index 'PRIMARY' -- retrieves a row from 'ms.user' as a User.

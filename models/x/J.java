@@ -40,7 +40,7 @@ public class J {
 		public int CurrentSeq;
 	}
 
-	public static class Comments {//oridnal: 3
+	public static class Comment {//oridnal: 3
 		public int Id;
 		public int UserId;
 		public int PostId;
@@ -481,7 +481,16 @@ public class J {
 		public int C5;
 	}
 
-	public static class User {//oridnal: 39
+	public static class TriggerLog {//oridnal: 39
+		public int Id;
+		public String ModelName;
+		public String ChangeType;
+		public int TargetId;
+		public String TargetStr;
+		public int CreatedSe;
+	}
+
+	public static class User {//oridnal: 40
 		public int Id;
 		public String UserName;
 		public String UserNameLower;
@@ -517,14 +526,14 @@ public class J {
 		public String LastIpAddress;
 	}
 
-	public static class UserMetaInfo {//oridnal: 40
+	public static class UserMetaInfo {//oridnal: 41
 		public int Id;
 		public int UserId;
 		public int IsNotificationDirty;
 		public int LastUserRecGen;
 	}
 
-	public static class UserPassword {//oridnal: 41
+	public static class UserPassword {//oridnal: 42
 		public int UserId;
 		public String Password;
 		public int CreatedTime;
