@@ -250,24 +250,24 @@ func (c _StoreImpl) PreLoadGroupMember_ByIds(Ids []int) {
 
 // GroupToMessage - PRIMARY
 
-// Likes - PRIMARY
+// Like - PRIMARY
 
-// Likes - PostId
+// Like - PostId
 
 //field//field//field
 
 ///// Generated from index 'Id'.
-func (c _StoreImpl) Likes_ById(Id int) (*Likes, bool) {
-	o, ok := RowCacheIndex.Get("Likes_Id:" + fmt.Sprintf("%v", Id))
+func (c _StoreImpl) Like_ById(Id int) (*Like, bool) {
+	o, ok := RowCacheIndex.Get("Like_Id:" + fmt.Sprintf("%v", Id))
 	if ok {
-		if obj, ok := o.(*Likes); ok {
+		if obj, ok := o.(*Like); ok {
 			return obj, true
 		}
 	}
 
-	row, err := NewLikes_Selector().Id_Eq(Id).GetRow(base.DB)
+	row, err := NewLike_Selector().Id_Eq(Id).GetRow(base.DB)
 	if err == nil {
-		RowCacheIndex.Set("Likes_Id:"+fmt.Sprintf("%v", row.Id), row, 0)
+		RowCacheIndex.Set("Like_Id:"+fmt.Sprintf("%v", row.Id), row, 0)
 		return row, true
 	}
 
@@ -275,21 +275,21 @@ func (c _StoreImpl) Likes_ById(Id int) (*Likes, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadLikes_ByIds(Ids []int) {
+func (c _StoreImpl) PreLoadLike_ByIds(Ids []int) {
 	not_cached := make([]int, 0, len(Ids))
 
 	for _, id := range Ids {
-		_, ok := RowCacheIndex.Get("Likes_Id:" + fmt.Sprintf("%v", id))
+		_, ok := RowCacheIndex.Get("Like_Id:" + fmt.Sprintf("%v", id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		rows, err := NewLikes_Selector().Id_In(not_cached).GetRows(base.DB)
+		rows, err := NewLike_Selector().Id_In(not_cached).GetRows(base.DB)
 		if err == nil {
 			for _, row := range rows {
-				RowCacheIndex.Set("Likes_Id:"+fmt.Sprintf("%v", row.Id), row, 0)
+				RowCacheIndex.Set("Like_Id:"+fmt.Sprintf("%v", row.Id), row, 0)
 			}
 		}
 	}
@@ -298,17 +298,17 @@ func (c _StoreImpl) PreLoadLikes_ByIds(Ids []int) {
 //field//field//field
 
 ///// Generated from index 'PostId_2'.
-func (c _StoreImpl) Likes_ByPostId(PostId int) (*Likes, bool) {
-	o, ok := RowCacheIndex.Get("Likes_PostId_2:" + fmt.Sprintf("%v", PostId))
+func (c _StoreImpl) Like_ByPostId(PostId int) (*Like, bool) {
+	o, ok := RowCacheIndex.Get("Like_PostId_2:" + fmt.Sprintf("%v", PostId))
 	if ok {
-		if obj, ok := o.(*Likes); ok {
+		if obj, ok := o.(*Like); ok {
 			return obj, true
 		}
 	}
 
-	row, err := NewLikes_Selector().PostId_Eq(PostId).GetRow(base.DB)
+	row, err := NewLike_Selector().PostId_Eq(PostId).GetRow(base.DB)
 	if err == nil {
-		RowCacheIndex.Set("Likes_PostId_2:"+fmt.Sprintf("%v", row.PostId), row, 0)
+		RowCacheIndex.Set("Like_PostId_2:"+fmt.Sprintf("%v", row.PostId), row, 0)
 		return row, true
 	}
 
@@ -316,27 +316,27 @@ func (c _StoreImpl) Likes_ByPostId(PostId int) (*Likes, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadLikes_ByPostIds(PostIds []int) {
+func (c _StoreImpl) PreLoadLike_ByPostIds(PostIds []int) {
 	not_cached := make([]int, 0, len(PostIds))
 
 	for _, id := range PostIds {
-		_, ok := RowCacheIndex.Get("Likes_PostId_2:" + fmt.Sprintf("%v", id))
+		_, ok := RowCacheIndex.Get("Like_PostId_2:" + fmt.Sprintf("%v", id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		rows, err := NewLikes_Selector().PostId_In(not_cached).GetRows(base.DB)
+		rows, err := NewLike_Selector().PostId_In(not_cached).GetRows(base.DB)
 		if err == nil {
 			for _, row := range rows {
-				RowCacheIndex.Set("Likes_PostId_2:"+fmt.Sprintf("%v", row.PostId), row, 0)
+				RowCacheIndex.Set("Like_PostId_2:"+fmt.Sprintf("%v", row.PostId), row, 0)
 			}
 		}
 	}
 }
 
-// LogChanges - PRIMARY
+// LogChange - PRIMARY
 
 // Media - PRIMARY
 
@@ -389,22 +389,22 @@ func (c _StoreImpl) PreLoadNotification_ByRowIds(RowIds []int) {
 
 // NotificationRemoved - PRIMARY
 
-// OldMessages - PRIMARY
+// OldMessage - PRIMARY
 
 //field//field//field
 
 ///// Generated from index 'Uid'.
-func (c _StoreImpl) OldMessages_ByUid(Uid int) (*OldMessages, bool) {
-	o, ok := RowCacheIndex.Get("OldMessages_Uid:" + fmt.Sprintf("%v", Uid))
+func (c _StoreImpl) OldMessage_ByUid(Uid int) (*OldMessage, bool) {
+	o, ok := RowCacheIndex.Get("OldMessage_Uid:" + fmt.Sprintf("%v", Uid))
 	if ok {
-		if obj, ok := o.(*OldMessages); ok {
+		if obj, ok := o.(*OldMessage); ok {
 			return obj, true
 		}
 	}
 
-	row, err := NewOldMessages_Selector().Uid_Eq(Uid).GetRow(base.DB)
+	row, err := NewOldMessage_Selector().Uid_Eq(Uid).GetRow(base.DB)
 	if err == nil {
-		RowCacheIndex.Set("OldMessages_Uid:"+fmt.Sprintf("%v", row.Uid), row, 0)
+		RowCacheIndex.Set("OldMessage_Uid:"+fmt.Sprintf("%v", row.Uid), row, 0)
 		return row, true
 	}
 
@@ -412,21 +412,21 @@ func (c _StoreImpl) OldMessages_ByUid(Uid int) (*OldMessages, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadOldMessages_ByUids(Uids []int) {
+func (c _StoreImpl) PreLoadOldMessage_ByUids(Uids []int) {
 	not_cached := make([]int, 0, len(Uids))
 
 	for _, id := range Uids {
-		_, ok := RowCacheIndex.Get("OldMessages_Uid:" + fmt.Sprintf("%v", id))
+		_, ok := RowCacheIndex.Get("OldMessage_Uid:" + fmt.Sprintf("%v", id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		rows, err := NewOldMessages_Selector().Uid_In(not_cached).GetRows(base.DB)
+		rows, err := NewOldMessage_Selector().Uid_In(not_cached).GetRows(base.DB)
 		if err == nil {
 			for _, row := range rows {
-				RowCacheIndex.Set("OldMessages_Uid:"+fmt.Sprintf("%v", row.Uid), row, 0)
+				RowCacheIndex.Set("OldMessage_Uid:"+fmt.Sprintf("%v", row.Uid), row, 0)
 			}
 		}
 	}
@@ -435,17 +435,17 @@ func (c _StoreImpl) PreLoadOldMessages_ByUids(Uids []int) {
 //field//field//field
 
 ///// Generated from index 'MessageKey'.
-func (c _StoreImpl) OldMessages_ByMessageKey(MessageKey string) (*OldMessages, bool) {
-	o, ok := RowCacheIndex.Get("OldMessages_MessageKey:" + fmt.Sprintf("%v", MessageKey))
+func (c _StoreImpl) OldMessage_ByMessageKey(MessageKey string) (*OldMessage, bool) {
+	o, ok := RowCacheIndex.Get("OldMessage_MessageKey:" + fmt.Sprintf("%v", MessageKey))
 	if ok {
-		if obj, ok := o.(*OldMessages); ok {
+		if obj, ok := o.(*OldMessage); ok {
 			return obj, true
 		}
 	}
 
-	row, err := NewOldMessages_Selector().MessageKey_Eq(MessageKey).GetRow(base.DB)
+	row, err := NewOldMessage_Selector().MessageKey_Eq(MessageKey).GetRow(base.DB)
 	if err == nil {
-		RowCacheIndex.Set("OldMessages_MessageKey:"+fmt.Sprintf("%v", row.MessageKey), row, 0)
+		RowCacheIndex.Set("OldMessage_MessageKey:"+fmt.Sprintf("%v", row.MessageKey), row, 0)
 		return row, true
 	}
 
@@ -453,27 +453,27 @@ func (c _StoreImpl) OldMessages_ByMessageKey(MessageKey string) (*OldMessages, b
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadOldMessages_ByMessageKeys(MessageKeys []string) {
+func (c _StoreImpl) PreLoadOldMessage_ByMessageKeys(MessageKeys []string) {
 	not_cached := make([]string, 0, len(MessageKeys))
 
 	for _, id := range MessageKeys {
-		_, ok := RowCacheIndex.Get("OldMessages_MessageKey:" + fmt.Sprintf("%v", id))
+		_, ok := RowCacheIndex.Get("OldMessage_MessageKey:" + fmt.Sprintf("%v", id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		rows, err := NewOldMessages_Selector().MessageKey_In(not_cached).GetRows(base.DB)
+		rows, err := NewOldMessage_Selector().MessageKey_In(not_cached).GetRows(base.DB)
 		if err == nil {
 			for _, row := range rows {
-				RowCacheIndex.Set("OldMessages_MessageKey:"+fmt.Sprintf("%v", row.MessageKey), row, 0)
+				RowCacheIndex.Set("OldMessage_MessageKey:"+fmt.Sprintf("%v", row.MessageKey), row, 0)
 			}
 		}
 	}
 }
 
-// OldMessages - UserId
+// OldMessage - UserId
 
 // OldMsgFile - PRIMARY
 
@@ -565,24 +565,24 @@ func (c _StoreImpl) PreLoadOldMsgPushEvent_ByUids(Uids []int) {
 	}
 }
 
-// PhoneContacts - PRIMARY
+// PhoneContact - PRIMARY
 
-// PhoneContacts - PhoneContactRowId
+// PhoneContact - PhoneContactRowId
 
 //field//field//field
 
 ///// Generated from index 'PhoneNumber'.
-func (c _StoreImpl) PhoneContacts_ByPhoneNumber(PhoneNumber string) (*PhoneContacts, bool) {
-	o, ok := RowCacheIndex.Get("PhoneContacts_PhoneNumber:" + fmt.Sprintf("%v", PhoneNumber))
+func (c _StoreImpl) PhoneContact_ByPhoneNumber(PhoneNumber string) (*PhoneContact, bool) {
+	o, ok := RowCacheIndex.Get("PhoneContact_PhoneNumber:" + fmt.Sprintf("%v", PhoneNumber))
 	if ok {
-		if obj, ok := o.(*PhoneContacts); ok {
+		if obj, ok := o.(*PhoneContact); ok {
 			return obj, true
 		}
 	}
 
-	row, err := NewPhoneContacts_Selector().PhoneNumber_Eq(PhoneNumber).GetRow(base.DB)
+	row, err := NewPhoneContact_Selector().PhoneNumber_Eq(PhoneNumber).GetRow(base.DB)
 	if err == nil {
-		RowCacheIndex.Set("PhoneContacts_PhoneNumber:"+fmt.Sprintf("%v", row.PhoneNumber), row, 0)
+		RowCacheIndex.Set("PhoneContact_PhoneNumber:"+fmt.Sprintf("%v", row.PhoneNumber), row, 0)
 		return row, true
 	}
 
@@ -590,21 +590,21 @@ func (c _StoreImpl) PhoneContacts_ByPhoneNumber(PhoneNumber string) (*PhoneConta
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadPhoneContacts_ByPhoneNumbers(PhoneNumbers []string) {
+func (c _StoreImpl) PreLoadPhoneContact_ByPhoneNumbers(PhoneNumbers []string) {
 	not_cached := make([]string, 0, len(PhoneNumbers))
 
 	for _, id := range PhoneNumbers {
-		_, ok := RowCacheIndex.Get("PhoneContacts_PhoneNumber:" + fmt.Sprintf("%v", id))
+		_, ok := RowCacheIndex.Get("PhoneContact_PhoneNumber:" + fmt.Sprintf("%v", id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		rows, err := NewPhoneContacts_Selector().PhoneNumber_In(not_cached).GetRows(base.DB)
+		rows, err := NewPhoneContact_Selector().PhoneNumber_In(not_cached).GetRows(base.DB)
 		if err == nil {
 			for _, row := range rows {
-				RowCacheIndex.Set("PhoneContacts_PhoneNumber:"+fmt.Sprintf("%v", row.PhoneNumber), row, 0)
+				RowCacheIndex.Set("PhoneContact_PhoneNumber:"+fmt.Sprintf("%v", row.PhoneNumber), row, 0)
 			}
 		}
 	}
@@ -613,17 +613,17 @@ func (c _StoreImpl) PreLoadPhoneContacts_ByPhoneNumbers(PhoneNumbers []string) {
 //field//field//field
 
 ///// Generated from index 'UserId'.
-func (c _StoreImpl) PhoneContacts_ByUserId(UserId int) (*PhoneContacts, bool) {
-	o, ok := RowCacheIndex.Get("PhoneContacts_UserId:" + fmt.Sprintf("%v", UserId))
+func (c _StoreImpl) PhoneContact_ByUserId(UserId int) (*PhoneContact, bool) {
+	o, ok := RowCacheIndex.Get("PhoneContact_UserId:" + fmt.Sprintf("%v", UserId))
 	if ok {
-		if obj, ok := o.(*PhoneContacts); ok {
+		if obj, ok := o.(*PhoneContact); ok {
 			return obj, true
 		}
 	}
 
-	row, err := NewPhoneContacts_Selector().UserId_Eq(UserId).GetRow(base.DB)
+	row, err := NewPhoneContact_Selector().UserId_Eq(UserId).GetRow(base.DB)
 	if err == nil {
-		RowCacheIndex.Set("PhoneContacts_UserId:"+fmt.Sprintf("%v", row.UserId), row, 0)
+		RowCacheIndex.Set("PhoneContact_UserId:"+fmt.Sprintf("%v", row.UserId), row, 0)
 		return row, true
 	}
 
@@ -631,42 +631,42 @@ func (c _StoreImpl) PhoneContacts_ByUserId(UserId int) (*PhoneContacts, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadPhoneContacts_ByUserIds(UserIds []int) {
+func (c _StoreImpl) PreLoadPhoneContact_ByUserIds(UserIds []int) {
 	not_cached := make([]int, 0, len(UserIds))
 
 	for _, id := range UserIds {
-		_, ok := RowCacheIndex.Get("PhoneContacts_UserId:" + fmt.Sprintf("%v", id))
+		_, ok := RowCacheIndex.Get("PhoneContact_UserId:" + fmt.Sprintf("%v", id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		rows, err := NewPhoneContacts_Selector().UserId_In(not_cached).GetRows(base.DB)
+		rows, err := NewPhoneContact_Selector().UserId_In(not_cached).GetRows(base.DB)
 		if err == nil {
 			for _, row := range rows {
-				RowCacheIndex.Set("PhoneContacts_UserId:"+fmt.Sprintf("%v", row.UserId), row, 0)
+				RowCacheIndex.Set("PhoneContact_UserId:"+fmt.Sprintf("%v", row.UserId), row, 0)
 			}
 		}
 	}
 }
 
-// PhoneContacts - UserId_Time
+// PhoneContact - UserId_Time
 
 //field//field//field
 
 ///// Generated from index 'PhoneNormalizedNumber'.
-func (c _StoreImpl) PhoneContacts_ByPhoneNormalizedNumber(PhoneNormalizedNumber string) (*PhoneContacts, bool) {
-	o, ok := RowCacheIndex.Get("PhoneContacts_PhoneNormalizedNumber:" + fmt.Sprintf("%v", PhoneNormalizedNumber))
+func (c _StoreImpl) PhoneContact_ByPhoneNormalizedNumber(PhoneNormalizedNumber string) (*PhoneContact, bool) {
+	o, ok := RowCacheIndex.Get("PhoneContact_PhoneNormalizedNumber:" + fmt.Sprintf("%v", PhoneNormalizedNumber))
 	if ok {
-		if obj, ok := o.(*PhoneContacts); ok {
+		if obj, ok := o.(*PhoneContact); ok {
 			return obj, true
 		}
 	}
 
-	row, err := NewPhoneContacts_Selector().PhoneNormalizedNumber_Eq(PhoneNormalizedNumber).GetRow(base.DB)
+	row, err := NewPhoneContact_Selector().PhoneNormalizedNumber_Eq(PhoneNormalizedNumber).GetRow(base.DB)
 	if err == nil {
-		RowCacheIndex.Set("PhoneContacts_PhoneNormalizedNumber:"+fmt.Sprintf("%v", row.PhoneNormalizedNumber), row, 0)
+		RowCacheIndex.Set("PhoneContact_PhoneNormalizedNumber:"+fmt.Sprintf("%v", row.PhoneNormalizedNumber), row, 0)
 		return row, true
 	}
 
@@ -674,21 +674,21 @@ func (c _StoreImpl) PhoneContacts_ByPhoneNormalizedNumber(PhoneNormalizedNumber 
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadPhoneContacts_ByPhoneNormalizedNumbers(PhoneNormalizedNumbers []string) {
+func (c _StoreImpl) PreLoadPhoneContact_ByPhoneNormalizedNumbers(PhoneNormalizedNumbers []string) {
 	not_cached := make([]string, 0, len(PhoneNormalizedNumbers))
 
 	for _, id := range PhoneNormalizedNumbers {
-		_, ok := RowCacheIndex.Get("PhoneContacts_PhoneNormalizedNumber:" + fmt.Sprintf("%v", id))
+		_, ok := RowCacheIndex.Get("PhoneContact_PhoneNormalizedNumber:" + fmt.Sprintf("%v", id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		rows, err := NewPhoneContacts_Selector().PhoneNormalizedNumber_In(not_cached).GetRows(base.DB)
+		rows, err := NewPhoneContact_Selector().PhoneNormalizedNumber_In(not_cached).GetRows(base.DB)
 		if err == nil {
 			for _, row := range rows {
-				RowCacheIndex.Set("PhoneContacts_PhoneNormalizedNumber:"+fmt.Sprintf("%v", row.PhoneNormalizedNumber), row, 0)
+				RowCacheIndex.Set("PhoneContact_PhoneNormalizedNumber:"+fmt.Sprintf("%v", row.PhoneNormalizedNumber), row, 0)
 			}
 		}
 	}
@@ -1083,24 +1083,24 @@ func (c _StoreImpl) PreLoadSession_ByUserIds(UserIds []int) {
 
 // SettingClient - PRIMARY
 
-// SettingNotifications - PRIMARY
+// SettingNotification - PRIMARY
 
-// Tags - PRIMARY
+// Tag - PRIMARY
 
 //field//field//field
 
 ///// Generated from index 'Name'.
-func (c _StoreImpl) Tags_ByName(Name string) (*Tags, bool) {
-	o, ok := RowCacheIndex.Get("Tags_Name:" + fmt.Sprintf("%v", Name))
+func (c _StoreImpl) Tag_ByName(Name string) (*Tag, bool) {
+	o, ok := RowCacheIndex.Get("Tag_Name:" + fmt.Sprintf("%v", Name))
 	if ok {
-		if obj, ok := o.(*Tags); ok {
+		if obj, ok := o.(*Tag); ok {
 			return obj, true
 		}
 	}
 
-	row, err := NewTags_Selector().Name_Eq(Name).GetRow(base.DB)
+	row, err := NewTag_Selector().Name_Eq(Name).GetRow(base.DB)
 	if err == nil {
-		RowCacheIndex.Set("Tags_Name:"+fmt.Sprintf("%v", row.Name), row, 0)
+		RowCacheIndex.Set("Tag_Name:"+fmt.Sprintf("%v", row.Name), row, 0)
 		return row, true
 	}
 
@@ -1108,29 +1108,29 @@ func (c _StoreImpl) Tags_ByName(Name string) (*Tags, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadTags_ByNames(Names []string) {
+func (c _StoreImpl) PreLoadTag_ByNames(Names []string) {
 	not_cached := make([]string, 0, len(Names))
 
 	for _, id := range Names {
-		_, ok := RowCacheIndex.Get("Tags_Name:" + fmt.Sprintf("%v", id))
+		_, ok := RowCacheIndex.Get("Tag_Name:" + fmt.Sprintf("%v", id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		rows, err := NewTags_Selector().Name_In(not_cached).GetRows(base.DB)
+		rows, err := NewTag_Selector().Name_In(not_cached).GetRows(base.DB)
 		if err == nil {
 			for _, row := range rows {
-				RowCacheIndex.Set("Tags_Name:"+fmt.Sprintf("%v", row.Name), row, 0)
+				RowCacheIndex.Set("Tag_Name:"+fmt.Sprintf("%v", row.Name), row, 0)
 			}
 		}
 	}
 }
 
-// TagsPosts - PRIMARY
+// TagsPost - PRIMARY
 
-// TagsPosts - TagId
+// TagsPost - TagId
 
 // TestChat - PRIMARY
 

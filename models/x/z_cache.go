@@ -485,14 +485,14 @@ func (c _StoreImpl) PreLoadGroupToMessageByIds(ids []int) {
 
 // yes 222 int
 
-func (c _StoreImpl) GetLikesById(Id int) (*Likes, bool) {
-	o, ok := RowCache.Get("Likes:" + strconv.Itoa(Id))
+func (c _StoreImpl) GetLikeById(Id int) (*Like, bool) {
+	o, ok := RowCache.Get("Like:" + strconv.Itoa(Id))
 	if ok {
-		if obj, ok := o.(*Likes); ok {
+		if obj, ok := o.(*Like); ok {
 			return obj, true
 		}
 	}
-	obj2, err := LikesById(base.DB, Id)
+	obj2, err := LikeById(base.DB, Id)
 	if err == nil {
 		return obj2, true
 	}
@@ -500,31 +500,31 @@ func (c _StoreImpl) GetLikesById(Id int) (*Likes, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadLikesByIds(ids []int) {
+func (c _StoreImpl) PreLoadLikeByIds(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
-		_, ok := RowCache.Get("Likes:" + strconv.Itoa(id))
+		_, ok := RowCache.Get("Like:" + strconv.Itoa(id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		NewLikes_Selector().Id_In(not_cached).GetRows(base.DB)
+		NewLike_Selector().Id_In(not_cached).GetRows(base.DB)
 	}
 }
 
 // yes 222 int
 
-func (c _StoreImpl) GetLogChangesById(Id int) (*LogChanges, bool) {
-	o, ok := RowCache.Get("LogChanges:" + strconv.Itoa(Id))
+func (c _StoreImpl) GetLogChangeById(Id int) (*LogChange, bool) {
+	o, ok := RowCache.Get("LogChange:" + strconv.Itoa(Id))
 	if ok {
-		if obj, ok := o.(*LogChanges); ok {
+		if obj, ok := o.(*LogChange); ok {
 			return obj, true
 		}
 	}
-	obj2, err := LogChangesById(base.DB, Id)
+	obj2, err := LogChangeById(base.DB, Id)
 	if err == nil {
 		return obj2, true
 	}
@@ -532,18 +532,18 @@ func (c _StoreImpl) GetLogChangesById(Id int) (*LogChanges, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadLogChangesByIds(ids []int) {
+func (c _StoreImpl) PreLoadLogChangeByIds(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
-		_, ok := RowCache.Get("LogChanges:" + strconv.Itoa(id))
+		_, ok := RowCache.Get("LogChange:" + strconv.Itoa(id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		NewLogChanges_Selector().Id_In(not_cached).GetRows(base.DB)
+		NewLogChange_Selector().Id_In(not_cached).GetRows(base.DB)
 	}
 }
 
@@ -677,14 +677,14 @@ func (c _StoreImpl) PreLoadNotificationRemovedByNotificationIds(ids []int) {
 
 // yes 222 int
 
-func (c _StoreImpl) GetOldMessagesById(Id int) (*OldMessages, bool) {
-	o, ok := RowCache.Get("OldMessages:" + strconv.Itoa(Id))
+func (c _StoreImpl) GetOldMessageById(Id int) (*OldMessage, bool) {
+	o, ok := RowCache.Get("OldMessage:" + strconv.Itoa(Id))
 	if ok {
-		if obj, ok := o.(*OldMessages); ok {
+		if obj, ok := o.(*OldMessage); ok {
 			return obj, true
 		}
 	}
-	obj2, err := OldMessagesById(base.DB, Id)
+	obj2, err := OldMessageById(base.DB, Id)
 	if err == nil {
 		return obj2, true
 	}
@@ -692,18 +692,18 @@ func (c _StoreImpl) GetOldMessagesById(Id int) (*OldMessages, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadOldMessagesByIds(ids []int) {
+func (c _StoreImpl) PreLoadOldMessageByIds(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
-		_, ok := RowCache.Get("OldMessages:" + strconv.Itoa(id))
+		_, ok := RowCache.Get("OldMessage:" + strconv.Itoa(id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		NewOldMessages_Selector().Id_In(not_cached).GetRows(base.DB)
+		NewOldMessage_Selector().Id_In(not_cached).GetRows(base.DB)
 	}
 }
 
@@ -805,14 +805,14 @@ func (c _StoreImpl) PreLoadOldMsgPushEventByIds(ids []int) {
 
 // yes 222 int
 
-func (c _StoreImpl) GetPhoneContactsById(Id int) (*PhoneContacts, bool) {
-	o, ok := RowCache.Get("PhoneContacts:" + strconv.Itoa(Id))
+func (c _StoreImpl) GetPhoneContactById(Id int) (*PhoneContact, bool) {
+	o, ok := RowCache.Get("PhoneContact:" + strconv.Itoa(Id))
 	if ok {
-		if obj, ok := o.(*PhoneContacts); ok {
+		if obj, ok := o.(*PhoneContact); ok {
 			return obj, true
 		}
 	}
-	obj2, err := PhoneContactsById(base.DB, Id)
+	obj2, err := PhoneContactById(base.DB, Id)
 	if err == nil {
 		return obj2, true
 	}
@@ -820,18 +820,18 @@ func (c _StoreImpl) GetPhoneContactsById(Id int) (*PhoneContacts, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadPhoneContactsByIds(ids []int) {
+func (c _StoreImpl) PreLoadPhoneContactByIds(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
-		_, ok := RowCache.Get("PhoneContacts:" + strconv.Itoa(id))
+		_, ok := RowCache.Get("PhoneContact:" + strconv.Itoa(id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		NewPhoneContacts_Selector().Id_In(not_cached).GetRows(base.DB)
+		NewPhoneContact_Selector().Id_In(not_cached).GetRows(base.DB)
 	}
 }
 
@@ -1125,14 +1125,14 @@ func (c _StoreImpl) PreLoadSettingClientByUserIds(ids []int) {
 
 // yes 222 int
 
-func (c _StoreImpl) GetSettingNotificationsByUserId(UserId int) (*SettingNotifications, bool) {
-	o, ok := RowCache.Get("SettingNotifications:" + strconv.Itoa(UserId))
+func (c _StoreImpl) GetSettingNotificationByUserId(UserId int) (*SettingNotification, bool) {
+	o, ok := RowCache.Get("SettingNotification:" + strconv.Itoa(UserId))
 	if ok {
-		if obj, ok := o.(*SettingNotifications); ok {
+		if obj, ok := o.(*SettingNotification); ok {
 			return obj, true
 		}
 	}
-	obj2, err := SettingNotificationsByUserId(base.DB, UserId)
+	obj2, err := SettingNotificationByUserId(base.DB, UserId)
 	if err == nil {
 		return obj2, true
 	}
@@ -1140,31 +1140,31 @@ func (c _StoreImpl) GetSettingNotificationsByUserId(UserId int) (*SettingNotific
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadSettingNotificationsByUserIds(ids []int) {
+func (c _StoreImpl) PreLoadSettingNotificationByUserIds(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
-		_, ok := RowCache.Get("SettingNotifications:" + strconv.Itoa(id))
+		_, ok := RowCache.Get("SettingNotification:" + strconv.Itoa(id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		NewSettingNotifications_Selector().UserId_In(not_cached).GetRows(base.DB)
+		NewSettingNotification_Selector().UserId_In(not_cached).GetRows(base.DB)
 	}
 }
 
 // yes 222 int
 
-func (c _StoreImpl) GetTagsById(Id int) (*Tags, bool) {
-	o, ok := RowCache.Get("Tags:" + strconv.Itoa(Id))
+func (c _StoreImpl) GetTagById(Id int) (*Tag, bool) {
+	o, ok := RowCache.Get("Tag:" + strconv.Itoa(Id))
 	if ok {
-		if obj, ok := o.(*Tags); ok {
+		if obj, ok := o.(*Tag); ok {
 			return obj, true
 		}
 	}
-	obj2, err := TagsById(base.DB, Id)
+	obj2, err := TagById(base.DB, Id)
 	if err == nil {
 		return obj2, true
 	}
@@ -1172,31 +1172,31 @@ func (c _StoreImpl) GetTagsById(Id int) (*Tags, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadTagsByIds(ids []int) {
+func (c _StoreImpl) PreLoadTagByIds(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
-		_, ok := RowCache.Get("Tags:" + strconv.Itoa(id))
+		_, ok := RowCache.Get("Tag:" + strconv.Itoa(id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		NewTags_Selector().Id_In(not_cached).GetRows(base.DB)
+		NewTag_Selector().Id_In(not_cached).GetRows(base.DB)
 	}
 }
 
 // yes 222 int
 
-func (c _StoreImpl) GetTagsPostsById(Id int) (*TagsPosts, bool) {
-	o, ok := RowCache.Get("TagsPosts:" + strconv.Itoa(Id))
+func (c _StoreImpl) GetTagsPostById(Id int) (*TagsPost, bool) {
+	o, ok := RowCache.Get("TagsPost:" + strconv.Itoa(Id))
 	if ok {
-		if obj, ok := o.(*TagsPosts); ok {
+		if obj, ok := o.(*TagsPost); ok {
 			return obj, true
 		}
 	}
-	obj2, err := TagsPostsById(base.DB, Id)
+	obj2, err := TagsPostById(base.DB, Id)
 	if err == nil {
 		return obj2, true
 	}
@@ -1204,18 +1204,18 @@ func (c _StoreImpl) GetTagsPostsById(Id int) (*TagsPosts, bool) {
 	return nil, false
 }
 
-func (c _StoreImpl) PreLoadTagsPostsByIds(ids []int) {
+func (c _StoreImpl) PreLoadTagsPostByIds(ids []int) {
 	not_cached := make([]int, 0, len(ids))
 
 	for _, id := range ids {
-		_, ok := RowCache.Get("TagsPosts:" + strconv.Itoa(id))
+		_, ok := RowCache.Get("TagsPost:" + strconv.Itoa(id))
 		if !ok {
 			not_cached = append(not_cached, id)
 		}
 	}
 
 	if len(not_cached) > 0 {
-		NewTagsPosts_Selector().Id_In(not_cached).GetRows(base.DB)
+		NewTagsPost_Selector().Id_In(not_cached).GetRows(base.DB)
 	}
 }
 

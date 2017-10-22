@@ -100,8 +100,8 @@ func PBConvPB_Chat_To_Chat ( o *Chat) *PB_Chat {
 }
 */
 /*
-func PBConvPB__Comment_To_Comment( o *PB_Comment) *Comments {
-     n := &Comments{
+func PBConvPB__Comment_To_Comment( o *PB_Comment) *Comment {
+     n := &Comment{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
       PostId: int ( o.PostId ),
@@ -111,7 +111,7 @@ func PBConvPB__Comment_To_Comment( o *PB_Comment) *Comments {
     return n
 }
 
-func PBConvPB_Comment_To_Comment ( o *Comments) *PB_Comment {
+func PBConvPB_Comment_To_Comment ( o *Comment) *PB_Comment {
      n := &PB_Comment{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
@@ -436,8 +436,8 @@ func PBConvPB_GroupToMessage_To_GroupToMessage ( o *GroupToMessage) *PB_GroupToM
 }
 */
 /*
-func PBConvPB__Like_To_Like( o *PB_Like) *Likes {
-     n := &Likes{
+func PBConvPB__Like_To_Like( o *PB_Like) *Like {
+     n := &Like{
       Id: int ( o.Id ),
       PostId: int ( o.PostId ),
       PostTypeId: int ( o.PostTypeId ),
@@ -448,7 +448,7 @@ func PBConvPB__Like_To_Like( o *PB_Like) *Likes {
     return n
 }
 
-func PBConvPB_Like_To_Like ( o *Likes) *PB_Like {
+func PBConvPB_Like_To_Like ( o *Like) *PB_Like {
      n := &PB_Like{
       Id: int32 ( o.Id ),
       PostId: int32 ( o.PostId ),

@@ -364,8 +364,8 @@ func GroupToMessageById(db *sqlx.DB, id int) (*GroupToMessage, error) {
 	return &gtm, nil
 }
 
-// LikesById Generated from index 'PRIMARY' -- retrieves a row from 'ms.likes' as a Likes.
-func LikesById(db *sqlx.DB, id int) (*Likes, error) {
+// LikeById Generated from index 'PRIMARY' -- retrieves a row from 'ms.likes' as a Like.
+func LikeById(db *sqlx.DB, id int) (*Like, error) {
 	var err error
 
 	const sqlstr = `SELECT * ` +
@@ -373,7 +373,7 @@ func LikesById(db *sqlx.DB, id int) (*Likes, error) {
 		`WHERE Id = ?`
 
 	XOLog(sqlstr, id)
-	l := Likes{
+	l := Like{
 		_exists: true,
 	}
 
@@ -383,13 +383,13 @@ func LikesById(db *sqlx.DB, id int) (*Likes, error) {
 		return nil, err
 	}
 
-	OnLikes_LoadOne(&l)
+	OnLike_LoadOne(&l)
 
 	return &l, nil
 }
 
-// LogChangesById Generated from index 'PRIMARY' -- retrieves a row from 'ms.log_changes' as a LogChanges.
-func LogChangesById(db *sqlx.DB, id int) (*LogChanges, error) {
+// LogChangeById Generated from index 'PRIMARY' -- retrieves a row from 'ms.log_changes' as a LogChange.
+func LogChangeById(db *sqlx.DB, id int) (*LogChange, error) {
 	var err error
 
 	const sqlstr = `SELECT * ` +
@@ -397,7 +397,7 @@ func LogChangesById(db *sqlx.DB, id int) (*LogChanges, error) {
 		`WHERE Id = ?`
 
 	XOLog(sqlstr, id)
-	lc := LogChanges{
+	lc := LogChange{
 		_exists: true,
 	}
 
@@ -407,7 +407,7 @@ func LogChangesById(db *sqlx.DB, id int) (*LogChanges, error) {
 		return nil, err
 	}
 
-	OnLogChanges_LoadOne(&lc)
+	OnLogChange_LoadOne(&lc)
 
 	return &lc, nil
 }
@@ -508,8 +508,8 @@ func NotificationRemovedByNotificationId(db *sqlx.DB, notificationId int) (*Noti
 	return &nr, nil
 }
 
-// OldMessagesById Generated from index 'PRIMARY' -- retrieves a row from 'ms.old_messages' as a OldMessages.
-func OldMessagesById(db *sqlx.DB, id int) (*OldMessages, error) {
+// OldMessageById Generated from index 'PRIMARY' -- retrieves a row from 'ms.old_messages' as a OldMessage.
+func OldMessageById(db *sqlx.DB, id int) (*OldMessage, error) {
 	var err error
 
 	const sqlstr = `SELECT * ` +
@@ -517,7 +517,7 @@ func OldMessagesById(db *sqlx.DB, id int) (*OldMessages, error) {
 		`WHERE Id = ?`
 
 	XOLog(sqlstr, id)
-	om := OldMessages{
+	om := OldMessage{
 		_exists: true,
 	}
 
@@ -527,7 +527,7 @@ func OldMessagesById(db *sqlx.DB, id int) (*OldMessages, error) {
 		return nil, err
 	}
 
-	OnOldMessages_LoadOne(&om)
+	OnOldMessage_LoadOne(&om)
 
 	return &om, nil
 }
@@ -604,8 +604,8 @@ func OldMsgPushEventById(db *sqlx.DB, id int) (*OldMsgPushEvent, error) {
 	return &ompe, nil
 }
 
-// PhoneContactsById Generated from index 'PRIMARY' -- retrieves a row from 'ms.phone_contacts' as a PhoneContacts.
-func PhoneContactsById(db *sqlx.DB, id int) (*PhoneContacts, error) {
+// PhoneContactById Generated from index 'PRIMARY' -- retrieves a row from 'ms.phone_contacts' as a PhoneContact.
+func PhoneContactById(db *sqlx.DB, id int) (*PhoneContact, error) {
 	var err error
 
 	const sqlstr = `SELECT * ` +
@@ -613,7 +613,7 @@ func PhoneContactsById(db *sqlx.DB, id int) (*PhoneContacts, error) {
 		`WHERE Id = ?`
 
 	XOLog(sqlstr, id)
-	pc := PhoneContacts{
+	pc := PhoneContact{
 		_exists: true,
 	}
 
@@ -623,7 +623,7 @@ func PhoneContactsById(db *sqlx.DB, id int) (*PhoneContacts, error) {
 		return nil, err
 	}
 
-	OnPhoneContacts_LoadOne(&pc)
+	OnPhoneContact_LoadOne(&pc)
 
 	return &pc, nil
 }
@@ -844,8 +844,8 @@ func SettingClientByUserId(db *sqlx.DB, userId int) (*SettingClient, error) {
 	return &sc, nil
 }
 
-// SettingNotificationsByUserId Generated from index 'PRIMARY' -- retrieves a row from 'ms.setting_notifications' as a SettingNotifications.
-func SettingNotificationsByUserId(db *sqlx.DB, userId int) (*SettingNotifications, error) {
+// SettingNotificationByUserId Generated from index 'PRIMARY' -- retrieves a row from 'ms.setting_notifications' as a SettingNotification.
+func SettingNotificationByUserId(db *sqlx.DB, userId int) (*SettingNotification, error) {
 	var err error
 
 	const sqlstr = `SELECT * ` +
@@ -853,7 +853,7 @@ func SettingNotificationsByUserId(db *sqlx.DB, userId int) (*SettingNotification
 		`WHERE UserId = ?`
 
 	XOLog(sqlstr, userId)
-	sn := SettingNotifications{
+	sn := SettingNotification{
 		_exists: true,
 	}
 
@@ -863,21 +863,21 @@ func SettingNotificationsByUserId(db *sqlx.DB, userId int) (*SettingNotification
 		return nil, err
 	}
 
-	OnSettingNotifications_LoadOne(&sn)
+	OnSettingNotification_LoadOne(&sn)
 
 	return &sn, nil
 }
 
-// TagsById Generated from index 'PRIMARY' -- retrieves a row from 'ms.tags' as a Tags.
-func TagsById(db *sqlx.DB, id int) (*Tags, error) {
+// TagById Generated from index 'PRIMARY' -- retrieves a row from 'ms.tag' as a Tag.
+func TagById(db *sqlx.DB, id int) (*Tag, error) {
 	var err error
 
 	const sqlstr = `SELECT * ` +
-		`FROM ms.tags ` +
+		`FROM ms.tag ` +
 		`WHERE Id = ?`
 
 	XOLog(sqlstr, id)
-	t := Tags{
+	t := Tag{
 		_exists: true,
 	}
 
@@ -887,13 +887,13 @@ func TagsById(db *sqlx.DB, id int) (*Tags, error) {
 		return nil, err
 	}
 
-	OnTags_LoadOne(&t)
+	OnTag_LoadOne(&t)
 
 	return &t, nil
 }
 
-// TagsPostsById Generated from index 'PRIMARY' -- retrieves a row from 'ms.tags_posts' as a TagsPosts.
-func TagsPostsById(db *sqlx.DB, id int) (*TagsPosts, error) {
+// TagsPostById Generated from index 'PRIMARY' -- retrieves a row from 'ms.tags_posts' as a TagsPost.
+func TagsPostById(db *sqlx.DB, id int) (*TagsPost, error) {
 	var err error
 
 	const sqlstr = `SELECT * ` +
@@ -901,7 +901,7 @@ func TagsPostsById(db *sqlx.DB, id int) (*TagsPosts, error) {
 		`WHERE Id = ?`
 
 	XOLog(sqlstr, id)
-	tp := TagsPosts{
+	tp := TagsPost{
 		_exists: true,
 	}
 
@@ -911,7 +911,7 @@ func TagsPostsById(db *sqlx.DB, id int) (*TagsPosts, error) {
 		return nil, err
 	}
 
-	OnTagsPosts_LoadOne(&tp)
+	OnTagsPost_LoadOne(&tp)
 
 	return &tp, nil
 }

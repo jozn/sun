@@ -434,14 +434,14 @@ $$
 
 
  #### delimiter ;*/
-################################ Likes ######################################
+################################ Like ######################################
 
 /* #### delimiter $$
 DROP TRIGGER IF EXISTS likes_OnCreateLogger $$
 CREATE TRIGGER likes_OnCreateLogger AFTER INSERT ON likes
   FOR EACH ROW
   BEGIN
-    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Likes","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Like","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
   END;
 $$
 
@@ -449,7 +449,7 @@ DROP TRIGGER IF EXISTS likes_OnUpdateLogger $$
 CREATE TRIGGER likes_OnUpdateLogger AFTER UPDATE ON likes
   FOR EACH ROW
   BEGIN
-  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Likes","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Like","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -457,20 +457,20 @@ DROP TRIGGER IF EXISTS likes_OnDeleteLogger $$
 CREATE TRIGGER likes_OnDeleteLogger AFTER DELETE ON likes
   FOR EACH ROW
   BEGIN
-   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Likes","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Like","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
 
  #### delimiter ;*/
-################################ LogChanges ######################################
+################################ LogChange ######################################
 
 /* #### delimiter $$
 DROP TRIGGER IF EXISTS log_changes_OnCreateLogger $$
 CREATE TRIGGER log_changes_OnCreateLogger AFTER INSERT ON log_changes
   FOR EACH ROW
   BEGIN
-    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("LogChanges","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("LogChange","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
   END;
 $$
 
@@ -478,7 +478,7 @@ DROP TRIGGER IF EXISTS log_changes_OnUpdateLogger $$
 CREATE TRIGGER log_changes_OnUpdateLogger AFTER UPDATE ON log_changes
   FOR EACH ROW
   BEGIN
-  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("LogChanges","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("LogChange","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -486,7 +486,7 @@ DROP TRIGGER IF EXISTS log_changes_OnDeleteLogger $$
 CREATE TRIGGER log_changes_OnDeleteLogger AFTER DELETE ON log_changes
   FOR EACH ROW
   BEGIN
-   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("LogChanges","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("LogChange","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -608,14 +608,14 @@ $$
 
 
  #### delimiter ;*/
-################################ OldMessages ######################################
+################################ OldMessage ######################################
 
 /* #### delimiter $$
 DROP TRIGGER IF EXISTS old_messages_OnCreateLogger $$
 CREATE TRIGGER old_messages_OnCreateLogger AFTER INSERT ON old_messages
   FOR EACH ROW
   BEGIN
-    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("OldMessages","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("OldMessage","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
   END;
 $$
 
@@ -623,7 +623,7 @@ DROP TRIGGER IF EXISTS old_messages_OnUpdateLogger $$
 CREATE TRIGGER old_messages_OnUpdateLogger AFTER UPDATE ON old_messages
   FOR EACH ROW
   BEGIN
-  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("OldMessages","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("OldMessage","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -631,7 +631,7 @@ DROP TRIGGER IF EXISTS old_messages_OnDeleteLogger $$
 CREATE TRIGGER old_messages_OnDeleteLogger AFTER DELETE ON old_messages
   FOR EACH ROW
   BEGIN
-   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("OldMessages","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("OldMessage","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -724,14 +724,14 @@ $$
 
 
  #### delimiter ;*/
-################################ PhoneContacts ######################################
+################################ PhoneContact ######################################
 
 /* #### delimiter $$
 DROP TRIGGER IF EXISTS phone_contacts_OnCreateLogger $$
 CREATE TRIGGER phone_contacts_OnCreateLogger AFTER INSERT ON phone_contacts
   FOR EACH ROW
   BEGIN
-    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("PhoneContacts","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("PhoneContact","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
   END;
 $$
 
@@ -739,7 +739,7 @@ DROP TRIGGER IF EXISTS phone_contacts_OnUpdateLogger $$
 CREATE TRIGGER phone_contacts_OnUpdateLogger AFTER UPDATE ON phone_contacts
   FOR EACH ROW
   BEGIN
-  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("PhoneContacts","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("PhoneContact","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -747,7 +747,7 @@ DROP TRIGGER IF EXISTS phone_contacts_OnDeleteLogger $$
 CREATE TRIGGER phone_contacts_OnDeleteLogger AFTER DELETE ON phone_contacts
   FOR EACH ROW
   BEGIN
-   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("PhoneContacts","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("PhoneContact","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -1014,14 +1014,14 @@ $$
 
 
  #### delimiter ;*/
-################################ SettingNotifications ######################################
+################################ SettingNotification ######################################
 
 /* #### delimiter $$
 DROP TRIGGER IF EXISTS setting_notifications_OnCreateLogger $$
 CREATE TRIGGER setting_notifications_OnCreateLogger AFTER INSERT ON setting_notifications
   FOR EACH ROW
   BEGIN
-    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("SettingNotifications","INSERT",NEW.UserId, UNIX_TIMESTAMP(NOW()) );
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("SettingNotification","INSERT",NEW.UserId, UNIX_TIMESTAMP(NOW()) );
   END;
 $$
 
@@ -1029,7 +1029,7 @@ DROP TRIGGER IF EXISTS setting_notifications_OnUpdateLogger $$
 CREATE TRIGGER setting_notifications_OnUpdateLogger AFTER UPDATE ON setting_notifications
   FOR EACH ROW
   BEGIN
-  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("SettingNotifications","UPDATE",NEW.UserId, UNIX_TIMESTAMP(NOW()));
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("SettingNotification","UPDATE",NEW.UserId, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -1037,49 +1037,49 @@ DROP TRIGGER IF EXISTS setting_notifications_OnDeleteLogger $$
 CREATE TRIGGER setting_notifications_OnDeleteLogger AFTER DELETE ON setting_notifications
   FOR EACH ROW
   BEGIN
-   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("SettingNotifications","DELETE",OLD.UserId, UNIX_TIMESTAMP(NOW()));
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("SettingNotification","DELETE",OLD.UserId, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
 
  #### delimiter ;*/
-################################ Tags ######################################
+################################ Tag ######################################
 
-delimiter $$
-DROP TRIGGER IF EXISTS tags_OnCreateLogger $$
-CREATE TRIGGER tags_OnCreateLogger AFTER INSERT ON tags
+/* #### delimiter $$
+DROP TRIGGER IF EXISTS tag_OnCreateLogger $$
+CREATE TRIGGER tag_OnCreateLogger AFTER INSERT ON tag
   FOR EACH ROW
   BEGIN
-    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Tags","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Tag","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
   END;
 $$
 
-DROP TRIGGER IF EXISTS tags_OnUpdateLogger $$
-CREATE TRIGGER tags_OnUpdateLogger AFTER UPDATE ON tags
+DROP TRIGGER IF EXISTS tag_OnUpdateLogger $$
+CREATE TRIGGER tag_OnUpdateLogger AFTER UPDATE ON tag
   FOR EACH ROW
   BEGIN
-  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Tags","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Tag","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
-DROP TRIGGER IF EXISTS tags_OnDeleteLogger $$
-CREATE TRIGGER tags_OnDeleteLogger AFTER DELETE ON tags
+DROP TRIGGER IF EXISTS tag_OnDeleteLogger $$
+CREATE TRIGGER tag_OnDeleteLogger AFTER DELETE ON tag
   FOR EACH ROW
   BEGIN
-   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Tags","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Tag","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
 
-delimiter ;
-################################ TagsPosts ######################################
+ #### delimiter ;*/
+################################ TagsPost ######################################
 
 /* #### delimiter $$
 DROP TRIGGER IF EXISTS tags_posts_OnCreateLogger $$
 CREATE TRIGGER tags_posts_OnCreateLogger AFTER INSERT ON tags_posts
   FOR EACH ROW
   BEGIN
-    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("TagsPosts","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("TagsPost","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
   END;
 $$
 
@@ -1087,7 +1087,7 @@ DROP TRIGGER IF EXISTS tags_posts_OnUpdateLogger $$
 CREATE TRIGGER tags_posts_OnUpdateLogger AFTER UPDATE ON tags_posts
   FOR EACH ROW
   BEGIN
-  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("TagsPosts","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("TagsPost","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -1095,7 +1095,7 @@ DROP TRIGGER IF EXISTS tags_posts_OnDeleteLogger $$
 CREATE TRIGGER tags_posts_OnDeleteLogger AFTER DELETE ON tags_posts
   FOR EACH ROW
   BEGIN
-   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("TagsPosts","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("TagsPost","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -1311,11 +1311,11 @@ DROP TRIGGER IF EXISTS group_message_OnDeleteLogger ;
 DROP TRIGGER IF EXISTS group_to_message_OnCreateLogger ;
 DROP TRIGGER IF EXISTS group_to_message_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS group_to_message_OnDeleteLogger ;
-### Likes ##
+### Like ##
 DROP TRIGGER IF EXISTS likes_OnCreateLogger ;
 DROP TRIGGER IF EXISTS likes_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS likes_OnDeleteLogger ;
-### LogChanges ##
+### LogChange ##
 DROP TRIGGER IF EXISTS log_changes_OnCreateLogger ;
 DROP TRIGGER IF EXISTS log_changes_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS log_changes_OnDeleteLogger ;
@@ -1335,7 +1335,7 @@ DROP TRIGGER IF EXISTS notification_OnDeleteLogger ;
 DROP TRIGGER IF EXISTS notification_removed_OnCreateLogger ;
 DROP TRIGGER IF EXISTS notification_removed_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS notification_removed_OnDeleteLogger ;
-### OldMessages ##
+### OldMessage ##
 DROP TRIGGER IF EXISTS old_messages_OnCreateLogger ;
 DROP TRIGGER IF EXISTS old_messages_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS old_messages_OnDeleteLogger ;
@@ -1351,7 +1351,7 @@ DROP TRIGGER IF EXISTS old_msg_push_OnDeleteLogger ;
 DROP TRIGGER IF EXISTS old_msg_push_event_OnCreateLogger ;
 DROP TRIGGER IF EXISTS old_msg_push_event_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS old_msg_push_event_OnDeleteLogger ;
-### PhoneContacts ##
+### PhoneContact ##
 DROP TRIGGER IF EXISTS phone_contacts_OnCreateLogger ;
 DROP TRIGGER IF EXISTS phone_contacts_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS phone_contacts_OnDeleteLogger ;
@@ -1391,15 +1391,15 @@ DROP TRIGGER IF EXISTS session_OnDeleteLogger ;
 DROP TRIGGER IF EXISTS setting_client_OnCreateLogger ;
 DROP TRIGGER IF EXISTS setting_client_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS setting_client_OnDeleteLogger ;
-### SettingNotifications ##
+### SettingNotification ##
 DROP TRIGGER IF EXISTS setting_notifications_OnCreateLogger ;
 DROP TRIGGER IF EXISTS setting_notifications_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS setting_notifications_OnDeleteLogger ;
-### Tags ##
-DROP TRIGGER IF EXISTS tags_OnCreateLogger ;
-DROP TRIGGER IF EXISTS tags_OnUpdateLogger ;
-DROP TRIGGER IF EXISTS tags_OnDeleteLogger ;
-### TagsPosts ##
+### Tag ##
+DROP TRIGGER IF EXISTS tag_OnCreateLogger ;
+DROP TRIGGER IF EXISTS tag_OnUpdateLogger ;
+DROP TRIGGER IF EXISTS tag_OnDeleteLogger ;
+### TagsPost ##
 DROP TRIGGER IF EXISTS tags_posts_OnCreateLogger ;
 DROP TRIGGER IF EXISTS tags_posts_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS tags_posts_OnDeleteLogger ;

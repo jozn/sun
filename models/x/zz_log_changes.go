@@ -9,28 +9,28 @@ import (
 	"strconv"
 
 	"github.com/jmoiron/sqlx"
-) // (shortname .TableNameGo "err" "res" "sqlstr" "db" "XOLog") -}}//(schema .Schema .Table.TableName) -}}// .TableNameGo}}// LogChanges represents a row from 'ms.log_changes'.
+) // (shortname .TableNameGo "err" "res" "sqlstr" "db" "XOLog") -}}//(schema .Schema .Table.TableName) -}}// .TableNameGo}}// LogChange represents a row from 'ms.log_changes'.
 
 // Manualy copy this to project
-type LogChanges__ struct {
+type LogChange__ struct {
 	Id int    `json:"Id"` // Id -
 	T  string `json:"T"`  // T -
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists determines if the LogChanges exists in the database.
-func (lc *LogChanges) Exists() bool {
+// Exists determines if the LogChange exists in the database.
+func (lc *LogChange) Exists() bool {
 	return lc._exists
 }
 
-// Deleted provides information if the LogChanges has been deleted from the database.
-func (lc *LogChanges) Deleted() bool {
+// Deleted provides information if the LogChange has been deleted from the database.
+func (lc *LogChange) Deleted() bool {
 	return lc._deleted
 }
 
-// Insert inserts the LogChanges to the database.
-func (lc *LogChanges) Insert(db XODB) error {
+// Insert inserts the LogChange to the database.
+func (lc *LogChange) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
@@ -55,13 +55,13 @@ func (lc *LogChanges) Insert(db XODB) error {
 	// set existence
 	lc._exists = true
 
-	OnLogChanges_AfterInsert(lc)
+	OnLogChange_AfterInsert(lc)
 
 	return nil
 }
 
-// Insert inserts the LogChanges to the database.
-func (lc *LogChanges) Replace(db XODB) error {
+// Insert inserts the LogChange to the database.
+func (lc *LogChange) Replace(db XODB) error {
 	var err error
 
 	// sql query
@@ -82,13 +82,13 @@ func (lc *LogChanges) Replace(db XODB) error {
 
 	lc._exists = true
 
-	OnLogChanges_AfterInsert(lc)
+	OnLogChange_AfterInsert(lc)
 
 	return nil
 }
 
-// Update updates the LogChanges in the database.
-func (lc *LogChanges) Update(db XODB) error {
+// Update updates the LogChange in the database.
+func (lc *LogChange) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
@@ -111,13 +111,13 @@ func (lc *LogChanges) Update(db XODB) error {
 	_, err = db.Exec(sqlstr, lc.T, lc.Id)
 
 	XOLogErr(err)
-	OnLogChanges_AfterUpdate(lc)
+	OnLogChange_AfterUpdate(lc)
 
 	return err
 }
 
-// Save saves the LogChanges to the database.
-func (lc *LogChanges) Save(db XODB) error {
+// Save saves the LogChange to the database.
+func (lc *LogChange) Save(db XODB) error {
 	if lc.Exists() {
 		return lc.Update(db)
 	}
@@ -125,8 +125,8 @@ func (lc *LogChanges) Save(db XODB) error {
 	return lc.Replace(db)
 }
 
-// Delete deletes the LogChanges from the database.
-func (lc *LogChanges) Delete(db XODB) error {
+// Delete deletes the LogChange from the database.
+func (lc *LogChange) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
@@ -153,7 +153,7 @@ func (lc *LogChanges) Delete(db XODB) error {
 	// set deleted
 	lc._deleted = true
 
-	OnLogChanges_AfterDelete(lc)
+	OnLogChange_AfterDelete(lc)
 
 	return nil
 }
@@ -164,18 +164,18 @@ func (lc *LogChanges) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __LogChanges_Deleter struct {
+type __LogChange_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __LogChanges_Updater struct {
+type __LogChange_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __LogChanges_Selector struct {
+type __LogChange_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -184,19 +184,19 @@ type __LogChanges_Selector struct {
 	offset    int
 }
 
-func NewLogChanges_Deleter() *__LogChanges_Deleter {
-	d := __LogChanges_Deleter{whereSep: " AND "}
+func NewLogChange_Deleter() *__LogChange_Deleter {
+	d := __LogChange_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewLogChanges_Updater() *__LogChanges_Updater {
-	u := __LogChanges_Updater{whereSep: " AND "}
+func NewLogChange_Updater() *__LogChange_Updater {
+	u := __LogChange_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewLogChanges_Selector() *__LogChanges_Selector {
-	u := __LogChanges_Selector{whereSep: " AND ", selectCol: "*"}
+func NewLogChange_Selector() *__LogChange_Selector {
+	u := __LogChange_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -204,12 +204,12 @@ func NewLogChanges_Selector() *__LogChanges_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__LogChanges_Deleter) Or() *__LogChanges_Deleter {
+func (u *__LogChange_Deleter) Or() *__LogChange_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__LogChanges_Deleter) Id_In(ins []int) *__LogChanges_Deleter {
+func (u *__LogChange_Deleter) Id_In(ins []int) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -222,7 +222,7 @@ func (u *__LogChanges_Deleter) Id_In(ins []int) *__LogChanges_Deleter {
 	return u
 }
 
-func (u *__LogChanges_Deleter) Id_Ins(ins ...int) *__LogChanges_Deleter {
+func (u *__LogChange_Deleter) Id_Ins(ins ...int) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -235,7 +235,7 @@ func (u *__LogChanges_Deleter) Id_Ins(ins ...int) *__LogChanges_Deleter {
 	return u
 }
 
-func (u *__LogChanges_Deleter) Id_NotIn(ins []int) *__LogChanges_Deleter {
+func (u *__LogChange_Deleter) Id_NotIn(ins []int) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -248,7 +248,7 @@ func (u *__LogChanges_Deleter) Id_NotIn(ins []int) *__LogChanges_Deleter {
 	return u
 }
 
-func (d *__LogChanges_Deleter) Id_Eq(val int) *__LogChanges_Deleter {
+func (d *__LogChange_Deleter) Id_Eq(val int) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -259,7 +259,7 @@ func (d *__LogChanges_Deleter) Id_Eq(val int) *__LogChanges_Deleter {
 	return d
 }
 
-func (d *__LogChanges_Deleter) Id_NotEq(val int) *__LogChanges_Deleter {
+func (d *__LogChange_Deleter) Id_NotEq(val int) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -270,7 +270,7 @@ func (d *__LogChanges_Deleter) Id_NotEq(val int) *__LogChanges_Deleter {
 	return d
 }
 
-func (d *__LogChanges_Deleter) Id_LT(val int) *__LogChanges_Deleter {
+func (d *__LogChange_Deleter) Id_LT(val int) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -281,7 +281,7 @@ func (d *__LogChanges_Deleter) Id_LT(val int) *__LogChanges_Deleter {
 	return d
 }
 
-func (d *__LogChanges_Deleter) Id_LE(val int) *__LogChanges_Deleter {
+func (d *__LogChange_Deleter) Id_LE(val int) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -292,7 +292,7 @@ func (d *__LogChanges_Deleter) Id_LE(val int) *__LogChanges_Deleter {
 	return d
 }
 
-func (d *__LogChanges_Deleter) Id_GT(val int) *__LogChanges_Deleter {
+func (d *__LogChange_Deleter) Id_GT(val int) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -303,7 +303,7 @@ func (d *__LogChanges_Deleter) Id_GT(val int) *__LogChanges_Deleter {
 	return d
 }
 
-func (d *__LogChanges_Deleter) Id_GE(val int) *__LogChanges_Deleter {
+func (d *__LogChange_Deleter) Id_GE(val int) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -315,12 +315,12 @@ func (d *__LogChanges_Deleter) Id_GE(val int) *__LogChanges_Deleter {
 }
 
 ////////ints
-func (u *__LogChanges_Updater) Or() *__LogChanges_Updater {
+func (u *__LogChange_Updater) Or() *__LogChange_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__LogChanges_Updater) Id_In(ins []int) *__LogChanges_Updater {
+func (u *__LogChange_Updater) Id_In(ins []int) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -333,7 +333,7 @@ func (u *__LogChanges_Updater) Id_In(ins []int) *__LogChanges_Updater {
 	return u
 }
 
-func (u *__LogChanges_Updater) Id_Ins(ins ...int) *__LogChanges_Updater {
+func (u *__LogChange_Updater) Id_Ins(ins ...int) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -346,7 +346,7 @@ func (u *__LogChanges_Updater) Id_Ins(ins ...int) *__LogChanges_Updater {
 	return u
 }
 
-func (u *__LogChanges_Updater) Id_NotIn(ins []int) *__LogChanges_Updater {
+func (u *__LogChange_Updater) Id_NotIn(ins []int) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -359,7 +359,7 @@ func (u *__LogChanges_Updater) Id_NotIn(ins []int) *__LogChanges_Updater {
 	return u
 }
 
-func (d *__LogChanges_Updater) Id_Eq(val int) *__LogChanges_Updater {
+func (d *__LogChange_Updater) Id_Eq(val int) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -370,7 +370,7 @@ func (d *__LogChanges_Updater) Id_Eq(val int) *__LogChanges_Updater {
 	return d
 }
 
-func (d *__LogChanges_Updater) Id_NotEq(val int) *__LogChanges_Updater {
+func (d *__LogChange_Updater) Id_NotEq(val int) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -381,7 +381,7 @@ func (d *__LogChanges_Updater) Id_NotEq(val int) *__LogChanges_Updater {
 	return d
 }
 
-func (d *__LogChanges_Updater) Id_LT(val int) *__LogChanges_Updater {
+func (d *__LogChange_Updater) Id_LT(val int) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -392,7 +392,7 @@ func (d *__LogChanges_Updater) Id_LT(val int) *__LogChanges_Updater {
 	return d
 }
 
-func (d *__LogChanges_Updater) Id_LE(val int) *__LogChanges_Updater {
+func (d *__LogChange_Updater) Id_LE(val int) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -403,7 +403,7 @@ func (d *__LogChanges_Updater) Id_LE(val int) *__LogChanges_Updater {
 	return d
 }
 
-func (d *__LogChanges_Updater) Id_GT(val int) *__LogChanges_Updater {
+func (d *__LogChange_Updater) Id_GT(val int) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -414,7 +414,7 @@ func (d *__LogChanges_Updater) Id_GT(val int) *__LogChanges_Updater {
 	return d
 }
 
-func (d *__LogChanges_Updater) Id_GE(val int) *__LogChanges_Updater {
+func (d *__LogChange_Updater) Id_GE(val int) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -426,12 +426,12 @@ func (d *__LogChanges_Updater) Id_GE(val int) *__LogChanges_Updater {
 }
 
 ////////ints
-func (u *__LogChanges_Selector) Or() *__LogChanges_Selector {
+func (u *__LogChange_Selector) Or() *__LogChange_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__LogChanges_Selector) Id_In(ins []int) *__LogChanges_Selector {
+func (u *__LogChange_Selector) Id_In(ins []int) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -444,7 +444,7 @@ func (u *__LogChanges_Selector) Id_In(ins []int) *__LogChanges_Selector {
 	return u
 }
 
-func (u *__LogChanges_Selector) Id_Ins(ins ...int) *__LogChanges_Selector {
+func (u *__LogChange_Selector) Id_Ins(ins ...int) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -457,7 +457,7 @@ func (u *__LogChanges_Selector) Id_Ins(ins ...int) *__LogChanges_Selector {
 	return u
 }
 
-func (u *__LogChanges_Selector) Id_NotIn(ins []int) *__LogChanges_Selector {
+func (u *__LogChange_Selector) Id_NotIn(ins []int) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -470,7 +470,7 @@ func (u *__LogChanges_Selector) Id_NotIn(ins []int) *__LogChanges_Selector {
 	return u
 }
 
-func (d *__LogChanges_Selector) Id_Eq(val int) *__LogChanges_Selector {
+func (d *__LogChange_Selector) Id_Eq(val int) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -481,7 +481,7 @@ func (d *__LogChanges_Selector) Id_Eq(val int) *__LogChanges_Selector {
 	return d
 }
 
-func (d *__LogChanges_Selector) Id_NotEq(val int) *__LogChanges_Selector {
+func (d *__LogChange_Selector) Id_NotEq(val int) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -492,7 +492,7 @@ func (d *__LogChanges_Selector) Id_NotEq(val int) *__LogChanges_Selector {
 	return d
 }
 
-func (d *__LogChanges_Selector) Id_LT(val int) *__LogChanges_Selector {
+func (d *__LogChange_Selector) Id_LT(val int) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -503,7 +503,7 @@ func (d *__LogChanges_Selector) Id_LT(val int) *__LogChanges_Selector {
 	return d
 }
 
-func (d *__LogChanges_Selector) Id_LE(val int) *__LogChanges_Selector {
+func (d *__LogChange_Selector) Id_LE(val int) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -514,7 +514,7 @@ func (d *__LogChanges_Selector) Id_LE(val int) *__LogChanges_Selector {
 	return d
 }
 
-func (d *__LogChanges_Selector) Id_GT(val int) *__LogChanges_Selector {
+func (d *__LogChange_Selector) Id_GT(val int) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -525,7 +525,7 @@ func (d *__LogChanges_Selector) Id_GT(val int) *__LogChanges_Selector {
 	return d
 }
 
-func (d *__LogChanges_Selector) Id_GE(val int) *__LogChanges_Selector {
+func (d *__LogChange_Selector) Id_GE(val int) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -540,7 +540,7 @@ func (d *__LogChanges_Selector) Id_GE(val int) *__LogChanges_Selector {
 
 ////////ints
 
-func (u *__LogChanges_Deleter) T_In(ins []string) *__LogChanges_Deleter {
+func (u *__LogChange_Deleter) T_In(ins []string) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -553,7 +553,7 @@ func (u *__LogChanges_Deleter) T_In(ins []string) *__LogChanges_Deleter {
 	return u
 }
 
-func (u *__LogChanges_Deleter) T_NotIn(ins []string) *__LogChanges_Deleter {
+func (u *__LogChange_Deleter) T_NotIn(ins []string) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -567,7 +567,7 @@ func (u *__LogChanges_Deleter) T_NotIn(ins []string) *__LogChanges_Deleter {
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__LogChanges_Deleter) T_Like(val string) *__LogChanges_Deleter {
+func (u *__LogChange_Deleter) T_Like(val string) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -578,7 +578,7 @@ func (u *__LogChanges_Deleter) T_Like(val string) *__LogChanges_Deleter {
 	return u
 }
 
-func (d *__LogChanges_Deleter) T_Eq(val string) *__LogChanges_Deleter {
+func (d *__LogChange_Deleter) T_Eq(val string) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -589,7 +589,7 @@ func (d *__LogChanges_Deleter) T_Eq(val string) *__LogChanges_Deleter {
 	return d
 }
 
-func (d *__LogChanges_Deleter) T_NotEq(val string) *__LogChanges_Deleter {
+func (d *__LogChange_Deleter) T_NotEq(val string) *__LogChange_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -602,7 +602,7 @@ func (d *__LogChanges_Deleter) T_NotEq(val string) *__LogChanges_Deleter {
 
 ////////ints
 
-func (u *__LogChanges_Updater) T_In(ins []string) *__LogChanges_Updater {
+func (u *__LogChange_Updater) T_In(ins []string) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -615,7 +615,7 @@ func (u *__LogChanges_Updater) T_In(ins []string) *__LogChanges_Updater {
 	return u
 }
 
-func (u *__LogChanges_Updater) T_NotIn(ins []string) *__LogChanges_Updater {
+func (u *__LogChange_Updater) T_NotIn(ins []string) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -629,7 +629,7 @@ func (u *__LogChanges_Updater) T_NotIn(ins []string) *__LogChanges_Updater {
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__LogChanges_Updater) T_Like(val string) *__LogChanges_Updater {
+func (u *__LogChange_Updater) T_Like(val string) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -640,7 +640,7 @@ func (u *__LogChanges_Updater) T_Like(val string) *__LogChanges_Updater {
 	return u
 }
 
-func (d *__LogChanges_Updater) T_Eq(val string) *__LogChanges_Updater {
+func (d *__LogChange_Updater) T_Eq(val string) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -651,7 +651,7 @@ func (d *__LogChanges_Updater) T_Eq(val string) *__LogChanges_Updater {
 	return d
 }
 
-func (d *__LogChanges_Updater) T_NotEq(val string) *__LogChanges_Updater {
+func (d *__LogChange_Updater) T_NotEq(val string) *__LogChange_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -664,7 +664,7 @@ func (d *__LogChanges_Updater) T_NotEq(val string) *__LogChanges_Updater {
 
 ////////ints
 
-func (u *__LogChanges_Selector) T_In(ins []string) *__LogChanges_Selector {
+func (u *__LogChange_Selector) T_In(ins []string) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -677,7 +677,7 @@ func (u *__LogChanges_Selector) T_In(ins []string) *__LogChanges_Selector {
 	return u
 }
 
-func (u *__LogChanges_Selector) T_NotIn(ins []string) *__LogChanges_Selector {
+func (u *__LogChange_Selector) T_NotIn(ins []string) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -691,7 +691,7 @@ func (u *__LogChanges_Selector) T_NotIn(ins []string) *__LogChanges_Selector {
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__LogChanges_Selector) T_Like(val string) *__LogChanges_Selector {
+func (u *__LogChange_Selector) T_Like(val string) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -702,7 +702,7 @@ func (u *__LogChanges_Selector) T_Like(val string) *__LogChanges_Selector {
 	return u
 }
 
-func (d *__LogChanges_Selector) T_Eq(val string) *__LogChanges_Selector {
+func (d *__LogChange_Selector) T_Eq(val string) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -713,7 +713,7 @@ func (d *__LogChanges_Selector) T_Eq(val string) *__LogChanges_Selector {
 	return d
 }
 
-func (d *__LogChanges_Selector) T_NotEq(val string) *__LogChanges_Selector {
+func (d *__LogChange_Selector) T_NotEq(val string) *__LogChange_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -730,12 +730,12 @@ func (d *__LogChanges_Selector) T_NotEq(val string) *__LogChanges_Selector {
 
 //ints
 
-func (u *__LogChanges_Updater) Id(newVal int) *__LogChanges_Updater {
+func (u *__LogChange_Updater) Id(newVal int) *__LogChange_Updater {
 	u.updates[" Id = ? "] = newVal
 	return u
 }
 
-func (u *__LogChanges_Updater) Id_Increment(count int) *__LogChanges_Updater {
+func (u *__LogChange_Updater) Id_Increment(count int) *__LogChange_Updater {
 	if count > 0 {
 		u.updates[" Id = Id+? "] = count
 	}
@@ -752,7 +752,7 @@ func (u *__LogChanges_Updater) Id_Increment(count int) *__LogChanges_Updater {
 //ints
 
 //string
-func (u *__LogChanges_Updater) T(newVal string) *__LogChanges_Updater {
+func (u *__LogChange_Updater) T(newVal string) *__LogChange_Updater {
 	u.updates[" T = ? "] = newVal
 	return u
 }
@@ -762,48 +762,48 @@ func (u *__LogChanges_Updater) T(newVal string) *__LogChanges_Updater {
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__LogChanges_Selector) OrderBy_Id_Desc() *__LogChanges_Selector {
+func (u *__LogChange_Selector) OrderBy_Id_Desc() *__LogChange_Selector {
 	u.orderBy = " ORDER BY Id DESC "
 	return u
 }
 
-func (u *__LogChanges_Selector) OrderBy_Id_Asc() *__LogChanges_Selector {
+func (u *__LogChange_Selector) OrderBy_Id_Asc() *__LogChange_Selector {
 	u.orderBy = " ORDER BY Id ASC "
 	return u
 }
 
-func (u *__LogChanges_Selector) Select_Id() *__LogChanges_Selector {
+func (u *__LogChange_Selector) Select_Id() *__LogChange_Selector {
 	u.selectCol = "Id"
 	return u
 }
 
-func (u *__LogChanges_Selector) OrderBy_T_Desc() *__LogChanges_Selector {
+func (u *__LogChange_Selector) OrderBy_T_Desc() *__LogChange_Selector {
 	u.orderBy = " ORDER BY T DESC "
 	return u
 }
 
-func (u *__LogChanges_Selector) OrderBy_T_Asc() *__LogChanges_Selector {
+func (u *__LogChange_Selector) OrderBy_T_Asc() *__LogChange_Selector {
 	u.orderBy = " ORDER BY T ASC "
 	return u
 }
 
-func (u *__LogChanges_Selector) Select_T() *__LogChanges_Selector {
+func (u *__LogChange_Selector) Select_T() *__LogChange_Selector {
 	u.selectCol = "T"
 	return u
 }
 
-func (u *__LogChanges_Selector) Limit(num int) *__LogChanges_Selector {
+func (u *__LogChange_Selector) Limit(num int) *__LogChange_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__LogChanges_Selector) Offset(num int) *__LogChanges_Selector {
+func (u *__LogChange_Selector) Offset(num int) *__LogChange_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__LogChanges_Selector) _stoSql() (string, []interface{}) {
+func (u *__LogChange_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
 	sqlstr := "SELECT " + u.selectCol + " FROM ms.log_changes"
@@ -826,14 +826,14 @@ func (u *__LogChanges_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__LogChanges_Selector) GetRow(db *sqlx.DB) (*LogChanges, error) {
+func (u *__LogChange_Selector) GetRow(db *sqlx.DB) (*LogChange, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &LogChanges{}
+	row := &LogChange{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -843,19 +843,19 @@ func (u *__LogChanges_Selector) GetRow(db *sqlx.DB) (*LogChanges, error) {
 
 	row._exists = true
 
-	OnLogChanges_LoadOne(row)
+	OnLogChange_LoadOne(row)
 
 	return row, nil
 }
 
-func (u *__LogChanges_Selector) GetRows(db *sqlx.DB) ([]*LogChanges, error) {
+func (u *__LogChange_Selector) GetRows(db *sqlx.DB) ([]*LogChange, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*LogChanges
+	var rows []*LogChange
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -871,20 +871,20 @@ func (u *__LogChanges_Selector) GetRows(db *sqlx.DB) ([]*LogChanges, error) {
 		rows[i]._exists = true
 	}
 
-	OnLogChanges_LoadMany(rows)
+	OnLogChange_LoadMany(rows)
 
 	return rows, nil
 }
 
 //dep use GetRows()
-func (u *__LogChanges_Selector) GetRows2(db *sqlx.DB) ([]LogChanges, error) {
+func (u *__LogChange_Selector) GetRows2(db *sqlx.DB) ([]LogChange, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*LogChanges
+	var rows []*LogChange
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -900,9 +900,9 @@ func (u *__LogChanges_Selector) GetRows2(db *sqlx.DB) ([]LogChanges, error) {
 		rows[i]._exists = true
 	}
 
-	OnLogChanges_LoadMany(rows)
+	OnLogChange_LoadMany(rows)
 
-	rows2 := make([]LogChanges, len(rows))
+	rows2 := make([]LogChange, len(rows))
 	for i := 0; i < len(rows); i++ {
 		cp := *rows[i]
 		rows2[i] = cp
@@ -911,7 +911,7 @@ func (u *__LogChanges_Selector) GetRows2(db *sqlx.DB) ([]LogChanges, error) {
 	return rows2, nil
 }
 
-func (u *__LogChanges_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__LogChange_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -929,7 +929,7 @@ func (u *__LogChanges_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__LogChanges_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__LogChange_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -947,7 +947,7 @@ func (u *__LogChanges_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	return rows, nil
 }
 
-func (u *__LogChanges_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__LogChange_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -965,7 +965,7 @@ func (u *__LogChanges_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__LogChanges_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__LogChange_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -984,7 +984,7 @@ func (u *__LogChanges_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__LogChanges_Updater) Update(db XODB) (int, error) {
+func (u *__LogChange_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -1023,7 +1023,7 @@ func (u *__LogChanges_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__LogChanges_Deleter) Delete(db XODB) (int, error) {
+func (d *__LogChange_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -1056,9 +1056,9 @@ func (d *__LogChanges_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  LogChanges ////////////////
+///////////////////////// Mass insert - replace for  LogChange ////////////////
 
-func MassInsert_LogChanges(rows []LogChanges, db XODB) error {
+func MassInsert_LogChange(rows []LogChange, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
@@ -1094,7 +1094,7 @@ func MassInsert_LogChanges(rows []LogChanges, db XODB) error {
 	return nil
 }
 
-func MassReplace_LogChanges(rows []LogChanges, db XODB) error {
+func MassReplace_LogChange(rows []LogChange, db XODB) error {
 	var err error
 	ln := len(rows)
 	s := "(?,?)," //`(?, ?, ?, ?),`

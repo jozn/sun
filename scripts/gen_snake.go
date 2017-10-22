@@ -15,8 +15,8 @@ func main() {
 	args := strings.Split(`mysql://root:123456@localhost:3306/ms -o ../models/x --package x --template-path C:\Go\_gopath\src\ms\xox\templates`, " ")
 	fmt.Println("")
 	fmt.Println(strings.Join(args, " * "))
-	cmd := exec.Command(`xox`, args...)
-	// cmd := exec.Command(`snake`, args...)
+	// cmd := exec.Command(`xox`, args...)
+	cmd := exec.Command(`snake`, args...)
 	cmd.Stdin = os.Stdin
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout

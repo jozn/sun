@@ -9,48 +9,48 @@ import (
 	"strconv"
 
 	"github.com/jmoiron/sqlx"
-) // (shortname .TableNameGo "err" "res" "sqlstr" "db" "XOLog") -}}//(schema .Schema .Table.TableName) -}}// .TableNameGo}}// Comments represents a row from 'ms.comments'.
+) // (shortname .TableNameGo "err" "res" "sqlstr" "db" "XOLog") -}}//(schema .Schema .Table.TableName) -}}// .TableNameGo}}// Tag represents a row from 'ms.tag'.
 
 // Manualy copy this to project
-type Comments__ struct {
+type Tag__ struct {
 	Id          int    `json:"Id"`          // Id -
-	UserId      int    `json:"UserId"`      // UserId -
-	PostId      int    `json:"PostId"`      // PostId -
-	Text        string `json:"Text"`        // Text -
+	Name        string `json:"Name"`        // Name -
+	Count       int    `json:"Count"`       // Count -
+	IsBlocked   int    `json:"IsBlocked"`   // IsBlocked -
 	CreatedTime int    `json:"CreatedTime"` // CreatedTime -
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists determines if the Comments exists in the database.
-func (c *Comments) Exists() bool {
-	return c._exists
+// Exists determines if the Tag exists in the database.
+func (t *Tag) Exists() bool {
+	return t._exists
 }
 
-// Deleted provides information if the Comments has been deleted from the database.
-func (c *Comments) Deleted() bool {
-	return c._deleted
+// Deleted provides information if the Tag has been deleted from the database.
+func (t *Tag) Deleted() bool {
+	return t._deleted
 }
 
-// Insert inserts the Comments to the database.
-func (c *Comments) Insert(db XODB) error {
+// Insert inserts the Tag to the database.
+func (t *Tag) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
-	if c._exists {
+	if t._exists {
 		return errors.New("insert failed: already exists")
 	}
 
 	// sql insert query, primary key provided by autoincrement
-	const sqlstr = `INSERT INTO ms.comments (` +
-		`UserId, PostId, Text, CreatedTime` +
+	const sqlstr = `INSERT INTO ms.tag (` +
+		`Name, Count, IsBlocked, CreatedTime` +
 		`) VALUES (` +
 		`?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime)
-	res, err := db.Exec(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime)
+	XOLog(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime)
+	res, err := db.Exec(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -64,29 +64,29 @@ func (c *Comments) Insert(db XODB) error {
 	}
 
 	// set primary key and existence
-	c.Id = int(id)
-	c._exists = true
+	t.Id = int(id)
+	t._exists = true
 
-	OnComments_AfterInsert(c)
+	OnTag_AfterInsert(t)
 
 	return nil
 }
 
-// Insert inserts the Comments to the database.
-func (c *Comments) Replace(db XODB) error {
+// Insert inserts the Tag to the database.
+func (t *Tag) Replace(db XODB) error {
 	var err error
 
 	// sql query
 
-	const sqlstr = `REPLACE INTO ms.comments (` +
-		`UserId, PostId, Text, CreatedTime` +
+	const sqlstr = `REPLACE INTO ms.tag (` +
+		`Name, Count, IsBlocked, CreatedTime` +
 		`) VALUES (` +
 		`?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime)
-	res, err := db.Exec(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime)
+	XOLog(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime)
+	res, err := db.Exec(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -100,81 +100,81 @@ func (c *Comments) Replace(db XODB) error {
 	}
 
 	// set primary key and existence
-	c.Id = int(id)
-	c._exists = true
+	t.Id = int(id)
+	t._exists = true
 
-	OnComments_AfterInsert(c)
+	OnTag_AfterInsert(t)
 
 	return nil
 }
 
-// Update updates the Comments in the database.
-func (c *Comments) Update(db XODB) error {
+// Update updates the Tag in the database.
+func (t *Tag) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !c._exists {
+	if !t._exists {
 		return errors.New("update failed: does not exist")
 	}
 
 	// if deleted, bail
-	if c._deleted {
+	if t._deleted {
 		return errors.New("update failed: marked for deletion")
 	}
 
 	// sql query
-	const sqlstr = `UPDATE ms.comments SET ` +
-		`UserId = ?, PostId = ?, Text = ?, CreatedTime = ?` +
+	const sqlstr = `UPDATE ms.tag SET ` +
+		`Name = ?, Count = ?, IsBlocked = ?, CreatedTime = ?` +
 		` WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime, c.Id)
-	_, err = db.Exec(sqlstr, c.UserId, c.PostId, c.Text, c.CreatedTime, c.Id)
+	XOLog(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime, t.Id)
+	_, err = db.Exec(sqlstr, t.Name, t.Count, t.IsBlocked, t.CreatedTime, t.Id)
 
 	XOLogErr(err)
-	OnComments_AfterUpdate(c)
+	OnTag_AfterUpdate(t)
 
 	return err
 }
 
-// Save saves the Comments to the database.
-func (c *Comments) Save(db XODB) error {
-	if c.Exists() {
-		return c.Update(db)
+// Save saves the Tag to the database.
+func (t *Tag) Save(db XODB) error {
+	if t.Exists() {
+		return t.Update(db)
 	}
 
-	return c.Replace(db)
+	return t.Replace(db)
 }
 
-// Delete deletes the Comments from the database.
-func (c *Comments) Delete(db XODB) error {
+// Delete deletes the Tag from the database.
+func (t *Tag) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
-	if !c._exists {
+	if !t._exists {
 		return nil
 	}
 
 	// if deleted, bail
-	if c._deleted {
+	if t._deleted {
 		return nil
 	}
 
 	// sql query
-	const sqlstr = `DELETE FROM ms.comments WHERE Id = ?`
+	const sqlstr = `DELETE FROM ms.tag WHERE Id = ?`
 
 	// run query
-	XOLog(sqlstr, c.Id)
-	_, err = db.Exec(sqlstr, c.Id)
+	XOLog(sqlstr, t.Id)
+	_, err = db.Exec(sqlstr, t.Id)
 	if err != nil {
 		XOLogErr(err)
 		return err
 	}
 
 	// set deleted
-	c._deleted = true
+	t._deleted = true
 
-	OnComments_AfterDelete(c)
+	OnTag_AfterDelete(t)
 
 	return nil
 }
@@ -185,18 +185,18 @@ func (c *Comments) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __Comments_Deleter struct {
+type __Tag_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __Comments_Updater struct {
+type __Tag_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __Comments_Selector struct {
+type __Tag_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -205,19 +205,19 @@ type __Comments_Selector struct {
 	offset    int
 }
 
-func NewComments_Deleter() *__Comments_Deleter {
-	d := __Comments_Deleter{whereSep: " AND "}
+func NewTag_Deleter() *__Tag_Deleter {
+	d := __Tag_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewComments_Updater() *__Comments_Updater {
-	u := __Comments_Updater{whereSep: " AND "}
+func NewTag_Updater() *__Tag_Updater {
+	u := __Tag_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewComments_Selector() *__Comments_Selector {
-	u := __Comments_Selector{whereSep: " AND ", selectCol: "*"}
+func NewTag_Selector() *__Tag_Selector {
+	u := __Tag_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -225,12 +225,12 @@ func NewComments_Selector() *__Comments_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__Comments_Deleter) Or() *__Comments_Deleter {
+func (u *__Tag_Deleter) Or() *__Tag_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Comments_Deleter) Id_In(ins []int) *__Comments_Deleter {
+func (u *__Tag_Deleter) Id_In(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -243,7 +243,7 @@ func (u *__Comments_Deleter) Id_In(ins []int) *__Comments_Deleter {
 	return u
 }
 
-func (u *__Comments_Deleter) Id_Ins(ins ...int) *__Comments_Deleter {
+func (u *__Tag_Deleter) Id_Ins(ins ...int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -256,7 +256,7 @@ func (u *__Comments_Deleter) Id_Ins(ins ...int) *__Comments_Deleter {
 	return u
 }
 
-func (u *__Comments_Deleter) Id_NotIn(ins []int) *__Comments_Deleter {
+func (u *__Tag_Deleter) Id_NotIn(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -269,7 +269,7 @@ func (u *__Comments_Deleter) Id_NotIn(ins []int) *__Comments_Deleter {
 	return u
 }
 
-func (d *__Comments_Deleter) Id_Eq(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Id_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -280,7 +280,7 @@ func (d *__Comments_Deleter) Id_Eq(val int) *__Comments_Deleter {
 	return d
 }
 
-func (d *__Comments_Deleter) Id_NotEq(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Id_NotEq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -291,7 +291,7 @@ func (d *__Comments_Deleter) Id_NotEq(val int) *__Comments_Deleter {
 	return d
 }
 
-func (d *__Comments_Deleter) Id_LT(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Id_LT(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -302,7 +302,7 @@ func (d *__Comments_Deleter) Id_LT(val int) *__Comments_Deleter {
 	return d
 }
 
-func (d *__Comments_Deleter) Id_LE(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Id_LE(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -313,7 +313,7 @@ func (d *__Comments_Deleter) Id_LE(val int) *__Comments_Deleter {
 	return d
 }
 
-func (d *__Comments_Deleter) Id_GT(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Id_GT(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -324,7 +324,7 @@ func (d *__Comments_Deleter) Id_GT(val int) *__Comments_Deleter {
 	return d
 }
 
-func (d *__Comments_Deleter) Id_GE(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Id_GE(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -335,230 +335,217 @@ func (d *__Comments_Deleter) Id_GE(val int) *__Comments_Deleter {
 	return d
 }
 
-func (u *__Comments_Deleter) UserId_In(ins []int) *__Comments_Deleter {
+func (u *__Tag_Deleter) Count_In(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Deleter) UserId_Ins(ins ...int) *__Comments_Deleter {
+func (u *__Tag_Deleter) Count_Ins(ins ...int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Deleter) UserId_NotIn(ins []int) *__Comments_Deleter {
+func (u *__Tag_Deleter) Count_NotIn(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Count NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Comments_Deleter) UserId_Eq(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Count_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId = ? "
+	w.condition = " Count = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) UserId_NotEq(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Count_NotEq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId != ? "
+	w.condition = " Count != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) UserId_LT(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Count_LT(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId < ? "
+	w.condition = " Count < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) UserId_LE(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Count_LE(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId <= ? "
+	w.condition = " Count <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) UserId_GT(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Count_GT(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId > ? "
+	w.condition = " Count > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) UserId_GE(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) Count_GE(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId >= ? "
+	w.condition = " Count >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Comments_Deleter) PostId_In(ins []int) *__Comments_Deleter {
+func (u *__Tag_Deleter) IsBlocked_In(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Deleter) PostId_Ins(ins ...int) *__Comments_Deleter {
+func (u *__Tag_Deleter) IsBlocked_Ins(ins ...int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Deleter) PostId_NotIn(ins []int) *__Comments_Deleter {
+func (u *__Tag_Deleter) IsBlocked_NotIn(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " IsBlocked NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Comments_Deleter) PostId_Eq(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) IsBlocked_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId = ? "
+	w.condition = " IsBlocked = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) PostId_NotEq(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) IsBlocked_NotEq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId != ? "
+	w.condition = " IsBlocked != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) PostId_LT(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) IsBlocked_LT(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId < ? "
+	w.condition = " IsBlocked < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) PostId_LE(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) IsBlocked_LE(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId <= ? "
+	w.condition = " IsBlocked <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) PostId_GT(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) IsBlocked_GT(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId > ? "
+	w.condition = " IsBlocked > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) PostId_GE(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) IsBlocked_GE(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId >= ? "
+	w.condition = " IsBlocked >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Comments_Deleter) CreatedTime_In(ins []int) *__Comments_Deleter {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Comments_Deleter) CreatedTime_Ins(ins ...int) *__Comments_Deleter {
+func (u *__Tag_Deleter) CreatedTime_In(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -571,7 +558,20 @@ func (u *__Comments_Deleter) CreatedTime_Ins(ins ...int) *__Comments_Deleter {
 	return u
 }
 
-func (u *__Comments_Deleter) CreatedTime_NotIn(ins []int) *__Comments_Deleter {
+func (u *__Tag_Deleter) CreatedTime_Ins(ins ...int) *__Tag_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Deleter) CreatedTime_NotIn(ins []int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -584,7 +584,7 @@ func (u *__Comments_Deleter) CreatedTime_NotIn(ins []int) *__Comments_Deleter {
 	return u
 }
 
-func (d *__Comments_Deleter) CreatedTime_Eq(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) CreatedTime_Eq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -595,7 +595,7 @@ func (d *__Comments_Deleter) CreatedTime_Eq(val int) *__Comments_Deleter {
 	return d
 }
 
-func (d *__Comments_Deleter) CreatedTime_NotEq(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) CreatedTime_NotEq(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -606,7 +606,7 @@ func (d *__Comments_Deleter) CreatedTime_NotEq(val int) *__Comments_Deleter {
 	return d
 }
 
-func (d *__Comments_Deleter) CreatedTime_LT(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) CreatedTime_LT(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -617,7 +617,7 @@ func (d *__Comments_Deleter) CreatedTime_LT(val int) *__Comments_Deleter {
 	return d
 }
 
-func (d *__Comments_Deleter) CreatedTime_LE(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) CreatedTime_LE(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -628,7 +628,7 @@ func (d *__Comments_Deleter) CreatedTime_LE(val int) *__Comments_Deleter {
 	return d
 }
 
-func (d *__Comments_Deleter) CreatedTime_GT(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) CreatedTime_GT(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -639,7 +639,7 @@ func (d *__Comments_Deleter) CreatedTime_GT(val int) *__Comments_Deleter {
 	return d
 }
 
-func (d *__Comments_Deleter) CreatedTime_GE(val int) *__Comments_Deleter {
+func (d *__Tag_Deleter) CreatedTime_GE(val int) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -651,12 +651,12 @@ func (d *__Comments_Deleter) CreatedTime_GE(val int) *__Comments_Deleter {
 }
 
 ////////ints
-func (u *__Comments_Updater) Or() *__Comments_Updater {
+func (u *__Tag_Updater) Or() *__Tag_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Comments_Updater) Id_In(ins []int) *__Comments_Updater {
+func (u *__Tag_Updater) Id_In(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -669,7 +669,7 @@ func (u *__Comments_Updater) Id_In(ins []int) *__Comments_Updater {
 	return u
 }
 
-func (u *__Comments_Updater) Id_Ins(ins ...int) *__Comments_Updater {
+func (u *__Tag_Updater) Id_Ins(ins ...int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -682,7 +682,7 @@ func (u *__Comments_Updater) Id_Ins(ins ...int) *__Comments_Updater {
 	return u
 }
 
-func (u *__Comments_Updater) Id_NotIn(ins []int) *__Comments_Updater {
+func (u *__Tag_Updater) Id_NotIn(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -695,7 +695,7 @@ func (u *__Comments_Updater) Id_NotIn(ins []int) *__Comments_Updater {
 	return u
 }
 
-func (d *__Comments_Updater) Id_Eq(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Id_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -706,7 +706,7 @@ func (d *__Comments_Updater) Id_Eq(val int) *__Comments_Updater {
 	return d
 }
 
-func (d *__Comments_Updater) Id_NotEq(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Id_NotEq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -717,7 +717,7 @@ func (d *__Comments_Updater) Id_NotEq(val int) *__Comments_Updater {
 	return d
 }
 
-func (d *__Comments_Updater) Id_LT(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Id_LT(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -728,7 +728,7 @@ func (d *__Comments_Updater) Id_LT(val int) *__Comments_Updater {
 	return d
 }
 
-func (d *__Comments_Updater) Id_LE(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Id_LE(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -739,7 +739,7 @@ func (d *__Comments_Updater) Id_LE(val int) *__Comments_Updater {
 	return d
 }
 
-func (d *__Comments_Updater) Id_GT(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Id_GT(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -750,7 +750,7 @@ func (d *__Comments_Updater) Id_GT(val int) *__Comments_Updater {
 	return d
 }
 
-func (d *__Comments_Updater) Id_GE(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Id_GE(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -761,230 +761,217 @@ func (d *__Comments_Updater) Id_GE(val int) *__Comments_Updater {
 	return d
 }
 
-func (u *__Comments_Updater) UserId_In(ins []int) *__Comments_Updater {
+func (u *__Tag_Updater) Count_In(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Updater) UserId_Ins(ins ...int) *__Comments_Updater {
+func (u *__Tag_Updater) Count_Ins(ins ...int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Updater) UserId_NotIn(ins []int) *__Comments_Updater {
+func (u *__Tag_Updater) Count_NotIn(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Count NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Comments_Updater) UserId_Eq(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Count_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId = ? "
+	w.condition = " Count = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) UserId_NotEq(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Count_NotEq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId != ? "
+	w.condition = " Count != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) UserId_LT(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Count_LT(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId < ? "
+	w.condition = " Count < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) UserId_LE(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Count_LE(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId <= ? "
+	w.condition = " Count <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) UserId_GT(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Count_GT(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId > ? "
+	w.condition = " Count > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) UserId_GE(val int) *__Comments_Updater {
+func (d *__Tag_Updater) Count_GE(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId >= ? "
+	w.condition = " Count >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Comments_Updater) PostId_In(ins []int) *__Comments_Updater {
+func (u *__Tag_Updater) IsBlocked_In(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Updater) PostId_Ins(ins ...int) *__Comments_Updater {
+func (u *__Tag_Updater) IsBlocked_Ins(ins ...int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Updater) PostId_NotIn(ins []int) *__Comments_Updater {
+func (u *__Tag_Updater) IsBlocked_NotIn(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " IsBlocked NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Comments_Updater) PostId_Eq(val int) *__Comments_Updater {
+func (d *__Tag_Updater) IsBlocked_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId = ? "
+	w.condition = " IsBlocked = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) PostId_NotEq(val int) *__Comments_Updater {
+func (d *__Tag_Updater) IsBlocked_NotEq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId != ? "
+	w.condition = " IsBlocked != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) PostId_LT(val int) *__Comments_Updater {
+func (d *__Tag_Updater) IsBlocked_LT(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId < ? "
+	w.condition = " IsBlocked < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) PostId_LE(val int) *__Comments_Updater {
+func (d *__Tag_Updater) IsBlocked_LE(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId <= ? "
+	w.condition = " IsBlocked <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) PostId_GT(val int) *__Comments_Updater {
+func (d *__Tag_Updater) IsBlocked_GT(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId > ? "
+	w.condition = " IsBlocked > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) PostId_GE(val int) *__Comments_Updater {
+func (d *__Tag_Updater) IsBlocked_GE(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId >= ? "
+	w.condition = " IsBlocked >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Comments_Updater) CreatedTime_In(ins []int) *__Comments_Updater {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Comments_Updater) CreatedTime_Ins(ins ...int) *__Comments_Updater {
+func (u *__Tag_Updater) CreatedTime_In(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -997,7 +984,20 @@ func (u *__Comments_Updater) CreatedTime_Ins(ins ...int) *__Comments_Updater {
 	return u
 }
 
-func (u *__Comments_Updater) CreatedTime_NotIn(ins []int) *__Comments_Updater {
+func (u *__Tag_Updater) CreatedTime_Ins(ins ...int) *__Tag_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Updater) CreatedTime_NotIn(ins []int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1010,7 +1010,7 @@ func (u *__Comments_Updater) CreatedTime_NotIn(ins []int) *__Comments_Updater {
 	return u
 }
 
-func (d *__Comments_Updater) CreatedTime_Eq(val int) *__Comments_Updater {
+func (d *__Tag_Updater) CreatedTime_Eq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1021,7 +1021,7 @@ func (d *__Comments_Updater) CreatedTime_Eq(val int) *__Comments_Updater {
 	return d
 }
 
-func (d *__Comments_Updater) CreatedTime_NotEq(val int) *__Comments_Updater {
+func (d *__Tag_Updater) CreatedTime_NotEq(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1032,7 +1032,7 @@ func (d *__Comments_Updater) CreatedTime_NotEq(val int) *__Comments_Updater {
 	return d
 }
 
-func (d *__Comments_Updater) CreatedTime_LT(val int) *__Comments_Updater {
+func (d *__Tag_Updater) CreatedTime_LT(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1043,7 +1043,7 @@ func (d *__Comments_Updater) CreatedTime_LT(val int) *__Comments_Updater {
 	return d
 }
 
-func (d *__Comments_Updater) CreatedTime_LE(val int) *__Comments_Updater {
+func (d *__Tag_Updater) CreatedTime_LE(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1054,7 +1054,7 @@ func (d *__Comments_Updater) CreatedTime_LE(val int) *__Comments_Updater {
 	return d
 }
 
-func (d *__Comments_Updater) CreatedTime_GT(val int) *__Comments_Updater {
+func (d *__Tag_Updater) CreatedTime_GT(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1065,7 +1065,7 @@ func (d *__Comments_Updater) CreatedTime_GT(val int) *__Comments_Updater {
 	return d
 }
 
-func (d *__Comments_Updater) CreatedTime_GE(val int) *__Comments_Updater {
+func (d *__Tag_Updater) CreatedTime_GE(val int) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1077,12 +1077,12 @@ func (d *__Comments_Updater) CreatedTime_GE(val int) *__Comments_Updater {
 }
 
 ////////ints
-func (u *__Comments_Selector) Or() *__Comments_Selector {
+func (u *__Tag_Selector) Or() *__Tag_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__Comments_Selector) Id_In(ins []int) *__Comments_Selector {
+func (u *__Tag_Selector) Id_In(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1095,7 +1095,7 @@ func (u *__Comments_Selector) Id_In(ins []int) *__Comments_Selector {
 	return u
 }
 
-func (u *__Comments_Selector) Id_Ins(ins ...int) *__Comments_Selector {
+func (u *__Tag_Selector) Id_Ins(ins ...int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1108,7 +1108,7 @@ func (u *__Comments_Selector) Id_Ins(ins ...int) *__Comments_Selector {
 	return u
 }
 
-func (u *__Comments_Selector) Id_NotIn(ins []int) *__Comments_Selector {
+func (u *__Tag_Selector) Id_NotIn(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1121,7 +1121,7 @@ func (u *__Comments_Selector) Id_NotIn(ins []int) *__Comments_Selector {
 	return u
 }
 
-func (d *__Comments_Selector) Id_Eq(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Id_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1132,7 +1132,7 @@ func (d *__Comments_Selector) Id_Eq(val int) *__Comments_Selector {
 	return d
 }
 
-func (d *__Comments_Selector) Id_NotEq(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Id_NotEq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1143,7 +1143,7 @@ func (d *__Comments_Selector) Id_NotEq(val int) *__Comments_Selector {
 	return d
 }
 
-func (d *__Comments_Selector) Id_LT(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Id_LT(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1154,7 +1154,7 @@ func (d *__Comments_Selector) Id_LT(val int) *__Comments_Selector {
 	return d
 }
 
-func (d *__Comments_Selector) Id_LE(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Id_LE(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1165,7 +1165,7 @@ func (d *__Comments_Selector) Id_LE(val int) *__Comments_Selector {
 	return d
 }
 
-func (d *__Comments_Selector) Id_GT(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Id_GT(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1176,7 +1176,7 @@ func (d *__Comments_Selector) Id_GT(val int) *__Comments_Selector {
 	return d
 }
 
-func (d *__Comments_Selector) Id_GE(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Id_GE(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1187,230 +1187,217 @@ func (d *__Comments_Selector) Id_GE(val int) *__Comments_Selector {
 	return d
 }
 
-func (u *__Comments_Selector) UserId_In(ins []int) *__Comments_Selector {
+func (u *__Tag_Selector) Count_In(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Selector) UserId_Ins(ins ...int) *__Comments_Selector {
+func (u *__Tag_Selector) Count_Ins(ins ...int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Count IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Selector) UserId_NotIn(ins []int) *__Comments_Selector {
+func (u *__Tag_Selector) Count_NotIn(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " UserId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Count NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Comments_Selector) UserId_Eq(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Count_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId = ? "
+	w.condition = " Count = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) UserId_NotEq(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Count_NotEq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId != ? "
+	w.condition = " Count != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) UserId_LT(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Count_LT(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId < ? "
+	w.condition = " Count < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) UserId_LE(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Count_LE(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId <= ? "
+	w.condition = " Count <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) UserId_GT(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Count_GT(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId > ? "
+	w.condition = " Count > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) UserId_GE(val int) *__Comments_Selector {
+func (d *__Tag_Selector) Count_GE(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " UserId >= ? "
+	w.condition = " Count >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Comments_Selector) PostId_In(ins []int) *__Comments_Selector {
+func (u *__Tag_Selector) IsBlocked_In(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Selector) PostId_Ins(ins ...int) *__Comments_Selector {
+func (u *__Tag_Selector) IsBlocked_Ins(ins ...int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " IsBlocked IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Selector) PostId_NotIn(ins []int) *__Comments_Selector {
+func (u *__Tag_Selector) IsBlocked_NotIn(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " PostId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " IsBlocked NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Comments_Selector) PostId_Eq(val int) *__Comments_Selector {
+func (d *__Tag_Selector) IsBlocked_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId = ? "
+	w.condition = " IsBlocked = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) PostId_NotEq(val int) *__Comments_Selector {
+func (d *__Tag_Selector) IsBlocked_NotEq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId != ? "
+	w.condition = " IsBlocked != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) PostId_LT(val int) *__Comments_Selector {
+func (d *__Tag_Selector) IsBlocked_LT(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId < ? "
+	w.condition = " IsBlocked < ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) PostId_LE(val int) *__Comments_Selector {
+func (d *__Tag_Selector) IsBlocked_LE(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId <= ? "
+	w.condition = " IsBlocked <= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) PostId_GT(val int) *__Comments_Selector {
+func (d *__Tag_Selector) IsBlocked_GT(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId > ? "
+	w.condition = " IsBlocked > ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) PostId_GE(val int) *__Comments_Selector {
+func (d *__Tag_Selector) IsBlocked_GE(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " PostId >= ? "
+	w.condition = " IsBlocked >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (u *__Comments_Selector) CreatedTime_In(ins []int) *__Comments_Selector {
-	w := whereClause{}
-	var insWhere []interface{}
-	for _, i := range ins {
-		insWhere = append(insWhere, i)
-	}
-	w.args = insWhere
-	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
-	u.wheres = append(u.wheres, w)
-
-	return u
-}
-
-func (u *__Comments_Selector) CreatedTime_Ins(ins ...int) *__Comments_Selector {
+func (u *__Tag_Selector) CreatedTime_In(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1423,7 +1410,20 @@ func (u *__Comments_Selector) CreatedTime_Ins(ins ...int) *__Comments_Selector {
 	return u
 }
 
-func (u *__Comments_Selector) CreatedTime_NotIn(ins []int) *__Comments_Selector {
+func (u *__Tag_Selector) CreatedTime_Ins(ins ...int) *__Tag_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " CreatedTime IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__Tag_Selector) CreatedTime_NotIn(ins []int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1436,7 +1436,7 @@ func (u *__Comments_Selector) CreatedTime_NotIn(ins []int) *__Comments_Selector 
 	return u
 }
 
-func (d *__Comments_Selector) CreatedTime_Eq(val int) *__Comments_Selector {
+func (d *__Tag_Selector) CreatedTime_Eq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1447,7 +1447,7 @@ func (d *__Comments_Selector) CreatedTime_Eq(val int) *__Comments_Selector {
 	return d
 }
 
-func (d *__Comments_Selector) CreatedTime_NotEq(val int) *__Comments_Selector {
+func (d *__Tag_Selector) CreatedTime_NotEq(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1458,7 +1458,7 @@ func (d *__Comments_Selector) CreatedTime_NotEq(val int) *__Comments_Selector {
 	return d
 }
 
-func (d *__Comments_Selector) CreatedTime_LT(val int) *__Comments_Selector {
+func (d *__Tag_Selector) CreatedTime_LT(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1469,7 +1469,7 @@ func (d *__Comments_Selector) CreatedTime_LT(val int) *__Comments_Selector {
 	return d
 }
 
-func (d *__Comments_Selector) CreatedTime_LE(val int) *__Comments_Selector {
+func (d *__Tag_Selector) CreatedTime_LE(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1480,7 +1480,7 @@ func (d *__Comments_Selector) CreatedTime_LE(val int) *__Comments_Selector {
 	return d
 }
 
-func (d *__Comments_Selector) CreatedTime_GT(val int) *__Comments_Selector {
+func (d *__Tag_Selector) CreatedTime_GT(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1491,7 +1491,7 @@ func (d *__Comments_Selector) CreatedTime_GT(val int) *__Comments_Selector {
 	return d
 }
 
-func (d *__Comments_Selector) CreatedTime_GE(val int) *__Comments_Selector {
+func (d *__Tag_Selector) CreatedTime_GE(val int) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1506,61 +1506,61 @@ func (d *__Comments_Selector) CreatedTime_GE(val int) *__Comments_Selector {
 
 ////////ints
 
-func (u *__Comments_Deleter) Text_In(ins []string) *__Comments_Deleter {
+func (u *__Tag_Deleter) Name_In(ins []string) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Text IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Deleter) Text_NotIn(ins []string) *__Comments_Deleter {
+func (u *__Tag_Deleter) Name_NotIn(ins []string) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Text NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Comments_Deleter) Text_Like(val string) *__Comments_Deleter {
+func (u *__Tag_Deleter) Name_Like(val string) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text LIKE ? "
+	w.condition = " Name LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Comments_Deleter) Text_Eq(val string) *__Comments_Deleter {
+func (d *__Tag_Deleter) Name_Eq(val string) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text = ? "
+	w.condition = " Name = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Deleter) Text_NotEq(val string) *__Comments_Deleter {
+func (d *__Tag_Deleter) Name_NotEq(val string) *__Tag_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text != ? "
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1568,61 +1568,61 @@ func (d *__Comments_Deleter) Text_NotEq(val string) *__Comments_Deleter {
 
 ////////ints
 
-func (u *__Comments_Updater) Text_In(ins []string) *__Comments_Updater {
+func (u *__Tag_Updater) Name_In(ins []string) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Text IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Updater) Text_NotIn(ins []string) *__Comments_Updater {
+func (u *__Tag_Updater) Name_NotIn(ins []string) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Text NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Comments_Updater) Text_Like(val string) *__Comments_Updater {
+func (u *__Tag_Updater) Name_Like(val string) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text LIKE ? "
+	w.condition = " Name LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Comments_Updater) Text_Eq(val string) *__Comments_Updater {
+func (d *__Tag_Updater) Name_Eq(val string) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text = ? "
+	w.condition = " Name = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Updater) Text_NotEq(val string) *__Comments_Updater {
+func (d *__Tag_Updater) Name_NotEq(val string) *__Tag_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text != ? "
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1630,61 +1630,61 @@ func (d *__Comments_Updater) Text_NotEq(val string) *__Comments_Updater {
 
 ////////ints
 
-func (u *__Comments_Selector) Text_In(ins []string) *__Comments_Selector {
+func (u *__Tag_Selector) Name_In(ins []string) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Text IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (u *__Comments_Selector) Text_NotIn(ins []string) *__Comments_Selector {
+func (u *__Tag_Selector) Name_NotIn(ins []string) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
 		insWhere = append(insWhere, i)
 	}
 	w.args = insWhere
-	w.condition = " Text NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	w.condition = " Name NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__Comments_Selector) Text_Like(val string) *__Comments_Selector {
+func (u *__Tag_Selector) Name_Like(val string) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text LIKE ? "
+	w.condition = " Name LIKE ? "
 	u.wheres = append(u.wheres, w)
 
 	return u
 }
 
-func (d *__Comments_Selector) Text_Eq(val string) *__Comments_Selector {
+func (d *__Tag_Selector) Name_Eq(val string) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text = ? "
+	w.condition = " Name = ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
 }
 
-func (d *__Comments_Selector) Text_NotEq(val string) *__Comments_Selector {
+func (d *__Tag_Selector) Name_NotEq(val string) *__Tag_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
 	w.args = insWhere
-	w.condition = " Text != ? "
+	w.condition = " Name != ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1696,12 +1696,12 @@ func (d *__Comments_Selector) Text_NotEq(val string) *__Comments_Selector {
 
 //ints
 
-func (u *__Comments_Updater) Id(newVal int) *__Comments_Updater {
+func (u *__Tag_Updater) Id(newVal int) *__Tag_Updater {
 	u.updates[" Id = ? "] = newVal
 	return u
 }
 
-func (u *__Comments_Updater) Id_Increment(count int) *__Comments_Updater {
+func (u *__Tag_Updater) Id_Increment(count int) *__Tag_Updater {
 	if count > 0 {
 		u.updates[" Id = Id+? "] = count
 	}
@@ -1717,18 +1717,26 @@ func (u *__Comments_Updater) Id_Increment(count int) *__Comments_Updater {
 
 //ints
 
-func (u *__Comments_Updater) UserId(newVal int) *__Comments_Updater {
-	u.updates[" UserId = ? "] = newVal
+//string
+func (u *__Tag_Updater) Name(newVal string) *__Tag_Updater {
+	u.updates[" Name = ? "] = newVal
 	return u
 }
 
-func (u *__Comments_Updater) UserId_Increment(count int) *__Comments_Updater {
+//ints
+
+func (u *__Tag_Updater) Count(newVal int) *__Tag_Updater {
+	u.updates[" Count = ? "] = newVal
+	return u
+}
+
+func (u *__Tag_Updater) Count_Increment(count int) *__Tag_Updater {
 	if count > 0 {
-		u.updates[" UserId = UserId+? "] = count
+		u.updates[" Count = Count+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" UserId = UserId-? "] = -(count) //make it positive
+		u.updates[" Count = Count-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1738,18 +1746,18 @@ func (u *__Comments_Updater) UserId_Increment(count int) *__Comments_Updater {
 
 //ints
 
-func (u *__Comments_Updater) PostId(newVal int) *__Comments_Updater {
-	u.updates[" PostId = ? "] = newVal
+func (u *__Tag_Updater) IsBlocked(newVal int) *__Tag_Updater {
+	u.updates[" IsBlocked = ? "] = newVal
 	return u
 }
 
-func (u *__Comments_Updater) PostId_Increment(count int) *__Comments_Updater {
+func (u *__Tag_Updater) IsBlocked_Increment(count int) *__Tag_Updater {
 	if count > 0 {
-		u.updates[" PostId = PostId+? "] = count
+		u.updates[" IsBlocked = IsBlocked+? "] = count
 	}
 
 	if count < 0 {
-		u.updates[" PostId = PostId-? "] = -(count) //make it positive
+		u.updates[" IsBlocked = IsBlocked-? "] = -(count) //make it positive
 	}
 
 	return u
@@ -1759,20 +1767,12 @@ func (u *__Comments_Updater) PostId_Increment(count int) *__Comments_Updater {
 
 //ints
 
-//string
-func (u *__Comments_Updater) Text(newVal string) *__Comments_Updater {
-	u.updates[" Text = ? "] = newVal
-	return u
-}
-
-//ints
-
-func (u *__Comments_Updater) CreatedTime(newVal int) *__Comments_Updater {
+func (u *__Tag_Updater) CreatedTime(newVal int) *__Tag_Updater {
 	u.updates[" CreatedTime = ? "] = newVal
 	return u
 }
 
-func (u *__Comments_Updater) CreatedTime_Increment(count int) *__Comments_Updater {
+func (u *__Tag_Updater) CreatedTime_Increment(count int) *__Tag_Updater {
 	if count > 0 {
 		u.updates[" CreatedTime = CreatedTime+? "] = count
 	}
@@ -1791,96 +1791,96 @@ func (u *__Comments_Updater) CreatedTime_Increment(count int) *__Comments_Update
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__Comments_Selector) OrderBy_Id_Desc() *__Comments_Selector {
+func (u *__Tag_Selector) OrderBy_Id_Desc() *__Tag_Selector {
 	u.orderBy = " ORDER BY Id DESC "
 	return u
 }
 
-func (u *__Comments_Selector) OrderBy_Id_Asc() *__Comments_Selector {
+func (u *__Tag_Selector) OrderBy_Id_Asc() *__Tag_Selector {
 	u.orderBy = " ORDER BY Id ASC "
 	return u
 }
 
-func (u *__Comments_Selector) Select_Id() *__Comments_Selector {
+func (u *__Tag_Selector) Select_Id() *__Tag_Selector {
 	u.selectCol = "Id"
 	return u
 }
 
-func (u *__Comments_Selector) OrderBy_UserId_Desc() *__Comments_Selector {
-	u.orderBy = " ORDER BY UserId DESC "
+func (u *__Tag_Selector) OrderBy_Name_Desc() *__Tag_Selector {
+	u.orderBy = " ORDER BY Name DESC "
 	return u
 }
 
-func (u *__Comments_Selector) OrderBy_UserId_Asc() *__Comments_Selector {
-	u.orderBy = " ORDER BY UserId ASC "
+func (u *__Tag_Selector) OrderBy_Name_Asc() *__Tag_Selector {
+	u.orderBy = " ORDER BY Name ASC "
 	return u
 }
 
-func (u *__Comments_Selector) Select_UserId() *__Comments_Selector {
-	u.selectCol = "UserId"
+func (u *__Tag_Selector) Select_Name() *__Tag_Selector {
+	u.selectCol = "Name"
 	return u
 }
 
-func (u *__Comments_Selector) OrderBy_PostId_Desc() *__Comments_Selector {
-	u.orderBy = " ORDER BY PostId DESC "
+func (u *__Tag_Selector) OrderBy_Count_Desc() *__Tag_Selector {
+	u.orderBy = " ORDER BY Count DESC "
 	return u
 }
 
-func (u *__Comments_Selector) OrderBy_PostId_Asc() *__Comments_Selector {
-	u.orderBy = " ORDER BY PostId ASC "
+func (u *__Tag_Selector) OrderBy_Count_Asc() *__Tag_Selector {
+	u.orderBy = " ORDER BY Count ASC "
 	return u
 }
 
-func (u *__Comments_Selector) Select_PostId() *__Comments_Selector {
-	u.selectCol = "PostId"
+func (u *__Tag_Selector) Select_Count() *__Tag_Selector {
+	u.selectCol = "Count"
 	return u
 }
 
-func (u *__Comments_Selector) OrderBy_Text_Desc() *__Comments_Selector {
-	u.orderBy = " ORDER BY Text DESC "
+func (u *__Tag_Selector) OrderBy_IsBlocked_Desc() *__Tag_Selector {
+	u.orderBy = " ORDER BY IsBlocked DESC "
 	return u
 }
 
-func (u *__Comments_Selector) OrderBy_Text_Asc() *__Comments_Selector {
-	u.orderBy = " ORDER BY Text ASC "
+func (u *__Tag_Selector) OrderBy_IsBlocked_Asc() *__Tag_Selector {
+	u.orderBy = " ORDER BY IsBlocked ASC "
 	return u
 }
 
-func (u *__Comments_Selector) Select_Text() *__Comments_Selector {
-	u.selectCol = "Text"
+func (u *__Tag_Selector) Select_IsBlocked() *__Tag_Selector {
+	u.selectCol = "IsBlocked"
 	return u
 }
 
-func (u *__Comments_Selector) OrderBy_CreatedTime_Desc() *__Comments_Selector {
+func (u *__Tag_Selector) OrderBy_CreatedTime_Desc() *__Tag_Selector {
 	u.orderBy = " ORDER BY CreatedTime DESC "
 	return u
 }
 
-func (u *__Comments_Selector) OrderBy_CreatedTime_Asc() *__Comments_Selector {
+func (u *__Tag_Selector) OrderBy_CreatedTime_Asc() *__Tag_Selector {
 	u.orderBy = " ORDER BY CreatedTime ASC "
 	return u
 }
 
-func (u *__Comments_Selector) Select_CreatedTime() *__Comments_Selector {
+func (u *__Tag_Selector) Select_CreatedTime() *__Tag_Selector {
 	u.selectCol = "CreatedTime"
 	return u
 }
 
-func (u *__Comments_Selector) Limit(num int) *__Comments_Selector {
+func (u *__Tag_Selector) Limit(num int) *__Tag_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__Comments_Selector) Offset(num int) *__Comments_Selector {
+func (u *__Tag_Selector) Offset(num int) *__Tag_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__Comments_Selector) _stoSql() (string, []interface{}) {
+func (u *__Tag_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
-	sqlstr := "SELECT " + u.selectCol + " FROM ms.comments"
+	sqlstr := "SELECT " + u.selectCol + " FROM ms.tag"
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -1900,14 +1900,14 @@ func (u *__Comments_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__Comments_Selector) GetRow(db *sqlx.DB) (*Comments, error) {
+func (u *__Tag_Selector) GetRow(db *sqlx.DB) (*Tag, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &Comments{}
+	row := &Tag{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -1917,19 +1917,19 @@ func (u *__Comments_Selector) GetRow(db *sqlx.DB) (*Comments, error) {
 
 	row._exists = true
 
-	OnComments_LoadOne(row)
+	OnTag_LoadOne(row)
 
 	return row, nil
 }
 
-func (u *__Comments_Selector) GetRows(db *sqlx.DB) ([]*Comments, error) {
+func (u *__Tag_Selector) GetRows(db *sqlx.DB) ([]*Tag, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*Comments
+	var rows []*Tag
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -1945,20 +1945,20 @@ func (u *__Comments_Selector) GetRows(db *sqlx.DB) ([]*Comments, error) {
 		rows[i]._exists = true
 	}
 
-	OnComments_LoadMany(rows)
+	OnTag_LoadMany(rows)
 
 	return rows, nil
 }
 
 //dep use GetRows()
-func (u *__Comments_Selector) GetRows2(db *sqlx.DB) ([]Comments, error) {
+func (u *__Tag_Selector) GetRows2(db *sqlx.DB) ([]Tag, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*Comments
+	var rows []*Tag
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -1974,9 +1974,9 @@ func (u *__Comments_Selector) GetRows2(db *sqlx.DB) ([]Comments, error) {
 		rows[i]._exists = true
 	}
 
-	OnComments_LoadMany(rows)
+	OnTag_LoadMany(rows)
 
-	rows2 := make([]Comments, len(rows))
+	rows2 := make([]Tag, len(rows))
 	for i := 0; i < len(rows); i++ {
 		cp := *rows[i]
 		rows2[i] = cp
@@ -1985,7 +1985,7 @@ func (u *__Comments_Selector) GetRows2(db *sqlx.DB) ([]Comments, error) {
 	return rows2, nil
 }
 
-func (u *__Comments_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__Tag_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2003,7 +2003,7 @@ func (u *__Comments_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__Comments_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__Tag_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2021,7 +2021,7 @@ func (u *__Comments_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	return rows, nil
 }
 
-func (u *__Comments_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__Tag_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2039,7 +2039,7 @@ func (u *__Comments_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__Comments_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__Tag_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -2058,7 +2058,7 @@ func (u *__Comments_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__Comments_Updater) Update(db XODB) (int, error) {
+func (u *__Tag_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -2075,7 +2075,7 @@ func (u *__Comments_Updater) Update(db XODB) (int, error) {
 	allArgs = append(allArgs, updateArgs...)
 	allArgs = append(allArgs, whereArgs...)
 
-	sqlstr := `UPDATE ms.comments SET ` + sqlUpdate
+	sqlstr := `UPDATE ms.tag SET ` + sqlUpdate
 
 	if len(strings.Trim(sqlWherrs, " ")) > 0 { //2 for safty
 		sqlstr += " WHERE " + sqlWherrs
@@ -2097,7 +2097,7 @@ func (u *__Comments_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__Comments_Deleter) Delete(db XODB) (int, error) {
+func (d *__Tag_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -2110,7 +2110,7 @@ func (d *__Comments_Deleter) Delete(db XODB) (int, error) {
 		args = append(args, w.args...)
 	}
 
-	sqlstr := "DELETE FROM ms.comments WHERE " + wheresStr
+	sqlstr := "DELETE FROM ms.tag WHERE " + wheresStr
 
 	// run query
 	XOLog(sqlstr, args)
@@ -2130,9 +2130,9 @@ func (d *__Comments_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  Comments ////////////////
+///////////////////////// Mass insert - replace for  Tag ////////////////
 
-func MassInsert_Comments(rows []Comments, db XODB) error {
+func MassInsert_Tag(rows []Tag, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
@@ -2143,8 +2143,8 @@ func MassInsert_Comments(rows []Comments, db XODB) error {
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "INSERT INTO ms.comments (" +
-		"UserId, PostId, Text, CreatedTime" +
+	sqlstr := "INSERT INTO ms.tag (" +
+		"Name, Count, IsBlocked, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -2152,9 +2152,9 @@ func MassInsert_Comments(rows []Comments, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.UserId)
-		vals = append(vals, row.PostId)
-		vals = append(vals, row.Text)
+		vals = append(vals, row.Name)
+		vals = append(vals, row.Count)
+		vals = append(vals, row.IsBlocked)
 		vals = append(vals, row.CreatedTime)
 
 	}
@@ -2170,15 +2170,15 @@ func MassInsert_Comments(rows []Comments, db XODB) error {
 	return nil
 }
 
-func MassReplace_Comments(rows []Comments, db XODB) error {
+func MassReplace_Tag(rows []Tag, db XODB) error {
 	var err error
 	ln := len(rows)
 	s := "(?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
-	sqlstr := "REPLACE INTO ms.comments (" +
-		"UserId, PostId, Text, CreatedTime" +
+	sqlstr := "REPLACE INTO ms.tag (" +
+		"Name, Count, IsBlocked, CreatedTime" +
 		") VALUES " + insVals
 
 	// run query
@@ -2186,9 +2186,9 @@ func MassReplace_Comments(rows []Comments, db XODB) error {
 
 	for _, row := range rows {
 		// vals = append(vals,row.UserId)
-		vals = append(vals, row.UserId)
-		vals = append(vals, row.PostId)
-		vals = append(vals, row.Text)
+		vals = append(vals, row.Name)
+		vals = append(vals, row.Count)
+		vals = append(vals, row.IsBlocked)
 		vals = append(vals, row.CreatedTime)
 
 	}

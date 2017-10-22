@@ -6,8 +6,8 @@ import (
 	"ms/sun/models/x"
 )
 
-//////// For Comments //////////
-func Notification_OnPostCommented(comment *x.Comments, post *x.Post) {
+//////// For Comment //////////
+func Notification_OnPostCommented(comment *x.Comment, post *x.Post) {
 	if comment == nil || post == nil {
 		return
 	}
@@ -34,7 +34,7 @@ func Notification_OnPostCommented(comment *x.Comments, post *x.Post) {
 	Notification_PushToUserPipe(not)
 }
 
-func Notification_OnPostCommentedDeleted(comment *x.Comments, post *x.Post) {
+func Notification_OnPostCommentedDeleted(comment *x.Comment, post *x.Post) {
 	if comment == nil || post == nil {
 		return
 	}
@@ -105,7 +105,7 @@ func Notification_OnUnFollowed(UserId, FollowedPeerUserId int) {
 }
 
 ////////////// For Likes ///////////////
-func Notification_OnPostLiked(lk *x.Likes) {
+func Notification_OnPostLiked(lk *x.Like) {
 	post, ok := x.Store.GetPostById(lk.PostId)
 	if !ok {
 		return
@@ -132,7 +132,7 @@ func Notification_OnPostLiked(lk *x.Likes) {
 	nf.Save(base.DB)
 }
 
-func Notification_OnPostUnLiked(lk *x.Likes) {
+func Notification_OnPostUnLiked(lk *x.Like) {
 	post, ok := x.Store.GetPostById(lk.PostId)
 	if !ok {
 		return

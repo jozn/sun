@@ -375,8 +375,8 @@ type GroupToMessage struct {
 	CreatedMs: 0,
 	StatusEnum: 0,
 */
-// likes 'Likes'.
-type Likes struct {
+// likes 'Like'.
+type Like struct {
 	Id          int
 	PostId      int
 	PostTypeId  int
@@ -388,7 +388,7 @@ type Likes struct {
 }
 
 /*
-:= &Likes {
+:= &Like {
 	Id: 0,
 	PostId: 0,
 	PostTypeId: 0,
@@ -396,8 +396,8 @@ type Likes struct {
 	TypeId: 0,
 	CreatedTime: 0,
 */
-// log_changes 'LogChanges'.
-type LogChanges struct {
+// log_changes 'LogChange'.
+type LogChange struct {
 	Id int
 	T  string
 
@@ -405,7 +405,7 @@ type LogChanges struct {
 }
 
 /*
-:= &LogChanges {
+:= &LogChange {
 	Id: 0,
 	T: "",
 */
@@ -521,8 +521,8 @@ type NotificationRemoved struct {
 	NotificationId: 0,
 	ForUserId: 0,
 */
-// old_messages 'OldMessages'.
-type OldMessages struct {
+// old_messages 'OldMessage'.
+type OldMessage struct {
 	Id            int
 	Uid           int
 	UserId        int
@@ -540,7 +540,7 @@ type OldMessages struct {
 }
 
 /*
-:= &OldMessages {
+:= &OldMessage {
 	Id: 0,
 	Uid: 0,
 	UserId: 0,
@@ -639,8 +639,8 @@ type OldMsgPushEvent struct {
 	EventType: 0,
 	AtTime: 0,
 */
-// phone_contacts 'PhoneContacts'.
-type PhoneContacts struct {
+// phone_contacts 'PhoneContact'.
+type PhoneContact struct {
 	Id                    int
 	PhoneDisplayName      string
 	PhoneFamilyName       string
@@ -656,7 +656,7 @@ type PhoneContacts struct {
 }
 
 /*
-:= &PhoneContacts {
+:= &PhoneContact {
 	Id: 0,
 	PhoneDisplayName: "",
 	PhoneFamilyName: "",
@@ -961,8 +961,8 @@ type SettingClient struct {
 	AutoDownloadRoamingGif: 0,
 	SaveToGallery: 0,
 */
-// setting_notifications 'SettingNotifications'.
-type SettingNotifications struct {
+// setting_notifications 'SettingNotification'.
+type SettingNotification struct {
 	UserId                   int
 	SocialLedOn              int
 	SocialLedColor           string
@@ -988,7 +988,7 @@ type SettingNotifications struct {
 }
 
 /*
-:= &SettingNotifications {
+:= &SettingNotification {
 	UserId: 0,
 	SocialLedOn: 0,
 	SocialLedColor: "",
@@ -1010,8 +1010,8 @@ type SettingNotifications struct {
 	DirectSound: 0,
 	DirectPriority: 0,
 */
-// tags 'Tags'.
-type Tags struct {
+// tag 'Tag'.
+type Tag struct {
 	Id          int
 	Name        string
 	Count       int
@@ -1022,15 +1022,15 @@ type Tags struct {
 }
 
 /*
-:= &Tags {
+:= &Tag {
 	Id: 0,
 	Name: "",
 	Count: 0,
 	IsBlocked: 0,
 	CreatedTime: 0,
 */
-// tags_posts 'TagsPosts'.
-type TagsPosts struct {
+// tags_posts 'TagsPost'.
+type TagsPost struct {
 	Id          int
 	TagId       int
 	PostId      int
@@ -1041,7 +1041,7 @@ type TagsPosts struct {
 }
 
 /*
-:= &TagsPosts {
+:= &TagsPost {
 	Id: 0,
 	TagId: 0,
 	PostId: 0,

@@ -6,8 +6,8 @@ import (
 	"ms/sun/models/x"
 )
 
-func Comment_Add(UserId, PostId int, Text string) x.Comments {
-	cmt := x.Comments{
+func Comment_Add(UserId, PostId int, Text string) x.Comment {
+	cmt := x.Comment{
 		UserId:      UserId,
 		PostId:      PostId,
 		CreatedTime: helper.TimeNow(),

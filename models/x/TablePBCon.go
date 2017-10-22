@@ -1155,8 +1155,8 @@ func PBConvPB_setting_notifications_To_setting_notifications ( o *setting_notifi
 }
 */
 /*
-func PBConvPB__tags_To_tags( o *PB_tags) *tags {
-     n := &tags{
+func PBConvPB__tag_To_tag( o *PB_tag) *tag {
+     n := &tag{
       Id: int ( o.Id ),
       Name: string ( o.Name ),
       Count: int ( o.Count ),
@@ -1166,8 +1166,8 @@ func PBConvPB__tags_To_tags( o *PB_tags) *tags {
     return n
 }
 
-func PBConvPB_tags_To_tags ( o *tags) *PB_tags {
-     n := &PB_tags{
+func PBConvPB_tag_To_tag ( o *tag) *PB_tag {
+     n := &PB_tag{
       Id: int32 ( o.Id ),
       Name: string ( o.Name ),
       Count: int32 ( o.Count ),

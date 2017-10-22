@@ -422,7 +422,7 @@ message PB_setting_notifications {
     int32 DirectSound = 37;
     int32 DirectPriority = 39;
 }
-message PB_tags {
+message PB_tag {
     int32 Id = 1;
     string Name = 3;
     int32 Count = 5;

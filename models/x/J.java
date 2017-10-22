@@ -166,7 +166,7 @@ public class J {
 		public int StatusEnum;
 	}
 
-	public static class Likes {//oridnal: 15
+	public static class Like {//oridnal: 15
 		public int Id;
 		public int PostId;
 		public int PostTypeId;
@@ -175,7 +175,7 @@ public class J {
 		public int CreatedTime;
 	}
 
-	public static class LogChanges {//oridnal: 16
+	public static class LogChange {//oridnal: 16
 		public int Id;
 		public String T;
 	}
@@ -230,7 +230,7 @@ public class J {
 		public int ForUserId;
 	}
 
-	public static class OldMessages {//oridnal: 21
+	public static class OldMessage {//oridnal: 21
 		public int Id;
 		public int Uid;
 		public int UserId;
@@ -283,7 +283,7 @@ public class J {
 		public int AtTime;
 	}
 
-	public static class PhoneContacts {//oridnal: 25
+	public static class PhoneContact {//oridnal: 25
 		public int Id;
 		public String PhoneDisplayName;
 		public String PhoneFamilyName;
@@ -429,7 +429,7 @@ public class J {
 		public int SaveToGallery;
 	}
 
-	public static class SettingNotifications {//oridnal: 35
+	public static class SettingNotification {//oridnal: 35
 		public int UserId;
 		public int SocialLedOn;
 		public String SocialLedColor;
@@ -452,7 +452,7 @@ public class J {
 		public int DirectPriority;
 	}
 
-	public static class Tags {//oridnal: 36
+	public static class Tag {//oridnal: 36
 		public int Id;
 		public String Name;
 		public int Count;
@@ -460,7 +460,7 @@ public class J {
 		public int CreatedTime;
 	}
 
-	public static class TagsPosts {//oridnal: 37
+	public static class TagsPost {//oridnal: 37
 		public int Id;
 		public int TagId;
 		public int PostId;

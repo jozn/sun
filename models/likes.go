@@ -11,7 +11,7 @@ func Like_LikePost(UserId, PostId int) {
 	if !ok {
 		return
 	}
-	l := &x.Likes{
+	l := &x.Like{
 		UserId:      UserId,
 		PostTypeId:  p.TypeId,
 		PostId:      PostId,

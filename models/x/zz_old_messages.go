@@ -9,10 +9,10 @@ import (
 	"strconv"
 
 	"github.com/jmoiron/sqlx"
-) // (shortname .TableNameGo "err" "res" "sqlstr" "db" "XOLog") -}}//(schema .Schema .Table.TableName) -}}// .TableNameGo}}// OldMessages represents a row from 'ms.old_messages'.
+) // (shortname .TableNameGo "err" "res" "sqlstr" "db" "XOLog") -}}//(schema .Schema .Table.TableName) -}}// .TableNameGo}}// OldMessage represents a row from 'ms.old_messages'.
 
 // Manualy copy this to project
-type OldMessages__ struct {
+type OldMessage__ struct {
 	Id            int    `json:"Id"`            // Id -
 	Uid           int    `json:"Uid"`           // Uid -
 	UserId        int    `json:"UserId"`        // UserId -
@@ -29,18 +29,18 @@ type OldMessages__ struct {
 	_exists, _deleted bool
 }
 
-// Exists determines if the OldMessages exists in the database.
-func (om *OldMessages) Exists() bool {
+// Exists determines if the OldMessage exists in the database.
+func (om *OldMessage) Exists() bool {
 	return om._exists
 }
 
-// Deleted provides information if the OldMessages has been deleted from the database.
-func (om *OldMessages) Deleted() bool {
+// Deleted provides information if the OldMessage has been deleted from the database.
+func (om *OldMessage) Deleted() bool {
 	return om._deleted
 }
 
-// Insert inserts the OldMessages to the database.
-func (om *OldMessages) Insert(db XODB) error {
+// Insert inserts the OldMessage to the database.
+func (om *OldMessage) Insert(db XODB) error {
 	var err error
 
 	// if already exist, bail
@@ -74,13 +74,13 @@ func (om *OldMessages) Insert(db XODB) error {
 	om.Id = int(id)
 	om._exists = true
 
-	OnOldMessages_AfterInsert(om)
+	OnOldMessage_AfterInsert(om)
 
 	return nil
 }
 
-// Insert inserts the OldMessages to the database.
-func (om *OldMessages) Replace(db XODB) error {
+// Insert inserts the OldMessage to the database.
+func (om *OldMessage) Replace(db XODB) error {
 	var err error
 
 	// sql query
@@ -110,13 +110,13 @@ func (om *OldMessages) Replace(db XODB) error {
 	om.Id = int(id)
 	om._exists = true
 
-	OnOldMessages_AfterInsert(om)
+	OnOldMessage_AfterInsert(om)
 
 	return nil
 }
 
-// Update updates the OldMessages in the database.
-func (om *OldMessages) Update(db XODB) error {
+// Update updates the OldMessage in the database.
+func (om *OldMessage) Update(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
@@ -139,13 +139,13 @@ func (om *OldMessages) Update(db XODB) error {
 	_, err = db.Exec(sqlstr, om.Uid, om.UserId, om.MessageKey, om.RoomKey, om.MessageType, om.RoomType, om.MsgFileId, om.DataPB, om.Data64, om.DataJson, om.CreatedTimeMs, om.Id)
 
 	XOLogErr(err)
-	OnOldMessages_AfterUpdate(om)
+	OnOldMessage_AfterUpdate(om)
 
 	return err
 }
 
-// Save saves the OldMessages to the database.
-func (om *OldMessages) Save(db XODB) error {
+// Save saves the OldMessage to the database.
+func (om *OldMessage) Save(db XODB) error {
 	if om.Exists() {
 		return om.Update(db)
 	}
@@ -153,8 +153,8 @@ func (om *OldMessages) Save(db XODB) error {
 	return om.Replace(db)
 }
 
-// Delete deletes the OldMessages from the database.
-func (om *OldMessages) Delete(db XODB) error {
+// Delete deletes the OldMessage from the database.
+func (om *OldMessage) Delete(db XODB) error {
 	var err error
 
 	// if doesn't exist, bail
@@ -181,7 +181,7 @@ func (om *OldMessages) Delete(db XODB) error {
 	// set deleted
 	om._deleted = true
 
-	OnOldMessages_AfterDelete(om)
+	OnOldMessage_AfterDelete(om)
 
 	return nil
 }
@@ -192,18 +192,18 @@ func (om *OldMessages) Delete(db XODB) error {
 // _Deleter, _Updater
 
 // orma types
-type __OldMessages_Deleter struct {
+type __OldMessage_Deleter struct {
 	wheres   []whereClause
 	whereSep string
 }
 
-type __OldMessages_Updater struct {
+type __OldMessage_Updater struct {
 	wheres   []whereClause
 	updates  map[string]interface{}
 	whereSep string
 }
 
-type __OldMessages_Selector struct {
+type __OldMessage_Selector struct {
 	wheres    []whereClause
 	selectCol string
 	whereSep  string
@@ -212,19 +212,19 @@ type __OldMessages_Selector struct {
 	offset    int
 }
 
-func NewOldMessages_Deleter() *__OldMessages_Deleter {
-	d := __OldMessages_Deleter{whereSep: " AND "}
+func NewOldMessage_Deleter() *__OldMessage_Deleter {
+	d := __OldMessage_Deleter{whereSep: " AND "}
 	return &d
 }
 
-func NewOldMessages_Updater() *__OldMessages_Updater {
-	u := __OldMessages_Updater{whereSep: " AND "}
+func NewOldMessage_Updater() *__OldMessage_Updater {
+	u := __OldMessage_Updater{whereSep: " AND "}
 	u.updates = make(map[string]interface{}, 10)
 	return &u
 }
 
-func NewOldMessages_Selector() *__OldMessages_Selector {
-	u := __OldMessages_Selector{whereSep: " AND ", selectCol: "*"}
+func NewOldMessage_Selector() *__OldMessage_Selector {
+	u := __OldMessage_Selector{whereSep: " AND ", selectCol: "*"}
 	return &u
 }
 
@@ -232,12 +232,12 @@ func NewOldMessages_Selector() *__OldMessages_Selector {
 //// for ints all selector updater, deleter
 
 ////////ints
-func (u *__OldMessages_Deleter) Or() *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) Or() *__OldMessage_Deleter {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__OldMessages_Deleter) Id_In(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) Id_In(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -250,7 +250,7 @@ func (u *__OldMessages_Deleter) Id_In(ins []int) *__OldMessages_Deleter {
 	return u
 }
 
-func (u *__OldMessages_Deleter) Id_Ins(ins ...int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) Id_Ins(ins ...int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -263,7 +263,7 @@ func (u *__OldMessages_Deleter) Id_Ins(ins ...int) *__OldMessages_Deleter {
 	return u
 }
 
-func (u *__OldMessages_Deleter) Id_NotIn(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) Id_NotIn(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -276,7 +276,7 @@ func (u *__OldMessages_Deleter) Id_NotIn(ins []int) *__OldMessages_Deleter {
 	return u
 }
 
-func (d *__OldMessages_Deleter) Id_Eq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Id_Eq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -287,7 +287,7 @@ func (d *__OldMessages_Deleter) Id_Eq(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Id_NotEq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Id_NotEq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -298,7 +298,7 @@ func (d *__OldMessages_Deleter) Id_NotEq(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Id_LT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Id_LT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -309,7 +309,7 @@ func (d *__OldMessages_Deleter) Id_LT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Id_LE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Id_LE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -320,7 +320,7 @@ func (d *__OldMessages_Deleter) Id_LE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Id_GT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Id_GT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -331,7 +331,7 @@ func (d *__OldMessages_Deleter) Id_GT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Id_GE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Id_GE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -342,7 +342,7 @@ func (d *__OldMessages_Deleter) Id_GE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (u *__OldMessages_Deleter) Uid_In(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) Uid_In(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -355,7 +355,7 @@ func (u *__OldMessages_Deleter) Uid_In(ins []int) *__OldMessages_Deleter {
 	return u
 }
 
-func (u *__OldMessages_Deleter) Uid_Ins(ins ...int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) Uid_Ins(ins ...int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -368,7 +368,7 @@ func (u *__OldMessages_Deleter) Uid_Ins(ins ...int) *__OldMessages_Deleter {
 	return u
 }
 
-func (u *__OldMessages_Deleter) Uid_NotIn(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) Uid_NotIn(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -381,7 +381,7 @@ func (u *__OldMessages_Deleter) Uid_NotIn(ins []int) *__OldMessages_Deleter {
 	return u
 }
 
-func (d *__OldMessages_Deleter) Uid_Eq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Uid_Eq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -392,7 +392,7 @@ func (d *__OldMessages_Deleter) Uid_Eq(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Uid_NotEq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Uid_NotEq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -403,7 +403,7 @@ func (d *__OldMessages_Deleter) Uid_NotEq(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Uid_LT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Uid_LT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -414,7 +414,7 @@ func (d *__OldMessages_Deleter) Uid_LT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Uid_LE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Uid_LE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -425,7 +425,7 @@ func (d *__OldMessages_Deleter) Uid_LE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Uid_GT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Uid_GT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -436,7 +436,7 @@ func (d *__OldMessages_Deleter) Uid_GT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Uid_GE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Uid_GE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -447,7 +447,7 @@ func (d *__OldMessages_Deleter) Uid_GE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (u *__OldMessages_Deleter) UserId_In(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) UserId_In(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -460,7 +460,7 @@ func (u *__OldMessages_Deleter) UserId_In(ins []int) *__OldMessages_Deleter {
 	return u
 }
 
-func (u *__OldMessages_Deleter) UserId_Ins(ins ...int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) UserId_Ins(ins ...int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -473,7 +473,7 @@ func (u *__OldMessages_Deleter) UserId_Ins(ins ...int) *__OldMessages_Deleter {
 	return u
 }
 
-func (u *__OldMessages_Deleter) UserId_NotIn(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) UserId_NotIn(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -486,7 +486,7 @@ func (u *__OldMessages_Deleter) UserId_NotIn(ins []int) *__OldMessages_Deleter {
 	return u
 }
 
-func (d *__OldMessages_Deleter) UserId_Eq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) UserId_Eq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -497,7 +497,7 @@ func (d *__OldMessages_Deleter) UserId_Eq(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) UserId_NotEq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) UserId_NotEq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -508,7 +508,7 @@ func (d *__OldMessages_Deleter) UserId_NotEq(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) UserId_LT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) UserId_LT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -519,7 +519,7 @@ func (d *__OldMessages_Deleter) UserId_LT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) UserId_LE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) UserId_LE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -530,7 +530,7 @@ func (d *__OldMessages_Deleter) UserId_LE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) UserId_GT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) UserId_GT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -541,7 +541,7 @@ func (d *__OldMessages_Deleter) UserId_GT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) UserId_GE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) UserId_GE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -552,7 +552,7 @@ func (d *__OldMessages_Deleter) UserId_GE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (u *__OldMessages_Deleter) MessageType_In(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) MessageType_In(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -565,7 +565,7 @@ func (u *__OldMessages_Deleter) MessageType_In(ins []int) *__OldMessages_Deleter
 	return u
 }
 
-func (u *__OldMessages_Deleter) MessageType_Ins(ins ...int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) MessageType_Ins(ins ...int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -578,7 +578,7 @@ func (u *__OldMessages_Deleter) MessageType_Ins(ins ...int) *__OldMessages_Delet
 	return u
 }
 
-func (u *__OldMessages_Deleter) MessageType_NotIn(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) MessageType_NotIn(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -591,7 +591,7 @@ func (u *__OldMessages_Deleter) MessageType_NotIn(ins []int) *__OldMessages_Dele
 	return u
 }
 
-func (d *__OldMessages_Deleter) MessageType_Eq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MessageType_Eq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -602,7 +602,7 @@ func (d *__OldMessages_Deleter) MessageType_Eq(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) MessageType_NotEq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MessageType_NotEq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -613,7 +613,7 @@ func (d *__OldMessages_Deleter) MessageType_NotEq(val int) *__OldMessages_Delete
 	return d
 }
 
-func (d *__OldMessages_Deleter) MessageType_LT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MessageType_LT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -624,7 +624,7 @@ func (d *__OldMessages_Deleter) MessageType_LT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) MessageType_LE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MessageType_LE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -635,7 +635,7 @@ func (d *__OldMessages_Deleter) MessageType_LE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) MessageType_GT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MessageType_GT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -646,7 +646,7 @@ func (d *__OldMessages_Deleter) MessageType_GT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) MessageType_GE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MessageType_GE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -657,7 +657,7 @@ func (d *__OldMessages_Deleter) MessageType_GE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (u *__OldMessages_Deleter) RoomType_In(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) RoomType_In(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -670,7 +670,7 @@ func (u *__OldMessages_Deleter) RoomType_In(ins []int) *__OldMessages_Deleter {
 	return u
 }
 
-func (u *__OldMessages_Deleter) RoomType_Ins(ins ...int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) RoomType_Ins(ins ...int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -683,7 +683,7 @@ func (u *__OldMessages_Deleter) RoomType_Ins(ins ...int) *__OldMessages_Deleter 
 	return u
 }
 
-func (u *__OldMessages_Deleter) RoomType_NotIn(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) RoomType_NotIn(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -696,7 +696,7 @@ func (u *__OldMessages_Deleter) RoomType_NotIn(ins []int) *__OldMessages_Deleter
 	return u
 }
 
-func (d *__OldMessages_Deleter) RoomType_Eq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) RoomType_Eq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -707,7 +707,7 @@ func (d *__OldMessages_Deleter) RoomType_Eq(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) RoomType_NotEq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) RoomType_NotEq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -718,7 +718,7 @@ func (d *__OldMessages_Deleter) RoomType_NotEq(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) RoomType_LT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) RoomType_LT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -729,7 +729,7 @@ func (d *__OldMessages_Deleter) RoomType_LT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) RoomType_LE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) RoomType_LE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -740,7 +740,7 @@ func (d *__OldMessages_Deleter) RoomType_LE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) RoomType_GT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) RoomType_GT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -751,7 +751,7 @@ func (d *__OldMessages_Deleter) RoomType_GT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) RoomType_GE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) RoomType_GE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -762,7 +762,7 @@ func (d *__OldMessages_Deleter) RoomType_GE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (u *__OldMessages_Deleter) MsgFileId_In(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) MsgFileId_In(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -775,7 +775,7 @@ func (u *__OldMessages_Deleter) MsgFileId_In(ins []int) *__OldMessages_Deleter {
 	return u
 }
 
-func (u *__OldMessages_Deleter) MsgFileId_Ins(ins ...int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) MsgFileId_Ins(ins ...int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -788,7 +788,7 @@ func (u *__OldMessages_Deleter) MsgFileId_Ins(ins ...int) *__OldMessages_Deleter
 	return u
 }
 
-func (u *__OldMessages_Deleter) MsgFileId_NotIn(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) MsgFileId_NotIn(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -801,7 +801,7 @@ func (u *__OldMessages_Deleter) MsgFileId_NotIn(ins []int) *__OldMessages_Delete
 	return u
 }
 
-func (d *__OldMessages_Deleter) MsgFileId_Eq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MsgFileId_Eq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -812,7 +812,7 @@ func (d *__OldMessages_Deleter) MsgFileId_Eq(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) MsgFileId_NotEq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MsgFileId_NotEq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -823,7 +823,7 @@ func (d *__OldMessages_Deleter) MsgFileId_NotEq(val int) *__OldMessages_Deleter 
 	return d
 }
 
-func (d *__OldMessages_Deleter) MsgFileId_LT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MsgFileId_LT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -834,7 +834,7 @@ func (d *__OldMessages_Deleter) MsgFileId_LT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) MsgFileId_LE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MsgFileId_LE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -845,7 +845,7 @@ func (d *__OldMessages_Deleter) MsgFileId_LE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) MsgFileId_GT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MsgFileId_GT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -856,7 +856,7 @@ func (d *__OldMessages_Deleter) MsgFileId_GT(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) MsgFileId_GE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MsgFileId_GE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -867,7 +867,7 @@ func (d *__OldMessages_Deleter) MsgFileId_GE(val int) *__OldMessages_Deleter {
 	return d
 }
 
-func (u *__OldMessages_Deleter) CreatedTimeMs_In(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) CreatedTimeMs_In(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -880,7 +880,7 @@ func (u *__OldMessages_Deleter) CreatedTimeMs_In(ins []int) *__OldMessages_Delet
 	return u
 }
 
-func (u *__OldMessages_Deleter) CreatedTimeMs_Ins(ins ...int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) CreatedTimeMs_Ins(ins ...int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -893,7 +893,7 @@ func (u *__OldMessages_Deleter) CreatedTimeMs_Ins(ins ...int) *__OldMessages_Del
 	return u
 }
 
-func (u *__OldMessages_Deleter) CreatedTimeMs_NotIn(ins []int) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) CreatedTimeMs_NotIn(ins []int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -906,7 +906,7 @@ func (u *__OldMessages_Deleter) CreatedTimeMs_NotIn(ins []int) *__OldMessages_De
 	return u
 }
 
-func (d *__OldMessages_Deleter) CreatedTimeMs_Eq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) CreatedTimeMs_Eq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -917,7 +917,7 @@ func (d *__OldMessages_Deleter) CreatedTimeMs_Eq(val int) *__OldMessages_Deleter
 	return d
 }
 
-func (d *__OldMessages_Deleter) CreatedTimeMs_NotEq(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) CreatedTimeMs_NotEq(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -928,7 +928,7 @@ func (d *__OldMessages_Deleter) CreatedTimeMs_NotEq(val int) *__OldMessages_Dele
 	return d
 }
 
-func (d *__OldMessages_Deleter) CreatedTimeMs_LT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) CreatedTimeMs_LT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -939,7 +939,7 @@ func (d *__OldMessages_Deleter) CreatedTimeMs_LT(val int) *__OldMessages_Deleter
 	return d
 }
 
-func (d *__OldMessages_Deleter) CreatedTimeMs_LE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) CreatedTimeMs_LE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -950,7 +950,7 @@ func (d *__OldMessages_Deleter) CreatedTimeMs_LE(val int) *__OldMessages_Deleter
 	return d
 }
 
-func (d *__OldMessages_Deleter) CreatedTimeMs_GT(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) CreatedTimeMs_GT(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -961,7 +961,7 @@ func (d *__OldMessages_Deleter) CreatedTimeMs_GT(val int) *__OldMessages_Deleter
 	return d
 }
 
-func (d *__OldMessages_Deleter) CreatedTimeMs_GE(val int) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) CreatedTimeMs_GE(val int) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -973,12 +973,12 @@ func (d *__OldMessages_Deleter) CreatedTimeMs_GE(val int) *__OldMessages_Deleter
 }
 
 ////////ints
-func (u *__OldMessages_Updater) Or() *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Or() *__OldMessage_Updater {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__OldMessages_Updater) Id_In(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Id_In(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -991,7 +991,7 @@ func (u *__OldMessages_Updater) Id_In(ins []int) *__OldMessages_Updater {
 	return u
 }
 
-func (u *__OldMessages_Updater) Id_Ins(ins ...int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Id_Ins(ins ...int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1004,7 +1004,7 @@ func (u *__OldMessages_Updater) Id_Ins(ins ...int) *__OldMessages_Updater {
 	return u
 }
 
-func (u *__OldMessages_Updater) Id_NotIn(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Id_NotIn(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1017,7 +1017,7 @@ func (u *__OldMessages_Updater) Id_NotIn(ins []int) *__OldMessages_Updater {
 	return u
 }
 
-func (d *__OldMessages_Updater) Id_Eq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Id_Eq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1028,7 +1028,7 @@ func (d *__OldMessages_Updater) Id_Eq(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Id_NotEq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Id_NotEq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1039,7 +1039,7 @@ func (d *__OldMessages_Updater) Id_NotEq(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Id_LT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Id_LT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1050,7 +1050,7 @@ func (d *__OldMessages_Updater) Id_LT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Id_LE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Id_LE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1061,7 +1061,7 @@ func (d *__OldMessages_Updater) Id_LE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Id_GT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Id_GT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1072,7 +1072,7 @@ func (d *__OldMessages_Updater) Id_GT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Id_GE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Id_GE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1083,7 +1083,7 @@ func (d *__OldMessages_Updater) Id_GE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (u *__OldMessages_Updater) Uid_In(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Uid_In(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1096,7 +1096,7 @@ func (u *__OldMessages_Updater) Uid_In(ins []int) *__OldMessages_Updater {
 	return u
 }
 
-func (u *__OldMessages_Updater) Uid_Ins(ins ...int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Uid_Ins(ins ...int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1109,7 +1109,7 @@ func (u *__OldMessages_Updater) Uid_Ins(ins ...int) *__OldMessages_Updater {
 	return u
 }
 
-func (u *__OldMessages_Updater) Uid_NotIn(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Uid_NotIn(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1122,7 +1122,7 @@ func (u *__OldMessages_Updater) Uid_NotIn(ins []int) *__OldMessages_Updater {
 	return u
 }
 
-func (d *__OldMessages_Updater) Uid_Eq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Uid_Eq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1133,7 +1133,7 @@ func (d *__OldMessages_Updater) Uid_Eq(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Uid_NotEq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Uid_NotEq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1144,7 +1144,7 @@ func (d *__OldMessages_Updater) Uid_NotEq(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Uid_LT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Uid_LT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1155,7 +1155,7 @@ func (d *__OldMessages_Updater) Uid_LT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Uid_LE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Uid_LE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1166,7 +1166,7 @@ func (d *__OldMessages_Updater) Uid_LE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Uid_GT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Uid_GT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1177,7 +1177,7 @@ func (d *__OldMessages_Updater) Uid_GT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Uid_GE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Uid_GE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1188,7 +1188,7 @@ func (d *__OldMessages_Updater) Uid_GE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (u *__OldMessages_Updater) UserId_In(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) UserId_In(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1201,7 +1201,7 @@ func (u *__OldMessages_Updater) UserId_In(ins []int) *__OldMessages_Updater {
 	return u
 }
 
-func (u *__OldMessages_Updater) UserId_Ins(ins ...int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) UserId_Ins(ins ...int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1214,7 +1214,7 @@ func (u *__OldMessages_Updater) UserId_Ins(ins ...int) *__OldMessages_Updater {
 	return u
 }
 
-func (u *__OldMessages_Updater) UserId_NotIn(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) UserId_NotIn(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1227,7 +1227,7 @@ func (u *__OldMessages_Updater) UserId_NotIn(ins []int) *__OldMessages_Updater {
 	return u
 }
 
-func (d *__OldMessages_Updater) UserId_Eq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) UserId_Eq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1238,7 +1238,7 @@ func (d *__OldMessages_Updater) UserId_Eq(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) UserId_NotEq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) UserId_NotEq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1249,7 +1249,7 @@ func (d *__OldMessages_Updater) UserId_NotEq(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) UserId_LT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) UserId_LT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1260,7 +1260,7 @@ func (d *__OldMessages_Updater) UserId_LT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) UserId_LE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) UserId_LE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1271,7 +1271,7 @@ func (d *__OldMessages_Updater) UserId_LE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) UserId_GT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) UserId_GT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1282,7 +1282,7 @@ func (d *__OldMessages_Updater) UserId_GT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) UserId_GE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) UserId_GE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1293,7 +1293,7 @@ func (d *__OldMessages_Updater) UserId_GE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (u *__OldMessages_Updater) MessageType_In(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MessageType_In(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1306,7 +1306,7 @@ func (u *__OldMessages_Updater) MessageType_In(ins []int) *__OldMessages_Updater
 	return u
 }
 
-func (u *__OldMessages_Updater) MessageType_Ins(ins ...int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MessageType_Ins(ins ...int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1319,7 +1319,7 @@ func (u *__OldMessages_Updater) MessageType_Ins(ins ...int) *__OldMessages_Updat
 	return u
 }
 
-func (u *__OldMessages_Updater) MessageType_NotIn(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MessageType_NotIn(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1332,7 +1332,7 @@ func (u *__OldMessages_Updater) MessageType_NotIn(ins []int) *__OldMessages_Upda
 	return u
 }
 
-func (d *__OldMessages_Updater) MessageType_Eq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MessageType_Eq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1343,7 +1343,7 @@ func (d *__OldMessages_Updater) MessageType_Eq(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) MessageType_NotEq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MessageType_NotEq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1354,7 +1354,7 @@ func (d *__OldMessages_Updater) MessageType_NotEq(val int) *__OldMessages_Update
 	return d
 }
 
-func (d *__OldMessages_Updater) MessageType_LT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MessageType_LT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1365,7 +1365,7 @@ func (d *__OldMessages_Updater) MessageType_LT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) MessageType_LE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MessageType_LE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1376,7 +1376,7 @@ func (d *__OldMessages_Updater) MessageType_LE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) MessageType_GT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MessageType_GT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1387,7 +1387,7 @@ func (d *__OldMessages_Updater) MessageType_GT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) MessageType_GE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MessageType_GE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1398,7 +1398,7 @@ func (d *__OldMessages_Updater) MessageType_GE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (u *__OldMessages_Updater) RoomType_In(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) RoomType_In(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1411,7 +1411,7 @@ func (u *__OldMessages_Updater) RoomType_In(ins []int) *__OldMessages_Updater {
 	return u
 }
 
-func (u *__OldMessages_Updater) RoomType_Ins(ins ...int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) RoomType_Ins(ins ...int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1424,7 +1424,7 @@ func (u *__OldMessages_Updater) RoomType_Ins(ins ...int) *__OldMessages_Updater 
 	return u
 }
 
-func (u *__OldMessages_Updater) RoomType_NotIn(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) RoomType_NotIn(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1437,7 +1437,7 @@ func (u *__OldMessages_Updater) RoomType_NotIn(ins []int) *__OldMessages_Updater
 	return u
 }
 
-func (d *__OldMessages_Updater) RoomType_Eq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) RoomType_Eq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1448,7 +1448,7 @@ func (d *__OldMessages_Updater) RoomType_Eq(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) RoomType_NotEq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) RoomType_NotEq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1459,7 +1459,7 @@ func (d *__OldMessages_Updater) RoomType_NotEq(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) RoomType_LT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) RoomType_LT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1470,7 +1470,7 @@ func (d *__OldMessages_Updater) RoomType_LT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) RoomType_LE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) RoomType_LE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1481,7 +1481,7 @@ func (d *__OldMessages_Updater) RoomType_LE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) RoomType_GT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) RoomType_GT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1492,7 +1492,7 @@ func (d *__OldMessages_Updater) RoomType_GT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) RoomType_GE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) RoomType_GE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1503,7 +1503,7 @@ func (d *__OldMessages_Updater) RoomType_GE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (u *__OldMessages_Updater) MsgFileId_In(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MsgFileId_In(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1516,7 +1516,7 @@ func (u *__OldMessages_Updater) MsgFileId_In(ins []int) *__OldMessages_Updater {
 	return u
 }
 
-func (u *__OldMessages_Updater) MsgFileId_Ins(ins ...int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MsgFileId_Ins(ins ...int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1529,7 +1529,7 @@ func (u *__OldMessages_Updater) MsgFileId_Ins(ins ...int) *__OldMessages_Updater
 	return u
 }
 
-func (u *__OldMessages_Updater) MsgFileId_NotIn(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MsgFileId_NotIn(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1542,7 +1542,7 @@ func (u *__OldMessages_Updater) MsgFileId_NotIn(ins []int) *__OldMessages_Update
 	return u
 }
 
-func (d *__OldMessages_Updater) MsgFileId_Eq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MsgFileId_Eq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1553,7 +1553,7 @@ func (d *__OldMessages_Updater) MsgFileId_Eq(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) MsgFileId_NotEq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MsgFileId_NotEq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1564,7 +1564,7 @@ func (d *__OldMessages_Updater) MsgFileId_NotEq(val int) *__OldMessages_Updater 
 	return d
 }
 
-func (d *__OldMessages_Updater) MsgFileId_LT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MsgFileId_LT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1575,7 +1575,7 @@ func (d *__OldMessages_Updater) MsgFileId_LT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) MsgFileId_LE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MsgFileId_LE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1586,7 +1586,7 @@ func (d *__OldMessages_Updater) MsgFileId_LE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) MsgFileId_GT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MsgFileId_GT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1597,7 +1597,7 @@ func (d *__OldMessages_Updater) MsgFileId_GT(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) MsgFileId_GE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MsgFileId_GE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1608,7 +1608,7 @@ func (d *__OldMessages_Updater) MsgFileId_GE(val int) *__OldMessages_Updater {
 	return d
 }
 
-func (u *__OldMessages_Updater) CreatedTimeMs_In(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) CreatedTimeMs_In(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1621,7 +1621,7 @@ func (u *__OldMessages_Updater) CreatedTimeMs_In(ins []int) *__OldMessages_Updat
 	return u
 }
 
-func (u *__OldMessages_Updater) CreatedTimeMs_Ins(ins ...int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) CreatedTimeMs_Ins(ins ...int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1634,7 +1634,7 @@ func (u *__OldMessages_Updater) CreatedTimeMs_Ins(ins ...int) *__OldMessages_Upd
 	return u
 }
 
-func (u *__OldMessages_Updater) CreatedTimeMs_NotIn(ins []int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) CreatedTimeMs_NotIn(ins []int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1647,7 +1647,7 @@ func (u *__OldMessages_Updater) CreatedTimeMs_NotIn(ins []int) *__OldMessages_Up
 	return u
 }
 
-func (d *__OldMessages_Updater) CreatedTimeMs_Eq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) CreatedTimeMs_Eq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1658,7 +1658,7 @@ func (d *__OldMessages_Updater) CreatedTimeMs_Eq(val int) *__OldMessages_Updater
 	return d
 }
 
-func (d *__OldMessages_Updater) CreatedTimeMs_NotEq(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) CreatedTimeMs_NotEq(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1669,7 +1669,7 @@ func (d *__OldMessages_Updater) CreatedTimeMs_NotEq(val int) *__OldMessages_Upda
 	return d
 }
 
-func (d *__OldMessages_Updater) CreatedTimeMs_LT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) CreatedTimeMs_LT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1680,7 +1680,7 @@ func (d *__OldMessages_Updater) CreatedTimeMs_LT(val int) *__OldMessages_Updater
 	return d
 }
 
-func (d *__OldMessages_Updater) CreatedTimeMs_LE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) CreatedTimeMs_LE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1691,7 +1691,7 @@ func (d *__OldMessages_Updater) CreatedTimeMs_LE(val int) *__OldMessages_Updater
 	return d
 }
 
-func (d *__OldMessages_Updater) CreatedTimeMs_GT(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) CreatedTimeMs_GT(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1702,7 +1702,7 @@ func (d *__OldMessages_Updater) CreatedTimeMs_GT(val int) *__OldMessages_Updater
 	return d
 }
 
-func (d *__OldMessages_Updater) CreatedTimeMs_GE(val int) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) CreatedTimeMs_GE(val int) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1714,12 +1714,12 @@ func (d *__OldMessages_Updater) CreatedTimeMs_GE(val int) *__OldMessages_Updater
 }
 
 ////////ints
-func (u *__OldMessages_Selector) Or() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Or() *__OldMessage_Selector {
 	u.whereSep = " OR "
 	return u
 }
 
-func (u *__OldMessages_Selector) Id_In(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Id_In(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1732,7 +1732,7 @@ func (u *__OldMessages_Selector) Id_In(ins []int) *__OldMessages_Selector {
 	return u
 }
 
-func (u *__OldMessages_Selector) Id_Ins(ins ...int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Id_Ins(ins ...int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1745,7 +1745,7 @@ func (u *__OldMessages_Selector) Id_Ins(ins ...int) *__OldMessages_Selector {
 	return u
 }
 
-func (u *__OldMessages_Selector) Id_NotIn(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Id_NotIn(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1758,7 +1758,7 @@ func (u *__OldMessages_Selector) Id_NotIn(ins []int) *__OldMessages_Selector {
 	return u
 }
 
-func (d *__OldMessages_Selector) Id_Eq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Id_Eq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1769,7 +1769,7 @@ func (d *__OldMessages_Selector) Id_Eq(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Id_NotEq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Id_NotEq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1780,7 +1780,7 @@ func (d *__OldMessages_Selector) Id_NotEq(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Id_LT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Id_LT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1791,7 +1791,7 @@ func (d *__OldMessages_Selector) Id_LT(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Id_LE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Id_LE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1802,7 +1802,7 @@ func (d *__OldMessages_Selector) Id_LE(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Id_GT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Id_GT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1813,7 +1813,7 @@ func (d *__OldMessages_Selector) Id_GT(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Id_GE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Id_GE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1824,7 +1824,7 @@ func (d *__OldMessages_Selector) Id_GE(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (u *__OldMessages_Selector) Uid_In(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Uid_In(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1837,7 +1837,7 @@ func (u *__OldMessages_Selector) Uid_In(ins []int) *__OldMessages_Selector {
 	return u
 }
 
-func (u *__OldMessages_Selector) Uid_Ins(ins ...int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Uid_Ins(ins ...int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1850,7 +1850,7 @@ func (u *__OldMessages_Selector) Uid_Ins(ins ...int) *__OldMessages_Selector {
 	return u
 }
 
-func (u *__OldMessages_Selector) Uid_NotIn(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Uid_NotIn(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1863,7 +1863,7 @@ func (u *__OldMessages_Selector) Uid_NotIn(ins []int) *__OldMessages_Selector {
 	return u
 }
 
-func (d *__OldMessages_Selector) Uid_Eq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Uid_Eq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1874,7 +1874,7 @@ func (d *__OldMessages_Selector) Uid_Eq(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Uid_NotEq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Uid_NotEq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1885,7 +1885,7 @@ func (d *__OldMessages_Selector) Uid_NotEq(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Uid_LT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Uid_LT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1896,7 +1896,7 @@ func (d *__OldMessages_Selector) Uid_LT(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Uid_LE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Uid_LE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1907,7 +1907,7 @@ func (d *__OldMessages_Selector) Uid_LE(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Uid_GT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Uid_GT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1918,7 +1918,7 @@ func (d *__OldMessages_Selector) Uid_GT(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Uid_GE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Uid_GE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1929,7 +1929,7 @@ func (d *__OldMessages_Selector) Uid_GE(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (u *__OldMessages_Selector) UserId_In(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) UserId_In(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1942,7 +1942,7 @@ func (u *__OldMessages_Selector) UserId_In(ins []int) *__OldMessages_Selector {
 	return u
 }
 
-func (u *__OldMessages_Selector) UserId_Ins(ins ...int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) UserId_Ins(ins ...int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1955,7 +1955,7 @@ func (u *__OldMessages_Selector) UserId_Ins(ins ...int) *__OldMessages_Selector 
 	return u
 }
 
-func (u *__OldMessages_Selector) UserId_NotIn(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) UserId_NotIn(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -1968,7 +1968,7 @@ func (u *__OldMessages_Selector) UserId_NotIn(ins []int) *__OldMessages_Selector
 	return u
 }
 
-func (d *__OldMessages_Selector) UserId_Eq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) UserId_Eq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1979,7 +1979,7 @@ func (d *__OldMessages_Selector) UserId_Eq(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) UserId_NotEq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) UserId_NotEq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -1990,7 +1990,7 @@ func (d *__OldMessages_Selector) UserId_NotEq(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) UserId_LT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) UserId_LT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2001,7 +2001,7 @@ func (d *__OldMessages_Selector) UserId_LT(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) UserId_LE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) UserId_LE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2012,7 +2012,7 @@ func (d *__OldMessages_Selector) UserId_LE(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) UserId_GT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) UserId_GT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2023,7 +2023,7 @@ func (d *__OldMessages_Selector) UserId_GT(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) UserId_GE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) UserId_GE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2034,7 +2034,7 @@ func (d *__OldMessages_Selector) UserId_GE(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (u *__OldMessages_Selector) MessageType_In(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) MessageType_In(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2047,7 +2047,7 @@ func (u *__OldMessages_Selector) MessageType_In(ins []int) *__OldMessages_Select
 	return u
 }
 
-func (u *__OldMessages_Selector) MessageType_Ins(ins ...int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) MessageType_Ins(ins ...int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2060,7 +2060,7 @@ func (u *__OldMessages_Selector) MessageType_Ins(ins ...int) *__OldMessages_Sele
 	return u
 }
 
-func (u *__OldMessages_Selector) MessageType_NotIn(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) MessageType_NotIn(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2073,7 +2073,7 @@ func (u *__OldMessages_Selector) MessageType_NotIn(ins []int) *__OldMessages_Sel
 	return u
 }
 
-func (d *__OldMessages_Selector) MessageType_Eq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MessageType_Eq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2084,7 +2084,7 @@ func (d *__OldMessages_Selector) MessageType_Eq(val int) *__OldMessages_Selector
 	return d
 }
 
-func (d *__OldMessages_Selector) MessageType_NotEq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MessageType_NotEq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2095,7 +2095,7 @@ func (d *__OldMessages_Selector) MessageType_NotEq(val int) *__OldMessages_Selec
 	return d
 }
 
-func (d *__OldMessages_Selector) MessageType_LT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MessageType_LT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2106,7 +2106,7 @@ func (d *__OldMessages_Selector) MessageType_LT(val int) *__OldMessages_Selector
 	return d
 }
 
-func (d *__OldMessages_Selector) MessageType_LE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MessageType_LE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2117,7 +2117,7 @@ func (d *__OldMessages_Selector) MessageType_LE(val int) *__OldMessages_Selector
 	return d
 }
 
-func (d *__OldMessages_Selector) MessageType_GT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MessageType_GT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2128,7 +2128,7 @@ func (d *__OldMessages_Selector) MessageType_GT(val int) *__OldMessages_Selector
 	return d
 }
 
-func (d *__OldMessages_Selector) MessageType_GE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MessageType_GE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2139,7 +2139,7 @@ func (d *__OldMessages_Selector) MessageType_GE(val int) *__OldMessages_Selector
 	return d
 }
 
-func (u *__OldMessages_Selector) RoomType_In(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) RoomType_In(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2152,7 +2152,7 @@ func (u *__OldMessages_Selector) RoomType_In(ins []int) *__OldMessages_Selector 
 	return u
 }
 
-func (u *__OldMessages_Selector) RoomType_Ins(ins ...int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) RoomType_Ins(ins ...int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2165,7 +2165,7 @@ func (u *__OldMessages_Selector) RoomType_Ins(ins ...int) *__OldMessages_Selecto
 	return u
 }
 
-func (u *__OldMessages_Selector) RoomType_NotIn(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) RoomType_NotIn(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2178,7 +2178,7 @@ func (u *__OldMessages_Selector) RoomType_NotIn(ins []int) *__OldMessages_Select
 	return u
 }
 
-func (d *__OldMessages_Selector) RoomType_Eq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) RoomType_Eq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2189,7 +2189,7 @@ func (d *__OldMessages_Selector) RoomType_Eq(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) RoomType_NotEq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) RoomType_NotEq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2200,7 +2200,7 @@ func (d *__OldMessages_Selector) RoomType_NotEq(val int) *__OldMessages_Selector
 	return d
 }
 
-func (d *__OldMessages_Selector) RoomType_LT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) RoomType_LT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2211,7 +2211,7 @@ func (d *__OldMessages_Selector) RoomType_LT(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) RoomType_LE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) RoomType_LE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2222,7 +2222,7 @@ func (d *__OldMessages_Selector) RoomType_LE(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) RoomType_GT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) RoomType_GT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2233,7 +2233,7 @@ func (d *__OldMessages_Selector) RoomType_GT(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) RoomType_GE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) RoomType_GE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2244,7 +2244,7 @@ func (d *__OldMessages_Selector) RoomType_GE(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (u *__OldMessages_Selector) MsgFileId_In(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) MsgFileId_In(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2257,7 +2257,7 @@ func (u *__OldMessages_Selector) MsgFileId_In(ins []int) *__OldMessages_Selector
 	return u
 }
 
-func (u *__OldMessages_Selector) MsgFileId_Ins(ins ...int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) MsgFileId_Ins(ins ...int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2270,7 +2270,7 @@ func (u *__OldMessages_Selector) MsgFileId_Ins(ins ...int) *__OldMessages_Select
 	return u
 }
 
-func (u *__OldMessages_Selector) MsgFileId_NotIn(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) MsgFileId_NotIn(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2283,7 +2283,7 @@ func (u *__OldMessages_Selector) MsgFileId_NotIn(ins []int) *__OldMessages_Selec
 	return u
 }
 
-func (d *__OldMessages_Selector) MsgFileId_Eq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MsgFileId_Eq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2294,7 +2294,7 @@ func (d *__OldMessages_Selector) MsgFileId_Eq(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) MsgFileId_NotEq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MsgFileId_NotEq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2305,7 +2305,7 @@ func (d *__OldMessages_Selector) MsgFileId_NotEq(val int) *__OldMessages_Selecto
 	return d
 }
 
-func (d *__OldMessages_Selector) MsgFileId_LT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MsgFileId_LT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2316,7 +2316,7 @@ func (d *__OldMessages_Selector) MsgFileId_LT(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) MsgFileId_LE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MsgFileId_LE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2327,7 +2327,7 @@ func (d *__OldMessages_Selector) MsgFileId_LE(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) MsgFileId_GT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MsgFileId_GT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2338,7 +2338,7 @@ func (d *__OldMessages_Selector) MsgFileId_GT(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) MsgFileId_GE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MsgFileId_GE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2349,7 +2349,7 @@ func (d *__OldMessages_Selector) MsgFileId_GE(val int) *__OldMessages_Selector {
 	return d
 }
 
-func (u *__OldMessages_Selector) CreatedTimeMs_In(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) CreatedTimeMs_In(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2362,7 +2362,7 @@ func (u *__OldMessages_Selector) CreatedTimeMs_In(ins []int) *__OldMessages_Sele
 	return u
 }
 
-func (u *__OldMessages_Selector) CreatedTimeMs_Ins(ins ...int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) CreatedTimeMs_Ins(ins ...int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2375,7 +2375,7 @@ func (u *__OldMessages_Selector) CreatedTimeMs_Ins(ins ...int) *__OldMessages_Se
 	return u
 }
 
-func (u *__OldMessages_Selector) CreatedTimeMs_NotIn(ins []int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) CreatedTimeMs_NotIn(ins []int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2388,7 +2388,7 @@ func (u *__OldMessages_Selector) CreatedTimeMs_NotIn(ins []int) *__OldMessages_S
 	return u
 }
 
-func (d *__OldMessages_Selector) CreatedTimeMs_Eq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) CreatedTimeMs_Eq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2399,7 +2399,7 @@ func (d *__OldMessages_Selector) CreatedTimeMs_Eq(val int) *__OldMessages_Select
 	return d
 }
 
-func (d *__OldMessages_Selector) CreatedTimeMs_NotEq(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) CreatedTimeMs_NotEq(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2410,7 +2410,7 @@ func (d *__OldMessages_Selector) CreatedTimeMs_NotEq(val int) *__OldMessages_Sel
 	return d
 }
 
-func (d *__OldMessages_Selector) CreatedTimeMs_LT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) CreatedTimeMs_LT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2421,7 +2421,7 @@ func (d *__OldMessages_Selector) CreatedTimeMs_LT(val int) *__OldMessages_Select
 	return d
 }
 
-func (d *__OldMessages_Selector) CreatedTimeMs_LE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) CreatedTimeMs_LE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2432,7 +2432,7 @@ func (d *__OldMessages_Selector) CreatedTimeMs_LE(val int) *__OldMessages_Select
 	return d
 }
 
-func (d *__OldMessages_Selector) CreatedTimeMs_GT(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) CreatedTimeMs_GT(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2443,7 +2443,7 @@ func (d *__OldMessages_Selector) CreatedTimeMs_GT(val int) *__OldMessages_Select
 	return d
 }
 
-func (d *__OldMessages_Selector) CreatedTimeMs_GE(val int) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) CreatedTimeMs_GE(val int) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2458,7 +2458,7 @@ func (d *__OldMessages_Selector) CreatedTimeMs_GE(val int) *__OldMessages_Select
 
 ////////ints
 
-func (u *__OldMessages_Deleter) MessageKey_In(ins []string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) MessageKey_In(ins []string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2471,7 +2471,7 @@ func (u *__OldMessages_Deleter) MessageKey_In(ins []string) *__OldMessages_Delet
 	return u
 }
 
-func (u *__OldMessages_Deleter) MessageKey_NotIn(ins []string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) MessageKey_NotIn(ins []string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2485,7 +2485,7 @@ func (u *__OldMessages_Deleter) MessageKey_NotIn(ins []string) *__OldMessages_De
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Deleter) MessageKey_Like(val string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) MessageKey_Like(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2496,7 +2496,7 @@ func (u *__OldMessages_Deleter) MessageKey_Like(val string) *__OldMessages_Delet
 	return u
 }
 
-func (d *__OldMessages_Deleter) MessageKey_Eq(val string) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MessageKey_Eq(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2507,7 +2507,7 @@ func (d *__OldMessages_Deleter) MessageKey_Eq(val string) *__OldMessages_Deleter
 	return d
 }
 
-func (d *__OldMessages_Deleter) MessageKey_NotEq(val string) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) MessageKey_NotEq(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2518,7 +2518,7 @@ func (d *__OldMessages_Deleter) MessageKey_NotEq(val string) *__OldMessages_Dele
 	return d
 }
 
-func (u *__OldMessages_Deleter) RoomKey_In(ins []string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) RoomKey_In(ins []string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2531,7 +2531,7 @@ func (u *__OldMessages_Deleter) RoomKey_In(ins []string) *__OldMessages_Deleter 
 	return u
 }
 
-func (u *__OldMessages_Deleter) RoomKey_NotIn(ins []string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) RoomKey_NotIn(ins []string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2545,7 +2545,7 @@ func (u *__OldMessages_Deleter) RoomKey_NotIn(ins []string) *__OldMessages_Delet
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Deleter) RoomKey_Like(val string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) RoomKey_Like(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2556,7 +2556,7 @@ func (u *__OldMessages_Deleter) RoomKey_Like(val string) *__OldMessages_Deleter 
 	return u
 }
 
-func (d *__OldMessages_Deleter) RoomKey_Eq(val string) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) RoomKey_Eq(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2567,7 +2567,7 @@ func (d *__OldMessages_Deleter) RoomKey_Eq(val string) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) RoomKey_NotEq(val string) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) RoomKey_NotEq(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2578,7 +2578,7 @@ func (d *__OldMessages_Deleter) RoomKey_NotEq(val string) *__OldMessages_Deleter
 	return d
 }
 
-func (u *__OldMessages_Deleter) Data64_In(ins []string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) Data64_In(ins []string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2591,7 +2591,7 @@ func (u *__OldMessages_Deleter) Data64_In(ins []string) *__OldMessages_Deleter {
 	return u
 }
 
-func (u *__OldMessages_Deleter) Data64_NotIn(ins []string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) Data64_NotIn(ins []string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2605,7 +2605,7 @@ func (u *__OldMessages_Deleter) Data64_NotIn(ins []string) *__OldMessages_Delete
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Deleter) Data64_Like(val string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) Data64_Like(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2616,7 +2616,7 @@ func (u *__OldMessages_Deleter) Data64_Like(val string) *__OldMessages_Deleter {
 	return u
 }
 
-func (d *__OldMessages_Deleter) Data64_Eq(val string) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Data64_Eq(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2627,7 +2627,7 @@ func (d *__OldMessages_Deleter) Data64_Eq(val string) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) Data64_NotEq(val string) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) Data64_NotEq(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2638,7 +2638,7 @@ func (d *__OldMessages_Deleter) Data64_NotEq(val string) *__OldMessages_Deleter 
 	return d
 }
 
-func (u *__OldMessages_Deleter) DataJson_In(ins []string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) DataJson_In(ins []string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2651,7 +2651,7 @@ func (u *__OldMessages_Deleter) DataJson_In(ins []string) *__OldMessages_Deleter
 	return u
 }
 
-func (u *__OldMessages_Deleter) DataJson_NotIn(ins []string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) DataJson_NotIn(ins []string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2665,7 +2665,7 @@ func (u *__OldMessages_Deleter) DataJson_NotIn(ins []string) *__OldMessages_Dele
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Deleter) DataJson_Like(val string) *__OldMessages_Deleter {
+func (u *__OldMessage_Deleter) DataJson_Like(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2676,7 +2676,7 @@ func (u *__OldMessages_Deleter) DataJson_Like(val string) *__OldMessages_Deleter
 	return u
 }
 
-func (d *__OldMessages_Deleter) DataJson_Eq(val string) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) DataJson_Eq(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2687,7 +2687,7 @@ func (d *__OldMessages_Deleter) DataJson_Eq(val string) *__OldMessages_Deleter {
 	return d
 }
 
-func (d *__OldMessages_Deleter) DataJson_NotEq(val string) *__OldMessages_Deleter {
+func (d *__OldMessage_Deleter) DataJson_NotEq(val string) *__OldMessage_Deleter {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2700,7 +2700,7 @@ func (d *__OldMessages_Deleter) DataJson_NotEq(val string) *__OldMessages_Delete
 
 ////////ints
 
-func (u *__OldMessages_Updater) MessageKey_In(ins []string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MessageKey_In(ins []string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2713,7 +2713,7 @@ func (u *__OldMessages_Updater) MessageKey_In(ins []string) *__OldMessages_Updat
 	return u
 }
 
-func (u *__OldMessages_Updater) MessageKey_NotIn(ins []string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MessageKey_NotIn(ins []string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2727,7 +2727,7 @@ func (u *__OldMessages_Updater) MessageKey_NotIn(ins []string) *__OldMessages_Up
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Updater) MessageKey_Like(val string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MessageKey_Like(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2738,7 +2738,7 @@ func (u *__OldMessages_Updater) MessageKey_Like(val string) *__OldMessages_Updat
 	return u
 }
 
-func (d *__OldMessages_Updater) MessageKey_Eq(val string) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MessageKey_Eq(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2749,7 +2749,7 @@ func (d *__OldMessages_Updater) MessageKey_Eq(val string) *__OldMessages_Updater
 	return d
 }
 
-func (d *__OldMessages_Updater) MessageKey_NotEq(val string) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) MessageKey_NotEq(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2760,7 +2760,7 @@ func (d *__OldMessages_Updater) MessageKey_NotEq(val string) *__OldMessages_Upda
 	return d
 }
 
-func (u *__OldMessages_Updater) RoomKey_In(ins []string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) RoomKey_In(ins []string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2773,7 +2773,7 @@ func (u *__OldMessages_Updater) RoomKey_In(ins []string) *__OldMessages_Updater 
 	return u
 }
 
-func (u *__OldMessages_Updater) RoomKey_NotIn(ins []string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) RoomKey_NotIn(ins []string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2787,7 +2787,7 @@ func (u *__OldMessages_Updater) RoomKey_NotIn(ins []string) *__OldMessages_Updat
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Updater) RoomKey_Like(val string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) RoomKey_Like(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2798,7 +2798,7 @@ func (u *__OldMessages_Updater) RoomKey_Like(val string) *__OldMessages_Updater 
 	return u
 }
 
-func (d *__OldMessages_Updater) RoomKey_Eq(val string) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) RoomKey_Eq(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2809,7 +2809,7 @@ func (d *__OldMessages_Updater) RoomKey_Eq(val string) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) RoomKey_NotEq(val string) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) RoomKey_NotEq(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2820,7 +2820,7 @@ func (d *__OldMessages_Updater) RoomKey_NotEq(val string) *__OldMessages_Updater
 	return d
 }
 
-func (u *__OldMessages_Updater) Data64_In(ins []string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Data64_In(ins []string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2833,7 +2833,7 @@ func (u *__OldMessages_Updater) Data64_In(ins []string) *__OldMessages_Updater {
 	return u
 }
 
-func (u *__OldMessages_Updater) Data64_NotIn(ins []string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Data64_NotIn(ins []string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2847,7 +2847,7 @@ func (u *__OldMessages_Updater) Data64_NotIn(ins []string) *__OldMessages_Update
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Updater) Data64_Like(val string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Data64_Like(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2858,7 +2858,7 @@ func (u *__OldMessages_Updater) Data64_Like(val string) *__OldMessages_Updater {
 	return u
 }
 
-func (d *__OldMessages_Updater) Data64_Eq(val string) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Data64_Eq(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2869,7 +2869,7 @@ func (d *__OldMessages_Updater) Data64_Eq(val string) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) Data64_NotEq(val string) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) Data64_NotEq(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2880,7 +2880,7 @@ func (d *__OldMessages_Updater) Data64_NotEq(val string) *__OldMessages_Updater 
 	return d
 }
 
-func (u *__OldMessages_Updater) DataJson_In(ins []string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) DataJson_In(ins []string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2893,7 +2893,7 @@ func (u *__OldMessages_Updater) DataJson_In(ins []string) *__OldMessages_Updater
 	return u
 }
 
-func (u *__OldMessages_Updater) DataJson_NotIn(ins []string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) DataJson_NotIn(ins []string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2907,7 +2907,7 @@ func (u *__OldMessages_Updater) DataJson_NotIn(ins []string) *__OldMessages_Upda
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Updater) DataJson_Like(val string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) DataJson_Like(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2918,7 +2918,7 @@ func (u *__OldMessages_Updater) DataJson_Like(val string) *__OldMessages_Updater
 	return u
 }
 
-func (d *__OldMessages_Updater) DataJson_Eq(val string) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) DataJson_Eq(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2929,7 +2929,7 @@ func (d *__OldMessages_Updater) DataJson_Eq(val string) *__OldMessages_Updater {
 	return d
 }
 
-func (d *__OldMessages_Updater) DataJson_NotEq(val string) *__OldMessages_Updater {
+func (d *__OldMessage_Updater) DataJson_NotEq(val string) *__OldMessage_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2942,7 +2942,7 @@ func (d *__OldMessages_Updater) DataJson_NotEq(val string) *__OldMessages_Update
 
 ////////ints
 
-func (u *__OldMessages_Selector) MessageKey_In(ins []string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) MessageKey_In(ins []string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2955,7 +2955,7 @@ func (u *__OldMessages_Selector) MessageKey_In(ins []string) *__OldMessages_Sele
 	return u
 }
 
-func (u *__OldMessages_Selector) MessageKey_NotIn(ins []string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) MessageKey_NotIn(ins []string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -2969,7 +2969,7 @@ func (u *__OldMessages_Selector) MessageKey_NotIn(ins []string) *__OldMessages_S
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Selector) MessageKey_Like(val string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) MessageKey_Like(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2980,7 +2980,7 @@ func (u *__OldMessages_Selector) MessageKey_Like(val string) *__OldMessages_Sele
 	return u
 }
 
-func (d *__OldMessages_Selector) MessageKey_Eq(val string) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MessageKey_Eq(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -2991,7 +2991,7 @@ func (d *__OldMessages_Selector) MessageKey_Eq(val string) *__OldMessages_Select
 	return d
 }
 
-func (d *__OldMessages_Selector) MessageKey_NotEq(val string) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) MessageKey_NotEq(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3002,7 +3002,7 @@ func (d *__OldMessages_Selector) MessageKey_NotEq(val string) *__OldMessages_Sel
 	return d
 }
 
-func (u *__OldMessages_Selector) RoomKey_In(ins []string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) RoomKey_In(ins []string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3015,7 +3015,7 @@ func (u *__OldMessages_Selector) RoomKey_In(ins []string) *__OldMessages_Selecto
 	return u
 }
 
-func (u *__OldMessages_Selector) RoomKey_NotIn(ins []string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) RoomKey_NotIn(ins []string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3029,7 +3029,7 @@ func (u *__OldMessages_Selector) RoomKey_NotIn(ins []string) *__OldMessages_Sele
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Selector) RoomKey_Like(val string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) RoomKey_Like(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3040,7 +3040,7 @@ func (u *__OldMessages_Selector) RoomKey_Like(val string) *__OldMessages_Selecto
 	return u
 }
 
-func (d *__OldMessages_Selector) RoomKey_Eq(val string) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) RoomKey_Eq(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3051,7 +3051,7 @@ func (d *__OldMessages_Selector) RoomKey_Eq(val string) *__OldMessages_Selector 
 	return d
 }
 
-func (d *__OldMessages_Selector) RoomKey_NotEq(val string) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) RoomKey_NotEq(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3062,7 +3062,7 @@ func (d *__OldMessages_Selector) RoomKey_NotEq(val string) *__OldMessages_Select
 	return d
 }
 
-func (u *__OldMessages_Selector) Data64_In(ins []string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Data64_In(ins []string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3075,7 +3075,7 @@ func (u *__OldMessages_Selector) Data64_In(ins []string) *__OldMessages_Selector
 	return u
 }
 
-func (u *__OldMessages_Selector) Data64_NotIn(ins []string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Data64_NotIn(ins []string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3089,7 +3089,7 @@ func (u *__OldMessages_Selector) Data64_NotIn(ins []string) *__OldMessages_Selec
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Selector) Data64_Like(val string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Data64_Like(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3100,7 +3100,7 @@ func (u *__OldMessages_Selector) Data64_Like(val string) *__OldMessages_Selector
 	return u
 }
 
-func (d *__OldMessages_Selector) Data64_Eq(val string) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Data64_Eq(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3111,7 +3111,7 @@ func (d *__OldMessages_Selector) Data64_Eq(val string) *__OldMessages_Selector {
 	return d
 }
 
-func (d *__OldMessages_Selector) Data64_NotEq(val string) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) Data64_NotEq(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3122,7 +3122,7 @@ func (d *__OldMessages_Selector) Data64_NotEq(val string) *__OldMessages_Selecto
 	return d
 }
 
-func (u *__OldMessages_Selector) DataJson_In(ins []string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) DataJson_In(ins []string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3135,7 +3135,7 @@ func (u *__OldMessages_Selector) DataJson_In(ins []string) *__OldMessages_Select
 	return u
 }
 
-func (u *__OldMessages_Selector) DataJson_NotIn(ins []string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) DataJson_NotIn(ins []string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	for _, i := range ins {
@@ -3149,7 +3149,7 @@ func (u *__OldMessages_Selector) DataJson_NotIn(ins []string) *__OldMessages_Sel
 }
 
 //must be used like: UserName_like("hamid%")
-func (u *__OldMessages_Selector) DataJson_Like(val string) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) DataJson_Like(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3160,7 +3160,7 @@ func (u *__OldMessages_Selector) DataJson_Like(val string) *__OldMessages_Select
 	return u
 }
 
-func (d *__OldMessages_Selector) DataJson_Eq(val string) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) DataJson_Eq(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3171,7 +3171,7 @@ func (d *__OldMessages_Selector) DataJson_Eq(val string) *__OldMessages_Selector
 	return d
 }
 
-func (d *__OldMessages_Selector) DataJson_NotEq(val string) *__OldMessages_Selector {
+func (d *__OldMessage_Selector) DataJson_NotEq(val string) *__OldMessage_Selector {
 	w := whereClause{}
 	var insWhere []interface{}
 	insWhere = append(insWhere, val)
@@ -3188,12 +3188,12 @@ func (d *__OldMessages_Selector) DataJson_NotEq(val string) *__OldMessages_Selec
 
 //ints
 
-func (u *__OldMessages_Updater) Id(newVal int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Id(newVal int) *__OldMessage_Updater {
 	u.updates[" Id = ? "] = newVal
 	return u
 }
 
-func (u *__OldMessages_Updater) Id_Increment(count int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Id_Increment(count int) *__OldMessage_Updater {
 	if count > 0 {
 		u.updates[" Id = Id+? "] = count
 	}
@@ -3209,12 +3209,12 @@ func (u *__OldMessages_Updater) Id_Increment(count int) *__OldMessages_Updater {
 
 //ints
 
-func (u *__OldMessages_Updater) Uid(newVal int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Uid(newVal int) *__OldMessage_Updater {
 	u.updates[" Uid = ? "] = newVal
 	return u
 }
 
-func (u *__OldMessages_Updater) Uid_Increment(count int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Uid_Increment(count int) *__OldMessage_Updater {
 	if count > 0 {
 		u.updates[" Uid = Uid+? "] = count
 	}
@@ -3230,12 +3230,12 @@ func (u *__OldMessages_Updater) Uid_Increment(count int) *__OldMessages_Updater 
 
 //ints
 
-func (u *__OldMessages_Updater) UserId(newVal int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) UserId(newVal int) *__OldMessage_Updater {
 	u.updates[" UserId = ? "] = newVal
 	return u
 }
 
-func (u *__OldMessages_Updater) UserId_Increment(count int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) UserId_Increment(count int) *__OldMessage_Updater {
 	if count > 0 {
 		u.updates[" UserId = UserId+? "] = count
 	}
@@ -3252,7 +3252,7 @@ func (u *__OldMessages_Updater) UserId_Increment(count int) *__OldMessages_Updat
 //ints
 
 //string
-func (u *__OldMessages_Updater) MessageKey(newVal string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MessageKey(newVal string) *__OldMessage_Updater {
 	u.updates[" MessageKey = ? "] = newVal
 	return u
 }
@@ -3260,19 +3260,19 @@ func (u *__OldMessages_Updater) MessageKey(newVal string) *__OldMessages_Updater
 //ints
 
 //string
-func (u *__OldMessages_Updater) RoomKey(newVal string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) RoomKey(newVal string) *__OldMessage_Updater {
 	u.updates[" RoomKey = ? "] = newVal
 	return u
 }
 
 //ints
 
-func (u *__OldMessages_Updater) MessageType(newVal int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MessageType(newVal int) *__OldMessage_Updater {
 	u.updates[" MessageType = ? "] = newVal
 	return u
 }
 
-func (u *__OldMessages_Updater) MessageType_Increment(count int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MessageType_Increment(count int) *__OldMessage_Updater {
 	if count > 0 {
 		u.updates[" MessageType = MessageType+? "] = count
 	}
@@ -3288,12 +3288,12 @@ func (u *__OldMessages_Updater) MessageType_Increment(count int) *__OldMessages_
 
 //ints
 
-func (u *__OldMessages_Updater) RoomType(newVal int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) RoomType(newVal int) *__OldMessage_Updater {
 	u.updates[" RoomType = ? "] = newVal
 	return u
 }
 
-func (u *__OldMessages_Updater) RoomType_Increment(count int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) RoomType_Increment(count int) *__OldMessage_Updater {
 	if count > 0 {
 		u.updates[" RoomType = RoomType+? "] = count
 	}
@@ -3309,12 +3309,12 @@ func (u *__OldMessages_Updater) RoomType_Increment(count int) *__OldMessages_Upd
 
 //ints
 
-func (u *__OldMessages_Updater) MsgFileId(newVal int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MsgFileId(newVal int) *__OldMessage_Updater {
 	u.updates[" MsgFileId = ? "] = newVal
 	return u
 }
 
-func (u *__OldMessages_Updater) MsgFileId_Increment(count int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) MsgFileId_Increment(count int) *__OldMessage_Updater {
 	if count > 0 {
 		u.updates[" MsgFileId = MsgFileId+? "] = count
 	}
@@ -3335,7 +3335,7 @@ func (u *__OldMessages_Updater) MsgFileId_Increment(count int) *__OldMessages_Up
 //ints
 
 //string
-func (u *__OldMessages_Updater) Data64(newVal string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) Data64(newVal string) *__OldMessage_Updater {
 	u.updates[" Data64 = ? "] = newVal
 	return u
 }
@@ -3343,19 +3343,19 @@ func (u *__OldMessages_Updater) Data64(newVal string) *__OldMessages_Updater {
 //ints
 
 //string
-func (u *__OldMessages_Updater) DataJson(newVal string) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) DataJson(newVal string) *__OldMessage_Updater {
 	u.updates[" DataJson = ? "] = newVal
 	return u
 }
 
 //ints
 
-func (u *__OldMessages_Updater) CreatedTimeMs(newVal int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) CreatedTimeMs(newVal int) *__OldMessage_Updater {
 	u.updates[" CreatedTimeMs = ? "] = newVal
 	return u
 }
 
-func (u *__OldMessages_Updater) CreatedTimeMs_Increment(count int) *__OldMessages_Updater {
+func (u *__OldMessage_Updater) CreatedTimeMs_Increment(count int) *__OldMessage_Updater {
 	if count > 0 {
 		u.updates[" CreatedTimeMs = CreatedTimeMs+? "] = count
 	}
@@ -3374,198 +3374,198 @@ func (u *__OldMessages_Updater) CreatedTimeMs_Increment(count int) *__OldMessage
 
 //Select_* can just be used with: .GetString() , .GetStringSlice(), .GetInt() ..GetIntSlice()
 
-func (u *__OldMessages_Selector) OrderBy_Id_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_Id_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY Id DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_Id_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_Id_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY Id ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_Id() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_Id() *__OldMessage_Selector {
 	u.selectCol = "Id"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_Uid_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_Uid_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY Uid DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_Uid_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_Uid_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY Uid ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_Uid() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_Uid() *__OldMessage_Selector {
 	u.selectCol = "Uid"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_UserId_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_UserId_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY UserId DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_UserId_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_UserId_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY UserId ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_UserId() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_UserId() *__OldMessage_Selector {
 	u.selectCol = "UserId"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_MessageKey_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_MessageKey_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY MessageKey DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_MessageKey_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_MessageKey_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY MessageKey ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_MessageKey() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_MessageKey() *__OldMessage_Selector {
 	u.selectCol = "MessageKey"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_RoomKey_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_RoomKey_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY RoomKey DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_RoomKey_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_RoomKey_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY RoomKey ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_RoomKey() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_RoomKey() *__OldMessage_Selector {
 	u.selectCol = "RoomKey"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_MessageType_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_MessageType_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY MessageType DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_MessageType_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_MessageType_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY MessageType ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_MessageType() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_MessageType() *__OldMessage_Selector {
 	u.selectCol = "MessageType"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_RoomType_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_RoomType_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY RoomType DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_RoomType_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_RoomType_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY RoomType ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_RoomType() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_RoomType() *__OldMessage_Selector {
 	u.selectCol = "RoomType"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_MsgFileId_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_MsgFileId_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY MsgFileId DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_MsgFileId_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_MsgFileId_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY MsgFileId ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_MsgFileId() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_MsgFileId() *__OldMessage_Selector {
 	u.selectCol = "MsgFileId"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_DataPB_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_DataPB_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY DataPB DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_DataPB_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_DataPB_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY DataPB ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_DataPB() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_DataPB() *__OldMessage_Selector {
 	u.selectCol = "DataPB"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_Data64_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_Data64_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY Data64 DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_Data64_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_Data64_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY Data64 ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_Data64() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_Data64() *__OldMessage_Selector {
 	u.selectCol = "Data64"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_DataJson_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_DataJson_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY DataJson DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_DataJson_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_DataJson_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY DataJson ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_DataJson() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_DataJson() *__OldMessage_Selector {
 	u.selectCol = "DataJson"
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_CreatedTimeMs_Desc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_CreatedTimeMs_Desc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY CreatedTimeMs DESC "
 	return u
 }
 
-func (u *__OldMessages_Selector) OrderBy_CreatedTimeMs_Asc() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) OrderBy_CreatedTimeMs_Asc() *__OldMessage_Selector {
 	u.orderBy = " ORDER BY CreatedTimeMs ASC "
 	return u
 }
 
-func (u *__OldMessages_Selector) Select_CreatedTimeMs() *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Select_CreatedTimeMs() *__OldMessage_Selector {
 	u.selectCol = "CreatedTimeMs"
 	return u
 }
 
-func (u *__OldMessages_Selector) Limit(num int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Limit(num int) *__OldMessage_Selector {
 	u.limit = num
 	return u
 }
 
-func (u *__OldMessages_Selector) Offset(num int) *__OldMessages_Selector {
+func (u *__OldMessage_Selector) Offset(num int) *__OldMessage_Selector {
 	u.offset = num
 	return u
 }
 
 /////////////////////////  Queryer Selector  //////////////////////////////////
-func (u *__OldMessages_Selector) _stoSql() (string, []interface{}) {
+func (u *__OldMessage_Selector) _stoSql() (string, []interface{}) {
 	sqlWherrs, whereArgs := whereClusesToSql(u.wheres, u.whereSep)
 
 	sqlstr := "SELECT " + u.selectCol + " FROM ms.old_messages"
@@ -3588,14 +3588,14 @@ func (u *__OldMessages_Selector) _stoSql() (string, []interface{}) {
 	return sqlstr, whereArgs
 }
 
-func (u *__OldMessages_Selector) GetRow(db *sqlx.DB) (*OldMessages, error) {
+func (u *__OldMessage_Selector) GetRow(db *sqlx.DB) (*OldMessage, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	row := &OldMessages{}
+	row := &OldMessage{}
 	//by Sqlx
 	err = db.Get(row, sqlstr, whereArgs...)
 	if err != nil {
@@ -3605,19 +3605,19 @@ func (u *__OldMessages_Selector) GetRow(db *sqlx.DB) (*OldMessages, error) {
 
 	row._exists = true
 
-	OnOldMessages_LoadOne(row)
+	OnOldMessage_LoadOne(row)
 
 	return row, nil
 }
 
-func (u *__OldMessages_Selector) GetRows(db *sqlx.DB) ([]*OldMessages, error) {
+func (u *__OldMessage_Selector) GetRows(db *sqlx.DB) ([]*OldMessage, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*OldMessages
+	var rows []*OldMessage
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -3633,20 +3633,20 @@ func (u *__OldMessages_Selector) GetRows(db *sqlx.DB) ([]*OldMessages, error) {
 		rows[i]._exists = true
 	}
 
-	OnOldMessages_LoadMany(rows)
+	OnOldMessage_LoadMany(rows)
 
 	return rows, nil
 }
 
 //dep use GetRows()
-func (u *__OldMessages_Selector) GetRows2(db *sqlx.DB) ([]OldMessages, error) {
+func (u *__OldMessage_Selector) GetRows2(db *sqlx.DB) ([]OldMessage, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
 
 	XOLog(sqlstr, whereArgs)
 
-	var rows []*OldMessages
+	var rows []*OldMessage
 	//by Sqlx
 	err = db.Unsafe().Select(&rows, sqlstr, whereArgs...)
 	if err != nil {
@@ -3662,9 +3662,9 @@ func (u *__OldMessages_Selector) GetRows2(db *sqlx.DB) ([]OldMessages, error) {
 		rows[i]._exists = true
 	}
 
-	OnOldMessages_LoadMany(rows)
+	OnOldMessage_LoadMany(rows)
 
-	rows2 := make([]OldMessages, len(rows))
+	rows2 := make([]OldMessage, len(rows))
 	for i := 0; i < len(rows); i++ {
 		cp := *rows[i]
 		rows2[i] = cp
@@ -3673,7 +3673,7 @@ func (u *__OldMessages_Selector) GetRows2(db *sqlx.DB) ([]OldMessages, error) {
 	return rows2, nil
 }
 
-func (u *__OldMessages_Selector) GetString(db *sqlx.DB) (string, error) {
+func (u *__OldMessage_Selector) GetString(db *sqlx.DB) (string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -3691,7 +3691,7 @@ func (u *__OldMessages_Selector) GetString(db *sqlx.DB) (string, error) {
 	return res, nil
 }
 
-func (u *__OldMessages_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
+func (u *__OldMessage_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -3709,7 +3709,7 @@ func (u *__OldMessages_Selector) GetStringSlice(db *sqlx.DB) ([]string, error) {
 	return rows, nil
 }
 
-func (u *__OldMessages_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
+func (u *__OldMessage_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -3727,7 +3727,7 @@ func (u *__OldMessages_Selector) GetIntSlice(db *sqlx.DB) ([]int, error) {
 	return rows, nil
 }
 
-func (u *__OldMessages_Selector) GetInt(db *sqlx.DB) (int, error) {
+func (u *__OldMessage_Selector) GetInt(db *sqlx.DB) (int, error) {
 	var err error
 
 	sqlstr, whereArgs := u._stoSql()
@@ -3746,7 +3746,7 @@ func (u *__OldMessages_Selector) GetInt(db *sqlx.DB) (int, error) {
 }
 
 /////////////////////////  Queryer Update Delete //////////////////////////////////
-func (u *__OldMessages_Updater) Update(db XODB) (int, error) {
+func (u *__OldMessage_Updater) Update(db XODB) (int, error) {
 	var err error
 
 	var updateArgs []interface{}
@@ -3785,7 +3785,7 @@ func (u *__OldMessages_Updater) Update(db XODB) (int, error) {
 	return int(num), nil
 }
 
-func (d *__OldMessages_Deleter) Delete(db XODB) (int, error) {
+func (d *__OldMessage_Deleter) Delete(db XODB) (int, error) {
 	var err error
 	var wheresArr []string
 	for _, w := range d.wheres {
@@ -3818,9 +3818,9 @@ func (d *__OldMessages_Deleter) Delete(db XODB) (int, error) {
 	return int(num), nil
 }
 
-///////////////////////// Mass insert - replace for  OldMessages ////////////////
+///////////////////////// Mass insert - replace for  OldMessage ////////////////
 
-func MassInsert_OldMessages(rows []OldMessages, db XODB) error {
+func MassInsert_OldMessage(rows []OldMessage, db XODB) error {
 	if len(rows) == 0 {
 		return errors.New("rows slice should not be empty - inserted nothing")
 	}
@@ -3865,7 +3865,7 @@ func MassInsert_OldMessages(rows []OldMessages, db XODB) error {
 	return nil
 }
 
-func MassReplace_OldMessages(rows []OldMessages, db XODB) error {
+func MassReplace_OldMessage(rows []OldMessage, db XODB) error {
 	var err error
 	ln := len(rows)
 	s := "(?,?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
