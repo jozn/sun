@@ -1,7 +1,9 @@
 package models
 
-func OnAppStart_Models() {
+import "fmt"
 
+func OnAppStart_Models() {
+    fmt.Println("OnAppStart_Models")
 	MemoryStore_User.ReloadAll()
 
 	ReloadTopUserIds()

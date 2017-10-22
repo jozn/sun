@@ -11,7 +11,7 @@ import (
 	"ms/sun/models"
 	"net/http"
 
-	_ "github.com/garyburd/redigo/redis"
+	//_ "github.com/garyburd/redigo/redis"
 	//_ "net/http/pprof"
 	_ "github.com/rakyll/gom/http"
 	_ "net/http/pprof"
@@ -27,7 +27,7 @@ import (
 	"time"
 )
 
-var redisPool *pool.Pool
+//var redisPool *pool.Pool
 
 func main() {
 
@@ -121,7 +121,7 @@ func startApp() {
 
 func redisInit1() {
 	var err error
-	redisPool, err = pool.New("tcp", "localhost:6379", 10)
+	redisPool, err := pool.New("tcp", "localhost:6379", 10)
 	if err != nil {
 		fmt.Println("redis failed")
 		return
@@ -247,7 +247,7 @@ func registerRoutes() *httptreemux.TreeMux {
 		//http.Handle("/i/msg", actionToFunc(ctrl.SendSampleMesgTable3_v04))
 		http.Handle("/i/msg", actionToFunc(ctrl.SendSampleMesgNew))
 		//http.Handle("/i/msg2", actionToFunc(ctrl.SendSampleMesg))
-		http.Handle("/i/redis", actionToFunc(RedisSavePlay))
+		//http.Handle("/i/redis", actionToFunc(RedisSavePlay))
 		http.Handle("/i/play", actionToFunc(PlaySomething))
 		http.Handle("/i/cache", actionToFunc(ShowCached))
 		http.Handle("/i/cacher", actionToFunc(ShowCacher))

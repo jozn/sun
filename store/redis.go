@@ -11,7 +11,7 @@ const REDIS_SORTED_LIST_REMOVE_RANGE_SCORE = "ZREMRANGEBYSCORE"
 const REDIS_SORTED_LIST_GET_RANGE_INDEX = "ZRANGE" //by index
 
 func init() {
-	GetRedisPool()
+	//GetRedisPool()
 }
 
 var redisPool *pool.Pool
