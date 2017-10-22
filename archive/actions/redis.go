@@ -6,7 +6,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models/x"
-	"ms/sun/store"
+	"ms/sun/archive/store"
 )
 
 func RedisSavePlay(c *base.Action) base.AppErr {

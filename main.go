@@ -16,7 +16,7 @@ import (
 	_ "github.com/rakyll/gom/http"
 	_ "net/http/pprof"
 
-	. "ms/sun/actions"
+	. "ms/sun/archive/actions"
 	"ms/sun/config"
 	"ms/sun/ctrl"
 	"ms/sun/fact"

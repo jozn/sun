@@ -2,7 +2,7 @@ package ctrl
 
 import (
 	"ms/sun/base"
-	"ms/sun/constants"
+	"ms/sun/archive/constants"
 	"ms/sun/models"
 )
 

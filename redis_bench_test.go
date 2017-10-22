@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ms/sun/store"
+	"ms/sun/archive/store"
 	"strconv"
 	"testing"
 )
