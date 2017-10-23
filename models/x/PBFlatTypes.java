@@ -2723,6 +2723,61 @@ public class PBFlatTypes {
 	t.ForUserId = m.getForUserId() ;
 	*/
 
+	public class PB_Offline {
+	   public long Id;
+	   public int FromUserId;
+	   public int ToUserId;
+	   public String RpcName;
+	   public String PBClassName;
+	   public String Key;
+	   public String DataJson;
+	   public byte[] DataBlob;
+	   public int DataLength;
+	   public long CreatedMs;
+	}
+	/*
+	folding
+	PBFlatTypes.PB_Offline t = new PBFlatTypes.PB_Offline();
+    t.setId();
+    t.setFromUserId();
+    t.setToUserId();
+    t.setRpcName();
+    t.setPBClassName();
+    t.setKey();
+    t.setDataJson();
+    t.setDataBlob();
+    t.setDataLength();
+    t.setCreatedMs();
+	*/
+
+	/*
+	PBFlatTypes.PB_Offline t = new PBFlatTypes.PB_Offline();
+	t.Id = ;
+	t.FromUserId = ;
+	t.ToUserId = ;
+	t.RpcName = ;
+	t.PBClassName = ;
+	t.Key = ;
+	t.DataJson = ;
+	t.DataBlob = ;
+	t.DataLength = ;
+	t.CreatedMs = ;
+	*/
+
+	/*
+	PB_Offline t = new PB_Offline();
+	t.Id = m.getId() ;
+	t.FromUserId = m.getFromUserId() ;
+	t.ToUserId = m.getToUserId() ;
+	t.RpcName = m.getRpcName() ;
+	t.PBClassName = m.getPBClassName() ;
+	t.Key = m.getKey() ;
+	t.DataJson = m.getDataJson() ;
+	t.DataBlob = m.getDataBlob() ;
+	t.DataLength = m.getDataLength() ;
+	t.CreatedMs = m.getCreatedMs() ;
+	*/
+
 	public class PB_OldMessage {
 	   public long Id;
 	   public long Uid;
@@ -3779,6 +3834,45 @@ public class PBFlatTypes {
 	t.C3 = m.getC3() ;
 	t.C4 = m.getC4() ;
 	t.C5 = m.getC5() ;
+	*/
+
+	public class PB_TriggerLog {
+	   public long Id;
+	   public String ModelName;
+	   public String ChangeType;
+	   public long TargetId;
+	   public String TargetStr;
+	   public int CreatedSe;
+	}
+	/*
+	folding
+	PBFlatTypes.PB_TriggerLog t = new PBFlatTypes.PB_TriggerLog();
+    t.setId();
+    t.setModelName();
+    t.setChangeType();
+    t.setTargetId();
+    t.setTargetStr();
+    t.setCreatedSe();
+	*/
+
+	/*
+	PBFlatTypes.PB_TriggerLog t = new PBFlatTypes.PB_TriggerLog();
+	t.Id = ;
+	t.ModelName = ;
+	t.ChangeType = ;
+	t.TargetId = ;
+	t.TargetStr = ;
+	t.CreatedSe = ;
+	*/
+
+	/*
+	PB_TriggerLog t = new PB_TriggerLog();
+	t.Id = m.getId() ;
+	t.ModelName = m.getModelName() ;
+	t.ChangeType = m.getChangeType() ;
+	t.TargetId = m.getTargetId() ;
+	t.TargetStr = m.getTargetStr() ;
+	t.CreatedSe = m.getCreatedSe() ;
 	*/
 
 	public class PB_User {

@@ -12,11 +12,11 @@ func main() {
 	go func() {
 		for {
 			err := exec.Command(`loc2.exe`, "").Run()
-            if err != nil {
-                fmt.Println(err)
-            }
-            fmt.Println("loc2 runned")
-            time.Sleep(time.Second * 10 * 60)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println("loc2 runned")
+			time.Sleep(time.Second * 10 * 60)
 		}
 	}()
 

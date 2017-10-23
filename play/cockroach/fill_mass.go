@@ -6,15 +6,15 @@ import (
 	"math/rand"
 
 	_ "github.com/lib/pq"
-    "time"
+	"time"
 )
 
 const (
-    numberOfUsers = 1000
-    numberOfGroups = 1000
-    usersPerGroup = 100
-    permissionsPerUser = 100
-    permissionsPerGroup = 100
+	numberOfUsers       = 1000
+	numberOfGroups      = 1000
+	usersPerGroup       = 100
+	permissionsPerUser  = 100
+	permissionsPerGroup = 100
 )
 
 func main() {
@@ -55,27 +55,26 @@ CREATE INDEX ON users_groups (group_id, user_id);
 		panic(err)
 	}
 
-    mass2(db)
+	mass2(db)
 
-    id := 1
+	id := 1
 	for {
-        s := ""
-        for id2:=0; id2 < numberOfUsers; id2++ {
-            //fmt.Println("UserView ", id)
-            id++
-            name := fmt.Sprintf("user-%d", id)
-            //id2 := id
-            s += fmt.Sprintf("INSERT INTO users VALUES (%d, '%s');", id, name)
+		s := ""
+		for id2 := 0; id2 < numberOfUsers; id2++ {
+			//fmt.Println("UserView ", id)
+			id++
+			name := fmt.Sprintf("user-%d", id)
+			//id2 := id
+			s += fmt.Sprintf("INSERT INTO users VALUES (%d, '%s');", id, name)
 
-        }
+		}
 
-        _, err = db.Exec(s)
-        if err != nil {
-            panic(err)
-        }
-        fmt.Println("groups : ", id)
-    }
-
+		_, err = db.Exec(s)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("groups : ", id)
+	}
 
 	mid := 0
 	for id := 0; id < numberOfGroups; id++ {
@@ -141,42 +140,41 @@ CREATE INDEX ON users_groups (group_id, user_id);
 	}
 }
 
-func mass2(db *sql.DB)  {
-    t :=time.Now()
-    lastT :=time.Now()
-    lastId :=0
-    id := 1000000000
-    for {
-        o:=""
-        for id2:=0; id2 < 1000; id2++ {
-            //fmt.Println("UserView ", id)
-            id++
-            name := fmt.Sprintf("user-%d-sd yeryey ee eyery sads شسشسسش سیسسیی سیسییس ثقلثلثقل صشصفشص فقفف", id)
-            name2 := fmt.Sprintf("useasd  فقفف", id)
-            //id2 := id
-            o += fmt.Sprintf("(%d, '%s' ,'%s'), ", id, name ,name2)
+func mass2(db *sql.DB) {
+	t := time.Now()
+	lastT := time.Now()
+	lastId := 0
+	id := 1000000000
+	for {
+		o := ""
+		for id2 := 0; id2 < 1000; id2++ {
+			//fmt.Println("UserView ", id)
+			id++
+			name := fmt.Sprintf("user-%d-sd yeryey ee eyery sads شسشسسش سیسسیی سیسییس ثقلثلثقل صشصفشص فقفف", id)
+			name2 := fmt.Sprintf("useasd  فقفف", id)
+			//id2 := id
+			o += fmt.Sprintf("(%d, '%s' ,'%s'), ", id, name, name2)
 
-        }
+		}
 
-        o = o[:len(o)-2]
-        s := "INSERT INTO users (id, name, name2) VALUES " + o + ";"
+		o = o[:len(o)-2]
+		s := "INSERT INTO users (id, name, name2) VALUES " + o + ";"
 
-        _, err := db.Exec(s)
-        if err != nil {
-            fmt.Println(s,err)
-            panic(err)
-        }
-        if id %100000 == 0 {
-            qpsAll:= id / int(time.Now().Sub(t).Seconds())
-            qpslast:= (id-lastId) *1000 / int(time.Now().Sub(lastT).Nanoseconds()/1000000)
+		_, err := db.Exec(s)
+		if err != nil {
+			fmt.Println(s, err)
+			panic(err)
+		}
+		if id%100000 == 0 {
+			qpsAll := id / int(time.Now().Sub(t).Seconds())
+			qpslast := (id - lastId) * 1000 / int(time.Now().Sub(lastT).Nanoseconds()/1000000)
 
-            fmt.Printf("id: %d -- qps:%d  - last: %d -- last rows count: %d \n", id,qpsAll,qpslast,(id-lastId))
+			fmt.Printf("id: %d -- qps:%d  - last: %d -- last rows count: %d \n", id, qpsAll, qpslast, (id - lastId))
 
-            lastT = time.Now()
-            lastId = id
+			lastT = time.Now()
+			lastId = id
 
-        }
-    }
+		}
+	}
 
 }
-

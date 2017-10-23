@@ -63,12 +63,12 @@ func BenchmarkProtoBuff(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		p := &x.PB_ChatView{
-			ChatKey:              "dasdasda",
+			ChatKey: "dasdasda",
 			//ChatId:               194965,
-			RoomTypeEnumId:       94965,
-			UserId:               94965,
-			PeerUserId:           94965,
-			GroupId:              94965,
+			RoomTypeEnumId: 94965,
+			UserId:         94965,
+			PeerUserId:     94965,
+			GroupId:        94965,
 			//CreatedTime:          58,
 			UpdatedMs:            94965,
 			LastMessageId:        94965,

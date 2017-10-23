@@ -2,7 +2,7 @@ package main
 
 // go test -bench .
 import (
-    "sync"
+	"sync"
 	"testing"
 	"unicode"
 	//"time"
@@ -257,6 +257,7 @@ func BenchmarkStr(b *testing.B) {
 		loopStr(c)
 	}
 }
+
 /*
 
 func BenchmarkJson1(b *testing.B) {

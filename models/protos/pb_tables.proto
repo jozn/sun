@@ -7,7 +7,7 @@ option optimize_for = LITE_RUNTIME; //CODE_SIZE;
 option go_package = "x";
 
 
-message PB_activity {
+message PB_Activity {
     int64 Id = 1;
     int32 ActorUserId = 3;
     int32 ActionTypeId = 5;
@@ -16,7 +16,7 @@ message PB_activity {
     int64 RefId = 11;
     int32 CreatedAt = 13;
 }
-message PB_bucket {
+message PB_Bucket {
     int32 BucketId = 1;
     string BucketName = 3;
     int32 Server1Id = 5;
@@ -26,7 +26,7 @@ message PB_bucket {
     int32 ContentObjectCount = 13;
     int32 CreatedTime = 15;
 }
-message PB_chat {
+message PB_Chat {
     string ChatKey = 1;
     string RoomKey = 3;
     int32 RoomTypeEnumId = 5;
@@ -43,14 +43,14 @@ message PB_chat {
     int32 LastSeqDelete = 27;
     int32 CurrentSeq = 29;
 }
-message PB_comment {
+message PB_Comment {
     int32 Id = 1;
     int32 UserId = 3;
     int32 PostId = 5;
     string Text = 7;
     int32 CreatedTime = 9;
 }
-message PB_direct_message {
+message PB_DirectMessage {
     int64 MessageId = 1;
     string MessageKey = 3;
     string RoomKey = 5;
@@ -63,13 +63,13 @@ message PB_direct_message {
     int32 PeerSeenTime = 19;
     int32 DeliviryStatusEnumId = 21;
 }
-message PB_direct_to_message {
+message PB_DirectToMessage {
     int64 Id = 1;
     string ChatKey = 3;
     int64 MessageId = 5;
     int32 SourceEnumId = 7;
 }
-message PB_direct_update {
+message PB_DirectUpdate {
     int64 DirectUpdateId = 1;
     int32 ToUserId = 3;
     int64 MessageId = 5;
@@ -85,7 +85,7 @@ message PB_direct_update {
     string ExtraJson = 25;
     int64 AtTimeMs = 27;
 }
-message PB_following_list {
+message PB_FollowingList {
     int32 Id = 1;
     int32 UserId = 3;
     int32 ListType = 5;
@@ -95,7 +95,7 @@ message PB_following_list {
     int32 IsPimiry = 13;
     int32 CreatedTime = 15;
 }
-message PB_following_list_member {
+message PB_FollowingListMember {
     int64 Id = 1;
     int32 ListId = 3;
     int32 UserId = 5;
@@ -103,7 +103,7 @@ message PB_following_list_member {
     int32 FollowType = 9;
     int64 UpdatedTimeMs = 11;
 }
-message PB_following_list_member_history {
+message PB_FollowingListMemberHistory {
     int64 Id = 1;
     int32 ListId = 3;
     int32 UserId = 5;
@@ -112,7 +112,7 @@ message PB_following_list_member_history {
     int64 UpdatedTimeMs = 11;
     int32 FollowId = 13;
 }
-message PB_general_log {
+message PB_GeneralLog {
     int64 Id = 1;
     int32 ToUserId = 3;
     int32 TargetId = 5;
@@ -121,7 +121,7 @@ message PB_general_log {
     string ExtraJson = 11;
     int64 CreatedMs = 13;
 }
-message PB_group {
+message PB_Group {
     int64 GroupId = 1;
     string GroupName = 3;
     int32 MembersCount = 5;
@@ -131,7 +131,7 @@ message PB_group {
     int64 UpdatedMs = 13;
     int32 CurrentSeq = 15;
 }
-message PB_group_member {
+message PB_GroupMember {
     int64 Id = 1;
     int64 GroupId = 3;
     string GroupKey = 5;
@@ -140,7 +140,7 @@ message PB_group_member {
     int32 GroupRoleEnumId = 11;
     int32 CreatedTime = 13;
 }
-message PB_group_message {
+message PB_GroupMessage {
     int64 MessageId = 1;
     string RoomKey = 3;
     int32 UserId = 5;
@@ -150,14 +150,14 @@ message PB_group_message {
     int64 CreatedMs = 13;
     int32 DeliveryStatusEnum = 15;
 }
-message PB_group_to_message {
+message PB_GroupToMessage {
     int64 Id = 1;
     int64 GroupId = 3;
     int64 MessageId = 5;
     int64 CreatedMs = 7;
     int32 StatusEnum = 9;
 }
-message PB_likes {
+message PB_Like {
     int32 Id = 1;
     int32 PostId = 3;
     int32 PostTypeId = 5;
@@ -165,11 +165,11 @@ message PB_likes {
     int32 TypeId = 9;
     int32 CreatedTime = 11;
 }
-message PB_log_changes {
+message PB_LogChange {
     int32 Id = 1;
     string T = 3;
 }
-message PB_media {
+message PB_Media {
     int32 Id = 1;
     int32 UserId = 3;
     int32 PostId = 5;
@@ -178,7 +178,7 @@ message PB_media {
     int32 CreatedTime = 11;
     string Src = 13;
 }
-message PB_message_file {
+message PB_MessageFile {
     int64 MessageFileId = 1;
     string MessageFileKey = 3;
     int32 OriginalUserId = 5;
@@ -199,7 +199,7 @@ message PB_message_file {
     int32 ServerId = 35;
     int32 CanDel = 37;
 }
-message PB_notification {
+message PB_Notification {
     int64 Id = 1;
     int32 ForUserId = 3;
     int32 ActorUserId = 5;
@@ -211,11 +211,23 @@ message PB_notification {
     int32 SeenStatus = 17;
     int32 CreatedTime = 19;
 }
-message PB_notification_removed {
+message PB_NotificationRemoved {
     int32 NotificationId = 1;
     int32 ForUserId = 3;
 }
-message PB_old_messages {
+message PB_Offline {
+    int64 Id = 1;
+    int32 FromUserId = 3;
+    int32 ToUserId = 5;
+    string RpcName = 7;
+    string PBClassName = 9;
+    string Key = 11;
+    string DataJson = 13;
+    bytes DataBlob = 15;
+    int32 DataLength = 17;
+    int64 CreatedMs = 19;
+}
+message PB_OldMessage {
     int64 Id = 1;
     int64 Uid = 3;
     int64 UserId = 5;
@@ -229,7 +241,7 @@ message PB_old_messages {
     string DataJson = 21;
     int64 CreatedTimeMs = 23;
 }
-message PB_old_msg_file {
+message PB_OldMsgFile {
     int64 Id = 1;
     string Name = 3;
     int32 Size = 5;
@@ -246,14 +258,14 @@ message PB_old_msg_file {
     int32 ServerId = 27;
     int32 CanDel = 29;
 }
-message PB_old_msg_push {
+message PB_OldMsgPush {
     int64 Id = 1;
     int64 Uid = 3;
     int64 ToUser = 5;
     int64 MsgUid = 7;
     int64 CreatedTimeMs = 9;
 }
-message PB_old_msg_push_event {
+message PB_OldMsgPushEvent {
     int64 Id = 1;
     int64 Uid = 3;
     int32 ToUserId = 5;
@@ -264,7 +276,7 @@ message PB_old_msg_push_event {
     int32 EventType = 15;
     int32 AtTime = 17;
 }
-message PB_phone_contacts {
+message PB_PhoneContact {
     int32 Id = 1;
     string PhoneDisplayName = 3;
     string PhoneFamilyName = 5;
@@ -276,7 +288,7 @@ message PB_phone_contacts {
     int32 CreatedTime = 17;
     int32 UpdatedTime = 19;
 }
-message PB_photo {
+message PB_Photo {
     int32 PhotoId = 1;
     int32 UserId = 3;
     int32 PostId = 5;
@@ -299,7 +311,7 @@ message PB_photo {
     int32 W160 = 39;
     int32 W80 = 41;
 }
-message PB_post {
+message PB_Post {
     int32 Id = 1;
     int32 UserId = 3;
     int32 TypeId = 5;
@@ -314,7 +326,7 @@ message PB_post {
     int32 EditedTime = 23;
     int32 CreatedTime = 25;
 }
-message PB_push_event {
+message PB_PushEvent {
     int64 PushEventId = 1;
     int32 ToUserId = 3;
     int64 ToDeviceId = 5;
@@ -325,7 +337,7 @@ message PB_push_event {
     int32 PushEventTypeEnum = 15;
     int32 AtTime = 17;
 }
-message PB_push_message {
+message PB_PushMessage {
     int64 PushMessageId = 1;
     int32 ToUserId = 3;
     int64 ToDeviceId = 5;
@@ -333,14 +345,14 @@ message PB_push_message {
     int32 RoomTypeEnum = 9;
     int64 CreatedMs = 11;
 }
-message PB_recommend_user {
+message PB_RecommendUser {
     int32 Id = 1;
     int32 UserId = 3;
     int32 TargetId = 5;
     float Weight = 7;
     int32 CreatedTime = 9;
 }
-message PB_room {
+message PB_Room {
     int64 RoomId = 1;
     string RoomKey = 3;
     int32 RoomTypeEnum = 5;
@@ -352,7 +364,7 @@ message PB_room {
     int32 CreatedTime = 17;
     int32 CurrentSeq = 19;
 }
-message PB_search_clicked {
+message PB_SearchClicked {
     int64 Id = 1;
     string Query = 3;
     int32 ClickType = 5;
@@ -360,7 +372,7 @@ message PB_search_clicked {
     int32 UserId = 9;
     int32 CreatedAt = 11;
 }
-message PB_session {
+message PB_Session {
     int32 Id = 1;
     int32 UserId = 3;
     string SessionUuid = 5;
@@ -378,7 +390,7 @@ message PB_session {
     int64 LastSyncGeneralUpdateId = 29;
     int64 LastSyncNotifyUpdateId = 31;
 }
-message PB_setting_client {
+message PB_SettingClient {
     int32 UserId = 1;
     int32 AutoDownloadWifiVoice = 3;
     int32 AutoDownloadWifiImage = 5;
@@ -400,7 +412,7 @@ message PB_setting_client {
     int32 AutoDownloadRoamingGif = 37;
     int32 SaveToGallery = 39;
 }
-message PB_setting_notifications {
+message PB_SettingNotification {
     int32 UserId = 1;
     int32 SocialLedOn = 3;
     string SocialLedColor = 5;
@@ -422,21 +434,21 @@ message PB_setting_notifications {
     int32 DirectSound = 37;
     int32 DirectPriority = 39;
 }
-message PB_tag {
+message PB_Tag {
     int32 Id = 1;
     string Name = 3;
     int32 Count = 5;
     int32 IsBlocked = 7;
     int32 CreatedTime = 9;
 }
-message PB_tags_posts {
+message PB_TagsPost {
     int32 Id = 1;
     int32 TagId = 3;
     int32 PostId = 5;
     int32 TypeId = 7;
     int32 CreatedTime = 9;
 }
-message PB_test_chat {
+message PB_TestChat {
     int64 Id = 1;
     int64 Id4 = 3;
     int64 TimeMs = 5;
@@ -448,7 +460,7 @@ message PB_test_chat {
     int32 C4 = 17;
     int32 C5 = 19;
 }
-message PB_trigger_log {
+message PB_TriggerLog {
     int64 Id = 1;
     string ModelName = 3;
     string ChangeType = 5;
@@ -456,7 +468,7 @@ message PB_trigger_log {
     string TargetStr = 9;
     int32 CreatedSe = 11;
 }
-message PB_user {
+message PB_User {
     int32 Id = 1;
     string UserName = 3;
     string UserNameLower = 5;
@@ -491,13 +503,13 @@ message PB_user {
     int32 LastLoginTime = 63;
     string LastIpAddress = 65;
 }
-message PB_user_meta_info {
+message PB_UserMetaInfo {
     int32 Id = 1;
     int32 UserId = 3;
     int32 IsNotificationDirty = 5;
     int32 LastUserRecGen = 7;
 }
-message PB_user_password {
+message PB_UserPassword {
     int32 UserId = 1;
     string Password = 3;
     int32 CreatedTime = 5;

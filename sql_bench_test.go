@@ -9,6 +9,7 @@ var onc sync.Once
 func prepareTest() {
 	onc.Do(func() { startApp() })
 }
+
 /*
 
 func Benchmark_sql_Activity_selext(b *testing.B) {

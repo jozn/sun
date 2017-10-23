@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/hacdias/fileutils"
+	"github.com/jozn/go-jalali/jalali"
 	"io/ioutil"
 	"ms/sun/helper"
 	"os"
 	"os/exec"
 	"path"
 	"time"
-    "github.com/jozn/go-jalali/jalali"
 )
 
 const SUN_DIR = `C:\Go\_gopath\src\ms\sun\`
@@ -55,19 +55,19 @@ func main() {
 	bts.WriteString("\n\n\n")
 	////////////////// End Android Social //////////////////
 
-    ///////////////// Android Social /////////////////////
-    bts.WriteString(header("Ants"))
-    cmd = exec.Command("cloc.exe", ANTS_DIR)
-    cmd.Stdout = bts
-    cmd.Run()
-    bts.WriteString(header("End Ants"))
-    bts.WriteString("\n\n\n")
-    ////////////////// End Android Social //////////////////
+	///////////////// Android Social /////////////////////
+	bts.WriteString(header("Ants"))
+	cmd = exec.Command("cloc.exe", ANTS_DIR)
+	cmd.Stdout = bts
+	cmd.Run()
+	bts.WriteString(header("End Ants"))
+	bts.WriteString("\n\n\n")
+	////////////////// End Android Social //////////////////
 
 	fmt.Println(bts.String())
 
-    year,mont,day := jalali.Gtoj(time.Now())
-	f, err := os.Create(path.Join(SCRIPTS_DIR, fmt.Sprintf("/loc_log/sun_%d__%d-%d-%d.txt", calDayChangeFrom826(),year,mont,day)))
+	year, mont, day := jalali.Gtoj(time.Now())
+	f, err := os.Create(path.Join(SCRIPTS_DIR, fmt.Sprintf("/loc_log/sun_%d__%d-%d-%d.txt", calDayChangeFrom826(), year, mont, day)))
 	helper.NoErr(err)
 	f.WriteString(bts.String())
 }
@@ -78,7 +78,7 @@ func calDayChangeFrom826() int {
 	startDay := 826
 	now := time.Now()
 	diff := now.Sub(t)
-	fmt.Println("Days diff:", diff.Seconds() / 86400)
+	fmt.Println("Days diff:", diff.Seconds()/86400)
 	dayShift := diff.Seconds() / 86400
 	startDay += int(dayShift)
 

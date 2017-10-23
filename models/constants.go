@@ -66,6 +66,5 @@ const PB_PushMsgEvents = "PB_PushMsgEvents"
 
 //const PB_PushMsgsRemovedFromServer = "PB_PushMsgsRemovedFromServer"
 
-
 //////////////// new push /////////
-const PB_PushHolderView  = "PB_PushHolderView"
+const PB_PushHolderView = "PB_PushHolderView"

@@ -508,6 +508,30 @@ func NotificationRemovedByNotificationId(db *sqlx.DB, notificationId int) (*Noti
 	return &nr, nil
 }
 
+// OfflineById Generated from index 'PRIMARY' -- retrieves a row from 'ms.offline' as a Offline.
+func OfflineById(db *sqlx.DB, id int) (*Offline, error) {
+	var err error
+
+	const sqlstr = `SELECT * ` +
+		`FROM ms.offline ` +
+		`WHERE Id = ?`
+
+	XOLog(sqlstr, id)
+	o := Offline{
+		_exists: true,
+	}
+
+	err = db.Get(&o, sqlstr, id)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+
+	OnOffline_LoadOne(&o)
+
+	return &o, nil
+}
+
 // OldMessageById Generated from index 'PRIMARY' -- retrieves a row from 'ms.old_messages' as a OldMessage.
 func OldMessageById(db *sqlx.DB, id int) (*OldMessage, error) {
 	var err error

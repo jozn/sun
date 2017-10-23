@@ -9,11 +9,11 @@ import (
 	"log"
 	"math/rand"
 	"mime/multipart"
+	"ms/sun/archive/shared"
 	"ms/sun/base"
 	"ms/sun/helper"
 	"ms/sun/models"
 	"ms/sun/models/x"
-	"ms/sun/archive/shared"
 	"net/http"
 	"os"
 	"time"
@@ -101,7 +101,7 @@ const dir = `./upload/samples`
 func init() {
 	imageFiles, err := ioutil.ReadDir(dir)
 	if err != nil {
-		log.Println("no such directy: ",err)
+		log.Println("no such directy: ", err)
 	}
 	_ = imageFiles
 }

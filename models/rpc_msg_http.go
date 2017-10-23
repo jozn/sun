@@ -3,9 +3,9 @@ package models
 import (
 	"fmt"
 	"github.com/jozn/protobuf/proto"
+	"io/ioutil"
 	"ms/sun/models/x"
 	"net/http"
-    "io/ioutil"
 )
 
 //TODO: add session handlerer/checker
@@ -13,8 +13,8 @@ func HttpRpcHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1e7)
 	r.ParseForm()
 
-    var err error = nil
-    //time.Sleep(2 * time.Second)
+	var err error = nil
+	//time.Sleep(2 * time.Second)
 	fmt.Printf("=====================================\ncalled MsgUploadV1: %v ", r.Form)
 
 	for key, value := range r.Form {

@@ -389,6 +389,8 @@ func (c _StoreImpl) PreLoadNotification_ByRowIds(RowIds []int) {
 
 // NotificationRemoved - PRIMARY
 
+// Offline - PRIMARY
+
 // OldMessage - PRIMARY
 
 //field//field//field

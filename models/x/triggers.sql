@@ -608,6 +608,35 @@ $$
 
 
  #### delimiter ;*/
+################################ Offline ######################################
+
+/* #### delimiter $$
+DROP TRIGGER IF EXISTS offline_OnCreateLogger $$
+CREATE TRIGGER offline_OnCreateLogger AFTER INSERT ON offline
+  FOR EACH ROW
+  BEGIN
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Offline","INSERT",NEW.Id, UNIX_TIMESTAMP(NOW()) );
+  END;
+$$
+
+DROP TRIGGER IF EXISTS offline_OnUpdateLogger $$
+CREATE TRIGGER offline_OnUpdateLogger AFTER UPDATE ON offline
+  FOR EACH ROW
+  BEGIN
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Offline","UPDATE",NEW.Id, UNIX_TIMESTAMP(NOW()));
+  END;
+$$
+
+DROP TRIGGER IF EXISTS offline_OnDeleteLogger $$
+CREATE TRIGGER offline_OnDeleteLogger AFTER DELETE ON offline
+  FOR EACH ROW
+  BEGIN
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("Offline","DELETE",OLD.Id, UNIX_TIMESTAMP(NOW()));
+  END;
+$$
+
+
+ #### delimiter ;*/
 ################################ OldMessage ######################################
 
 /* #### delimiter $$
@@ -1335,6 +1364,10 @@ DROP TRIGGER IF EXISTS notification_OnDeleteLogger ;
 DROP TRIGGER IF EXISTS notification_removed_OnCreateLogger ;
 DROP TRIGGER IF EXISTS notification_removed_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS notification_removed_OnDeleteLogger ;
+### Offline ##
+DROP TRIGGER IF EXISTS offline_OnCreateLogger ;
+DROP TRIGGER IF EXISTS offline_OnUpdateLogger ;
+DROP TRIGGER IF EXISTS offline_OnDeleteLogger ;
 ### OldMessage ##
 DROP TRIGGER IF EXISTS old_messages_OnCreateLogger ;
 DROP TRIGGER IF EXISTS old_messages_OnUpdateLogger ;

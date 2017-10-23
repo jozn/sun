@@ -74,11 +74,11 @@ CREATE TABLE users_groups (id INT PRIMARY KEY, user_id INT, group_id INT);
 	usersPerGroup := 100
 	permissionsPerUser := 100
 	permissionsPerGroup := 100
-	i :=0
-    next := func()int{
-        i++
-        return i
-    }
+	i := 0
+	next := func() int {
+		i++
+		return i
+	}
 	ff := func() {
 		for id := 0; id < numberOfUsers; id++ {
 			c++

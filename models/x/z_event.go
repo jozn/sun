@@ -509,6 +509,30 @@ func OnNotificationRemoved_LoadMany(rows []*NotificationRemoved) {
 	}
 }
 
+//Offline Events
+
+func OnOffline_AfterInsert(row *Offline) {
+	RowCache.Set("Offline:"+strconv.Itoa(row.Id), row, time.Hour*0)
+}
+
+func OnOffline_AfterUpdate(row *Offline) {
+	RowCache.Set("Offline:"+strconv.Itoa(row.Id), row, time.Hour*0)
+}
+
+func OnOffline_AfterDelete(row *Offline) {
+	RowCache.Delete("Offline:" + strconv.Itoa(row.Id))
+}
+
+func OnOffline_LoadOne(row *Offline) {
+	RowCache.Set("Offline:"+strconv.Itoa(row.Id), row, time.Hour*0)
+}
+
+func OnOffline_LoadMany(rows []*Offline) {
+	for _, row := range rows {
+		RowCache.Set("Offline:"+strconv.Itoa(row.Id), row, time.Hour*0)
+	}
+}
+
 //OldMessage Events
 
 func OnOldMessage_AfterInsert(row *OldMessage) {

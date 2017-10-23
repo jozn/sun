@@ -1,8 +1,8 @@
 package x
 
 /*
-func PBConvPB__activity_To_activity( o *PB_activity) *activity {
-     n := &activity{
+func PBConvPB__Activity_To_Activity( o *PB_Activity) *Activity {
+     n := &Activity{
       Id: int ( o.Id ),
       ActorUserId: int ( o.ActorUserId ),
       ActionTypeId: int ( o.ActionTypeId ),
@@ -14,8 +14,8 @@ func PBConvPB__activity_To_activity( o *PB_activity) *activity {
     return n
 }
 
-func PBConvPB_activity_To_activity ( o *activity) *PB_activity {
-     n := &PB_activity{
+func PBConvPB_Activity_To_Activity ( o *Activity) *PB_Activity {
+     n := &PB_Activity{
       Id: int64 ( o.Id ),
       ActorUserId: int32 ( o.ActorUserId ),
       ActionTypeId: int32 ( o.ActionTypeId ),
@@ -28,8 +28,8 @@ func PBConvPB_activity_To_activity ( o *activity) *PB_activity {
 }
 */
 /*
-func PBConvPB__bucket_To_bucket( o *PB_bucket) *bucket {
-     n := &bucket{
+func PBConvPB__Bucket_To_Bucket( o *PB_Bucket) *Bucket {
+     n := &Bucket{
       BucketId: int ( o.BucketId ),
       BucketName: string ( o.BucketName ),
       Server1Id: int ( o.Server1Id ),
@@ -42,8 +42,8 @@ func PBConvPB__bucket_To_bucket( o *PB_bucket) *bucket {
     return n
 }
 
-func PBConvPB_bucket_To_bucket ( o *bucket) *PB_bucket {
-     n := &PB_bucket{
+func PBConvPB_Bucket_To_Bucket ( o *Bucket) *PB_Bucket {
+     n := &PB_Bucket{
       BucketId: int32 ( o.BucketId ),
       BucketName: string ( o.BucketName ),
       Server1Id: int32 ( o.Server1Id ),
@@ -57,8 +57,8 @@ func PBConvPB_bucket_To_bucket ( o *bucket) *PB_bucket {
 }
 */
 /*
-func PBConvPB__chat_To_chat( o *PB_chat) *chat {
-     n := &chat{
+func PBConvPB__Chat_To_Chat( o *PB_Chat) *Chat {
+     n := &Chat{
       ChatKey: string ( o.ChatKey ),
       RoomKey: string ( o.RoomKey ),
       RoomTypeEnumId: int ( o.RoomTypeEnumId ),
@@ -78,8 +78,8 @@ func PBConvPB__chat_To_chat( o *PB_chat) *chat {
     return n
 }
 
-func PBConvPB_chat_To_chat ( o *chat) *PB_chat {
-     n := &PB_chat{
+func PBConvPB_Chat_To_Chat ( o *Chat) *PB_Chat {
+     n := &PB_Chat{
       ChatKey: string ( o.ChatKey ),
       RoomKey: string ( o.RoomKey ),
       RoomTypeEnumId: int32 ( o.RoomTypeEnumId ),
@@ -100,8 +100,8 @@ func PBConvPB_chat_To_chat ( o *chat) *PB_chat {
 }
 */
 /*
-func PBConvPB__comment_To_comment( o *PB_comment) *comment {
-     n := &comment{
+func PBConvPB__Comment_To_Comment( o *PB_Comment) *Comment {
+     n := &Comment{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
       PostId: int ( o.PostId ),
@@ -111,8 +111,8 @@ func PBConvPB__comment_To_comment( o *PB_comment) *comment {
     return n
 }
 
-func PBConvPB_comment_To_comment ( o *comment) *PB_comment {
-     n := &PB_comment{
+func PBConvPB_Comment_To_Comment ( o *Comment) *PB_Comment {
+     n := &PB_Comment{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       PostId: int32 ( o.PostId ),
@@ -123,8 +123,8 @@ func PBConvPB_comment_To_comment ( o *comment) *PB_comment {
 }
 */
 /*
-func PBConvPB__direct_message_To_direct_message( o *PB_direct_message) *direct_message {
-     n := &direct_message{
+func PBConvPB__DirectMessage_To_DirectMessage( o *PB_DirectMessage) *DirectMessage {
+     n := &DirectMessage{
       MessageId: int ( o.MessageId ),
       MessageKey: string ( o.MessageKey ),
       RoomKey: string ( o.RoomKey ),
@@ -140,8 +140,8 @@ func PBConvPB__direct_message_To_direct_message( o *PB_direct_message) *direct_m
     return n
 }
 
-func PBConvPB_direct_message_To_direct_message ( o *direct_message) *PB_direct_message {
-     n := &PB_direct_message{
+func PBConvPB_DirectMessage_To_DirectMessage ( o *DirectMessage) *PB_DirectMessage {
+     n := &PB_DirectMessage{
       MessageId: int64 ( o.MessageId ),
       MessageKey: string ( o.MessageKey ),
       RoomKey: string ( o.RoomKey ),
@@ -158,8 +158,8 @@ func PBConvPB_direct_message_To_direct_message ( o *direct_message) *PB_direct_m
 }
 */
 /*
-func PBConvPB__direct_to_message_To_direct_to_message( o *PB_direct_to_message) *direct_to_message {
-     n := &direct_to_message{
+func PBConvPB__DirectToMessage_To_DirectToMessage( o *PB_DirectToMessage) *DirectToMessage {
+     n := &DirectToMessage{
       Id: int ( o.Id ),
       ChatKey: string ( o.ChatKey ),
       MessageId: int ( o.MessageId ),
@@ -168,8 +168,8 @@ func PBConvPB__direct_to_message_To_direct_to_message( o *PB_direct_to_message) 
     return n
 }
 
-func PBConvPB_direct_to_message_To_direct_to_message ( o *direct_to_message) *PB_direct_to_message {
-     n := &PB_direct_to_message{
+func PBConvPB_DirectToMessage_To_DirectToMessage ( o *DirectToMessage) *PB_DirectToMessage {
+     n := &PB_DirectToMessage{
       Id: int64 ( o.Id ),
       ChatKey: string ( o.ChatKey ),
       MessageId: int64 ( o.MessageId ),
@@ -179,8 +179,8 @@ func PBConvPB_direct_to_message_To_direct_to_message ( o *direct_to_message) *PB
 }
 */
 /*
-func PBConvPB__direct_update_To_direct_update( o *PB_direct_update) *direct_update {
-     n := &direct_update{
+func PBConvPB__DirectUpdate_To_DirectUpdate( o *PB_DirectUpdate) *DirectUpdate {
+     n := &DirectUpdate{
       DirectUpdateId: int ( o.DirectUpdateId ),
       ToUserId: int ( o.ToUserId ),
       MessageId: int ( o.MessageId ),
@@ -199,8 +199,8 @@ func PBConvPB__direct_update_To_direct_update( o *PB_direct_update) *direct_upda
     return n
 }
 
-func PBConvPB_direct_update_To_direct_update ( o *direct_update) *PB_direct_update {
-     n := &PB_direct_update{
+func PBConvPB_DirectUpdate_To_DirectUpdate ( o *DirectUpdate) *PB_DirectUpdate {
+     n := &PB_DirectUpdate{
       DirectUpdateId: int64 ( o.DirectUpdateId ),
       ToUserId: int32 ( o.ToUserId ),
       MessageId: int64 ( o.MessageId ),
@@ -220,8 +220,8 @@ func PBConvPB_direct_update_To_direct_update ( o *direct_update) *PB_direct_upda
 }
 */
 /*
-func PBConvPB__following_list_To_following_list( o *PB_following_list) *following_list {
-     n := &following_list{
+func PBConvPB__FollowingList_To_FollowingList( o *PB_FollowingList) *FollowingList {
+     n := &FollowingList{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
       ListType: int ( o.ListType ),
@@ -234,8 +234,8 @@ func PBConvPB__following_list_To_following_list( o *PB_following_list) *followin
     return n
 }
 
-func PBConvPB_following_list_To_following_list ( o *following_list) *PB_following_list {
-     n := &PB_following_list{
+func PBConvPB_FollowingList_To_FollowingList ( o *FollowingList) *PB_FollowingList {
+     n := &PB_FollowingList{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       ListType: int32 ( o.ListType ),
@@ -249,8 +249,8 @@ func PBConvPB_following_list_To_following_list ( o *following_list) *PB_followin
 }
 */
 /*
-func PBConvPB__following_list_member_To_following_list_member( o *PB_following_list_member) *following_list_member {
-     n := &following_list_member{
+func PBConvPB__FollowingListMember_To_FollowingListMember( o *PB_FollowingListMember) *FollowingListMember {
+     n := &FollowingListMember{
       Id: int ( o.Id ),
       ListId: int ( o.ListId ),
       UserId: int ( o.UserId ),
@@ -261,8 +261,8 @@ func PBConvPB__following_list_member_To_following_list_member( o *PB_following_l
     return n
 }
 
-func PBConvPB_following_list_member_To_following_list_member ( o *following_list_member) *PB_following_list_member {
-     n := &PB_following_list_member{
+func PBConvPB_FollowingListMember_To_FollowingListMember ( o *FollowingListMember) *PB_FollowingListMember {
+     n := &PB_FollowingListMember{
       Id: int64 ( o.Id ),
       ListId: int32 ( o.ListId ),
       UserId: int32 ( o.UserId ),
@@ -274,8 +274,8 @@ func PBConvPB_following_list_member_To_following_list_member ( o *following_list
 }
 */
 /*
-func PBConvPB__following_list_member_history_To_following_list_member_history( o *PB_following_list_member_history) *following_list_member_history {
-     n := &following_list_member_history{
+func PBConvPB__FollowingListMemberHistory_To_FollowingListMemberHistory( o *PB_FollowingListMemberHistory) *FollowingListMemberHistory {
+     n := &FollowingListMemberHistory{
       Id: int ( o.Id ),
       ListId: int ( o.ListId ),
       UserId: int ( o.UserId ),
@@ -287,8 +287,8 @@ func PBConvPB__following_list_member_history_To_following_list_member_history( o
     return n
 }
 
-func PBConvPB_following_list_member_history_To_following_list_member_history ( o *following_list_member_history) *PB_following_list_member_history {
-     n := &PB_following_list_member_history{
+func PBConvPB_FollowingListMemberHistory_To_FollowingListMemberHistory ( o *FollowingListMemberHistory) *PB_FollowingListMemberHistory {
+     n := &PB_FollowingListMemberHistory{
       Id: int64 ( o.Id ),
       ListId: int32 ( o.ListId ),
       UserId: int32 ( o.UserId ),
@@ -301,8 +301,8 @@ func PBConvPB_following_list_member_history_To_following_list_member_history ( o
 }
 */
 /*
-func PBConvPB__general_log_To_general_log( o *PB_general_log) *general_log {
-     n := &general_log{
+func PBConvPB__GeneralLog_To_GeneralLog( o *PB_GeneralLog) *GeneralLog {
+     n := &GeneralLog{
       Id: int ( o.Id ),
       ToUserId: int ( o.ToUserId ),
       TargetId: int ( o.TargetId ),
@@ -314,8 +314,8 @@ func PBConvPB__general_log_To_general_log( o *PB_general_log) *general_log {
     return n
 }
 
-func PBConvPB_general_log_To_general_log ( o *general_log) *PB_general_log {
-     n := &PB_general_log{
+func PBConvPB_GeneralLog_To_GeneralLog ( o *GeneralLog) *PB_GeneralLog {
+     n := &PB_GeneralLog{
       Id: int64 ( o.Id ),
       ToUserId: int32 ( o.ToUserId ),
       TargetId: int32 ( o.TargetId ),
@@ -328,8 +328,8 @@ func PBConvPB_general_log_To_general_log ( o *general_log) *PB_general_log {
 }
 */
 /*
-func PBConvPB__group_To_group( o *PB_group) *group {
-     n := &group{
+func PBConvPB__Group_To_Group( o *PB_Group) *Group {
+     n := &Group{
       GroupId: int ( o.GroupId ),
       GroupName: string ( o.GroupName ),
       MembersCount: int ( o.MembersCount ),
@@ -342,8 +342,8 @@ func PBConvPB__group_To_group( o *PB_group) *group {
     return n
 }
 
-func PBConvPB_group_To_group ( o *group) *PB_group {
-     n := &PB_group{
+func PBConvPB_Group_To_Group ( o *Group) *PB_Group {
+     n := &PB_Group{
       GroupId: int64 ( o.GroupId ),
       GroupName: string ( o.GroupName ),
       MembersCount: int32 ( o.MembersCount ),
@@ -357,8 +357,8 @@ func PBConvPB_group_To_group ( o *group) *PB_group {
 }
 */
 /*
-func PBConvPB__group_member_To_group_member( o *PB_group_member) *group_member {
-     n := &group_member{
+func PBConvPB__GroupMember_To_GroupMember( o *PB_GroupMember) *GroupMember {
+     n := &GroupMember{
       Id: int ( o.Id ),
       GroupId: int ( o.GroupId ),
       GroupKey: string ( o.GroupKey ),
@@ -370,8 +370,8 @@ func PBConvPB__group_member_To_group_member( o *PB_group_member) *group_member {
     return n
 }
 
-func PBConvPB_group_member_To_group_member ( o *group_member) *PB_group_member {
-     n := &PB_group_member{
+func PBConvPB_GroupMember_To_GroupMember ( o *GroupMember) *PB_GroupMember {
+     n := &PB_GroupMember{
       Id: int64 ( o.Id ),
       GroupId: int64 ( o.GroupId ),
       GroupKey: string ( o.GroupKey ),
@@ -384,8 +384,8 @@ func PBConvPB_group_member_To_group_member ( o *group_member) *PB_group_member {
 }
 */
 /*
-func PBConvPB__group_message_To_group_message( o *PB_group_message) *group_message {
-     n := &group_message{
+func PBConvPB__GroupMessage_To_GroupMessage( o *PB_GroupMessage) *GroupMessage {
+     n := &GroupMessage{
       MessageId: int ( o.MessageId ),
       RoomKey: string ( o.RoomKey ),
       UserId: int ( o.UserId ),
@@ -398,8 +398,8 @@ func PBConvPB__group_message_To_group_message( o *PB_group_message) *group_messa
     return n
 }
 
-func PBConvPB_group_message_To_group_message ( o *group_message) *PB_group_message {
-     n := &PB_group_message{
+func PBConvPB_GroupMessage_To_GroupMessage ( o *GroupMessage) *PB_GroupMessage {
+     n := &PB_GroupMessage{
       MessageId: int64 ( o.MessageId ),
       RoomKey: string ( o.RoomKey ),
       UserId: int32 ( o.UserId ),
@@ -413,8 +413,8 @@ func PBConvPB_group_message_To_group_message ( o *group_message) *PB_group_messa
 }
 */
 /*
-func PBConvPB__group_to_message_To_group_to_message( o *PB_group_to_message) *group_to_message {
-     n := &group_to_message{
+func PBConvPB__GroupToMessage_To_GroupToMessage( o *PB_GroupToMessage) *GroupToMessage {
+     n := &GroupToMessage{
       Id: int ( o.Id ),
       GroupId: int ( o.GroupId ),
       MessageId: int ( o.MessageId ),
@@ -424,8 +424,8 @@ func PBConvPB__group_to_message_To_group_to_message( o *PB_group_to_message) *gr
     return n
 }
 
-func PBConvPB_group_to_message_To_group_to_message ( o *group_to_message) *PB_group_to_message {
-     n := &PB_group_to_message{
+func PBConvPB_GroupToMessage_To_GroupToMessage ( o *GroupToMessage) *PB_GroupToMessage {
+     n := &PB_GroupToMessage{
       Id: int64 ( o.Id ),
       GroupId: int64 ( o.GroupId ),
       MessageId: int64 ( o.MessageId ),
@@ -436,8 +436,8 @@ func PBConvPB_group_to_message_To_group_to_message ( o *group_to_message) *PB_gr
 }
 */
 /*
-func PBConvPB__likes_To_likes( o *PB_likes) *likes {
-     n := &likes{
+func PBConvPB__Like_To_Like( o *PB_Like) *Like {
+     n := &Like{
       Id: int ( o.Id ),
       PostId: int ( o.PostId ),
       PostTypeId: int ( o.PostTypeId ),
@@ -448,8 +448,8 @@ func PBConvPB__likes_To_likes( o *PB_likes) *likes {
     return n
 }
 
-func PBConvPB_likes_To_likes ( o *likes) *PB_likes {
-     n := &PB_likes{
+func PBConvPB_Like_To_Like ( o *Like) *PB_Like {
+     n := &PB_Like{
       Id: int32 ( o.Id ),
       PostId: int32 ( o.PostId ),
       PostTypeId: int32 ( o.PostTypeId ),
@@ -461,16 +461,16 @@ func PBConvPB_likes_To_likes ( o *likes) *PB_likes {
 }
 */
 /*
-func PBConvPB__log_changes_To_log_changes( o *PB_log_changes) *log_changes {
-     n := &log_changes{
+func PBConvPB__LogChange_To_LogChange( o *PB_LogChange) *LogChange {
+     n := &LogChange{
       Id: int ( o.Id ),
       T: string ( o.T ),
     }
     return n
 }
 
-func PBConvPB_log_changes_To_log_changes ( o *log_changes) *PB_log_changes {
-     n := &PB_log_changes{
+func PBConvPB_LogChange_To_LogChange ( o *LogChange) *PB_LogChange {
+     n := &PB_LogChange{
       Id: int32 ( o.Id ),
       T: string ( o.T ),
     }
@@ -478,8 +478,8 @@ func PBConvPB_log_changes_To_log_changes ( o *log_changes) *PB_log_changes {
 }
 */
 /*
-func PBConvPB__media_To_media( o *PB_media) *media {
-     n := &media{
+func PBConvPB__Media_To_Media( o *PB_Media) *Media {
+     n := &Media{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
       PostId: int ( o.PostId ),
@@ -491,8 +491,8 @@ func PBConvPB__media_To_media( o *PB_media) *media {
     return n
 }
 
-func PBConvPB_media_To_media ( o *media) *PB_media {
-     n := &PB_media{
+func PBConvPB_Media_To_Media ( o *Media) *PB_Media {
+     n := &PB_Media{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       PostId: int32 ( o.PostId ),
@@ -505,8 +505,8 @@ func PBConvPB_media_To_media ( o *media) *PB_media {
 }
 */
 /*
-func PBConvPB__message_file_To_message_file( o *PB_message_file) *message_file {
-     n := &message_file{
+func PBConvPB__MessageFile_To_MessageFile( o *PB_MessageFile) *MessageFile {
+     n := &MessageFile{
       MessageFileId: int ( o.MessageFileId ),
       MessageFileKey: string ( o.MessageFileKey ),
       OriginalUserId: int ( o.OriginalUserId ),
@@ -530,8 +530,8 @@ func PBConvPB__message_file_To_message_file( o *PB_message_file) *message_file {
     return n
 }
 
-func PBConvPB_message_file_To_message_file ( o *message_file) *PB_message_file {
-     n := &PB_message_file{
+func PBConvPB_MessageFile_To_MessageFile ( o *MessageFile) *PB_MessageFile {
+     n := &PB_MessageFile{
       MessageFileId: int64 ( o.MessageFileId ),
       MessageFileKey: string ( o.MessageFileKey ),
       OriginalUserId: int32 ( o.OriginalUserId ),
@@ -556,8 +556,8 @@ func PBConvPB_message_file_To_message_file ( o *message_file) *PB_message_file {
 }
 */
 /*
-func PBConvPB__notification_To_notification( o *PB_notification) *notification {
-     n := &notification{
+func PBConvPB__Notification_To_Notification( o *PB_Notification) *Notification {
+     n := &Notification{
       Id: int ( o.Id ),
       ForUserId: int ( o.ForUserId ),
       ActorUserId: int ( o.ActorUserId ),
@@ -572,8 +572,8 @@ func PBConvPB__notification_To_notification( o *PB_notification) *notification {
     return n
 }
 
-func PBConvPB_notification_To_notification ( o *notification) *PB_notification {
-     n := &PB_notification{
+func PBConvPB_Notification_To_Notification ( o *Notification) *PB_Notification {
+     n := &PB_Notification{
       Id: int64 ( o.Id ),
       ForUserId: int32 ( o.ForUserId ),
       ActorUserId: int32 ( o.ActorUserId ),
@@ -589,16 +589,16 @@ func PBConvPB_notification_To_notification ( o *notification) *PB_notification {
 }
 */
 /*
-func PBConvPB__notification_removed_To_notification_removed( o *PB_notification_removed) *notification_removed {
-     n := &notification_removed{
+func PBConvPB__NotificationRemoved_To_NotificationRemoved( o *PB_NotificationRemoved) *NotificationRemoved {
+     n := &NotificationRemoved{
       NotificationId: int ( o.NotificationId ),
       ForUserId: int ( o.ForUserId ),
     }
     return n
 }
 
-func PBConvPB_notification_removed_To_notification_removed ( o *notification_removed) *PB_notification_removed {
-     n := &PB_notification_removed{
+func PBConvPB_NotificationRemoved_To_NotificationRemoved ( o *NotificationRemoved) *PB_NotificationRemoved {
+     n := &PB_NotificationRemoved{
       NotificationId: int32 ( o.NotificationId ),
       ForUserId: int32 ( o.ForUserId ),
     }
@@ -606,8 +606,41 @@ func PBConvPB_notification_removed_To_notification_removed ( o *notification_rem
 }
 */
 /*
-func PBConvPB__old_messages_To_old_messages( o *PB_old_messages) *old_messages {
-     n := &old_messages{
+func PBConvPB__Offline_To_Offline( o *PB_Offline) *Offline {
+     n := &Offline{
+      Id: int ( o.Id ),
+      FromUserId: int ( o.FromUserId ),
+      ToUserId: int ( o.ToUserId ),
+      RpcName: string ( o.RpcName ),
+      PBClassName: string ( o.PBClassName ),
+      Key: string ( o.Key ),
+      DataJson: string ( o.DataJson ),
+      DataBlob: []byte ( o.DataBlob ),
+      DataLength: int ( o.DataLength ),
+      CreatedMs: int ( o.CreatedMs ),
+    }
+    return n
+}
+
+func PBConvPB_Offline_To_Offline ( o *Offline) *PB_Offline {
+     n := &PB_Offline{
+      Id: int64 ( o.Id ),
+      FromUserId: int32 ( o.FromUserId ),
+      ToUserId: int32 ( o.ToUserId ),
+      RpcName: string ( o.RpcName ),
+      PBClassName: string ( o.PBClassName ),
+      Key: string ( o.Key ),
+      DataJson: string ( o.DataJson ),
+      DataBlob: []byte ( o.DataBlob ),
+      DataLength: int32 ( o.DataLength ),
+      CreatedMs: int64 ( o.CreatedMs ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__OldMessage_To_OldMessage( o *PB_OldMessage) *OldMessage {
+     n := &OldMessage{
       Id: int ( o.Id ),
       Uid: int ( o.Uid ),
       UserId: int ( o.UserId ),
@@ -624,8 +657,8 @@ func PBConvPB__old_messages_To_old_messages( o *PB_old_messages) *old_messages {
     return n
 }
 
-func PBConvPB_old_messages_To_old_messages ( o *old_messages) *PB_old_messages {
-     n := &PB_old_messages{
+func PBConvPB_OldMessage_To_OldMessage ( o *OldMessage) *PB_OldMessage {
+     n := &PB_OldMessage{
       Id: int64 ( o.Id ),
       Uid: int64 ( o.Uid ),
       UserId: int64 ( o.UserId ),
@@ -643,8 +676,8 @@ func PBConvPB_old_messages_To_old_messages ( o *old_messages) *PB_old_messages {
 }
 */
 /*
-func PBConvPB__old_msg_file_To_old_msg_file( o *PB_old_msg_file) *old_msg_file {
-     n := &old_msg_file{
+func PBConvPB__OldMsgFile_To_OldMsgFile( o *PB_OldMsgFile) *OldMsgFile {
+     n := &OldMsgFile{
       Id: int ( o.Id ),
       Name: string ( o.Name ),
       Size: int ( o.Size ),
@@ -664,8 +697,8 @@ func PBConvPB__old_msg_file_To_old_msg_file( o *PB_old_msg_file) *old_msg_file {
     return n
 }
 
-func PBConvPB_old_msg_file_To_old_msg_file ( o *old_msg_file) *PB_old_msg_file {
-     n := &PB_old_msg_file{
+func PBConvPB_OldMsgFile_To_OldMsgFile ( o *OldMsgFile) *PB_OldMsgFile {
+     n := &PB_OldMsgFile{
       Id: int64 ( o.Id ),
       Name: string ( o.Name ),
       Size: int32 ( o.Size ),
@@ -686,8 +719,8 @@ func PBConvPB_old_msg_file_To_old_msg_file ( o *old_msg_file) *PB_old_msg_file {
 }
 */
 /*
-func PBConvPB__old_msg_push_To_old_msg_push( o *PB_old_msg_push) *old_msg_push {
-     n := &old_msg_push{
+func PBConvPB__OldMsgPush_To_OldMsgPush( o *PB_OldMsgPush) *OldMsgPush {
+     n := &OldMsgPush{
       Id: int ( o.Id ),
       Uid: int ( o.Uid ),
       ToUser: int ( o.ToUser ),
@@ -697,8 +730,8 @@ func PBConvPB__old_msg_push_To_old_msg_push( o *PB_old_msg_push) *old_msg_push {
     return n
 }
 
-func PBConvPB_old_msg_push_To_old_msg_push ( o *old_msg_push) *PB_old_msg_push {
-     n := &PB_old_msg_push{
+func PBConvPB_OldMsgPush_To_OldMsgPush ( o *OldMsgPush) *PB_OldMsgPush {
+     n := &PB_OldMsgPush{
       Id: int64 ( o.Id ),
       Uid: int64 ( o.Uid ),
       ToUser: int64 ( o.ToUser ),
@@ -709,8 +742,8 @@ func PBConvPB_old_msg_push_To_old_msg_push ( o *old_msg_push) *PB_old_msg_push {
 }
 */
 /*
-func PBConvPB__old_msg_push_event_To_old_msg_push_event( o *PB_old_msg_push_event) *old_msg_push_event {
-     n := &old_msg_push_event{
+func PBConvPB__OldMsgPushEvent_To_OldMsgPushEvent( o *PB_OldMsgPushEvent) *OldMsgPushEvent {
+     n := &OldMsgPushEvent{
       Id: int ( o.Id ),
       Uid: int ( o.Uid ),
       ToUserId: int ( o.ToUserId ),
@@ -724,8 +757,8 @@ func PBConvPB__old_msg_push_event_To_old_msg_push_event( o *PB_old_msg_push_even
     return n
 }
 
-func PBConvPB_old_msg_push_event_To_old_msg_push_event ( o *old_msg_push_event) *PB_old_msg_push_event {
-     n := &PB_old_msg_push_event{
+func PBConvPB_OldMsgPushEvent_To_OldMsgPushEvent ( o *OldMsgPushEvent) *PB_OldMsgPushEvent {
+     n := &PB_OldMsgPushEvent{
       Id: int64 ( o.Id ),
       Uid: int64 ( o.Uid ),
       ToUserId: int32 ( o.ToUserId ),
@@ -740,8 +773,8 @@ func PBConvPB_old_msg_push_event_To_old_msg_push_event ( o *old_msg_push_event) 
 }
 */
 /*
-func PBConvPB__phone_contacts_To_phone_contacts( o *PB_phone_contacts) *phone_contacts {
-     n := &phone_contacts{
+func PBConvPB__PhoneContact_To_PhoneContact( o *PB_PhoneContact) *PhoneContact {
+     n := &PhoneContact{
       Id: int ( o.Id ),
       PhoneDisplayName: string ( o.PhoneDisplayName ),
       PhoneFamilyName: string ( o.PhoneFamilyName ),
@@ -756,8 +789,8 @@ func PBConvPB__phone_contacts_To_phone_contacts( o *PB_phone_contacts) *phone_co
     return n
 }
 
-func PBConvPB_phone_contacts_To_phone_contacts ( o *phone_contacts) *PB_phone_contacts {
-     n := &PB_phone_contacts{
+func PBConvPB_PhoneContact_To_PhoneContact ( o *PhoneContact) *PB_PhoneContact {
+     n := &PB_PhoneContact{
       Id: int32 ( o.Id ),
       PhoneDisplayName: string ( o.PhoneDisplayName ),
       PhoneFamilyName: string ( o.PhoneFamilyName ),
@@ -773,8 +806,8 @@ func PBConvPB_phone_contacts_To_phone_contacts ( o *phone_contacts) *PB_phone_co
 }
 */
 /*
-func PBConvPB__photo_To_photo( o *PB_photo) *photo {
-     n := &photo{
+func PBConvPB__Photo_To_Photo( o *PB_Photo) *Photo {
+     n := &Photo{
       PhotoId: int ( o.PhotoId ),
       UserId: int ( o.UserId ),
       PostId: int ( o.PostId ),
@@ -800,8 +833,8 @@ func PBConvPB__photo_To_photo( o *PB_photo) *photo {
     return n
 }
 
-func PBConvPB_photo_To_photo ( o *photo) *PB_photo {
-     n := &PB_photo{
+func PBConvPB_Photo_To_Photo ( o *Photo) *PB_Photo {
+     n := &PB_Photo{
       PhotoId: int32 ( o.PhotoId ),
       UserId: int32 ( o.UserId ),
       PostId: int32 ( o.PostId ),
@@ -828,8 +861,8 @@ func PBConvPB_photo_To_photo ( o *photo) *PB_photo {
 }
 */
 /*
-func PBConvPB__post_To_post( o *PB_post) *post {
-     n := &post{
+func PBConvPB__Post_To_Post( o *PB_Post) *Post {
+     n := &Post{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
       TypeId: int ( o.TypeId ),
@@ -847,8 +880,8 @@ func PBConvPB__post_To_post( o *PB_post) *post {
     return n
 }
 
-func PBConvPB_post_To_post ( o *post) *PB_post {
-     n := &PB_post{
+func PBConvPB_Post_To_Post ( o *Post) *PB_Post {
+     n := &PB_Post{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       TypeId: int32 ( o.TypeId ),
@@ -867,8 +900,8 @@ func PBConvPB_post_To_post ( o *post) *PB_post {
 }
 */
 /*
-func PBConvPB__push_event_To_push_event( o *PB_push_event) *push_event {
-     n := &push_event{
+func PBConvPB__PushEvent_To_PushEvent( o *PB_PushEvent) *PushEvent {
+     n := &PushEvent{
       PushEventId: int ( o.PushEventId ),
       ToUserId: int ( o.ToUserId ),
       ToDeviceId: int ( o.ToDeviceId ),
@@ -882,8 +915,8 @@ func PBConvPB__push_event_To_push_event( o *PB_push_event) *push_event {
     return n
 }
 
-func PBConvPB_push_event_To_push_event ( o *push_event) *PB_push_event {
-     n := &PB_push_event{
+func PBConvPB_PushEvent_To_PushEvent ( o *PushEvent) *PB_PushEvent {
+     n := &PB_PushEvent{
       PushEventId: int64 ( o.PushEventId ),
       ToUserId: int32 ( o.ToUserId ),
       ToDeviceId: int64 ( o.ToDeviceId ),
@@ -898,8 +931,8 @@ func PBConvPB_push_event_To_push_event ( o *push_event) *PB_push_event {
 }
 */
 /*
-func PBConvPB__push_message_To_push_message( o *PB_push_message) *push_message {
-     n := &push_message{
+func PBConvPB__PushMessage_To_PushMessage( o *PB_PushMessage) *PushMessage {
+     n := &PushMessage{
       PushMessageId: int ( o.PushMessageId ),
       ToUserId: int ( o.ToUserId ),
       ToDeviceId: int ( o.ToDeviceId ),
@@ -910,8 +943,8 @@ func PBConvPB__push_message_To_push_message( o *PB_push_message) *push_message {
     return n
 }
 
-func PBConvPB_push_message_To_push_message ( o *push_message) *PB_push_message {
-     n := &PB_push_message{
+func PBConvPB_PushMessage_To_PushMessage ( o *PushMessage) *PB_PushMessage {
+     n := &PB_PushMessage{
       PushMessageId: int64 ( o.PushMessageId ),
       ToUserId: int32 ( o.ToUserId ),
       ToDeviceId: int64 ( o.ToDeviceId ),
@@ -923,8 +956,8 @@ func PBConvPB_push_message_To_push_message ( o *push_message) *PB_push_message {
 }
 */
 /*
-func PBConvPB__recommend_user_To_recommend_user( o *PB_recommend_user) *recommend_user {
-     n := &recommend_user{
+func PBConvPB__RecommendUser_To_RecommendUser( o *PB_RecommendUser) *RecommendUser {
+     n := &RecommendUser{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
       TargetId: int ( o.TargetId ),
@@ -934,8 +967,8 @@ func PBConvPB__recommend_user_To_recommend_user( o *PB_recommend_user) *recommen
     return n
 }
 
-func PBConvPB_recommend_user_To_recommend_user ( o *recommend_user) *PB_recommend_user {
-     n := &PB_recommend_user{
+func PBConvPB_RecommendUser_To_RecommendUser ( o *RecommendUser) *PB_RecommendUser {
+     n := &PB_RecommendUser{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       TargetId: int32 ( o.TargetId ),
@@ -946,8 +979,8 @@ func PBConvPB_recommend_user_To_recommend_user ( o *recommend_user) *PB_recommen
 }
 */
 /*
-func PBConvPB__room_To_room( o *PB_room) *room {
-     n := &room{
+func PBConvPB__Room_To_Room( o *PB_Room) *Room {
+     n := &Room{
       RoomId: int ( o.RoomId ),
       RoomKey: string ( o.RoomKey ),
       RoomTypeEnum: int ( o.RoomTypeEnum ),
@@ -962,8 +995,8 @@ func PBConvPB__room_To_room( o *PB_room) *room {
     return n
 }
 
-func PBConvPB_room_To_room ( o *room) *PB_room {
-     n := &PB_room{
+func PBConvPB_Room_To_Room ( o *Room) *PB_Room {
+     n := &PB_Room{
       RoomId: int64 ( o.RoomId ),
       RoomKey: string ( o.RoomKey ),
       RoomTypeEnum: int32 ( o.RoomTypeEnum ),
@@ -979,8 +1012,8 @@ func PBConvPB_room_To_room ( o *room) *PB_room {
 }
 */
 /*
-func PBConvPB__search_clicked_To_search_clicked( o *PB_search_clicked) *search_clicked {
-     n := &search_clicked{
+func PBConvPB__SearchClicked_To_SearchClicked( o *PB_SearchClicked) *SearchClicked {
+     n := &SearchClicked{
       Id: int ( o.Id ),
       Query: string ( o.Query ),
       ClickType: int ( o.ClickType ),
@@ -991,8 +1024,8 @@ func PBConvPB__search_clicked_To_search_clicked( o *PB_search_clicked) *search_c
     return n
 }
 
-func PBConvPB_search_clicked_To_search_clicked ( o *search_clicked) *PB_search_clicked {
-     n := &PB_search_clicked{
+func PBConvPB_SearchClicked_To_SearchClicked ( o *SearchClicked) *PB_SearchClicked {
+     n := &PB_SearchClicked{
       Id: int64 ( o.Id ),
       Query: string ( o.Query ),
       ClickType: int32 ( o.ClickType ),
@@ -1004,8 +1037,8 @@ func PBConvPB_search_clicked_To_search_clicked ( o *search_clicked) *PB_search_c
 }
 */
 /*
-func PBConvPB__session_To_session( o *PB_session) *session {
-     n := &session{
+func PBConvPB__Session_To_Session( o *PB_Session) *Session {
+     n := &Session{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
       SessionUuid: string ( o.SessionUuid ),
@@ -1026,8 +1059,8 @@ func PBConvPB__session_To_session( o *PB_session) *session {
     return n
 }
 
-func PBConvPB_session_To_session ( o *session) *PB_session {
-     n := &PB_session{
+func PBConvPB_Session_To_Session ( o *Session) *PB_Session {
+     n := &PB_Session{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       SessionUuid: string ( o.SessionUuid ),
@@ -1049,8 +1082,8 @@ func PBConvPB_session_To_session ( o *session) *PB_session {
 }
 */
 /*
-func PBConvPB__setting_client_To_setting_client( o *PB_setting_client) *setting_client {
-     n := &setting_client{
+func PBConvPB__SettingClient_To_SettingClient( o *PB_SettingClient) *SettingClient {
+     n := &SettingClient{
       UserId: int ( o.UserId ),
       AutoDownloadWifiVoice: int ( o.AutoDownloadWifiVoice ),
       AutoDownloadWifiImage: int ( o.AutoDownloadWifiImage ),
@@ -1075,8 +1108,8 @@ func PBConvPB__setting_client_To_setting_client( o *PB_setting_client) *setting_
     return n
 }
 
-func PBConvPB_setting_client_To_setting_client ( o *setting_client) *PB_setting_client {
-     n := &PB_setting_client{
+func PBConvPB_SettingClient_To_SettingClient ( o *SettingClient) *PB_SettingClient {
+     n := &PB_SettingClient{
       UserId: int32 ( o.UserId ),
       AutoDownloadWifiVoice: int32 ( o.AutoDownloadWifiVoice ),
       AutoDownloadWifiImage: int32 ( o.AutoDownloadWifiImage ),
@@ -1102,8 +1135,8 @@ func PBConvPB_setting_client_To_setting_client ( o *setting_client) *PB_setting_
 }
 */
 /*
-func PBConvPB__setting_notifications_To_setting_notifications( o *PB_setting_notifications) *setting_notifications {
-     n := &setting_notifications{
+func PBConvPB__SettingNotification_To_SettingNotification( o *PB_SettingNotification) *SettingNotification {
+     n := &SettingNotification{
       UserId: int ( o.UserId ),
       SocialLedOn: int ( o.SocialLedOn ),
       SocialLedColor: string ( o.SocialLedColor ),
@@ -1128,8 +1161,8 @@ func PBConvPB__setting_notifications_To_setting_notifications( o *PB_setting_not
     return n
 }
 
-func PBConvPB_setting_notifications_To_setting_notifications ( o *setting_notifications) *PB_setting_notifications {
-     n := &PB_setting_notifications{
+func PBConvPB_SettingNotification_To_SettingNotification ( o *SettingNotification) *PB_SettingNotification {
+     n := &PB_SettingNotification{
       UserId: int32 ( o.UserId ),
       SocialLedOn: int32 ( o.SocialLedOn ),
       SocialLedColor: string ( o.SocialLedColor ),
@@ -1155,8 +1188,8 @@ func PBConvPB_setting_notifications_To_setting_notifications ( o *setting_notifi
 }
 */
 /*
-func PBConvPB__tag_To_tag( o *PB_tag) *tag {
-     n := &tag{
+func PBConvPB__Tag_To_Tag( o *PB_Tag) *Tag {
+     n := &Tag{
       Id: int ( o.Id ),
       Name: string ( o.Name ),
       Count: int ( o.Count ),
@@ -1166,8 +1199,8 @@ func PBConvPB__tag_To_tag( o *PB_tag) *tag {
     return n
 }
 
-func PBConvPB_tag_To_tag ( o *tag) *PB_tag {
-     n := &PB_tag{
+func PBConvPB_Tag_To_Tag ( o *Tag) *PB_Tag {
+     n := &PB_Tag{
       Id: int32 ( o.Id ),
       Name: string ( o.Name ),
       Count: int32 ( o.Count ),
@@ -1178,8 +1211,8 @@ func PBConvPB_tag_To_tag ( o *tag) *PB_tag {
 }
 */
 /*
-func PBConvPB__tags_posts_To_tags_posts( o *PB_tags_posts) *tags_posts {
-     n := &tags_posts{
+func PBConvPB__TagsPost_To_TagsPost( o *PB_TagsPost) *TagsPost {
+     n := &TagsPost{
       Id: int ( o.Id ),
       TagId: int ( o.TagId ),
       PostId: int ( o.PostId ),
@@ -1189,8 +1222,8 @@ func PBConvPB__tags_posts_To_tags_posts( o *PB_tags_posts) *tags_posts {
     return n
 }
 
-func PBConvPB_tags_posts_To_tags_posts ( o *tags_posts) *PB_tags_posts {
-     n := &PB_tags_posts{
+func PBConvPB_TagsPost_To_TagsPost ( o *TagsPost) *PB_TagsPost {
+     n := &PB_TagsPost{
       Id: int32 ( o.Id ),
       TagId: int32 ( o.TagId ),
       PostId: int32 ( o.PostId ),
@@ -1201,8 +1234,8 @@ func PBConvPB_tags_posts_To_tags_posts ( o *tags_posts) *PB_tags_posts {
 }
 */
 /*
-func PBConvPB__test_chat_To_test_chat( o *PB_test_chat) *test_chat {
-     n := &test_chat{
+func PBConvPB__TestChat_To_TestChat( o *PB_TestChat) *TestChat {
+     n := &TestChat{
       Id: int ( o.Id ),
       Id4: int ( o.Id4 ),
       TimeMs: int ( o.TimeMs ),
@@ -1217,8 +1250,8 @@ func PBConvPB__test_chat_To_test_chat( o *PB_test_chat) *test_chat {
     return n
 }
 
-func PBConvPB_test_chat_To_test_chat ( o *test_chat) *PB_test_chat {
-     n := &PB_test_chat{
+func PBConvPB_TestChat_To_TestChat ( o *TestChat) *PB_TestChat {
+     n := &PB_TestChat{
       Id: int64 ( o.Id ),
       Id4: int64 ( o.Id4 ),
       TimeMs: int64 ( o.TimeMs ),
@@ -1234,8 +1267,8 @@ func PBConvPB_test_chat_To_test_chat ( o *test_chat) *PB_test_chat {
 }
 */
 /*
-func PBConvPB__trigger_log_To_trigger_log( o *PB_trigger_log) *trigger_log {
-     n := &trigger_log{
+func PBConvPB__TriggerLog_To_TriggerLog( o *PB_TriggerLog) *TriggerLog {
+     n := &TriggerLog{
       Id: int ( o.Id ),
       ModelName: string ( o.ModelName ),
       ChangeType: string ( o.ChangeType ),
@@ -1246,8 +1279,8 @@ func PBConvPB__trigger_log_To_trigger_log( o *PB_trigger_log) *trigger_log {
     return n
 }
 
-func PBConvPB_trigger_log_To_trigger_log ( o *trigger_log) *PB_trigger_log {
-     n := &PB_trigger_log{
+func PBConvPB_TriggerLog_To_TriggerLog ( o *TriggerLog) *PB_TriggerLog {
+     n := &PB_TriggerLog{
       Id: int64 ( o.Id ),
       ModelName: string ( o.ModelName ),
       ChangeType: string ( o.ChangeType ),
@@ -1259,7 +1292,7 @@ func PBConvPB_trigger_log_To_trigger_log ( o *trigger_log) *PB_trigger_log {
 }
 */
 /*
-func PBConvPB__user_To_user( o *PB_user) *user {n := &user{}
+func PBConvPB__User_To_User( o *PB_User) *User {n := &User{}
    n.Id = int ( o.Id )
    n.UserName = string ( o.UserName )
    n.UserNameLower = string ( o.UserNameLower )
@@ -1296,7 +1329,7 @@ func PBConvPB__user_To_user( o *PB_user) *user {n := &user{}
     return n
 }
 
-func PBConvPB_user_To_user ( o *user) *PB_user {n := &PB_user{}
+func PBConvPB_User_To_User ( o *User) *PB_User {n := &PB_User{}
    n.Id = int32 ( o.Id )
    n.UserName = string ( o.UserName )
    n.UserNameLower = string ( o.UserNameLower )
@@ -1334,8 +1367,8 @@ func PBConvPB_user_To_user ( o *user) *PB_user {n := &PB_user{}
 }
 */
 /*
-func PBConvPB__user_meta_info_To_user_meta_info( o *PB_user_meta_info) *user_meta_info {
-     n := &user_meta_info{
+func PBConvPB__UserMetaInfo_To_UserMetaInfo( o *PB_UserMetaInfo) *UserMetaInfo {
+     n := &UserMetaInfo{
       Id: int ( o.Id ),
       UserId: int ( o.UserId ),
       IsNotificationDirty: int ( o.IsNotificationDirty ),
@@ -1344,8 +1377,8 @@ func PBConvPB__user_meta_info_To_user_meta_info( o *PB_user_meta_info) *user_met
     return n
 }
 
-func PBConvPB_user_meta_info_To_user_meta_info ( o *user_meta_info) *PB_user_meta_info {
-     n := &PB_user_meta_info{
+func PBConvPB_UserMetaInfo_To_UserMetaInfo ( o *UserMetaInfo) *PB_UserMetaInfo {
+     n := &PB_UserMetaInfo{
       Id: int32 ( o.Id ),
       UserId: int32 ( o.UserId ),
       IsNotificationDirty: int32 ( o.IsNotificationDirty ),
@@ -1355,8 +1388,8 @@ func PBConvPB_user_meta_info_To_user_meta_info ( o *user_meta_info) *PB_user_met
 }
 */
 /*
-func PBConvPB__user_password_To_user_password( o *PB_user_password) *user_password {
-     n := &user_password{
+func PBConvPB__UserPassword_To_UserPassword( o *PB_UserPassword) *UserPassword {
+     n := &UserPassword{
       UserId: int ( o.UserId ),
       Password: string ( o.Password ),
       CreatedTime: int ( o.CreatedTime ),
@@ -1364,8 +1397,8 @@ func PBConvPB__user_password_To_user_password( o *PB_user_password) *user_passwo
     return n
 }
 
-func PBConvPB_user_password_To_user_password ( o *user_password) *PB_user_password {
-     n := &PB_user_password{
+func PBConvPB_UserPassword_To_UserPassword ( o *UserPassword) *PB_UserPassword {
+     n := &PB_UserPassword{
       UserId: int32 ( o.UserId ),
       Password: string ( o.Password ),
       CreatedTime: int32 ( o.CreatedTime ),

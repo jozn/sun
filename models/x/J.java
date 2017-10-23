@@ -230,7 +230,20 @@ public class J {
 		public int ForUserId;
 	}
 
-	public static class OldMessage {//oridnal: 21
+	public static class Offline {//oridnal: 21
+		public int Id;
+		public int FromUserId;
+		public int ToUserId;
+		public String RpcName;
+		public String PBClassName;
+		public String Key;
+		public String DataJson;
+		public UNKNOWN DataBlob;
+		public int DataLength;
+		public int CreatedMs;
+	}
+
+	public static class OldMessage {//oridnal: 22
 		public int Id;
 		public int Uid;
 		public int UserId;
@@ -245,7 +258,7 @@ public class J {
 		public int CreatedTimeMs;
 	}
 
-	public static class OldMsgFile {//oridnal: 22
+	public static class OldMsgFile {//oridnal: 23
 		public int Id;
 		public String Name;
 		public int Size;
@@ -263,7 +276,7 @@ public class J {
 		public int CanDel;
 	}
 
-	public static class OldMsgPush {//oridnal: 23
+	public static class OldMsgPush {//oridnal: 24
 		public int Id;
 		public int Uid;
 		public int ToUser;
@@ -271,7 +284,7 @@ public class J {
 		public int CreatedTimeMs;
 	}
 
-	public static class OldMsgPushEvent {//oridnal: 24
+	public static class OldMsgPushEvent {//oridnal: 25
 		public int Id;
 		public int Uid;
 		public int ToUserId;
@@ -283,7 +296,7 @@ public class J {
 		public int AtTime;
 	}
 
-	public static class PhoneContact {//oridnal: 25
+	public static class PhoneContact {//oridnal: 26
 		public int Id;
 		public String PhoneDisplayName;
 		public String PhoneFamilyName;
@@ -296,7 +309,7 @@ public class J {
 		public int UpdatedTime;
 	}
 
-	public static class Photo {//oridnal: 26
+	public static class Photo {//oridnal: 27
 		public int PhotoId;
 		public int UserId;
 		public int PostId;
@@ -320,7 +333,7 @@ public class J {
 		public int W80;
 	}
 
-	public static class Post {//oridnal: 27
+	public static class Post {//oridnal: 28
 		public int Id;
 		public int UserId;
 		public int TypeId;
@@ -336,7 +349,7 @@ public class J {
 		public int CreatedTime;
 	}
 
-	public static class PushEvent {//oridnal: 28
+	public static class PushEvent {//oridnal: 29
 		public int PushEventId;
 		public int ToUserId;
 		public int ToDeviceId;
@@ -348,7 +361,7 @@ public class J {
 		public int AtTime;
 	}
 
-	public static class PushMessage {//oridnal: 29
+	public static class PushMessage {//oridnal: 30
 		public int PushMessageId;
 		public int ToUserId;
 		public int ToDeviceId;
@@ -357,7 +370,7 @@ public class J {
 		public int CreatedMs;
 	}
 
-	public static class RecommendUser {//oridnal: 30
+	public static class RecommendUser {//oridnal: 31
 		public int Id;
 		public int UserId;
 		public int TargetId;
@@ -365,7 +378,7 @@ public class J {
 		public int CreatedTime;
 	}
 
-	public static class Room {//oridnal: 31
+	public static class Room {//oridnal: 32
 		public int RoomId;
 		public String RoomKey;
 		public int RoomTypeEnum;
@@ -378,7 +391,7 @@ public class J {
 		public int CurrentSeq;
 	}
 
-	public static class SearchClicked {//oridnal: 32
+	public static class SearchClicked {//oridnal: 33
 		public int Id;
 		public String Query;
 		public int ClickType;
@@ -387,7 +400,7 @@ public class J {
 		public int CreatedAt;
 	}
 
-	public static class Session {//oridnal: 33
+	public static class Session {//oridnal: 34
 		public int Id;
 		public int UserId;
 		public String SessionUuid;
@@ -406,7 +419,7 @@ public class J {
 		public int LastSyncNotifyUpdateId;
 	}
 
-	public static class SettingClient {//oridnal: 34
+	public static class SettingClient {//oridnal: 35
 		public int UserId;
 		public int AutoDownloadWifiVoice;
 		public int AutoDownloadWifiImage;
@@ -429,7 +442,7 @@ public class J {
 		public int SaveToGallery;
 	}
 
-	public static class SettingNotification {//oridnal: 35
+	public static class SettingNotification {//oridnal: 36
 		public int UserId;
 		public int SocialLedOn;
 		public String SocialLedColor;
@@ -452,7 +465,7 @@ public class J {
 		public int DirectPriority;
 	}
 
-	public static class Tag {//oridnal: 36
+	public static class Tag {//oridnal: 37
 		public int Id;
 		public String Name;
 		public int Count;
@@ -460,7 +473,7 @@ public class J {
 		public int CreatedTime;
 	}
 
-	public static class TagsPost {//oridnal: 37
+	public static class TagsPost {//oridnal: 38
 		public int Id;
 		public int TagId;
 		public int PostId;
@@ -468,7 +481,7 @@ public class J {
 		public int CreatedTime;
 	}
 
-	public static class TestChat {//oridnal: 38
+	public static class TestChat {//oridnal: 39
 		public int Id;
 		public int Id4;
 		public int TimeMs;
@@ -481,7 +494,7 @@ public class J {
 		public int C5;
 	}
 
-	public static class TriggerLog {//oridnal: 39
+	public static class TriggerLog {//oridnal: 40
 		public int Id;
 		public String ModelName;
 		public String ChangeType;
@@ -490,7 +503,7 @@ public class J {
 		public int CreatedSe;
 	}
 
-	public static class User {//oridnal: 40
+	public static class User {//oridnal: 41
 		public int Id;
 		public String UserName;
 		public String UserNameLower;
@@ -526,14 +539,14 @@ public class J {
 		public String LastIpAddress;
 	}
 
-	public static class UserMetaInfo {//oridnal: 41
+	public static class UserMetaInfo {//oridnal: 42
 		public int Id;
 		public int UserId;
 		public int IsNotificationDirty;
 		public int LastUserRecGen;
 	}
 
-	public static class UserPassword {//oridnal: 42
+	public static class UserPassword {//oridnal: 43
 		public int UserId;
 		public String Password;
 		public int CreatedTime;

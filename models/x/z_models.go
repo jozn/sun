@@ -521,6 +521,35 @@ type NotificationRemoved struct {
 	NotificationId: 0,
 	ForUserId: 0,
 */
+// offline 'Offline'.
+type Offline struct {
+	Id          int
+	FromUserId  int
+	ToUserId    int
+	RpcName     string
+	PBClassName string
+	Key         string
+	DataJson    string
+	DataBlob    []byte
+	DataLength  int
+	CreatedMs   int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &Offline {
+	Id: 0,
+	FromUserId: 0,
+	ToUserId: 0,
+	RpcName: "",
+	PBClassName: "",
+	Key: "",
+	DataJson: "",
+	DataBlob: []byte{},
+	DataLength: 0,
+	CreatedMs: 0,
+*/
 // old_messages 'OldMessage'.
 type OldMessage struct {
 	Id            int

@@ -677,6 +677,38 @@ func (c _StoreImpl) PreLoadNotificationRemovedByNotificationIds(ids []int) {
 
 // yes 222 int
 
+func (c _StoreImpl) GetOfflineById(Id int) (*Offline, bool) {
+	o, ok := RowCache.Get("Offline:" + strconv.Itoa(Id))
+	if ok {
+		if obj, ok := o.(*Offline); ok {
+			return obj, true
+		}
+	}
+	obj2, err := OfflineById(base.DB, Id)
+	if err == nil {
+		return obj2, true
+	}
+	XOLogErr(err)
+	return nil, false
+}
+
+func (c _StoreImpl) PreLoadOfflineByIds(ids []int) {
+	not_cached := make([]int, 0, len(ids))
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Offline:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewOffline_Selector().Id_In(not_cached).GetRows(base.DB)
+	}
+}
+
+// yes 222 int
+
 func (c _StoreImpl) GetOldMessageById(Id int) (*OldMessage, bool) {
 	o, ok := RowCache.Get("OldMessage:" + strconv.Itoa(Id))
 	if ok {
