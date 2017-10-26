@@ -9,17 +9,18 @@ import (
 	"time"
 )
 
-type liveUpdaterBuffer struct {
-	//HereDirect        chan x.DirectUpdate
-	HereDirectDelayer chan UpdateDelayer
-	StoredDirect      chan x.DirectUpdate
+type liveOfflineBuffer struct {
+	//HereDirect        chan x.DirectOffline
+	HereDirectDelayer_DEP chan OfflineDelayer
+	HereDirectDelayer     chan x.DirectOffline
+	StoredDirect          chan x.DirectOffline
 
-	HereGroup   chan x.DirectUpdate
-	StoredGroup chan x.DirectUpdate
+	HereGroup   chan x.DirectOffline
+	StoredGroup chan x.DirectOffline
 }
 
-type UpdateDelayer struct {
-	directUpdate x.DirectUpdate
+type OfflineDelayer struct {
+	directUpdate x.DirectOffline
 	/*fromUserId   int
 	toUserId     int
 	roomKey      string
@@ -30,27 +31,28 @@ type UpdateDelayer struct {
 
 ///////////////////////////////
 
-var LiveUpdateFramer = liveUpdaterBuffer{
-	//HereDirect:        make(chan x.DirectUpdate, 10000),//dep?? use HereDirectDelayer_DEP
-	HereDirectDelayer: make(chan UpdateDelayer, 10000),
-	StoredDirect:      make(chan x.DirectUpdate, 10000),
-	HereGroup:         make(chan x.DirectUpdate, 10000),
-	StoredGroup:       make(chan x.DirectUpdate, 10000),
+var LiveOfflineFramer = liveOfflineBuffer{
+	//HereDirect:        make(chan x.DirectOffline, 10000),//dep?? use HereDirectDelayer_DEP
+	//HereDirectDelayer_DEP: make(chan OfflineDelayer, 10000),
+	HereDirectDelayer: make(chan x.DirectOffline, 10000),
+	StoredDirect:      make(chan x.DirectOffline, 10000),
+	HereGroup:         make(chan x.DirectOffline, 10000),
+	StoredGroup:       make(chan x.DirectOffline, 10000),
 }
 
 func init() {
-	LiveUpdateFramer.StartLoops()
+	LiveOfflineFramer.StartLoops()
 }
 
-func (m *liveUpdaterBuffer) StartLoops() {
+func (m *liveOfflineBuffer) StartLoops() {
 	go m.loopHereDirect()
 	go m.loopDirectToUser()
 }
 
 //can causes panic
-func (m *liveUpdaterBuffer) loopHereDirect() {
+func (m *liveOfflineBuffer) loopHereDirect() {
 	const siz = 50000
-	arr := make([]UpdateDelayer, 0, siz)
+	arr := make([]x.DirectOffline, 0, siz)
 	cnt := 0
 
 	ticker := time.NewTicker(10 * time.Millisecond)
@@ -64,7 +66,7 @@ func (m *liveUpdaterBuffer) loopHereDirect() {
 				cnt++
 				fmt.Printf("batch of chanNewChatMsgsBuffer - cnt:%d - len:%d \n", cnt, len(arr))
 				pre := arr
-				arr = make([]UpdateDelayer, 0, siz)
+				arr = make([]x.DirectOffline, 0, siz)
 				go m.saveNewChatDirectBuffer(pre)
 				logChat.Printf(".HereDirectDelayer_DEP is saving for %v", pre)
 			}
@@ -72,33 +74,33 @@ func (m *liveUpdaterBuffer) loopHereDirect() {
 	}
 }
 
-func (m *liveUpdaterBuffer) saveNewChatDirectBuffer(msgsDelays []UpdateDelayer) {
+func (m *liveOfflineBuffer) saveNewChatDirectBuffer(msgsDelays []x.DirectOffline) {
 	defer helper.JustRecover()
 
 	if len(msgsDelays) == 0 {
 		return
 	}
 
-	logs := make([]x.DirectUpdate, 0, len(msgsDelays))
+	logs := make([]x.DirectOffline, 0, len(msgsDelays))
 	for _, md := range msgsDelays {
-		logs = append(logs, md.directUpdate)
+		logs = append(logs, md)
 	}
-	err := x.MassInsert_DirectUpdate(logs, base.DB)
+	err := x.MassInsert_DirectOffline(logs, base.DB)
 	helper.DebugErr(err)
 
 	if err != nil {
-		logChat.Printf(".saveNewChatDirectBuffer() has error for saving mass DirectUpdate - Err: %s", err)
+		logChat.Printf(".saveNewChatDirectBuffer() has error for saving mass OfflineDelayer - Err: %s", err)
 	}
 
 	//fixme: is it better to use just use anotehr mechanism - this has data racing??
 	for _, md := range msgsDelays {
-		m.StoredDirect <- md.directUpdate
+		m.StoredDirect <- md
 	}
 }
 
-func (m *liveUpdaterBuffer) loopDirectToUser() {
+func (m *liveOfflineBuffer) loopDirectToUser() {
 	const siz = 50000
-	arr := make([]x.DirectUpdate, 0, siz)
+	arr := make([]x.DirectOffline, 0, siz)
 	cnt := 0
 
 	ticker := time.NewTicker(10 * time.Millisecond)
@@ -114,21 +116,21 @@ func (m *liveUpdaterBuffer) loopDirectToUser() {
 				cnt++
 				fmt.Printf("batch of loopDirectToUser - cnt:%d - len:%d \n", cnt, len(arr))
 				pre := arr
-				arr = make([]x.DirectUpdate, 0, siz)
+				arr = make([]x.DirectOffline, 0, siz)
 				go _livePush_sendToUsersUpdatesFrame(pre)
 			}
 		}
 	}
 }
 
-func _livePush_sendToUsersUpdatesFrame(logs []x.DirectUpdate) {
+func _livePush_sendToUsersUpdatesFrame(logs []x.DirectOffline) {
 	defer helper.JustRecover()
 
 	if len(logs) == 0 {
 		return
 	}
 
-	mp := make(map[int][]*x.DirectUpdate, len(logs))
+	mp := make(map[int][]*x.DirectOffline, len(logs))
 	msgIds := make([]int, 0, len(logs))
 	for _, l := range logs {
 		l2 := l
@@ -142,7 +144,7 @@ func _livePush_sendToUsersUpdatesFrame(logs []x.DirectUpdate) {
 
 	for UserId, lgs := range mp { //each user
 		if AllPipesMap.IsPipeOpen(UserId) && len(lgs) > 0 {
-			res := ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(UserId, lgs)
+			res := ViewPush_OfflineDelayersList_To_GetDirectUpdatesView(UserId, lgs)
 
 			pb_res := x.PB_AllLivePushes{
 				DirectUpdates: res,

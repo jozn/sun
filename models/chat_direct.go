@@ -1,13 +1,14 @@
 package models
 
 import (
+	"errors"
 	"ms/sun/base"
 	"ms/sun/config"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 )
 
-type chatDirect struct {
+type _chatDirect struct {
 	MeUserId    int
 	PeerUserId  int
 	MeChat      *x.Chat
@@ -17,8 +18,8 @@ type chatDirect struct {
 	PeerChatKey string
 }
 
-func NewDirectMessagingByUsers(meUserId, peerUserId int) *chatDirect {
-	res := &chatDirect{
+func NewDirectMessagingByUsers(meUserId, peerUserId int) *_chatDirect {
+	res := &_chatDirect{
 		MeUserId:    meUserId,
 		PeerUserId:  peerUserId,
 		MeChatKey:   UsersToChatKey(meUserId, peerUserId),
@@ -28,37 +29,32 @@ func NewDirectMessagingByUsers(meUserId, peerUserId int) *chatDirect {
 	return res
 }
 
-func NewDirectMessagingByChatId(meUserId int, chatId string) (*chatDirect, error) {
-	/* if meUserId <=  0 {
-	       return  nil,errors.New("not user")
-	   }
-	   if chatId > 0 {
-	       ch, err := x.Store.GetChatByChatId(chatId)
-	       if err != nil {
+func NewDirectMessagingByChatId(meUserId int, chatkEY string) (*_chatDirect, error) {
+	if meUserId <= 0 {
+		return nil, errors.New("not user")
+	}
 
-	       }
-	   }*/
-	ch, err := x.NewChat_Selector().ChatKey_Eq(chatId).UserId_Eq(meUserId).GetRow(base.DB)
+	ch, err := x.NewChat_Selector().ChatKey_Eq(chatkEY).UserId_Eq(meUserId).GetRow(base.DB)
 	if err != nil {
 		return nil, err
 	}
 
-	s := &chatDirect{
-		MeUserId:   meUserId,
-		PeerUserId: ch.PeerUserId,
-	}
-	s.MeChat = ch
-	var e2 error
+	s := NewDirectMessagingByUsers(meUserId, ch.PeerUserId)
+	//s.MeChat = ch
+	/*var e2 error
 	s.PeerChat, e2 = GetOrCreateDirectChatForPeers(s.PeerUserId, s.MeUserId)
 	if e2 != nil {
 		s.Err = e2
-	}
+	}*/
 
-	s.LoadOrCreateRooms()
+	//s.LoadOrCreateRooms()
 	return s, nil
 }
 
-func (s *chatDirect) LoadOrCreateRooms() error {
+func (s *_chatDirect) LoadOrCreateRooms() error {
+	if s.MeChat != nil && s.PeerChat != nil {
+		return nil
+	}
 	var e1, e2 error
 	s.MeChat, e1 = GetOrCreateDirectChatForPeers(s.MeUserId, s.PeerUserId)
 	s.PeerChat, e2 = GetOrCreateDirectChatForPeers(s.PeerUserId, s.MeUserId)
@@ -77,7 +73,7 @@ func (s *chatDirect) LoadOrCreateRooms() error {
 }
 
 ///////////////// main fuctionalities ///////////////////
-func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
+func (s *_chatDirect) AddMessage(msg *x.DirectMessage) {
 	s.LoadOrCreateRooms()
 	if s.Err != nil {
 		return
@@ -88,24 +84,23 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 		return
 	}
 
-	Chat_IncermentForNewMessage(s.MeChat)
-	Chat_IncermentForNewMessage(s.PeerChat)
+	//Chat_IncermentForNewMessage(s.MeChat)
+	//Chat_IncermentForNewMessage(s.PeerChat)
+
+	Chat_setLastMsg(s.MeChat, msg)
+	Chat_setLastMsg(s.PeerChat, msg)
 
 	d2mMe := x.DirectToMessage{
-		Id: helper.NextRowsSeqId(),
-		//ChatId:       s.MeChat.ChatId,
-		MessageId: msg.MessageId,
-		ChatKey:   UsersToChatKey(s.MeUserId, s.PeerUserId),
-		//Seq:          s.MeChat.CurrentSeq,
+		Id:           helper.NextRowsSeqId(),
+		MessageId:    msg.MessageId,
+		ChatKey:      s.MeChat.ChatKey,
 		SourceEnumId: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
 	}
 
 	d2mPeer := x.DirectToMessage{
-		Id: helper.NextRowsSeqId(),
-		//ChatId:       s.PeerChat.ChatId,
-		ChatKey:   UsersToChatKey(s.PeerUserId, s.MeUserId),
-		MessageId: msg.MessageId,
-		//Seq:          s.PeerChat.CurrentSeq,
+		Id:           helper.NextRowsSeqId(),
+		ChatKey:      s.PeerChat.ChatKey,
+		MessageId:    msg.MessageId,
 		SourceEnumId: int(x.DirectMessageSourceEnum_COMPOSE_SOURCE),
 	}
 
@@ -164,16 +159,16 @@ func (s *chatDirect) AddMessage(msg *x.DirectMessage) {
 	LiveUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlRec}
 }
 
-func (s *chatDirect) DeleteMessageFromMe() {
+func (s *_chatDirect) DeleteMessageFromMe() {
 
 }
 
-func (s *chatDirect) EditMessageFromMe() {
+func (s *_chatDirect) EditMessageFromMe() {
 
 }
 
 //todo: make this more performant with MsgIds passing
-func (s *chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
+func (s *_chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 	sel := x.NewDirectToMessage_Selector().Select_MessageId().
 		ChatKey_Eq(s.MeChatKey)
 	/*if fromSeq > 0 {
@@ -209,13 +204,13 @@ func (s *chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 	      AtTimeMs:      helper.TimeNowMs(),
 	  }
 
-	  LiveUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlNew}*/
+	  LiveUpdateFramer.HereDirectDelayer_DEP <- UpdateDelayer{directUpdate: dlNew}*/
 }
 
-func (s *chatDirect) SetMessagesStatus() {
+func (s *_chatDirect) SetMessagesStatus() {
 
 }
 
-func (s *chatDirect) DeleteMyHistory() {
+func (s *_chatDirect) DeleteMyHistory() {
 
 }

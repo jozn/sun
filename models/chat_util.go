@@ -81,8 +81,15 @@ func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {
 }
 
 func Chat_IncermentForNewMessage(c *x.Chat) {
-	c.CurrentSeq += 1 //todo dep - remove this
+	//c.CurrentSeq += 1 //todo dep - remove this
 	c.UpdatedMs = helper.TimeNowMs()
+}
+
+func Chat_setLastMsg(c *x.Chat, msg *x.DirectMessage) {
+	if msg.MessageId > 0 { //must alwasye be true
+		c.LastMessageId = msg.MessageId
+		c.UpdatedMs = helper.TimeNowMs()
+	}
 }
 
 /*
