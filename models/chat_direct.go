@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"github.com/jozn/protobuf/proto"
 	"ms/sun/base"
 	"ms/sun/config"
 	"ms/sun/helper"
@@ -124,39 +125,48 @@ func (s *_chatDirect) AddMessage(msg *x.DirectMessage) {
 		return
 	}
 
-	dlNew := x.DirectUpdate{
-		DirectUpdateId: helper.NextRowsSeqId(),
-		ToUserId:       s.PeerChat.UserId,
-		MessageId:      msg.MessageId,
-		MessageFileId:  msg.MessageFileId,
-		//ChatId:        s.PeerChat.ChatId,
-		ChatKey:       s.PeerChatKey, //UsersToChatKey(s.MeUserId, s.PeerUserId),
-		PeerUserId:    s.MeChat.UserId,
-		RoomLogTypeId: int(Push_NEW_DIRECT_MESSAGE), //x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE),
-		FromSeq:       -1,
-		ToSeq:         -1,
-		ExtraPB:       []byte{},
-		ExtraJson:     "",
-		AtTimeMs:      helper.TimeNowMs(),
+	//=== new direct to peer offline
+	pbNewMsg := &x.PB_Offline_NewDirectMessage{
+		ChatKey:       int64(s.MeChat.ChatKey),
+		FromMessageId: int64(msg.MessageId),
+		AtTime:        int64(helper.TimeNow()),
 	}
 
-	dlRec := x.DirectUpdate{
-		DirectUpdateId: helper.NextRowsSeqId(),
-		ToUserId:       s.MeChat.UserId,
-		MessageId:      msg.MessageId,
-		MessageFileId:  0,
-		ChatKey:        s.MeChatKey, //UsersToChatKey(s.MeUserId, s.PeerUserId),
-		PeerUserId:     s.PeerChat.UserId,
-		RoomLogTypeId:  int(Push_MESSAGE_RECIVED_TO_SERVER), //int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
-		FromSeq:        -1,
-		ToSeq:          -1,
-		ExtraPB:        []byte{},
-		ExtraJson:      "",
-		AtTimeMs:       helper.TimeNowMs(),
+	dlNew := x.DirectOffline{
+		DirectOfflineId: helper.NextRowsSeqId(),
+		ToUserId:        s.PeerChat.UserId,
+		MessageId:       msg.MessageId,
+		MessageFileId:   msg.MessageFileId,
+		ChatKey:         s.PeerChatKey, //UsersToChatKey(s.MeUserId, s.PeerUserId),
+		PeerUserId:      s.MeChat.UserId,
+		RoomLogTypeId:   int(Push_NEW_DIRECT_MESSAGE), //x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE),
+		OtherId:         0,
+		AtTimeMs:        helper.TimeNowMs(),
+	}
+	dlNew.DataPB, _ = proto.Marshal(pbNewMsg)
+	dlNew.DataJson = helper.ToJson(pbNewMsg)
+
+	//=== recived msg to peer offline
+	dlRec := x.DirectOffline{
+		DirectOfflineId: helper.NextRowsSeqId(),
+		ToUserId:        s.MeChat.UserId,
+		MessageId:       msg.MessageId,
+		MessageFileId:   0,
+		ChatKey:         s.MeChatKey, //UsersToChatKey(s.MeUserId, s.PeerUserId),
+		PeerUserId:      s.PeerChat.UserId,
+		RoomLogTypeId:   int(Push_MESSAGE_RECIVED_TO_SERVER), //int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
+		AtTimeMs:        helper.TimeNowMs(),
+	}
+	pbRecOff := &x.PB_Offline_MessagesReachedServer{
+		MessageKeys: []string{msg.MessageKey},
+		AtTime:      int64(helper.TimeNow()),
 	}
 
-	LiveUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlNew}
-	LiveUpdateFramer.HereDirectDelayer <- UpdateDelayer{directUpdate: dlRec}
+	dlRec.DataPB, _ = proto.Marshal(pbRecOff)
+	dlRec.DataJson = helper.ToJson(pbRecOff)
+
+	LiveOfflineFramer.HereDirectDelayer <- dlNew
+	LiveOfflineFramer.HereDirectDelayer <- dlRec
 }
 
 func (s *_chatDirect) DeleteMessageFromMe() {
@@ -188,7 +198,7 @@ func (s *_chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
 		DeliviryStatusEnumId(int(x.RoomMessageDeliviryStatusEnum_SEEN2)).
 		Update(base.DB)
 
-	s.MeChat.LastSeqSeen = toSeq
+	//s.MeChat.LastSeqSeen = toSeq
 
 	/*dlRec := x.DirectUpdate{
 	      Id:            helper.NextRowsSeqId(),
