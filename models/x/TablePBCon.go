@@ -67,13 +67,10 @@ func PBConvPB__Chat_To_Chat( o *PB_Chat) *Chat {
       GroupId: int ( o.GroupId ),
       CreatedSe: int ( o.CreatedSe ),
       StartMessageIdFrom: int ( o.StartMessageIdFrom ),
-      LastSeenMessageId: int ( o.LastSeenMessageId ),
-      UpdatedMs: int ( o.UpdatedMs ),
-      LastMessageId: int ( o.LastMessageId ),
       LastDeletedMessageId: int ( o.LastDeletedMessageId ),
-      LastSeqSeen: int ( o.LastSeqSeen ),
-      LastSeqDelete: int ( o.LastSeqDelete ),
-      CurrentSeq: int ( o.CurrentSeq ),
+      LastSeenMessageId: int ( o.LastSeenMessageId ),
+      LastMessageId: int ( o.LastMessageId ),
+      UpdatedMs: int ( o.UpdatedMs ),
     }
     return n
 }
@@ -88,13 +85,10 @@ func PBConvPB_Chat_To_Chat ( o *Chat) *PB_Chat {
       GroupId: int64 ( o.GroupId ),
       CreatedSe: int32 ( o.CreatedSe ),
       StartMessageIdFrom: int64 ( o.StartMessageIdFrom ),
-      LastSeenMessageId: int64 ( o.LastSeenMessageId ),
-      UpdatedMs: int64 ( o.UpdatedMs ),
-      LastMessageId: int64 ( o.LastMessageId ),
       LastDeletedMessageId: int64 ( o.LastDeletedMessageId ),
-      LastSeqSeen: int32 ( o.LastSeqSeen ),
-      LastSeqDelete: int32 ( o.LastSeqDelete ),
-      CurrentSeq: int32 ( o.CurrentSeq ),
+      LastSeenMessageId: int64 ( o.LastSeenMessageId ),
+      LastMessageId: int64 ( o.LastMessageId ),
+      UpdatedMs: int64 ( o.UpdatedMs ),
     }
     return n
 }
@@ -153,6 +147,45 @@ func PBConvPB_DirectMessage_To_DirectMessage ( o *DirectMessage) *PB_DirectMessa
       PeerReceivedTime: int32 ( o.PeerReceivedTime ),
       PeerSeenTime: int32 ( o.PeerSeenTime ),
       DeliviryStatusEnumId: int32 ( o.DeliviryStatusEnumId ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__DirectOffline_To_DirectOffline( o *PB_DirectOffline) *DirectOffline {
+     n := &DirectOffline{
+      DirectOfflineId: int ( o.DirectOfflineId ),
+      ToUserId: int ( o.ToUserId ),
+      MessageId: int ( o.MessageId ),
+      MessageFileId: int ( o.MessageFileId ),
+      OtherId: int ( o.OtherId ),
+      ChatKey: string ( o.ChatKey ),
+      PeerUserId: int ( o.PeerUserId ),
+      RoomLogTypeId: int ( o.RoomLogTypeId ),
+      PBClass: string ( o.PBClass ),
+      DataPB: []byte ( o.DataPB ),
+      DataJson: string ( o.DataJson ),
+      DataTemp: string ( o.DataTemp ),
+      AtTimeMs: int ( o.AtTimeMs ),
+    }
+    return n
+}
+
+func PBConvPB_DirectOffline_To_DirectOffline ( o *DirectOffline) *PB_DirectOffline {
+     n := &PB_DirectOffline{
+      DirectOfflineId: int64 ( o.DirectOfflineId ),
+      ToUserId: int32 ( o.ToUserId ),
+      MessageId: int64 ( o.MessageId ),
+      MessageFileId: int64 ( o.MessageFileId ),
+      OtherId: int64 ( o.OtherId ),
+      ChatKey: string ( o.ChatKey ),
+      PeerUserId: int32 ( o.PeerUserId ),
+      RoomLogTypeId: int32 ( o.RoomLogTypeId ),
+      PBClass: string ( o.PBClass ),
+      DataPB: []byte ( o.DataPB ),
+      DataJson: string ( o.DataJson ),
+      DataTemp: string ( o.DataTemp ),
+      AtTimeMs: int64 ( o.AtTimeMs ),
     }
     return n
 }

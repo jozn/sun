@@ -35,13 +35,10 @@ message PB_Chat {
     int64 GroupId = 11;
     int32 CreatedSe = 13;
     int64 StartMessageIdFrom = 15;
-    int64 LastSeenMessageId = 17;
-    int64 UpdatedMs = 19;
+    int64 LastDeletedMessageId = 17;
+    int64 LastSeenMessageId = 19;
     int64 LastMessageId = 21;
-    int64 LastDeletedMessageId = 23;
-    int32 LastSeqSeen = 25;
-    int32 LastSeqDelete = 27;
-    int32 CurrentSeq = 29;
+    int64 UpdatedMs = 23;
 }
 message PB_Comment {
     int32 Id = 1;
@@ -62,6 +59,21 @@ message PB_DirectMessage {
     int32 PeerReceivedTime = 17;
     int32 PeerSeenTime = 19;
     int32 DeliviryStatusEnumId = 21;
+}
+message PB_DirectOffline {
+    int64 DirectOfflineId = 1;
+    int32 ToUserId = 3;
+    int64 MessageId = 5;
+    int64 MessageFileId = 7;
+    int64 OtherId = 9;
+    string ChatKey = 11;
+    int32 PeerUserId = 13;
+    int32 RoomLogTypeId = 15;
+    string PBClass = 17;
+    bytes DataPB = 19;
+    string DataJson = 21;
+    string DataTemp = 23;
+    int64 AtTimeMs = 25;
 }
 message PB_DirectToMessage {
     int64 Id = 1;

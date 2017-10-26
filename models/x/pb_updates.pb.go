@@ -18,7 +18,7 @@ type PB_UpdateGroupParticipants struct {
 func (m *PB_UpdateGroupParticipants) Reset()                    { *m = PB_UpdateGroupParticipants{} }
 func (m *PB_UpdateGroupParticipants) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateGroupParticipants) ProtoMessage()               {}
-func (*PB_UpdateGroupParticipants) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{0} }
+func (*PB_UpdateGroupParticipants) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
 
 type PB_UpdateNotifySettings struct {
 }
@@ -26,7 +26,7 @@ type PB_UpdateNotifySettings struct {
 func (m *PB_UpdateNotifySettings) Reset()                    { *m = PB_UpdateNotifySettings{} }
 func (m *PB_UpdateNotifySettings) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateNotifySettings) ProtoMessage()               {}
-func (*PB_UpdateNotifySettings) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{1} }
+func (*PB_UpdateNotifySettings) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
 
 type PB_UpdateServiceNotification struct {
 }
@@ -34,7 +34,7 @@ type PB_UpdateServiceNotification struct {
 func (m *PB_UpdateServiceNotification) Reset()                    { *m = PB_UpdateServiceNotification{} }
 func (m *PB_UpdateServiceNotification) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateServiceNotification) ProtoMessage()               {}
-func (*PB_UpdateServiceNotification) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{2} }
+func (*PB_UpdateServiceNotification) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{2} }
 
 // //////////////////////////////////////////////
 type PB_UpdateMessageMeta struct {
@@ -45,7 +45,7 @@ type PB_UpdateMessageMeta struct {
 func (m *PB_UpdateMessageMeta) Reset()                    { *m = PB_UpdateMessageMeta{} }
 func (m *PB_UpdateMessageMeta) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateMessageMeta) ProtoMessage()               {}
-func (*PB_UpdateMessageMeta) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{3} }
+func (*PB_UpdateMessageMeta) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{3} }
 
 func (m *PB_UpdateMessageMeta) GetMessageId() int64 {
 	if m != nil {
@@ -69,7 +69,7 @@ type PB_UpdateMessageId struct {
 func (m *PB_UpdateMessageId) Reset()                    { *m = PB_UpdateMessageId{} }
 func (m *PB_UpdateMessageId) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateMessageId) ProtoMessage()               {}
-func (*PB_UpdateMessageId) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{4} }
+func (*PB_UpdateMessageId) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{4} }
 
 func (m *PB_UpdateMessageId) GetOldMessageId() int64 {
 	if m != nil {
@@ -93,7 +93,7 @@ type PB_UpdateMessageToEdit struct {
 func (m *PB_UpdateMessageToEdit) Reset()                    { *m = PB_UpdateMessageToEdit{} }
 func (m *PB_UpdateMessageToEdit) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateMessageToEdit) ProtoMessage()               {}
-func (*PB_UpdateMessageToEdit) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{5} }
+func (*PB_UpdateMessageToEdit) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{5} }
 
 func (m *PB_UpdateMessageToEdit) GetMessageId() int64 {
 	if m != nil {
@@ -116,7 +116,7 @@ type PB_UpdateMessageToDelete struct {
 func (m *PB_UpdateMessageToDelete) Reset()                    { *m = PB_UpdateMessageToDelete{} }
 func (m *PB_UpdateMessageToDelete) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateMessageToDelete) ProtoMessage()               {}
-func (*PB_UpdateMessageToDelete) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{6} }
+func (*PB_UpdateMessageToDelete) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{6} }
 
 func (m *PB_UpdateMessageToDelete) GetMessageId() int64 {
 	if m != nil {
@@ -134,7 +134,7 @@ type PB_UpdateRoomActionDoing struct {
 func (m *PB_UpdateRoomActionDoing) Reset()                    { *m = PB_UpdateRoomActionDoing{} }
 func (m *PB_UpdateRoomActionDoing) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateRoomActionDoing) ProtoMessage()               {}
-func (*PB_UpdateRoomActionDoing) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{7} }
+func (*PB_UpdateRoomActionDoing) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{7} }
 
 func (m *PB_UpdateRoomActionDoing) GetRoomKey() string {
 	if m != nil {
@@ -158,7 +158,7 @@ type PB_UpdateUserBlocked struct {
 func (m *PB_UpdateUserBlocked) Reset()                    { *m = PB_UpdateUserBlocked{} }
 func (m *PB_UpdateUserBlocked) String() string            { return proto.CompactTextString(m) }
 func (*PB_UpdateUserBlocked) ProtoMessage()               {}
-func (*PB_UpdateUserBlocked) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{8} }
+func (*PB_UpdateUserBlocked) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{8} }
 
 func (m *PB_UpdateUserBlocked) GetUserId() int32 {
 	if m != nil {
@@ -186,9 +186,9 @@ func init() {
 	proto.RegisterType((*PB_UpdateUserBlocked)(nil), "PB_UpdateUserBlocked")
 }
 
-func init() { proto.RegisterFile("pb_updates.proto", fileDescriptor7) }
+func init() { proto.RegisterFile("pb_updates.proto", fileDescriptor8) }
 
-var fileDescriptor7 = []byte{
+var fileDescriptor8 = []byte{
 	// 345 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0xdd, 0x4f, 0xc2, 0x30,
 	0x14, 0xc5, 0x33, 0x89, 0x08, 0x37, 0x86, 0xe8, 0x42, 0x70, 0x12, 0x62, 0x48, 0x9f, 0x78, 0xe2,

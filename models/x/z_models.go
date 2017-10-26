@@ -58,13 +58,10 @@ type Chat struct {
 	GroupId              int
 	CreatedSe            int
 	StartMessageIdFrom   int
-	LastSeenMessageId    int
-	UpdatedMs            int
-	LastMessageId        int //just direct
 	LastDeletedMessageId int
-	LastSeqSeen          int
-	LastSeqDelete        int
-	CurrentSeq           int //just for peer to peer
+	LastSeenMessageId    int
+	LastMessageId        int //just direct-not reliable- just increment not decremetnt
+	UpdatedMs            int
 
 	_exists, _deleted bool
 }
@@ -79,13 +76,10 @@ type Chat struct {
 	GroupId: 0,
 	CreatedSe: 0,
 	StartMessageIdFrom: 0,
-	LastSeenMessageId: 0,
-	UpdatedMs: 0,
-	LastMessageId: 0,
 	LastDeletedMessageId: 0,
-	LastSeqSeen: 0,
-	LastSeqDelete: 0,
-	CurrentSeq: 0,
+	LastSeenMessageId: 0,
+	LastMessageId: 0,
+	UpdatedMs: 0,
 */
 // comment 'Comment'.
 type Comment struct {
@@ -136,6 +130,41 @@ type DirectMessage struct {
 	PeerReceivedTime: 0,
 	PeerSeenTime: 0,
 	DeliviryStatusEnumId: 0,
+*/
+// direct_offline 'DirectOffline'.
+type DirectOffline struct {
+	DirectOfflineId int
+	ToUserId        int
+	MessageId       int
+	MessageFileId   int
+	OtherId         int
+	ChatKey         string
+	PeerUserId      int
+	RoomLogTypeId   int
+	PBClass         string
+	DataPB          []byte
+	DataJson        string
+	DataTemp        string //not real data
+	AtTimeMs        int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &DirectOffline {
+	DirectOfflineId: 0,
+	ToUserId: 0,
+	MessageId: 0,
+	MessageFileId: 0,
+	OtherId: 0,
+	ChatKey: "",
+	PeerUserId: 0,
+	RoomLogTypeId: 0,
+	PBClass: "",
+	DataPB: []byte{},
+	DataJson: "",
+	DataTemp: "",
+	AtTimeMs: 0,
 */
 // direct_to_message 'DirectToMessage'.
 type DirectToMessage struct {

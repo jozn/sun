@@ -40,7 +40,7 @@ type PB_ChatView struct {
 func (m *PB_ChatView) Reset()                    { *m = PB_ChatView{} }
 func (m *PB_ChatView) String() string            { return proto.CompactTextString(m) }
 func (*PB_ChatView) ProtoMessage()               {}
-func (*PB_ChatView) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
+func (*PB_ChatView) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{0} }
 
 func (m *PB_ChatView) GetChatKey() string {
 	if m != nil {
@@ -198,7 +198,7 @@ type PB_MessageView struct {
 func (m *PB_MessageView) Reset()                    { *m = PB_MessageView{} }
 func (m *PB_MessageView) String() string            { return proto.CompactTextString(m) }
 func (*PB_MessageView) ProtoMessage()               {}
-func (*PB_MessageView) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
+func (*PB_MessageView) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{1} }
 
 func (m *PB_MessageView) GetMessageId() int64 {
 	if m != nil {
@@ -347,7 +347,7 @@ type PB_MessageFileView struct {
 func (m *PB_MessageFileView) Reset()                    { *m = PB_MessageFileView{} }
 func (m *PB_MessageFileView) String() string            { return proto.CompactTextString(m) }
 func (*PB_MessageFileView) ProtoMessage()               {}
-func (*PB_MessageFileView) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{2} }
+func (*PB_MessageFileView) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{2} }
 
 func (m *PB_MessageFileView) GetMessageFileId() int64 {
 	if m != nil {
@@ -542,7 +542,7 @@ type PB_UserView struct {
 func (m *PB_UserView) Reset()                    { *m = PB_UserView{} }
 func (m *PB_UserView) String() string            { return proto.CompactTextString(m) }
 func (*PB_UserView) ProtoMessage()               {}
-func (*PB_UserView) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{3} }
+func (*PB_UserView) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{3} }
 
 func (m *PB_UserView) GetUserId() int32 {
 	if m != nil {
@@ -663,9 +663,9 @@ func init() {
 	proto.RegisterType((*PB_UserView)(nil), "PB_UserView")
 }
 
-func init() { proto.RegisterFile("pb_views.proto", fileDescriptor8) }
+func init() { proto.RegisterFile("pb_views.proto", fileDescriptor9) }
 
-var fileDescriptor8 = []byte{
+var fileDescriptor9 = []byte{
 	// 1065 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x56, 0x51, 0x6f, 0x23, 0x35,
 	0x10, 0xd6, 0xd2, 0x4b, 0xdb, 0x38, 0xd7, 0xe6, 0xea, 0x5e, 0x61, 0xe9, 0x71, 0xbd, 0xb4, 0xaa,

@@ -125,6 +125,30 @@ func OnDirectMessage_LoadMany(rows []*DirectMessage) {
 	}
 }
 
+//DirectOffline Events
+
+func OnDirectOffline_AfterInsert(row *DirectOffline) {
+	RowCache.Set("DirectOffline:"+strconv.Itoa(row.DirectOfflineId), row, time.Hour*0)
+}
+
+func OnDirectOffline_AfterUpdate(row *DirectOffline) {
+	RowCache.Set("DirectOffline:"+strconv.Itoa(row.DirectOfflineId), row, time.Hour*0)
+}
+
+func OnDirectOffline_AfterDelete(row *DirectOffline) {
+	RowCache.Delete("DirectOffline:" + strconv.Itoa(row.DirectOfflineId))
+}
+
+func OnDirectOffline_LoadOne(row *DirectOffline) {
+	RowCache.Set("DirectOffline:"+strconv.Itoa(row.DirectOfflineId), row, time.Hour*0)
+}
+
+func OnDirectOffline_LoadMany(rows []*DirectOffline) {
+	for _, row := range rows {
+		RowCache.Set("DirectOffline:"+strconv.Itoa(row.DirectOfflineId), row, time.Hour*0)
+	}
+}
+
 //DirectToMessage Events
 
 func OnDirectToMessage_AfterInsert(row *DirectToMessage) {

@@ -144,6 +144,35 @@ $$
 
 
  #### delimiter ;*/
+################################ DirectOffline ######################################
+
+/* #### delimiter $$
+DROP TRIGGER IF EXISTS direct_offline_OnCreateLogger $$
+CREATE TRIGGER direct_offline_OnCreateLogger AFTER INSERT ON direct_offline
+  FOR EACH ROW
+  BEGIN
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("DirectOffline","INSERT",NEW.DirectOfflineId, UNIX_TIMESTAMP(NOW()) );
+  END;
+$$
+
+DROP TRIGGER IF EXISTS direct_offline_OnUpdateLogger $$
+CREATE TRIGGER direct_offline_OnUpdateLogger AFTER UPDATE ON direct_offline
+  FOR EACH ROW
+  BEGIN
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("DirectOffline","UPDATE",NEW.DirectOfflineId, UNIX_TIMESTAMP(NOW()));
+  END;
+$$
+
+DROP TRIGGER IF EXISTS direct_offline_OnDeleteLogger $$
+CREATE TRIGGER direct_offline_OnDeleteLogger AFTER DELETE ON direct_offline
+  FOR EACH ROW
+  BEGIN
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("DirectOffline","DELETE",OLD.DirectOfflineId, UNIX_TIMESTAMP(NOW()));
+  END;
+$$
+
+
+ #### delimiter ;*/
 ################################ DirectToMessage ######################################
 
 /* #### delimiter $$
@@ -1300,6 +1329,10 @@ DROP TRIGGER IF EXISTS comment_OnDeleteLogger ;
 DROP TRIGGER IF EXISTS direct_message_OnCreateLogger ;
 DROP TRIGGER IF EXISTS direct_message_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS direct_message_OnDeleteLogger ;
+### DirectOffline ##
+DROP TRIGGER IF EXISTS direct_offline_OnCreateLogger ;
+DROP TRIGGER IF EXISTS direct_offline_OnUpdateLogger ;
+DROP TRIGGER IF EXISTS direct_offline_OnDeleteLogger ;
 ### DirectToMessage ##
 DROP TRIGGER IF EXISTS direct_to_message_OnCreateLogger ;
 DROP TRIGGER IF EXISTS direct_to_message_OnUpdateLogger ;

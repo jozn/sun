@@ -165,6 +165,38 @@ func (c _StoreImpl) PreLoadDirectMessageByMessageIds(ids []int) {
 
 // yes 222 int
 
+func (c _StoreImpl) GetDirectOfflineByDirectOfflineId(DirectOfflineId int) (*DirectOffline, bool) {
+	o, ok := RowCache.Get("DirectOffline:" + strconv.Itoa(DirectOfflineId))
+	if ok {
+		if obj, ok := o.(*DirectOffline); ok {
+			return obj, true
+		}
+	}
+	obj2, err := DirectOfflineByDirectOfflineId(base.DB, DirectOfflineId)
+	if err == nil {
+		return obj2, true
+	}
+	XOLogErr(err)
+	return nil, false
+}
+
+func (c _StoreImpl) PreLoadDirectOfflineByDirectOfflineIds(ids []int) {
+	not_cached := make([]int, 0, len(ids))
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("DirectOffline:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewDirectOffline_Selector().DirectOfflineId_In(not_cached).GetRows(base.DB)
+	}
+}
+
+// yes 222 int
+
 func (c _StoreImpl) GetDirectToMessageById(Id int) (*DirectToMessage, bool) {
 	o, ok := RowCache.Get("DirectToMessage:" + strconv.Itoa(Id))
 	if ok {

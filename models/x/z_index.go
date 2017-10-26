@@ -124,6 +124,30 @@ func DirectMessageByMessageId(db *sqlx.DB, messageId int) (*DirectMessage, error
 	return &dm, nil
 }
 
+// DirectOfflineByDirectOfflineId Generated from index 'PRIMARY' -- retrieves a row from 'ms.direct_offline' as a DirectOffline.
+func DirectOfflineByDirectOfflineId(db *sqlx.DB, directOfflineId int) (*DirectOffline, error) {
+	var err error
+
+	const sqlstr = `SELECT * ` +
+		`FROM ms.direct_offline ` +
+		`WHERE DirectOfflineId = ?`
+
+	XOLog(sqlstr, directOfflineId)
+	do := DirectOffline{
+		_exists: true,
+	}
+
+	err = db.Get(&do, sqlstr, directOfflineId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+
+	OnDirectOffline_LoadOne(&do)
+
+	return &do, nil
+}
+
 // DirectToMessageById Generated from index 'PRIMARY' -- retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
 func DirectToMessageById(db *sqlx.DB, id int) (*DirectToMessage, error) {
 	var err error

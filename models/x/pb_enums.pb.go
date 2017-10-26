@@ -7,6 +7,7 @@ Package x is a generated protocol buffer package.
 It is generated from these files:
 	pb_enums.proto
 	pb_global.proto
+	pb_offlines.proto
 	pb_rpc_auth2.proto
 	pb_rpc_msg.proto
 	pb_rpc_sync.proto
@@ -27,6 +28,16 @@ It has these top-level messages:
 	PB_CommandReachedToServer
 	PB_CommandReachedToClient
 	PB_ResponseToClient
+	PB_Offline_NewDirectMessage
+	PB_Offline_MessagesReachedServer
+	PB_Offline_MessagesDeliveredToUser
+	PB_Offline_MessagesSeenByPeer
+	PB_Offline_MessagesDeletedFromServer
+	PB_Offline_ChangeMessageId
+	PB_Offline_ChangeMessageFileId
+	PB_Offline_MessageToEdit
+	PB_Offline_MessageToDelete
+	PB_Online_RoomActionDoing
 	PB_UserParam_CheckUserName2
 	PB_UserResponse_CheckUserName2
 	PB_MsgParam_AddNewTextMessage
@@ -99,6 +110,7 @@ It has these top-level messages:
 	PB_Chat
 	PB_Comment
 	PB_DirectMessage
+	PB_DirectOffline
 	PB_DirectToMessage
 	PB_DirectUpdate
 	PB_FollowingList
@@ -115,6 +127,7 @@ It has these top-level messages:
 	PB_MessageFile
 	PB_Notification
 	PB_NotificationRemoved
+	PB_Offline
 	PB_OldMessage
 	PB_OldMsgFile
 	PB_OldMsgPush
@@ -133,6 +146,7 @@ It has these top-level messages:
 	PB_Tag
 	PB_TagsPost
 	PB_TestChat
+	PB_TriggerLog
 	PB_User
 	PB_UserMetaInfo
 	PB_UserPassword
