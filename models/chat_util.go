@@ -59,17 +59,18 @@ func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {
 	chatMe, err := x.NewChat_Selector().UserId_Eq(me).PeerUserId_Eq(peer).GetRow(base.DB)
 	if err != nil {
 		chatMe = &x.Chat{
-			//ChatId:         helper.NextRowsSeqId(),
-			ChatKey:        UsersToChatKey(me, peer),
-			RoomKey:        UsersToRoomKey(me, peer),
-			RoomTypeEnumId: int(x.RoomTypeEnum_DIRECT),
-			UserId:         me,
-			LastSeqSeen:    0,
-			LastSeqDelete:  0,
-			PeerUserId:     peer,
-			GroupId:        0,
-			CreatedSe:      helper.TimeNow(),
-			CurrentSeq:     0,
+			ChatKey:              UsersToChatKey(me, peer),
+			RoomKey:              UsersToRoomKey(me, peer),
+			RoomTypeEnumId:       int(x.RoomTypeEnum_DIRECT),
+			UserId:               me,
+			PeerUserId:           peer,
+			GroupId:              0,
+			CreatedSe:            helper.TimeNow(),
+			StartMessageIdFrom:   helper.NextRowsSeqIdBase(),
+			LastDeletedMessageId: 0,
+			LastSeenMessageId:    0,
+			LastMessageId:        0,
+			UpdatedMs:            helper.TimeNowMs(),
 		}
 		err = chatMe.Save(base.DB)
 		if err != nil {

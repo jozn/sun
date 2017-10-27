@@ -509,6 +509,77 @@ public class PBFlatTypes {
 	t.ActionType = m.getActionType() ;
 	*/
 
+	public class PB_Offline_Sync {
+	   public PB_MessageView NewMessages;
+	   public PB_MessageFileView ChatFiles;
+	   public PB_ChatView Chats;
+	   public PB_UserView Users;
+	   public PB_Offline_ChangeMessageId ChangeMessageIds;
+	   public PB_Offline_ChangeMessageFileId ChangeMessageFileIds;
+	   public PB_Offline_MessageToEdit MessagesToEdit;
+	   public PB_Offline_MessageToDelete MessagesToDelete;
+	   public PB_Offline_MessagesReachedServer MessagesReachedServer;
+	   public PB_Offline_MessagesDeliveredToUser MessagesDeliveredToUser;
+	   public PB_Offline_MessagesSeenByPeer MessagesSeenByPeer;
+	   public PB_Offline_MessagesDeletedFromServer MessagesDeletedFromServer;
+	   public PB_Online_RoomActionDoing RoomActionDoing;
+	   public long LastId;
+	}
+	/*
+	folding
+	PBFlatTypes.PB_Offline_Sync t = new PBFlatTypes.PB_Offline_Sync();
+    t.setNewMessages();
+    t.setChatFiles();
+    t.setChats();
+    t.setUsers();
+    t.setChangeMessageIds();
+    t.setChangeMessageFileIds();
+    t.setMessagesToEdit();
+    t.setMessagesToDelete();
+    t.setMessagesReachedServer();
+    t.setMessagesDeliveredToUser();
+    t.setMessagesSeenByPeer();
+    t.setMessagesDeletedFromServer();
+    t.setRoomActionDoing();
+    t.setLastId();
+	*/
+
+	/*
+	PBFlatTypes.PB_Offline_Sync t = new PBFlatTypes.PB_Offline_Sync();
+	t.NewMessages = ;
+	t.ChatFiles = ;
+	t.Chats = ;
+	t.Users = ;
+	t.ChangeMessageIds = ;
+	t.ChangeMessageFileIds = ;
+	t.MessagesToEdit = ;
+	t.MessagesToDelete = ;
+	t.MessagesReachedServer = ;
+	t.MessagesDeliveredToUser = ;
+	t.MessagesSeenByPeer = ;
+	t.MessagesDeletedFromServer = ;
+	t.RoomActionDoing = ;
+	t.LastId = ;
+	*/
+
+	/*
+	PB_Offline_Sync t = new PB_Offline_Sync();
+	t.NewMessages = m.getNewMessages() ;
+	t.ChatFiles = m.getChatFiles() ;
+	t.Chats = m.getChats() ;
+	t.Users = m.getUsers() ;
+	t.ChangeMessageIds = m.getChangeMessageIds() ;
+	t.ChangeMessageFileIds = m.getChangeMessageFileIds() ;
+	t.MessagesToEdit = m.getMessagesToEdit() ;
+	t.MessagesToDelete = m.getMessagesToDelete() ;
+	t.MessagesReachedServer = m.getMessagesReachedServer() ;
+	t.MessagesDeliveredToUser = m.getMessagesDeliveredToUser() ;
+	t.MessagesSeenByPeer = m.getMessagesSeenByPeer() ;
+	t.MessagesDeletedFromServer = m.getMessagesDeletedFromServer() ;
+	t.RoomActionDoing = m.getRoomActionDoing() ;
+	t.LastId = m.getLastId() ;
+	*/
+
 	public class PB_UserParam_CheckUserName2 {
 	}
 	/*

@@ -117,13 +117,13 @@ func (m *liveOfflineBuffer) loopDirectToUser() {
 				fmt.Printf("batch of loopDirectToUser - cnt:%d - len:%d \n", cnt, len(arr))
 				pre := arr
 				arr = make([]x.DirectOffline, 0, siz)
-				go _livePush_sendToUsersUpdatesFrame(pre)
+				go _livePush_sendToUsersOfflineFrame(pre)
 			}
 		}
 	}
 }
 
-func _livePush_sendToUsersUpdatesFrame(logs []x.DirectOffline) {
+func _livePush_sendToUsersOfflineFrame(logs []x.DirectOffline) {
 	defer helper.JustRecover()
 
 	if len(logs) == 0 {
@@ -144,14 +144,14 @@ func _livePush_sendToUsersUpdatesFrame(logs []x.DirectOffline) {
 
 	for UserId, lgs := range mp { //each user
 		if AllPipesMap.IsPipeOpen(UserId) && len(lgs) > 0 {
-			res := ViewPush_OfflineDelayersList_To_GetDirectUpdatesView(UserId, lgs)
+			res := ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(UserId, lgs)
 
 			pb_res := x.PB_AllLivePushes{
 				DirectUpdates: res,
 			}
 			PushToUserLiveData(UserId, pb_res)
 			if config.IS_DEBUG {
-				logChat.Printf("_livePush_sendToUsersUpdatesFrame() is sending to user: %s", pb_res)
+				logChat.Printf("_livePush_sendToUsersOfflineFrame() is sending to user: %s", pb_res)
 				//logLivePush.Printf("to user: %d - Data: %s\n", UserId, helper.ToJsonPerety(&pb_res))
 
 				fmt.Printf("send to user: %d PushViews : %s", UserId, helper.ToJson(res))
@@ -160,7 +160,7 @@ func _livePush_sendToUsersUpdatesFrame(logs []x.DirectOffline) {
 			/*cmd := NewPB_CommandToClient_WithData(PB_PushHolderView, res)
 			AllPipesMap.SendToUser(UserId, cmd)
 			if config.IS_DEBUG {
-				logChat.Printf("_livePush_sendToUsersUpdatesFrame() is sending to user: %s", cmd)
+				logChat.Printf("_livePush_sendToUsersOfflineFrame() is sending to user: %s", cmd)
 
 				fmt.Printf("send to user: %d PushViews : %s", UserId, helper.ToJson(res))
 			}*/

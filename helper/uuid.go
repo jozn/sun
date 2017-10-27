@@ -44,6 +44,31 @@ func (gen *uuidGen) next() int {
 	return i
 }
 
+func (gen *uuidGen) base() int {
+    now := TimeNowMs()
+    gen.Lock()
+    if gen.timeMs < now {
+        gen.timeMs = now
+        //gen.counter = 1
+    }
+
+    if gen.counter >= 9999 {
+        gen.counter = 0
+    }
+
+    // "13time milliscon + 2 serverId + 4 random  == 19digits
+    t := gen.timeMs
+    gen.Unlock() //no defer this is faster fmt.Sprintf took 700us
+
+    s := fmt.Sprintf("%d%02d%04d", t,0, 0) //19
+    i := StrToInt(s, 0)
+    return i
+}
+
 func NextRowsSeqId() int {
 	return defGen.next()
+}
+
+func NextRowsSeqIdBase() int {
+    return defGen.base()
 }

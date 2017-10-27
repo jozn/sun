@@ -629,6 +629,47 @@ var PB_Online_RoomActionDoing__FOlD = &PB_Online_RoomActionDoing{
 	RoomKey: "",
 }
 
+type PB_Offline_Sync_Flat struct {
+	NewMessages               []PB_MessageView
+	ChatFiles                 []PB_MessageFileView
+	Chats                     []PB_ChatView
+	Users                     []PB_UserView
+	ChangeMessageIds          []PB_Offline_ChangeMessageId
+	ChangeMessageFileIds      []PB_Offline_ChangeMessageFileId
+	MessagesToEdit            []PB_Offline_MessageToEdit
+	MessagesToDelete          []PB_Offline_MessageToDelete
+	MessagesReachedServer     []PB_Offline_MessagesReachedServer
+	MessagesDeliveredToUser   []PB_Offline_MessagesDeliveredToUser
+	MessagesSeenByPeer        []PB_Offline_MessagesSeenByPeer
+	MessagesDeletedFromServer []PB_Offline_MessagesDeletedFromServer
+	RoomActionDoing           []PB_Online_RoomActionDoing
+	LastId                    int
+}
+
+//ToPB
+func (m *PB_Offline_Sync) ToFlat() *PB_Offline_Sync_Flat {
+	r := &PB_Offline_Sync_Flat{
+
+		LastId: int(m.LastId),
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_Offline_Sync_Flat) ToPB() *PB_Offline_Sync {
+	r := &PB_Offline_Sync{
+
+		LastId: int64(m.LastId),
+	}
+	return r
+}
+
+//folding
+var PB_Offline_Sync__FOlD = &PB_Offline_Sync{
+
+	LastId: 0,
+}
+
 type PB_UserParam_CheckUserName2_Flat struct {
 }
 
@@ -5741,6 +5782,26 @@ r := &PB_Online_RoomActionDoing_Flat{
 return r
 }
 
+func(m *PB_Offline_Sync)ToFlat() *PB_Offline_Sync_Flat {
+r := &PB_Offline_Sync_Flat{
+
+
+
+
+
+
+
+
+
+
+
+
+
+    LastId:  int(m.LastId) ,
+}
+return r
+}
+
 func(m *PB_UserParam_CheckUserName2)ToFlat() *PB_UserParam_CheckUserName2_Flat {
 r := &PB_UserParam_CheckUserName2_Flat{
 }
@@ -7301,6 +7362,26 @@ r := &PB_Online_RoomActionDoing{
 return r
 }
 
+func(m *PB_Offline_Sync_Flat)ToPB() *PB_Offline_Sync {
+r := &PB_Offline_Sync{
+
+
+
+
+
+
+
+
+
+
+
+
+
+    LastId:  int64(m.LastId) ,
+}
+return r
+}
+
 func(m *PB_UserParam_CheckUserName2_Flat)ToPB() *PB_UserParam_CheckUserName2 {
 r := &PB_UserParam_CheckUserName2{
 }
@@ -8816,6 +8897,24 @@ var PB_Offline_MessageToDelete__FOlD = &PB_Offline_MessageToDelete{
 var PB_Online_RoomActionDoing__FOlD = &PB_Online_RoomActionDoing{
         RoomKey:  "" ,
 
+}
+
+
+var PB_Offline_Sync__FOlD = &PB_Offline_Sync{
+
+
+
+
+
+
+
+
+
+
+
+
+
+        LastId:  0 ,
 }
 
 

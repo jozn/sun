@@ -30,9 +30,6 @@ func ViewChat_GetChatViewList_ByChatKeys(meId int, chatKeys []string) (res []*x.
 				LastMessageId:        int64(chat.LastMessageId),
 				LastDeletedMessageId: int64(chat.LastDeletedMessageId),
 				LastSeenMessageId:    int64(chat.LastSeenMessageId),
-				LastSeqSeen:          int32(chat.LastSeqSeen),
-				LastSeqDelete:        int32(chat.LastSeqDelete),
-				CurrentSeq:           int32(chat.CurrentSeq),
 			}
 
 			chatView.UserView = UserView_GetUserView(meId, chat.PeerUserId)

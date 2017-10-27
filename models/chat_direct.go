@@ -7,6 +7,7 @@ import (
 	"ms/sun/config"
 	"ms/sun/helper"
 	"ms/sun/models/x"
+	"ms/sun/models/x/xconst"
 )
 
 type _chatDirect struct {
@@ -85,9 +86,6 @@ func (s *_chatDirect) AddMessage(msg *x.DirectMessage) {
 		return
 	}
 
-	//Chat_IncermentForNewMessage(s.MeChat)
-	//Chat_IncermentForNewMessage(s.PeerChat)
-
 	Chat_setLastMsg(s.MeChat, msg)
 	Chat_setLastMsg(s.PeerChat, msg)
 
@@ -142,6 +140,7 @@ func (s *_chatDirect) AddMessage(msg *x.DirectMessage) {
 		RoomLogTypeId:   int(Push_NEW_DIRECT_MESSAGE), //x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE),
 		OtherId:         0,
 		AtTimeMs:        helper.TimeNowMs(),
+		PBClass:         xconst.PB_Offline_NewDirectMessage,
 	}
 	dlNew.DataPB, _ = proto.Marshal(pbNewMsg)
 	dlNew.DataJson = helper.ToJson(pbNewMsg)
@@ -156,6 +155,7 @@ func (s *_chatDirect) AddMessage(msg *x.DirectMessage) {
 		PeerUserId:      s.PeerChat.UserId,
 		RoomLogTypeId:   int(Push_MESSAGE_RECIVED_TO_SERVER), //int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
 		AtTimeMs:        helper.TimeNowMs(),
+        PBClass:         xconst.PB_Offline_MessagesReachedServer,
 	}
 	pbRecOff := &x.PB_Offline_MessagesReachedServer{
 		MessageKeys: []string{msg.MessageKey},
