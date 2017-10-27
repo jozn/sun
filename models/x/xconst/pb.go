@@ -149,12 +149,3 @@ const (
 	PB_MessageFileView                           = "PB_MessageFileView"
 	PB_UserView                                  = "PB_UserView"
 )
-
-var x = struct {
-	Xdasd  int
-	Xdasd5 int
-	Xdasd2 int
-}{
-	Xdasd:  24,
-	Xdasd5: 256,
-}

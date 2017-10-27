@@ -38,6 +38,7 @@ It has these top-level messages:
 	PB_Offline_MessageToEdit
 	PB_Offline_MessageToDelete
 	PB_Online_RoomActionDoing
+	PB_Offline_Sync
 	PB_UserParam_CheckUserName2
 	PB_UserResponse_CheckUserName2
 	PB_MsgParam_AddNewTextMessage
