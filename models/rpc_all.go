@@ -9,21 +9,6 @@ import (
 	"time"
 )
 
-type rpcAll struct {
-	//x.RPC_AllHandlersInteract
-	//x.EmptyRPC_RPC_MessageReq
-	//x.EmptyRPC_RPC_MessageReqOffline
-	x.EmptyRPC_RPC_Auth
-	//x.EmptyRPC_RPC_Msg
-	x.EmptyRPC_RPC_UserOffline
-	x.EmptyRPC_RPC_User
-	//x.EmptyRPC_RpcMsgs
-
-	/// ouer imple
-	rpcMsg
-	rpcSync
-}
-
 //var RpcAll = rpcAll{}
 var RpcAll = x.RPC_AllHandlersInteract{}
 
