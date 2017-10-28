@@ -40,13 +40,13 @@ func GeneralLog_UnFollow(me, peer int) {
 }
 
 //todo do we need aggertion like: just the last one is important: followed or unfollowed
-func GeneralLog_GetLastView(me, lastId int) (*x.PB_SyncResponse_GetGeneralUpdates, error) {
+func GeneralLog_GetLastView(me, lastId int) (v x.PB_SyncResponse_GetGeneralUpdates, err error) {
 	rows, err := x.NewGeneralLog_Selector().Id_GT(lastId).ToUserId_Eq(me).OrderBy_Id_Asc().GetRows(base.DB)
 	if err != nil {
-		return nil, err
+		return v, err
 	}
 
-	v := &x.PB_SyncResponse_GetGeneralUpdates{}
+	v = x.PB_SyncResponse_GetGeneralUpdates{}
 
 	for _, r := range rows {
 		switch r.LogTypeId {

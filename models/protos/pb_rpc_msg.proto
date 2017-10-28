@@ -162,7 +162,6 @@ message PB_MsgParam_GetFreshChatList {
 }
 message PB_MsgResponse_GetFreshChatList {
     repeated PB_ChatView Chats = 1;
-    repeated PB_UserView Users = 6;//dep
 }
 
 ////////////////////////////////////////////////////////

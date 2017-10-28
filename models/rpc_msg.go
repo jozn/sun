@@ -1,16 +1,81 @@
 package models
 
 import (
-	"fmt"
-	"math/rand"
-	"ms/sun/base"
-	"ms/sun/helper"
+	//"fmt"
+	//"math/rand"
+	//"ms/sun/base"
+	//"ms/sun/helper"
 	"ms/sun/models/x"
-	"os"
+	//"os"
 )
 
 type rpcMsg int
 
+func (rpcMsg) AddNewTextMessage(param *x.PB_MsgParam_AddNewTextMessage, userParam x.RPC_UserParam) (res x.PB_MsgResponse_AddNewTextMessage, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) AddNewMessage(param *x.PB_MsgParam_AddNewMessage, userParam x.RPC_UserParam) (res x.PB_MsgResponse_AddNewMessage, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) SetRoomActionDoing(param *x.PB_MsgParam_SetRoomActionDoing, userParam x.RPC_UserParam) (res x.PB_MsgResponse_SetRoomActionDoing, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) GetMessagesByIds(param *x.PB_MsgParam_GetMessagesByIds, userParam x.RPC_UserParam) (res x.PB_MsgResponse_GetMessagesByIds, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) GetMessagesHistory(param *x.PB_MsgParam_GetMessagesHistory, userParam x.RPC_UserParam) (res x.PB_MsgResponse_GetMessagesHistory, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) SetMessagesRangeAsSeen(param *x.PB_MsgParam_SetChatMessagesRangeAsSeen, userParam x.RPC_UserParam) (res x.PB_MsgResponse_SetChatMessagesRangeAsSeen, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) DeleteChatHistory(param *x.PB_MsgParam_DeleteChatHistory, userParam x.RPC_UserParam) (res x.PB_MsgResponse_DeleteChatHistory, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) DeleteMessagesByIds(param *x.PB_MsgParam_DeleteMessagesByIds, userParam x.RPC_UserParam) (res x.PB_MsgResponse_DeleteMessagesByIds, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) SetMessagesAsReceived(param *x.PB_MsgParam_SetMessagesAsReceived, userParam x.RPC_UserParam) (res x.PB_MsgResponse_SetMessagesAsReceived, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) ForwardMessages(param *x.PB_MsgParam_ForwardMessages, userParam x.RPC_UserParam) (res x.PB_MsgResponse_ForwardMessages, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) EditMessage(param *x.PB_MsgParam_EditMessage, userParam x.RPC_UserParam) (res x.PB_MsgResponse_EditMessage, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) BroadcastNewMessage(param *x.PB_MsgParam_BroadcastNewMessage, userParam x.RPC_UserParam) (res x.PB_MsgResponse_BroadcastNewMessage, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) GetFreshChatList(param *x.PB_MsgParam_GetFreshChatList, userParam x.RPC_UserParam) (res x.PB_MsgResponse_GetFreshChatList, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) GetFreshRoomMessagesList(param *x.PB_MsgParam_GetFreshRoomMessagesList, userParam x.RPC_UserParam) (res x.PB_MsgResponse_GetFreshRoomMessagesList, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) GetFreshAllDirectMessagesList(param *x.PB_MsgParam_GetFreshAllDirectMessagesList, userParam x.RPC_UserParam) (res x.PB_MsgResponse_GetFreshAllDirectMessagesList, err error) {
+    panic("implement me")
+}
+
+func (rpcMsg) Echo(param *x.PB_MsgParam_Echo, userParam x.RPC_UserParam) (res x.PB_MsgResponse_PB_MsgParam_Echo, err error) {
+    panic("implement me")
+}
+
+/*
 func (rpcMsg) GetFreshAllDirectMessagesList(i *x.PB_MsgParam_GetFreshAllDirectMessagesList, p x.RPC_UserParam) (*x.PB_MsgResponse_GetFreshAllDirectMessagesList, error) {
 	chatKeys, err := x.NewChat_Selector().Select_ChatKey().UserId_Eq(p.GetUserId()).GetStringSlice(base.DB)
 	if err != nil {
@@ -31,13 +96,15 @@ func (rpcMsg) GetFreshAllDirectMessagesList(i *x.PB_MsgParam_GetFreshAllDirectMe
 
 func (rpcMsg) GetFreshChatList(i *x.PB_MsgParam_GetFreshChatList, p x.RPC_UserParam) (*x.PB_MsgResponse_GetFreshChatList, error) {
 	chats, err := Chat_GetChatListForUser(p.GetUserId())
-	/*uids := make(map[int]bool)
+	*/
+/*uids := make(map[int]bool)
 
 	if err == nil {
 		for _, c := range chats {
 			uids[int(c.UserId)] = true
 		}
-	}*/
+	}*//*
+
 
 	//users := ViewUser_GetUserViewList(p.GetUserId(), uids)
 	return &x.PB_MsgResponse_GetFreshChatList{
@@ -184,12 +251,14 @@ func (rpcMsg) GetMessagesByIds(i *x.PB_MsgParam_GetMessagesByIds, p x.RPC_UserPa
 
 func (rpcMsg) GetMessagesHistory(i *x.PB_MsgParam_GetMessagesHistory, p x.RPC_UserParam) (*x.PB_MsgResponse_GetMessagesHistory, error) {
 	sel := x.NewDirectToMessage_Selector().Select_MessageId().ChatKey_Eq(i.ChatKey)
-	/*if i.FromSeq > 0 {
+	*/
+/*if i.FromSeq > 0 {
 		sel.Seq_GE(int(i.FromSeq))
 	}
 	if i.FromSeq > 0 {
 		sel.Seq_GE(int(i.FromSeq))
-	}*/
+	}*//*
+
 
 	msgIds, err := sel.OrderBy_Id_Desc().GetIntSlice(base.DB)
 
@@ -240,5 +309,6 @@ func (rpcMsg) EditMessage(i *x.PB_MsgParam_EditMessage, p x.RPC_UserParam) (*x.P
 func (rpcMsg) BroadcastNewMessage(i *x.PB_MsgParam_BroadcastNewMessage, p x.RPC_UserParam) (*x.PB_MsgResponse_BroadcastNewMessage, error) {
 	panic("implement me")
 }
+*/
 
 /////////////////////////////

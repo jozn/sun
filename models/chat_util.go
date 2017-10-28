@@ -3,11 +3,15 @@ package models
 import (
 	"fmt"
 	"ms/sun/base"
+	"ms/sun/config"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 	"strings"
+    "errors"
 )
 
+//RoomKey; d24_6
+//ChatKey: d6:24
 func KeyNewMessageKey(UserId int) string {
 	return fmt.Sprintf("%d_%d_%s", UserId, helper.TimeNow(), helper.RandString(4)) //todo extrac this to client
 }
@@ -47,6 +51,36 @@ func UsersToRoomKey(me int, peer int) string {
 
 func UsersToChatKey(me int, peer int) string {
 	return fmt.Sprintf("d%d:%d", me, peer)
+}
+
+func Keys_RoomKeyToChatKey(RoomKey string) (ChatKey string, err error) {
+	arr := strings.Split(RoomKey, "_")
+	if len(arr) == 2 && (RoomKey[0] == 'd' ||RoomKey[0] == 'g') {
+		u1 := helper.StrToInt(arr[0][1:], 0)
+		u2 := helper.StrToInt(arr[1], 0)
+		if u1 > 0 && u2 > 0 {
+			return UsersToChatKey(u1, u2), nil
+		}
+	}
+	if config.IS_DEBUG {
+		panic("WRONG Keys_RoomKeyToChatKey param for RoomKey: " + RoomKey)
+	}
+	return "", errors.New("WRONG RoomKey ")
+}
+
+func Keys_ChatKeyToRoomKey(ChatKey string) (RoomKey string, err error) {
+    arr := strings.Split(ChatKey, ":")
+    if len(arr) == 2 && (ChatKey[0] == 'd' || ChatKey[0] == 'g') {
+        u1 := helper.StrToInt(arr[0][1:], 0)
+        u2 := helper.StrToInt(arr[1], 0)
+        if u1 > 0 && u2 > 0 {
+            return UsersToRoomKey(u1, u2), nil
+        }
+    }
+    if config.IS_DEBUG {
+        panic("WRONG Keys_ChatKeyToRoomKey param for ChatKey: " + ChatKey)
+    }
+    return "", errors.New("WRONG ChatKey ")
 }
 
 func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {

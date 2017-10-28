@@ -1591,25 +1591,21 @@ public class PBFlatTypes {
 
 	public class PB_MsgResponse_GetFreshChatList {
 	   public PB_ChatView Chats;
-	   public PB_UserView Users;
 	}
 	/*
 	folding
 	PBFlatTypes.PB_MsgResponse_GetFreshChatList t = new PBFlatTypes.PB_MsgResponse_GetFreshChatList();
     t.setChats();
-    t.setUsers();
 	*/
 
 	/*
 	PBFlatTypes.PB_MsgResponse_GetFreshChatList t = new PBFlatTypes.PB_MsgResponse_GetFreshChatList();
 	t.Chats = ;
-	t.Users = ;
 	*/
 
 	/*
 	PB_MsgResponse_GetFreshChatList t = new PB_MsgResponse_GetFreshChatList();
 	t.Chats = m.getChats() ;
-	t.Users = m.getUsers() ;
 	*/
 
 	public class PB_MsgParam_GetFreshRoomMessagesList {
