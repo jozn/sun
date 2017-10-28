@@ -25,7 +25,7 @@ type PB_Activity struct {
 func (m *PB_Activity) Reset()                    { *m = PB_Activity{} }
 func (m *PB_Activity) String() string            { return proto.CompactTextString(m) }
 func (*PB_Activity) ProtoMessage()               {}
-func (*PB_Activity) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{0} }
+func (*PB_Activity) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
 
 func (m *PB_Activity) GetId() int64 {
 	if m != nil {
@@ -90,7 +90,7 @@ type PB_Bucket struct {
 func (m *PB_Bucket) Reset()                    { *m = PB_Bucket{} }
 func (m *PB_Bucket) String() string            { return proto.CompactTextString(m) }
 func (*PB_Bucket) ProtoMessage()               {}
-func (*PB_Bucket) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{1} }
+func (*PB_Bucket) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
 
 func (m *PB_Bucket) GetBucketId() int32 {
 	if m != nil {
@@ -166,7 +166,7 @@ type PB_Chat struct {
 func (m *PB_Chat) Reset()                    { *m = PB_Chat{} }
 func (m *PB_Chat) String() string            { return proto.CompactTextString(m) }
 func (*PB_Chat) ProtoMessage()               {}
-func (*PB_Chat) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{2} }
+func (*PB_Chat) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{2} }
 
 func (m *PB_Chat) GetChatKey() string {
 	if m != nil {
@@ -263,7 +263,7 @@ type PB_Comment struct {
 func (m *PB_Comment) Reset()                    { *m = PB_Comment{} }
 func (m *PB_Comment) String() string            { return proto.CompactTextString(m) }
 func (*PB_Comment) ProtoMessage()               {}
-func (*PB_Comment) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{3} }
+func (*PB_Comment) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{3} }
 
 func (m *PB_Comment) GetId() int32 {
 	if m != nil {
@@ -317,7 +317,7 @@ type PB_DirectMessage struct {
 func (m *PB_DirectMessage) Reset()                    { *m = PB_DirectMessage{} }
 func (m *PB_DirectMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_DirectMessage) ProtoMessage()               {}
-func (*PB_DirectMessage) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{4} }
+func (*PB_DirectMessage) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{4} }
 
 func (m *PB_DirectMessage) GetMessageId() int64 {
 	if m != nil {
@@ -415,7 +415,7 @@ type PB_DirectOffline struct {
 func (m *PB_DirectOffline) Reset()                    { *m = PB_DirectOffline{} }
 func (m *PB_DirectOffline) String() string            { return proto.CompactTextString(m) }
 func (*PB_DirectOffline) ProtoMessage()               {}
-func (*PB_DirectOffline) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{5} }
+func (*PB_DirectOffline) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{5} }
 
 func (m *PB_DirectOffline) GetDirectOfflineId() int64 {
 	if m != nil {
@@ -518,7 +518,7 @@ type PB_DirectToMessage struct {
 func (m *PB_DirectToMessage) Reset()                    { *m = PB_DirectToMessage{} }
 func (m *PB_DirectToMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_DirectToMessage) ProtoMessage()               {}
-func (*PB_DirectToMessage) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{6} }
+func (*PB_DirectToMessage) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{6} }
 
 func (m *PB_DirectToMessage) GetId() int64 {
 	if m != nil {
@@ -568,7 +568,7 @@ type PB_DirectUpdate struct {
 func (m *PB_DirectUpdate) Reset()                    { *m = PB_DirectUpdate{} }
 func (m *PB_DirectUpdate) String() string            { return proto.CompactTextString(m) }
 func (*PB_DirectUpdate) ProtoMessage()               {}
-func (*PB_DirectUpdate) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{7} }
+func (*PB_DirectUpdate) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{7} }
 
 func (m *PB_DirectUpdate) GetDirectUpdateId() int64 {
 	if m != nil {
@@ -682,7 +682,7 @@ type PB_FollowingList struct {
 func (m *PB_FollowingList) Reset()                    { *m = PB_FollowingList{} }
 func (m *PB_FollowingList) String() string            { return proto.CompactTextString(m) }
 func (*PB_FollowingList) ProtoMessage()               {}
-func (*PB_FollowingList) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{8} }
+func (*PB_FollowingList) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{8} }
 
 func (m *PB_FollowingList) GetId() int32 {
 	if m != nil {
@@ -752,7 +752,7 @@ type PB_FollowingListMember struct {
 func (m *PB_FollowingListMember) Reset()                    { *m = PB_FollowingListMember{} }
 func (m *PB_FollowingListMember) String() string            { return proto.CompactTextString(m) }
 func (*PB_FollowingListMember) ProtoMessage()               {}
-func (*PB_FollowingListMember) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{9} }
+func (*PB_FollowingListMember) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{9} }
 
 func (m *PB_FollowingListMember) GetId() int64 {
 	if m != nil {
@@ -809,7 +809,7 @@ type PB_FollowingListMemberHistory struct {
 func (m *PB_FollowingListMemberHistory) Reset()                    { *m = PB_FollowingListMemberHistory{} }
 func (m *PB_FollowingListMemberHistory) String() string            { return proto.CompactTextString(m) }
 func (*PB_FollowingListMemberHistory) ProtoMessage()               {}
-func (*PB_FollowingListMemberHistory) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{10} }
+func (*PB_FollowingListMemberHistory) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{10} }
 
 func (m *PB_FollowingListMemberHistory) GetId() int64 {
 	if m != nil {
@@ -873,7 +873,7 @@ type PB_GeneralLog struct {
 func (m *PB_GeneralLog) Reset()                    { *m = PB_GeneralLog{} }
 func (m *PB_GeneralLog) String() string            { return proto.CompactTextString(m) }
 func (*PB_GeneralLog) ProtoMessage()               {}
-func (*PB_GeneralLog) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{11} }
+func (*PB_GeneralLog) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{11} }
 
 func (m *PB_GeneralLog) GetId() int64 {
 	if m != nil {
@@ -938,7 +938,7 @@ type PB_Group struct {
 func (m *PB_Group) Reset()                    { *m = PB_Group{} }
 func (m *PB_Group) String() string            { return proto.CompactTextString(m) }
 func (*PB_Group) ProtoMessage()               {}
-func (*PB_Group) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{12} }
+func (*PB_Group) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{12} }
 
 func (m *PB_Group) GetGroupId() int64 {
 	if m != nil {
@@ -1009,7 +1009,7 @@ type PB_GroupMember struct {
 func (m *PB_GroupMember) Reset()                    { *m = PB_GroupMember{} }
 func (m *PB_GroupMember) String() string            { return proto.CompactTextString(m) }
 func (*PB_GroupMember) ProtoMessage()               {}
-func (*PB_GroupMember) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{13} }
+func (*PB_GroupMember) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{13} }
 
 func (m *PB_GroupMember) GetId() int64 {
 	if m != nil {
@@ -1074,7 +1074,7 @@ type PB_GroupMessage struct {
 func (m *PB_GroupMessage) Reset()                    { *m = PB_GroupMessage{} }
 func (m *PB_GroupMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_GroupMessage) ProtoMessage()               {}
-func (*PB_GroupMessage) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{14} }
+func (*PB_GroupMessage) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{14} }
 
 func (m *PB_GroupMessage) GetMessageId() int64 {
 	if m != nil {
@@ -1143,7 +1143,7 @@ type PB_GroupToMessage struct {
 func (m *PB_GroupToMessage) Reset()                    { *m = PB_GroupToMessage{} }
 func (m *PB_GroupToMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_GroupToMessage) ProtoMessage()               {}
-func (*PB_GroupToMessage) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{15} }
+func (*PB_GroupToMessage) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{15} }
 
 func (m *PB_GroupToMessage) GetId() int64 {
 	if m != nil {
@@ -1192,7 +1192,7 @@ type PB_Like struct {
 func (m *PB_Like) Reset()                    { *m = PB_Like{} }
 func (m *PB_Like) String() string            { return proto.CompactTextString(m) }
 func (*PB_Like) ProtoMessage()               {}
-func (*PB_Like) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{16} }
+func (*PB_Like) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{16} }
 
 func (m *PB_Like) GetId() int32 {
 	if m != nil {
@@ -1244,7 +1244,7 @@ type PB_LogChange struct {
 func (m *PB_LogChange) Reset()                    { *m = PB_LogChange{} }
 func (m *PB_LogChange) String() string            { return proto.CompactTextString(m) }
 func (*PB_LogChange) ProtoMessage()               {}
-func (*PB_LogChange) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{17} }
+func (*PB_LogChange) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{17} }
 
 func (m *PB_LogChange) GetId() int32 {
 	if m != nil {
@@ -1273,7 +1273,7 @@ type PB_Media struct {
 func (m *PB_Media) Reset()                    { *m = PB_Media{} }
 func (m *PB_Media) String() string            { return proto.CompactTextString(m) }
 func (*PB_Media) ProtoMessage()               {}
-func (*PB_Media) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{18} }
+func (*PB_Media) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{18} }
 
 func (m *PB_Media) GetId() int32 {
 	if m != nil {
@@ -1349,7 +1349,7 @@ type PB_MessageFile struct {
 func (m *PB_MessageFile) Reset()                    { *m = PB_MessageFile{} }
 func (m *PB_MessageFile) String() string            { return proto.CompactTextString(m) }
 func (*PB_MessageFile) ProtoMessage()               {}
-func (*PB_MessageFile) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{19} }
+func (*PB_MessageFile) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{19} }
 
 func (m *PB_MessageFile) GetMessageFileId() int64 {
 	if m != nil {
@@ -1500,7 +1500,7 @@ type PB_Notification struct {
 func (m *PB_Notification) Reset()                    { *m = PB_Notification{} }
 func (m *PB_Notification) String() string            { return proto.CompactTextString(m) }
 func (*PB_Notification) ProtoMessage()               {}
-func (*PB_Notification) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{20} }
+func (*PB_Notification) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{20} }
 
 func (m *PB_Notification) GetId() int64 {
 	if m != nil {
@@ -1580,7 +1580,7 @@ type PB_NotificationRemoved struct {
 func (m *PB_NotificationRemoved) Reset()                    { *m = PB_NotificationRemoved{} }
 func (m *PB_NotificationRemoved) String() string            { return proto.CompactTextString(m) }
 func (*PB_NotificationRemoved) ProtoMessage()               {}
-func (*PB_NotificationRemoved) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{21} }
+func (*PB_NotificationRemoved) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{21} }
 
 func (m *PB_NotificationRemoved) GetNotificationId() int32 {
 	if m != nil {
@@ -1612,7 +1612,7 @@ type PB_Offline struct {
 func (m *PB_Offline) Reset()                    { *m = PB_Offline{} }
 func (m *PB_Offline) String() string            { return proto.CompactTextString(m) }
 func (*PB_Offline) ProtoMessage()               {}
-func (*PB_Offline) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{22} }
+func (*PB_Offline) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{22} }
 
 func (m *PB_Offline) GetId() int64 {
 	if m != nil {
@@ -1702,7 +1702,7 @@ type PB_OldMessage struct {
 func (m *PB_OldMessage) Reset()                    { *m = PB_OldMessage{} }
 func (m *PB_OldMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_OldMessage) ProtoMessage()               {}
-func (*PB_OldMessage) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{23} }
+func (*PB_OldMessage) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{23} }
 
 func (m *PB_OldMessage) GetId() int64 {
 	if m != nil {
@@ -1809,7 +1809,7 @@ type PB_OldMsgFile struct {
 func (m *PB_OldMsgFile) Reset()                    { *m = PB_OldMsgFile{} }
 func (m *PB_OldMsgFile) String() string            { return proto.CompactTextString(m) }
 func (*PB_OldMsgFile) ProtoMessage()               {}
-func (*PB_OldMsgFile) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{24} }
+func (*PB_OldMsgFile) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{24} }
 
 func (m *PB_OldMsgFile) GetId() int64 {
 	if m != nil {
@@ -1927,7 +1927,7 @@ type PB_OldMsgPush struct {
 func (m *PB_OldMsgPush) Reset()                    { *m = PB_OldMsgPush{} }
 func (m *PB_OldMsgPush) String() string            { return proto.CompactTextString(m) }
 func (*PB_OldMsgPush) ProtoMessage()               {}
-func (*PB_OldMsgPush) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{25} }
+func (*PB_OldMsgPush) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{25} }
 
 func (m *PB_OldMsgPush) GetId() int64 {
 	if m != nil {
@@ -1979,7 +1979,7 @@ type PB_OldMsgPushEvent struct {
 func (m *PB_OldMsgPushEvent) Reset()                    { *m = PB_OldMsgPushEvent{} }
 func (m *PB_OldMsgPushEvent) String() string            { return proto.CompactTextString(m) }
 func (*PB_OldMsgPushEvent) ProtoMessage()               {}
-func (*PB_OldMsgPushEvent) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{26} }
+func (*PB_OldMsgPushEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{26} }
 
 func (m *PB_OldMsgPushEvent) GetId() int64 {
 	if m != nil {
@@ -2060,7 +2060,7 @@ type PB_PhoneContact struct {
 func (m *PB_PhoneContact) Reset()                    { *m = PB_PhoneContact{} }
 func (m *PB_PhoneContact) String() string            { return proto.CompactTextString(m) }
 func (*PB_PhoneContact) ProtoMessage()               {}
-func (*PB_PhoneContact) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{27} }
+func (*PB_PhoneContact) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{27} }
 
 func (m *PB_PhoneContact) GetId() int32 {
 	if m != nil {
@@ -2159,7 +2159,7 @@ type PB_Photo struct {
 func (m *PB_Photo) Reset()                    { *m = PB_Photo{} }
 func (m *PB_Photo) String() string            { return proto.CompactTextString(m) }
 func (*PB_Photo) ProtoMessage()               {}
-func (*PB_Photo) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{28} }
+func (*PB_Photo) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{28} }
 
 func (m *PB_Photo) GetPhotoId() int32 {
 	if m != nil {
@@ -2327,7 +2327,7 @@ type PB_Post struct {
 func (m *PB_Post) Reset()                    { *m = PB_Post{} }
 func (m *PB_Post) String() string            { return proto.CompactTextString(m) }
 func (*PB_Post) ProtoMessage()               {}
-func (*PB_Post) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{29} }
+func (*PB_Post) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{29} }
 
 func (m *PB_Post) GetId() int32 {
 	if m != nil {
@@ -2435,7 +2435,7 @@ type PB_PushEvent struct {
 func (m *PB_PushEvent) Reset()                    { *m = PB_PushEvent{} }
 func (m *PB_PushEvent) String() string            { return proto.CompactTextString(m) }
 func (*PB_PushEvent) ProtoMessage()               {}
-func (*PB_PushEvent) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{30} }
+func (*PB_PushEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{30} }
 
 func (m *PB_PushEvent) GetPushEventId() int64 {
 	if m != nil {
@@ -2512,7 +2512,7 @@ type PB_PushMessage struct {
 func (m *PB_PushMessage) Reset()                    { *m = PB_PushMessage{} }
 func (m *PB_PushMessage) String() string            { return proto.CompactTextString(m) }
 func (*PB_PushMessage) ProtoMessage()               {}
-func (*PB_PushMessage) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{31} }
+func (*PB_PushMessage) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{31} }
 
 func (m *PB_PushMessage) GetPushMessageId() int64 {
 	if m != nil {
@@ -2567,7 +2567,7 @@ type PB_RecommendUser struct {
 func (m *PB_RecommendUser) Reset()                    { *m = PB_RecommendUser{} }
 func (m *PB_RecommendUser) String() string            { return proto.CompactTextString(m) }
 func (*PB_RecommendUser) ProtoMessage()               {}
-func (*PB_RecommendUser) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{32} }
+func (*PB_RecommendUser) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{32} }
 
 func (m *PB_RecommendUser) GetId() int32 {
 	if m != nil {
@@ -2620,7 +2620,7 @@ type PB_Room struct {
 func (m *PB_Room) Reset()                    { *m = PB_Room{} }
 func (m *PB_Room) String() string            { return proto.CompactTextString(m) }
 func (*PB_Room) ProtoMessage()               {}
-func (*PB_Room) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{33} }
+func (*PB_Room) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{33} }
 
 func (m *PB_Room) GetRoomId() int64 {
 	if m != nil {
@@ -2704,7 +2704,7 @@ type PB_SearchClicked struct {
 func (m *PB_SearchClicked) Reset()                    { *m = PB_SearchClicked{} }
 func (m *PB_SearchClicked) String() string            { return proto.CompactTextString(m) }
 func (*PB_SearchClicked) ProtoMessage()               {}
-func (*PB_SearchClicked) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{34} }
+func (*PB_SearchClicked) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{34} }
 
 func (m *PB_SearchClicked) GetId() int64 {
 	if m != nil {
@@ -2770,7 +2770,7 @@ type PB_Session struct {
 func (m *PB_Session) Reset()                    { *m = PB_Session{} }
 func (m *PB_Session) String() string            { return proto.CompactTextString(m) }
 func (*PB_Session) ProtoMessage()               {}
-func (*PB_Session) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{35} }
+func (*PB_Session) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{35} }
 
 func (m *PB_Session) GetId() int32 {
 	if m != nil {
@@ -2910,7 +2910,7 @@ type PB_SettingClient struct {
 func (m *PB_SettingClient) Reset()                    { *m = PB_SettingClient{} }
 func (m *PB_SettingClient) String() string            { return proto.CompactTextString(m) }
 func (*PB_SettingClient) ProtoMessage()               {}
-func (*PB_SettingClient) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{36} }
+func (*PB_SettingClient) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{36} }
 
 func (m *PB_SettingClient) GetUserId() int32 {
 	if m != nil {
@@ -3078,7 +3078,7 @@ type PB_SettingNotification struct {
 func (m *PB_SettingNotification) Reset()                    { *m = PB_SettingNotification{} }
 func (m *PB_SettingNotification) String() string            { return proto.CompactTextString(m) }
 func (*PB_SettingNotification) ProtoMessage()               {}
-func (*PB_SettingNotification) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{37} }
+func (*PB_SettingNotification) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{37} }
 
 func (m *PB_SettingNotification) GetUserId() int32 {
 	if m != nil {
@@ -3231,7 +3231,7 @@ type PB_Tag struct {
 func (m *PB_Tag) Reset()                    { *m = PB_Tag{} }
 func (m *PB_Tag) String() string            { return proto.CompactTextString(m) }
 func (*PB_Tag) ProtoMessage()               {}
-func (*PB_Tag) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{38} }
+func (*PB_Tag) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{38} }
 
 func (m *PB_Tag) GetId() int32 {
 	if m != nil {
@@ -3279,7 +3279,7 @@ type PB_TagsPost struct {
 func (m *PB_TagsPost) Reset()                    { *m = PB_TagsPost{} }
 func (m *PB_TagsPost) String() string            { return proto.CompactTextString(m) }
 func (*PB_TagsPost) ProtoMessage()               {}
-func (*PB_TagsPost) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{39} }
+func (*PB_TagsPost) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{39} }
 
 func (m *PB_TagsPost) GetId() int32 {
 	if m != nil {
@@ -3332,7 +3332,7 @@ type PB_TestChat struct {
 func (m *PB_TestChat) Reset()                    { *m = PB_TestChat{} }
 func (m *PB_TestChat) String() string            { return proto.CompactTextString(m) }
 func (*PB_TestChat) ProtoMessage()               {}
-func (*PB_TestChat) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{40} }
+func (*PB_TestChat) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{40} }
 
 func (m *PB_TestChat) GetId() int64 {
 	if m != nil {
@@ -3416,7 +3416,7 @@ type PB_TriggerLog struct {
 func (m *PB_TriggerLog) Reset()                    { *m = PB_TriggerLog{} }
 func (m *PB_TriggerLog) String() string            { return proto.CompactTextString(m) }
 func (*PB_TriggerLog) ProtoMessage()               {}
-func (*PB_TriggerLog) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{41} }
+func (*PB_TriggerLog) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{41} }
 
 func (m *PB_TriggerLog) GetId() int64 {
 	if m != nil {
@@ -3499,7 +3499,7 @@ type PB_User struct {
 func (m *PB_User) Reset()                    { *m = PB_User{} }
 func (m *PB_User) String() string            { return proto.CompactTextString(m) }
 func (*PB_User) ProtoMessage()               {}
-func (*PB_User) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{42} }
+func (*PB_User) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{42} }
 
 func (m *PB_User) GetId() int32 {
 	if m != nil {
@@ -3742,7 +3742,7 @@ type PB_UserMetaInfo struct {
 func (m *PB_UserMetaInfo) Reset()                    { *m = PB_UserMetaInfo{} }
 func (m *PB_UserMetaInfo) String() string            { return proto.CompactTextString(m) }
 func (*PB_UserMetaInfo) ProtoMessage()               {}
-func (*PB_UserMetaInfo) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{43} }
+func (*PB_UserMetaInfo) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{43} }
 
 func (m *PB_UserMetaInfo) GetId() int32 {
 	if m != nil {
@@ -3781,7 +3781,7 @@ type PB_UserPassword struct {
 func (m *PB_UserPassword) Reset()                    { *m = PB_UserPassword{} }
 func (m *PB_UserPassword) String() string            { return proto.CompactTextString(m) }
 func (*PB_UserPassword) ProtoMessage()               {}
-func (*PB_UserPassword) Descriptor() ([]byte, []int) { return fileDescriptor7, []int{44} }
+func (*PB_UserPassword) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{44} }
 
 func (m *PB_UserPassword) GetUserId() int32 {
 	if m != nil {
@@ -3852,9 +3852,9 @@ func init() {
 	proto.RegisterType((*PB_UserPassword)(nil), "PB_UserPassword")
 }
 
-func init() { proto.RegisterFile("pb_tables.proto", fileDescriptor7) }
+func init() { proto.RegisterFile("pb_tables.proto", fileDescriptor8) }
 
-var fileDescriptor7 = []byte{
+var fileDescriptor8 = []byte{
 	// 3940 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x5b, 0x4d, 0x6c, 0x1c, 0xc7,
 	0x95, 0xc6, 0x70, 0x34, 0x24, 0xa7, 0x86, 0x14, 0xc5, 0xa6, 0x44, 0x8e, 0x7e, 0x68, 0xd1, 0x6d,

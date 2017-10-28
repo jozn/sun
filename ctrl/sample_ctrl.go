@@ -83,7 +83,7 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				}
 
 				uParam := userParamSample(fromUserId)
-				models.RpcAll.AddNewTextMessage(paramAdd, &uParam)
+				models.RpcAll.RPC_Msg.AddNewTextMessage(paramAdd, &uParam)
 			}
 
 			if img > 0 {
@@ -137,7 +137,7 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				}
 
 				uParam := userParamSample(fromUserId)
-				models.RpcAll.AddNewMessage(paramAdd, &uParam)
+				models.RpcAll.RPC_Msg.AddNewMessage(paramAdd, &uParam)
 			}
 
 			/*if img > 0 {

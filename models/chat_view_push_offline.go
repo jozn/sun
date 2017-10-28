@@ -8,7 +8,7 @@ import (
 	"ms/sun/models/x/xconst"
 )
 
-func ViewPush_DirectOfflinesList_To_GetDirectUpdatesView(meId int, logs []*x.DirectOffline) *x.PB_Offline_Sync {
+func ViewPush_DirectOfflinesList_To_GetDirectUpdatesView(meId int, logs []*x.DirectOffline) *x.PB_Offline_Messagings {
 
 	//preload in here
 	usersToLoad := make(map[int]bool)
@@ -27,7 +27,7 @@ func ViewPush_DirectOfflinesList_To_GetDirectUpdatesView(meId int, logs []*x.Dir
 	}
 
 	//
-	res := &x.PB_Offline_Sync{}
+	res := &x.PB_Offline_Messagings{}
 
 	//todo add perloadings
 	for _, logRow := range logs { //each user

@@ -13,7 +13,7 @@ import "pb_views.proto";
 
 /////////////////////////// Messages Offline //////////////////////////////////
 message PB_Offline_NewDirectMessage{
-    int64 ChatKey =1;
+    string ChatKey =1;
     int64 FromMessageId =2;
     int64 AtTime =3;
 }
@@ -67,7 +67,7 @@ message PB_Online_RoomActionDoing{
 }
 //////////////////////////////////////////////////////////////
 
-message PB_Offline_Sync{
+message PB_Offline_Messagings{
     //new mssages
     repeated PB_MessageView NewMessages = 1;
     repeated PB_MessageFileView ChatFiles = 2;

@@ -9,6 +9,7 @@ It is generated from these files:
 	pb_global.proto
 	pb_offlines.proto
 	pb_rpc_auth2.proto
+	pb_rpc_chat.proto
 	pb_rpc_msg.proto
 	pb_rpc_sync.proto
 	pb_rpc_user.proto
@@ -38,9 +39,29 @@ It has these top-level messages:
 	PB_Offline_MessageToEdit
 	PB_Offline_MessageToDelete
 	PB_Online_RoomActionDoing
-	PB_Offline_Sync
+	PB_Offline_Messagings
 	PB_UserParam_CheckUserName2
 	PB_UserResponse_CheckUserName2
+	PB_ChatParam_AddNewMessage
+	PB_ChatResponse_AddNewMessage
+	PB_ChatParam_SetRoomActionDoing
+	PB_ChatResponse_SetRoomActionDoing
+	PB_ChatParam_SetChatMessagesRangeAsSeen
+	PB_ChatResponse_SetChatMessagesRangeAsSeen
+	PB_ChatParam_DeleteChatHistory
+	PB_ChatResponse_DeleteChatHistory
+	PB_ChatParam_DeleteMessagesByIds
+	PB_ChatResponse_DeleteMessagesByIds
+	PB_ChatParam_SetMessagesAsReceived
+	PB_ChatResponse_SetMessagesAsReceived
+	PB_ChatParam_EditMessage
+	PB_ChatResponse_EditMessage
+	PB_ChatParam_GetChatList
+	PB_ChatResponse_GetChatList
+	PB_ChatParam_GetChatHistoryToOlder
+	PB_ChatResponse_GetChatHistoryToOlder
+	PB_ChatParam_GetFreshAllDirectMessagesList
+	PB_ChatResponse_GetFreshAllDirectMessagesList
 	PB_MsgParam_AddNewTextMessage
 	PB_MsgResponse_AddNewTextMessage
 	PB_MsgParam_AddNewMessage

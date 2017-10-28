@@ -11,6 +11,7 @@ import "pb_enums.proto";
 //import "pb_chat.proto";
 import "pb_views.proto";
 import "pb_updates.proto";
+import "pb_offlines.proto";
 
 ///////////////////////////////
 message PB_SyncParam_GetDirectUpdates {
@@ -113,6 +114,7 @@ message PB_NotifyUpdatesView {
 message PB_AllLivePushes{
     PB_SyncResponse_GetDirectUpdates DirectUpdates = 1;
     PB_SyncResponse_GetGeneralUpdates GeneralUpdates = 2;
+    PB_Offline_Messagings Offline_Messagings = 3;
 }
 
 service RPC_Sync {

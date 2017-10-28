@@ -125,7 +125,7 @@ func (s *_chatDirect) AddMessage(msg *x.DirectMessage) {
 
 	//=== new direct to peer offline
 	pbNewMsg := &x.PB_Offline_NewDirectMessage{
-		ChatKey:       int64(s.MeChat.ChatKey),
+		ChatKey:       s.MeChat.ChatKey,
 		FromMessageId: int64(msg.MessageId),
 		AtTime:        int64(helper.TimeNow()),
 	}
@@ -155,7 +155,7 @@ func (s *_chatDirect) AddMessage(msg *x.DirectMessage) {
 		PeerUserId:      s.PeerChat.UserId,
 		RoomLogTypeId:   int(Push_MESSAGE_RECIVED_TO_SERVER), //int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
 		AtTimeMs:        helper.TimeNowMs(),
-        PBClass:         xconst.PB_Offline_MessagesReachedServer,
+		PBClass:         xconst.PB_Offline_MessagesReachedServer,
 	}
 	pbRecOff := &x.PB_Offline_MessagesReachedServer{
 		MessageKeys: []string{msg.MessageKey},

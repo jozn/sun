@@ -144,10 +144,10 @@ func _livePush_sendToUsersOfflineFrame(logs []x.DirectOffline) {
 
 	for UserId, lgs := range mp { //each user
 		if AllPipesMap.IsPipeOpen(UserId) && len(lgs) > 0 {
-			res := ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(UserId, lgs)
+			res := ViewPush_DirectOfflinesList_To_GetDirectUpdatesView(UserId, lgs)
 
 			pb_res := x.PB_AllLivePushes{
-				DirectUpdates: res,
+				Offline_Messagings: res,
 			}
 			PushToUserLiveData(UserId, pb_res)
 			if config.IS_DEBUG {

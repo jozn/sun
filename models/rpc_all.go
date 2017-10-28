@@ -24,11 +24,13 @@ type rpcAll struct {
 	rpcSync
 }
 
-var RpcAll = rpcAll{}
+//var RpcAll = rpcAll{}
+var RpcAll = x.RPC_AllHandlersInteract{}
 
 func init() {
-	RpcAll.rpcMsg = rpcMsg(0)
-	RpcAll.rpcSync = rpcSync(0)
+	RpcAll.RPC_Msg = rpcMsg(0)
+	RpcAll.RPC_Sync = rpcSync(0)
+	RpcAll.RPC_Chat = rpcChat(0)
 }
 
 ///////////////////////////////

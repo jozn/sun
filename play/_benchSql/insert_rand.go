@@ -8,6 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	//"ms/sun/sync"
+	"ms/sun/helper"
 	"sync/atomic"
 )
 
@@ -33,9 +34,9 @@ func main() {
 		go func() {
 			ts := time.Now()
 			lastI := i
-			for i < 10000 {
-				addToTable_tran()
-				if n == 0 && i%10 == 0 {
+			for i < 10000000 {
+				addToTable()
+				if n == 0 && i%1000 == 0 {
 					sec := time.Now().Sub(ts).Seconds()
 					ts = time.Now()
 					k := i
@@ -52,6 +53,17 @@ func main() {
 
 	time.Sleep(time.Second * 100000)
 
+}
+
+func addToTable() {
+	_, err := DB.Exec(`INSERT INTO msg
+(KeyStr,Name,Id)
+ VALUES
+ (?,?,?);
+ `, helper.RandString(40), helper.FactRandStr(40), rand.Intn(1e6))
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func addToTable_tran() {

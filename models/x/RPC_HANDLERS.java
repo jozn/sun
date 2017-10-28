@@ -17,6 +17,18 @@ public interface RPC_Auth {
     void SingIn( PB_UserResponse_CheckUserName2 pb, boolean handled);
     void LogOut( PB_UserResponse_CheckUserName2 pb, boolean handled);
 }
+public interface RPC_Chat {
+    void AddNewMessage( PB_ChatResponse_AddNewMessage pb, boolean handled);
+    void SetRoomActionDoing( PB_ChatResponse_SetRoomActionDoing pb, boolean handled);
+    void SetMessagesRangeAsSeen( PB_ChatResponse_SetChatMessagesRangeAsSeen pb, boolean handled);
+    void DeleteChatHistory( PB_ChatResponse_DeleteChatHistory pb, boolean handled);
+    void DeleteMessagesByIds( PB_ChatResponse_DeleteMessagesByIds pb, boolean handled);
+    void SetMessagesAsReceived( PB_ChatResponse_SetMessagesAsReceived pb, boolean handled);
+    void EditMessage( PB_ChatResponse_EditMessage pb, boolean handled);
+    void GetChatList( PB_ChatResponse_GetChatList pb, boolean handled);
+    void GetChatHistoryToOlder( PB_ChatResponse_GetChatHistoryToOlder pb, boolean handled);
+    void GetFreshAllDirectMessagesList( PB_ChatResponse_GetFreshAllDirectMessagesList pb, boolean handled);
+}
 public interface RPC_Msg {
     void AddNewTextMessage( PB_MsgResponse_AddNewTextMessage pb, boolean handled);
     void AddNewMessage( PB_MsgResponse_AddNewMessage pb, boolean handled);
@@ -86,6 +98,49 @@ public interface RPC_User {
   	@Override
     public void LogOut( PB_UserResponse_CheckUserName2 pb, boolean handled){
     	Log.d("RPC", " default empty handler for RPC 'RPC_Auth.LogOut' ");
+    }
+  }
+  public static class RPC_Chat_Empty implements RPC_Chat{
+  
+  	@Override
+    public void AddNewMessage( PB_ChatResponse_AddNewMessage pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.AddNewMessage' ");
+    }
+  	@Override
+    public void SetRoomActionDoing( PB_ChatResponse_SetRoomActionDoing pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.SetRoomActionDoing' ");
+    }
+  	@Override
+    public void SetMessagesRangeAsSeen( PB_ChatResponse_SetChatMessagesRangeAsSeen pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.SetMessagesRangeAsSeen' ");
+    }
+  	@Override
+    public void DeleteChatHistory( PB_ChatResponse_DeleteChatHistory pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.DeleteChatHistory' ");
+    }
+  	@Override
+    public void DeleteMessagesByIds( PB_ChatResponse_DeleteMessagesByIds pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.DeleteMessagesByIds' ");
+    }
+  	@Override
+    public void SetMessagesAsReceived( PB_ChatResponse_SetMessagesAsReceived pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.SetMessagesAsReceived' ");
+    }
+  	@Override
+    public void EditMessage( PB_ChatResponse_EditMessage pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.EditMessage' ");
+    }
+  	@Override
+    public void GetChatList( PB_ChatResponse_GetChatList pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.GetChatList' ");
+    }
+  	@Override
+    public void GetChatHistoryToOlder( PB_ChatResponse_GetChatHistoryToOlder pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.GetChatHistoryToOlder' ");
+    }
+  	@Override
+    public void GetFreshAllDirectMessagesList( PB_ChatResponse_GetFreshAllDirectMessagesList pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.GetFreshAllDirectMessagesList' ");
     }
   }
   public static class RPC_Msg_Empty implements RPC_Msg{
@@ -229,6 +284,7 @@ public interface RPC_User {
 
 	
 	public static RPC_HANDLERS.RPC_Auth RPC_Auth_Default_Handler = new RPC_HANDLERS.RPC_Auth_Empty();
+	public static RPC_HANDLERS.RPC_Chat RPC_Chat_Default_Handler = new RPC_HANDLERS.RPC_Chat_Empty();
 	public static RPC_HANDLERS.RPC_Msg RPC_Msg_Default_Handler = new RPC_HANDLERS.RPC_Msg_Empty();
 	public static RPC_HANDLERS.RPC_Sync RPC_Sync_Default_Handler = new RPC_HANDLERS.RPC_Sync_Empty();
 	public static RPC_HANDLERS.RPC_UserOffline RPC_UserOffline_Default_Handler = new RPC_HANDLERS.RPC_UserOffline_Empty();
@@ -300,6 +356,87 @@ public interface RPC_User {
 					RPC_Auth_Default_Handler.LogOut((PB_UserResponse_CheckUserName2) pb, handled);
 				}else{
 					Log.d("RPC", " can not convert response object to PB_UserResponse_CheckUserName2 in rpc: .LogOut -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+	  
+			router.put("RPC_Chat.AddNewMessage", (pb, handled)->{
+				if(pb instanceof PB_ChatResponse_AddNewMessage){
+					RPC_Chat_Default_Handler.AddNewMessage((PB_ChatResponse_AddNewMessage) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_ChatResponse_AddNewMessage in rpc: .AddNewMessage -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+			router.put("RPC_Chat.SetRoomActionDoing", (pb, handled)->{
+				if(pb instanceof PB_ChatResponse_SetRoomActionDoing){
+					RPC_Chat_Default_Handler.SetRoomActionDoing((PB_ChatResponse_SetRoomActionDoing) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_ChatResponse_SetRoomActionDoing in rpc: .SetRoomActionDoing -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+			router.put("RPC_Chat.SetMessagesRangeAsSeen", (pb, handled)->{
+				if(pb instanceof PB_ChatResponse_SetChatMessagesRangeAsSeen){
+					RPC_Chat_Default_Handler.SetMessagesRangeAsSeen((PB_ChatResponse_SetChatMessagesRangeAsSeen) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_ChatResponse_SetChatMessagesRangeAsSeen in rpc: .SetMessagesRangeAsSeen -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+			router.put("RPC_Chat.DeleteChatHistory", (pb, handled)->{
+				if(pb instanceof PB_ChatResponse_DeleteChatHistory){
+					RPC_Chat_Default_Handler.DeleteChatHistory((PB_ChatResponse_DeleteChatHistory) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_ChatResponse_DeleteChatHistory in rpc: .DeleteChatHistory -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+			router.put("RPC_Chat.DeleteMessagesByIds", (pb, handled)->{
+				if(pb instanceof PB_ChatResponse_DeleteMessagesByIds){
+					RPC_Chat_Default_Handler.DeleteMessagesByIds((PB_ChatResponse_DeleteMessagesByIds) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_ChatResponse_DeleteMessagesByIds in rpc: .DeleteMessagesByIds -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+			router.put("RPC_Chat.SetMessagesAsReceived", (pb, handled)->{
+				if(pb instanceof PB_ChatResponse_SetMessagesAsReceived){
+					RPC_Chat_Default_Handler.SetMessagesAsReceived((PB_ChatResponse_SetMessagesAsReceived) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_ChatResponse_SetMessagesAsReceived in rpc: .SetMessagesAsReceived -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+			router.put("RPC_Chat.EditMessage", (pb, handled)->{
+				if(pb instanceof PB_ChatResponse_EditMessage){
+					RPC_Chat_Default_Handler.EditMessage((PB_ChatResponse_EditMessage) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_ChatResponse_EditMessage in rpc: .EditMessage -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+			router.put("RPC_Chat.GetChatList", (pb, handled)->{
+				if(pb instanceof PB_ChatResponse_GetChatList){
+					RPC_Chat_Default_Handler.GetChatList((PB_ChatResponse_GetChatList) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_ChatResponse_GetChatList in rpc: .GetChatList -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+			router.put("RPC_Chat.GetChatHistoryToOlder", (pb, handled)->{
+				if(pb instanceof PB_ChatResponse_GetChatHistoryToOlder){
+					RPC_Chat_Default_Handler.GetChatHistoryToOlder((PB_ChatResponse_GetChatHistoryToOlder) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_ChatResponse_GetChatHistoryToOlder in rpc: .GetChatHistoryToOlder -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+			router.put("RPC_Chat.GetFreshAllDirectMessagesList", (pb, handled)->{
+				if(pb instanceof PB_ChatResponse_GetFreshAllDirectMessagesList){
+					RPC_Chat_Default_Handler.GetFreshAllDirectMessagesList((PB_ChatResponse_GetFreshAllDirectMessagesList) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_ChatResponse_GetFreshAllDirectMessagesList in rpc: .GetFreshAllDirectMessagesList -- class: " + pb );//.getClass().getName());
 				}
 			});
 	  
@@ -553,6 +690,7 @@ public interface RPC_User {
 /*
 
 RPC_HANDLERS.RPC_Auth RPC_Auth_Default_Handler = new RPC_HANDLERS.RPC_Auth RPC_Auth_Empty();
+RPC_HANDLERS.RPC_Chat RPC_Chat_Default_Handler = new RPC_HANDLERS.RPC_Chat RPC_Chat_Empty();
 RPC_HANDLERS.RPC_Msg RPC_Msg_Default_Handler = new RPC_HANDLERS.RPC_Msg RPC_Msg_Empty();
 RPC_HANDLERS.RPC_Sync RPC_Sync_Default_Handler = new RPC_HANDLERS.RPC_Sync RPC_Sync_Empty();
 RPC_HANDLERS.RPC_UserOffline RPC_UserOffline_Default_Handler = new RPC_HANDLERS.RPC_UserOffline RPC_UserOffline_Empty();
