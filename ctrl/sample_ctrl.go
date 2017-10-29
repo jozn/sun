@@ -73,17 +73,33 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				continue
 			}
 
+			roomKey:= models.UserIdsToRoomKey(toUserId,fromUserId)
+			msgP := &x.PB_MessageView{
+                MessageId:            int64(helper.RandomSeqUid()),
+                MessageKey:           fmt.Sprintf("%s|%d|%s|%d",roomKey,helper.TimeNowMs(),helper.RandString(3),fromUserId),
+                RoomKey:              roomKey,
+                UserId:               int32(fromUserId),
+                MessageFileId:        int64(0),
+                MessageTypeEnumId:    int32(x.RoomMessageTypeEnum_TEXT),
+                Text:                 txt,
+                CreatedSe:            int32(helper.TimeNow()),
+                PeerReceivedTime:     int32(0),
+                PeerSeenTime:         int32(0),
+                DeliviryStatusEnumId: int32(x.RoomMessageDeliviryStatusEnum_SENDING),
+                //ChatKey:              m.ChatKey,
+                RoomTypeEnumId:       int32(x.RoomTypeEnum_DIRECT),
+                //IsByMe:               m.IsByMe,
+                RemoteId:             int64(0),
+            }
+
+            paramAdd := &x.PB_ChatParam_AddNewMessage{
+                MessageView:msgP,
+            }
+
 			if img < 1 { //just text
-				paramAdd := &x.PB_MsgParam_AddNewTextMessage{
-					Text:             txt,
-					MessageKey:       helper.RandString(9),
-					PeerId:           int32(toUserId),
-					Time:             int32(helper.TimeNow()),
-					ReplyToMessageId: 0,
-				}
 
 				uParam := userParamSample(fromUserId)
-				models.RpcAll.RPC_Msg.AddNewTextMessage(paramAdd, &uParam)
+				models.RpcAll.RPC_Chat.AddNewMessage(paramAdd, &uParam)
 			}
 
 			if img > 0 {
@@ -99,10 +115,10 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 				bs, _ := ioutil.ReadAll(igFile)
 				//bs64, _ := helper.FromBase64ToBin(thumb64)
 
-				igPb := &x.PB_MessageFileView{
+				pb_msgFile := &x.PB_MessageFileView{
 					MessageFileId:   int64(helper.NextRowsSeqId()),
 					OriginalUserId:  int32(fromUserId),
-					MessageFileKey:  models.KeyNewMessageKey(fromUserId),
+					MessageFileKey:  models.KeyNewMessageKey(fromUserId,roomKey),
 					Name:            imgRnd,
 					Size:            int32(st.Size()),
 					FileTypeEnumId:  1,
@@ -120,55 +136,11 @@ func SendSampleMesgNew(a *base.Action) base.AppErr {
 					ServerId:        0,
 					CanDel:          0,
 				}
-
-				m := &x.PB_MessageView{
-					MessageFileId:   igPb.MessageFileId,
-					MessageFileView: igPb,
-				}
-
-				paramAdd := &x.PB_MsgParam_AddNewMessage{
-					Text:             txt,
-					PeerId:           int32(toUserId),
-					ToRoomKey:        models.UsersToRoomKey(toUserId, fromUserId),
-					Time:             int32(helper.TimeNow()),
-					ReplyToMessageId: 0,
-					Blob:             bs,
-					MessageView:      m,
-				}
-
+                paramAdd.MessageView.MessageFileView = pb_msgFile
+                paramAdd.Blob = bs
 				uParam := userParamSample(fromUserId)
-				models.RpcAll.RPC_Msg.AddNewMessage(paramAdd, &uParam)
+				models.RpcAll.RPC_Chat.AddNewMessage(paramAdd, &uParam)
 			}
-
-			/*if img > 0 {
-			                imgRnd, w, h := fact.RandImage()
-			                igFile, err := os.Open(imgRnd)
-			                if err != nil {
-			                    log.Fatal(err)
-			                }
-			                st, _ := igFile.Stat()
-			                st.Size()
-
-			                bs, _ := ioutil.ReadAll(igFile)
-			                bs64, _ := helper.FromBase64ToBin(thumb64)
-
-			                igPb := &x.PB_MsgFile{
-			                    Name:      st.Name(),
-			                    Size:      int64(st.Size()),
-			                    FileType:  models.MESSAGE_IMAGE,
-			                    MimeType:  "image/jpeg",
-			                    Width:     int32(w),
-			                    Height:    int32(h),
-			                    Duration:  int32(0),
-			                    Extension: ".jpg",
-			                    ThumbData: bs64,
-			                    Data:      bs,
-			                    ServerSrc: "", //must set with hand
-
-			                }
-							msg.MessageFileView = igPb
-							msg.MessageTypeId = models.MESSAGE_IMAGE
-						}*/
 
 			atomic.AddInt64(&Cnt3, 1)
 

@@ -12,8 +12,9 @@ import (
 
 //RoomKey; d24_6
 //ChatKey: d6:24
-func KeyNewMessageKey(UserId int) string {
-	return fmt.Sprintf("%d_%d_%s", UserId, helper.TimeNow(), helper.RandString(4)) //todo extrac this to client
+func KeyNewMessageKey(UserId int, RoomKey string) string {
+	//return fmt.Sprintf("%d_%d_%s", UserId, helper.TimeNow(), helper.RandString(4)) //todo extrac this to client
+	return  fmt.Sprintf("%s|%d|%s|%d",RoomKey,helper.TimeNowMs(),helper.RandString(3),UserId)
 }
 
 //"d25_56" "d56:24" ////not yet "g6_15646548_cdc" "g6:6_15646548_cdc"
