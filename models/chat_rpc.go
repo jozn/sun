@@ -218,8 +218,14 @@ func (rpcChat) SetMessagesRangeAsSeen(param *x.PB_ChatParam_SetChatMessagesRange
 	return
 }
 
+//todo add offlines_for chats
 func (rpcChat) DeleteChatHistory(param *x.PB_ChatParam_DeleteChatHistory, userParam x.RPC_UserParam) (res x.PB_ChatResponse_DeleteChatHistory, err error) {
-	panic("implement me")
+	x.NewDirectToMessage_Deleter().ChatKey_Eq(param.ChatKey).MessageId_LE(int(param.FromMessageId)).Delete(base.DB)
+	x.NewChat_Updater().StartMessageIdFrom(int(param.FromMessageId) + 1).
+		LastDeletedMessageId(int(param.FromMessageId)).
+		ChatKey_Eq(param.ChatKey).Update(base.DB)
+
+	return
 }
 
 func (rpcChat) DeleteMessagesByIds(param *x.PB_ChatParam_DeleteMessagesByIds, userParam x.RPC_UserParam) (res x.PB_ChatResponse_DeleteMessagesByIds, err error) {
@@ -227,7 +233,37 @@ func (rpcChat) DeleteMessagesByIds(param *x.PB_ChatParam_DeleteMessagesByIds, us
 }
 
 func (rpcChat) SetMessagesAsReceived(param *x.PB_ChatParam_SetMessagesAsReceived, userParam x.RPC_UserParam) (res x.PB_ChatResponse_SetMessagesAsReceived, err error) {
-	panic("implement me")
+	if len(param.MessageIds) > 0 {
+		cnt, _ := x.NewDirectMessage_Updater().PeerReceivedTime(helper.TimeNow()).
+			MessageId_In(helper.SliceInt64ToInt(param.MessageIds)).PeerReceivedTime(0).Update(base.DB)
+
+		if cnt > 0 {
+            roomKey, _ := Keys_ChatKeyToRoomKey(param.ChatRoom)
+			//MEASSAGE REACHED SERVER OFFLINE
+			pbMsgRecivied := &x.PB_Offline_MessagesDeliveredToUser{
+				MessageIds: param.MessageIds,
+				RoomKey:    roomKey,
+				AtTime:     int64(helper.TimeNow()),
+			}
+			pbByte, _ := proto.Marshal(pbMsgRecivied)
+			peerId := RoomKeyToOtherUser(roomKey, userParam.GetUserId())
+			if peerId > 0 {
+				dOffMsgReached := x.DirectOffline{
+					DirectOfflineId: helper.NextRowsSeqId(),
+					ToUserId:        peerId,
+					ChatKey:         UsersToChatKey(userParam.GetUserId(), peerId),
+					PBClass:         xconst.PB_Offline_MessagesDeliveredToUser,
+					DataPB:          pbByte,
+					DataJson:        helper.ToJson(pbMsgRecivied),
+					DataTemp:        "",
+					AtTimeMs:        helper.TimeNowMs(),
+				}
+				LiveOfflineFramer.HereDirectDelayer <- dOffMsgReached
+			}
+		}
+
+	}
+	return
 }
 
 func (rpcChat) EditMessage(param *x.PB_ChatParam_EditMessage, userParam x.RPC_UserParam) (res x.PB_ChatResponse_EditMessage, err error) {

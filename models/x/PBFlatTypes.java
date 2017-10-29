@@ -323,6 +323,7 @@ public class PBFlatTypes {
 
 	public class PB_Offline_MessagesDeliveredToUser {
 	   public String MessageKeys;
+	   public long MessageIds;
 	   public String RoomKey;
 	   public long AtTime;
 	}
@@ -330,6 +331,7 @@ public class PBFlatTypes {
 	folding
 	PBFlatTypes.PB_Offline_MessagesDeliveredToUser t = new PBFlatTypes.PB_Offline_MessagesDeliveredToUser();
     t.setMessageKeys();
+    t.setMessageIds();
     t.setRoomKey();
     t.setAtTime();
 	*/
@@ -337,6 +339,7 @@ public class PBFlatTypes {
 	/*
 	PBFlatTypes.PB_Offline_MessagesDeliveredToUser t = new PBFlatTypes.PB_Offline_MessagesDeliveredToUser();
 	t.MessageKeys = ;
+	t.MessageIds = ;
 	t.RoomKey = ;
 	t.AtTime = ;
 	*/
@@ -344,6 +347,7 @@ public class PBFlatTypes {
 	/*
 	PB_Offline_MessagesDeliveredToUser t = new PB_Offline_MessagesDeliveredToUser();
 	t.MessageKeys = m.getMessageKeys() ;
+	t.MessageIds = m.getMessageIds() ;
 	t.RoomKey = m.getRoomKey() ;
 	t.AtTime = m.getAtTime() ;
 	*/
@@ -381,24 +385,28 @@ public class PBFlatTypes {
 
 	public class PB_Offline_MessagesDeletedFromServer {
 	   public String MessageKeys;
+	   public long MessageIds;
 	   public long AtTime;
 	}
 	/*
 	folding
 	PBFlatTypes.PB_Offline_MessagesDeletedFromServer t = new PBFlatTypes.PB_Offline_MessagesDeletedFromServer();
     t.setMessageKeys();
+    t.setMessageIds();
     t.setAtTime();
 	*/
 
 	/*
 	PBFlatTypes.PB_Offline_MessagesDeletedFromServer t = new PBFlatTypes.PB_Offline_MessagesDeletedFromServer();
 	t.MessageKeys = ;
+	t.MessageIds = ;
 	t.AtTime = ;
 	*/
 
 	/*
 	PB_Offline_MessagesDeletedFromServer t = new PB_Offline_MessagesDeletedFromServer();
 	t.MessageKeys = m.getMessageKeys() ;
+	t.MessageIds = m.getMessageIds() ;
 	t.AtTime = m.getAtTime() ;
 	*/
 

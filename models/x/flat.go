@@ -398,6 +398,7 @@ var PB_Offline_MessagesReachedServer__FOlD = &PB_Offline_MessagesReachedServer{
 
 type PB_Offline_MessagesDeliveredToUser_Flat struct {
 	MessageKeys []string
+	MessageIds  []int
 	RoomKey     string
 	AtTime      int
 }
@@ -406,6 +407,7 @@ type PB_Offline_MessagesDeliveredToUser_Flat struct {
 func (m *PB_Offline_MessagesDeliveredToUser) ToFlat() *PB_Offline_MessagesDeliveredToUser_Flat {
 	r := &PB_Offline_MessagesDeliveredToUser_Flat{
 		MessageKeys: m.MessageKeys,
+		MessageIds:  helper.SliceInt64ToInt(m.MessageIds),
 		RoomKey:     m.RoomKey,
 		AtTime:      int(m.AtTime),
 	}
@@ -416,6 +418,7 @@ func (m *PB_Offline_MessagesDeliveredToUser) ToFlat() *PB_Offline_MessagesDelive
 func (m *PB_Offline_MessagesDeliveredToUser_Flat) ToPB() *PB_Offline_MessagesDeliveredToUser {
 	r := &PB_Offline_MessagesDeliveredToUser{
 		MessageKeys: m.MessageKeys,
+		MessageIds:  helper.SliceIntToInt64(m.MessageIds),
 		RoomKey:     m.RoomKey,
 		AtTime:      int64(m.AtTime),
 	}
@@ -467,6 +470,7 @@ var PB_Offline_MessagesSeenByPeer__FOlD = &PB_Offline_MessagesSeenByPeer{
 
 type PB_Offline_MessagesDeletedFromServer_Flat struct {
 	MessageKeys []string
+	MessageIds  []int
 	AtTime      int
 }
 
@@ -474,6 +478,7 @@ type PB_Offline_MessagesDeletedFromServer_Flat struct {
 func (m *PB_Offline_MessagesDeletedFromServer) ToFlat() *PB_Offline_MessagesDeletedFromServer_Flat {
 	r := &PB_Offline_MessagesDeletedFromServer_Flat{
 		MessageKeys: m.MessageKeys,
+		MessageIds:  helper.SliceInt64ToInt(m.MessageIds),
 		AtTime:      int(m.AtTime),
 	}
 	return r
@@ -483,6 +488,7 @@ func (m *PB_Offline_MessagesDeletedFromServer) ToFlat() *PB_Offline_MessagesDele
 func (m *PB_Offline_MessagesDeletedFromServer_Flat) ToPB() *PB_Offline_MessagesDeletedFromServer {
 	r := &PB_Offline_MessagesDeletedFromServer{
 		MessageKeys: m.MessageKeys,
+		MessageIds:  helper.SliceIntToInt64(m.MessageIds),
 		AtTime:      int64(m.AtTime),
 	}
 	return r
@@ -6312,6 +6318,7 @@ return r
 func(m *PB_Offline_MessagesDeliveredToUser)ToFlat() *PB_Offline_MessagesDeliveredToUser_Flat {
 r := &PB_Offline_MessagesDeliveredToUser_Flat{
     MessageKeys:  m.MessageKeys ,
+    MessageIds:  helper.SliceInt64ToInt(m.MessageIds) ,
     RoomKey:  m.RoomKey ,
     AtTime:  int(m.AtTime) ,
 }
@@ -6331,6 +6338,7 @@ return r
 func(m *PB_Offline_MessagesDeletedFromServer)ToFlat() *PB_Offline_MessagesDeletedFromServer_Flat {
 r := &PB_Offline_MessagesDeletedFromServer_Flat{
     MessageKeys:  m.MessageKeys ,
+    MessageIds:  helper.SliceInt64ToInt(m.MessageIds) ,
     AtTime:  int(m.AtTime) ,
 }
 return r
@@ -8067,6 +8075,7 @@ return r
 func(m *PB_Offline_MessagesDeliveredToUser_Flat)ToPB() *PB_Offline_MessagesDeliveredToUser {
 r := &PB_Offline_MessagesDeliveredToUser{
     MessageKeys:  m.MessageKeys ,
+    MessageIds:  helper.SliceIntToInt64(m.MessageIds) ,
     RoomKey:  m.RoomKey ,
     AtTime:  int64(m.AtTime) ,
 }
@@ -8086,6 +8095,7 @@ return r
 func(m *PB_Offline_MessagesDeletedFromServer_Flat)ToPB() *PB_Offline_MessagesDeletedFromServer {
 r := &PB_Offline_MessagesDeletedFromServer{
     MessageKeys:  m.MessageKeys ,
+    MessageIds:  helper.SliceIntToInt64(m.MessageIds) ,
     AtTime:  int64(m.AtTime) ,
 }
 return r
@@ -9795,6 +9805,7 @@ var PB_Offline_MessagesReachedServer__FOlD = &PB_Offline_MessagesReachedServer{
 
 var PB_Offline_MessagesDeliveredToUser__FOlD = &PB_Offline_MessagesDeliveredToUser{
         MessageKeys:  "" ,
+        MessageIds:  0 ,
         RoomKey:  "" ,
         AtTime:  0 ,
 }
@@ -9810,6 +9821,7 @@ var PB_Offline_MessagesSeenByPeer__FOlD = &PB_Offline_MessagesSeenByPeer{
 
 var PB_Offline_MessagesDeletedFromServer__FOlD = &PB_Offline_MessagesDeletedFromServer{
         MessageKeys:  "" ,
+        MessageIds:  0 ,
         AtTime:  0 ,
 }
 

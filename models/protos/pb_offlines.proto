@@ -25,6 +25,7 @@ message PB_Offline_MessagesReachedServer{
 
 message PB_Offline_MessagesDeliveredToUser{
     repeated string MessageKeys =1;
+    repeated int64 MessageIds =12;
     string RoomKey =2;
     int64 AtTime =3;
 }
@@ -38,6 +39,7 @@ message PB_Offline_MessagesSeenByPeer{
 
 message PB_Offline_MessagesDeletedFromServer{
     repeated string MessageKeys =1;
+    repeated int64 MessageIds =12;
     //string RoomKey =2;
     int64 AtTime =3;
 }
