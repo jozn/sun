@@ -156,6 +156,35 @@ func PBConvPB__DirectOffline_To_DirectOffline( o *PB_DirectOffline) *DirectOffli
      n := &DirectOffline{
       DirectOfflineId: int ( o.DirectOfflineId ),
       ToUserId: int ( o.ToUserId ),
+      ChatKey: string ( o.ChatKey ),
+      PBClass: string ( o.PBClass ),
+      DataPB: []byte ( o.DataPB ),
+      DataJson: string ( o.DataJson ),
+      DataTemp: string ( o.DataTemp ),
+      AtTimeMs: int ( o.AtTimeMs ),
+    }
+    return n
+}
+
+func PBConvPB_DirectOffline_To_DirectOffline ( o *DirectOffline) *PB_DirectOffline {
+     n := &PB_DirectOffline{
+      DirectOfflineId: int64 ( o.DirectOfflineId ),
+      ToUserId: int32 ( o.ToUserId ),
+      ChatKey: string ( o.ChatKey ),
+      PBClass: string ( o.PBClass ),
+      DataPB: []byte ( o.DataPB ),
+      DataJson: string ( o.DataJson ),
+      DataTemp: string ( o.DataTemp ),
+      AtTimeMs: int64 ( o.AtTimeMs ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__DirectOfflineDep_To_DirectOfflineDep( o *PB_DirectOfflineDep) *DirectOfflineDep {
+     n := &DirectOfflineDep{
+      DirectOfflineId: int ( o.DirectOfflineId ),
+      ToUserId: int ( o.ToUserId ),
       MessageId: int ( o.MessageId ),
       MessageFileId: int ( o.MessageFileId ),
       OtherId: int ( o.OtherId ),
@@ -171,8 +200,8 @@ func PBConvPB__DirectOffline_To_DirectOffline( o *PB_DirectOffline) *DirectOffli
     return n
 }
 
-func PBConvPB_DirectOffline_To_DirectOffline ( o *DirectOffline) *PB_DirectOffline {
-     n := &PB_DirectOffline{
+func PBConvPB_DirectOfflineDep_To_DirectOfflineDep ( o *DirectOfflineDep) *PB_DirectOfflineDep {
+     n := &PB_DirectOfflineDep{
       DirectOfflineId: int64 ( o.DirectOfflineId ),
       ToUserId: int32 ( o.ToUserId ),
       MessageId: int64 ( o.MessageId ),
@@ -584,6 +613,25 @@ func PBConvPB_MessageFile_To_MessageFile ( o *MessageFile) *PB_MessageFile {
       BucketId: string ( o.BucketId ),
       ServerId: int32 ( o.ServerId ),
       CanDel: int32 ( o.CanDel ),
+    }
+    return n
+}
+*/
+/*
+func PBConvPB__Msg_To_Msg( o *PB_Msg) *Msg {
+     n := &Msg{
+      Key: string ( o.Key ),
+      Name: string ( o.Name ),
+      Id: int ( o.Id ),
+    }
+    return n
+}
+
+func PBConvPB_Msg_To_Msg ( o *Msg) *PB_Msg {
+     n := &PB_Msg{
+      Key: string ( o.Key ),
+      Name: string ( o.Name ),
+      Id: int32 ( o.Id ),
     }
     return n
 }

@@ -135,6 +135,31 @@ type DirectMessage struct {
 type DirectOffline struct {
 	DirectOfflineId int
 	ToUserId        int
+	ChatKey         string
+	PBClass         string
+	DataPB          []byte
+	DataJson        string
+	DataTemp        string //not real data
+	AtTimeMs        int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &DirectOffline {
+	DirectOfflineId: 0,
+	ToUserId: 0,
+	ChatKey: "",
+	PBClass: "",
+	DataPB: []byte{},
+	DataJson: "",
+	DataTemp: "",
+	AtTimeMs: 0,
+*/
+// direct_offline_dep 'DirectOfflineDep'.
+type DirectOfflineDep struct {
+	DirectOfflineId int
+	ToUserId        int
 	MessageId       int
 	MessageFileId   int
 	OtherId         int
@@ -151,7 +176,7 @@ type DirectOffline struct {
 }
 
 /*
-:= &DirectOffline {
+:= &DirectOfflineDep {
 	DirectOfflineId: 0,
 	ToUserId: 0,
 	MessageId: 0,
@@ -507,6 +532,21 @@ type MessageFile struct {
 	BucketId: "",
 	ServerId: 0,
 	CanDel: 0,
+*/
+// msg 'Msg'.
+type Msg struct {
+	Key  string
+	Name string
+	Id   int
+
+	_exists, _deleted bool
+}
+
+/*
+:= &Msg {
+	Key: "",
+	Name: "",
+	Id: 0,
 */
 // notification 'Notification'.
 type Notification struct {

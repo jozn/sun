@@ -42,12 +42,12 @@ message PB_Offline_MessagesDeletedFromServer{
 }
 
 message PB_Offline_ChangeMessageId{
-    int64 MessageKey =1;
+    string MessageKey =1;
     int64 NewMessageId =2;
 }
 
 message PB_Offline_ChangeMessageFileId{
-    int64 MessageFileKey =1;
+    string MessageFileKey =1;
     int64 NewMessageFileId =2;
 }
 

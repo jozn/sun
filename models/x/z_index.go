@@ -148,6 +148,30 @@ func DirectOfflineByDirectOfflineId(db *sqlx.DB, directOfflineId int) (*DirectOf
 	return &do, nil
 }
 
+// DirectOfflineDepByDirectOfflineId Generated from index 'PRIMARY' -- retrieves a row from 'ms.direct_offline_dep' as a DirectOfflineDep.
+func DirectOfflineDepByDirectOfflineId(db *sqlx.DB, directOfflineId int) (*DirectOfflineDep, error) {
+	var err error
+
+	const sqlstr = `SELECT * ` +
+		`FROM ms.direct_offline_dep ` +
+		`WHERE DirectOfflineId = ?`
+
+	XOLog(sqlstr, directOfflineId)
+	dod := DirectOfflineDep{
+		_exists: true,
+	}
+
+	err = db.Get(&dod, sqlstr, directOfflineId)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+
+	OnDirectOfflineDep_LoadOne(&dod)
+
+	return &dod, nil
+}
+
 // DirectToMessageById Generated from index 'PRIMARY' -- retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
 func DirectToMessageById(db *sqlx.DB, id int) (*DirectToMessage, error) {
 	var err error
@@ -482,6 +506,30 @@ func MessageFileByMessageFileId(db *sqlx.DB, messageFileId int) (*MessageFile, e
 	OnMessageFile_LoadOne(&mf)
 
 	return &mf, nil
+}
+
+// MsgByKey Generated from index 'PRIMARY' -- retrieves a row from 'ms.msg' as a Msg.
+func MsgByKey(db *sqlx.DB, key string) (*Msg, error) {
+	var err error
+
+	const sqlstr = `SELECT * ` +
+		`FROM ms.msg ` +
+		`WHERE Key = ?`
+
+	XOLog(sqlstr, key)
+	m := Msg{
+		_exists: true,
+	}
+
+	err = db.Get(&m, sqlstr, key)
+	if err != nil {
+		XOLogErr(err)
+		return nil, err
+	}
+
+	OnMsg_LoadOne(&m)
+
+	return &m, nil
 }
 
 // NotificationById Generated from index 'PRIMARY' -- retrieves a row from 'ms.notification' as a Notification.

@@ -173,6 +173,35 @@ $$
 
 
  #### delimiter ;*/
+################################ DirectOfflineDep ######################################
+
+/* #### delimiter $$
+DROP TRIGGER IF EXISTS direct_offline_dep_OnCreateLogger $$
+CREATE TRIGGER direct_offline_dep_OnCreateLogger AFTER INSERT ON direct_offline_dep
+  FOR EACH ROW
+  BEGIN
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("DirectOfflineDep","INSERT",NEW.DirectOfflineId, UNIX_TIMESTAMP(NOW()) );
+  END;
+$$
+
+DROP TRIGGER IF EXISTS direct_offline_dep_OnUpdateLogger $$
+CREATE TRIGGER direct_offline_dep_OnUpdateLogger AFTER UPDATE ON direct_offline_dep
+  FOR EACH ROW
+  BEGIN
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("DirectOfflineDep","UPDATE",NEW.DirectOfflineId, UNIX_TIMESTAMP(NOW()));
+  END;
+$$
+
+DROP TRIGGER IF EXISTS direct_offline_dep_OnDeleteLogger $$
+CREATE TRIGGER direct_offline_dep_OnDeleteLogger AFTER DELETE ON direct_offline_dep
+  FOR EACH ROW
+  BEGIN
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("DirectOfflineDep","DELETE",OLD.DirectOfflineId, UNIX_TIMESTAMP(NOW()));
+  END;
+$$
+
+
+ #### delimiter ;*/
 ################################ DirectToMessage ######################################
 
 /* #### delimiter $$
@@ -574,6 +603,35 @@ CREATE TRIGGER message_file_OnDeleteLogger AFTER DELETE ON message_file
   FOR EACH ROW
   BEGIN
    	INSERT INTO trigger_log (ModelName,ChangeType,TargetId,CreatedSe) VALUES ("MessageFile","DELETE",OLD.MessageFileId, UNIX_TIMESTAMP(NOW()));
+  END;
+$$
+
+
+ #### delimiter ;*/
+################################ Msg ######################################
+
+/* #### delimiter $$
+DROP TRIGGER IF EXISTS msg_OnCreateLogger $$
+CREATE TRIGGER msg_OnCreateLogger AFTER INSERT ON msg
+  FOR EACH ROW
+  BEGIN
+    INSERT INTO trigger_log (ModelName,ChangeType,TargetStr,CreatedSe) VALUES ("Msg","INSERT",NEW.Key, UNIX_TIMESTAMP(NOW()) );
+  END;
+$$
+
+DROP TRIGGER IF EXISTS msg_OnUpdateLogger $$
+CREATE TRIGGER msg_OnUpdateLogger AFTER UPDATE ON msg
+  FOR EACH ROW
+  BEGIN
+  	INSERT INTO trigger_log (ModelName,ChangeType,TargetStr,CreatedSe) VALUES ("Msg","UPDATE",NEW.Key, UNIX_TIMESTAMP(NOW()));
+  END;
+$$
+
+DROP TRIGGER IF EXISTS msg_OnDeleteLogger $$
+CREATE TRIGGER msg_OnDeleteLogger AFTER DELETE ON msg
+  FOR EACH ROW
+  BEGIN
+   	INSERT INTO trigger_log (ModelName,ChangeType,TargetStr,CreatedSe) VALUES ("Msg","DELETE",OLD.Key, UNIX_TIMESTAMP(NOW()));
   END;
 $$
 
@@ -1333,6 +1391,10 @@ DROP TRIGGER IF EXISTS direct_message_OnDeleteLogger ;
 DROP TRIGGER IF EXISTS direct_offline_OnCreateLogger ;
 DROP TRIGGER IF EXISTS direct_offline_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS direct_offline_OnDeleteLogger ;
+### DirectOfflineDep ##
+DROP TRIGGER IF EXISTS direct_offline_dep_OnCreateLogger ;
+DROP TRIGGER IF EXISTS direct_offline_dep_OnUpdateLogger ;
+DROP TRIGGER IF EXISTS direct_offline_dep_OnDeleteLogger ;
 ### DirectToMessage ##
 DROP TRIGGER IF EXISTS direct_to_message_OnCreateLogger ;
 DROP TRIGGER IF EXISTS direct_to_message_OnUpdateLogger ;
@@ -1389,6 +1451,10 @@ DROP TRIGGER IF EXISTS media_OnDeleteLogger ;
 DROP TRIGGER IF EXISTS message_file_OnCreateLogger ;
 DROP TRIGGER IF EXISTS message_file_OnUpdateLogger ;
 DROP TRIGGER IF EXISTS message_file_OnDeleteLogger ;
+### Msg ##
+DROP TRIGGER IF EXISTS msg_OnCreateLogger ;
+DROP TRIGGER IF EXISTS msg_OnUpdateLogger ;
+DROP TRIGGER IF EXISTS msg_OnDeleteLogger ;
 ### Notification ##
 DROP TRIGGER IF EXISTS notification_OnCreateLogger ;
 DROP TRIGGER IF EXISTS notification_OnUpdateLogger ;

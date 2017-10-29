@@ -399,7 +399,7 @@ public class PBFlatTypes {
 	*/
 
 	public class PB_Offline_ChangeMessageId {
-	   public long MessageKey;
+	   public String MessageKey;
 	   public long NewMessageId;
 	}
 	/*
@@ -422,7 +422,7 @@ public class PBFlatTypes {
 	*/
 
 	public class PB_Offline_ChangeMessageFileId {
-	   public long MessageFileKey;
+	   public String MessageFileKey;
 	   public long NewMessageFileId;
 	}
 	/*
@@ -2727,6 +2727,53 @@ public class PBFlatTypes {
 	public class PB_DirectOffline {
 	   public long DirectOfflineId;
 	   public int ToUserId;
+	   public String ChatKey;
+	   public String PBClass;
+	   public byte[] DataPB;
+	   public String DataJson;
+	   public String DataTemp;
+	   public long AtTimeMs;
+	}
+	/*
+	folding
+	PBFlatTypes.PB_DirectOffline t = new PBFlatTypes.PB_DirectOffline();
+    t.setDirectOfflineId();
+    t.setToUserId();
+    t.setChatKey();
+    t.setPBClass();
+    t.setDataPB();
+    t.setDataJson();
+    t.setDataTemp();
+    t.setAtTimeMs();
+	*/
+
+	/*
+	PBFlatTypes.PB_DirectOffline t = new PBFlatTypes.PB_DirectOffline();
+	t.DirectOfflineId = ;
+	t.ToUserId = ;
+	t.ChatKey = ;
+	t.PBClass = ;
+	t.DataPB = ;
+	t.DataJson = ;
+	t.DataTemp = ;
+	t.AtTimeMs = ;
+	*/
+
+	/*
+	PB_DirectOffline t = new PB_DirectOffline();
+	t.DirectOfflineId = m.getDirectOfflineId() ;
+	t.ToUserId = m.getToUserId() ;
+	t.ChatKey = m.getChatKey() ;
+	t.PBClass = m.getPBClass() ;
+	t.DataPB = m.getDataPB() ;
+	t.DataJson = m.getDataJson() ;
+	t.DataTemp = m.getDataTemp() ;
+	t.AtTimeMs = m.getAtTimeMs() ;
+	*/
+
+	public class PB_DirectOfflineDep {
+	   public long DirectOfflineId;
+	   public int ToUserId;
 	   public long MessageId;
 	   public long MessageFileId;
 	   public long OtherId;
@@ -2741,7 +2788,7 @@ public class PBFlatTypes {
 	}
 	/*
 	folding
-	PBFlatTypes.PB_DirectOffline t = new PBFlatTypes.PB_DirectOffline();
+	PBFlatTypes.PB_DirectOfflineDep t = new PBFlatTypes.PB_DirectOfflineDep();
     t.setDirectOfflineId();
     t.setToUserId();
     t.setMessageId();
@@ -2758,7 +2805,7 @@ public class PBFlatTypes {
 	*/
 
 	/*
-	PBFlatTypes.PB_DirectOffline t = new PBFlatTypes.PB_DirectOffline();
+	PBFlatTypes.PB_DirectOfflineDep t = new PBFlatTypes.PB_DirectOfflineDep();
 	t.DirectOfflineId = ;
 	t.ToUserId = ;
 	t.MessageId = ;
@@ -2775,7 +2822,7 @@ public class PBFlatTypes {
 	*/
 
 	/*
-	PB_DirectOffline t = new PB_DirectOffline();
+	PB_DirectOfflineDep t = new PB_DirectOfflineDep();
 	t.DirectOfflineId = m.getDirectOfflineId() ;
 	t.ToUserId = m.getToUserId() ;
 	t.MessageId = m.getMessageId() ;
@@ -3431,6 +3478,33 @@ public class PBFlatTypes {
 	t.BucketId = m.getBucketId() ;
 	t.ServerId = m.getServerId() ;
 	t.CanDel = m.getCanDel() ;
+	*/
+
+	public class PB_Msg {
+	   public String Key;
+	   public String Name;
+	   public int Id;
+	}
+	/*
+	folding
+	PBFlatTypes.PB_Msg t = new PBFlatTypes.PB_Msg();
+    t.setKey();
+    t.setName();
+    t.setId();
+	*/
+
+	/*
+	PBFlatTypes.PB_Msg t = new PBFlatTypes.PB_Msg();
+	t.Key = ;
+	t.Name = ;
+	t.Id = ;
+	*/
+
+	/*
+	PB_Msg t = new PB_Msg();
+	t.Key = m.getKey() ;
+	t.Name = m.getName() ;
+	t.Id = m.getId() ;
 	*/
 
 	public class PB_Notification {

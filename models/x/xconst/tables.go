@@ -13,6 +13,8 @@ const (
 	DirectMessage_TableGo              = "DirectMessage"
 	DirectOffline_Table                = "direct_offline"
 	DirectOffline_TableGo              = "DirectOffline"
+	DirectOfflineDep_Table             = "direct_offline_dep"
+	DirectOfflineDep_TableGo           = "DirectOfflineDep"
 	DirectToMessage_Table              = "direct_to_message"
 	DirectToMessage_TableGo            = "DirectToMessage"
 	DirectUpdate_Table                 = "direct_update"
@@ -41,6 +43,8 @@ const (
 	Media_TableGo                      = "Media"
 	MessageFile_Table                  = "message_file"
 	MessageFile_TableGo                = "MessageFile"
+	Msg_Table                          = "msg"
+	Msg_TableGo                        = "Msg"
 	Notification_Table                 = "notification"
 	Notification_TableGo               = "Notification"
 	NotificationRemoved_Table          = "notification_removed"
@@ -205,6 +209,27 @@ var DirectMessage = struct {
 }
 
 var DirectOffline = struct {
+	DirectOfflineId string
+	ToUserId        string
+	ChatKey         string
+	PBClass         string
+	DataPB          string
+	DataJson        string
+	DataTemp        string
+	AtTimeMs        string
+}{
+
+	DirectOfflineId: "DirectOfflineId",
+	ToUserId:        "ToUserId",
+	ChatKey:         "ChatKey",
+	PBClass:         "PBClass",
+	DataPB:          "DataPB",
+	DataJson:        "DataJson",
+	DataTemp:        "DataTemp",
+	AtTimeMs:        "AtTimeMs",
+}
+
+var DirectOfflineDep = struct {
 	DirectOfflineId string
 	ToUserId        string
 	MessageId       string
@@ -519,6 +544,17 @@ var MessageFile = struct {
 	BucketId:        "BucketId",
 	ServerId:        "ServerId",
 	CanDel:          "CanDel",
+}
+
+var Msg = struct {
+	Key  string
+	Name string
+	Id   string
+}{
+
+	Key:  "Key",
+	Name: "Name",
+	Id:   "Id",
 }
 
 var Notification = struct {
@@ -1174,13 +1210,4 @@ var UserPassword = struct {
 	UserId:      "UserId",
 	Password:    "Password",
 	CreatedTime: "CreatedTime",
-}
-
-var x = struct {
-	Xdasd  int
-	Xdasd5 int
-	Xdasd2 int
-}{
-	Xdasd:  24,
-	Xdasd5: 256,
 }

@@ -142,6 +142,49 @@ func (c _StoreImpl) PreLoadDirectOffline_ByToUserIds(ToUserIds []int) {
 	}
 }
 
+// DirectOfflineDep - PRIMARY
+
+//field//field//field
+
+///// Generated from index 'ToUserId'.
+func (c _StoreImpl) DirectOfflineDep_ByToUserId(ToUserId int) (*DirectOfflineDep, bool) {
+	o, ok := RowCacheIndex.Get("DirectOfflineDep_ToUserId:" + fmt.Sprintf("%v", ToUserId))
+	if ok {
+		if obj, ok := o.(*DirectOfflineDep); ok {
+			return obj, true
+		}
+	}
+
+	row, err := NewDirectOfflineDep_Selector().ToUserId_Eq(ToUserId).GetRow(base.DB)
+	if err == nil {
+		RowCacheIndex.Set("DirectOfflineDep_ToUserId:"+fmt.Sprintf("%v", row.ToUserId), row, 0)
+		return row, true
+	}
+
+	XOLogErr(err)
+	return nil, false
+}
+
+func (c _StoreImpl) PreLoadDirectOfflineDep_ByToUserIds(ToUserIds []int) {
+	not_cached := make([]int, 0, len(ToUserIds))
+
+	for _, id := range ToUserIds {
+		_, ok := RowCacheIndex.Get("DirectOfflineDep_ToUserId:" + fmt.Sprintf("%v", id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		rows, err := NewDirectOfflineDep_Selector().ToUserId_In(not_cached).GetRows(base.DB)
+		if err == nil {
+			for _, row := range rows {
+				RowCacheIndex.Set("DirectOfflineDep_ToUserId:"+fmt.Sprintf("%v", row.ToUserId), row, 0)
+			}
+		}
+	}
+}
+
 // DirectToMessage - PRIMARY
 
 //field//field//field
@@ -384,6 +427,8 @@ func (c _StoreImpl) PreLoadLike_ByPostIds(PostIds []int) {
 // Media - PRIMARY
 
 // MessageFile - PRIMARY
+
+// Msg - PRIMARY
 
 // Notification - PRIMARY
 

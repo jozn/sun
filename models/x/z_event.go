@@ -149,6 +149,30 @@ func OnDirectOffline_LoadMany(rows []*DirectOffline) {
 	}
 }
 
+//DirectOfflineDep Events
+
+func OnDirectOfflineDep_AfterInsert(row *DirectOfflineDep) {
+	RowCache.Set("DirectOfflineDep:"+strconv.Itoa(row.DirectOfflineId), row, time.Hour*0)
+}
+
+func OnDirectOfflineDep_AfterUpdate(row *DirectOfflineDep) {
+	RowCache.Set("DirectOfflineDep:"+strconv.Itoa(row.DirectOfflineId), row, time.Hour*0)
+}
+
+func OnDirectOfflineDep_AfterDelete(row *DirectOfflineDep) {
+	RowCache.Delete("DirectOfflineDep:" + strconv.Itoa(row.DirectOfflineId))
+}
+
+func OnDirectOfflineDep_LoadOne(row *DirectOfflineDep) {
+	RowCache.Set("DirectOfflineDep:"+strconv.Itoa(row.DirectOfflineId), row, time.Hour*0)
+}
+
+func OnDirectOfflineDep_LoadMany(rows []*DirectOfflineDep) {
+	for _, row := range rows {
+		RowCache.Set("DirectOfflineDep:"+strconv.Itoa(row.DirectOfflineId), row, time.Hour*0)
+	}
+}
+
 //DirectToMessage Events
 
 func OnDirectToMessage_AfterInsert(row *DirectToMessage) {
@@ -482,6 +506,30 @@ func OnMessageFile_LoadOne(row *MessageFile) {
 func OnMessageFile_LoadMany(rows []*MessageFile) {
 	for _, row := range rows {
 		RowCache.Set("MessageFile:"+strconv.Itoa(row.MessageFileId), row, time.Hour*0)
+	}
+}
+
+//Msg Events
+
+func OnMsg_AfterInsert(row *Msg) {
+	RowCache.Set("Msg:"+row.Key, row, time.Hour*0)
+}
+
+func OnMsg_AfterUpdate(row *Msg) {
+	RowCache.Set("Msg:"+row.Key, row, time.Hour*0)
+}
+
+func OnMsg_AfterDelete(row *Msg) {
+	RowCache.Delete("Msg:" + row.Key)
+}
+
+func OnMsg_LoadOne(row *Msg) {
+	RowCache.Set("Msg:"+row.Key, row, time.Hour*0)
+}
+
+func OnMsg_LoadMany(rows []*Msg) {
+	for _, row := range rows {
+		RowCache.Set("Msg:"+row.Key, row, time.Hour*0)
 	}
 }
 

@@ -197,6 +197,38 @@ func (c _StoreImpl) PreLoadDirectOfflineByDirectOfflineIds(ids []int) {
 
 // yes 222 int
 
+func (c _StoreImpl) GetDirectOfflineDepByDirectOfflineId(DirectOfflineId int) (*DirectOfflineDep, bool) {
+	o, ok := RowCache.Get("DirectOfflineDep:" + strconv.Itoa(DirectOfflineId))
+	if ok {
+		if obj, ok := o.(*DirectOfflineDep); ok {
+			return obj, true
+		}
+	}
+	obj2, err := DirectOfflineDepByDirectOfflineId(base.DB, DirectOfflineId)
+	if err == nil {
+		return obj2, true
+	}
+	XOLogErr(err)
+	return nil, false
+}
+
+func (c _StoreImpl) PreLoadDirectOfflineDepByDirectOfflineIds(ids []int) {
+	not_cached := make([]int, 0, len(ids))
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("DirectOfflineDep:" + strconv.Itoa(id))
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewDirectOfflineDep_Selector().DirectOfflineId_In(not_cached).GetRows(base.DB)
+	}
+}
+
+// yes 222 int
+
 func (c _StoreImpl) GetDirectToMessageById(Id int) (*DirectToMessage, bool) {
 	o, ok := RowCache.Get("DirectToMessage:" + strconv.Itoa(Id))
 	if ok {
@@ -644,6 +676,38 @@ func (c _StoreImpl) PreLoadMessageFileByMessageFileIds(ids []int) {
 }
 
 // yes 222 int
+
+func (c _StoreImpl) GetMsgByKey(Key string) (*Msg, bool) {
+	o, ok := RowCache.Get("Msg:" + Key)
+	if ok {
+		if obj, ok := o.(*Msg); ok {
+			return obj, true
+		}
+	}
+	obj2, err := MsgByKey(base.DB, Key)
+	if err == nil {
+		return obj2, true
+	}
+	XOLogErr(err)
+	return nil, false
+}
+
+func (c _StoreImpl) PreLoadMsgByKeys(ids []string) {
+	not_cached := make([]string, 0, len(ids))
+
+	for _, id := range ids {
+		_, ok := RowCache.Get("Msg:" + id)
+		if !ok {
+			not_cached = append(not_cached, id)
+		}
+	}
+
+	if len(not_cached) > 0 {
+		NewMsg_Selector().Key_In(not_cached).GetRows(base.DB)
+	}
+}
+
+// yes 222 string
 
 func (c _StoreImpl) GetNotificationById(Id int) (*Notification, bool) {
 	o, ok := RowCache.Get("Notification:" + strconv.Itoa(Id))

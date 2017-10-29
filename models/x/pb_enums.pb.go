@@ -133,6 +133,7 @@ It has these top-level messages:
 	PB_Comment
 	PB_DirectMessage
 	PB_DirectOffline
+	PB_DirectOfflineDep
 	PB_DirectToMessage
 	PB_DirectUpdate
 	PB_FollowingList
@@ -147,6 +148,7 @@ It has these top-level messages:
 	PB_LogChange
 	PB_Media
 	PB_MessageFile
+	PB_Msg
 	PB_Notification
 	PB_NotificationRemoved
 	PB_Offline
