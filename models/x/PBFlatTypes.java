@@ -350,6 +350,7 @@ public class PBFlatTypes {
 
 	public class PB_Offline_MessagesSeenByPeer {
 	   public String MessageKeys;
+	   public long MessageIds;
 	   public String RoomKey;
 	   public long AtTime;
 	}
@@ -357,6 +358,7 @@ public class PBFlatTypes {
 	folding
 	PBFlatTypes.PB_Offline_MessagesSeenByPeer t = new PBFlatTypes.PB_Offline_MessagesSeenByPeer();
     t.setMessageKeys();
+    t.setMessageIds();
     t.setRoomKey();
     t.setAtTime();
 	*/
@@ -364,6 +366,7 @@ public class PBFlatTypes {
 	/*
 	PBFlatTypes.PB_Offline_MessagesSeenByPeer t = new PBFlatTypes.PB_Offline_MessagesSeenByPeer();
 	t.MessageKeys = ;
+	t.MessageIds = ;
 	t.RoomKey = ;
 	t.AtTime = ;
 	*/
@@ -371,6 +374,7 @@ public class PBFlatTypes {
 	/*
 	PB_Offline_MessagesSeenByPeer t = new PB_Offline_MessagesSeenByPeer();
 	t.MessageKeys = m.getMessageKeys() ;
+	t.MessageIds = m.getMessageIds() ;
 	t.RoomKey = m.getRoomKey() ;
 	t.AtTime = m.getAtTime() ;
 	*/

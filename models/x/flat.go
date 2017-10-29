@@ -431,6 +431,7 @@ var PB_Offline_MessagesDeliveredToUser__FOlD = &PB_Offline_MessagesDeliveredToUs
 
 type PB_Offline_MessagesSeenByPeer_Flat struct {
 	MessageKeys []string
+	MessageIds  []int
 	RoomKey     string
 	AtTime      int
 }
@@ -439,6 +440,7 @@ type PB_Offline_MessagesSeenByPeer_Flat struct {
 func (m *PB_Offline_MessagesSeenByPeer) ToFlat() *PB_Offline_MessagesSeenByPeer_Flat {
 	r := &PB_Offline_MessagesSeenByPeer_Flat{
 		MessageKeys: m.MessageKeys,
+		MessageIds:  helper.SliceInt64ToInt(m.MessageIds),
 		RoomKey:     m.RoomKey,
 		AtTime:      int(m.AtTime),
 	}
@@ -449,6 +451,7 @@ func (m *PB_Offline_MessagesSeenByPeer) ToFlat() *PB_Offline_MessagesSeenByPeer_
 func (m *PB_Offline_MessagesSeenByPeer_Flat) ToPB() *PB_Offline_MessagesSeenByPeer {
 	r := &PB_Offline_MessagesSeenByPeer{
 		MessageKeys: m.MessageKeys,
+		MessageIds:  helper.SliceIntToInt64(m.MessageIds),
 		RoomKey:     m.RoomKey,
 		AtTime:      int64(m.AtTime),
 	}
@@ -6318,6 +6321,7 @@ return r
 func(m *PB_Offline_MessagesSeenByPeer)ToFlat() *PB_Offline_MessagesSeenByPeer_Flat {
 r := &PB_Offline_MessagesSeenByPeer_Flat{
     MessageKeys:  m.MessageKeys ,
+    MessageIds:  helper.SliceInt64ToInt(m.MessageIds) ,
     RoomKey:  m.RoomKey ,
     AtTime:  int(m.AtTime) ,
 }
@@ -8072,6 +8076,7 @@ return r
 func(m *PB_Offline_MessagesSeenByPeer_Flat)ToPB() *PB_Offline_MessagesSeenByPeer {
 r := &PB_Offline_MessagesSeenByPeer{
     MessageKeys:  m.MessageKeys ,
+    MessageIds:  helper.SliceIntToInt64(m.MessageIds) ,
     RoomKey:  m.RoomKey ,
     AtTime:  int64(m.AtTime) ,
 }
@@ -9797,6 +9802,7 @@ var PB_Offline_MessagesDeliveredToUser__FOlD = &PB_Offline_MessagesDeliveredToUs
 
 var PB_Offline_MessagesSeenByPeer__FOlD = &PB_Offline_MessagesSeenByPeer{
         MessageKeys:  "" ,
+        MessageIds:  0 ,
         RoomKey:  "" ,
         AtTime:  0 ,
 }

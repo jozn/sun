@@ -185,7 +185,37 @@ func (rpcChat) SetRoomActionDoing(param *x.PB_ChatParam_SetRoomActionDoing, user
 }
 
 func (rpcChat) SetMessagesRangeAsSeen(param *x.PB_ChatParam_SetChatMessagesRangeAsSeen, userParam x.RPC_UserParam) (res x.PB_ChatResponse_SetChatMessagesRangeAsSeen, err error) {
-	panic("implement me")
+	msgIds, err := x.NewDirectToMessage_Selector().Select_MessageId().ChatKey_Eq(param.ChatKey).
+		MessageId_GE(int(param.BottomMessageId)).MessageId_LE(int(param.TopMessageId)).
+		GetIntSlice(base.DB)
+	if err != nil && len(msgIds) > 0 {
+		x.NewDirectMessage_Updater().PeerSeenTime(int(param.SeenTimeMs / 1000)).
+			MessageId_In(msgIds).PeerSeenTime_Eq(0).Update(base.DB)
+
+		//MEASSAGE REACHED SERVER OFFLINE
+		roomKey, _ := Keys_ChatKeyToRoomKey(param.ChatKey)
+		pbMsgSeen := &x.PB_Offline_MessagesSeenByPeer{
+			MessageIds: helper.SliceIntToInt64(msgIds),
+			RoomKey:    roomKey,
+			AtTime:     int64(helper.TimeNow()),
+		}
+		pbByte, _ := proto.Marshal(pbMsgSeen)
+		peerId := RoomKeyToOtherUser(roomKey, userParam.GetUserId())
+		if peerId > 0 {
+			dOffMsgReached := x.DirectOffline{
+				DirectOfflineId: helper.NextRowsSeqId(),
+				ToUserId:        peerId,
+				ChatKey:         UsersToChatKey(userParam.GetUserId(), peerId),
+				PBClass:         xconst.PB_Offline_MessagesSeenByPeer,
+				DataPB:          pbByte,
+				DataJson:        helper.ToJson(pbMsgSeen),
+				DataTemp:        "",
+				AtTimeMs:        helper.TimeNowMs(),
+			}
+			LiveOfflineFramer.HereDirectDelayer <- dOffMsgReached
+		}
+	}
+	return
 }
 
 func (rpcChat) DeleteChatHistory(param *x.PB_ChatParam_DeleteChatHistory, userParam x.RPC_UserParam) (res x.PB_ChatResponse_DeleteChatHistory, err error) {

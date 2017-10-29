@@ -31,6 +31,7 @@ message PB_Offline_MessagesDeliveredToUser{
 
 message PB_Offline_MessagesSeenByPeer{
     repeated string MessageKeys =1;
+    repeated int64 MessageIds =12;
     string RoomKey =2;
     int64 AtTime =3;
 }
