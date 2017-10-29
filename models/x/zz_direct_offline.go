@@ -16,6 +16,8 @@ type DirectOffline__ struct {
 	DirectOfflineId int    `json:"DirectOfflineId"` // DirectOfflineId -
 	ToUserId        int    `json:"ToUserId"`        // ToUserId -
 	ChatKey         string `json:"ChatKey"`         // ChatKey -
+	MessageId       int    `json:"MessageId"`       // MessageId -
+	MessageFileId   int    `json:"MessageFileId"`   // MessageFileId -
 	PBClass         string `json:"PBClass"`         // PBClass -
 	DataPB          []byte `json:"DataPB"`          // DataPB -
 	DataJson        string `json:"DataJson"`        // DataJson -
@@ -46,14 +48,14 @@ func (do *DirectOffline) Insert(db XODB) error {
 
 	// sql insert query, primary key must be provided
 	const sqlstr = `INSERT INTO ms.direct_offline (` +
-		`DirectOfflineId, ToUserId, ChatKey, PBClass, DataPB, DataJson, DataTemp, AtTimeMs` +
+		`DirectOfflineId, ToUserId, ChatKey, MessageId, MessageFileId, PBClass, DataPB, DataJson, DataTemp, AtTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, do.DirectOfflineId, do.ToUserId, do.ChatKey, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs)
-	_, err = db.Exec(sqlstr, do.DirectOfflineId, do.ToUserId, do.ChatKey, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs)
+	XOLog(sqlstr, do.DirectOfflineId, do.ToUserId, do.ChatKey, do.MessageId, do.MessageFileId, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs)
+	_, err = db.Exec(sqlstr, do.DirectOfflineId, do.ToUserId, do.ChatKey, do.MessageId, do.MessageFileId, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs)
 	if err != nil {
 		return err
 	}
@@ -73,14 +75,14 @@ func (do *DirectOffline) Replace(db XODB) error {
 	// sql query
 
 	const sqlstr = `REPLACE INTO ms.direct_offline (` +
-		`DirectOfflineId, ToUserId, ChatKey, PBClass, DataPB, DataJson, DataTemp, AtTimeMs` +
+		`DirectOfflineId, ToUserId, ChatKey, MessageId, MessageFileId, PBClass, DataPB, DataJson, DataTemp, AtTimeMs` +
 		`) VALUES (` +
-		`?, ?, ?, ?, ?, ?, ?, ?` +
+		`?, ?, ?, ?, ?, ?, ?, ?, ?, ?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, do.DirectOfflineId, do.ToUserId, do.ChatKey, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs)
-	_, err = db.Exec(sqlstr, do.DirectOfflineId, do.ToUserId, do.ChatKey, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs)
+	XOLog(sqlstr, do.DirectOfflineId, do.ToUserId, do.ChatKey, do.MessageId, do.MessageFileId, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs)
+	_, err = db.Exec(sqlstr, do.DirectOfflineId, do.ToUserId, do.ChatKey, do.MessageId, do.MessageFileId, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs)
 	if err != nil {
 		XOLogErr(err)
 		return err
@@ -109,12 +111,12 @@ func (do *DirectOffline) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE ms.direct_offline SET ` +
-		`ToUserId = ?, ChatKey = ?, PBClass = ?, DataPB = ?, DataJson = ?, DataTemp = ?, AtTimeMs = ?` +
+		`ToUserId = ?, ChatKey = ?, MessageId = ?, MessageFileId = ?, PBClass = ?, DataPB = ?, DataJson = ?, DataTemp = ?, AtTimeMs = ?` +
 		` WHERE DirectOfflineId = ?`
 
 	// run query
-	XOLog(sqlstr, do.ToUserId, do.ChatKey, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs, do.DirectOfflineId)
-	_, err = db.Exec(sqlstr, do.ToUserId, do.ChatKey, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs, do.DirectOfflineId)
+	XOLog(sqlstr, do.ToUserId, do.ChatKey, do.MessageId, do.MessageFileId, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs, do.DirectOfflineId)
+	_, err = db.Exec(sqlstr, do.ToUserId, do.ChatKey, do.MessageId, do.MessageFileId, do.PBClass, do.DataPB, do.DataJson, do.DataTemp, do.AtTimeMs, do.DirectOfflineId)
 
 	XOLogErr(err)
 	OnDirectOffline_AfterUpdate(do)
@@ -420,6 +422,216 @@ func (d *__DirectOffline_Deleter) ToUserId_GE(val int) *__DirectOffline_Deleter 
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectOffline_Deleter) MessageId_In(ins []int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Deleter) MessageId_Ins(ins ...int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Deleter) MessageId_NotIn(ins []int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectOffline_Deleter) MessageId_Eq(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Deleter) MessageId_NotEq(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Deleter) MessageId_LT(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Deleter) MessageId_LE(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Deleter) MessageId_GT(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Deleter) MessageId_GE(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectOffline_Deleter) MessageFileId_In(ins []int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Deleter) MessageFileId_Ins(ins ...int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Deleter) MessageFileId_NotIn(ins []int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectOffline_Deleter) MessageFileId_Eq(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Deleter) MessageFileId_NotEq(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Deleter) MessageFileId_LT(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Deleter) MessageFileId_LE(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Deleter) MessageFileId_GT(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Deleter) MessageFileId_GE(val int) *__DirectOffline_Deleter {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -746,6 +958,216 @@ func (d *__DirectOffline_Updater) ToUserId_GE(val int) *__DirectOffline_Updater 
 	return d
 }
 
+func (u *__DirectOffline_Updater) MessageId_In(ins []int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Updater) MessageId_Ins(ins ...int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Updater) MessageId_NotIn(ins []int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectOffline_Updater) MessageId_Eq(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Updater) MessageId_NotEq(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Updater) MessageId_LT(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Updater) MessageId_LE(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Updater) MessageId_GT(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Updater) MessageId_GE(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectOffline_Updater) MessageFileId_In(ins []int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Updater) MessageFileId_Ins(ins ...int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Updater) MessageFileId_NotIn(ins []int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectOffline_Updater) MessageFileId_Eq(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Updater) MessageFileId_NotEq(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Updater) MessageFileId_LT(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Updater) MessageFileId_LE(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Updater) MessageFileId_GT(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Updater) MessageFileId_GE(val int) *__DirectOffline_Updater {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
 func (u *__DirectOffline_Updater) AtTimeMs_In(ins []int) *__DirectOffline_Updater {
 	w := whereClause{}
 	var insWhere []interface{}
@@ -1062,6 +1484,216 @@ func (d *__DirectOffline_Selector) ToUserId_GE(val int) *__DirectOffline_Selecto
 	insWhere = append(insWhere, val)
 	w.args = insWhere
 	w.condition = " ToUserId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectOffline_Selector) MessageId_In(ins []int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Selector) MessageId_Ins(ins ...int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Selector) MessageId_NotIn(ins []int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectOffline_Selector) MessageId_Eq(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Selector) MessageId_NotEq(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Selector) MessageId_LT(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Selector) MessageId_LE(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Selector) MessageId_GT(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Selector) MessageId_GE(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageId >= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (u *__DirectOffline_Selector) MessageFileId_In(ins []int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Selector) MessageFileId_Ins(ins ...int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (u *__DirectOffline_Selector) MessageFileId_NotIn(ins []int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	for _, i := range ins {
+		insWhere = append(insWhere, i)
+	}
+	w.args = insWhere
+	w.condition = " MessageFileId NOT IN(" + helper.DbQuestionForSqlIn(len(ins)) + ") "
+	u.wheres = append(u.wheres, w)
+
+	return u
+}
+
+func (d *__DirectOffline_Selector) MessageFileId_Eq(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId = ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Selector) MessageFileId_NotEq(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId != ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Selector) MessageFileId_LT(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId < ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Selector) MessageFileId_LE(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId <= ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Selector) MessageFileId_GT(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId > ? "
+	d.wheres = append(d.wheres, w)
+
+	return d
+}
+
+func (d *__DirectOffline_Selector) MessageFileId_GE(val int) *__DirectOffline_Selector {
+	w := whereClause{}
+	var insWhere []interface{}
+	insWhere = append(insWhere, val)
+	w.args = insWhere
+	w.condition = " MessageFileId >= ? "
 	d.wheres = append(d.wheres, w)
 
 	return d
@@ -1956,6 +2588,48 @@ func (u *__DirectOffline_Updater) ChatKey(newVal string) *__DirectOffline_Update
 
 //ints
 
+func (u *__DirectOffline_Updater) MessageId(newVal int) *__DirectOffline_Updater {
+	u.updates[" MessageId = ? "] = newVal
+	return u
+}
+
+func (u *__DirectOffline_Updater) MessageId_Increment(count int) *__DirectOffline_Updater {
+	if count > 0 {
+		u.updates[" MessageId = MessageId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" MessageId = MessageId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
+func (u *__DirectOffline_Updater) MessageFileId(newVal int) *__DirectOffline_Updater {
+	u.updates[" MessageFileId = ? "] = newVal
+	return u
+}
+
+func (u *__DirectOffline_Updater) MessageFileId_Increment(count int) *__DirectOffline_Updater {
+	if count > 0 {
+		u.updates[" MessageFileId = MessageFileId+? "] = count
+	}
+
+	if count < 0 {
+		u.updates[" MessageFileId = MessageFileId-? "] = -(count) //make it positive
+	}
+
+	return u
+}
+
+//string
+
+//ints
+
 //string
 func (u *__DirectOffline_Updater) PBClass(newVal string) *__DirectOffline_Updater {
 	u.updates[" PBClass = ? "] = newVal
@@ -2050,6 +2724,36 @@ func (u *__DirectOffline_Selector) OrderBy_ChatKey_Asc() *__DirectOffline_Select
 
 func (u *__DirectOffline_Selector) Select_ChatKey() *__DirectOffline_Selector {
 	u.selectCol = "ChatKey"
+	return u
+}
+
+func (u *__DirectOffline_Selector) OrderBy_MessageId_Desc() *__DirectOffline_Selector {
+	u.orderBy = " ORDER BY MessageId DESC "
+	return u
+}
+
+func (u *__DirectOffline_Selector) OrderBy_MessageId_Asc() *__DirectOffline_Selector {
+	u.orderBy = " ORDER BY MessageId ASC "
+	return u
+}
+
+func (u *__DirectOffline_Selector) Select_MessageId() *__DirectOffline_Selector {
+	u.selectCol = "MessageId"
+	return u
+}
+
+func (u *__DirectOffline_Selector) OrderBy_MessageFileId_Desc() *__DirectOffline_Selector {
+	u.orderBy = " ORDER BY MessageFileId DESC "
+	return u
+}
+
+func (u *__DirectOffline_Selector) OrderBy_MessageFileId_Asc() *__DirectOffline_Selector {
+	u.orderBy = " ORDER BY MessageFileId ASC "
+	return u
+}
+
+func (u *__DirectOffline_Selector) Select_MessageFileId() *__DirectOffline_Selector {
+	u.selectCol = "MessageFileId"
 	return u
 }
 
@@ -2400,13 +3104,13 @@ func MassInsert_DirectOffline(rows []DirectOffline, db XODB) error {
 	}
 	var err error
 	ln := len(rows)
-	//s:= "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
-	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	//s:= "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "INSERT INTO ms.direct_offline (" +
-		"DirectOfflineId, ToUserId, ChatKey, PBClass, DataPB, DataJson, DataTemp, AtTimeMs" +
+		"DirectOfflineId, ToUserId, ChatKey, MessageId, MessageFileId, PBClass, DataPB, DataJson, DataTemp, AtTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2417,6 +3121,8 @@ func MassInsert_DirectOffline(rows []DirectOffline, db XODB) error {
 		vals = append(vals, row.DirectOfflineId)
 		vals = append(vals, row.ToUserId)
 		vals = append(vals, row.ChatKey)
+		vals = append(vals, row.MessageId)
+		vals = append(vals, row.MessageFileId)
 		vals = append(vals, row.PBClass)
 		vals = append(vals, row.DataPB)
 		vals = append(vals, row.DataJson)
@@ -2439,12 +3145,12 @@ func MassInsert_DirectOffline(rows []DirectOffline, db XODB) error {
 func MassReplace_DirectOffline(rows []DirectOffline, db XODB) error {
 	var err error
 	ln := len(rows)
-	s := "(?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
+	s := "(?,?,?,?,?,?,?,?,?,?)," //`(?, ?, ?, ?),`
 	insVals_ := strings.Repeat(s, ln)
 	insVals := insVals_[0 : len(insVals_)-1]
 	// sql query
 	sqlstr := "REPLACE INTO ms.direct_offline (" +
-		"DirectOfflineId, ToUserId, ChatKey, PBClass, DataPB, DataJson, DataTemp, AtTimeMs" +
+		"DirectOfflineId, ToUserId, ChatKey, MessageId, MessageFileId, PBClass, DataPB, DataJson, DataTemp, AtTimeMs" +
 		") VALUES " + insVals
 
 	// run query
@@ -2455,6 +3161,8 @@ func MassReplace_DirectOffline(rows []DirectOffline, db XODB) error {
 		vals = append(vals, row.DirectOfflineId)
 		vals = append(vals, row.ToUserId)
 		vals = append(vals, row.ChatKey)
+		vals = append(vals, row.MessageId)
+		vals = append(vals, row.MessageFileId)
 		vals = append(vals, row.PBClass)
 		vals = append(vals, row.DataPB)
 		vals = append(vals, row.DataJson)
@@ -2475,6 +3183,10 @@ func MassReplace_DirectOffline(rows []DirectOffline, db XODB) error {
 }
 
 //////////////////// Play ///////////////////////////////
+
+//
+
+//
 
 //
 

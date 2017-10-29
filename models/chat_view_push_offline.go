@@ -2,7 +2,7 @@ package models
 
 import (
 	"fmt"
-	"github.com/jozn/protobuf/proto"
+	"github.com/golang/protobuf/proto"
 	"ms/sun/config"
 	"ms/sun/models/x"
 	"ms/sun/models/x/xconst"
@@ -17,12 +17,16 @@ func ViewPush_DirectOfflinesList_To_GetDirectUpdatesView(meId int, logs []*x.Dir
 	msgFileIdsToLoad := []int{}
 	for _, log := range logs { //each user
 		if log.PBClass == xconst.PB_Offline_NewDirectMessage {
-			usersToLoad[log.PeerUserId] = true
+			//usersToLoad[log.PeerUserId] = true
 			chatKeysToLoad[log.ChatKey] = true
 			msgIdsToLoad = append(msgIdsToLoad, log.MessageId)
 			if log.MessageFileId > 0 {
 				msgFileIdsToLoad = append(msgFileIdsToLoad, log.MessageFileId)
 			}
+			/*pb := &x.PB_Offline_NewDirectMessage{}
+						err := proto.Unmarshal(log.DataPB,pb)
+						if err == nil {
+			            }*/
 		}
 	}
 

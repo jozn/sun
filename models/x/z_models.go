@@ -136,6 +136,8 @@ type DirectOffline struct {
 	DirectOfflineId int
 	ToUserId        int
 	ChatKey         string
+	MessageId       int
+	MessageFileId   int
 	PBClass         string
 	DataPB          []byte
 	DataJson        string
@@ -150,6 +152,8 @@ type DirectOffline struct {
 	DirectOfflineId: 0,
 	ToUserId: 0,
 	ChatKey: "",
+	MessageId: 0,
+	MessageFileId: 0,
 	PBClass: "",
 	DataPB: []byte{},
 	DataJson: "",

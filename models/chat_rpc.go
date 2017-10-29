@@ -43,10 +43,10 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 		DeliviryStatusEnumId: int(x.RoomMessageDeliviryStatusEnum_SENT),
 	}
 
-	var igPb *x.MessageFile
+	var msgFile *x.MessageFile
 	if iMsg.MessageFileView != nil {
 		f := iMsg.MessageFileView
-		igPb = &x.MessageFile{
+		msgFile = &x.MessageFile{
 			MessageFileId:   (helper.NextRowsSeqId()),
 			MessageFileKey:  f.MessageFileKey, //,KeyNewMessageKey(p.GetUserId()), //todo must set at client
 			OriginalUserId:  userParam.GetUserId(),
@@ -72,7 +72,7 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 			dirName := fmt.Sprintf("./upload/message_files/")
 			os.MkdirAll(dirName, 0666)
 
-			fileName := fmt.Sprintf("%s%d%s", dirName, igPb.MessageFileId, igPb.Extension)
+			fileName := fmt.Sprintf("%s%d%s", dirName, msgFile.MessageFileId, msgFile.Extension)
 			newFile, err1 := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
 			if err1 != nil {
 				println("add message file : creating file failed")
@@ -82,9 +82,9 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 			newFile.Write(param.Blob)
 		}
 
-		err := igPb.Save(base.DB)
+		err := msgFile.Save(base.DB)
 		if err == nil {
-			msg.MessageFileId = igPb.MessageFileId
+			msg.MessageFileId = msgFile.MessageFileId
 			msg.MessageTypeEnumId = int(x.RoomMessageTypeEnum_IMAGE_TEXT)
 		}
 		//helper.NoErr(err)
@@ -97,7 +97,7 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 	for _, us := range [][]int{{peerId, userParam.GetUserId()}, {userParam.GetUserId(), peerId}} {
 		pbNewMsg := &x.PB_Offline_NewDirectMessage{
 			ChatKey:       UsersToChatKey(us[0], us[1]),
-			FromMessageId: iMsg.MessageId,
+			FromMessageId: int64(msg.MessageId),
 			AtTime:        int64(helper.TimeNowMs()),
 		}
 		pbByte, _ := proto.Marshal(pbNewMsg)
@@ -106,6 +106,7 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 			DirectOfflineId: helper.NextRowsSeqId(),
 			ToUserId:        peerId,
 			ChatKey:         UsersToChatKey(us[0], us[1]),
+			MessageId:       msg.MessageId,
 			PBClass:         xconst.PB_Offline_NewDirectMessage,
 			DataPB:          pbByte,
 			DataJson:        helper.ToJson(pbNewMsg),
@@ -118,7 +119,7 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 	//PUSH CHANGE MESSAGE ID
 	pbChangeMsgId := &x.PB_Offline_ChangeMessageId{
 		MessageKey:   iMsg.MessageKey,
-		NewMessageId: iMsg.MessageId,
+		NewMessageId: int64(msg.MessageId),
 	}
 	pbByte, _ := proto.Marshal(pbChangeMsgId)
 
@@ -136,10 +137,10 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 
 	var pbChangeMsgFileId *x.PB_Offline_ChangeMessageFileId
 	//PUSH CHANGE MESSAGE File ID
-	if iMsg.MessageFileView != nil {
+	if msgFile != nil {
 		pbChangeMsgFileId = &x.PB_Offline_ChangeMessageFileId{
 			MessageFileKey:   iMsg.MessageFileView.MessageFileKey,
-			NewMessageFileId: iMsg.MessageFileView.MessageFileId,
+			NewMessageFileId: int64(msgFile.MessageFileId),
 		}
 		pbByte, _ := proto.Marshal(pbChangeMsgFileId)
 
@@ -238,7 +239,7 @@ func (rpcChat) SetMessagesAsReceived(param *x.PB_ChatParam_SetMessagesAsReceived
 			MessageId_In(helper.SliceInt64ToInt(param.MessageIds)).PeerReceivedTime(0).Update(base.DB)
 
 		if cnt > 0 {
-            roomKey, _ := Keys_ChatKeyToRoomKey(param.ChatRoom)
+			roomKey, _ := Keys_ChatKeyToRoomKey(param.ChatRoom)
 			//MEASSAGE REACHED SERVER OFFLINE
 			pbMsgRecivied := &x.PB_Offline_MessagesDeliveredToUser{
 				MessageIds: param.MessageIds,
@@ -305,33 +306,3 @@ func (rpcChat) GetFreshAllDirectMessagesList(param *x.PB_ChatParam_GetFreshAllDi
 
 	return
 }
-
-/*
-func (rpcChat) GetChatList(i *x.PB_ChatParam_GetChatList, p x.RPC_UserParam) (*x.PB_ChatResponse_GetChatList, error) {
-    chats, err := Chat_GetChatListForUser(p.GetUserId())
-    return &x.PB_ChatResponse_GetChatList{
-        Chats: chats,
-    }, err
-}
-
-func (rpcChat) GetChatHistoryToOlder(i *x.PB_ChatParam_GetChatHistoryToOlder, p x.RPC_UserParam) (*x.PB_ChatResponse_GetChatHistoryToOlder, error) {
-    var res []*x.PB_MessageView
-    roomKey,_ := Keys_ChatKeyToRoomKey(i.ChatKey)
-    rows, err := x.NewDirectMessage_Selector().RoomKey_Eq(roomKey).OrderBy_MessageId_Desc().GetRows(base.DB)
-    if err != nil {
-        return
-    }
-
-    for _, r := range rows {
-        chat := PBConv_DirectMessage_to_PB_MessageView(r, "")
-        res = append(res, chat)
-    }
-
-}
-
-func (rpcChat) GetFreshAllDirectMessagesList(i *x.PB_ChatParam_GetFreshAllDirectMessagesList, p x.RPC_UserParam) (*x.PB_ChatResponse_GetFreshAllDirectMessagesList, error) {
-    panic("implement me")
-}
-
-
-*/

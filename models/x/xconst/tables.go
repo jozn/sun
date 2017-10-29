@@ -212,6 +212,8 @@ var DirectOffline = struct {
 	DirectOfflineId string
 	ToUserId        string
 	ChatKey         string
+	MessageId       string
+	MessageFileId   string
 	PBClass         string
 	DataPB          string
 	DataJson        string
@@ -222,6 +224,8 @@ var DirectOffline = struct {
 	DirectOfflineId: "DirectOfflineId",
 	ToUserId:        "ToUserId",
 	ChatKey:         "ChatKey",
+	MessageId:       "MessageId",
+	MessageFileId:   "MessageFileId",
 	PBClass:         "PBClass",
 	DataPB:          "DataPB",
 	DataJson:        "DataJson",

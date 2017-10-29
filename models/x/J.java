@@ -63,6 +63,8 @@ public class J {
 		public int DirectOfflineId;
 		public int ToUserId;
 		public String ChatKey;
+		public int MessageId;
+		public int MessageFileId;
 		public String PBClass;
 		public UNKNOWN DataPB;
 		public String DataJson;

@@ -64,11 +64,13 @@ message PB_DirectOffline {
     int64 DirectOfflineId = 1;
     int32 ToUserId = 3;
     string ChatKey = 5;
-    string PBClass = 7;
-    bytes DataPB = 9;
-    string DataJson = 11;
-    string DataTemp = 13;
-    int64 AtTimeMs = 15;
+    int64 MessageId = 7;
+    int64 MessageFileId = 9;
+    string PBClass = 11;
+    bytes DataPB = 13;
+    string DataJson = 15;
+    string DataTemp = 17;
+    int64 AtTimeMs = 19;
 }
 message PB_DirectOfflineDep {
     int64 DirectOfflineId = 1;
