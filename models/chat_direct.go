@@ -2,12 +2,10 @@ package models
 
 import (
 	"errors"
-	"github.com/jozn/protobuf/proto"
 	"ms/sun/base"
 	"ms/sun/config"
 	"ms/sun/helper"
 	"ms/sun/models/x"
-	"ms/sun/models/x/xconst"
 )
 
 type _chatDirect struct {
@@ -123,104 +121,5 @@ func (s *_chatDirect) AddMessage(msg *x.DirectMessage) {
 		return
 	}
 
-	//=== new direct to peer offline
-	pbNewMsg := &x.PB_Offline_NewDirectMessage{
-		ChatKey:       s.MeChat.ChatKey,
-		FromMessageId: int64(msg.MessageId),
-		AtTime:        int64(helper.TimeNow()),
-	}
-
-	dlNew := x.DirectOffline{
-		DirectOfflineId: helper.NextRowsSeqId(),
-		ToUserId:        s.PeerChat.UserId,
-		MessageId:       msg.MessageId,
-		MessageFileId:   msg.MessageFileId,
-		ChatKey:         s.PeerChatKey, //UsersToChatKey(s.MeUserId, s.PeerUserId),
-		PeerUserId:      s.MeChat.UserId,
-		RoomLogTypeId:   int(Push_NEW_DIRECT_MESSAGE), //x.RoomLogTypeEnum_NEW_DIRECT_MESSAGE),
-		OtherId:         0,
-		AtTimeMs:        helper.TimeNowMs(),
-		PBClass:         xconst.PB_Offline_NewDirectMessage,
-	}
-	dlNew.DataPB, _ = proto.Marshal(pbNewMsg)
-	dlNew.DataJson = helper.ToJson(pbNewMsg)
-
-	//=== recived msg to peer offline
-	dlRec := x.DirectOffline{
-		DirectOfflineId: helper.NextRowsSeqId(),
-		ToUserId:        s.MeChat.UserId,
-		MessageId:       msg.MessageId,
-		MessageFileId:   0,
-		ChatKey:         s.MeChatKey, //UsersToChatKey(s.MeUserId, s.PeerUserId),
-		PeerUserId:      s.PeerChat.UserId,
-		RoomLogTypeId:   int(Push_MESSAGE_RECIVED_TO_SERVER), //int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
-		AtTimeMs:        helper.TimeNowMs(),
-		PBClass:         xconst.PB_Offline_MessagesReachedServer,
-	}
-	pbRecOff := &x.PB_Offline_MessagesReachedServer{
-		MessageKeys: []string{msg.MessageKey},
-		AtTime:      int64(helper.TimeNow()),
-	}
-
-	dlRec.DataPB, _ = proto.Marshal(pbRecOff)
-	dlRec.DataJson = helper.ToJson(pbRecOff)
-
-	LiveOfflineFramer.HereDirectDelayer <- dlNew
-	LiveOfflineFramer.HereDirectDelayer <- dlRec
-}
-
-func (s *_chatDirect) DeleteMessageFromMe() {
-
-}
-
-func (s *_chatDirect) EditMessageFromMe() {
-
-}
-
-//todo: make this more performant with MsgIds passing
-func (s *_chatDirect) SetMessagesAsSeen(fromSeq, toSeq, time int) {
-	sel := x.NewDirectToMessage_Selector().Select_MessageId().
-		ChatKey_Eq(s.MeChatKey)
-	/*if fromSeq > 0 {
-		sel.Seq_GE(fromSeq)
-	}
-	if toSeq > 0 {
-		sel.Seq_GE(toSeq)
-	}*/
-
-	msgIds, err := sel.OrderBy_Id_Desc().GetIntSlice(base.DB)
-	if err != nil {
-		return
-	}
-
-	x.NewDirectMessage_Updater().
-		MessageId_In(msgIds).
-		DeliviryStatusEnumId(int(x.RoomMessageDeliviryStatusEnum_SEEN2)).
-		Update(base.DB)
-
-	//s.MeChat.LastSeqSeen = toSeq
-
-	/*dlRec := x.DirectUpdate{
-	      Id:            helper.NextRowsSeqId(),
-	      ToUserId:      s.MeChat.UserId,
-	      MessageId:     msg.MessageId,
-	      ChatId:        s.MeChat.ChatId,
-	      PeerUserId:    s.PeerChat.UserId,
-	      RoomLogTypeId: int(x.RoomLogTypeEnum_MESSAGE_RECIVED_TO_SERVER),
-	      FromSeq:       -1,
-	      ToSeq:         -1,
-	      ExtraPB:       []byte{},
-	      ExtraJson:     "",
-	      AtTimeMs:      helper.TimeNowMs(),
-	  }
-
-	  LiveUpdateFramer.HereDirectDelayer_DEP <- UpdateDelayer{directUpdate: dlNew}*/
-}
-
-func (s *_chatDirect) SetMessagesStatus() {
-
-}
-
-func (s *_chatDirect) DeleteMyHistory() {
 
 }

@@ -91,6 +91,7 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 	}
 
 	dm := NewDirectMessagingByUsers(userParam.GetUserId(), peerId)
+    dm.AddMessage(msg)
 
 	//PUSH NEW MESSAGE
 	//sent to both me (for mutliple device and other peer new msg)
@@ -175,8 +176,6 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 		AtTimeMs:        helper.TimeNowMs(),
 	}
 	LiveOfflineFramer.HereDirectDelayer <- dOffMsgReached
-
-	dm.AddMessage(msg)
 
 	return res, nil
 }
