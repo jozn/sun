@@ -13,7 +13,7 @@ import (
 var RpcAll = x.RPC_AllHandlersInteract{}
 
 func init() {
-	RpcAll.RPC_Msg = rpcMsg(0)
+	//RpcAll.RPC_Msg = rpcMsg(0)
 	RpcAll.RPC_Sync = rpcSync(0)
 	RpcAll.RPC_Chat = rpcChat(0)
 }
@@ -110,53 +110,3 @@ func PushToUserLiveData(UserId int, pbAllLivePush x.PB_AllLivePushes) {
 	AllPipesMap.SendToUser(UserId, cmd)
 }
 
-/*Backup of old rpc handling
-func (rpcResHandeler) HandleOfflineResult(i interface{}, PBClass string, RpcName string, c x.PB_CommandToServer, p x.RPC_UserParam, paramParsed interface{}) {
-
-    //fmt.Println("implement me", i, c, p)
-    resOfRpcFunc, ok := i.(proto.Message)
-    if ok {
-        data, err := proto.Marshal(resOfRpcFunc)
-
-        //todo: if response has error we must call the clint with and error: like: SERVER_ERR
-        if err != nil {
-            return
-        }
-        resToClient := &x.PB_ResponseToClient{
-            ClientCallId: int64(c.ClientCallId),
-            PBClass:      PBClass,
-            RpcFullName:  RpcName,
-            Data:         data,
-        }
-
-        if config.IS_DEBUG {
-            //logRpc.Println("debuging loggin " + RpcName)
-            param2, _ := paramParsed.(proto.Message)
-            t := time.Now()
-            s := "//======================================================================================================================="
-            //s = "////////////////////////////////////////////////////////////////////////////////////"
-            //logRpc.Println(s)
-*/ /*oT :=
-                  `"%s - %s"
-  Param = %s
-  Result = %s
-  `*/ /*
-            //logRpc.Printf(oT, RpcName, t.Format("3:04:04"), helper.ToJsonPerety2(param2), helper.ToJsonPerety2(resOfRpcFunc))
-            //logRpc.Println(s)
-
-            logRpc.Printf(`"%s - %s"`, RpcName, t.Format("3:04:04"))
-            logRpc.Println("Param = ", helper.ToJsonPerety2(param2))
-            logRpc.Println("Result = ", helper.ToJsonPerety2(resOfRpcFunc))
-            logRpc.Println("PB_ResponseToClient = ", helper.ToJsonPerety2(resToClient))
-            logRpc.Println("ResponseDataSize = ", helper.ToJsonPerety2(len(resToClient.Data)))
-            logRpc.Println(s)
-
-        }
-
-        //wsDebugLog(fmt.Sprintf("%s %s", "HandleOfflineResult: "+PBClass+" ", i))
-        cmd := NewPB_CommandToClient_WithData("PB_ResponseToClient", resToClient)
-        AllPipesMap.SendToUser(p.GetUserId(), cmd)
-        //_ = cmd
-    }
-
-}*/
