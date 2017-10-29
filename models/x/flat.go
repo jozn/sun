@@ -2121,47 +2121,6 @@ var PB_SyncParam_GetDirectUpdates__FOlD = &PB_SyncParam_GetDirectUpdates{
 	LastId: 0,
 }
 
-type PB_SyncResponse_GetDirectUpdates_Flat struct {
-	NewMessages               []PB_MessageView
-	ChatFiles                 []PB_MessageFileView
-	Chats                     []PB_ChatView
-	Users                     []PB_UserView
-	MessagesChangeIds         []PB_UpdateMessageId
-	MessagesFileChangeIds     []PB_UpdateMessageId
-	MessagesToUpdate          []PB_UpdateMessageToEdit
-	MessagesToDelete          []PB_UpdateMessageToDelete
-	MessagesDelivierdToServer []PB_UpdateMessageMeta
-	MessagesDelivierdToPeer   []PB_UpdateMessageMeta
-	MessagesSeenByPeer        []PB_UpdateMessageMeta
-	MessagesDeletedFromServer []PB_UpdateMessageMeta
-	RoomActionDoing           []PB_UpdateRoomActionDoing
-	LastId                    int
-}
-
-//ToPB
-func (m *PB_SyncResponse_GetDirectUpdates) ToFlat() *PB_SyncResponse_GetDirectUpdates_Flat {
-	r := &PB_SyncResponse_GetDirectUpdates_Flat{
-
-		LastId: int(m.LastId),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_SyncResponse_GetDirectUpdates_Flat) ToPB() *PB_SyncResponse_GetDirectUpdates {
-	r := &PB_SyncResponse_GetDirectUpdates{
-
-		LastId: int64(m.LastId),
-	}
-	return r
-}
-
-//folding
-var PB_SyncResponse_GetDirectUpdates__FOlD = &PB_SyncResponse_GetDirectUpdates{
-
-	LastId: 0,
-}
-
 type PB_SyncParam_GetGeneralUpdates_Flat struct {
 	LastId int
 }
@@ -2421,7 +2380,6 @@ func (m *PB_NotifyUpdatesView_Flat) ToPB() *PB_NotifyUpdatesView {
 var PB_NotifyUpdatesView__FOlD = &PB_NotifyUpdatesView{}
 
 type PB_AllLivePushes_Flat struct {
-	DirectUpdates      PB_SyncResponse_GetDirectUpdates
 	GeneralUpdates     PB_SyncResponse_GetGeneralUpdates
 	Offline_Messagings PB_Offline_Messagings
 }
@@ -3141,6 +3099,8 @@ type PB_DirectOffline_Flat struct {
 	DirectOfflineId int
 	ToUserId        int
 	ChatKey         string
+	MessageId       int
+	MessageFileId   int
 	PBClass         string
 	DataPB          []byte
 	DataJson        string
@@ -3154,6 +3114,8 @@ func (m *PB_DirectOffline) ToFlat() *PB_DirectOffline_Flat {
 		DirectOfflineId: int(m.DirectOfflineId),
 		ToUserId:        int(m.ToUserId),
 		ChatKey:         m.ChatKey,
+		MessageId:       int(m.MessageId),
+		MessageFileId:   int(m.MessageFileId),
 		PBClass:         m.PBClass,
 		DataPB:          []byte(m.DataPB),
 		DataJson:        m.DataJson,
@@ -3169,6 +3131,8 @@ func (m *PB_DirectOffline_Flat) ToPB() *PB_DirectOffline {
 		DirectOfflineId: int64(m.DirectOfflineId),
 		ToUserId:        int32(m.ToUserId),
 		ChatKey:         m.ChatKey,
+		MessageId:       int64(m.MessageId),
+		MessageFileId:   int64(m.MessageFileId),
 		PBClass:         m.PBClass,
 		DataPB:          m.DataPB,
 		DataJson:        m.DataJson,
@@ -3183,6 +3147,8 @@ var PB_DirectOffline__FOlD = &PB_DirectOffline{
 	DirectOfflineId: 0,
 	ToUserId:        0,
 	ChatKey:         "",
+	MessageId:       0,
+	MessageFileId:   0,
 	PBClass:         "",
 	DataPB:          []byte{},
 	DataJson:        "",
@@ -6841,26 +6807,6 @@ r := &PB_SyncParam_GetDirectUpdates_Flat{
 return r
 }
 
-func(m *PB_SyncResponse_GetDirectUpdates)ToFlat() *PB_SyncResponse_GetDirectUpdates_Flat {
-r := &PB_SyncResponse_GetDirectUpdates_Flat{
-
-
-
-
-
-
-
-
-
-
-
-
-
-    LastId:  int(m.LastId) ,
-}
-return r
-}
-
 func(m *PB_SyncParam_GetGeneralUpdates)ToFlat() *PB_SyncParam_GetGeneralUpdates_Flat {
 r := &PB_SyncParam_GetGeneralUpdates_Flat{
     LastId:  int(m.LastId) ,
@@ -6941,7 +6887,6 @@ return r
 
 func(m *PB_AllLivePushes)ToFlat() *PB_AllLivePushes_Flat {
 r := &PB_AllLivePushes_Flat{
-
 
 
 }
@@ -7151,6 +7096,8 @@ r := &PB_DirectOffline_Flat{
     DirectOfflineId:  int(m.DirectOfflineId) ,
     ToUserId:  int(m.ToUserId) ,
     ChatKey:  m.ChatKey ,
+    MessageId:  int(m.MessageId) ,
+    MessageFileId:  int(m.MessageFileId) ,
     PBClass:  m.PBClass ,
     DataPB:  []byte(m.DataPB) ,
     DataJson:  m.DataJson ,
@@ -8598,26 +8545,6 @@ r := &PB_SyncParam_GetDirectUpdates{
 return r
 }
 
-func(m *PB_SyncResponse_GetDirectUpdates_Flat)ToPB() *PB_SyncResponse_GetDirectUpdates {
-r := &PB_SyncResponse_GetDirectUpdates{
-
-
-
-
-
-
-
-
-
-
-
-
-
-    LastId:  int64(m.LastId) ,
-}
-return r
-}
-
 func(m *PB_SyncParam_GetGeneralUpdates_Flat)ToPB() *PB_SyncParam_GetGeneralUpdates {
 r := &PB_SyncParam_GetGeneralUpdates{
     LastId:  int64(m.LastId) ,
@@ -8698,7 +8625,6 @@ return r
 
 func(m *PB_AllLivePushes_Flat)ToPB() *PB_AllLivePushes {
 r := &PB_AllLivePushes{
-
 
 
 }
@@ -8908,6 +8834,8 @@ r := &PB_DirectOffline{
     DirectOfflineId:  int64(m.DirectOfflineId) ,
     ToUserId:  int32(m.ToUserId) ,
     ChatKey:  m.ChatKey ,
+    MessageId:  int64(m.MessageId) ,
+    MessageFileId:  int64(m.MessageFileId) ,
     PBClass:  m.PBClass ,
     DataPB:  m.DataPB ,
     DataJson:  m.DataJson ,
@@ -10197,24 +10125,6 @@ var PB_SyncParam_GetDirectUpdates__FOlD = &PB_SyncParam_GetDirectUpdates{
 }
 
 
-var PB_SyncResponse_GetDirectUpdates__FOlD = &PB_SyncResponse_GetDirectUpdates{
-
-
-
-
-
-
-
-
-
-
-
-
-
-        LastId:  0 ,
-}
-
-
 var PB_SyncParam_GetGeneralUpdates__FOlD = &PB_SyncParam_GetGeneralUpdates{
         LastId:  0 ,
 }
@@ -10272,7 +10182,6 @@ var PB_NotifyUpdatesView__FOlD = &PB_NotifyUpdatesView{
 
 
 var PB_AllLivePushes__FOlD = &PB_AllLivePushes{
-
 
 
 }
@@ -10436,6 +10345,8 @@ var PB_DirectOffline__FOlD = &PB_DirectOffline{
         DirectOfflineId:  0 ,
         ToUserId:  0 ,
         ChatKey:  "" ,
+        MessageId:  0 ,
+        MessageFileId:  0 ,
         PBClass:  "" ,
         DataPB:  []byte{} ,
         DataJson:  "" ,

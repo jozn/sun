@@ -87,7 +87,6 @@ type RPC_Msg interface {
 }
 
 type RPC_Sync interface {
-	GetDirectUpdates(param *PB_SyncParam_GetDirectUpdates, userParam RPC_UserParam) (res PB_SyncResponse_GetDirectUpdates, err error)
 	GetGeneralUpdates(param *PB_SyncParam_GetGeneralUpdates, userParam RPC_UserParam) (res PB_SyncResponse_GetGeneralUpdates, err error)
 	GetNotifyUpdates(param *PB_SyncParam_GetNotifyUpdates, userParam RPC_UserParam) (res PB_SyncResponse_GetNotifyUpdates, err error)
 	SetLastSyncDirectUpdateId(param *PB_SyncParam_SetLastSyncDirectUpdateId, userParam RPC_UserParam) (res PB_SyncResponse_SetLastSyncDirectUpdateId, err error)
@@ -943,29 +942,6 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 		}*/
 
 		switch splits[1] {
-		case "GetDirectUpdates": //each pb_service_method
-			load := &PB_SyncParam_GetDirectUpdates{}
-			err := proto.Unmarshal(cmd.Data, load)
-			if err == nil {
-				res, err := rpc.GetDirectUpdates(load, params)
-				if err == nil {
-					out := RpcResponseOutput{
-						RpcName:         "RPC_Sync.GetDirectUpdates",
-						UserParam:       params,
-						CommandToServer: cmd,
-						PBClassName:     "PB_SyncResponse_GetDirectUpdates",
-						ResponseData:    res,
-						RpcParamPassed:  load,
-					}
-					//RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetDirectUpdates",cmd, params)
-					//RPC_ResponseHandler.HandleOfflineResult(res,"PB_SyncResponse_GetDirectUpdates","RPC_Sync.GetDirectUpdates",cmd, params , load)
-					RPC_ResponseHandler.HandleOfflineResult(out)
-				} else {
-					RPC_ResponseHandler.HandelError(err)
-				}
-			} else {
-				RPC_ResponseHandler.HandelError(err)
-			}
 		case "GetGeneralUpdates": //each pb_service_method
 			load := &PB_SyncParam_GetGeneralUpdates{}
 			err := proto.Unmarshal(cmd.Data, load)
@@ -1349,7 +1325,6 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 
 
 
- RPC_Sync.GetDirectUpdates
  RPC_Sync.GetGeneralUpdates
  RPC_Sync.GetNotifyUpdates
  RPC_Sync.SetLastSyncDirectUpdateId

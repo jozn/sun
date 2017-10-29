@@ -124,9 +124,6 @@ type EmptyRPC_RPC_Sync int
 
 var Empty_RPC_RPC_Sync_Sample = EmptyRPC_RPC_Sync(0)
 
-func (EmptyRPC_RPC_Sync) GetDirectUpdates(i *PB_SyncParam_GetDirectUpdates, p RPC_UserParam) (*PB_SyncResponse_GetDirectUpdates, error) {
-	return nil, nil
-}
 func (EmptyRPC_RPC_Sync) GetGeneralUpdates(i *PB_SyncParam_GetGeneralUpdates, p RPC_UserParam) (*PB_SyncResponse_GetGeneralUpdates, error) {
 	return nil, nil
 }

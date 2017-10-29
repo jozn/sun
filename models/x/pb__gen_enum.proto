@@ -52,7 +52,6 @@ enum RPC_Msg_Enum {
 }
 enum RPC_Sync_Enum {
     EMPTY = 0;
-    GetDirectUpdates = 4628;
     GetGeneralUpdates = 9188;
     GetNotifyUpdates = 6213;
     SetLastSyncDirectUpdateId = 5769;

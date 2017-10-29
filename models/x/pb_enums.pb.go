@@ -97,7 +97,6 @@ It has these top-level messages:
 	PB_MsgParam_Echo
 	PB_MsgResponse_PB_MsgParam_Echo
 	PB_SyncParam_GetDirectUpdates
-	PB_SyncResponse_GetDirectUpdates
 	PB_SyncParam_GetGeneralUpdates
 	PB_SyncResponse_GetGeneralUpdates
 	PB_SyncParam_GetNotifyUpdates

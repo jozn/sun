@@ -48,7 +48,6 @@ public interface RPC_Msg {
     void Echo( PB_MsgResponse_PB_MsgParam_Echo pb, boolean handled);
 }
 public interface RPC_Sync {
-    void GetDirectUpdates( PB_SyncResponse_GetDirectUpdates pb, boolean handled);
     void GetGeneralUpdates( PB_SyncResponse_GetGeneralUpdates pb, boolean handled);
     void GetNotifyUpdates( PB_SyncResponse_GetNotifyUpdates pb, boolean handled);
     void SetLastSyncDirectUpdateId( PB_SyncResponse_SetLastSyncDirectUpdateId pb, boolean handled);
@@ -212,10 +211,6 @@ public interface RPC_User {
   }
   public static class RPC_Sync_Empty implements RPC_Sync{
   
-  	@Override
-    public void GetDirectUpdates( PB_SyncResponse_GetDirectUpdates pb, boolean handled){
-    	Log.d("RPC", " default empty handler for RPC 'RPC_Sync.GetDirectUpdates' ");
-    }
   	@Override
     public void GetGeneralUpdates( PB_SyncResponse_GetGeneralUpdates pb, boolean handled){
     	Log.d("RPC", " default empty handler for RPC 'RPC_Sync.GetGeneralUpdates' ");
@@ -569,14 +564,6 @@ public interface RPC_User {
 				}
 			});
 	  
-	  
-			router.put("RPC_Sync.GetDirectUpdates", (pb, handled)->{
-				if(pb instanceof PB_SyncResponse_GetDirectUpdates){
-					RPC_Sync_Default_Handler.GetDirectUpdates((PB_SyncResponse_GetDirectUpdates) pb, handled);
-				}else{
-					Log.d("RPC", " can not convert response object to PB_SyncResponse_GetDirectUpdates in rpc: .GetDirectUpdates -- class: " + pb );//.getClass().getName());
-				}
-			});
 	  
 			router.put("RPC_Sync.GetGeneralUpdates", (pb, handled)->{
 				if(pb instanceof PB_SyncResponse_GetGeneralUpdates){

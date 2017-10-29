@@ -7,13 +7,13 @@ import (
 
 type rpcSync int
 
-func (rpcSync) GetDirectUpdates(i *x.PB_SyncParam_GetDirectUpdates, p x.RPC_UserParam) (res x.PB_SyncResponse_GetDirectUpdates, err error) {
+/*func (rpcSync) GetDirectUpdates(i *x.PB_SyncParam_GetDirectUpdates, p x.RPC_UserParam) (res x.PB_SyncResponse_GetDirectUpdates, err error) {
 	rows, err := x.NewDirectUpdate_Selector().ToUserId_Eq(p.GetUserId()).DirectUpdateId_GT(int(i.LastId)).OrderBy_DirectUpdateId_Asc().GetRows(base.DB)
 	if err != nil {
 		return
 	}
 	return *ViewPush_DirectUpdatesList_To_GetDirectUpdatesView(p.GetUserId(), rows), nil
-}
+}*/
 
 func (rpcSync) GetGeneralUpdates(i *x.PB_SyncParam_GetGeneralUpdates, p x.RPC_UserParam) (x.PB_SyncResponse_GetGeneralUpdates, error) {
 	return GeneralLog_GetLastView(p.GetUserId(), int(i.LastId))

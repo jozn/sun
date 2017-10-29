@@ -10,8 +10,6 @@ import (
 )
 
 type liveOfflineBuffer struct {
-	//HereDirect        chan x.DirectOffline
-	HereDirectDelayer_DEP chan OfflineDelayer
 	HereDirectDelayer     chan x.DirectOffline
 	StoredDirect          chan x.DirectOffline
 
@@ -19,21 +17,9 @@ type liveOfflineBuffer struct {
 	StoredGroup chan x.DirectOffline
 }
 
-type OfflineDelayer struct {
-	directUpdate x.DirectOffline
-	/*fromUserId   int
-	toUserId     int
-	roomKey      string
-	hashId       int
-	uid          int
-	msgFileRowId int*/
-}
-
 ///////////////////////////////
 
 var LiveOfflineFramer = liveOfflineBuffer{
-	//HereDirect:        make(chan x.DirectOffline, 10000),//dep?? use HereDirectDelayer_DEP
-	//HereDirectDelayer_DEP: make(chan OfflineDelayer, 10000),
 	HereDirectDelayer: make(chan x.DirectOffline, 10000),
 	StoredDirect:      make(chan x.DirectOffline, 10000),
 	HereGroup:         make(chan x.DirectOffline, 10000),
@@ -156,14 +142,6 @@ func _livePush_sendToUsersOfflineFrame(logs []x.DirectOffline) {
 
 				fmt.Printf("send to user: %d PushViews : %s", UserId, helper.ToJson(res))
 			}
-
-			/*cmd := NewPB_CommandToClient_WithData(PB_PushHolderView, res)
-			AllPipesMap.SendToUser(UserId, cmd)
-			if config.IS_DEBUG {
-				logChat.Printf("_livePush_sendToUsersOfflineFrame() is sending to user: %s", cmd)
-
-				fmt.Printf("send to user: %d PushViews : %s", UserId, helper.ToJson(res))
-			}*/
 		}
 	}
 }

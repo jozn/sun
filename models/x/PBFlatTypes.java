@@ -1831,77 +1831,6 @@ public class PBFlatTypes {
 	t.LastId = m.getLastId() ;
 	*/
 
-	public class PB_SyncResponse_GetDirectUpdates {
-	   public PB_MessageView NewMessages;
-	   public PB_MessageFileView ChatFiles;
-	   public PB_ChatView Chats;
-	   public PB_UserView Users;
-	   public PB_UpdateMessageId MessagesChangeIds;
-	   public PB_UpdateMessageId MessagesFileChangeIds;
-	   public PB_UpdateMessageToEdit MessagesToUpdate;
-	   public PB_UpdateMessageToDelete MessagesToDelete;
-	   public PB_UpdateMessageMeta MessagesDelivierdToServer;
-	   public PB_UpdateMessageMeta MessagesDelivierdToPeer;
-	   public PB_UpdateMessageMeta MessagesSeenByPeer;
-	   public PB_UpdateMessageMeta MessagesDeletedFromServer;
-	   public PB_UpdateRoomActionDoing RoomActionDoing;
-	   public long LastId;
-	}
-	/*
-	folding
-	PBFlatTypes.PB_SyncResponse_GetDirectUpdates t = new PBFlatTypes.PB_SyncResponse_GetDirectUpdates();
-    t.setNewMessages();
-    t.setChatFiles();
-    t.setChats();
-    t.setUsers();
-    t.setMessagesChangeIds();
-    t.setMessagesFileChangeIds();
-    t.setMessagesToUpdate();
-    t.setMessagesToDelete();
-    t.setMessagesDelivierdToServer();
-    t.setMessagesDelivierdToPeer();
-    t.setMessagesSeenByPeer();
-    t.setMessagesDeletedFromServer();
-    t.setRoomActionDoing();
-    t.setLastId();
-	*/
-
-	/*
-	PBFlatTypes.PB_SyncResponse_GetDirectUpdates t = new PBFlatTypes.PB_SyncResponse_GetDirectUpdates();
-	t.NewMessages = ;
-	t.ChatFiles = ;
-	t.Chats = ;
-	t.Users = ;
-	t.MessagesChangeIds = ;
-	t.MessagesFileChangeIds = ;
-	t.MessagesToUpdate = ;
-	t.MessagesToDelete = ;
-	t.MessagesDelivierdToServer = ;
-	t.MessagesDelivierdToPeer = ;
-	t.MessagesSeenByPeer = ;
-	t.MessagesDeletedFromServer = ;
-	t.RoomActionDoing = ;
-	t.LastId = ;
-	*/
-
-	/*
-	PB_SyncResponse_GetDirectUpdates t = new PB_SyncResponse_GetDirectUpdates();
-	t.NewMessages = m.getNewMessages() ;
-	t.ChatFiles = m.getChatFiles() ;
-	t.Chats = m.getChats() ;
-	t.Users = m.getUsers() ;
-	t.MessagesChangeIds = m.getMessagesChangeIds() ;
-	t.MessagesFileChangeIds = m.getMessagesFileChangeIds() ;
-	t.MessagesToUpdate = m.getMessagesToUpdate() ;
-	t.MessagesToDelete = m.getMessagesToDelete() ;
-	t.MessagesDelivierdToServer = m.getMessagesDelivierdToServer() ;
-	t.MessagesDelivierdToPeer = m.getMessagesDelivierdToPeer() ;
-	t.MessagesSeenByPeer = m.getMessagesSeenByPeer() ;
-	t.MessagesDeletedFromServer = m.getMessagesDeletedFromServer() ;
-	t.RoomActionDoing = m.getRoomActionDoing() ;
-	t.LastId = m.getLastId() ;
-	*/
-
 	public class PB_SyncParam_GetGeneralUpdates {
 	   public long LastId;
 	}
@@ -2116,28 +2045,24 @@ public class PBFlatTypes {
 	*/
 
 	public class PB_AllLivePushes {
-	   public PB_SyncResponse_GetDirectUpdates DirectUpdates;
 	   public PB_SyncResponse_GetGeneralUpdates GeneralUpdates;
 	   public PB_Offline_Messagings Offline_Messagings;
 	}
 	/*
 	folding
 	PBFlatTypes.PB_AllLivePushes t = new PBFlatTypes.PB_AllLivePushes();
-    t.setDirectUpdates();
     t.setGeneralUpdates();
     t.setOffline_Messagings();
 	*/
 
 	/*
 	PBFlatTypes.PB_AllLivePushes t = new PBFlatTypes.PB_AllLivePushes();
-	t.DirectUpdates = ;
 	t.GeneralUpdates = ;
 	t.Offline_Messagings = ;
 	*/
 
 	/*
 	PB_AllLivePushes t = new PB_AllLivePushes();
-	t.DirectUpdates = m.getDirectUpdates() ;
 	t.GeneralUpdates = m.getGeneralUpdates() ;
 	t.Offline_Messagings = m.getOffline_Messagings() ;
 	*/
@@ -2740,6 +2665,8 @@ public class PBFlatTypes {
 	   public long DirectOfflineId;
 	   public int ToUserId;
 	   public String ChatKey;
+	   public long MessageId;
+	   public long MessageFileId;
 	   public String PBClass;
 	   public byte[] DataPB;
 	   public String DataJson;
@@ -2752,6 +2679,8 @@ public class PBFlatTypes {
     t.setDirectOfflineId();
     t.setToUserId();
     t.setChatKey();
+    t.setMessageId();
+    t.setMessageFileId();
     t.setPBClass();
     t.setDataPB();
     t.setDataJson();
@@ -2764,6 +2693,8 @@ public class PBFlatTypes {
 	t.DirectOfflineId = ;
 	t.ToUserId = ;
 	t.ChatKey = ;
+	t.MessageId = ;
+	t.MessageFileId = ;
 	t.PBClass = ;
 	t.DataPB = ;
 	t.DataJson = ;
@@ -2776,6 +2707,8 @@ public class PBFlatTypes {
 	t.DirectOfflineId = m.getDirectOfflineId() ;
 	t.ToUserId = m.getToUserId() ;
 	t.ChatKey = m.getChatKey() ;
+	t.MessageId = m.getMessageId() ;
+	t.MessageFileId = m.getMessageFileId() ;
 	t.PBClass = m.getPBClass() ;
 	t.DataPB = m.getDataPB() ;
 	t.DataJson = m.getDataJson() ;
