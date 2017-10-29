@@ -10,7 +10,6 @@ It is generated from these files:
 	pb_offlines.proto
 	pb_rpc_auth2.proto
 	pb_rpc_chat.proto
-	pb_rpc_msg.proto
 	pb_rpc_sync.proto
 	pb_rpc_user.proto
 	pb_tables.proto
@@ -62,40 +61,6 @@ It has these top-level messages:
 	PB_ChatResponse_GetChatHistoryToOlder
 	PB_ChatParam_GetFreshAllDirectMessagesList
 	PB_ChatResponse_GetFreshAllDirectMessagesList
-	PB_MsgParam_AddNewTextMessage
-	PB_MsgResponse_AddNewTextMessage
-	PB_MsgParam_AddNewMessage
-	PB_MsgResponse_AddNewMessage
-	PB_MsgParam_SetRoomActionDoing
-	PB_MsgResponse_SetRoomActionDoing
-	PB_MsgParam_GetMessagesByIds
-	PB_MsgResponse_GetMessagesByIds
-	PB_MsgParam_GetMessagesHistory
-	PB_MsgResponse_GetMessagesHistory
-	PB_MsgParam_SetChatMessagesRangeAsSeen
-	PB_MsgResponse_SetChatMessagesRangeAsSeen
-	PB_MsgParam_DeleteChatHistory
-	PB_MsgResponse_DeleteChatHistory
-	PB_MsgParam_DeleteMessagesByIds
-	PB_MsgResponse_DeleteMessagesByIds
-	PB_MsgParam_SetMessagesAsReceived
-	PB_MsgResponse_SetMessagesAsReceived
-	PB_MsgParam_ForwardMessages
-	PB_MsgResponse_ForwardMessages
-	PB_MsgParam_EditMessage
-	PB_MsgResponse_EditMessage
-	PB_MsgParam_BroadcastNewMessage
-	PB_MsgResponse_BroadcastNewMessage
-	PB_MsgParam_GetFreshChatList
-	PB_MsgResponse_GetFreshChatList
-	PB_MsgParam_GetFreshRoomMessagesList
-	PB_MsgResponse_GetFreshRoomMessagesList
-	PB_MsgParam_GetFreshAllDirectMessagesList
-	PB_MsgResponse_GetFreshAllDirectMessagesList
-	PB_MessageForwardedFrom
-	PB_MessagesCollections
-	PB_MsgParam_Echo
-	PB_MsgResponse_PB_MsgParam_Echo
 	PB_SyncParam_GetDirectUpdates
 	PB_SyncParam_GetGeneralUpdates
 	PB_SyncResponse_GetGeneralUpdates

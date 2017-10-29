@@ -9,7 +9,6 @@ option go_package = "x";
 
 import "pb_enums.proto";
 import "pb_views.proto";
-//import "pb_rpc_msg.proto";
 
 // AddNewMessage
 message PB_ChatParam_AddNewMessage {

@@ -31,25 +31,6 @@ enum RPC_Chat_Enum {
     GetChatHistoryToOlder = 7782;
     GetFreshAllDirectMessagesList = 1094;
 }
-enum RPC_Msg_Enum {
-    EMPTY = 0;
-    AddNewTextMessage = 8818;
-    AddNewMessage = 7534;
-    SetRoomActionDoing = 7576;
-    GetMessagesByIds = 9361;
-    GetMessagesHistory = 6469;
-    SetMessagesRangeAsSeen = 1565;
-    DeleteChatHistory = 5524;
-    DeleteMessagesByIds = 1169;
-    SetMessagesAsReceived = 6852;
-    ForwardMessages = 333;
-    EditMessage = 2882;
-    BroadcastNewMessage = 7558;
-    GetFreshChatList = 4759;
-    GetFreshRoomMessagesList = 4972;
-    GetFreshAllDirectMessagesList = 1094;
-    Echo = 7265;
-}
 enum RPC_Sync_Enum {
     EMPTY = 0;
     GetGeneralUpdates = 9188;

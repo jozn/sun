@@ -18,32 +18,6 @@ message PB_SyncParam_GetDirectUpdates {
     int64 LastId = 1;
 }
 
-/*message PB_SyncResponse_GetDirectUpdates{
-    //new mssages
-    repeated PB_MessageView NewMessages = 1;
-    repeated PB_MessageFileView ChatFiles = 2;
-    repeated PB_ChatView Chats = 3;
-    repeated PB_UserView Users = 6;
-
-    repeated PB_UpdateMessageId MessagesChangeIds = 10;
-    repeated PB_UpdateMessageId MessagesFileChangeIds = 15;
-    repeated PB_UpdateMessageToEdit MessagesToUpdate = 11;
-    repeated PB_UpdateMessageToDelete MessagesToDelete = 12;
-
-    //messages meta info
-    repeated PB_UpdateMessageMeta MessagesDelivierdToServer = 20;
-    repeated PB_UpdateMessageMeta MessagesDelivierdToPeer = 21;
-    repeated PB_UpdateMessageMeta MessagesSeenByPeer = 22;
-    repeated PB_UpdateMessageMeta MessagesDeletedFromServer = 23;
-
-
-
-    //room updates
-    repeated PB_UpdateRoomActionDoing RoomActionDoing = 30;
-
-    int64 LastId = 50;
-}*/
-
 //////////////////////////////
 message PB_SyncParam_GetGeneralUpdates {
     int64 LastId = 1;

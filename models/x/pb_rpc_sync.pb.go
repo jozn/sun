@@ -25,7 +25,7 @@ type PB_SyncParam_GetDirectUpdates struct {
 func (m *PB_SyncParam_GetDirectUpdates) Reset()                    { *m = PB_SyncParam_GetDirectUpdates{} }
 func (m *PB_SyncParam_GetDirectUpdates) String() string            { return proto.CompactTextString(m) }
 func (*PB_SyncParam_GetDirectUpdates) ProtoMessage()               {}
-func (*PB_SyncParam_GetDirectUpdates) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{0} }
+func (*PB_SyncParam_GetDirectUpdates) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{0} }
 
 func (m *PB_SyncParam_GetDirectUpdates) GetLastId() int64 {
 	if m != nil {
@@ -42,7 +42,7 @@ type PB_SyncParam_GetGeneralUpdates struct {
 func (m *PB_SyncParam_GetGeneralUpdates) Reset()                    { *m = PB_SyncParam_GetGeneralUpdates{} }
 func (m *PB_SyncParam_GetGeneralUpdates) String() string            { return proto.CompactTextString(m) }
 func (*PB_SyncParam_GetGeneralUpdates) ProtoMessage()               {}
-func (*PB_SyncParam_GetGeneralUpdates) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{1} }
+func (*PB_SyncParam_GetGeneralUpdates) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{1} }
 
 func (m *PB_SyncParam_GetGeneralUpdates) GetLastId() int64 {
 	if m != nil {
@@ -62,7 +62,7 @@ func (m *PB_SyncResponse_GetGeneralUpdates) Reset()         { *m = PB_SyncRespon
 func (m *PB_SyncResponse_GetGeneralUpdates) String() string { return proto.CompactTextString(m) }
 func (*PB_SyncResponse_GetGeneralUpdates) ProtoMessage()    {}
 func (*PB_SyncResponse_GetGeneralUpdates) Descriptor() ([]byte, []int) {
-	return fileDescriptor6, []int{2}
+	return fileDescriptor5, []int{2}
 }
 
 func (m *PB_SyncResponse_GetGeneralUpdates) GetUserBlockedByMe() []*PB_UpdateUserBlocked {
@@ -94,7 +94,7 @@ type PB_SyncParam_GetNotifyUpdates struct {
 func (m *PB_SyncParam_GetNotifyUpdates) Reset()                    { *m = PB_SyncParam_GetNotifyUpdates{} }
 func (m *PB_SyncParam_GetNotifyUpdates) String() string            { return proto.CompactTextString(m) }
 func (*PB_SyncParam_GetNotifyUpdates) ProtoMessage()               {}
-func (*PB_SyncParam_GetNotifyUpdates) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{3} }
+func (*PB_SyncParam_GetNotifyUpdates) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{3} }
 
 func (m *PB_SyncParam_GetNotifyUpdates) GetLastId() int64 {
 	if m != nil {
@@ -112,7 +112,7 @@ func (m *PB_SyncResponse_GetNotifyUpdates) Reset()         { *m = PB_SyncRespons
 func (m *PB_SyncResponse_GetNotifyUpdates) String() string { return proto.CompactTextString(m) }
 func (*PB_SyncResponse_GetNotifyUpdates) ProtoMessage()    {}
 func (*PB_SyncResponse_GetNotifyUpdates) Descriptor() ([]byte, []int) {
-	return fileDescriptor6, []int{4}
+	return fileDescriptor5, []int{4}
 }
 
 func (m *PB_SyncResponse_GetNotifyUpdates) GetUpdates() *PB_NotifyUpdatesView {
@@ -140,7 +140,7 @@ func (m *PB_SyncParam_SetLastSyncDirectUpdateId) Reset() {
 func (m *PB_SyncParam_SetLastSyncDirectUpdateId) String() string { return proto.CompactTextString(m) }
 func (*PB_SyncParam_SetLastSyncDirectUpdateId) ProtoMessage()    {}
 func (*PB_SyncParam_SetLastSyncDirectUpdateId) Descriptor() ([]byte, []int) {
-	return fileDescriptor6, []int{5}
+	return fileDescriptor5, []int{5}
 }
 
 func (m *PB_SyncParam_SetLastSyncDirectUpdateId) GetLastId() int64 {
@@ -159,7 +159,7 @@ func (m *PB_SyncResponse_SetLastSyncDirectUpdateId) Reset() {
 func (m *PB_SyncResponse_SetLastSyncDirectUpdateId) String() string { return proto.CompactTextString(m) }
 func (*PB_SyncResponse_SetLastSyncDirectUpdateId) ProtoMessage()    {}
 func (*PB_SyncResponse_SetLastSyncDirectUpdateId) Descriptor() ([]byte, []int) {
-	return fileDescriptor6, []int{6}
+	return fileDescriptor5, []int{6}
 }
 
 // ////////////////////////////
@@ -173,7 +173,7 @@ func (m *PB_SyncParam_SetLastSyncGeneralUpdateId) Reset() {
 func (m *PB_SyncParam_SetLastSyncGeneralUpdateId) String() string { return proto.CompactTextString(m) }
 func (*PB_SyncParam_SetLastSyncGeneralUpdateId) ProtoMessage()    {}
 func (*PB_SyncParam_SetLastSyncGeneralUpdateId) Descriptor() ([]byte, []int) {
-	return fileDescriptor6, []int{7}
+	return fileDescriptor5, []int{7}
 }
 
 func (m *PB_SyncParam_SetLastSyncGeneralUpdateId) GetLastId() int64 {
@@ -194,7 +194,7 @@ func (m *PB_SyncResponse_SetLastSyncGeneralUpdateId) String() string {
 }
 func (*PB_SyncResponse_SetLastSyncGeneralUpdateId) ProtoMessage() {}
 func (*PB_SyncResponse_SetLastSyncGeneralUpdateId) Descriptor() ([]byte, []int) {
-	return fileDescriptor6, []int{8}
+	return fileDescriptor5, []int{8}
 }
 
 // ////////////////////////////
@@ -208,7 +208,7 @@ func (m *PB_SyncParam_SetLastSyncNotifyUpdateId) Reset() {
 func (m *PB_SyncParam_SetLastSyncNotifyUpdateId) String() string { return proto.CompactTextString(m) }
 func (*PB_SyncParam_SetLastSyncNotifyUpdateId) ProtoMessage()    {}
 func (*PB_SyncParam_SetLastSyncNotifyUpdateId) Descriptor() ([]byte, []int) {
-	return fileDescriptor6, []int{9}
+	return fileDescriptor5, []int{9}
 }
 
 func (m *PB_SyncParam_SetLastSyncNotifyUpdateId) GetLastId() int64 {
@@ -227,7 +227,7 @@ func (m *PB_SyncResponse_SetLastSyncNotifyUpdateId) Reset() {
 func (m *PB_SyncResponse_SetLastSyncNotifyUpdateId) String() string { return proto.CompactTextString(m) }
 func (*PB_SyncResponse_SetLastSyncNotifyUpdateId) ProtoMessage()    {}
 func (*PB_SyncResponse_SetLastSyncNotifyUpdateId) Descriptor() ([]byte, []int) {
-	return fileDescriptor6, []int{10}
+	return fileDescriptor5, []int{10}
 }
 
 type PB_NotifyUpdatesView struct {
@@ -239,7 +239,7 @@ type PB_NotifyUpdatesView struct {
 func (m *PB_NotifyUpdatesView) Reset()                    { *m = PB_NotifyUpdatesView{} }
 func (m *PB_NotifyUpdatesView) String() string            { return proto.CompactTextString(m) }
 func (*PB_NotifyUpdatesView) ProtoMessage()               {}
-func (*PB_NotifyUpdatesView) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{11} }
+func (*PB_NotifyUpdatesView) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{11} }
 
 func (m *PB_NotifyUpdatesView) GetUserBlockedByMe() []*PB_UpdateUserBlocked {
 	if m != nil {
@@ -266,7 +266,7 @@ type PB_AllLivePushes struct {
 func (m *PB_AllLivePushes) Reset()                    { *m = PB_AllLivePushes{} }
 func (m *PB_AllLivePushes) String() string            { return proto.CompactTextString(m) }
 func (*PB_AllLivePushes) ProtoMessage()               {}
-func (*PB_AllLivePushes) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{12} }
+func (*PB_AllLivePushes) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{12} }
 
 func (m *PB_AllLivePushes) GetGeneralUpdates() *PB_SyncResponse_GetGeneralUpdates {
 	if m != nil {
@@ -504,9 +504,9 @@ var _RPC_Sync_serviceDesc = grpc.ServiceDesc{
 	Metadata: "pb_rpc_sync.proto",
 }
 
-func init() { proto.RegisterFile("pb_rpc_sync.proto", fileDescriptor6) }
+func init() { proto.RegisterFile("pb_rpc_sync.proto", fileDescriptor5) }
 
-var fileDescriptor6 = []byte{
+var fileDescriptor5 = []byte{
 	// 502 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x55, 0xd1, 0x6e, 0xd3, 0x30,
 	0x14, 0x55, 0x28, 0xda, 0xa6, 0x8b, 0x18, 0x6d, 0x04, 0x53, 0x88, 0xc4, 0xe8, 0xf2, 0xc0, 0xca,
