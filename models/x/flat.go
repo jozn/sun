@@ -1218,6 +1218,56 @@ var PB_ChatResponse_GetFreshAllDirectMessagesList__FOlD = &PB_ChatResponse_GetFr
 	HasMore: false,
 }
 
+type PB_OtherParam_Echo_Flat struct {
+	Text string
+}
+
+//ToPB
+func (m *PB_OtherParam_Echo) ToFlat() *PB_OtherParam_Echo_Flat {
+	r := &PB_OtherParam_Echo_Flat{
+		Text: m.Text,
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_OtherParam_Echo_Flat) ToPB() *PB_OtherParam_Echo {
+	r := &PB_OtherParam_Echo{
+		Text: m.Text,
+	}
+	return r
+}
+
+//folding
+var PB_OtherParam_Echo__FOlD = &PB_OtherParam_Echo{
+	Text: "",
+}
+
+type PB_OtherResponse_Echo_Flat struct {
+	Text string
+}
+
+//ToPB
+func (m *PB_OtherResponse_Echo) ToFlat() *PB_OtherResponse_Echo_Flat {
+	r := &PB_OtherResponse_Echo_Flat{
+		Text: m.Text,
+	}
+	return r
+}
+
+//ToPB
+func (m *PB_OtherResponse_Echo_Flat) ToPB() *PB_OtherResponse_Echo {
+	r := &PB_OtherResponse_Echo{
+		Text: m.Text,
+	}
+	return r
+}
+
+//folding
+var PB_OtherResponse_Echo__FOlD = &PB_OtherResponse_Echo{
+	Text: "",
+}
+
 type PB_SyncParam_GetDirectUpdates_Flat struct {
 	LastId int
 }
@@ -2278,79 +2328,6 @@ var PB_DirectOffline__FOlD = &PB_DirectOffline{
 	AtTimeMs:        0,
 }
 
-type PB_DirectOfflineDep_Flat struct {
-	DirectOfflineId int
-	ToUserId        int
-	MessageId       int
-	MessageFileId   int
-	OtherId         int
-	ChatKey         string
-	PeerUserId      int
-	RoomLogTypeId   int
-	PBClass         string
-	DataPB          []byte
-	DataJson        string
-	DataTemp        string
-	AtTimeMs        int
-}
-
-//ToPB
-func (m *PB_DirectOfflineDep) ToFlat() *PB_DirectOfflineDep_Flat {
-	r := &PB_DirectOfflineDep_Flat{
-		DirectOfflineId: int(m.DirectOfflineId),
-		ToUserId:        int(m.ToUserId),
-		MessageId:       int(m.MessageId),
-		MessageFileId:   int(m.MessageFileId),
-		OtherId:         int(m.OtherId),
-		ChatKey:         m.ChatKey,
-		PeerUserId:      int(m.PeerUserId),
-		RoomLogTypeId:   int(m.RoomLogTypeId),
-		PBClass:         m.PBClass,
-		DataPB:          []byte(m.DataPB),
-		DataJson:        m.DataJson,
-		DataTemp:        m.DataTemp,
-		AtTimeMs:        int(m.AtTimeMs),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_DirectOfflineDep_Flat) ToPB() *PB_DirectOfflineDep {
-	r := &PB_DirectOfflineDep{
-		DirectOfflineId: int64(m.DirectOfflineId),
-		ToUserId:        int32(m.ToUserId),
-		MessageId:       int64(m.MessageId),
-		MessageFileId:   int64(m.MessageFileId),
-		OtherId:         int64(m.OtherId),
-		ChatKey:         m.ChatKey,
-		PeerUserId:      int32(m.PeerUserId),
-		RoomLogTypeId:   int32(m.RoomLogTypeId),
-		PBClass:         m.PBClass,
-		DataPB:          m.DataPB,
-		DataJson:        m.DataJson,
-		DataTemp:        m.DataTemp,
-		AtTimeMs:        int64(m.AtTimeMs),
-	}
-	return r
-}
-
-//folding
-var PB_DirectOfflineDep__FOlD = &PB_DirectOfflineDep{
-	DirectOfflineId: 0,
-	ToUserId:        0,
-	MessageId:       0,
-	MessageFileId:   0,
-	OtherId:         0,
-	ChatKey:         "",
-	PeerUserId:      0,
-	RoomLogTypeId:   0,
-	PBClass:         "",
-	DataPB:          []byte{},
-	DataJson:        "",
-	DataTemp:        "",
-	AtTimeMs:        0,
-}
-
 type PB_DirectToMessage_Flat struct {
 	Id           int
 	ChatKey      string
@@ -2386,83 +2363,6 @@ var PB_DirectToMessage__FOlD = &PB_DirectToMessage{
 	ChatKey:      "",
 	MessageId:    0,
 	SourceEnumId: 0,
-}
-
-type PB_DirectUpdate_Flat struct {
-	DirectUpdateId int
-	ToUserId       int
-	MessageId      int
-	MessageFileId  int
-	OtherId        int
-	ChatKey        string
-	PeerUserId     int
-	EventType      int
-	RoomLogTypeId  int
-	FromSeq        int
-	ToSeq          int
-	ExtraPB        []byte
-	ExtraJson      string
-	AtTimeMs       int
-}
-
-//ToPB
-func (m *PB_DirectUpdate) ToFlat() *PB_DirectUpdate_Flat {
-	r := &PB_DirectUpdate_Flat{
-		DirectUpdateId: int(m.DirectUpdateId),
-		ToUserId:       int(m.ToUserId),
-		MessageId:      int(m.MessageId),
-		MessageFileId:  int(m.MessageFileId),
-		OtherId:        int(m.OtherId),
-		ChatKey:        m.ChatKey,
-		PeerUserId:     int(m.PeerUserId),
-		EventType:      int(m.EventType),
-		RoomLogTypeId:  int(m.RoomLogTypeId),
-		FromSeq:        int(m.FromSeq),
-		ToSeq:          int(m.ToSeq),
-		ExtraPB:        []byte(m.ExtraPB),
-		ExtraJson:      m.ExtraJson,
-		AtTimeMs:       int(m.AtTimeMs),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_DirectUpdate_Flat) ToPB() *PB_DirectUpdate {
-	r := &PB_DirectUpdate{
-		DirectUpdateId: int64(m.DirectUpdateId),
-		ToUserId:       int32(m.ToUserId),
-		MessageId:      int64(m.MessageId),
-		MessageFileId:  int64(m.MessageFileId),
-		OtherId:        int64(m.OtherId),
-		ChatKey:        m.ChatKey,
-		PeerUserId:     int32(m.PeerUserId),
-		EventType:      int32(m.EventType),
-		RoomLogTypeId:  int32(m.RoomLogTypeId),
-		FromSeq:        int32(m.FromSeq),
-		ToSeq:          int32(m.ToSeq),
-		ExtraPB:        m.ExtraPB,
-		ExtraJson:      m.ExtraJson,
-		AtTimeMs:       int64(m.AtTimeMs),
-	}
-	return r
-}
-
-//folding
-var PB_DirectUpdate__FOlD = &PB_DirectUpdate{
-	DirectUpdateId: 0,
-	ToUserId:       0,
-	MessageId:      0,
-	MessageFileId:  0,
-	OtherId:        0,
-	ChatKey:        "",
-	PeerUserId:     0,
-	EventType:      0,
-	RoomLogTypeId:  0,
-	FromSeq:        0,
-	ToSeq:          0,
-	ExtraPB:        []byte{},
-	ExtraJson:      "",
-	AtTimeMs:       0,
 }
 
 type PB_FollowingList_Flat struct {
@@ -3077,39 +2977,6 @@ var PB_MessageFile__FOlD = &PB_MessageFile{
 	CanDel:          0,
 }
 
-type PB_Msg_Flat struct {
-	Key  string
-	Name string
-	Id   int
-}
-
-//ToPB
-func (m *PB_Msg) ToFlat() *PB_Msg_Flat {
-	r := &PB_Msg_Flat{
-		Key:  m.Key,
-		Name: m.Name,
-		Id:   int(m.Id),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_Msg_Flat) ToPB() *PB_Msg {
-	r := &PB_Msg{
-		Key:  m.Key,
-		Name: m.Name,
-		Id:   int32(m.Id),
-	}
-	return r
-}
-
-//folding
-var PB_Msg__FOlD = &PB_Msg{
-	Key:  "",
-	Name: "",
-	Id:   0,
-}
-
 type PB_Notification_Flat struct {
 	Id           int
 	ForUserId    int
@@ -3259,254 +3126,6 @@ var PB_Offline__FOlD = &PB_Offline{
 	DataBlob:    []byte{},
 	DataLength:  0,
 	CreatedMs:   0,
-}
-
-type PB_OldMessage_Flat struct {
-	Id            int
-	Uid           int
-	UserId        int
-	MessageKey    string
-	RoomKey       string
-	MessageType   int
-	RoomType      int
-	MsgFileId     int
-	DataPB        []byte
-	Data64        string
-	DataJson      string
-	CreatedTimeMs int
-}
-
-//ToPB
-func (m *PB_OldMessage) ToFlat() *PB_OldMessage_Flat {
-	r := &PB_OldMessage_Flat{
-		Id:            int(m.Id),
-		Uid:           int(m.Uid),
-		UserId:        int(m.UserId),
-		MessageKey:    m.MessageKey,
-		RoomKey:       m.RoomKey,
-		MessageType:   int(m.MessageType),
-		RoomType:      int(m.RoomType),
-		MsgFileId:     int(m.MsgFileId),
-		DataPB:        []byte(m.DataPB),
-		Data64:        m.Data64,
-		DataJson:      m.DataJson,
-		CreatedTimeMs: int(m.CreatedTimeMs),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_OldMessage_Flat) ToPB() *PB_OldMessage {
-	r := &PB_OldMessage{
-		Id:            int64(m.Id),
-		Uid:           int64(m.Uid),
-		UserId:        int64(m.UserId),
-		MessageKey:    m.MessageKey,
-		RoomKey:       m.RoomKey,
-		MessageType:   int32(m.MessageType),
-		RoomType:      int32(m.RoomType),
-		MsgFileId:     int64(m.MsgFileId),
-		DataPB:        m.DataPB,
-		Data64:        m.Data64,
-		DataJson:      m.DataJson,
-		CreatedTimeMs: int64(m.CreatedTimeMs),
-	}
-	return r
-}
-
-//folding
-var PB_OldMessage__FOlD = &PB_OldMessage{
-	Id:            0,
-	Uid:           0,
-	UserId:        0,
-	MessageKey:    "",
-	RoomKey:       "",
-	MessageType:   0,
-	RoomType:      0,
-	MsgFileId:     0,
-	DataPB:        []byte{},
-	Data64:        "",
-	DataJson:      "",
-	CreatedTimeMs: 0,
-}
-
-type PB_OldMsgFile_Flat struct {
-	Id          int
-	Name        string
-	Size        int
-	FileType    int
-	MimeType    string
-	Width       int
-	Height      int
-	Duration    int
-	Extension   string
-	ThumbData   []byte
-	ThumbData64 string
-	ServerSrc   string
-	ServerPath  string
-	ServerId    int
-	CanDel      int
-}
-
-//ToPB
-func (m *PB_OldMsgFile) ToFlat() *PB_OldMsgFile_Flat {
-	r := &PB_OldMsgFile_Flat{
-		Id:          int(m.Id),
-		Name:        m.Name,
-		Size:        int(m.Size),
-		FileType:    int(m.FileType),
-		MimeType:    m.MimeType,
-		Width:       int(m.Width),
-		Height:      int(m.Height),
-		Duration:    int(m.Duration),
-		Extension:   m.Extension,
-		ThumbData:   []byte(m.ThumbData),
-		ThumbData64: m.ThumbData64,
-		ServerSrc:   m.ServerSrc,
-		ServerPath:  m.ServerPath,
-		ServerId:    int(m.ServerId),
-		CanDel:      int(m.CanDel),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_OldMsgFile_Flat) ToPB() *PB_OldMsgFile {
-	r := &PB_OldMsgFile{
-		Id:          int64(m.Id),
-		Name:        m.Name,
-		Size:        int32(m.Size),
-		FileType:    int32(m.FileType),
-		MimeType:    m.MimeType,
-		Width:       int32(m.Width),
-		Height:      int32(m.Height),
-		Duration:    int32(m.Duration),
-		Extension:   m.Extension,
-		ThumbData:   m.ThumbData,
-		ThumbData64: m.ThumbData64,
-		ServerSrc:   m.ServerSrc,
-		ServerPath:  m.ServerPath,
-		ServerId:    int32(m.ServerId),
-		CanDel:      int32(m.CanDel),
-	}
-	return r
-}
-
-//folding
-var PB_OldMsgFile__FOlD = &PB_OldMsgFile{
-	Id:          0,
-	Name:        "",
-	Size:        0,
-	FileType:    0,
-	MimeType:    "",
-	Width:       0,
-	Height:      0,
-	Duration:    0,
-	Extension:   "",
-	ThumbData:   []byte{},
-	ThumbData64: "",
-	ServerSrc:   "",
-	ServerPath:  "",
-	ServerId:    0,
-	CanDel:      0,
-}
-
-type PB_OldMsgPush_Flat struct {
-	Id            int
-	Uid           int
-	ToUser        int
-	MsgUid        int
-	CreatedTimeMs int
-}
-
-//ToPB
-func (m *PB_OldMsgPush) ToFlat() *PB_OldMsgPush_Flat {
-	r := &PB_OldMsgPush_Flat{
-		Id:            int(m.Id),
-		Uid:           int(m.Uid),
-		ToUser:        int(m.ToUser),
-		MsgUid:        int(m.MsgUid),
-		CreatedTimeMs: int(m.CreatedTimeMs),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_OldMsgPush_Flat) ToPB() *PB_OldMsgPush {
-	r := &PB_OldMsgPush{
-		Id:            int64(m.Id),
-		Uid:           int64(m.Uid),
-		ToUser:        int64(m.ToUser),
-		MsgUid:        int64(m.MsgUid),
-		CreatedTimeMs: int64(m.CreatedTimeMs),
-	}
-	return r
-}
-
-//folding
-var PB_OldMsgPush__FOlD = &PB_OldMsgPush{
-	Id:            0,
-	Uid:           0,
-	ToUser:        0,
-	MsgUid:        0,
-	CreatedTimeMs: 0,
-}
-
-type PB_OldMsgPushEvent_Flat struct {
-	Id         int
-	Uid        int
-	ToUserId   int
-	MsgUid     int
-	MsgKey     string
-	RoomKey    string
-	PeerUserId int
-	EventType  int
-	AtTime     int
-}
-
-//ToPB
-func (m *PB_OldMsgPushEvent) ToFlat() *PB_OldMsgPushEvent_Flat {
-	r := &PB_OldMsgPushEvent_Flat{
-		Id:         int(m.Id),
-		Uid:        int(m.Uid),
-		ToUserId:   int(m.ToUserId),
-		MsgUid:     int(m.MsgUid),
-		MsgKey:     m.MsgKey,
-		RoomKey:    m.RoomKey,
-		PeerUserId: int(m.PeerUserId),
-		EventType:  int(m.EventType),
-		AtTime:     int(m.AtTime),
-	}
-	return r
-}
-
-//ToPB
-func (m *PB_OldMsgPushEvent_Flat) ToPB() *PB_OldMsgPushEvent {
-	r := &PB_OldMsgPushEvent{
-		Id:         int64(m.Id),
-		Uid:        int64(m.Uid),
-		ToUserId:   int32(m.ToUserId),
-		MsgUid:     int64(m.MsgUid),
-		MsgKey:     m.MsgKey,
-		RoomKey:    m.RoomKey,
-		PeerUserId: int32(m.PeerUserId),
-		EventType:  int32(m.EventType),
-		AtTime:     int32(m.AtTime),
-	}
-	return r
-}
-
-//folding
-var PB_OldMsgPushEvent__FOlD = &PB_OldMsgPushEvent{
-	Id:         0,
-	Uid:        0,
-	ToUserId:   0,
-	MsgUid:     0,
-	MsgKey:     "",
-	RoomKey:    "",
-	PeerUserId: 0,
-	EventType:  0,
-	AtTime:     0,
 }
 
 type PB_PhoneContact_Flat struct {
@@ -5654,6 +5273,20 @@ r := &PB_ChatResponse_GetFreshAllDirectMessagesList_Flat{
 return r
 }
 
+func(m *PB_OtherParam_Echo)ToFlat() *PB_OtherParam_Echo_Flat {
+r := &PB_OtherParam_Echo_Flat{
+    Text:  m.Text ,
+}
+return r
+}
+
+func(m *PB_OtherResponse_Echo)ToFlat() *PB_OtherResponse_Echo_Flat {
+r := &PB_OtherResponse_Echo_Flat{
+    Text:  m.Text ,
+}
+return r
+}
+
 func(m *PB_SyncParam_GetDirectUpdates)ToFlat() *PB_SyncParam_GetDirectUpdates_Flat {
 r := &PB_SyncParam_GetDirectUpdates_Flat{
     LastId:  int(m.LastId) ,
@@ -5961,51 +5594,12 @@ r := &PB_DirectOffline_Flat{
 return r
 }
 
-func(m *PB_DirectOfflineDep)ToFlat() *PB_DirectOfflineDep_Flat {
-r := &PB_DirectOfflineDep_Flat{
-    DirectOfflineId:  int(m.DirectOfflineId) ,
-    ToUserId:  int(m.ToUserId) ,
-    MessageId:  int(m.MessageId) ,
-    MessageFileId:  int(m.MessageFileId) ,
-    OtherId:  int(m.OtherId) ,
-    ChatKey:  m.ChatKey ,
-    PeerUserId:  int(m.PeerUserId) ,
-    RoomLogTypeId:  int(m.RoomLogTypeId) ,
-    PBClass:  m.PBClass ,
-    DataPB:  []byte(m.DataPB) ,
-    DataJson:  m.DataJson ,
-    DataTemp:  m.DataTemp ,
-    AtTimeMs:  int(m.AtTimeMs) ,
-}
-return r
-}
-
 func(m *PB_DirectToMessage)ToFlat() *PB_DirectToMessage_Flat {
 r := &PB_DirectToMessage_Flat{
     Id:  int(m.Id) ,
     ChatKey:  m.ChatKey ,
     MessageId:  int(m.MessageId) ,
     SourceEnumId:  int(m.SourceEnumId) ,
-}
-return r
-}
-
-func(m *PB_DirectUpdate)ToFlat() *PB_DirectUpdate_Flat {
-r := &PB_DirectUpdate_Flat{
-    DirectUpdateId:  int(m.DirectUpdateId) ,
-    ToUserId:  int(m.ToUserId) ,
-    MessageId:  int(m.MessageId) ,
-    MessageFileId:  int(m.MessageFileId) ,
-    OtherId:  int(m.OtherId) ,
-    ChatKey:  m.ChatKey ,
-    PeerUserId:  int(m.PeerUserId) ,
-    EventType:  int(m.EventType) ,
-    RoomLogTypeId:  int(m.RoomLogTypeId) ,
-    FromSeq:  int(m.FromSeq) ,
-    ToSeq:  int(m.ToSeq) ,
-    ExtraPB:  []byte(m.ExtraPB) ,
-    ExtraJson:  m.ExtraJson ,
-    AtTimeMs:  int(m.AtTimeMs) ,
 }
 return r
 }
@@ -6172,15 +5766,6 @@ r := &PB_MessageFile_Flat{
 return r
 }
 
-func(m *PB_Msg)ToFlat() *PB_Msg_Flat {
-r := &PB_Msg_Flat{
-    Key:  m.Key ,
-    Name:  m.Name ,
-    Id:  int(m.Id) ,
-}
-return r
-}
-
 func(m *PB_Notification)ToFlat() *PB_Notification_Flat {
 r := &PB_Notification_Flat{
     Id:  int(m.Id) ,
@@ -6217,71 +5802,6 @@ r := &PB_Offline_Flat{
     DataBlob:  []byte(m.DataBlob) ,
     DataLength:  int(m.DataLength) ,
     CreatedMs:  int(m.CreatedMs) ,
-}
-return r
-}
-
-func(m *PB_OldMessage)ToFlat() *PB_OldMessage_Flat {
-r := &PB_OldMessage_Flat{
-    Id:  int(m.Id) ,
-    Uid:  int(m.Uid) ,
-    UserId:  int(m.UserId) ,
-    MessageKey:  m.MessageKey ,
-    RoomKey:  m.RoomKey ,
-    MessageType:  int(m.MessageType) ,
-    RoomType:  int(m.RoomType) ,
-    MsgFileId:  int(m.MsgFileId) ,
-    DataPB:  []byte(m.DataPB) ,
-    Data64:  m.Data64 ,
-    DataJson:  m.DataJson ,
-    CreatedTimeMs:  int(m.CreatedTimeMs) ,
-}
-return r
-}
-
-func(m *PB_OldMsgFile)ToFlat() *PB_OldMsgFile_Flat {
-r := &PB_OldMsgFile_Flat{
-    Id:  int(m.Id) ,
-    Name:  m.Name ,
-    Size:  int(m.Size) ,
-    FileType:  int(m.FileType) ,
-    MimeType:  m.MimeType ,
-    Width:  int(m.Width) ,
-    Height:  int(m.Height) ,
-    Duration:  int(m.Duration) ,
-    Extension:  m.Extension ,
-    ThumbData:  []byte(m.ThumbData) ,
-    ThumbData64:  m.ThumbData64 ,
-    ServerSrc:  m.ServerSrc ,
-    ServerPath:  m.ServerPath ,
-    ServerId:  int(m.ServerId) ,
-    CanDel:  int(m.CanDel) ,
-}
-return r
-}
-
-func(m *PB_OldMsgPush)ToFlat() *PB_OldMsgPush_Flat {
-r := &PB_OldMsgPush_Flat{
-    Id:  int(m.Id) ,
-    Uid:  int(m.Uid) ,
-    ToUser:  int(m.ToUser) ,
-    MsgUid:  int(m.MsgUid) ,
-    CreatedTimeMs:  int(m.CreatedTimeMs) ,
-}
-return r
-}
-
-func(m *PB_OldMsgPushEvent)ToFlat() *PB_OldMsgPushEvent_Flat {
-r := &PB_OldMsgPushEvent_Flat{
-    Id:  int(m.Id) ,
-    Uid:  int(m.Uid) ,
-    ToUserId:  int(m.ToUserId) ,
-    MsgUid:  int(m.MsgUid) ,
-    MsgKey:  m.MsgKey ,
-    RoomKey:  m.RoomKey ,
-    PeerUserId:  int(m.PeerUserId) ,
-    EventType:  int(m.EventType) ,
-    AtTime:  int(m.AtTime) ,
 }
 return r
 }
@@ -7124,6 +6644,20 @@ r := &PB_ChatResponse_GetFreshAllDirectMessagesList{
 return r
 }
 
+func(m *PB_OtherParam_Echo_Flat)ToPB() *PB_OtherParam_Echo {
+r := &PB_OtherParam_Echo{
+    Text:  m.Text ,
+}
+return r
+}
+
+func(m *PB_OtherResponse_Echo_Flat)ToPB() *PB_OtherResponse_Echo {
+r := &PB_OtherResponse_Echo{
+    Text:  m.Text ,
+}
+return r
+}
+
 func(m *PB_SyncParam_GetDirectUpdates_Flat)ToPB() *PB_SyncParam_GetDirectUpdates {
 r := &PB_SyncParam_GetDirectUpdates{
     LastId:  int64(m.LastId) ,
@@ -7431,51 +6965,12 @@ r := &PB_DirectOffline{
 return r
 }
 
-func(m *PB_DirectOfflineDep_Flat)ToPB() *PB_DirectOfflineDep {
-r := &PB_DirectOfflineDep{
-    DirectOfflineId:  int64(m.DirectOfflineId) ,
-    ToUserId:  int32(m.ToUserId) ,
-    MessageId:  int64(m.MessageId) ,
-    MessageFileId:  int64(m.MessageFileId) ,
-    OtherId:  int64(m.OtherId) ,
-    ChatKey:  m.ChatKey ,
-    PeerUserId:  int32(m.PeerUserId) ,
-    RoomLogTypeId:  int32(m.RoomLogTypeId) ,
-    PBClass:  m.PBClass ,
-    DataPB:  m.DataPB ,
-    DataJson:  m.DataJson ,
-    DataTemp:  m.DataTemp ,
-    AtTimeMs:  int64(m.AtTimeMs) ,
-}
-return r
-}
-
 func(m *PB_DirectToMessage_Flat)ToPB() *PB_DirectToMessage {
 r := &PB_DirectToMessage{
     Id:  int64(m.Id) ,
     ChatKey:  m.ChatKey ,
     MessageId:  int64(m.MessageId) ,
     SourceEnumId:  int32(m.SourceEnumId) ,
-}
-return r
-}
-
-func(m *PB_DirectUpdate_Flat)ToPB() *PB_DirectUpdate {
-r := &PB_DirectUpdate{
-    DirectUpdateId:  int64(m.DirectUpdateId) ,
-    ToUserId:  int32(m.ToUserId) ,
-    MessageId:  int64(m.MessageId) ,
-    MessageFileId:  int64(m.MessageFileId) ,
-    OtherId:  int64(m.OtherId) ,
-    ChatKey:  m.ChatKey ,
-    PeerUserId:  int32(m.PeerUserId) ,
-    EventType:  int32(m.EventType) ,
-    RoomLogTypeId:  int32(m.RoomLogTypeId) ,
-    FromSeq:  int32(m.FromSeq) ,
-    ToSeq:  int32(m.ToSeq) ,
-    ExtraPB:  m.ExtraPB ,
-    ExtraJson:  m.ExtraJson ,
-    AtTimeMs:  int64(m.AtTimeMs) ,
 }
 return r
 }
@@ -7642,15 +7137,6 @@ r := &PB_MessageFile{
 return r
 }
 
-func(m *PB_Msg_Flat)ToPB() *PB_Msg {
-r := &PB_Msg{
-    Key:  m.Key ,
-    Name:  m.Name ,
-    Id:  int32(m.Id) ,
-}
-return r
-}
-
 func(m *PB_Notification_Flat)ToPB() *PB_Notification {
 r := &PB_Notification{
     Id:  int64(m.Id) ,
@@ -7687,71 +7173,6 @@ r := &PB_Offline{
     DataBlob:  m.DataBlob ,
     DataLength:  int32(m.DataLength) ,
     CreatedMs:  int64(m.CreatedMs) ,
-}
-return r
-}
-
-func(m *PB_OldMessage_Flat)ToPB() *PB_OldMessage {
-r := &PB_OldMessage{
-    Id:  int64(m.Id) ,
-    Uid:  int64(m.Uid) ,
-    UserId:  int64(m.UserId) ,
-    MessageKey:  m.MessageKey ,
-    RoomKey:  m.RoomKey ,
-    MessageType:  int32(m.MessageType) ,
-    RoomType:  int32(m.RoomType) ,
-    MsgFileId:  int64(m.MsgFileId) ,
-    DataPB:  m.DataPB ,
-    Data64:  m.Data64 ,
-    DataJson:  m.DataJson ,
-    CreatedTimeMs:  int64(m.CreatedTimeMs) ,
-}
-return r
-}
-
-func(m *PB_OldMsgFile_Flat)ToPB() *PB_OldMsgFile {
-r := &PB_OldMsgFile{
-    Id:  int64(m.Id) ,
-    Name:  m.Name ,
-    Size:  int32(m.Size) ,
-    FileType:  int32(m.FileType) ,
-    MimeType:  m.MimeType ,
-    Width:  int32(m.Width) ,
-    Height:  int32(m.Height) ,
-    Duration:  int32(m.Duration) ,
-    Extension:  m.Extension ,
-    ThumbData:  m.ThumbData ,
-    ThumbData64:  m.ThumbData64 ,
-    ServerSrc:  m.ServerSrc ,
-    ServerPath:  m.ServerPath ,
-    ServerId:  int32(m.ServerId) ,
-    CanDel:  int32(m.CanDel) ,
-}
-return r
-}
-
-func(m *PB_OldMsgPush_Flat)ToPB() *PB_OldMsgPush {
-r := &PB_OldMsgPush{
-    Id:  int64(m.Id) ,
-    Uid:  int64(m.Uid) ,
-    ToUser:  int64(m.ToUser) ,
-    MsgUid:  int64(m.MsgUid) ,
-    CreatedTimeMs:  int64(m.CreatedTimeMs) ,
-}
-return r
-}
-
-func(m *PB_OldMsgPushEvent_Flat)ToPB() *PB_OldMsgPushEvent {
-r := &PB_OldMsgPushEvent{
-    Id:  int64(m.Id) ,
-    Uid:  int64(m.Uid) ,
-    ToUserId:  int32(m.ToUserId) ,
-    MsgUid:  int64(m.MsgUid) ,
-    MsgKey:  m.MsgKey ,
-    RoomKey:  m.RoomKey ,
-    PeerUserId:  int32(m.PeerUserId) ,
-    EventType:  int32(m.EventType) ,
-    AtTime:  int32(m.AtTime) ,
 }
 return r
 }
@@ -8506,6 +7927,16 @@ var PB_ChatResponse_GetFreshAllDirectMessagesList__FOlD = &PB_ChatResponse_GetFr
 }
 
 
+var PB_OtherParam_Echo__FOlD = &PB_OtherParam_Echo{
+        Text:  "" ,
+}
+
+
+var PB_OtherResponse_Echo__FOlD = &PB_OtherResponse_Echo{
+        Text:  "" ,
+}
+
+
 var PB_SyncParam_GetDirectUpdates__FOlD = &PB_SyncParam_GetDirectUpdates{
         LastId:  0 ,
 }
@@ -8741,46 +8172,11 @@ var PB_DirectOffline__FOlD = &PB_DirectOffline{
 }
 
 
-var PB_DirectOfflineDep__FOlD = &PB_DirectOfflineDep{
-        DirectOfflineId:  0 ,
-        ToUserId:  0 ,
-        MessageId:  0 ,
-        MessageFileId:  0 ,
-        OtherId:  0 ,
-        ChatKey:  "" ,
-        PeerUserId:  0 ,
-        RoomLogTypeId:  0 ,
-        PBClass:  "" ,
-        DataPB:  []byte{} ,
-        DataJson:  "" ,
-        DataTemp:  "" ,
-        AtTimeMs:  0 ,
-}
-
-
 var PB_DirectToMessage__FOlD = &PB_DirectToMessage{
         Id:  0 ,
         ChatKey:  "" ,
         MessageId:  0 ,
         SourceEnumId:  0 ,
-}
-
-
-var PB_DirectUpdate__FOlD = &PB_DirectUpdate{
-        DirectUpdateId:  0 ,
-        ToUserId:  0 ,
-        MessageId:  0 ,
-        MessageFileId:  0 ,
-        OtherId:  0 ,
-        ChatKey:  "" ,
-        PeerUserId:  0 ,
-        EventType:  0 ,
-        RoomLogTypeId:  0 ,
-        FromSeq:  0 ,
-        ToSeq:  0 ,
-        ExtraPB:  []byte{} ,
-        ExtraJson:  "" ,
-        AtTimeMs:  0 ,
 }
 
 
@@ -8922,13 +8318,6 @@ var PB_MessageFile__FOlD = &PB_MessageFile{
 }
 
 
-var PB_Msg__FOlD = &PB_Msg{
-        Key:  "" ,
-        Name:  "" ,
-        Id:  0 ,
-}
-
-
 var PB_Notification__FOlD = &PB_Notification{
         Id:  0 ,
         ForUserId:  0 ,
@@ -8960,63 +8349,6 @@ var PB_Offline__FOlD = &PB_Offline{
         DataBlob:  []byte{} ,
         DataLength:  0 ,
         CreatedMs:  0 ,
-}
-
-
-var PB_OldMessage__FOlD = &PB_OldMessage{
-        Id:  0 ,
-        Uid:  0 ,
-        UserId:  0 ,
-        MessageKey:  "" ,
-        RoomKey:  "" ,
-        MessageType:  0 ,
-        RoomType:  0 ,
-        MsgFileId:  0 ,
-        DataPB:  []byte{} ,
-        Data64:  "" ,
-        DataJson:  "" ,
-        CreatedTimeMs:  0 ,
-}
-
-
-var PB_OldMsgFile__FOlD = &PB_OldMsgFile{
-        Id:  0 ,
-        Name:  "" ,
-        Size:  0 ,
-        FileType:  0 ,
-        MimeType:  "" ,
-        Width:  0 ,
-        Height:  0 ,
-        Duration:  0 ,
-        Extension:  "" ,
-        ThumbData:  []byte{} ,
-        ThumbData64:  "" ,
-        ServerSrc:  "" ,
-        ServerPath:  "" ,
-        ServerId:  0 ,
-        CanDel:  0 ,
-}
-
-
-var PB_OldMsgPush__FOlD = &PB_OldMsgPush{
-        Id:  0 ,
-        Uid:  0 ,
-        ToUser:  0 ,
-        MsgUid:  0 ,
-        CreatedTimeMs:  0 ,
-}
-
-
-var PB_OldMsgPushEvent__FOlD = &PB_OldMsgPushEvent{
-        Id:  0 ,
-        Uid:  0 ,
-        ToUserId:  0 ,
-        MsgUid:  0 ,
-        MsgKey:  "" ,
-        RoomKey:  "" ,
-        PeerUserId:  0 ,
-        EventType:  0 ,
-        AtTime:  0 ,
 }
 
 

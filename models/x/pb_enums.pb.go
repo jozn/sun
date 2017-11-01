@@ -10,6 +10,7 @@ It is generated from these files:
 	pb_offlines.proto
 	pb_rpc_auth2.proto
 	pb_rpc_chat.proto
+	pb_rpc_other.proto
 	pb_rpc_sync.proto
 	pb_rpc_user.proto
 	pb_tables.proto
@@ -61,6 +62,8 @@ It has these top-level messages:
 	PB_ChatResponse_GetChatHistoryToOlder
 	PB_ChatParam_GetFreshAllDirectMessagesList
 	PB_ChatResponse_GetFreshAllDirectMessagesList
+	PB_OtherParam_Echo
+	PB_OtherResponse_Echo
 	PB_SyncParam_GetDirectUpdates
 	PB_SyncParam_GetGeneralUpdates
 	PB_SyncResponse_GetGeneralUpdates
@@ -97,9 +100,7 @@ It has these top-level messages:
 	PB_Comment
 	PB_DirectMessage
 	PB_DirectOffline
-	PB_DirectOfflineDep
 	PB_DirectToMessage
-	PB_DirectUpdate
 	PB_FollowingList
 	PB_FollowingListMember
 	PB_FollowingListMemberHistory
@@ -112,14 +113,9 @@ It has these top-level messages:
 	PB_LogChange
 	PB_Media
 	PB_MessageFile
-	PB_Msg
 	PB_Notification
 	PB_NotificationRemoved
 	PB_Offline
-	PB_OldMessage
-	PB_OldMsgFile
-	PB_OldMsgPush
-	PB_OldMsgPushEvent
 	PB_PhoneContact
 	PB_Photo
 	PB_Post

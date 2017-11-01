@@ -185,45 +185,6 @@ func PBConvPB_DirectOffline_To_DirectOffline ( o *DirectOffline) *PB_DirectOffli
 }
 */
 /*
-func PBConvPB__DirectOfflineDep_To_DirectOfflineDep( o *PB_DirectOfflineDep) *DirectOfflineDep {
-     n := &DirectOfflineDep{
-      DirectOfflineId: int ( o.DirectOfflineId ),
-      ToUserId: int ( o.ToUserId ),
-      MessageId: int ( o.MessageId ),
-      MessageFileId: int ( o.MessageFileId ),
-      OtherId: int ( o.OtherId ),
-      ChatKey: string ( o.ChatKey ),
-      PeerUserId: int ( o.PeerUserId ),
-      RoomLogTypeId: int ( o.RoomLogTypeId ),
-      PBClass: string ( o.PBClass ),
-      DataPB: []byte ( o.DataPB ),
-      DataJson: string ( o.DataJson ),
-      DataTemp: string ( o.DataTemp ),
-      AtTimeMs: int ( o.AtTimeMs ),
-    }
-    return n
-}
-
-func PBConvPB_DirectOfflineDep_To_DirectOfflineDep ( o *DirectOfflineDep) *PB_DirectOfflineDep {
-     n := &PB_DirectOfflineDep{
-      DirectOfflineId: int64 ( o.DirectOfflineId ),
-      ToUserId: int32 ( o.ToUserId ),
-      MessageId: int64 ( o.MessageId ),
-      MessageFileId: int64 ( o.MessageFileId ),
-      OtherId: int64 ( o.OtherId ),
-      ChatKey: string ( o.ChatKey ),
-      PeerUserId: int32 ( o.PeerUserId ),
-      RoomLogTypeId: int32 ( o.RoomLogTypeId ),
-      PBClass: string ( o.PBClass ),
-      DataPB: []byte ( o.DataPB ),
-      DataJson: string ( o.DataJson ),
-      DataTemp: string ( o.DataTemp ),
-      AtTimeMs: int64 ( o.AtTimeMs ),
-    }
-    return n
-}
-*/
-/*
 func PBConvPB__DirectToMessage_To_DirectToMessage( o *PB_DirectToMessage) *DirectToMessage {
      n := &DirectToMessage{
       Id: int ( o.Id ),
@@ -240,47 +201,6 @@ func PBConvPB_DirectToMessage_To_DirectToMessage ( o *DirectToMessage) *PB_Direc
       ChatKey: string ( o.ChatKey ),
       MessageId: int64 ( o.MessageId ),
       SourceEnumId: int32 ( o.SourceEnumId ),
-    }
-    return n
-}
-*/
-/*
-func PBConvPB__DirectUpdate_To_DirectUpdate( o *PB_DirectUpdate) *DirectUpdate {
-     n := &DirectUpdate{
-      DirectUpdateId: int ( o.DirectUpdateId ),
-      ToUserId: int ( o.ToUserId ),
-      MessageId: int ( o.MessageId ),
-      MessageFileId: int ( o.MessageFileId ),
-      OtherId: int ( o.OtherId ),
-      ChatKey: string ( o.ChatKey ),
-      PeerUserId: int ( o.PeerUserId ),
-      EventType: int ( o.EventType ),
-      RoomLogTypeId: int ( o.RoomLogTypeId ),
-      FromSeq: int ( o.FromSeq ),
-      ToSeq: int ( o.ToSeq ),
-      ExtraPB: []byte ( o.ExtraPB ),
-      ExtraJson: string ( o.ExtraJson ),
-      AtTimeMs: int ( o.AtTimeMs ),
-    }
-    return n
-}
-
-func PBConvPB_DirectUpdate_To_DirectUpdate ( o *DirectUpdate) *PB_DirectUpdate {
-     n := &PB_DirectUpdate{
-      DirectUpdateId: int64 ( o.DirectUpdateId ),
-      ToUserId: int32 ( o.ToUserId ),
-      MessageId: int64 ( o.MessageId ),
-      MessageFileId: int64 ( o.MessageFileId ),
-      OtherId: int64 ( o.OtherId ),
-      ChatKey: string ( o.ChatKey ),
-      PeerUserId: int32 ( o.PeerUserId ),
-      EventType: int32 ( o.EventType ),
-      RoomLogTypeId: int32 ( o.RoomLogTypeId ),
-      FromSeq: int32 ( o.FromSeq ),
-      ToSeq: int32 ( o.ToSeq ),
-      ExtraPB: []byte ( o.ExtraPB ),
-      ExtraJson: string ( o.ExtraJson ),
-      AtTimeMs: int64 ( o.AtTimeMs ),
     }
     return n
 }
@@ -622,25 +542,6 @@ func PBConvPB_MessageFile_To_MessageFile ( o *MessageFile) *PB_MessageFile {
 }
 */
 /*
-func PBConvPB__Msg_To_Msg( o *PB_Msg) *Msg {
-     n := &Msg{
-      Key: string ( o.Key ),
-      Name: string ( o.Name ),
-      Id: int ( o.Id ),
-    }
-    return n
-}
-
-func PBConvPB_Msg_To_Msg ( o *Msg) *PB_Msg {
-     n := &PB_Msg{
-      Key: string ( o.Key ),
-      Name: string ( o.Name ),
-      Id: int32 ( o.Id ),
-    }
-    return n
-}
-*/
-/*
 func PBConvPB__Notification_To_Notification( o *PB_Notification) *Notification {
      n := &Notification{
       Id: int ( o.Id ),
@@ -719,140 +620,6 @@ func PBConvPB_Offline_To_Offline ( o *Offline) *PB_Offline {
       DataBlob: []byte ( o.DataBlob ),
       DataLength: int32 ( o.DataLength ),
       CreatedMs: int64 ( o.CreatedMs ),
-    }
-    return n
-}
-*/
-/*
-func PBConvPB__OldMessage_To_OldMessage( o *PB_OldMessage) *OldMessage {
-     n := &OldMessage{
-      Id: int ( o.Id ),
-      Uid: int ( o.Uid ),
-      UserId: int ( o.UserId ),
-      MessageKey: string ( o.MessageKey ),
-      RoomKey: string ( o.RoomKey ),
-      MessageType: int ( o.MessageType ),
-      RoomType: int ( o.RoomType ),
-      MsgFileId: int ( o.MsgFileId ),
-      DataPB: []byte ( o.DataPB ),
-      Data64: string ( o.Data64 ),
-      DataJson: string ( o.DataJson ),
-      CreatedTimeMs: int ( o.CreatedTimeMs ),
-    }
-    return n
-}
-
-func PBConvPB_OldMessage_To_OldMessage ( o *OldMessage) *PB_OldMessage {
-     n := &PB_OldMessage{
-      Id: int64 ( o.Id ),
-      Uid: int64 ( o.Uid ),
-      UserId: int64 ( o.UserId ),
-      MessageKey: string ( o.MessageKey ),
-      RoomKey: string ( o.RoomKey ),
-      MessageType: int32 ( o.MessageType ),
-      RoomType: int32 ( o.RoomType ),
-      MsgFileId: int64 ( o.MsgFileId ),
-      DataPB: []byte ( o.DataPB ),
-      Data64: string ( o.Data64 ),
-      DataJson: string ( o.DataJson ),
-      CreatedTimeMs: int64 ( o.CreatedTimeMs ),
-    }
-    return n
-}
-*/
-/*
-func PBConvPB__OldMsgFile_To_OldMsgFile( o *PB_OldMsgFile) *OldMsgFile {
-     n := &OldMsgFile{
-      Id: int ( o.Id ),
-      Name: string ( o.Name ),
-      Size: int ( o.Size ),
-      FileType: int ( o.FileType ),
-      MimeType: string ( o.MimeType ),
-      Width: int ( o.Width ),
-      Height: int ( o.Height ),
-      Duration: int ( o.Duration ),
-      Extension: string ( o.Extension ),
-      ThumbData: []byte ( o.ThumbData ),
-      ThumbData64: string ( o.ThumbData64 ),
-      ServerSrc: string ( o.ServerSrc ),
-      ServerPath: string ( o.ServerPath ),
-      ServerId: int ( o.ServerId ),
-      CanDel: int ( o.CanDel ),
-    }
-    return n
-}
-
-func PBConvPB_OldMsgFile_To_OldMsgFile ( o *OldMsgFile) *PB_OldMsgFile {
-     n := &PB_OldMsgFile{
-      Id: int64 ( o.Id ),
-      Name: string ( o.Name ),
-      Size: int32 ( o.Size ),
-      FileType: int32 ( o.FileType ),
-      MimeType: string ( o.MimeType ),
-      Width: int32 ( o.Width ),
-      Height: int32 ( o.Height ),
-      Duration: int32 ( o.Duration ),
-      Extension: string ( o.Extension ),
-      ThumbData: []byte ( o.ThumbData ),
-      ThumbData64: string ( o.ThumbData64 ),
-      ServerSrc: string ( o.ServerSrc ),
-      ServerPath: string ( o.ServerPath ),
-      ServerId: int32 ( o.ServerId ),
-      CanDel: int32 ( o.CanDel ),
-    }
-    return n
-}
-*/
-/*
-func PBConvPB__OldMsgPush_To_OldMsgPush( o *PB_OldMsgPush) *OldMsgPush {
-     n := &OldMsgPush{
-      Id: int ( o.Id ),
-      Uid: int ( o.Uid ),
-      ToUser: int ( o.ToUser ),
-      MsgUid: int ( o.MsgUid ),
-      CreatedTimeMs: int ( o.CreatedTimeMs ),
-    }
-    return n
-}
-
-func PBConvPB_OldMsgPush_To_OldMsgPush ( o *OldMsgPush) *PB_OldMsgPush {
-     n := &PB_OldMsgPush{
-      Id: int64 ( o.Id ),
-      Uid: int64 ( o.Uid ),
-      ToUser: int64 ( o.ToUser ),
-      MsgUid: int64 ( o.MsgUid ),
-      CreatedTimeMs: int64 ( o.CreatedTimeMs ),
-    }
-    return n
-}
-*/
-/*
-func PBConvPB__OldMsgPushEvent_To_OldMsgPushEvent( o *PB_OldMsgPushEvent) *OldMsgPushEvent {
-     n := &OldMsgPushEvent{
-      Id: int ( o.Id ),
-      Uid: int ( o.Uid ),
-      ToUserId: int ( o.ToUserId ),
-      MsgUid: int ( o.MsgUid ),
-      MsgKey: string ( o.MsgKey ),
-      RoomKey: string ( o.RoomKey ),
-      PeerUserId: int ( o.PeerUserId ),
-      EventType: int ( o.EventType ),
-      AtTime: int ( o.AtTime ),
-    }
-    return n
-}
-
-func PBConvPB_OldMsgPushEvent_To_OldMsgPushEvent ( o *OldMsgPushEvent) *PB_OldMsgPushEvent {
-     n := &PB_OldMsgPushEvent{
-      Id: int64 ( o.Id ),
-      Uid: int64 ( o.Uid ),
-      ToUserId: int32 ( o.ToUserId ),
-      MsgUid: int64 ( o.MsgUid ),
-      MsgKey: string ( o.MsgKey ),
-      RoomKey: string ( o.RoomKey ),
-      PeerUserId: int32 ( o.PeerUserId ),
-      EventType: int32 ( o.EventType ),
-      AtTime: int32 ( o.AtTime ),
     }
     return n
 }

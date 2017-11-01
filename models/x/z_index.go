@@ -148,30 +148,6 @@ func DirectOfflineByDirectOfflineId(db *sqlx.DB, directOfflineId int) (*DirectOf
 	return &do, nil
 }
 
-// DirectOfflineDepByDirectOfflineId Generated from index 'PRIMARY' -- retrieves a row from 'ms.direct_offline_dep' as a DirectOfflineDep.
-func DirectOfflineDepByDirectOfflineId(db *sqlx.DB, directOfflineId int) (*DirectOfflineDep, error) {
-	var err error
-
-	const sqlstr = `SELECT * ` +
-		`FROM ms.direct_offline_dep ` +
-		`WHERE DirectOfflineId = ?`
-
-	XOLog(sqlstr, directOfflineId)
-	dod := DirectOfflineDep{
-		_exists: true,
-	}
-
-	err = db.Get(&dod, sqlstr, directOfflineId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnDirectOfflineDep_LoadOne(&dod)
-
-	return &dod, nil
-}
-
 // DirectToMessageById Generated from index 'PRIMARY' -- retrieves a row from 'ms.direct_to_message' as a DirectToMessage.
 func DirectToMessageById(db *sqlx.DB, id int) (*DirectToMessage, error) {
 	var err error
@@ -194,30 +170,6 @@ func DirectToMessageById(db *sqlx.DB, id int) (*DirectToMessage, error) {
 	OnDirectToMessage_LoadOne(&dtm)
 
 	return &dtm, nil
-}
-
-// DirectUpdateByDirectUpdateId Generated from index 'PRIMARY' -- retrieves a row from 'ms.direct_update' as a DirectUpdate.
-func DirectUpdateByDirectUpdateId(db *sqlx.DB, directUpdateId int) (*DirectUpdate, error) {
-	var err error
-
-	const sqlstr = `SELECT * ` +
-		`FROM ms.direct_update ` +
-		`WHERE DirectUpdateId = ?`
-
-	XOLog(sqlstr, directUpdateId)
-	du := DirectUpdate{
-		_exists: true,
-	}
-
-	err = db.Get(&du, sqlstr, directUpdateId)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnDirectUpdate_LoadOne(&du)
-
-	return &du, nil
 }
 
 // FollowingListById Generated from index 'PRIMARY' -- retrieves a row from 'ms.following_list' as a FollowingList.
@@ -508,30 +460,6 @@ func MessageFileByMessageFileId(db *sqlx.DB, messageFileId int) (*MessageFile, e
 	return &mf, nil
 }
 
-// MsgByKey Generated from index 'PRIMARY' -- retrieves a row from 'ms.msg' as a Msg.
-func MsgByKey(db *sqlx.DB, key string) (*Msg, error) {
-	var err error
-
-	const sqlstr = `SELECT * ` +
-		`FROM ms.msg ` +
-		`WHERE Key = ?`
-
-	XOLog(sqlstr, key)
-	m := Msg{
-		_exists: true,
-	}
-
-	err = db.Get(&m, sqlstr, key)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnMsg_LoadOne(&m)
-
-	return &m, nil
-}
-
 // NotificationById Generated from index 'PRIMARY' -- retrieves a row from 'ms.notification' as a Notification.
 func NotificationById(db *sqlx.DB, id int) (*Notification, error) {
 	var err error
@@ -602,102 +530,6 @@ func OfflineById(db *sqlx.DB, id int) (*Offline, error) {
 	OnOffline_LoadOne(&o)
 
 	return &o, nil
-}
-
-// OldMessageById Generated from index 'PRIMARY' -- retrieves a row from 'ms.old_messages' as a OldMessage.
-func OldMessageById(db *sqlx.DB, id int) (*OldMessage, error) {
-	var err error
-
-	const sqlstr = `SELECT * ` +
-		`FROM ms.old_messages ` +
-		`WHERE Id = ?`
-
-	XOLog(sqlstr, id)
-	om := OldMessage{
-		_exists: true,
-	}
-
-	err = db.Get(&om, sqlstr, id)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnOldMessage_LoadOne(&om)
-
-	return &om, nil
-}
-
-// OldMsgFileById Generated from index 'PRIMARY' -- retrieves a row from 'ms.old_msg_file' as a OldMsgFile.
-func OldMsgFileById(db *sqlx.DB, id int) (*OldMsgFile, error) {
-	var err error
-
-	const sqlstr = `SELECT * ` +
-		`FROM ms.old_msg_file ` +
-		`WHERE Id = ?`
-
-	XOLog(sqlstr, id)
-	omf := OldMsgFile{
-		_exists: true,
-	}
-
-	err = db.Get(&omf, sqlstr, id)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnOldMsgFile_LoadOne(&omf)
-
-	return &omf, nil
-}
-
-// OldMsgPushById Generated from index 'PRIMARY' -- retrieves a row from 'ms.old_msg_push' as a OldMsgPush.
-func OldMsgPushById(db *sqlx.DB, id int) (*OldMsgPush, error) {
-	var err error
-
-	const sqlstr = `SELECT * ` +
-		`FROM ms.old_msg_push ` +
-		`WHERE Id = ?`
-
-	XOLog(sqlstr, id)
-	omp := OldMsgPush{
-		_exists: true,
-	}
-
-	err = db.Get(&omp, sqlstr, id)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnOldMsgPush_LoadOne(&omp)
-
-	return &omp, nil
-}
-
-// OldMsgPushEventById Generated from index 'PRIMARY' -- retrieves a row from 'ms.old_msg_push_event' as a OldMsgPushEvent.
-func OldMsgPushEventById(db *sqlx.DB, id int) (*OldMsgPushEvent, error) {
-	var err error
-
-	const sqlstr = `SELECT * ` +
-		`FROM ms.old_msg_push_event ` +
-		`WHERE Id = ?`
-
-	XOLog(sqlstr, id)
-	ompe := OldMsgPushEvent{
-		_exists: true,
-	}
-
-	err = db.Get(&ompe, sqlstr, id)
-	if err != nil {
-		XOLogErr(err)
-		return nil, err
-	}
-
-	OnOldMsgPushEvent_LoadOne(&ompe)
-
-	return &ompe, nil
 }
 
 // PhoneContactById Generated from index 'PRIMARY' -- retrieves a row from 'ms.phone_contacts' as a PhoneContact.

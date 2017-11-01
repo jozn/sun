@@ -31,6 +31,10 @@ enum RPC_Chat_Enum {
     GetChatHistoryToOlder = 7782;
     GetFreshAllDirectMessagesList = 1094;
 }
+enum RPC_Other_Enum {
+    EMPTY = 0;
+    Echo = 7265;
+}
 enum RPC_Sync_Enum {
     EMPTY = 0;
     GetGeneralUpdates = 9188;

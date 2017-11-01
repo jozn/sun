@@ -160,41 +160,6 @@ type DirectOffline struct {
 	DataTemp: "",
 	AtTimeMs: 0,
 */
-// direct_offline_dep 'DirectOfflineDep'.
-type DirectOfflineDep struct {
-	DirectOfflineId int
-	ToUserId        int
-	MessageId       int
-	MessageFileId   int
-	OtherId         int
-	ChatKey         string
-	PeerUserId      int
-	RoomLogTypeId   int
-	PBClass         string
-	DataPB          []byte
-	DataJson        string
-	DataTemp        string //not real data
-	AtTimeMs        int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &DirectOfflineDep {
-	DirectOfflineId: 0,
-	ToUserId: 0,
-	MessageId: 0,
-	MessageFileId: 0,
-	OtherId: 0,
-	ChatKey: "",
-	PeerUserId: 0,
-	RoomLogTypeId: 0,
-	PBClass: "",
-	DataPB: []byte{},
-	DataJson: "",
-	DataTemp: "",
-	AtTimeMs: 0,
-*/
 // direct_to_message 'DirectToMessage'.
 type DirectToMessage struct {
 	Id           int
@@ -211,43 +176,6 @@ type DirectToMessage struct {
 	ChatKey: "",
 	MessageId: 0,
 	SourceEnumId: 0,
-*/
-// direct_update 'DirectUpdate'.
-type DirectUpdate struct {
-	DirectUpdateId int
-	ToUserId       int
-	MessageId      int
-	MessageFileId  int
-	OtherId        int
-	ChatKey        string
-	PeerUserId     int
-	EventType      int
-	RoomLogTypeId  int
-	FromSeq        int
-	ToSeq          int
-	ExtraPB        []byte
-	ExtraJson      string
-	AtTimeMs       int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &DirectUpdate {
-	DirectUpdateId: 0,
-	ToUserId: 0,
-	MessageId: 0,
-	MessageFileId: 0,
-	OtherId: 0,
-	ChatKey: "",
-	PeerUserId: 0,
-	EventType: 0,
-	RoomLogTypeId: 0,
-	FromSeq: 0,
-	ToSeq: 0,
-	ExtraPB: []byte{},
-	ExtraJson: "",
-	AtTimeMs: 0,
 */
 // following_list 'FollowingList'.
 type FollowingList struct {
@@ -537,21 +465,6 @@ type MessageFile struct {
 	ServerId: 0,
 	CanDel: 0,
 */
-// msg 'Msg'.
-type Msg struct {
-	Key  string
-	Name string
-	Id   int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &Msg {
-	Key: "",
-	Name: "",
-	Id: 0,
-*/
 // notification 'Notification'.
 type Notification struct {
 	Id           int
@@ -622,124 +535,6 @@ type Offline struct {
 	DataBlob: []byte{},
 	DataLength: 0,
 	CreatedMs: 0,
-*/
-// old_messages 'OldMessage'.
-type OldMessage struct {
-	Id            int
-	Uid           int
-	UserId        int
-	MessageKey    string
-	RoomKey       string
-	MessageType   int
-	RoomType      int
-	MsgFileId     int
-	DataPB        []byte
-	Data64        string
-	DataJson      string
-	CreatedTimeMs int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &OldMessage {
-	Id: 0,
-	Uid: 0,
-	UserId: 0,
-	MessageKey: "",
-	RoomKey: "",
-	MessageType: 0,
-	RoomType: 0,
-	MsgFileId: 0,
-	DataPB: []byte{},
-	Data64: "",
-	DataJson: "",
-	CreatedTimeMs: 0,
-*/
-// old_msg_file 'OldMsgFile'.
-type OldMsgFile struct {
-	Id          int
-	Name        string
-	Size        int
-	FileType    int
-	MimeType    string
-	Width       int
-	Height      int
-	Duration    int
-	Extension   string
-	ThumbData   []byte
-	ThumbData64 string
-	ServerSrc   string
-	ServerPath  string
-	ServerId    int
-	CanDel      int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &OldMsgFile {
-	Id: 0,
-	Name: "",
-	Size: 0,
-	FileType: 0,
-	MimeType: "",
-	Width: 0,
-	Height: 0,
-	Duration: 0,
-	Extension: "",
-	ThumbData: []byte{},
-	ThumbData64: "",
-	ServerSrc: "",
-	ServerPath: "",
-	ServerId: 0,
-	CanDel: 0,
-*/
-// old_msg_push 'OldMsgPush'.
-type OldMsgPush struct {
-	Id            int
-	Uid           int
-	ToUser        int
-	MsgUid        int
-	CreatedTimeMs int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &OldMsgPush {
-	Id: 0,
-	Uid: 0,
-	ToUser: 0,
-	MsgUid: 0,
-	CreatedTimeMs: 0,
-*/
-// old_msg_push_event 'OldMsgPushEvent'.
-type OldMsgPushEvent struct {
-	Id         int
-	Uid        int
-	ToUserId   int
-	MsgUid     int
-	MsgKey     string
-	RoomKey    string
-	PeerUserId int
-	EventType  int
-	AtTime     int
-
-	_exists, _deleted bool
-}
-
-/*
-:= &OldMsgPushEvent {
-	Id: 0,
-	Uid: 0,
-	ToUserId: 0,
-	MsgUid: 0,
-	MsgKey: "",
-	RoomKey: "",
-	PeerUserId: 0,
-	EventType: 0,
-	AtTime: 0,
 */
 // phone_contacts 'PhoneContact'.
 type PhoneContact struct {

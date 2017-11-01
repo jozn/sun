@@ -29,6 +29,9 @@ public interface RPC_Chat {
     void GetChatHistoryToOlder( PB_ChatResponse_GetChatHistoryToOlder pb, boolean handled);
     void GetFreshAllDirectMessagesList( PB_ChatResponse_GetFreshAllDirectMessagesList pb, boolean handled);
 }
+public interface RPC_Other {
+    void Echo( PB_OtherResponse_Echo pb, boolean handled);
+}
 public interface RPC_Sync {
     void GetGeneralUpdates( PB_SyncResponse_GetGeneralUpdates pb, boolean handled);
     void GetNotifyUpdates( PB_SyncResponse_GetNotifyUpdates pb, boolean handled);
@@ -124,6 +127,13 @@ public interface RPC_User {
     	Log.d("RPC", " default empty handler for RPC 'RPC_Chat.GetFreshAllDirectMessagesList' ");
     }
   }
+  public static class RPC_Other_Empty implements RPC_Other{
+  
+  	@Override
+    public void Echo( PB_OtherResponse_Echo pb, boolean handled){
+    	Log.d("RPC", " default empty handler for RPC 'RPC_Other.Echo' ");
+    }
+  }
   public static class RPC_Sync_Empty implements RPC_Sync{
   
   	@Override
@@ -195,6 +205,7 @@ public interface RPC_User {
 	
 	public static RPC_HANDLERS.RPC_Auth RPC_Auth_Default_Handler = new RPC_HANDLERS.RPC_Auth_Empty();
 	public static RPC_HANDLERS.RPC_Chat RPC_Chat_Default_Handler = new RPC_HANDLERS.RPC_Chat_Empty();
+	public static RPC_HANDLERS.RPC_Other RPC_Other_Default_Handler = new RPC_HANDLERS.RPC_Other_Empty();
 	public static RPC_HANDLERS.RPC_Sync RPC_Sync_Default_Handler = new RPC_HANDLERS.RPC_Sync_Empty();
 	public static RPC_HANDLERS.RPC_UserOffline RPC_UserOffline_Default_Handler = new RPC_HANDLERS.RPC_UserOffline_Empty();
 	public static RPC_HANDLERS.RPC_User RPC_User_Default_Handler = new RPC_HANDLERS.RPC_User_Empty();
@@ -350,6 +361,15 @@ public interface RPC_User {
 			});
 	  
 	  
+			router.put("RPC_Other.Echo", (pb, handled)->{
+				if(pb instanceof PB_OtherResponse_Echo){
+					RPC_Other_Default_Handler.Echo((PB_OtherResponse_Echo) pb, handled);
+				}else{
+					Log.d("RPC", " can not convert response object to PB_OtherResponse_Echo in rpc: .Echo -- class: " + pb );//.getClass().getName());
+				}
+			});
+	  
+	  
 			router.put("RPC_Sync.GetGeneralUpdates", (pb, handled)->{
 				if(pb instanceof PB_SyncResponse_GetGeneralUpdates){
 					RPC_Sync_Default_Handler.GetGeneralUpdates((PB_SyncResponse_GetGeneralUpdates) pb, handled);
@@ -463,6 +483,7 @@ public interface RPC_User {
 
 RPC_HANDLERS.RPC_Auth RPC_Auth_Default_Handler = new RPC_HANDLERS.RPC_Auth RPC_Auth_Empty();
 RPC_HANDLERS.RPC_Chat RPC_Chat_Default_Handler = new RPC_HANDLERS.RPC_Chat RPC_Chat_Empty();
+RPC_HANDLERS.RPC_Other RPC_Other_Default_Handler = new RPC_HANDLERS.RPC_Other RPC_Other_Empty();
 RPC_HANDLERS.RPC_Sync RPC_Sync_Default_Handler = new RPC_HANDLERS.RPC_Sync RPC_Sync_Empty();
 RPC_HANDLERS.RPC_UserOffline RPC_UserOffline_Default_Handler = new RPC_HANDLERS.RPC_UserOffline RPC_UserOffline_Empty();
 RPC_HANDLERS.RPC_User RPC_User_Default_Handler = new RPC_HANDLERS.RPC_User RPC_User_Empty();

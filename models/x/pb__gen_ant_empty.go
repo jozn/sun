@@ -65,6 +65,15 @@ func (EmptyRPC_RPC_Chat) GetFreshAllDirectMessagesList(i *PB_ChatParam_GetFreshA
 	return nil, nil
 }
 
+/////////////////// RPC_Other  -  EmptyRPC_RPC_Other /////////////////////
+type EmptyRPC_RPC_Other int
+
+var Empty_RPC_RPC_Other_Sample = EmptyRPC_RPC_Other(0)
+
+func (EmptyRPC_RPC_Other) Echo(i *PB_OtherParam_Echo, p RPC_UserParam) (*PB_OtherResponse_Echo, error) {
+	return nil, nil
+}
+
 /////////////////// RPC_Sync  -  EmptyRPC_RPC_Sync /////////////////////
 type EmptyRPC_RPC_Sync int
 

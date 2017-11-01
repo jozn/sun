@@ -13,12 +13,8 @@ const (
 	DirectMessage_TableGo              = "DirectMessage"
 	DirectOffline_Table                = "direct_offline"
 	DirectOffline_TableGo              = "DirectOffline"
-	DirectOfflineDep_Table             = "direct_offline_dep"
-	DirectOfflineDep_TableGo           = "DirectOfflineDep"
 	DirectToMessage_Table              = "direct_to_message"
 	DirectToMessage_TableGo            = "DirectToMessage"
-	DirectUpdate_Table                 = "direct_update"
-	DirectUpdate_TableGo               = "DirectUpdate"
 	FollowingList_Table                = "following_list"
 	FollowingList_TableGo              = "FollowingList"
 	FollowingListMember_Table          = "following_list_member"
@@ -43,22 +39,12 @@ const (
 	Media_TableGo                      = "Media"
 	MessageFile_Table                  = "message_file"
 	MessageFile_TableGo                = "MessageFile"
-	Msg_Table                          = "msg"
-	Msg_TableGo                        = "Msg"
 	Notification_Table                 = "notification"
 	Notification_TableGo               = "Notification"
 	NotificationRemoved_Table          = "notification_removed"
 	NotificationRemoved_TableGo        = "NotificationRemoved"
 	Offline_Table                      = "offline"
 	Offline_TableGo                    = "Offline"
-	OldMessage_Table                   = "old_messages"
-	OldMessage_TableGo                 = "OldMessage"
-	OldMsgFile_Table                   = "old_msg_file"
-	OldMsgFile_TableGo                 = "OldMsgFile"
-	OldMsgPush_Table                   = "old_msg_push"
-	OldMsgPush_TableGo                 = "OldMsgPush"
-	OldMsgPushEvent_Table              = "old_msg_push_event"
-	OldMsgPushEvent_TableGo            = "OldMsgPushEvent"
 	PhoneContact_Table                 = "phone_contacts"
 	PhoneContact_TableGo               = "PhoneContact"
 	Photo_Table                        = "photo"
@@ -233,37 +219,6 @@ var DirectOffline = struct {
 	AtTimeMs:        "AtTimeMs",
 }
 
-var DirectOfflineDep = struct {
-	DirectOfflineId string
-	ToUserId        string
-	MessageId       string
-	MessageFileId   string
-	OtherId         string
-	ChatKey         string
-	PeerUserId      string
-	RoomLogTypeId   string
-	PBClass         string
-	DataPB          string
-	DataJson        string
-	DataTemp        string
-	AtTimeMs        string
-}{
-
-	DirectOfflineId: "DirectOfflineId",
-	ToUserId:        "ToUserId",
-	MessageId:       "MessageId",
-	MessageFileId:   "MessageFileId",
-	OtherId:         "OtherId",
-	ChatKey:         "ChatKey",
-	PeerUserId:      "PeerUserId",
-	RoomLogTypeId:   "RoomLogTypeId",
-	PBClass:         "PBClass",
-	DataPB:          "DataPB",
-	DataJson:        "DataJson",
-	DataTemp:        "DataTemp",
-	AtTimeMs:        "AtTimeMs",
-}
-
 var DirectToMessage = struct {
 	Id           string
 	ChatKey      string
@@ -275,39 +230,6 @@ var DirectToMessage = struct {
 	ChatKey:      "ChatKey",
 	MessageId:    "MessageId",
 	SourceEnumId: "SourceEnumId",
-}
-
-var DirectUpdate = struct {
-	DirectUpdateId string
-	ToUserId       string
-	MessageId      string
-	MessageFileId  string
-	OtherId        string
-	ChatKey        string
-	PeerUserId     string
-	EventType      string
-	RoomLogTypeId  string
-	FromSeq        string
-	ToSeq          string
-	ExtraPB        string
-	ExtraJson      string
-	AtTimeMs       string
-}{
-
-	DirectUpdateId: "DirectUpdateId",
-	ToUserId:       "ToUserId",
-	MessageId:      "MessageId",
-	MessageFileId:  "MessageFileId",
-	OtherId:        "OtherId",
-	ChatKey:        "ChatKey",
-	PeerUserId:     "PeerUserId",
-	EventType:      "EventType",
-	RoomLogTypeId:  "RoomLogTypeId",
-	FromSeq:        "FromSeq",
-	ToSeq:          "ToSeq",
-	ExtraPB:        "ExtraPB",
-	ExtraJson:      "ExtraJson",
-	AtTimeMs:       "AtTimeMs",
 }
 
 var FollowingList = struct {
@@ -550,17 +472,6 @@ var MessageFile = struct {
 	CanDel:          "CanDel",
 }
 
-var Msg = struct {
-	Key  string
-	Name string
-	Id   string
-}{
-
-	Key:  "Key",
-	Name: "Name",
-	Id:   "Id",
-}
-
 var Notification = struct {
 	Id           string
 	ForUserId    string
@@ -618,108 +529,6 @@ var Offline = struct {
 	DataBlob:    "DataBlob",
 	DataLength:  "DataLength",
 	CreatedMs:   "CreatedMs",
-}
-
-var OldMessage = struct {
-	Id            string
-	Uid           string
-	UserId        string
-	MessageKey    string
-	RoomKey       string
-	MessageType   string
-	RoomType      string
-	MsgFileId     string
-	DataPB        string
-	Data64        string
-	DataJson      string
-	CreatedTimeMs string
-}{
-
-	Id:            "Id",
-	Uid:           "Uid",
-	UserId:        "UserId",
-	MessageKey:    "MessageKey",
-	RoomKey:       "RoomKey",
-	MessageType:   "MessageType",
-	RoomType:      "RoomType",
-	MsgFileId:     "MsgFileId",
-	DataPB:        "DataPB",
-	Data64:        "Data64",
-	DataJson:      "DataJson",
-	CreatedTimeMs: "CreatedTimeMs",
-}
-
-var OldMsgFile = struct {
-	Id          string
-	Name        string
-	Size        string
-	FileType    string
-	MimeType    string
-	Width       string
-	Height      string
-	Duration    string
-	Extension   string
-	ThumbData   string
-	ThumbData64 string
-	ServerSrc   string
-	ServerPath  string
-	ServerId    string
-	CanDel      string
-}{
-
-	Id:          "Id",
-	Name:        "Name",
-	Size:        "Size",
-	FileType:    "FileType",
-	MimeType:    "MimeType",
-	Width:       "Width",
-	Height:      "Height",
-	Duration:    "Duration",
-	Extension:   "Extension",
-	ThumbData:   "ThumbData",
-	ThumbData64: "ThumbData64",
-	ServerSrc:   "ServerSrc",
-	ServerPath:  "ServerPath",
-	ServerId:    "ServerId",
-	CanDel:      "CanDel",
-}
-
-var OldMsgPush = struct {
-	Id            string
-	Uid           string
-	ToUser        string
-	MsgUid        string
-	CreatedTimeMs string
-}{
-
-	Id:            "Id",
-	Uid:           "Uid",
-	ToUser:        "ToUser",
-	MsgUid:        "MsgUid",
-	CreatedTimeMs: "CreatedTimeMs",
-}
-
-var OldMsgPushEvent = struct {
-	Id         string
-	Uid        string
-	ToUserId   string
-	MsgUid     string
-	MsgKey     string
-	RoomKey    string
-	PeerUserId string
-	EventType  string
-	AtTime     string
-}{
-
-	Id:         "Id",
-	Uid:        "Uid",
-	ToUserId:   "ToUserId",
-	MsgUid:     "MsgUid",
-	MsgKey:     "MsgKey",
-	RoomKey:    "RoomKey",
-	PeerUserId: "PeerUserId",
-	EventType:  "EventType",
-	AtTime:     "AtTime",
 }
 
 var PhoneContact = struct {

@@ -72,42 +72,11 @@ message PB_DirectOffline {
     string DataTemp = 17;
     int64 AtTimeMs = 19;
 }
-message PB_DirectOfflineDep {
-    int64 DirectOfflineId = 1;
-    int32 ToUserId = 3;
-    int64 MessageId = 5;
-    int64 MessageFileId = 7;
-    int64 OtherId = 9;
-    string ChatKey = 11;
-    int32 PeerUserId = 13;
-    int32 RoomLogTypeId = 15;
-    string PBClass = 17;
-    bytes DataPB = 19;
-    string DataJson = 21;
-    string DataTemp = 23;
-    int64 AtTimeMs = 25;
-}
 message PB_DirectToMessage {
     int64 Id = 1;
     string ChatKey = 3;
     int64 MessageId = 5;
     int32 SourceEnumId = 7;
-}
-message PB_DirectUpdate {
-    int64 DirectUpdateId = 1;
-    int32 ToUserId = 3;
-    int64 MessageId = 5;
-    int64 MessageFileId = 7;
-    int64 OtherId = 9;
-    string ChatKey = 11;
-    int32 PeerUserId = 13;
-    int32 EventType = 15;
-    int32 RoomLogTypeId = 17;
-    int32 FromSeq = 19;
-    int32 ToSeq = 21;
-    bytes ExtraPB = 23;
-    string ExtraJson = 25;
-    int64 AtTimeMs = 27;
 }
 message PB_FollowingList {
     int32 Id = 1;
@@ -223,11 +192,6 @@ message PB_MessageFile {
     int32 ServerId = 35;
     int32 CanDel = 37;
 }
-message PB_Msg {
-    string Key = 1;
-    string Name = 3;
-    int32 Id = 5;
-}
 message PB_Notification {
     int64 Id = 1;
     int32 ForUserId = 3;
@@ -255,55 +219,6 @@ message PB_Offline {
     bytes DataBlob = 15;
     int32 DataLength = 17;
     int64 CreatedMs = 19;
-}
-message PB_OldMessage {
-    int64 Id = 1;
-    int64 Uid = 3;
-    int64 UserId = 5;
-    string MessageKey = 7;
-    string RoomKey = 9;
-    int32 MessageType = 11;
-    int32 RoomType = 13;
-    int64 MsgFileId = 15;
-    bytes DataPB = 17;
-    string Data64 = 19;
-    string DataJson = 21;
-    int64 CreatedTimeMs = 23;
-}
-message PB_OldMsgFile {
-    int64 Id = 1;
-    string Name = 3;
-    int32 Size = 5;
-    int32 FileType = 7;
-    string MimeType = 9;
-    int32 Width = 11;
-    int32 Height = 13;
-    int32 Duration = 15;
-    string Extension = 17;
-    bytes ThumbData = 19;
-    string ThumbData64 = 21;
-    string ServerSrc = 23;
-    string ServerPath = 25;
-    int32 ServerId = 27;
-    int32 CanDel = 29;
-}
-message PB_OldMsgPush {
-    int64 Id = 1;
-    int64 Uid = 3;
-    int64 ToUser = 5;
-    int64 MsgUid = 7;
-    int64 CreatedTimeMs = 9;
-}
-message PB_OldMsgPushEvent {
-    int64 Id = 1;
-    int64 Uid = 3;
-    int32 ToUserId = 5;
-    int64 MsgUid = 7;
-    string MsgKey = 9;
-    string RoomKey = 11;
-    int32 PeerUserId = 13;
-    int32 EventType = 15;
-    int32 AtTime = 17;
 }
 message PB_PhoneContact {
     int32 Id = 1;

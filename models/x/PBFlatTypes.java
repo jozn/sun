@@ -1046,6 +1046,44 @@ public class PBFlatTypes {
 	t.HasMore = m.getHasMore() ;
 	*/
 
+	public class PB_OtherParam_Echo {
+	   public String Text;
+	}
+	/*
+	folding
+	PBFlatTypes.PB_OtherParam_Echo t = new PBFlatTypes.PB_OtherParam_Echo();
+    t.setText();
+	*/
+
+	/*
+	PBFlatTypes.PB_OtherParam_Echo t = new PBFlatTypes.PB_OtherParam_Echo();
+	t.Text = ;
+	*/
+
+	/*
+	PB_OtherParam_Echo t = new PB_OtherParam_Echo();
+	t.Text = m.getText() ;
+	*/
+
+	public class PB_OtherResponse_Echo {
+	   public String Text;
+	}
+	/*
+	folding
+	PBFlatTypes.PB_OtherResponse_Echo t = new PBFlatTypes.PB_OtherResponse_Echo();
+    t.setText();
+	*/
+
+	/*
+	PBFlatTypes.PB_OtherResponse_Echo t = new PBFlatTypes.PB_OtherResponse_Echo();
+	t.Text = ;
+	*/
+
+	/*
+	PB_OtherResponse_Echo t = new PB_OtherResponse_Echo();
+	t.Text = m.getText() ;
+	*/
+
 	public class PB_SyncParam_GetDirectUpdates {
 	   public long LastId;
 	}
@@ -1950,73 +1988,6 @@ public class PBFlatTypes {
 	t.AtTimeMs = m.getAtTimeMs() ;
 	*/
 
-	public class PB_DirectOfflineDep {
-	   public long DirectOfflineId;
-	   public int ToUserId;
-	   public long MessageId;
-	   public long MessageFileId;
-	   public long OtherId;
-	   public String ChatKey;
-	   public int PeerUserId;
-	   public int RoomLogTypeId;
-	   public String PBClass;
-	   public byte[] DataPB;
-	   public String DataJson;
-	   public String DataTemp;
-	   public long AtTimeMs;
-	}
-	/*
-	folding
-	PBFlatTypes.PB_DirectOfflineDep t = new PBFlatTypes.PB_DirectOfflineDep();
-    t.setDirectOfflineId();
-    t.setToUserId();
-    t.setMessageId();
-    t.setMessageFileId();
-    t.setOtherId();
-    t.setChatKey();
-    t.setPeerUserId();
-    t.setRoomLogTypeId();
-    t.setPBClass();
-    t.setDataPB();
-    t.setDataJson();
-    t.setDataTemp();
-    t.setAtTimeMs();
-	*/
-
-	/*
-	PBFlatTypes.PB_DirectOfflineDep t = new PBFlatTypes.PB_DirectOfflineDep();
-	t.DirectOfflineId = ;
-	t.ToUserId = ;
-	t.MessageId = ;
-	t.MessageFileId = ;
-	t.OtherId = ;
-	t.ChatKey = ;
-	t.PeerUserId = ;
-	t.RoomLogTypeId = ;
-	t.PBClass = ;
-	t.DataPB = ;
-	t.DataJson = ;
-	t.DataTemp = ;
-	t.AtTimeMs = ;
-	*/
-
-	/*
-	PB_DirectOfflineDep t = new PB_DirectOfflineDep();
-	t.DirectOfflineId = m.getDirectOfflineId() ;
-	t.ToUserId = m.getToUserId() ;
-	t.MessageId = m.getMessageId() ;
-	t.MessageFileId = m.getMessageFileId() ;
-	t.OtherId = m.getOtherId() ;
-	t.ChatKey = m.getChatKey() ;
-	t.PeerUserId = m.getPeerUserId() ;
-	t.RoomLogTypeId = m.getRoomLogTypeId() ;
-	t.PBClass = m.getPBClass() ;
-	t.DataPB = m.getDataPB() ;
-	t.DataJson = m.getDataJson() ;
-	t.DataTemp = m.getDataTemp() ;
-	t.AtTimeMs = m.getAtTimeMs() ;
-	*/
-
 	public class PB_DirectToMessage {
 	   public long Id;
 	   public String ChatKey;
@@ -2046,77 +2017,6 @@ public class PBFlatTypes {
 	t.ChatKey = m.getChatKey() ;
 	t.MessageId = m.getMessageId() ;
 	t.SourceEnumId = m.getSourceEnumId() ;
-	*/
-
-	public class PB_DirectUpdate {
-	   public long DirectUpdateId;
-	   public int ToUserId;
-	   public long MessageId;
-	   public long MessageFileId;
-	   public long OtherId;
-	   public String ChatKey;
-	   public int PeerUserId;
-	   public int EventType;
-	   public int RoomLogTypeId;
-	   public int FromSeq;
-	   public int ToSeq;
-	   public byte[] ExtraPB;
-	   public String ExtraJson;
-	   public long AtTimeMs;
-	}
-	/*
-	folding
-	PBFlatTypes.PB_DirectUpdate t = new PBFlatTypes.PB_DirectUpdate();
-    t.setDirectUpdateId();
-    t.setToUserId();
-    t.setMessageId();
-    t.setMessageFileId();
-    t.setOtherId();
-    t.setChatKey();
-    t.setPeerUserId();
-    t.setEventType();
-    t.setRoomLogTypeId();
-    t.setFromSeq();
-    t.setToSeq();
-    t.setExtraPB();
-    t.setExtraJson();
-    t.setAtTimeMs();
-	*/
-
-	/*
-	PBFlatTypes.PB_DirectUpdate t = new PBFlatTypes.PB_DirectUpdate();
-	t.DirectUpdateId = ;
-	t.ToUserId = ;
-	t.MessageId = ;
-	t.MessageFileId = ;
-	t.OtherId = ;
-	t.ChatKey = ;
-	t.PeerUserId = ;
-	t.EventType = ;
-	t.RoomLogTypeId = ;
-	t.FromSeq = ;
-	t.ToSeq = ;
-	t.ExtraPB = ;
-	t.ExtraJson = ;
-	t.AtTimeMs = ;
-	*/
-
-	/*
-	PB_DirectUpdate t = new PB_DirectUpdate();
-	t.DirectUpdateId = m.getDirectUpdateId() ;
-	t.ToUserId = m.getToUserId() ;
-	t.MessageId = m.getMessageId() ;
-	t.MessageFileId = m.getMessageFileId() ;
-	t.OtherId = m.getOtherId() ;
-	t.ChatKey = m.getChatKey() ;
-	t.PeerUserId = m.getPeerUserId() ;
-	t.EventType = m.getEventType() ;
-	t.RoomLogTypeId = m.getRoomLogTypeId() ;
-	t.FromSeq = m.getFromSeq() ;
-	t.ToSeq = m.getToSeq() ;
-	t.ExtraPB = m.getExtraPB() ;
-	t.ExtraJson = m.getExtraJson() ;
-	t.AtTimeMs = m.getAtTimeMs() ;
 	*/
 
 	public class PB_FollowingList {
@@ -2659,33 +2559,6 @@ public class PBFlatTypes {
 	t.CanDel = m.getCanDel() ;
 	*/
 
-	public class PB_Msg {
-	   public String Key;
-	   public String Name;
-	   public int Id;
-	}
-	/*
-	folding
-	PBFlatTypes.PB_Msg t = new PBFlatTypes.PB_Msg();
-    t.setKey();
-    t.setName();
-    t.setId();
-	*/
-
-	/*
-	PBFlatTypes.PB_Msg t = new PBFlatTypes.PB_Msg();
-	t.Key = ;
-	t.Name = ;
-	t.Id = ;
-	*/
-
-	/*
-	PB_Msg t = new PB_Msg();
-	t.Key = m.getKey() ;
-	t.Name = m.getName() ;
-	t.Id = m.getId() ;
-	*/
-
 	public class PB_Notification {
 	   public long Id;
 	   public int ForUserId;
@@ -2817,230 +2690,6 @@ public class PBFlatTypes {
 	t.DataBlob = m.getDataBlob() ;
 	t.DataLength = m.getDataLength() ;
 	t.CreatedMs = m.getCreatedMs() ;
-	*/
-
-	public class PB_OldMessage {
-	   public long Id;
-	   public long Uid;
-	   public long UserId;
-	   public String MessageKey;
-	   public String RoomKey;
-	   public int MessageType;
-	   public int RoomType;
-	   public long MsgFileId;
-	   public byte[] DataPB;
-	   public String Data64;
-	   public String DataJson;
-	   public long CreatedTimeMs;
-	}
-	/*
-	folding
-	PBFlatTypes.PB_OldMessage t = new PBFlatTypes.PB_OldMessage();
-    t.setId();
-    t.setUid();
-    t.setUserId();
-    t.setMessageKey();
-    t.setRoomKey();
-    t.setMessageType();
-    t.setRoomType();
-    t.setMsgFileId();
-    t.setDataPB();
-    t.setData64();
-    t.setDataJson();
-    t.setCreatedTimeMs();
-	*/
-
-	/*
-	PBFlatTypes.PB_OldMessage t = new PBFlatTypes.PB_OldMessage();
-	t.Id = ;
-	t.Uid = ;
-	t.UserId = ;
-	t.MessageKey = ;
-	t.RoomKey = ;
-	t.MessageType = ;
-	t.RoomType = ;
-	t.MsgFileId = ;
-	t.DataPB = ;
-	t.Data64 = ;
-	t.DataJson = ;
-	t.CreatedTimeMs = ;
-	*/
-
-	/*
-	PB_OldMessage t = new PB_OldMessage();
-	t.Id = m.getId() ;
-	t.Uid = m.getUid() ;
-	t.UserId = m.getUserId() ;
-	t.MessageKey = m.getMessageKey() ;
-	t.RoomKey = m.getRoomKey() ;
-	t.MessageType = m.getMessageType() ;
-	t.RoomType = m.getRoomType() ;
-	t.MsgFileId = m.getMsgFileId() ;
-	t.DataPB = m.getDataPB() ;
-	t.Data64 = m.getData64() ;
-	t.DataJson = m.getDataJson() ;
-	t.CreatedTimeMs = m.getCreatedTimeMs() ;
-	*/
-
-	public class PB_OldMsgFile {
-	   public long Id;
-	   public String Name;
-	   public int Size;
-	   public int FileType;
-	   public String MimeType;
-	   public int Width;
-	   public int Height;
-	   public int Duration;
-	   public String Extension;
-	   public byte[] ThumbData;
-	   public String ThumbData64;
-	   public String ServerSrc;
-	   public String ServerPath;
-	   public int ServerId;
-	   public int CanDel;
-	}
-	/*
-	folding
-	PBFlatTypes.PB_OldMsgFile t = new PBFlatTypes.PB_OldMsgFile();
-    t.setId();
-    t.setName();
-    t.setSize();
-    t.setFileType();
-    t.setMimeType();
-    t.setWidth();
-    t.setHeight();
-    t.setDuration();
-    t.setExtension();
-    t.setThumbData();
-    t.setThumbData64();
-    t.setServerSrc();
-    t.setServerPath();
-    t.setServerId();
-    t.setCanDel();
-	*/
-
-	/*
-	PBFlatTypes.PB_OldMsgFile t = new PBFlatTypes.PB_OldMsgFile();
-	t.Id = ;
-	t.Name = ;
-	t.Size = ;
-	t.FileType = ;
-	t.MimeType = ;
-	t.Width = ;
-	t.Height = ;
-	t.Duration = ;
-	t.Extension = ;
-	t.ThumbData = ;
-	t.ThumbData64 = ;
-	t.ServerSrc = ;
-	t.ServerPath = ;
-	t.ServerId = ;
-	t.CanDel = ;
-	*/
-
-	/*
-	PB_OldMsgFile t = new PB_OldMsgFile();
-	t.Id = m.getId() ;
-	t.Name = m.getName() ;
-	t.Size = m.getSize() ;
-	t.FileType = m.getFileType() ;
-	t.MimeType = m.getMimeType() ;
-	t.Width = m.getWidth() ;
-	t.Height = m.getHeight() ;
-	t.Duration = m.getDuration() ;
-	t.Extension = m.getExtension() ;
-	t.ThumbData = m.getThumbData() ;
-	t.ThumbData64 = m.getThumbData64() ;
-	t.ServerSrc = m.getServerSrc() ;
-	t.ServerPath = m.getServerPath() ;
-	t.ServerId = m.getServerId() ;
-	t.CanDel = m.getCanDel() ;
-	*/
-
-	public class PB_OldMsgPush {
-	   public long Id;
-	   public long Uid;
-	   public long ToUser;
-	   public long MsgUid;
-	   public long CreatedTimeMs;
-	}
-	/*
-	folding
-	PBFlatTypes.PB_OldMsgPush t = new PBFlatTypes.PB_OldMsgPush();
-    t.setId();
-    t.setUid();
-    t.setToUser();
-    t.setMsgUid();
-    t.setCreatedTimeMs();
-	*/
-
-	/*
-	PBFlatTypes.PB_OldMsgPush t = new PBFlatTypes.PB_OldMsgPush();
-	t.Id = ;
-	t.Uid = ;
-	t.ToUser = ;
-	t.MsgUid = ;
-	t.CreatedTimeMs = ;
-	*/
-
-	/*
-	PB_OldMsgPush t = new PB_OldMsgPush();
-	t.Id = m.getId() ;
-	t.Uid = m.getUid() ;
-	t.ToUser = m.getToUser() ;
-	t.MsgUid = m.getMsgUid() ;
-	t.CreatedTimeMs = m.getCreatedTimeMs() ;
-	*/
-
-	public class PB_OldMsgPushEvent {
-	   public long Id;
-	   public long Uid;
-	   public int ToUserId;
-	   public long MsgUid;
-	   public String MsgKey;
-	   public String RoomKey;
-	   public int PeerUserId;
-	   public int EventType;
-	   public int AtTime;
-	}
-	/*
-	folding
-	PBFlatTypes.PB_OldMsgPushEvent t = new PBFlatTypes.PB_OldMsgPushEvent();
-    t.setId();
-    t.setUid();
-    t.setToUserId();
-    t.setMsgUid();
-    t.setMsgKey();
-    t.setRoomKey();
-    t.setPeerUserId();
-    t.setEventType();
-    t.setAtTime();
-	*/
-
-	/*
-	PBFlatTypes.PB_OldMsgPushEvent t = new PBFlatTypes.PB_OldMsgPushEvent();
-	t.Id = ;
-	t.Uid = ;
-	t.ToUserId = ;
-	t.MsgUid = ;
-	t.MsgKey = ;
-	t.RoomKey = ;
-	t.PeerUserId = ;
-	t.EventType = ;
-	t.AtTime = ;
-	*/
-
-	/*
-	PB_OldMsgPushEvent t = new PB_OldMsgPushEvent();
-	t.Id = m.getId() ;
-	t.Uid = m.getUid() ;
-	t.ToUserId = m.getToUserId() ;
-	t.MsgUid = m.getMsgUid() ;
-	t.MsgKey = m.getMsgKey() ;
-	t.RoomKey = m.getRoomKey() ;
-	t.PeerUserId = m.getPeerUserId() ;
-	t.EventType = m.getEventType() ;
-	t.AtTime = m.getAtTime() ;
 	*/
 
 	public class PB_PhoneContact {
@@ -4667,6 +4316,7 @@ public class PBFlatTypes {
 
 RPC_HANDLERS.RPC_Auth RPC_Auth_Handeler = null;
 RPC_HANDLERS.RPC_Chat RPC_Chat_Handeler = null;
+RPC_HANDLERS.RPC_Other RPC_Other_Handeler = null;
 RPC_HANDLERS.RPC_Sync RPC_Sync_Handeler = null;
 RPC_HANDLERS.RPC_UserOffline RPC_UserOffline_Handeler = null;
 RPC_HANDLERS.RPC_User RPC_User_Handeler = null;

@@ -36,6 +36,7 @@ var RPC_ResponseHandler RPC_ResponseHandlerInterface
 type RPC_AllHandlersInteract struct {
 	RPC_Auth        RPC_Auth
 	RPC_Chat        RPC_Chat
+	RPC_Other       RPC_Other
 	RPC_Sync        RPC_Sync
 	RPC_UserOffline RPC_UserOffline
 	RPC_User        RPC_User
@@ -64,6 +65,10 @@ type RPC_Chat interface {
 	GetChatList(param *PB_ChatParam_GetChatList, userParam RPC_UserParam) (res PB_ChatResponse_GetChatList, err error)
 	GetChatHistoryToOlder(param *PB_ChatParam_GetChatHistoryToOlder, userParam RPC_UserParam) (res PB_ChatResponse_GetChatHistoryToOlder, err error)
 	GetFreshAllDirectMessagesList(param *PB_ChatParam_GetFreshAllDirectMessagesList, userParam RPC_UserParam) (res PB_ChatResponse_GetFreshAllDirectMessagesList, err error)
+}
+
+type RPC_Other interface {
+	Echo(param *PB_OtherParam_Echo, userParam RPC_UserParam) (res PB_OtherResponse_Echo, err error)
 }
 
 type RPC_Sync interface {
@@ -527,6 +532,44 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
 		default:
 			noDevErr(errors.New("rpc method is does not exist: " + cmd.Command))
 		}
+	case "RPC_Other":
+
+		//rpc,ok := rpcHandler.RPC_Other
+		rpc := rpcHandler.RPC_Other
+		/*if !ok {
+		    e:=errors.New("rpcHandler could not be cast to : RPC_Other")
+		    noDevErr(e)
+		    RPC_ResponseHandler.HandelError(e)
+		    return
+		}*/
+
+		switch splits[1] {
+		case "Echo": //each pb_service_method
+			load := &PB_OtherParam_Echo{}
+			err := proto.Unmarshal(cmd.Data, load)
+			if err == nil {
+				res, err := rpc.Echo(load, params)
+				if err == nil {
+					out := RpcResponseOutput{
+						RpcName:         "RPC_Other.Echo",
+						UserParam:       params,
+						CommandToServer: cmd,
+						PBClassName:     "PB_OtherResponse_Echo",
+						ResponseData:    res,
+						RpcParamPassed:  load,
+					}
+					//RPC_ResponseHandler.HandleOfflineResult(res,"PB_OtherResponse_Echo",cmd, params)
+					//RPC_ResponseHandler.HandleOfflineResult(res,"PB_OtherResponse_Echo","RPC_Other.Echo",cmd, params , load)
+					RPC_ResponseHandler.HandleOfflineResult(out)
+				} else {
+					RPC_ResponseHandler.HandelError(err)
+				}
+			} else {
+				RPC_ResponseHandler.HandelError(err)
+			}
+		default:
+			noDevErr(errors.New("rpc method is does not exist: " + cmd.Command))
+		}
 	case "RPC_Sync":
 
 		//rpc,ok := rpcHandler.RPC_Sync
@@ -900,6 +943,10 @@ func HandleRpcs(cmd PB_CommandToServer, params RPC_UserParam, rpcHandler RPC_All
  RPC_Chat.GetChatList
  RPC_Chat.GetChatHistoryToOlder
  RPC_Chat.GetFreshAllDirectMessagesList
+
+
+
+ RPC_Other.Echo
 
 
 
