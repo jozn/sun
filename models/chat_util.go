@@ -1,20 +1,20 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 	"ms/sun/base"
 	"ms/sun/config"
 	"ms/sun/helper"
 	"ms/sun/models/x"
 	"strings"
-    "errors"
 )
 
 //RoomKey; d24_6
 //ChatKey: d6:24
 func KeyNewMessageKey(UserId int, RoomKey string) string {
 	//return fmt.Sprintf("%d_%d_%s", UserId, helper.TimeNow(), helper.RandString(4)) //todo extrac this to client
-	return  fmt.Sprintf("%s|%d|%s|%d",RoomKey,helper.TimeNowMs(),helper.RandString(3),UserId)
+	return fmt.Sprintf("%s|%d|%s|%d", RoomKey, helper.TimeNowMs(), helper.RandString(3), UserId)
 }
 
 //"d25_56" "d56:24" ////not yet "g6_15646548_cdc" "g6:6_15646548_cdc"
@@ -56,7 +56,7 @@ func UsersToChatKey(me int, peer int) string {
 
 func Keys_RoomKeyToChatKey(RoomKey string) (ChatKey string, err error) {
 	arr := strings.Split(RoomKey, "_")
-	if len(arr) == 2 && (RoomKey[0] == 'd' ||RoomKey[0] == 'g') {
+	if len(arr) == 2 && (RoomKey[0] == 'd' || RoomKey[0] == 'g') {
 		u1 := helper.StrToInt(arr[0][1:], 0)
 		u2 := helper.StrToInt(arr[1], 0)
 		if u1 > 0 && u2 > 0 {
@@ -69,19 +69,28 @@ func Keys_RoomKeyToChatKey(RoomKey string) (ChatKey string, err error) {
 	return "", errors.New("WRONG RoomKey ")
 }
 
+func Keys_IsMyChatKey(ChatKey string, MyUserId int) bool {
+	if len(ChatKey) > 0 && ChatKey[0] == 'd' {
+		str := ChatKey[1:strings.Index(ChatKey, ":")]
+		uid := helper.StrToInt(str, 0)
+		return uid == MyUserId
+	}
+	return false
+}
+
 func Keys_ChatKeyToRoomKey(ChatKey string) (RoomKey string, err error) {
-    arr := strings.Split(ChatKey, ":")
-    if len(arr) == 2 && (ChatKey[0] == 'd' || ChatKey[0] == 'g') {
-        u1 := helper.StrToInt(arr[0][1:], 0)
-        u2 := helper.StrToInt(arr[1], 0)
-        if u1 > 0 && u2 > 0 {
-            return UsersToRoomKey(u1, u2), nil
-        }
-    }
-    if config.IS_DEBUG {
-        panic("WRONG Keys_ChatKeyToRoomKey param for ChatKey: " + ChatKey)
-    }
-    return "", errors.New("WRONG ChatKey ")
+	arr := strings.Split(ChatKey, ":")
+	if len(arr) == 2 && (ChatKey[0] == 'd' || ChatKey[0] == 'g') {
+		u1 := helper.StrToInt(arr[0][1:], 0)
+		u2 := helper.StrToInt(arr[1], 0)
+		if u1 > 0 && u2 > 0 {
+			return UsersToRoomKey(u1, u2), nil
+		}
+	}
+	if config.IS_DEBUG {
+		panic("WRONG Keys_ChatKeyToRoomKey param for ChatKey: " + ChatKey)
+	}
+	return "", errors.New("WRONG ChatKey ")
 }
 
 func GetOrCreateDirectChatForPeers(me int, peer int) (*x.Chat, error) {

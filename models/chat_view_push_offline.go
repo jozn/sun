@@ -23,6 +23,11 @@ func ViewPush_DirectOfflinesList_To_GetDirectUpdatesView(meId int, logs []*x.Dir
 			if log.MessageFileId > 0 {
 				msgFileIdsToLoad = append(msgFileIdsToLoad, log.MessageFileId)
 			}
+			if config.IS_DEBUG {
+			    if !Keys_IsMyChatKey(log.ChatKey,meId){
+			        panic("in ViewPush_DirectOfflinesList_To_GetDirectUpdatesView we are not sending our peerded chat to ouerself")
+                }
+            }
 			/*pb := &x.PB_Offline_NewDirectMessage{}
 						err := proto.Unmarshal(log.DataPB,pb)
 						if err == nil {

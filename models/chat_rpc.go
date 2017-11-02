@@ -105,7 +105,7 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 
 		dOffNewMsg := x.DirectOffline{
 			DirectOfflineId: helper.NextRowsSeqId(),
-			ToUserId:        peerId,
+			ToUserId:        us[0],
 			ChatKey:         UsersToChatKey(us[0], us[1]),
 			MessageId:       msg.MessageId,
 			PBClass:         xconst.PB_Offline_NewDirectMessage,
@@ -114,6 +114,9 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 			DataTemp:        "",
 			AtTimeMs:        helper.TimeNowMs(),
 		}
+        if msgFile != nil {
+            dOffNewMsg.MessageFileId = msgFile.MessageFileId
+        }
 		LiveOfflineFramer.HereDirectDelayer <- dOffNewMsg
 	}
 
