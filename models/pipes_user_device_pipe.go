@@ -12,6 +12,7 @@ import (
 	"os"
 
 	"github.com/golang/protobuf/proto"
+    "log"
 )
 
 type UserDevicePipe struct {
@@ -28,6 +29,9 @@ func (pipe *UserDevicePipe) ServeIncomingCalls() {
 	go func() {
 		defer func() {
 			if r := recover(); r != nil {
+                if config.IS_DEBUG{
+                    log.Panic("recverd in ServeSendToUserDevice err: ",r)
+                }
 				helper.Debug("Recovered in ws messaging clinet request", r)
 				pipe.ShutDownCompletely()
 			}
@@ -67,7 +71,11 @@ func (pipe *UserDevicePipe) ServeSendToUserDevice() {
 		//if we panic somehow? in writing json shutdown
 		defer func() {
 			if r := recover(); r != nil {
-				pipe.ShutDownCompletely()
+			    if config.IS_DEBUG{
+			        log.Panic("recverd in ServeSendToUserDevice err: ",r)
+                }else {
+                    pipe.ShutDownCompletely()
+                }
 			}
 		}()
 		for r := range pipe.ToDeviceChan {
@@ -138,10 +146,10 @@ func serverWSReqCalls(reqCall *x.PB_CommandToServer, pipe *UserDevicePipe) {
 	}
 
 	helper.DebugPrintln("WS serving: ", reqCall.Command)
-	logPipes.Println("WS serving: ", reqCall.Command)
+	logRpc.Println("WS serving: ", reqCall.Command)
 	//fmt.Println("WS serving: ", reqCall.Command)
 
-	x.HandleRpcs(*reqCall, userParam, RpcAll)
+	x.HandleRpcs(*reqCall, userParam, RpcAll,rpcResHand)
 }
 
 var _wsLogFile *os.File

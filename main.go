@@ -38,7 +38,7 @@ func main() {
 		}
 	}()
 
-	fmt.Println("Try To Start The App \n", time.Now().Second())
+	fmt.Println("Try To Start The App 6 \n", time.Now().Second())
 	startApp()
 
 	/*go func() {

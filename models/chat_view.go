@@ -1,6 +1,7 @@
 package models
 
 import (
+	"log"
 	"ms/sun/base"
 	"ms/sun/config"
 	"ms/sun/models/x"
@@ -18,6 +19,9 @@ func ViewChat_GetChatViewList_ByChatKeys_map(meId int, chatKeysMap map[string]bo
 func ViewChat_GetChatViewList_ByChatKeys(meId int, chatKeys []string) (res []*x.PB_ChatView) {
 	for _, chatId := range chatKeys {
 		if chat, ok := x.Store.GetChatByChatKey(chatId); ok {
+			if config.IS_DEBUG && !Keys_IsMyChatKey(chatId, meId) {
+				log.Panic("try to make chat view for a chat id not belong to current user: in ViewChat_GetChatViewList_ByChatKeys ", chatId, meId)
+			}
 			chatView := &x.PB_ChatView{
 				ChatKey:              chat.ChatKey,
 				RoomKey:              chat.RoomKey,

@@ -16,6 +16,7 @@ func init() {
 	//RpcAll.RPC_Msg = rpcMsg(0)
 	RpcAll.RPC_Sync = rpcSync(0)
 	RpcAll.RPC_Chat = rpcChat(0)
+	RpcAll.RPC_Other = rpcOther(74)
 }
 
 ///////////////////////////////
@@ -34,13 +35,14 @@ func (s RPC_UserParam_Imple) IsUser() bool {
 //////////////////////
 type rpcResHandeler int
 
-var rpcResHand = rpcResHandeler(0)
+var rpcResHand = rpcResHandeler(7)
 
 func init() {
-	x.RPC_ResponseHandler = rpcResHand
+	//x.RPC_ResponseHandler = rpcResHand
 }
 
 func (rpcResHandeler) HandleOfflineResult(resOut x.RpcResponseOutput) {
+    //fmt.Println("HandleOfflineResult",resOut)
 	//fmt.Println("implement me", i, c, p)
 	resOfRpcFunc, ok := resOut.ResponseData.(proto.Message)
 	if ok {
@@ -48,6 +50,9 @@ func (rpcResHandeler) HandleOfflineResult(resOut x.RpcResponseOutput) {
 
 		//todo: if response has error we must call the clint with and error: like: SERVER_ERR
 		if err != nil {
+            if config.IS_DEBUG {
+                panic("can nto Marshal pb in HandleOfflineResult")
+            }
 			return
 		}
 		resToClient := &x.PB_ResponseToClient{
@@ -59,6 +64,7 @@ func (rpcResHandeler) HandleOfflineResult(resOut x.RpcResponseOutput) {
 
 		if config.IS_DEBUG {
 			//logRpc.Println("debuging loggin " + RpcName)
+            //fmt.Println("implement me")
 			param2, _ := resOut.RpcParamPassed.(proto.Message)
 			t := time.Now()
 			s := "//======================================================================================================================="
@@ -85,7 +91,9 @@ func (rpcResHandeler) HandleOfflineResult(resOut x.RpcResponseOutput) {
 		cmd := NewPB_CommandToClient_WithData("PB_ResponseToClient", resToClient)
 		AllPipesMap.SendToUser(resOut.UserParam.GetUserId(), cmd)
 		//_ = cmd
-	}
+	}else if config.IS_DEBUG{
+	    panic("rpc HandleOfflineResult response is not of type PB - ants must wroks wrong!")
+    }
 
 }
 
@@ -94,7 +102,7 @@ func (rpcResHandeler) IsUserOnlineResult(i interface{}, erro error) {
 }
 
 func (rpcResHandeler) HandelError(erro error) {
-	fmt.Println("===============", erro)
+	fmt.Println("=============== Error in Rpc:: (rpcResHandeler) HandelError(erro error) ", erro)
 }
 
 func PushToUserLiveData(UserId int, pbAllLivePush x.PB_AllLivePushes) {

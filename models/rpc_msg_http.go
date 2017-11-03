@@ -51,6 +51,6 @@ func HttpRpcHandler(w http.ResponseWriter, r *http.Request) {
 		userId: 6,
 	}
 
-	x.HandleRpcs(*cmdToServer, userParam, RpcAll)
+	x.HandleRpcs(*cmdToServer, userParam, RpcAll,rpcResHand)
 
 }
