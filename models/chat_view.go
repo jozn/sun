@@ -5,6 +5,7 @@ import (
 	"ms/sun/base"
 	"ms/sun/config"
 	"ms/sun/models/x"
+    "ms/sun/helper"
 )
 
 func ViewChat_GetChatViewList_ByChatKeys_map(meId int, chatKeysMap map[string]bool) (res []*x.PB_ChatView) {
@@ -68,7 +69,7 @@ func ViewChat_GetDirectMessageViewList_ByMsgIds(meId int, msgIds []int) (res []*
 			msgFile, ok := x.Store.GetMessageFileByMessageFileId(msg.MessageFileId)
 			if ok {
 				v.MessageFileView = PBConvPB_MessageFile_To_MessageFile(msgFile)
-				v.MessageFileView.ServerSrc = config.CDN_CHAT_MSG_UPLOAD_URL + v.MessageFileView.Name
+				v.MessageFileView.ServerSrc = config.CDN_CHAT_MSG_UPLOAD_URL + "/upload/message_files/" + helper.IntToStr(msgFile.MessageFileId) +msgFile.Extension // v.MessageFileView.Name
 				//fmt.Println("v.MessageFileView ", v.MessageFileView)
 			}
 		}
