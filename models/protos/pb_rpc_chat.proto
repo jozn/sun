@@ -19,7 +19,11 @@ message PB_ChatParam_AddNewMessage {
 }
 
 message PB_ChatResponse_AddNewMessage {
-
+    string MessageKey =1;
+    int64 NewMessageId =2;
+    string MessageFileKey =3;
+    int64 NewMessageFileId =4;
+    int64 AtTime =5;
 }
 
 // SetRoomActionDoing

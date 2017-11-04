@@ -18,25 +18,25 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 		return
 	}
 
-	iMsg := param.MessageView
-	timeing := int(iMsg.CreatedSe)
+	inMsg := param.MessageView
+	timeing := int(inMsg.CreatedSe)
 	if timeing < (helper.TimeNow()-24*3600) || timeing > helper.TimeNow() {
 		timeing = helper.TimeNow()
 	}
 
-	peerId := RoomKeyToOtherUser(iMsg.RoomKey, userParam.GetUserId())
+	peerId := RoomKeyToOtherUser(inMsg.RoomKey, userParam.GetUserId())
 	if peerId < 1 {
 		return res, errors.New("peerId is not valid")
 	}
 
 	msg := &x.DirectMessage{
 		MessageId:            helper.NextRowsSeqId(),
-		MessageKey:           iMsg.MessageKey,
-		RoomKey:              iMsg.RoomKey,
+		MessageKey:           inMsg.MessageKey,
+		RoomKey:              inMsg.RoomKey,
 		UserId:               userParam.GetUserId(),
-		MessageFileId:        int(iMsg.MessageFileId),
-		MessageTypeEnumId:    int(iMsg.MessageTypeEnumId),
-		Text:                 iMsg.Text,
+		MessageFileId:        int(inMsg.MessageFileId),
+		MessageTypeEnumId:    int(inMsg.MessageTypeEnumId),
+		Text:                 inMsg.Text,
 		CreatedSe:            int(timeing),
 		PeerReceivedTime:     0,
 		PeerSeenTime:         0,
@@ -44,15 +44,15 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 	}
 
 	var msgFile *x.MessageFile
-	if iMsg.MessageFileView != nil {
-		f := iMsg.MessageFileView
+	if inMsg.MessageFileView != nil {
+		f := inMsg.MessageFileView
 		msgFile = &x.MessageFile{
 			MessageFileId:   (helper.NextRowsSeqId()),
 			MessageFileKey:  f.MessageFileKey, //,KeyNewMessageKey(p.GetUserId()), //todo must set at client
 			OriginalUserId:  userParam.GetUserId(),
 			Name:            f.Name,
 			Size:            int(f.Size),
-			FileTypeEnumId:  int(iMsg.MessageTypeEnumId),
+			FileTypeEnumId:  int(inMsg.MessageTypeEnumId),
 			Width:           int(f.Width),
 			Height:          int(f.Height),
 			Duration:        int(f.Duration),
@@ -91,7 +91,7 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 	}
 
 	dm := NewDirectMessagingByUsers(userParam.GetUserId(), peerId)
-    dm.AddMessage(msg)
+	dm.AddMessage(msg)
 
 	//PUSH NEW MESSAGE
 	//sent to both me (for mutliple device and other peer new msg)
@@ -114,15 +114,15 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 			DataTemp:        "",
 			AtTimeMs:        helper.TimeNowMs(),
 		}
-        if msgFile != nil {
-            dOffNewMsg.MessageFileId = msgFile.MessageFileId
-        }
+		if msgFile != nil {
+			dOffNewMsg.MessageFileId = msgFile.MessageFileId
+		}
 		LiveOfflineFramer.HereDirectDelayer <- dOffNewMsg
 	}
 
 	//PUSH CHANGE MESSAGE ID
 	pbChangeMsgId := &x.PB_Offline_ChangeMessageId{
-		MessageKey:   iMsg.MessageKey,
+		MessageKey:   inMsg.MessageKey,
 		NewMessageId: int64(msg.MessageId),
 	}
 	pbByte, _ := proto.Marshal(pbChangeMsgId)
@@ -143,7 +143,7 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 	//PUSH CHANGE MESSAGE File ID
 	if msgFile != nil {
 		pbChangeMsgFileId = &x.PB_Offline_ChangeMessageFileId{
-			MessageFileKey:   iMsg.MessageFileView.MessageFileKey,
+			MessageFileKey:   inMsg.MessageFileView.MessageFileKey,
 			NewMessageFileId: int64(msgFile.MessageFileId),
 		}
 		pbByte, _ := proto.Marshal(pbChangeMsgFileId)
@@ -163,7 +163,7 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 
 	//MEASSAGE REACHED SERVER OFFLINE
 	pbMsgReachedServer := &x.PB_Offline_MessagesReachedServer{
-		MessageKeys: []string{iMsg.MessageKey},
+		MessageKeys: []string{inMsg.MessageKey},
 		AtTime:      int64(helper.TimeNow()),
 	}
 	pbByte, _ = proto.Marshal(pbMsgReachedServer)
@@ -179,6 +179,14 @@ func (rpcChat) AddNewMessage(param *x.PB_ChatParam_AddNewMessage, userParam x.RP
 		AtTimeMs:        helper.TimeNowMs(),
 	}
 	LiveOfflineFramer.HereDirectDelayer <- dOffMsgReached
+
+	res.AtTime = int64(helper.TimeNow())
+	res.MessageKey = inMsg.MessageKey
+	res.NewMessageId = int64(msg.MessageId)
+	if msgFile != nil {
+		res.MessageFileKey = msgFile.MessageFileKey
+		res.NewMessageFileId = int64(msg.MessageFileId)
+	}
 
 	return res, nil
 }
