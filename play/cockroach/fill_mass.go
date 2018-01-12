@@ -23,9 +23,9 @@ func main() {
 		panic(err)
 	}
 	structure := `
-	drop database b;
+	drop database if EXISTS b;
 	create database b;
-	use bench;
+	set database = b;
 DROP TABLE IF EXISTS users;
 CREATE TABLE if not EXISTS users (id INT PRIMARY KEY, name STRING ,name2 STRING);
 
@@ -144,7 +144,7 @@ func mass2(db *sql.DB) {
 	t := time.Now()
 	lastT := time.Now()
 	lastId := 0
-	id := 1000000000
+	id := 0
 	for {
 		o := ""
 		for id2 := 0; id2 < 1000; id2++ {

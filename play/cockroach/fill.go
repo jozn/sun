@@ -14,6 +14,8 @@ func main() {
 		panic(err)
 	}
 	structure := `
+CREATE database if not EXISTS bench2;
+set database = bench2;
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (id INT PRIMARY KEY, name STRING);
 

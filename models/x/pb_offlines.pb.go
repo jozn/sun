@@ -45,6 +45,7 @@ func (m *PB_Offline_NewDirectMessage) GetAtTime() int64 {
 	return 0
 }
 
+// del?
 type PB_Offline_MessagesReachedServer struct {
 	MessageKeys []string `protobuf:"bytes,1,rep,name=MessageKeys" json:"MessageKeys,omitempty"`
 	AtTime      int64    `protobuf:"varint,2,opt,name=AtTime" json:"AtTime,omitempty"`
@@ -188,6 +189,7 @@ func (m *PB_Offline_MessagesDeletedFromServer) GetAtTime() int64 {
 	return 0
 }
 
+// del?
 type PB_Offline_ChangeMessageId struct {
 	MessageKey   string `protobuf:"bytes,1,opt,name=MessageKey" json:"MessageKey,omitempty"`
 	NewMessageId int64  `protobuf:"varint,2,opt,name=NewMessageId" json:"NewMessageId,omitempty"`
@@ -212,6 +214,7 @@ func (m *PB_Offline_ChangeMessageId) GetNewMessageId() int64 {
 	return 0
 }
 
+// del?
 type PB_Offline_ChangeMessageFileId struct {
 	MessageFileKey   string `protobuf:"bytes,1,opt,name=MessageFileKey" json:"MessageFileKey,omitempty"`
 	NewMessageFileId int64  `protobuf:"varint,2,opt,name=NewMessageFileId" json:"NewMessageFileId,omitempty"`

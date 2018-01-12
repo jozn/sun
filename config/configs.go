@@ -24,3 +24,7 @@ const UPLOAD_DIR_POSTS = UPLOAD_DIR + ""
 const BUCKET_SIZE = 30
 
 const TAGS_RELOAD_TOP_INTERVAL_MINS = 60
+
+/////////////////////// for galaxy /////////////////
+const GALAXY_CACHE_PARENT_DIR = `C:\Go\_gopath\src\ms\sun\galaxy\`
+/////////////////////// end galaxy /////////////////

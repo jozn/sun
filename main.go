@@ -289,6 +289,7 @@ func registerRoutes() *httptreemux.TreeMux {
 
 func toV1(fn func(*base.Action) base.AppErr) func(http.ResponseWriter, *http.Request, map[string]string) {
 	return func(rw http.ResponseWriter, r *http.Request, parms map[string]string) {
+	    fmt.Println(r.RequestURI)
 		(base.Action{Fn2: fn, Ver: 2}).ServeHTTP(rw, r)
 	}
 }

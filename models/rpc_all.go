@@ -35,10 +35,10 @@ func (s RPC_UserParam_Imple) IsUser() bool {
 //////////////////////
 type rpcResHandeler int
 
-var rpcResHand = rpcResHandeler(7)
+var rpcResHandler = rpcResHandeler(7)
 
 func init() {
-	//x.RPC_ResponseHandler = rpcResHand
+	//x.RPC_ResponseHandler = rpcResHandler
 }
 
 func (rpcResHandeler) HandleOfflineResult(resOut x.RpcResponseOutput) {
