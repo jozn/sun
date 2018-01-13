@@ -12,11 +12,15 @@ type httpHandler struct {
 }
 
 func (httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-    os.Stdout = nil
+	os.Stdout = nil
 	row, err := newRowReq(r.URL)
 	fmt.Println(row)
 	fmt.Println(err)
-	http.ServeFile(w, r, row.rowCacheOutFullPath)
+	if err == nil {
+		http.ServeFile(w, r, row.rowCacheOutFullPath)
+	} else {
+		http.NotFound(w, r)
+	}
 }
 
 func (httpHandler) ServeHTTP1(w http.ResponseWriter, r *http.Request) {
