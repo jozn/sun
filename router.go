@@ -137,6 +137,10 @@ func registerRoutes() {
 	mux.Get("/comments/add", actionToFunc(ctrl.PostAddCommentAction))
 	mux.Post("/comments/add", actionToFunc(ctrl.PostAddCommentAction))
 	mux.Get("/comments/list", actionToFunc(ctrl.GetCommentsAction))
+	mux.Post("/comments/delete", actionToFunc(ctrl.RemoveCommentAction))
+
+	mux.Post("/session/info", actionToFunc(ctrl.SessionGetUserInfo))
+	mux.Get("/session/info", actionToFunc(ctrl.SessionGetUserInfo))
 
 
 

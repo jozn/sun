@@ -70,11 +70,11 @@ func PostAddCommentAction(c *base.Action) base.AppErr {
 	return nil
 }
 
-func PostRemoveCommentAction(c *base.Action) base.AppErr {
+func RemoveCommentAction(c *base.Action) base.AppErr {
     MustBeUserAndUpdate(c)
 
-    pid := c.GetParamInt("post_id",0)
-    comment_id := c.GetParamInt("comment_id",0)
+    pid := c.GetParamInt("post_id",-1)
+    comment_id := c.GetParamInt("comment_id",-1)
 
     boolean := models.RemoveComment(c.UserId(),pid,comment_id)
     c.SendJson(boolean)
